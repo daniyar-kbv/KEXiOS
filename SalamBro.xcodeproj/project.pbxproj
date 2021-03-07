@@ -20,6 +20,8 @@
 		FB664D0B25F507DC000DC55F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB664D0A25F507DC000DC55F /* LaunchScreen.storyboard */; };
 		FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D1225F5084D000DC55F /* CitiesListController.swift */; };
 		FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D1725F50889000DC55F /* CitiesListView.swift */; };
+		FB664D1D25F50BB3000DC55F /* AddressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D1C25F50BB3000DC55F /* AddressController.swift */; };
+		FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2125F50BD6000DC55F /* AddressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		FB664D0A25F507DC000DC55F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB664D1225F5084D000DC55F /* CitiesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListController.swift; sourceTree = "<group>"; };
 		FB664D1725F50889000DC55F /* CitiesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListView.swift; sourceTree = "<group>"; };
+		FB664D1C25F50BB3000DC55F /* AddressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressController.swift; sourceTree = "<group>"; };
+		FB664D2125F50BD6000DC55F /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +157,7 @@
 				FB664CD625F4F243000DC55F /* UpdateController.swift */,
 				FB664CF425F50174000DC55F /* CountriesListController.swift */,
 				FB664D1225F5084D000DC55F /* CitiesListController.swift */,
+				FB664D1C25F50BB3000DC55F /* AddressController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 				FB664CEC25F4FB64000DC55F /* UpdateView.swift */,
 				FB664CF925F502BA000DC55F /* CountriesListView.swift */,
 				FB664D1725F50889000DC55F /* CitiesListView.swift */,
+				FB664D2125F50BD6000DC55F /* AddressView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -308,7 +314,9 @@
 				FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */,
 				FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */,
 				FB664D0325F505AA000DC55F /* DummyData.swift in Sources */,
+				FB664D1D25F50BB3000DC55F /* AddressController.swift in Sources */,
 				FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */,
+				FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */,
 				FB664CF525F50174000DC55F /* CountriesListController.swift in Sources */,
 				FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */,
 				FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */,

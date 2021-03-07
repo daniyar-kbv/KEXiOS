@@ -14,16 +14,11 @@ class CountriesListController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        configUI()
     }
     
     override func loadView() {
         view = rootView
-    }
-    
-    func setupViews() {
-        navigationItem.title = "Choose your country"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 //  FIXME: -BUG should deselect after returning back to country select?
 //    override func viewWillAppear(_ animated: Bool) {
@@ -80,5 +75,12 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
 extension CountriesListController: CountriesListViewDelegate {
     func updateList() {
         print("update list...")
+    }
+}
+
+extension CountriesListController {
+    private func configUI() {
+        navigationItem.title = "Choose your country"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

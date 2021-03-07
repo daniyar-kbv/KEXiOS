@@ -25,10 +25,6 @@ class CountriesListView: UIView {
     
     public var delegate: CountriesListViewDelegate?
     
-    private var itemSize: CGSize {
-        return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width / 1.5)
-    }
-    
     init(delegate: (UITableViewDelegate & UITableViewDataSource & CountriesListViewDelegate)) {
         self.delegate = delegate
         super.init(frame: .zero)

@@ -7,11 +7,12 @@
 
 import UIKit
 
-protocol CitiesListDelegate {
-    func make()
+protocol CitiesListViewDelegate {
+    func test()
 }
+
 class CitiesListView: UIView {
-    public var delegate: CitiesListDelegate?
+    public var delegate: CitiesListViewDelegate?
     
     lazy var citiesTableView: UITableView = {
         let table = UITableView()
@@ -23,13 +24,7 @@ class CitiesListView: UIView {
         return table
     }()
     
-    
-    
-    private var itemSize: CGSize {
-        return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width / 1.5)
-    }
-    
-    init(delegate: (UITableViewDelegate & UITableViewDataSource & CitiesListDelegate)) {
+    init(delegate: (UITableViewDelegate & UITableViewDataSource & CitiesListViewDelegate)) {
         self.delegate = delegate
         super.init(frame: .zero)
         self.citiesTableView.dataSource = delegate

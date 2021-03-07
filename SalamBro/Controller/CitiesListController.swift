@@ -17,21 +17,16 @@ class CitiesListController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupViews()
+        configUI()
     }
     
     override func loadView() {
         view = rootView
     }
-    
-    func setupViews() {
-        navigationItem.title = "Choose your city"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-    }
 }
 
-extension CitiesListController: CitiesListDelegate {
-    func make() {
+extension CitiesListController: CitiesListViewDelegate {
+    func test() {
         print("f")
     }
     
@@ -55,9 +50,9 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
         if selectionIndexPath != nil {
             if selectionIndexPath == indexPath {
                 print("proceed to next view")
-//                let vc = AddressController()
-//                selectionIndexPath = nil
-//                navigationController?.pushViewController(vc, animated: true)
+                let vc = AddressController()
+                selectionIndexPath = nil
+                navigationController?.pushViewController(vc, animated: true)
             } else {
                 print(selectionIndexPath!.row)
                 selectionIndexPath = indexPath
@@ -75,5 +70,12 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.accessoryType = .none
+    }
+}
+
+extension CitiesListController {
+    private func configUI() {
+        navigationItem.title = "Choose your city"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

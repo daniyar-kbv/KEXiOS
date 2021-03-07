@@ -9,16 +9,18 @@ import UIKit
 
 class UpdateController: UIViewController {
     
-    fileprivate let movieReusableCell = "movieReusableCell"
     fileprivate lazy var rootView = UpdateView(delegate: self)
 
     
-    override func loadView() {
-        view = rootView
-    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
+    }
+    
+    override func loadView() {
+        view = rootView
     }
     
     override func viewWillAppear(_ animated: Bool) {
