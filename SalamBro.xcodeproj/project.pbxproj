@@ -14,6 +14,7 @@
 		E6B175E225ED524000A9F827 /* SalamBroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175E125ED524000A9F827 /* SalamBroUITests.swift */; };
 		FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CD625F4F243000DC55F /* UpdateController.swift */; };
 		FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */; };
+		FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CEC25F4FB64000DC55F /* UpdateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		E6B175E325ED524000A9F827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB664CD625F4F243000DC55F /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
 		FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		FB664CEC25F4FB64000DC55F /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 		E6B175BE25ED523F00A9F827 /* SalamBro */ = {
 			isa = PBXGroup;
 			children = (
+				FB664CEB25F4FB3C000DC55F /* View */,
 				FB664CE725F4F34B000DC55F /* Controller */,
 				FB664CDB25F4F297000DC55F /* Extensions */,
 				E6B175BF25ED523F00A9F827 /* AppDelegate.swift */,
@@ -139,6 +142,14 @@
 				FB664CD625F4F243000DC55F /* UpdateController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		FB664CEB25F4FB3C000DC55F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FB664CEC25F4FB64000DC55F /* UpdateView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */,
+				FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */,
 				FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */,
 				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
 			);
