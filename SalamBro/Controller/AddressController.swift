@@ -25,8 +25,8 @@ class AddressController: UIViewController {
 extension AddressController {
     func submitForms() {
         print("proceed to next view")
-//        let vc = BrandController()
-//        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = BrandsController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

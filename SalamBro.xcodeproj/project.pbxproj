@@ -22,6 +22,8 @@
 		FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D1725F50889000DC55F /* CitiesListView.swift */; };
 		FB664D1D25F50BB3000DC55F /* AddressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D1C25F50BB3000DC55F /* AddressController.swift */; };
 		FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2125F50BD6000DC55F /* AddressView.swift */; };
+		FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2625F510E1000DC55F /* BrandsController.swift */; };
+		FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2B25F5117F000DC55F /* BrandsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		FB664D1725F50889000DC55F /* CitiesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListView.swift; sourceTree = "<group>"; };
 		FB664D1C25F50BB3000DC55F /* AddressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressController.swift; sourceTree = "<group>"; };
 		FB664D2125F50BD6000DC55F /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		FB664D2625F510E1000DC55F /* BrandsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsController.swift; sourceTree = "<group>"; };
+		FB664D2B25F5117F000DC55F /* BrandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +162,7 @@
 				FB664CF425F50174000DC55F /* CountriesListController.swift */,
 				FB664D1225F5084D000DC55F /* CitiesListController.swift */,
 				FB664D1C25F50BB3000DC55F /* AddressController.swift */,
+				FB664D2625F510E1000DC55F /* BrandsController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -169,6 +174,7 @@
 				FB664CF925F502BA000DC55F /* CountriesListView.swift */,
 				FB664D1725F50889000DC55F /* CitiesListView.swift */,
 				FB664D2125F50BD6000DC55F /* AddressView.swift */,
+				FB664D2B25F5117F000DC55F /* BrandsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -313,6 +319,7 @@
 				E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */,
 				FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */,
 				FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */,
+				FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */,
 				FB664D0325F505AA000DC55F /* DummyData.swift in Sources */,
 				FB664D1D25F50BB3000DC55F /* AddressController.swift in Sources */,
 				FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */,
@@ -321,6 +328,7 @@
 				FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */,
 				FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */,
 				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
+				FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
