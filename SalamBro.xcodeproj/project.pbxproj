@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175BF25ED523F00A9F827 /* AppDelegate.swift */; };
-		E6B175C225ED523F00A9F827 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175C125ED523F00A9F827 /* SceneDelegate.swift */; };
 		E6B175C425ED523F00A9F827 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175C325ED523F00A9F827 /* ViewController.swift */; };
-		E6B175C725ED523F00A9F827 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6B175C525ED523F00A9F827 /* Main.storyboard */; };
 		E6B175C925ED524000A9F827 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B175C825ED524000A9F827 /* Assets.xcassets */; };
 		E6B175CC25ED524000A9F827 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6B175CA25ED524000A9F827 /* LaunchScreen.storyboard */; };
 		E6B175D725ED524000A9F827 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175D625ED524000A9F827 /* SalamBroTests.swift */; };
@@ -37,9 +35,7 @@
 /* Begin PBXFileReference section */
 		E6B175BC25ED523F00A9F827 /* SalamBro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalamBro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B175BF25ED523F00A9F827 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E6B175C125ED523F00A9F827 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E6B175C325ED523F00A9F827 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		E6B175C625ED523F00A9F827 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E6B175C825ED524000A9F827 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E6B175CB25ED524000A9F827 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E6B175CD25ED524000A9F827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -100,9 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				E6B175BF25ED523F00A9F827 /* AppDelegate.swift */,
-				E6B175C125ED523F00A9F827 /* SceneDelegate.swift */,
 				E6B175C325ED523F00A9F827 /* ViewController.swift */,
-				E6B175C525ED523F00A9F827 /* Main.storyboard */,
 				E6B175C825ED524000A9F827 /* Assets.xcassets */,
 				E6B175CA25ED524000A9F827 /* LaunchScreen.storyboard */,
 				E6B175CD25ED524000A9F827 /* Info.plist */,
@@ -233,7 +227,6 @@
 			files = (
 				E6B175CC25ED524000A9F827 /* LaunchScreen.storyboard in Resources */,
 				E6B175C925ED524000A9F827 /* Assets.xcassets in Resources */,
-				E6B175C725ED523F00A9F827 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +253,6 @@
 			files = (
 				E6B175C425ED523F00A9F827 /* ViewController.swift in Sources */,
 				E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */,
-				E6B175C225ED523F00A9F827 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,14 +288,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E6B175C525ED523F00A9F827 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E6B175C625ED523F00A9F827 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		E6B175CA25ED524000A9F827 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -366,7 +350,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -421,7 +405,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -439,6 +423,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N54MPMJ454;
 				INFOPLIST_FILE = SalamBro/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -446,7 +431,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = kz.salambro.app.SalamBro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -458,6 +443,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N54MPMJ454;
 				INFOPLIST_FILE = SalamBro/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -465,7 +451,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = kz.salambro.app.SalamBro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
