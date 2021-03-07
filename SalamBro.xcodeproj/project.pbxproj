@@ -15,6 +15,9 @@
 		FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CD625F4F243000DC55F /* UpdateController.swift */; };
 		FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */; };
 		FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CEC25F4FB64000DC55F /* UpdateView.swift */; };
+		FB664CF525F50174000DC55F /* CountriesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CF425F50174000DC55F /* CountriesListController.swift */; };
+		FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CF925F502BA000DC55F /* CountriesListView.swift */; };
+		FB664D0325F505AA000DC55F /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D0225F505AA000DC55F /* DummyData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		FB664CD625F4F243000DC55F /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
 		FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		FB664CEC25F4FB64000DC55F /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
+		FB664CF425F50174000DC55F /* CountriesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListController.swift; sourceTree = "<group>"; };
+		FB664CF925F502BA000DC55F /* CountriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListView.swift; sourceTree = "<group>"; };
+		FB664D0225F505AA000DC55F /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,7 @@
 		E6B175BE25ED523F00A9F827 /* SalamBro */ = {
 			isa = PBXGroup;
 			children = (
+				FB664D0125F505A0000DC55F /* Model */,
 				FB664CEB25F4FB3C000DC55F /* View */,
 				FB664CE725F4F34B000DC55F /* Controller */,
 				FB664CDB25F4F297000DC55F /* Extensions */,
@@ -140,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				FB664CD625F4F243000DC55F /* UpdateController.swift */,
+				FB664CF425F50174000DC55F /* CountriesListController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -148,8 +156,17 @@
 			isa = PBXGroup;
 			children = (
 				FB664CEC25F4FB64000DC55F /* UpdateView.swift */,
+				FB664CF925F502BA000DC55F /* CountriesListView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		FB664D0125F505A0000DC55F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FB664D0225F505AA000DC55F /* DummyData.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,8 +299,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */,
+				FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */,
 				FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */,
+				FB664D0325F505AA000DC55F /* DummyData.swift in Sources */,
 				FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */,
+				FB664CF525F50174000DC55F /* CountriesListController.swift in Sources */,
 				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

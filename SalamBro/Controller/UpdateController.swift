@@ -36,7 +36,7 @@ class UpdateController: UIViewController {
 extension UpdateController {
     private func updateApp() {
         print("proceed to AppStore to update app")
-//        self.navigationController?.pushViewController(CountriesController(), animated: true)
+        self.navigationController?.pushViewController(CountriesListController(), animated: true)
     }
 }
 
