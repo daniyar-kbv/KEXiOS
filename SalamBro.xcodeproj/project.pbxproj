@@ -8,13 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175BF25ED523F00A9F827 /* AppDelegate.swift */; };
-		E6B175C225ED523F00A9F827 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175C125ED523F00A9F827 /* SceneDelegate.swift */; };
-		E6B175C425ED523F00A9F827 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175C325ED523F00A9F827 /* ViewController.swift */; };
-		E6B175C725ED523F00A9F827 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6B175C525ED523F00A9F827 /* Main.storyboard */; };
 		E6B175C925ED524000A9F827 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B175C825ED524000A9F827 /* Assets.xcassets */; };
-		E6B175CC25ED524000A9F827 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6B175CA25ED524000A9F827 /* LaunchScreen.storyboard */; };
 		E6B175D725ED524000A9F827 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175D625ED524000A9F827 /* SalamBroTests.swift */; };
 		E6B175E225ED524000A9F827 /* SalamBroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175E125ED524000A9F827 /* SalamBroUITests.swift */; };
+		FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CD625F4F243000DC55F /* UpdateController.swift */; };
+		FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */; };
+		FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CEC25F4FB64000DC55F /* UpdateView.swift */; };
+		FB664CF525F50174000DC55F /* CountriesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CF425F50174000DC55F /* CountriesListController.swift */; };
+		FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CF925F502BA000DC55F /* CountriesListView.swift */; };
+		FB664D0325F505AA000DC55F /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D0225F505AA000DC55F /* DummyData.swift */; };
+		FB664D0B25F507DC000DC55F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB664D0A25F507DC000DC55F /* LaunchScreen.storyboard */; };
+		FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D1225F5084D000DC55F /* CitiesListController.swift */; };
+		FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D1725F50889000DC55F /* CitiesListView.swift */; };
+		FB664D1D25F50BB3000DC55F /* AddressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D1C25F50BB3000DC55F /* AddressController.swift */; };
+		FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2125F50BD6000DC55F /* AddressView.swift */; };
+		FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2625F510E1000DC55F /* BrandsController.swift */; };
+		FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2B25F5117F000DC55F /* BrandsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,11 +46,7 @@
 /* Begin PBXFileReference section */
 		E6B175BC25ED523F00A9F827 /* SalamBro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalamBro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B175BF25ED523F00A9F827 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E6B175C125ED523F00A9F827 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E6B175C325ED523F00A9F827 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		E6B175C625ED523F00A9F827 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E6B175C825ED524000A9F827 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E6B175CB25ED524000A9F827 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E6B175CD25ED524000A9F827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6B175D225ED524000A9F827 /* SalamBroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalamBroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B175D625ED524000A9F827 /* SalamBroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalamBroTests.swift; sourceTree = "<group>"; };
@@ -49,6 +54,19 @@
 		E6B175DD25ED524000A9F827 /* SalamBroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalamBroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B175E125ED524000A9F827 /* SalamBroUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalamBroUITests.swift; sourceTree = "<group>"; };
 		E6B175E325ED524000A9F827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB664CD625F4F243000DC55F /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
+		FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		FB664CEC25F4FB64000DC55F /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
+		FB664CF425F50174000DC55F /* CountriesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListController.swift; sourceTree = "<group>"; };
+		FB664CF925F502BA000DC55F /* CountriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListView.swift; sourceTree = "<group>"; };
+		FB664D0225F505AA000DC55F /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
+		FB664D0A25F507DC000DC55F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FB664D1225F5084D000DC55F /* CitiesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListController.swift; sourceTree = "<group>"; };
+		FB664D1725F50889000DC55F /* CitiesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListView.swift; sourceTree = "<group>"; };
+		FB664D1C25F50BB3000DC55F /* AddressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressController.swift; sourceTree = "<group>"; };
+		FB664D2125F50BD6000DC55F /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		FB664D2625F510E1000DC55F /* BrandsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsController.swift; sourceTree = "<group>"; };
+		FB664D2B25F5117F000DC55F /* BrandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +117,14 @@
 		E6B175BE25ED523F00A9F827 /* SalamBro */ = {
 			isa = PBXGroup;
 			children = (
+				FB664D0125F505A0000DC55F /* Model */,
+				FB664CEB25F4FB3C000DC55F /* View */,
+				FB664CE725F4F34B000DC55F /* Controller */,
+				FB664CDB25F4F297000DC55F /* Extensions */,
 				E6B175BF25ED523F00A9F827 /* AppDelegate.swift */,
-				E6B175C125ED523F00A9F827 /* SceneDelegate.swift */,
-				E6B175C325ED523F00A9F827 /* ViewController.swift */,
-				E6B175C525ED523F00A9F827 /* Main.storyboard */,
 				E6B175C825ED524000A9F827 /* Assets.xcassets */,
-				E6B175CA25ED524000A9F827 /* LaunchScreen.storyboard */,
 				E6B175CD25ED524000A9F827 /* Info.plist */,
+				FB664D0A25F507DC000DC55F /* LaunchScreen.storyboard */,
 			);
 			path = SalamBro;
 			sourceTree = "<group>";
@@ -126,6 +145,46 @@
 				E6B175E325ED524000A9F827 /* Info.plist */,
 			);
 			path = SalamBroUITests;
+			sourceTree = "<group>";
+		};
+		FB664CDB25F4F297000DC55F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FB664CE725F4F34B000DC55F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FB664CD625F4F243000DC55F /* UpdateController.swift */,
+				FB664CF425F50174000DC55F /* CountriesListController.swift */,
+				FB664D1225F5084D000DC55F /* CitiesListController.swift */,
+				FB664D1C25F50BB3000DC55F /* AddressController.swift */,
+				FB664D2625F510E1000DC55F /* BrandsController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		FB664CEB25F4FB3C000DC55F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FB664CEC25F4FB64000DC55F /* UpdateView.swift */,
+				FB664CF925F502BA000DC55F /* CountriesListView.swift */,
+				FB664D1725F50889000DC55F /* CitiesListView.swift */,
+				FB664D2125F50BD6000DC55F /* AddressView.swift */,
+				FB664D2B25F5117F000DC55F /* BrandsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FB664D0125F505A0000DC55F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FB664D0225F505AA000DC55F /* DummyData.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,9 +290,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6B175CC25ED524000A9F827 /* LaunchScreen.storyboard in Resources */,
+				FB664D0B25F507DC000DC55F /* LaunchScreen.storyboard in Resources */,
 				E6B175C925ED524000A9F827 /* Assets.xcassets in Resources */,
-				E6B175C725ED523F00A9F827 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,9 +316,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6B175C425ED523F00A9F827 /* ViewController.swift in Sources */,
 				E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */,
-				E6B175C225ED523F00A9F827 /* SceneDelegate.swift in Sources */,
+				FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */,
+				FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */,
+				FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */,
+				FB664D0325F505AA000DC55F /* DummyData.swift in Sources */,
+				FB664D1D25F50BB3000DC55F /* AddressController.swift in Sources */,
+				FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */,
+				FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */,
+				FB664CF525F50174000DC55F /* CountriesListController.swift in Sources */,
+				FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */,
+				FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */,
+				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
+				FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,25 +362,6 @@
 			targetProxy = E6B175DE25ED524000A9F827 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		E6B175C525ED523F00A9F827 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E6B175C625ED523F00A9F827 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		E6B175CA25ED524000A9F827 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E6B175CB25ED524000A9F827 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E6B175E425ED524000A9F827 /* Debug */ = {
@@ -366,7 +415,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -421,7 +470,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -439,6 +488,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N54MPMJ454;
 				INFOPLIST_FILE = SalamBro/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -446,7 +496,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = kz.salambro.app.SalamBro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -458,6 +508,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N54MPMJ454;
 				INFOPLIST_FILE = SalamBro/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -465,7 +516,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = kz.salambro.app.SalamBro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
