@@ -3,14 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		044F1676BBEFBF14A143748E /* Pods_SalamBro_SalamBroUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D8F009C25F4C103415CEC5 /* Pods_SalamBro_SalamBroUITests.framework */; };
+		3A8DD9CA39E401309D9CD91F /* Pods_SalamBroTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 890DF397D2923F097F755E74 /* Pods_SalamBroTests.framework */; };
 		E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175BF25ED523F00A9F827 /* AppDelegate.swift */; };
 		E6B175C925ED524000A9F827 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B175C825ED524000A9F827 /* Assets.xcassets */; };
 		E6B175D725ED524000A9F827 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175D625ED524000A9F827 /* SalamBroTests.swift */; };
 		E6B175E225ED524000A9F827 /* SalamBroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175E125ED524000A9F827 /* SalamBroUITests.swift */; };
+		ECB61B520A3013C0E1A20656 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E70522479B758433B9143BB /* Pods_SalamBro.framework */; };
+		FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB626D4625FA48E700C8E6B7 /* VerificationView.swift */; };
+		FB626D4F25FA508100C8E6B7 /* AdditionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */; };
 		FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CD625F4F243000DC55F /* UpdateController.swift */; };
 		FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */; };
 		FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CEC25F4FB64000DC55F /* UpdateView.swift */; };
@@ -24,6 +29,14 @@
 		FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2125F50BD6000DC55F /* AddressView.swift */; };
 		FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2625F510E1000DC55F /* BrandsController.swift */; };
 		FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2B25F5117F000DC55F /* BrandsView.swift */; };
+		FBAB1E7725F6478A00112B72 /* AuthorizarionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */; };
+		FBAB1E7C25F6492700112B72 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */; };
+		FBAB1E8325F7A54600112B72 /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E8225F7A54600112B72 /* VerificationController.swift */; };
+		FBBF4C3A25F7FCF100341D0E /* OneTimeCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C3925F7FCF100341D0E /* OneTimeCodeView.swift */; };
+		FBBF4C4225F8DA6F00341D0E /* AgreementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */; };
+		FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */; };
+		FBBF4C4C25F8FA9F00341D0E /* GetNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */; };
+		FBBF4C5125F8FAB600341D0E /* GetNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C5025F8FAB600341D0E /* GetNameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +57,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6C5C67233A34039A51657F3E /* Pods-SalamBro-SalamBroUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro-SalamBroUITests.release.xcconfig"; path = "Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests.release.xcconfig"; sourceTree = "<group>"; };
+		8041AC939DD29C939F05E905 /* Pods-SalamBroTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBroTests.release.xcconfig"; path = "Target Support Files/Pods-SalamBroTests/Pods-SalamBroTests.release.xcconfig"; sourceTree = "<group>"; };
+		890DF397D2923F097F755E74 /* Pods_SalamBroTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SalamBroTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E70522479B758433B9143BB /* Pods_SalamBro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SalamBro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4D8F009C25F4C103415CEC5 /* Pods_SalamBro_SalamBroUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SalamBro_SalamBroUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8C3B5D83FF684A450832ECF /* Pods-SalamBro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.debug.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.debug.xcconfig"; sourceTree = "<group>"; };
+		BC2DB55BC75565198CF98DA2 /* Pods-SalamBro-SalamBroUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro-SalamBroUITests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E6B175BC25ED523F00A9F827 /* SalamBro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalamBro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B175BF25ED523F00A9F827 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6B175C825ED524000A9F827 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -54,6 +74,10 @@
 		E6B175DD25ED524000A9F827 /* SalamBroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalamBroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B175E125ED524000A9F827 /* SalamBroUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalamBroUITests.swift; sourceTree = "<group>"; };
 		E6B175E325ED524000A9F827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F196633B2610CD27C66E1360 /* Pods-SalamBroTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBroTests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBroTests/Pods-SalamBroTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F98B9E95BFE98AE0B8F1A966 /* Pods-SalamBro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.release.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.release.xcconfig"; sourceTree = "<group>"; };
+		FB626D4625FA48E700C8E6B7 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
+		FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalView.swift; sourceTree = "<group>"; };
 		FB664CD625F4F243000DC55F /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
 		FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		FB664CEC25F4FB64000DC55F /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
@@ -67,6 +91,14 @@
 		FB664D2125F50BD6000DC55F /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		FB664D2625F510E1000DC55F /* BrandsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsController.swift; sourceTree = "<group>"; };
 		FB664D2B25F5117F000DC55F /* BrandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsView.swift; sourceTree = "<group>"; };
+		FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizarionController.swift; sourceTree = "<group>"; };
+		FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
+		FBAB1E8225F7A54600112B72 /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
+		FBBF4C3925F7FCF100341D0E /* OneTimeCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimeCodeView.swift; sourceTree = "<group>"; };
+		FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementController.swift; sourceTree = "<group>"; };
+		FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementView.swift; sourceTree = "<group>"; };
+		FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNameController.swift; sourceTree = "<group>"; };
+		FBBF4C5025F8FAB600341D0E /* GetNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECB61B520A3013C0E1A20656 /* Pods_SalamBro.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A8DD9CA39E401309D9CD91F /* Pods_SalamBroTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,12 +122,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044F1676BBEFBF14A143748E /* Pods_SalamBro_SalamBroUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C3BD7983083B196C4353BFCC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B8C3B5D83FF684A450832ECF /* Pods-SalamBro.debug.xcconfig */,
+				F98B9E95BFE98AE0B8F1A966 /* Pods-SalamBro.release.xcconfig */,
+				BC2DB55BC75565198CF98DA2 /* Pods-SalamBro-SalamBroUITests.debug.xcconfig */,
+				6C5C67233A34039A51657F3E /* Pods-SalamBro-SalamBroUITests.release.xcconfig */,
+				F196633B2610CD27C66E1360 /* Pods-SalamBroTests.debug.xcconfig */,
+				8041AC939DD29C939F05E905 /* Pods-SalamBroTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		E6B175B325ED523F00A9F827 = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +149,8 @@
 				E6B175D525ED524000A9F827 /* SalamBroTests */,
 				E6B175E025ED524000A9F827 /* SalamBroUITests */,
 				E6B175BD25ED523F00A9F827 /* Products */,
+				C3BD7983083B196C4353BFCC /* Pods */,
+				E9F25F578ECCEEB4F0B36F73 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,6 +167,7 @@
 		E6B175BE25ED523F00A9F827 /* SalamBro */ = {
 			isa = PBXGroup;
 			children = (
+				FB626D5325FA572B00C8E6B7 /* Service */,
 				FB664D0125F505A0000DC55F /* Model */,
 				FB664CEB25F4FB3C000DC55F /* View */,
 				FB664CE725F4F34B000DC55F /* Controller */,
@@ -147,6 +198,23 @@
 			path = SalamBroUITests;
 			sourceTree = "<group>";
 		};
+		E9F25F578ECCEEB4F0B36F73 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8E70522479B758433B9143BB /* Pods_SalamBro.framework */,
+				A4D8F009C25F4C103415CEC5 /* Pods_SalamBro_SalamBroUITests.framework */,
+				890DF397D2923F097F755E74 /* Pods_SalamBroTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FB626D5325FA572B00C8E6B7 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		FB664CDB25F4F297000DC55F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +231,10 @@
 				FB664D1225F5084D000DC55F /* CitiesListController.swift */,
 				FB664D1C25F50BB3000DC55F /* AddressController.swift */,
 				FB664D2625F510E1000DC55F /* BrandsController.swift */,
+				FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */,
+				FBAB1E8225F7A54600112B72 /* VerificationController.swift */,
+				FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */,
+				FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -175,6 +247,12 @@
 				FB664D1725F50889000DC55F /* CitiesListView.swift */,
 				FB664D2125F50BD6000DC55F /* AddressView.swift */,
 				FB664D2B25F5117F000DC55F /* BrandsView.swift */,
+				FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */,
+				FB626D4625FA48E700C8E6B7 /* VerificationView.swift */,
+				FBBF4C3925F7FCF100341D0E /* OneTimeCodeView.swift */,
+				FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */,
+				FBBF4C5025F8FAB600341D0E /* GetNameView.swift */,
+				FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -194,9 +272,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6B175E625ED524000A9F827 /* Build configuration list for PBXNativeTarget "SalamBro" */;
 			buildPhases = (
+				8F328A2B8A8DC63699768181 /* [CP] Check Pods Manifest.lock */,
 				E6B175B825ED523F00A9F827 /* Sources */,
 				E6B175B925ED523F00A9F827 /* Frameworks */,
 				E6B175BA25ED523F00A9F827 /* Resources */,
+				B2DF8E4C7EA81C1F22C7F3EE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -211,6 +291,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6B175E925ED524000A9F827 /* Build configuration list for PBXNativeTarget "SalamBroTests" */;
 			buildPhases = (
+				99E8B0F6B21DAAFEBFC1767F /* [CP] Check Pods Manifest.lock */,
 				E6B175CE25ED524000A9F827 /* Sources */,
 				E6B175CF25ED524000A9F827 /* Frameworks */,
 				E6B175D025ED524000A9F827 /* Resources */,
@@ -229,9 +310,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6B175EC25ED524000A9F827 /* Build configuration list for PBXNativeTarget "SalamBroUITests" */;
 			buildPhases = (
+				4AF9CCB5901317A2DFA06B9D /* [CP] Check Pods Manifest.lock */,
 				E6B175D925ED524000A9F827 /* Sources */,
 				E6B175DA25ED524000A9F827 /* Frameworks */,
 				E6B175DB25ED524000A9F827 /* Resources */,
+				3DE4B9F377CE9AC4654282AE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -311,6 +394,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3DE4B9F377CE9AC4654282AE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4AF9CCB5901317A2DFA06B9D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SalamBro-SalamBroUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8F328A2B8A8DC63699768181 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SalamBro-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		99E8B0F6B21DAAFEBFC1767F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SalamBroTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B2DF8E4C7EA81C1F22C7F3EE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E6B175B825ED523F00A9F827 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -324,11 +510,21 @@
 				FB664D1D25F50BB3000DC55F /* AddressController.swift in Sources */,
 				FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */,
 				FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */,
+				FBBF4C5125F8FAB600341D0E /* GetNameView.swift in Sources */,
+				FBAB1E7C25F6492700112B72 /* AuthorizationView.swift in Sources */,
 				FB664CF525F50174000DC55F /* CountriesListController.swift in Sources */,
+				FBAB1E8325F7A54600112B72 /* VerificationController.swift in Sources */,
+				FBAB1E7725F6478A00112B72 /* AuthorizarionController.swift in Sources */,
+				FB626D4F25FA508100C8E6B7 /* AdditionalView.swift in Sources */,
+				FBBF4C4225F8DA6F00341D0E /* AgreementController.swift in Sources */,
 				FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */,
 				FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */,
 				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
+				FBBF4C3A25F7FCF100341D0E /* OneTimeCodeView.swift in Sources */,
 				FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */,
+				FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */,
+				FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */,
+				FBBF4C4C25F8FA9F00341D0E /* GetNameController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,6 +678,7 @@
 		};
 		E6B175E725ED524000A9F827 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8C3B5D83FF684A450832ECF /* Pods-SalamBro.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -502,6 +699,7 @@
 		};
 		E6B175E825ED524000A9F827 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F98B9E95BFE98AE0B8F1A966 /* Pods-SalamBro.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -522,6 +720,7 @@
 		};
 		E6B175EA25ED524000A9F827 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F196633B2610CD27C66E1360 /* Pods-SalamBroTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -544,6 +743,7 @@
 		};
 		E6B175EB25ED524000A9F827 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8041AC939DD29C939F05E905 /* Pods-SalamBroTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -566,6 +766,7 @@
 		};
 		E6B175ED25ED524000A9F827 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC2DB55BC75565198CF98DA2 /* Pods-SalamBro-SalamBroUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -586,6 +787,7 @@
 		};
 		E6B175EE25ED524000A9F827 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C5C67233A34039A51657F3E /* Pods-SalamBro-SalamBroUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

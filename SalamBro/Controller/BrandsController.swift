@@ -44,7 +44,7 @@ extension BrandsController: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("proceed to next vc")
-//        self.navigationController?.pushViewController(AuthorizationController(), animated: true)
+        self.navigationController?.pushViewController(AuthorizationController(), animated: true)
     }
     
 }

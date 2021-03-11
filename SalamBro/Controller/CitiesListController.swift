@@ -29,8 +29,6 @@ extension CitiesListController: CitiesListViewDelegate {
     func test() {
         print("f")
     }
-    
-    
 }
 
 extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
