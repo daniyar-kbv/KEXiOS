@@ -11,14 +11,17 @@ class BrandsController: UIViewController {
     
     fileprivate lazy var rootView = BrandsView(delegate: self)
     
+    private var brandViewModel: BrandViewModel!
+    
+    override func loadView() {
+        view = rootView
+        brandViewModel = BrandViewModel(brandRepository: ServiceLocator.getBrandRepository())
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configUI()
-    }
-
-    override func loadView() {
-        view = rootView
     }
 }
 
@@ -59,5 +62,19 @@ extension BrandsController {
     private func configUI() {
         navigationItem.title = "Choose brand"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+}
+
+
+class BrandViewModel {
+    
+    private let brandRepository: BrandRepository
+    
+    init(brandRepository: BrandRepository) {
+        self.brandRepository = brandRepository
+    }
+    
+    func getBrands() {
+        
     }
 }
