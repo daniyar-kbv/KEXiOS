@@ -179,11 +179,10 @@
 		E6B175BE25ED523F00A9F827 /* SalamBro */ = {
 			isa = PBXGroup;
 			children = (
-				FB626D5325FA572B00C8E6B7 /* Service */,
-				E6DFBE4525FA716A0091ABFC /* Presentation */,
-				E6DFBE3125FA6E440091ABFC /* DI */,
-				E6DFBE1825FA6D4D0091ABFC /* Domain */,
-				E6DFBE1725FA6D460091ABFC /* Data */,
+				FB0B919225FBF24F003AFEBB /* DI */,
+				FB0B919025FBF233003AFEBB /* Domain */,
+				FB0B918C25FBF17F003AFEBB /* Data */,
+				FB0B918B25FBF114003AFEBB /* Presentation */,
 				FB664D0125F505A0000DC55F /* Model */,
 				FB664CDB25F4F297000DC55F /* Extensions */,
 				E6B175BF25ED523F00A9F827 /* AppDelegate.swift */,
@@ -212,25 +211,6 @@
 			path = SalamBroUITests;
 			sourceTree = "<group>";
 		};
-		E6DFBE1725FA6D460091ABFC /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				E6DFBE2425FA6DCD0091ABFC /* Storage */,
-				E6DFBE2325FA6DC10091ABFC /* Repository */,
-				E6DFBE2225FA6DB00091ABFC /* Network */,
-			);
-			name = Data;
-			sourceTree = "<group>";
-		};
-		E6DFBE1825FA6D4D0091ABFC /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				E6DFBE4425FA71560091ABFC /* Model */,
-				E6DFBE1925FA6D560091ABFC /* Repository */,
-			);
-			name = Domain;
-			sourceTree = "<group>";
-		};
 		E6DFBE1925FA6D560091ABFC /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,60 +219,12 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		E6DFBE2225FA6DB00091ABFC /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				E6DFBE3A25FA70240091ABFC /* NetworkManager.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		E6DFBE2325FA6DC10091ABFC /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-				E6DFBE2525FA6DDB0091ABFC /* Mock */,
-				E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */,
-			);
-			name = Repository;
-			sourceTree = "<group>";
-		};
-		E6DFBE2425FA6DCD0091ABFC /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Storage;
-			sourceTree = "<group>";
-		};
 		E6DFBE2525FA6DDB0091ABFC /* Mock */ = {
 			isa = PBXGroup;
 			children = (
 				E6DFBE2625FA6DFE0091ABFC /* BrandRepositoryMockImpl.swift */,
 			);
 			path = Mock;
-			sourceTree = "<group>";
-		};
-		E6DFBE3125FA6E440091ABFC /* DI */ = {
-			isa = PBXGroup;
-			children = (
-				E6DFBE3225FA6E6F0091ABFC /* ServiceLocator.swift */,
-			);
-			name = DI;
-			sourceTree = "<group>";
-		};
-		E6DFBE4425FA71560091ABFC /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		E6DFBE4525FA716A0091ABFC /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				FB664CEB25F4FB3C000DC55F /* View */,
-				FB664CE725F4F34B000DC55F /* Controller */,
-			);
-			name = Presentation;
 			sourceTree = "<group>";
 		};
 		E9F25F578ECCEEB4F0B36F73 /* Frameworks */ = {
@@ -305,11 +237,80 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FB0B918B25FBF114003AFEBB /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				FB664CE725F4F34B000DC55F /* Controller */,
+				FB664CEB25F4FB3C000DC55F /* View */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		FB0B918C25FBF17F003AFEBB /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				FB0B918D25FBF1D4003AFEBB /* Storage */,
+				FB0B918E25FBF1DB003AFEBB /* Repository */,
+				FB0B918F25FBF1F3003AFEBB /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		FB0B918D25FBF1D4003AFEBB /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		FB0B918E25FBF1DB003AFEBB /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				E6DFBE2525FA6DDB0091ABFC /* Mock */,
+				E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		FB0B918F25FBF1F3003AFEBB /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FB626D5325FA572B00C8E6B7 /* Service */,
+				E6DFBE3A25FA70240091ABFC /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		FB0B919025FBF233003AFEBB /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				E6DFBE1925FA6D560091ABFC /* Repository */,
+				FB0B919125FBF23D003AFEBB /* Model */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		FB0B919125FBF23D003AFEBB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FB0B919225FBF24F003AFEBB /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				E6DFBE3225FA6E6F0091ABFC /* ServiceLocator.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
 		FB626D5325FA572B00C8E6B7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Service;
+			name = Service;
+			path = ../../Service;
 			sourceTree = "<group>";
 		};
 		FB664CDB25F4F297000DC55F /* Extensions */ = {
