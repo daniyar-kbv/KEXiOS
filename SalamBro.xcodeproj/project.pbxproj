@@ -13,14 +13,14 @@
 		E6B175C925ED524000A9F827 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B175C825ED524000A9F827 /* Assets.xcassets */; };
 		E6B175D725ED524000A9F827 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175D625ED524000A9F827 /* SalamBroTests.swift */; };
 		E6B175E225ED524000A9F827 /* SalamBroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B175E125ED524000A9F827 /* SalamBroUITests.swift */; };
-		ECB61B520A3013C0E1A20656 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E70522479B758433B9143BB /* Pods_SalamBro.framework */; };
-		FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB626D4625FA48E700C8E6B7 /* VerificationView.swift */; };
-		FB626D4F25FA508100C8E6B7 /* AdditionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */; };
 		E6DFBE1B25FA6D6A0091ABFC /* BrandRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE1A25FA6D6A0091ABFC /* BrandRepository.swift */; };
 		E6DFBE2725FA6DFE0091ABFC /* BrandRepositoryMockImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE2625FA6DFE0091ABFC /* BrandRepositoryMockImpl.swift */; };
 		E6DFBE3325FA6E6F0091ABFC /* ServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3225FA6E6F0091ABFC /* ServiceLocator.swift */; };
 		E6DFBE3B25FA70240091ABFC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3A25FA70240091ABFC /* NetworkManager.swift */; };
 		E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */; };
+		ECB61B520A3013C0E1A20656 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E70522479B758433B9143BB /* Pods_SalamBro.framework */; };
+		FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB626D4625FA48E700C8E6B7 /* VerificationView.swift */; };
+		FB626D4F25FA508100C8E6B7 /* AdditionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */; };
 		FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CD625F4F243000DC55F /* UpdateController.swift */; };
 		FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */; };
 		FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CEC25F4FB64000DC55F /* UpdateView.swift */; };
@@ -34,6 +34,7 @@
 		FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2125F50BD6000DC55F /* AddressView.swift */; };
 		FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2625F510E1000DC55F /* BrandsController.swift */; };
 		FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2B25F5117F000DC55F /* BrandsView.swift */; };
+		FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB786F8E25FB57A800ED02D3 /* FormView.swift */; };
 		FBAB1E7725F6478A00112B72 /* AuthorizarionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */; };
 		FBAB1E7C25F6492700112B72 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */; };
 		FBAB1E8325F7A54600112B72 /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E8225F7A54600112B72 /* VerificationController.swift */; };
@@ -79,15 +80,15 @@
 		E6B175DD25ED524000A9F827 /* SalamBroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalamBroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B175E125ED524000A9F827 /* SalamBroUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalamBroUITests.swift; sourceTree = "<group>"; };
 		E6B175E325ED524000A9F827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F196633B2610CD27C66E1360 /* Pods-SalamBroTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBroTests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBroTests/Pods-SalamBroTests.debug.xcconfig"; sourceTree = "<group>"; };
-		F98B9E95BFE98AE0B8F1A966 /* Pods-SalamBro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.release.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.release.xcconfig"; sourceTree = "<group>"; };
-		FB626D4625FA48E700C8E6B7 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
-		FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalView.swift; sourceTree = "<group>"; };
 		E6DFBE1A25FA6D6A0091ABFC /* BrandRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandRepository.swift; sourceTree = "<group>"; };
 		E6DFBE2625FA6DFE0091ABFC /* BrandRepositoryMockImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandRepositoryMockImpl.swift; sourceTree = "<group>"; };
 		E6DFBE3225FA6E6F0091ABFC /* ServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLocator.swift; sourceTree = "<group>"; };
 		E6DFBE3A25FA70240091ABFC /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandRepositoryImpl.swift; sourceTree = "<group>"; };
+		F196633B2610CD27C66E1360 /* Pods-SalamBroTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBroTests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBroTests/Pods-SalamBroTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F98B9E95BFE98AE0B8F1A966 /* Pods-SalamBro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.release.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.release.xcconfig"; sourceTree = "<group>"; };
+		FB626D4625FA48E700C8E6B7 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
+		FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalView.swift; sourceTree = "<group>"; };
 		FB664CD625F4F243000DC55F /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
 		FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		FB664CEC25F4FB64000DC55F /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 		FB664D2125F50BD6000DC55F /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		FB664D2625F510E1000DC55F /* BrandsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsController.swift; sourceTree = "<group>"; };
 		FB664D2B25F5117F000DC55F /* BrandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsView.swift; sourceTree = "<group>"; };
+		FB786F8E25FB57A800ED02D3 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizarionController.swift; sourceTree = "<group>"; };
 		FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
 		FBAB1E8225F7A54600112B72 /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
@@ -210,23 +212,6 @@
 			path = SalamBroUITests;
 			sourceTree = "<group>";
 		};
-		E9F25F578ECCEEB4F0B36F73 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				8E70522479B758433B9143BB /* Pods_SalamBro.framework */,
-				A4D8F009C25F4C103415CEC5 /* Pods_SalamBro_SalamBroUITests.framework */,
-				890DF397D2923F097F755E74 /* Pods_SalamBroTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		FB626D5325FA572B00C8E6B7 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
 		E6DFBE1725FA6D460091ABFC /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,6 +295,23 @@
 			name = Presentation;
 			sourceTree = "<group>";
 		};
+		E9F25F578ECCEEB4F0B36F73 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8E70522479B758433B9143BB /* Pods_SalamBro.framework */,
+				A4D8F009C25F4C103415CEC5 /* Pods_SalamBro_SalamBroUITests.framework */,
+				890DF397D2923F097F755E74 /* Pods_SalamBroTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FB626D5325FA572B00C8E6B7 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		FB664CDB25F4F297000DC55F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -348,6 +350,7 @@
 				FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */,
 				FBBF4C5025F8FAB600341D0E /* GetNameView.swift */,
 				FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */,
+				FB786F8E25FB57A800ED02D3 /* FormView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -623,6 +626,7 @@
 				FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */,
 				FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */,
 				FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */,
+				FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */,
 				FBBF4C4C25F8FA9F00341D0E /* GetNameController.swift in Sources */,
 				E6DFBE1B25FA6D6A0091ABFC /* BrandRepository.swift in Sources */,
 			);

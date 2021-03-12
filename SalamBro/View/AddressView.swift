@@ -14,98 +14,27 @@ protocol AddressViewDelegate {
 class AddressView: UIView {
     
     public var delegate: AddressViewDelegate?
-    
-    lazy var streetLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Street"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var streetField: UITextField = {
-        let field = UITextField()
-        return field
-    }()
-    
-    lazy var buildingLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Building number"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var buildingField: UITextField = {
-        let field = UITextField()
-        return field
-    }()
 
-    lazy var apartmentLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Apartment N"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var apartmentField: UITextField = {
-        let field = UITextField()
-        return field
-    }()
-    
-    lazy var entranceLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Entrance N"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var entranceField: UITextField = {
-        let field = UITextField()
-        return field
-    }()
-    
-    lazy var floorLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Floor N"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var floorField: UITextField = {
-        let field = UITextField()
-        return field
-    }()
-    
-    lazy var codeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Code"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var codeField: UITextField = {
-        let field = UITextField()
-        return field
-    }()
-    
-    lazy var commentaryLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Commentary"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var commentaryField: UITextField = {
-        let field = UITextField()
-        return field
-    }()
-    
     lazy var formView: UIStackView = {
         let view = UIStackView()
         view.alignment                                  = .fill
         view.axis                                       = .vertical
-        view.distribution                               = .fillEqually
+        view.distribution                               = .fill
         view.spacing                                    = 10
         view.translatesAutoresizingMaskIntoConstraints  = false
+        return view
+    }()
+    
+    lazy var streetForm = FormView(labelText: "Улица*")
+    lazy var buildingForm = FormView(labelText: "Дом*")
+    lazy var apartmentForm = FormView(labelText: "Квартира")
+    lazy var entranceForm = FormView(labelText: "Подъезд")
+    lazy var floorForm = FormView(labelText: "Этаж")
+    lazy var commentaryForm = FormView(labelText: "Комментарий к адресу")
+    
+    lazy var emptyView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -121,11 +50,26 @@ class AddressView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+
+    lazy var scrollView: UIScrollView = {
+        let v = UIScrollView()
+        v.isScrollEnabled = true
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.backgroundColor = .clear
+        return v
+    }()
+
+    lazy var contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     
-    init(delegate: (AddressViewDelegate)) {
+    init(delegate: (AddressViewDelegate & UIScrollViewDelegate)) {
         self.delegate = delegate
         super.init(frame: .zero)
+        scrollView.delegate = delegate
         setupViews()
         setupConstraints()
         setupAddTargetIsNotEmptyTextFields()
@@ -137,53 +81,55 @@ class AddressView: UIView {
 }
 
 extension AddressView {
+    
     func setupViews() {
         backgroundColor = .white
-        
-        let forms = [streetLabel, buildingLabel, apartmentLabel, entranceLabel, floorLabel, codeLabel, commentaryLabel]
-        let fields = [streetField, buildingField, apartmentField, entranceField, floorField, codeField, commentaryField]
-        
-        zip(forms, fields).forEach {
-            $1.clearButtonMode = .whileEditing
-            $1.layer.borderColor = UIColor.gray.cgColor
-            $1.layer.backgroundColor = UIColor.white.cgColor
-            $1.layer.borderWidth = 0.0
-            $1.layer.shadowOffset = CGSize(width: 0, height: 0.5)
-            $1.layer.shadowOpacity = 0.5
-            $1.layer.shadowRadius = 0.0
-            $1.translatesAutoresizingMaskIntoConstraints = false
-            
-            formView.addArrangedSubview($0)
-            formView.addArrangedSubview($1)
+        let forms = [streetForm, buildingForm, apartmentForm, entranceForm, floorForm, commentaryForm]
+        for i in forms {
+            formView.addArrangedSubview(i)
         }
-        
-        addSubview(formView)
-        addSubview(saveButton)
+        formView.addArrangedSubview(emptyView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(formView)
+        contentView.addSubview(saveButton)
+
+        addSubview(scrollView)
     }
     
     func setupConstraints() {
-        formView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
-        formView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16).isActive = true
-        formView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -94).isActive = true
-        formView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -32).isActive = true
+
+        formView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        formView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 6).isActive = true
+        formView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -6).isActive = true
+        formView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -32).isActive = true
+
+        saveButton.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        saveButton.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        saveButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        saveButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
+
+        contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -36).isActive = true
+        contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, constant: -18).isActive = true
+        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 18).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
         
-        saveButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
-        saveButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -32).isActive = true
-        saveButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
-        saveButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
-    
+
     func setupAddTargetIsNotEmptyTextFields() {
-        [streetField, buildingField, apartmentField].forEach({ $0.addTarget(self, action: #selector(editingChanged), for: .editingChanged) })
+        [streetForm.formField, buildingForm.formField].forEach({ $0.addTarget(self, action: #selector(editingChanged), for: .editingChanged) })
     }
-    
+
     @objc func editingChanged(sender: UITextField) {
 
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
 
-        guard let street = streetField.text, !street.isEmpty ,
-              let building = buildingField.text, !building.isEmpty
-              // let apartment = apartmentField.text, !apartment.isEmpty
+        guard let street = streetForm.formField.text, !street.isEmpty ,
+              let building = buildingForm.formField.text, !building.isEmpty
         else {
             self.saveButton.isEnabled = false
             self.saveButton.alpha = 0.5
@@ -193,8 +139,9 @@ extension AddressView {
         self.saveButton.isEnabled = true
         self.saveButton.alpha = 1.0
        }
-    
+
     @objc func submitAction() {
         delegate?.submit()
     }
+
 }

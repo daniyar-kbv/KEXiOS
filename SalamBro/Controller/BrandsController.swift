@@ -15,7 +15,8 @@ class BrandsController: UIViewController {
     
     override func loadView() {
         view = rootView
-        brandViewModel = BrandViewModel(brandRepository: ServiceLocator.getBrandRepository())
+        //FIXME: - Broken repository
+//        brandViewModel = BrandViewModel(brandRepository: ServiceLocator.getBrandRepository())
     }
     
     override func viewDidLoad() {
