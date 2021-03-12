@@ -39,8 +39,8 @@ class VerificationView: UIView {
         return label
     }()
     
-    lazy var pinCodeTextField: OneTimeCodeView = {
-        let field = OneTimeCodeView()
+    lazy var otpField: OTPView = {
+        let field = OTPView()
         field.setup()
         field.didEnterLastDigit = { code in
             self.passCode()
@@ -83,7 +83,7 @@ extension VerificationView {
         
         addSubview(mainTitle)
         addSubview(smallTitle)
-        addSubview(pinCodeTextField)
+        addSubview(otpField)
         addSubview(getCodeButton)
     }
     
@@ -96,10 +96,10 @@ extension VerificationView {
         smallTitle.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         smallTitle.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         
-        pinCodeTextField.topAnchor.constraint(equalTo: smallTitle.bottomAnchor, constant: 40).isActive = true
-        pinCodeTextField.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        pinCodeTextField.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-        pinCodeTextField.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        otpField.topAnchor.constraint(equalTo: smallTitle.bottomAnchor, constant: 40).isActive = true
+        otpField.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
+        otpField.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
+        otpField.heightAnchor.constraint(equalToConstant: 65).isActive = true
         
         getCodeButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
         getCodeButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
@@ -149,8 +149,8 @@ extension VerificationView {
     
     @objc func reload() {
         print("reload!")
-        pinCodeTextField.text = ""
-        pinCodeTextField.clearLabels()
+        otpField.text = ""
+        otpField.clearLabels()
         startTimer()
     }
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OneTimeCodeView: UITextField {
+class OTPView: UITextField {
     
     var didEnterLastDigit: ((String) -> Void)?
     
@@ -112,7 +112,7 @@ class OneTimeCodeView: UITextField {
 
 }
 
-extension OneTimeCodeView: UITextFieldDelegate {
+extension OTPView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let characterCount = textField.text?.count else { return false }
         return characterCount < labels.count || string == ""

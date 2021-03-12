@@ -38,7 +38,7 @@
 		FBAB1E7725F6478A00112B72 /* AuthorizarionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */; };
 		FBAB1E7C25F6492700112B72 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */; };
 		FBAB1E8325F7A54600112B72 /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E8225F7A54600112B72 /* VerificationController.swift */; };
-		FBBF4C3A25F7FCF100341D0E /* OneTimeCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C3925F7FCF100341D0E /* OneTimeCodeView.swift */; };
+		FBBF4C3A25F7FCF100341D0E /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C3925F7FCF100341D0E /* OTPView.swift */; };
 		FBBF4C4225F8DA6F00341D0E /* AgreementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */; };
 		FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */; };
 		FBBF4C4C25F8FA9F00341D0E /* GetNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */; };
@@ -106,7 +106,7 @@
 		FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizarionController.swift; sourceTree = "<group>"; };
 		FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
 		FBAB1E8225F7A54600112B72 /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
-		FBBF4C3925F7FCF100341D0E /* OneTimeCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimeCodeView.swift; sourceTree = "<group>"; };
+		FBBF4C3925F7FCF100341D0E /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
 		FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementController.swift; sourceTree = "<group>"; };
 		FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementView.swift; sourceTree = "<group>"; };
 		FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNameController.swift; sourceTree = "<group>"; };
@@ -240,6 +240,7 @@
 		FB0B918B25FBF114003AFEBB /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				FB0B919625FBF54F003AFEBB /* Features */,
 				FB664CE725F4F34B000DC55F /* Controller */,
 				FB664CEB25F4FB3C000DC55F /* View */,
 			);
@@ -305,6 +306,103 @@
 			path = DI;
 			sourceTree = "<group>";
 		};
+		FB0B919625FBF54F003AFEBB /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				FB0B919F25FBFA5C003AFEBB /* GetName */,
+				FB0B919E25FBFA45003AFEBB /* Agreement */,
+				FB0B919D25FBFA27003AFEBB /* Verification */,
+				FB0B919C25FBFA12003AFEBB /* Authorization */,
+				FB0B919B25FBF9F0003AFEBB /* Brands */,
+				FB0B919A25FBF9DC003AFEBB /* Address */,
+				FB0B919925FBF580003AFEBB /* CitiesList */,
+				FB0B919825FBF56F003AFEBB /* CountriesList */,
+				FB0B919725FBF559003AFEBB /* Update */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		FB0B919725FBF559003AFEBB /* Update */ = {
+			isa = PBXGroup;
+			children = (
+				FB664CEC25F4FB64000DC55F /* UpdateView.swift */,
+				FB664CD625F4F243000DC55F /* UpdateController.swift */,
+			);
+			path = Update;
+			sourceTree = "<group>";
+		};
+		FB0B919825FBF56F003AFEBB /* CountriesList */ = {
+			isa = PBXGroup;
+			children = (
+				FB664CF925F502BA000DC55F /* CountriesListView.swift */,
+				FB664CF425F50174000DC55F /* CountriesListController.swift */,
+			);
+			path = CountriesList;
+			sourceTree = "<group>";
+		};
+		FB0B919925FBF580003AFEBB /* CitiesList */ = {
+			isa = PBXGroup;
+			children = (
+				FB664D1725F50889000DC55F /* CitiesListView.swift */,
+				FB664D1225F5084D000DC55F /* CitiesListController.swift */,
+			);
+			path = CitiesList;
+			sourceTree = "<group>";
+		};
+		FB0B919A25FBF9DC003AFEBB /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				FB664D2125F50BD6000DC55F /* AddressView.swift */,
+				FB664D1C25F50BB3000DC55F /* AddressController.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		FB0B919B25FBF9F0003AFEBB /* Brands */ = {
+			isa = PBXGroup;
+			children = (
+				FB664D2B25F5117F000DC55F /* BrandsView.swift */,
+				FB664D2625F510E1000DC55F /* BrandsController.swift */,
+			);
+			path = Brands;
+			sourceTree = "<group>";
+		};
+		FB0B919C25FBFA12003AFEBB /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */,
+				FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */,
+			);
+			path = Authorization;
+			sourceTree = "<group>";
+		};
+		FB0B919D25FBFA27003AFEBB /* Verification */ = {
+			isa = PBXGroup;
+			children = (
+				FB626D4625FA48E700C8E6B7 /* VerificationView.swift */,
+				FBAB1E8225F7A54600112B72 /* VerificationController.swift */,
+			);
+			path = Verification;
+			sourceTree = "<group>";
+		};
+		FB0B919E25FBFA45003AFEBB /* Agreement */ = {
+			isa = PBXGroup;
+			children = (
+				FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */,
+				FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */,
+			);
+			path = Agreement;
+			sourceTree = "<group>";
+		};
+		FB0B919F25FBFA5C003AFEBB /* GetName */ = {
+			isa = PBXGroup;
+			children = (
+				FBBF4C5025F8FAB600341D0E /* GetNameView.swift */,
+				FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */,
+			);
+			path = GetName;
+			sourceTree = "<group>";
+		};
 		FB626D5325FA572B00C8E6B7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -324,15 +422,6 @@
 		FB664CE725F4F34B000DC55F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				FB664CD625F4F243000DC55F /* UpdateController.swift */,
-				FB664CF425F50174000DC55F /* CountriesListController.swift */,
-				FB664D1225F5084D000DC55F /* CitiesListController.swift */,
-				FB664D1C25F50BB3000DC55F /* AddressController.swift */,
-				FB664D2625F510E1000DC55F /* BrandsController.swift */,
-				FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */,
-				FBAB1E8225F7A54600112B72 /* VerificationController.swift */,
-				FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */,
-				FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -340,16 +429,7 @@
 		FB664CEB25F4FB3C000DC55F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FB664CEC25F4FB64000DC55F /* UpdateView.swift */,
-				FB664CF925F502BA000DC55F /* CountriesListView.swift */,
-				FB664D1725F50889000DC55F /* CitiesListView.swift */,
-				FB664D2125F50BD6000DC55F /* AddressView.swift */,
-				FB664D2B25F5117F000DC55F /* BrandsView.swift */,
-				FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */,
-				FB626D4625FA48E700C8E6B7 /* VerificationView.swift */,
-				FBBF4C3925F7FCF100341D0E /* OneTimeCodeView.swift */,
-				FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */,
-				FBBF4C5025F8FAB600341D0E /* GetNameView.swift */,
+				FBBF4C3925F7FCF100341D0E /* OTPView.swift */,
 				FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */,
 				FB786F8E25FB57A800ED02D3 /* FormView.swift */,
 			);
@@ -623,7 +703,7 @@
 				FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */,
 				FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */,
 				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
-				FBBF4C3A25F7FCF100341D0E /* OneTimeCodeView.swift in Sources */,
+				FBBF4C3A25F7FCF100341D0E /* OTPView.swift in Sources */,
 				FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */,
 				FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */,
 				FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */,

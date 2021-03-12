@@ -27,8 +27,8 @@ class VerificationController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        rootView.pinCodeTextField.text = ""
-        rootView.pinCodeTextField.clearLabels()
+        rootView.otpField.text = ""
+        rootView.otpField.clearLabels()
         rootView.timer.invalidate()
         rootView.getCodeButton.setTitle("Отправить повторно через: 01:30", for: .disabled)
     }
