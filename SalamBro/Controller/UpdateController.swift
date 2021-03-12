@@ -9,18 +9,22 @@ import UIKit
 
 class UpdateController: UIViewController {
     
-    fileprivate lazy var rootView = UpdateView(delegate: self)
+    fileprivate lazy var rootView = AdditionalView(delegate: self)
 
-    
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
     }
     
     override func loadView() {
+        rootView.descriptionLabel.text = """
+        Мы добавили много новых функций и
+        исправили некоторые баги, чтобы вам
+        было удобнее пользоваться приложением
+        """
+        rootView.button.setTitle("Обновить приложение", for: .normal)
         view = rootView
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,10 +46,11 @@ extension UpdateController {
     }
 }
 
-extension UpdateController: UpdateViewDelegate {
-    func update() {
+extension UpdateController: AdditionalViewDelegate {
+    func action() {
         updateApp()
     }
+    
 }
 
 extension UpdateController {

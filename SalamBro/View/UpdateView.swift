@@ -37,7 +37,7 @@ class UpdateView: UIView {
         исправили некоторые баги, чтобы вам
         было удобнее пользоваться приложением
         """
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 14)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping

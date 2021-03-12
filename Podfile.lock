@@ -1,0 +1,16 @@
+PODS:
+  - InputMask (6.1.0)
+
+DEPENDENCIES:
+  - InputMask
+
+SPEC REPOS:
+  trunk:
+    - InputMask
+
+SPEC CHECKSUMS:
+  InputMask: 71d291dc54d2deaeac6512afb6ec2304228c0bb7
+
+PODFILE CHECKSUM: bc5e5e8e04e94554f62a1ae6221af07d51621e7c
+
+COCOAPODS: 1.10.0
