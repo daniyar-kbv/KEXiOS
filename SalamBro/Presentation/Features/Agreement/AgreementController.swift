@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import WebKit
 class AgreementController: UIViewController {
     
     fileprivate lazy var rootView = AgreementView(delegate: self)
@@ -28,8 +28,6 @@ extension AgreementController {
     }
 }
 
-extension AgreementController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("received scroll")
-    }
+extension AgreementController: WKUIDelegate {
+    
 }

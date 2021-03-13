@@ -45,21 +45,24 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         return field
     }()
     
-    lazy var confirmationButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("""
-                    Продолжая, вы соглашаетесь со сбором, обработкой персональных данных и Пользовательским соглашением
-                    """, for: .normal)
+    lazy var aggreementLabel: UILabel = {
+        let label = UILabel()
+        
+        let textAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.darkGray]
+        let linkAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.blue, NSAttributedString.Key.underlineColor: UIColor.blue]
 
-        button.setTitleColor(.darkGray, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 12)
-        button.titleLabel?.numberOfLines = 0
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.lineBreakMode = .byWordWrapping
-        button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(proceedToAgreementView), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+        let helloString = NSMutableAttributedString(string: " Продолжая, вы соглашаетесь со сбором, обработкой персональных данных и ", attributes: textAttributes)
+        let worldString = NSAttributedString(string: "Пользовательским соглашением", attributes: linkAttributes)
+        helloString.append(worldString)
+        print(helloString)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
+        label.attributedText = helloString
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel(_:))))
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     let getButton: UIButton = {
@@ -78,7 +81,6 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         configUI()
         setupViews()
         setupConstraints()
@@ -108,18 +110,20 @@ extension AuthorizationController {
 }
 extension AuthorizationController {
     @objc func getCode() {
-        
         authorize()
-//        delegate?.getSMSCode()
-//        let vc = ConfirmationCodeViewController()
-//        self.navigationController?.pushViewController(vc, animated: true)
     }
     
-//    func isValidPhone(phone: String) -> Bool {
-//            let phoneRegex = "^[0-9+]{0,1}+[0-9]{5,16}$"
-//            let phoneTest = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
-//            return phoneTest.evaluate(with: phone)
-//        }
+    @objc func handleTapOnLabel(_ recognizer: UITapGestureRecognizer) {
+        
+        guard let text = aggreementLabel.attributedText?.string else {
+            return
+        }
+
+        if let range = text.range(of: "Пользовательским соглашением"),
+            recognizer.didTapAttributedTextInLabel(label: aggreementLabel, inRange: NSRange(range, in: text)) {
+            proceedToAgreementView()
+        }
+    }
     
     func textField(
         _ textField: UITextField,
@@ -144,7 +148,7 @@ extension AuthorizationController {
         view.addSubview(mainTitle)
         view.addSubview(smallTitle)
         view.addSubview(numberField)
-        view.addSubview(confirmationButton)
+        view.addSubview(aggreementLabel)
         view.addSubview(getButton)
     }
 
@@ -161,9 +165,9 @@ extension AuthorizationController {
         numberField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         numberField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
 
-        confirmationButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
-        confirmationButton.bottomAnchor.constraint(equalTo: getButton.topAnchor, constant: -16).isActive = true
-        confirmationButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
+        aggreementLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
+        aggreementLabel.bottomAnchor.constraint(equalTo: getButton.topAnchor, constant: -16).isActive = true
+        aggreementLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
         
         getButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
         getButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32).isActive = true
