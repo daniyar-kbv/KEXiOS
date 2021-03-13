@@ -19,18 +19,19 @@ class AddressView: UIView {
         let view = UIStackView()
         view.alignment                                  = .fill
         view.axis                                       = .vertical
-        view.distribution                               = .fill
+        view.distribution                               = .equalSpacing
         view.spacing                                    = 10
         view.translatesAutoresizingMaskIntoConstraints  = false
         return view
     }()
-    
-    lazy var streetForm = FormView(labelText: "Улица*")
-    lazy var buildingForm = FormView(labelText: "Дом*")
-    lazy var apartmentForm = FormView(labelText: "Квартира")
-    lazy var entranceForm = FormView(labelText: "Подъезд")
-    lazy var floorForm = FormView(labelText: "Этаж")
-    lazy var commentaryForm = FormView(labelText: "Комментарий к адресу")
+    lazy var countryForm = FormView(labelText: "Страна*", tag: 0)
+    lazy var cityForm = FormView(labelText: "Город*", tag: 1)
+    lazy var streetForm = FormView(labelText: "Улица*", tag: 2)
+    lazy var buildingForm = FormView(labelText: "Дом*", tag: 3)
+    lazy var apartmentForm = FormView(labelText: "Квартира", tag: 4)
+    lazy var entranceForm = FormView(labelText: "Подъезд", tag: 5)
+    lazy var floorForm = FormView(labelText: "Этаж", tag: 6)
+    lazy var commentaryForm = FormView(labelText: "Комментарий к адресу", tag: 7)
     
     lazy var emptyView: UIView = {
         let view = UIView()
@@ -80,19 +81,21 @@ class AddressView: UIView {
     }
 }
 
-extension AddressView {
+extension AddressView: UITextFieldDelegate {
     
     func setupViews() {
         backgroundColor = .white
-        let forms = [streetForm, buildingForm, apartmentForm, entranceForm, floorForm, commentaryForm]
+        
+        let forms = [countryForm, cityForm, streetForm, buildingForm, apartmentForm, entranceForm, floorForm, commentaryForm]
+        
         for i in forms {
+            i.formField.delegate = self
             formView.addArrangedSubview(i)
         }
-        formView.addArrangedSubview(emptyView)
+        
         scrollView.addSubview(contentView)
         contentView.addSubview(formView)
         contentView.addSubview(saveButton)
-
         addSubview(scrollView)
     }
     
@@ -104,14 +107,14 @@ extension AddressView {
         formView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -32).isActive = true
 
         saveButton.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        saveButton.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        saveButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        saveButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12).isActive = true
+        saveButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32).isActive = true
         saveButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
 
         contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -36).isActive = true
         contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, constant: -18).isActive = true
-        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 18).isActive = true
+        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24).isActive = true
         contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
         
         scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
@@ -144,4 +147,23 @@ extension AddressView {
         delegate?.submit()
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+       // Try to find next responder
+        if let nextForm = self.viewWithTag(textField.superview!.tag + 1) as? FormView {
+            nextForm.formField.becomeFirstResponder()
+       } else {
+          // Not found, so remove keyboard.
+          textField.resignFirstResponder()
+       }
+       // Do not add a line break
+       return false
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+            scrollView.setContentOffset(CGPoint(x: 0, y: (textField.superview?.frame.origin.y)!), animated: true)
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
 }

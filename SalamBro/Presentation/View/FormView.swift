@@ -20,7 +20,6 @@ class FormView: UIView {
 
     lazy var formField: UITextField = {
         let field = UITextField()
-        
         field.clearButtonMode = .whileEditing
         field.layer.borderColor = UIColor.gray.cgColor
         field.layer.backgroundColor = UIColor.white.cgColor
@@ -32,8 +31,9 @@ class FormView: UIView {
         return field
     }()
     
-    init(labelText: String) {
+    init(labelText: String, tag: Int) {
         super.init(frame: .zero)
+        self.tag = tag
         formLabel.text = labelText
         setupViews()
         setupConstraints()
