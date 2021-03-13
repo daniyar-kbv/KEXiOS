@@ -24,6 +24,7 @@ class AddressView: UIView {
         view.translatesAutoresizingMaskIntoConstraints  = false
         return view
     }()
+    
     lazy var countryForm = FormView(labelText: "Страна*", tag: 0)
     lazy var cityForm = FormView(labelText: "Город*", tag: 1)
     lazy var streetForm = FormView(labelText: "Улица*", tag: 2)

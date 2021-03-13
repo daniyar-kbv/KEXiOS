@@ -140,6 +140,7 @@ extension AuthorizationController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
+
 extension AuthorizationController {
     @objc func getCode() {
         authorize()
@@ -193,10 +194,6 @@ extension AuthorizationController {
         smallTitle.topAnchor.constraint(equalTo: mainTitle.bottomAnchor).isActive = true
         smallTitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         smallTitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-        
-//        numberField.topAnchor.constraint(equalTo: smallTitle.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
-//        numberField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-//        numberField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         
         numberField.leftAnchor.constraint(equalTo: countryCodeButton.safeAreaLayoutGuide.rightAnchor, constant: 24).isActive = true
         numberField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true

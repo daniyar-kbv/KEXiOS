@@ -17,12 +17,8 @@ class UpdateController: UIViewController {
     }
     
     override func loadView() {
-        rootView.descriptionLabel.text = """
-        Мы добавили много новых функций и
-        исправили некоторые баги, чтобы вам
-        было удобнее пользоваться приложением
-        """
-        rootView.button.setTitle("Обновить приложение", for: .normal)
+        rootView.descriptionLabel.text = "We added a lot of new features and fixed several bugs for your convenience use".localized()
+        rootView.button.setTitle("It's time to update".localized(), for: .normal)
         view = rootView
         
     }
@@ -41,7 +37,6 @@ class UpdateController: UIViewController {
 // MARK: - Actions
 extension UpdateController {
     private func updateApp() {
-        print("proceed to AppStore to update app")
         self.navigationController?.pushViewController(CountriesListController(), animated: true)
     }
 }

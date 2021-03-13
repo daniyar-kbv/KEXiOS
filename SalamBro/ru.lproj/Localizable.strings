@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  SalamBro
+
+  Created by Arystan on 3/13/21.
+  
+*/
+
+// update feature
+"It's time to update" = "Обновить приложение";
+"We added a lot of new features and fixed several bugs for your convenience use" = "Мы добавили много новых функций и
+исправили некоторые баги, чтобы вам
+было удобнее пользоваться приложением";
