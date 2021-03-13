@@ -5,7 +5,7 @@
 //  Created by Arystan on 3/7/21.
 //
 
-import Foundation
+import UIKit
 
 public let countries: [String] = [
     "Russian Federation",

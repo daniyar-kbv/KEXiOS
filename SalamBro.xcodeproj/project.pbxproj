@@ -36,6 +36,11 @@
 		FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2B25F5117F000DC55F /* BrandsView.swift */; };
 		FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB786F8E25FB57A800ED02D3 /* FormView.swift */; };
 		FBA7CA1625FC9B000099777F /* UITapGestureRecognizer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */; };
+		FBA7CA1B25FCAD870099777F /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA1A25FCAD870099777F /* Country.swift */; };
+		FBA7CA2325FCB91F0099777F /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA2225FCB91F0099777F /* APIService.swift */; };
+		FBA7CA2925FCBAB10099777F /* CountryCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA2825FCBAB10099777F /* CountryCodePickerViewController.swift */; };
+		FBA7CA2E25FCBB1C0099777F /* CountryCodePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA2D25FCBB1C0099777F /* CountryCodePickerView.swift */; };
+		FBA7CA3325FCBB370099777F /* CountryCodePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA3225FCBB370099777F /* CountryCodePickerViewModel.swift */; };
 		FBAB1E7725F6478A00112B72 /* AuthorizarionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */; };
 		FBAB1E7C25F6492700112B72 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */; };
 		FBAB1E8325F7A54600112B72 /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E8225F7A54600112B72 /* VerificationController.swift */; };
@@ -105,6 +110,11 @@
 		FB664D2B25F5117F000DC55F /* BrandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsView.swift; sourceTree = "<group>"; };
 		FB786F8E25FB57A800ED02D3 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Extension.swift"; sourceTree = "<group>"; };
+		FBA7CA1A25FCAD870099777F /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		FBA7CA2225FCB91F0099777F /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = SalamBro/Domain/Model/APIService.swift; sourceTree = SOURCE_ROOT; };
+		FBA7CA2825FCBAB10099777F /* CountryCodePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewController.swift; sourceTree = "<group>"; };
+		FBA7CA2D25FCBB1C0099777F /* CountryCodePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerView.swift; sourceTree = "<group>"; };
+		FBA7CA3225FCBB370099777F /* CountryCodePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewModel.swift; sourceTree = "<group>"; };
 		FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizarionController.swift; sourceTree = "<group>"; };
 		FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
 		FBAB1E8225F7A54600112B72 /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
@@ -296,6 +306,8 @@
 		FB0B919125FBF23D003AFEBB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FBA7CA1A25FCAD870099777F /* Country.swift */,
+				FB664D0225F505AA000DC55F /* DummyData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -311,6 +323,7 @@
 		FB0B919625FBF54F003AFEBB /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				FBA7CA2725FCBA9B0099777F /* CountryCodePicker */,
 				FB0B919F25FBFA5C003AFEBB /* GetName */,
 				FB0B919E25FBFA45003AFEBB /* Agreement */,
 				FB0B919D25FBFA27003AFEBB /* Verification */,
@@ -408,6 +421,7 @@
 		FB626D5325FA572B00C8E6B7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				FBA7CA2225FCB91F0099777F /* APIService.swift */,
 			);
 			name = Service;
 			path = ../../Service;
@@ -442,9 +456,18 @@
 		FB664D0125F505A0000DC55F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FB664D0225F505AA000DC55F /* DummyData.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		FBA7CA2725FCBA9B0099777F /* CountryCodePicker */ = {
+			isa = PBXGroup;
+			children = (
+				FBA7CA3225FCBB370099777F /* CountryCodePickerViewModel.swift */,
+				FBA7CA2D25FCBB1C0099777F /* CountryCodePickerView.swift */,
+				FBA7CA2825FCBAB10099777F /* CountryCodePickerViewController.swift */,
+			);
+			path = CountryCodePicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -686,6 +709,7 @@
 			files = (
 				E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */,
 				E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */,
+				FBA7CA2925FCBAB10099777F /* CountryCodePickerViewController.swift in Sources */,
 				FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */,
 				FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */,
 				FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */,
@@ -706,13 +730,17 @@
 				FBBF4C4225F8DA6F00341D0E /* AgreementController.swift in Sources */,
 				FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */,
 				FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */,
+				FBA7CA2325FCB91F0099777F /* APIService.swift in Sources */,
+				FBA7CA2E25FCBB1C0099777F /* CountryCodePickerView.swift in Sources */,
 				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
 				FBBF4C3A25F7FCF100341D0E /* OTPView.swift in Sources */,
 				FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */,
 				FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */,
 				FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */,
+				FBA7CA3325FCBB370099777F /* CountryCodePickerViewModel.swift in Sources */,
 				FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */,
 				FBBF4C4C25F8FA9F00341D0E /* GetNameController.swift in Sources */,
+				FBA7CA1B25FCAD870099777F /* Country.swift in Sources */,
 				E6DFBE1B25FA6D6A0091ABFC /* BrandRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

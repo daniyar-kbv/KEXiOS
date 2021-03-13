@@ -33,39 +33,12 @@ class AddressController: UIViewController {
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
 
         if notification.name == UIResponder.keyboardWillHideNotification {
-//            rootView.contentView.heightAnchor.constraint(equalTo: rootView.scrollView.heightAnchor, constant: -18).isActive = true
-//            rootView.saveButton.topAnchor.constraint(equalTo: rootView.formView.bottomAnchor,constant: 8).isActive = false
             rootView.scrollView.contentInset = .zero
-//            rootView.layoutIfNeeded()
         } else {
-//            rootView.contentView.heightAnchor.constraint(equalTo: rootView.scrollView.heightAnchor, constant: -18).isActive = false
-//            rootView.saveButton.topAnchor.constraint(equalTo: rootView.formView.bottomAnchor,constant: 8).isActive = true
             rootView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
-//            rootView.layoutIfNeeded()
         }
-
         rootView.scrollView.scrollIndicatorInsets = rootView.scrollView.contentInset
-
-//        let selectedRange = rootView.scrollView.selectedRange
-//        yourTextView.scrollRangeToVisible(selectedRange)
     }
-    
-//    @objc func keyboardWillShow(notification: Notification) {
-//        guard let userInfo = notification.userInfo else { return }
-//        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-//        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-//
-////        rootView.contentView.bottomAnchor.constraint(equalTo: rootView.contentView.bottomAnchor).isActive = true
-//        var contentInset:UIEdgeInsets = rootView.scrollView.contentInset
-//        contentInset.bottom = keyboardFrame.size.height
-//        rootView.scrollView.contentInset = contentInset
-//
-//      }
-//
-//     @objc func keyboardWillHide(notification: Notification){
-//        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
-//        rootView.scrollView.contentInset = contentInset
-//     }
 }
 
 extension AddressController {
