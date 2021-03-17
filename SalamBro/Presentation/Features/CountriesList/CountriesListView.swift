@@ -12,7 +12,6 @@ protocol CountriesListViewDelegate {
 }
 
 class CountriesListView: UIView {
-    
     lazy var countriesTableView: UITableView = {
         let table = UITableView()
         table.allowsMultipleSelection = false

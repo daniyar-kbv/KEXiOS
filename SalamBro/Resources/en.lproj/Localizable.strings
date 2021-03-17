@@ -1,0 +1,56 @@
+/* 
+  Localizable.strings
+  SalamBro
+
+  Created by Arystan on 3/17/21.
+  
+*/
+
+// MARK: - UPDATE
+"Update.title.description" = "We added a lot of new features and fixed several bugs for your convenient use";
+"Update.button.title" = "Update app";
+
+// MARK: - CountriesList
+"CountriesList.navigation.title" = "Select your country";
+
+// MARK: - CitiesList
+"CitiesList.navigation.title" = "Select your city";
+
+// MARK: - Address
+"Address.form.country.title" = "Country*";
+"Address.form.city.title" = "City*";
+"Address.form.street.title" = "Street*";
+"Address.form.building.title" = "Building*";
+"Address.form.apartment.title" = "Apartment";
+"Address.form.entrance.title" = "Entrance";
+"Address.form.floor.title" = "Floor";
+"Address.form.commentary.title" = "Commentary for address";
+"Address.button.title" = "Save address";
+"Address.navigation.title" = "Set delivery address";
+
+// MARK: - Brands
+"Brands.navigation.title" = "Select brand";
+
+// MARK: - Authorization
+"Authorization.title" = "Enter your phone number";
+"Authorization.subtitle" = "A confirmation SMS code will be sent to this number";
+"Authorization.numberField.placeholder.title" = "Phone number";
+"Authorization.agreement.inactive.title" = "By continuing, you agree to the collection, processing of personal data and ";
+"Authorization.agreement.active.title" = "User agreement";
+"Authorization.button.title" = "Get code";
+
+// MARK: - Verification
+"Verification.title" = "Enter the code from the message";
+"Verification.subtitle" = "We sent it to number %@";
+"Verification.button.title" = "Resend again in: %@";
+
+// MARK: - Agreement
+"Agreement.navigation.title" = "User agreement";
+
+// MARK: - CountryCodePicker
+"CountryCodePicker.navigation.title" = "Select country code";
+
+// MARK: - GetName
+"GetName.title" = "What is your name?";
+"GetName.field.title" = "Enter your name";
+"GetName.button.title" = "Next";

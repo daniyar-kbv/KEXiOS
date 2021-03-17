@@ -9,20 +9,19 @@ import UIKit
 
 protocol VerificationViewDelegate {
     func passCode()
-    
 }
+
 class VerificationView: UIView {
 
     var timer: Timer!
     var expirationDate = Date()
-
     var numSeconds: TimeInterval = 91.0
-    
     var delegate: VerificationViewDelegate?
+    var number: String? = nil
     
-    lazy var mainTitle: UILabel = {
+    lazy var maintitle: UILabel = {
         let label = UILabel()
-        label.text = "Введите код из сообщения"
+        label.text = L10n.Verification.title
         label.font = .boldSystemFont(ofSize: 32)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -30,9 +29,9 @@ class VerificationView: UIView {
         return label
     }()
     
-    lazy var smallTitle: UILabel = {
+    lazy var subtitle: UILabel = {
         let label = UILabel()
-        label.text = "Мы отправили его на номер +7 (702) 000 00 28"
+        label.text = L10n.Verification.subtitle(" " + number!)
         label.font = .systemFont(ofSize: 12)
         label.textColor = .mildBlue
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +53,7 @@ class VerificationView: UIView {
         let button = UIButton()
         button.backgroundColor = .white
         button.isEnabled = false
-        button.setTitle("Отправить повторно через: 01:30", for: .disabled)
+        button.setTitle(L10n.Verification.Button.title(" 01:30"), for: .disabled)
         button.setTitleColor(.darkGray, for: .disabled)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
@@ -64,8 +63,9 @@ class VerificationView: UIView {
         return button
     }()
 
-    init(delegate: VerificationViewDelegate) {
+    init(delegate: VerificationViewDelegate, number: String) {
         super.init(frame: .zero)
+        self.number = number
         self.delegate = delegate
         setupViews()
         setupConstraints()
@@ -81,22 +81,22 @@ extension VerificationView {
     func setupViews() {
         backgroundColor = .white
         
-        addSubview(mainTitle)
-        addSubview(smallTitle)
+        addSubview(maintitle)
+        addSubview(subtitle)
         addSubview(otpField)
         addSubview(getCodeButton)
     }
     
     func setupConstraints() {
-        mainTitle.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
-        mainTitle.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        mainTitle.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
+        maintitle.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
+        maintitle.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
+        maintitle.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         
-        smallTitle.topAnchor.constraint(equalTo: mainTitle.bottomAnchor).isActive = true
-        smallTitle.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        smallTitle.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
+        subtitle.topAnchor.constraint(equalTo: maintitle.bottomAnchor).isActive = true
+        subtitle.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
+        subtitle.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         
-        otpField.topAnchor.constraint(equalTo: smallTitle.bottomAnchor, constant: 40).isActive = true
+        otpField.topAnchor.constraint(equalTo: subtitle.bottomAnchor, constant: 40).isActive = true
         otpField.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         otpField.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         otpField.heightAnchor.constraint(equalToConstant: 65).isActive = true
@@ -138,17 +138,16 @@ extension VerificationView {
       // Call the currentTimeString method which can decrease the time..
         let timeString = currentTimeString()
         if timeString != nil {
-            getCodeButton.setTitle("Отправить повторно через: \(timeString!)", for: .disabled)
+            getCodeButton.setTitle(" " + L10n.Verification.Button.title(timeString!), for: .disabled)
         } else {
             
             getCodeButton.isEnabled = true
             getCodeButton.backgroundColor = .kexRed
-            getCodeButton.setTitle("Отправить код повторно", for: .normal)
+            getCodeButton.setTitle(L10n.Verification.Button.title(""), for: .normal)
         }
     }
     
     @objc func reload() {
-        print("reload!")
         otpField.text = ""
         otpField.clearLabels()
         startTimer()

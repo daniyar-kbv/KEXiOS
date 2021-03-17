@@ -25,14 +25,14 @@ class AddressView: UIView {
         return view
     }()
     
-    lazy var countryForm = FormView(labelText: "Страна*", tag: 0)
-    lazy var cityForm = FormView(labelText: "Город*", tag: 1)
-    lazy var streetForm = FormView(labelText: "Улица*", tag: 2)
-    lazy var buildingForm = FormView(labelText: "Дом*", tag: 3)
-    lazy var apartmentForm = FormView(labelText: "Квартира", tag: 4)
-    lazy var entranceForm = FormView(labelText: "Подъезд", tag: 5)
-    lazy var floorForm = FormView(labelText: "Этаж", tag: 6)
-    lazy var commentaryForm = FormView(labelText: "Комментарий к адресу", tag: 7)
+    lazy var countryForm = FormView(labelText: L10n.Address.Form.Country.title, tag: 0)
+    lazy var cityForm = FormView(labelText: L10n.Address.Form.City.title, tag: 1)
+    lazy var streetForm = FormView(labelText: L10n.Address.Form.Street.title, tag: 2)
+    lazy var buildingForm = FormView(labelText: L10n.Address.Form.Building.title, tag: 3)
+    lazy var apartmentForm = FormView(labelText: L10n.Address.Form.Apartment.title, tag: 4)
+    lazy var entranceForm = FormView(labelText: L10n.Address.Form.Entrance.title, tag: 5)
+    lazy var floorForm = FormView(labelText: L10n.Address.Form.Floor.title, tag: 6)
+    lazy var commentaryForm = FormView(labelText: L10n.Address.Form.Commentary.title, tag: 7)
     
     lazy var emptyView: UIView = {
         let view = UIView()
@@ -42,7 +42,7 @@ class AddressView: UIView {
     
     lazy var saveButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Save delivery address", for: .normal)
+        button.setTitle(L10n.Address.Button.title, for: .normal)
         button.addTarget(self, action: #selector(submitAction), for: .touchUpInside)
         button.backgroundColor = UIColor(red: 0.82, green: 0.216, blue: 0.192, alpha: 1.0)
         button.isEnabled = false

@@ -47,7 +47,6 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if selectionIndexPath != nil {
             if selectionIndexPath == indexPath {
-                print("proceed to next view")
                 let vc = AddressController()
                 selectionIndexPath = nil
                 navigationController?.pushViewController(vc, animated: true)
@@ -73,7 +72,7 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
 
 extension CitiesListController {
     private func configUI() {
-        navigationItem.title = "Choose your city"
+        navigationItem.title = L10n.CitiesList.Navigation.title
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

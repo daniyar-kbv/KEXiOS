@@ -9,13 +9,12 @@ import UIKit
 
 class VerificationController: UIViewController {
     
-    fileprivate lazy var rootView = VerificationView(delegate: self)
-    
-
+    var number: String = ""
+    fileprivate lazy var rootView = VerificationView(delegate: self, number: number)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configUI()
     }
     
     override func loadView() {
@@ -30,7 +29,7 @@ class VerificationController: UIViewController {
         rootView.otpField.text = ""
         rootView.otpField.clearLabels()
         rootView.timer.invalidate()
-        rootView.getCodeButton.setTitle("Отправить повторно через: 01:30", for: .disabled)
+        rootView.getCodeButton.setTitle(L10n.Verification.Button.title(" 01:30"), for: .disabled)
     }
 }
 
@@ -39,7 +38,11 @@ extension VerificationController: VerificationViewDelegate {
         let vc = GetNameController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
-    
-    
+}
+
+extension VerificationController {
+    private func configUI() {
+        navigationItem.title = ""
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
 }

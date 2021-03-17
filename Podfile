@@ -7,6 +7,7 @@ target 'SalamBro' do
 
   # Pods for SalamBro
   pod 'InputMask'
+  pod 'SwiftGen'
 
   target 'SalamBroTests' do
     inherit! :search_paths

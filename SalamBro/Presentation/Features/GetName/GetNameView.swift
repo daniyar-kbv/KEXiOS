@@ -17,7 +17,7 @@ class GetNameView: UIView {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Как Вас зовут?"
+        label.text = L10n.GetName.title
         label.font = UIFont.boldSystemFont(ofSize: 32)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -25,7 +25,7 @@ class GetNameView: UIView {
 
     lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Введите Ваше имя"
+        label.text = L10n.GetName.Field.title
         label.font = .systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -48,7 +48,7 @@ class GetNameView: UIView {
     
     lazy var nextButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Далее", for: .normal)
+        button.setTitle(L10n.GetName.Button.title, for: .normal)
         button.addTarget(self, action: #selector(submitAction), for: .touchUpInside)
         button.backgroundColor = UIColor(red: 0.82, green: 0.216, blue: 0.192, alpha: 1.0)
         button.isEnabled = false
@@ -74,7 +74,6 @@ class GetNameView: UIView {
 
 extension GetNameView {
     func setupViews() {
-        
         backgroundColor = .arcticWhite
         
         addSubview(titleLabel)
@@ -103,7 +102,6 @@ extension GetNameView {
     }
     
     @objc func editingChanged(sender: UITextField) {
-
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
 
         guard let name = nameField.text, !name.isEmpty else {

@@ -43,16 +43,13 @@ class AddressController: UIViewController {
 
 extension AddressController {
     func submitForms() {
-        print("proceed to next view")
         let vc = BrandsController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension AddressController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("received scroll")
-    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {}
 }
 
 extension AddressController: AddressViewDelegate {
@@ -61,11 +58,9 @@ extension AddressController: AddressViewDelegate {
     }
 }
 
-
-
 extension AddressController {
     private func configUI() {
-        navigationItem.title = "Set your delivery address"
+        navigationItem.title = L10n.Address.Navigation.title
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

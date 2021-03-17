@@ -17,8 +17,8 @@ class UpdateController: UIViewController {
     }
     
     override func loadView() {
-        rootView.descriptionLabel.text = "We added a lot of new features and fixed several bugs for your convenience use".localized()
-        rootView.button.setTitle("It's time to update".localized(), for: .normal)
+        rootView.descriptionLabel.text = L10n.Update.Title.description
+        rootView.button.setTitle(L10n.Update.Button.title, for: .normal)
         view = rootView
         
     }

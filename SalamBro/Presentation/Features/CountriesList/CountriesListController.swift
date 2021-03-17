@@ -20,13 +20,7 @@ class CountriesListController: UIViewController {
     override func loadView() {
         view = rootView
     }
-//  FIXME: -BUG should deselect after returning back to country select?
-//    override func viewWillAppear(_ animated: Bool) {
-//        print(selectionIndexPath)
-//        if selectionIndexPath != nil {
-//            self.tableView.deselectRow(at: selectionIndexPath!, animated: true)
-//        }
-//    }
+
 }
 
 //MARK: - UITableView
@@ -47,7 +41,6 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if selectionIndexPath != nil {
             if selectionIndexPath == indexPath {
-                print("next page")
                 let vc = CitiesListController()
                 vc.countryId = indexPath.row
                 selectionIndexPath = nil
@@ -80,7 +73,7 @@ extension CountriesListController: CountriesListViewDelegate {
 
 extension CountriesListController {
     private func configUI() {
-        navigationItem.title = "Choose your country"
+        navigationItem.title = L10n.CountriesList.Navigation.title
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

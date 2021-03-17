@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CountryCodePickerDelegate: AnyObject {
-    func passCountry(county: Country)
+    func passCountry(country: Country)
 }
 
 class CountryCodePickerViewController: UIViewController {
@@ -100,7 +100,7 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
         countryViewModel.unmarkAll()
         countryViewModel.countryArray[indexPath.row].marked.toggle()
         dismiss(animated: true) {
-            self.delegate?.passCountry(county: self.countryViewModel.countryArray[indexPath.row])
+            self.delegate?.passCountry(country: self.countryViewModel.countryArray[indexPath.row])
         }
     }
     
@@ -113,7 +113,7 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
 
 extension CountryCodePickerViewController {
     private func configUI() {
-        navigationItem.title = "Выберите код страны"
+        navigationItem.title = L10n.CountryCodePicker.Navigation.title
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

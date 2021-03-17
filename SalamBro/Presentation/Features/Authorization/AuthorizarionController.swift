@@ -18,9 +18,9 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         return delegate
     }()
     
-    lazy var mainTitle: UILabel = {
+    lazy var maintitle: UILabel = {
         let label = UILabel()
-        label.text = "Введите Ваш номер телефона"
+        label.text = L10n.Authorization.title
         label.font = .boldSystemFont(ofSize: 32)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -28,9 +28,9 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         return label
     }()
     
-    lazy var smallTitle: UILabel = {
+    lazy var subtitle: UILabel = {
         let label = UILabel()
-        label.text = "На этот номер придет подтверждающий СМС код"
+        label.text = L10n.Authorization.subtitle
         label.font = .systemFont(ofSize: 12)
         label.textColor = .mildBlue
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -41,24 +41,22 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         let field = UITextField()
         field.keyboardType = .numberPad
         field.font = .systemFont(ofSize: 26)
-        field.placeholder = "Номер телефона"
+        field.placeholder = L10n.Authorization.NumberField.Placeholder.title
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
     
     lazy var aggreementLabel: UILabel = {
         let label = UILabel()
-        
         let textAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.darkGray]
         let linkAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.blue, NSAttributedString.Key.underlineColor: UIColor.blue]
-        let helloString = NSMutableAttributedString(string: " Продолжая, вы соглашаетесь со сбором, обработкой персональных данных и ", attributes: textAttributes)
-        let worldString = NSAttributedString(string: "Пользовательским соглашением", attributes: linkAttributes)
-        helloString.append(worldString)
-        print(helloString)
+        let inactiveString = NSMutableAttributedString(string: L10n.Authorization.Agreement.Inactive.title, attributes: textAttributes)
+        let activeString = NSAttributedString(string: L10n.Authorization.Agreement.Active.title, attributes: linkAttributes)
+        inactiveString.append(activeString)
         label.numberOfLines = 0
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
-        label.attributedText = helloString
+        label.attributedText = inactiveString
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel(_:))))
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +65,7 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
     
     lazy var countryCodeButton: UIButton = {
         let button = UIButton()
-        button.setTitle("X", for: .normal)
+//        button.setTitle("X", for: .normal)
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 26)
         button.titleLabel?.textAlignment = .center
@@ -79,7 +77,7 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
     
     let getButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Get code", for: .normal)
+        button.setTitle(L10n.Authorization.Button.title, for: .normal)
         button.addTarget(self, action: #selector(getCode), for: .touchUpInside)
         button.backgroundColor = UIColor(red: 0.82, green: 0.216, blue: 0.192, alpha: 1.0)
         button.isEnabled = false
@@ -108,8 +106,8 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
 
 extension AuthorizationController {
     func authorize() {
-        print("proceed to next view")
         let vc = VerificationController()
+        vc.number = countryViewModel.getMarked()!.callingCode + numberField.text!
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -124,13 +122,12 @@ extension AuthorizationController {
         vc.delegate = self
         vc.modalPresentationStyle = .pageSheet
         present(vc, animated: true, completion: nil)
-//        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension AuthorizationController: CountryCodePickerDelegate {
-    func passCountry(county: Country) {
-        countryCodeButton.setTitle(county.callingCode, for: .normal)
+    func passCountry(country: Country) {
+        countryCodeButton.setTitle(country.callingCode, for: .normal)
     }
 }
 
@@ -152,7 +149,7 @@ extension AuthorizationController {
             return
         }
 
-        if let range = text.range(of: "Пользовательским соглашением"),
+        if let range = text.range(of: L10n.Authorization.Agreement.Active.title),
             recognizer.didTapAttributedTextInLabel(label: aggreementLabel, inRange: NSRange(range, in: text)) {
             proceedToAgreementView()
         }
@@ -178,8 +175,8 @@ extension AuthorizationController {
         numberField.delegate = maskedDelegate
         view.backgroundColor = .white
         
-        view.addSubview(mainTitle)
-        view.addSubview(smallTitle)
+        view.addSubview(maintitle)
+        view.addSubview(subtitle)
         view.addSubview(numberField)
         view.addSubview(countryCodeButton)
         view.addSubview(aggreementLabel)
@@ -187,19 +184,19 @@ extension AuthorizationController {
     }
 
     func setupConstraints() {
-        mainTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        mainTitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        mainTitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
+        maintitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        maintitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
+        maintitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         
-        smallTitle.topAnchor.constraint(equalTo: mainTitle.bottomAnchor).isActive = true
-        smallTitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        smallTitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
+        subtitle.topAnchor.constraint(equalTo: maintitle.bottomAnchor).isActive = true
+        subtitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
+        subtitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         
         numberField.leftAnchor.constraint(equalTo: countryCodeButton.safeAreaLayoutGuide.rightAnchor, constant: 24).isActive = true
         numberField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         numberField.centerYAnchor.constraint(equalTo: countryCodeButton.titleLabel!.centerYAnchor).isActive = true
             
-        countryCodeButton.topAnchor.constraint(equalTo: smallTitle.safeAreaLayoutGuide.bottomAnchor, constant: 40).isActive = true
+        countryCodeButton.topAnchor.constraint(equalTo: subtitle.safeAreaLayoutGuide.bottomAnchor, constant: 40).isActive = true
         countryCodeButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         countryCodeButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
         

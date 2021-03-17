@@ -46,7 +46,6 @@ extension BrandsController: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("proceed to next vc")
         self.navigationController?.pushViewController(AuthorizationController(), animated: true)
     }
     
@@ -60,21 +59,8 @@ extension BrandsController: BrandsViewDelegate {
 
 extension BrandsController {
     private func configUI() {
-        navigationItem.title = "Choose brand"
+        navigationItem.title = L10n.Brands.Navigation.title
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
 
-
-class BrandViewModel {
-    
-    private let brandRepository: BrandRepository
-    
-    init(brandRepository: BrandRepository) {
-        self.brandRepository = brandRepository
-    }
-    
-    func getBrands() {
-        
-    }
-}

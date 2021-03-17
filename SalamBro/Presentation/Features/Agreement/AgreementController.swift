@@ -23,7 +23,7 @@ class AgreementController: UIViewController {
 
 extension AgreementController {
     private func configUI() {
-        navigationItem.title = "Пользовательское соглашение"
+        navigationItem.title = L10n.Agreement.Navigation.title
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
