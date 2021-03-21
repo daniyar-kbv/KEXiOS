@@ -1,0 +1,59 @@
+/* 
+  Localizable.strings
+  SalamBro
+
+  Created by Arystan on 3/17/21.
+  
+*/
+
+// MARK: - UPDATE
+"Update.title.description" = "Мы добавили много новых функций и
+исправили некоторые баги, чтобы вам
+было удобнее пользоваться приложением";
+"Update.button.title" = "Обновить приложение";
+
+// MARK: - CountriesList
+"CountriesList.navigation.title" = "Выберите вашу страну";
+
+// MARK: - CitiesList
+"CitiesList.navigation.title" = "Выберите ваш город";
+
+// MARK: - Address
+"Address.form.country.title" = "Страна*";
+"Address.form.city.title" = "Город*";
+"Address.form.street.title" = "Улица*";
+"Address.form.building.title" = "Дом*";
+"Address.form.apartment.title" = "Квартира";
+"Address.form.entrance.title" = "Подъезд";
+"Address.form.floor.title" = "Этаж";
+"Address.form.commentary.title" = "Комментарий к адресу";
+"Address.button.title" = "Сохранить адрес";
+"Address.navigation.title" = "Укажите адрес доставки";
+
+// MARK: - Brands
+"Brands.navigation.title" = "Выберите бренд";
+
+// MARK: - Authorization
+"Authorization.title" = "Введите Ваш номер телефона";
+"Authorization.subtitle" = "На этот номер придет подтверждающий СМС код";
+"Authorization.numberField.placeholder.title" = "Номер телефона";
+"Authorization.agreement.inactive.title" = "Продолжая, вы соглашаетесь со сбором, обработкой персональных данных и ";
+"Authorization.agreement.active.title" = "Пользовательским соглашением";
+"Authorization.button.title" = "Получить код";
+
+
+// MARK: - Verification
+"Verification.title" = "Введите код из сообщения";
+"Verification.subtitle" = "Мы отправили его на номер%@";
+"Verification.button.title" = "Отправить повторно через:%@";
+
+// MARK: - Agreement
+"Agreement.navigation.title" = "Пользовательское соглашение";
+
+// MARK: - CountryCodePicker
+"CountryCodePicker.navigation.title" = "Выберите код страны";
+
+// MARK: - GetName
+"GetName.title" = "Как Вас зовут?";
+"GetName.field.title" = "Введите Ваше имя";
+"GetName.button.title" = "Далее";

@@ -23,7 +23,6 @@
 		FB626D4F25FA508100C8E6B7 /* AdditionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */; };
 		FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CD625F4F243000DC55F /* UpdateController.swift */; };
 		FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */; };
-		FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CEC25F4FB64000DC55F /* UpdateView.swift */; };
 		FB664CF525F50174000DC55F /* CountriesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CF425F50174000DC55F /* CountriesListController.swift */; };
 		FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CF925F502BA000DC55F /* CountriesListView.swift */; };
 		FB664D0325F505AA000DC55F /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D0225F505AA000DC55F /* DummyData.swift */; };
@@ -35,10 +34,20 @@
 		FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2625F510E1000DC55F /* BrandsController.swift */; };
 		FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2B25F5117F000DC55F /* BrandsView.swift */; };
 		FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB786F8E25FB57A800ED02D3 /* FormView.swift */; };
+		FBA7CA1625FC9B000099777F /* UITapGestureRecognizer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */; };
+		FBA7CA1B25FCAD870099777F /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA1A25FCAD870099777F /* Country.swift */; };
+		FBA7CA2325FCB91F0099777F /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA2225FCB91F0099777F /* APIService.swift */; };
+		FBA7CA2925FCBAB10099777F /* CountryCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA2825FCBAB10099777F /* CountryCodePickerViewController.swift */; };
+		FBA7CA2E25FCBB1C0099777F /* CountryCodePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA2D25FCBB1C0099777F /* CountryCodePickerView.swift */; };
+		FBA7CA3325FCBB370099777F /* CountryCodePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA3225FCBB370099777F /* CountryCodePickerViewModel.swift */; };
+		FBA7CA4A25FD03A80099777F /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA4925FD03A80099777F /* String+Extension.swift */; };
+		FBA7CAA52602250E0099777F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FBA7CAA72602250E0099777F /* Localizable.strings */; };
+		FBA7CABB260232F30099777F /* BrandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CABA260232F30099777F /* BrandViewModel.swift */; };
+		FBA7CAC3260245D40099777F /* Localizable+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CAC2260245D40099777F /* Localizable+Generated.swift */; };
 		FBAB1E7725F6478A00112B72 /* AuthorizarionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */; };
 		FBAB1E7C25F6492700112B72 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */; };
 		FBAB1E8325F7A54600112B72 /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E8225F7A54600112B72 /* VerificationController.swift */; };
-		FBBF4C3A25F7FCF100341D0E /* OneTimeCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C3925F7FCF100341D0E /* OneTimeCodeView.swift */; };
+		FBBF4C3A25F7FCF100341D0E /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C3925F7FCF100341D0E /* OTPView.swift */; };
 		FBBF4C4225F8DA6F00341D0E /* AgreementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */; };
 		FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */; };
 		FBBF4C4C25F8FA9F00341D0E /* GetNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */; };
@@ -91,7 +100,6 @@
 		FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalView.swift; sourceTree = "<group>"; };
 		FB664CD625F4F243000DC55F /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
 		FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		FB664CEC25F4FB64000DC55F /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
 		FB664CF425F50174000DC55F /* CountriesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListController.swift; sourceTree = "<group>"; };
 		FB664CF925F502BA000DC55F /* CountriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListView.swift; sourceTree = "<group>"; };
 		FB664D0225F505AA000DC55F /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
@@ -103,10 +111,21 @@
 		FB664D2625F510E1000DC55F /* BrandsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsController.swift; sourceTree = "<group>"; };
 		FB664D2B25F5117F000DC55F /* BrandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsView.swift; sourceTree = "<group>"; };
 		FB786F8E25FB57A800ED02D3 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
+		FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Extension.swift"; sourceTree = "<group>"; };
+		FBA7CA1A25FCAD870099777F /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		FBA7CA2225FCB91F0099777F /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = SalamBro/Domain/Model/APIService.swift; sourceTree = SOURCE_ROOT; };
+		FBA7CA2825FCBAB10099777F /* CountryCodePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewController.swift; sourceTree = "<group>"; };
+		FBA7CA2D25FCBB1C0099777F /* CountryCodePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerView.swift; sourceTree = "<group>"; };
+		FBA7CA3225FCBB370099777F /* CountryCodePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewModel.swift; sourceTree = "<group>"; };
+		FBA7CA4925FD03A80099777F /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		FBA7CAA62602250E0099777F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FBA7CAAB260225120099777F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FBA7CABA260232F30099777F /* BrandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandViewModel.swift; sourceTree = "<group>"; };
+		FBA7CAC2260245D40099777F /* Localizable+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Localizable+Generated.swift"; sourceTree = "<group>"; };
 		FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizarionController.swift; sourceTree = "<group>"; };
 		FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
 		FBAB1E8225F7A54600112B72 /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
-		FBBF4C3925F7FCF100341D0E /* OneTimeCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimeCodeView.swift; sourceTree = "<group>"; };
+		FBBF4C3925F7FCF100341D0E /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
 		FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementController.swift; sourceTree = "<group>"; };
 		FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementView.swift; sourceTree = "<group>"; };
 		FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNameController.swift; sourceTree = "<group>"; };
@@ -179,17 +198,14 @@
 		E6B175BE25ED523F00A9F827 /* SalamBro */ = {
 			isa = PBXGroup;
 			children = (
-				FB626D5325FA572B00C8E6B7 /* Service */,
-				E6DFBE4525FA716A0091ABFC /* Presentation */,
-				E6DFBE3125FA6E440091ABFC /* DI */,
-				E6DFBE1825FA6D4D0091ABFC /* Domain */,
-				E6DFBE1725FA6D460091ABFC /* Data */,
-				FB664D0125F505A0000DC55F /* Model */,
+				FBA7CA91260220480099777F /* Resources */,
+				FB0B919225FBF24F003AFEBB /* DI */,
+				FB0B919025FBF233003AFEBB /* Domain */,
+				FB0B918C25FBF17F003AFEBB /* Data */,
+				FB0B918B25FBF114003AFEBB /* Presentation */,
 				FB664CDB25F4F297000DC55F /* Extensions */,
 				E6B175BF25ED523F00A9F827 /* AppDelegate.swift */,
-				E6B175C825ED524000A9F827 /* Assets.xcassets */,
 				E6B175CD25ED524000A9F827 /* Info.plist */,
-				FB664D0A25F507DC000DC55F /* LaunchScreen.storyboard */,
 			);
 			path = SalamBro;
 			sourceTree = "<group>";
@@ -212,25 +228,6 @@
 			path = SalamBroUITests;
 			sourceTree = "<group>";
 		};
-		E6DFBE1725FA6D460091ABFC /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				E6DFBE2425FA6DCD0091ABFC /* Storage */,
-				E6DFBE2325FA6DC10091ABFC /* Repository */,
-				E6DFBE2225FA6DB00091ABFC /* Network */,
-			);
-			name = Data;
-			sourceTree = "<group>";
-		};
-		E6DFBE1825FA6D4D0091ABFC /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				E6DFBE4425FA71560091ABFC /* Model */,
-				E6DFBE1925FA6D560091ABFC /* Repository */,
-			);
-			name = Domain;
-			sourceTree = "<group>";
-		};
 		E6DFBE1925FA6D560091ABFC /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,60 +236,12 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		E6DFBE2225FA6DB00091ABFC /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				E6DFBE3A25FA70240091ABFC /* NetworkManager.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		E6DFBE2325FA6DC10091ABFC /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-				E6DFBE2525FA6DDB0091ABFC /* Mock */,
-				E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */,
-			);
-			name = Repository;
-			sourceTree = "<group>";
-		};
-		E6DFBE2425FA6DCD0091ABFC /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Storage;
-			sourceTree = "<group>";
-		};
 		E6DFBE2525FA6DDB0091ABFC /* Mock */ = {
 			isa = PBXGroup;
 			children = (
 				E6DFBE2625FA6DFE0091ABFC /* BrandRepositoryMockImpl.swift */,
 			);
 			path = Mock;
-			sourceTree = "<group>";
-		};
-		E6DFBE3125FA6E440091ABFC /* DI */ = {
-			isa = PBXGroup;
-			children = (
-				E6DFBE3225FA6E6F0091ABFC /* ServiceLocator.swift */,
-			);
-			name = DI;
-			sourceTree = "<group>";
-		};
-		E6DFBE4425FA71560091ABFC /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		E6DFBE4525FA716A0091ABFC /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				FB664CEB25F4FB3C000DC55F /* View */,
-				FB664CE725F4F34B000DC55F /* Controller */,
-			);
-			name = Presentation;
 			sourceTree = "<group>";
 		};
 		E9F25F578ECCEEB4F0B36F73 /* Frameworks */ = {
@@ -305,17 +254,190 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FB626D5325FA572B00C8E6B7 /* Service */ = {
+		FB0B918B25FBF114003AFEBB /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				FB0B919625FBF54F003AFEBB /* Features */,
+				FB664CE725F4F34B000DC55F /* Controller */,
+				FB664CEB25F4FB3C000DC55F /* View */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		FB0B918C25FBF17F003AFEBB /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				FB0B918D25FBF1D4003AFEBB /* Storage */,
+				FB0B918E25FBF1DB003AFEBB /* Repository */,
+				FB0B918F25FBF1F3003AFEBB /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		FB0B918D25FBF1D4003AFEBB /* Storage */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Service;
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		FB0B918E25FBF1DB003AFEBB /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				E6DFBE2525FA6DDB0091ABFC /* Mock */,
+				E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		FB0B918F25FBF1F3003AFEBB /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FB626D5325FA572B00C8E6B7 /* Service */,
+				E6DFBE3A25FA70240091ABFC /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		FB0B919025FBF233003AFEBB /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				E6DFBE1925FA6D560091ABFC /* Repository */,
+				FB0B919125FBF23D003AFEBB /* Model */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		FB0B919125FBF23D003AFEBB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FBA7CA1A25FCAD870099777F /* Country.swift */,
+				FB664D0225F505AA000DC55F /* DummyData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FB0B919225FBF24F003AFEBB /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				E6DFBE3225FA6E6F0091ABFC /* ServiceLocator.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		FB0B919625FBF54F003AFEBB /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				FBA7CA2725FCBA9B0099777F /* CountryCodePicker */,
+				FB0B919F25FBFA5C003AFEBB /* GetName */,
+				FB0B919E25FBFA45003AFEBB /* Agreement */,
+				FB0B919D25FBFA27003AFEBB /* Verification */,
+				FB0B919C25FBFA12003AFEBB /* Authorization */,
+				FB0B919B25FBF9F0003AFEBB /* Brands */,
+				FB0B919A25FBF9DC003AFEBB /* Address */,
+				FB0B919925FBF580003AFEBB /* CitiesList */,
+				FB0B919825FBF56F003AFEBB /* CountriesList */,
+				FB0B919725FBF559003AFEBB /* Update */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		FB0B919725FBF559003AFEBB /* Update */ = {
+			isa = PBXGroup;
+			children = (
+				FB664CD625F4F243000DC55F /* UpdateController.swift */,
+			);
+			path = Update;
+			sourceTree = "<group>";
+		};
+		FB0B919825FBF56F003AFEBB /* CountriesList */ = {
+			isa = PBXGroup;
+			children = (
+				FB664CF925F502BA000DC55F /* CountriesListView.swift */,
+				FB664CF425F50174000DC55F /* CountriesListController.swift */,
+			);
+			path = CountriesList;
+			sourceTree = "<group>";
+		};
+		FB0B919925FBF580003AFEBB /* CitiesList */ = {
+			isa = PBXGroup;
+			children = (
+				FB664D1725F50889000DC55F /* CitiesListView.swift */,
+				FB664D1225F5084D000DC55F /* CitiesListController.swift */,
+			);
+			path = CitiesList;
+			sourceTree = "<group>";
+		};
+		FB0B919A25FBF9DC003AFEBB /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				FB664D2125F50BD6000DC55F /* AddressView.swift */,
+				FB664D1C25F50BB3000DC55F /* AddressController.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		FB0B919B25FBF9F0003AFEBB /* Brands */ = {
+			isa = PBXGroup;
+			children = (
+				FB664D2B25F5117F000DC55F /* BrandsView.swift */,
+				FB664D2625F510E1000DC55F /* BrandsController.swift */,
+				FBA7CABA260232F30099777F /* BrandViewModel.swift */,
+			);
+			path = Brands;
+			sourceTree = "<group>";
+		};
+		FB0B919C25FBFA12003AFEBB /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */,
+				FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */,
+			);
+			path = Authorization;
+			sourceTree = "<group>";
+		};
+		FB0B919D25FBFA27003AFEBB /* Verification */ = {
+			isa = PBXGroup;
+			children = (
+				FB626D4625FA48E700C8E6B7 /* VerificationView.swift */,
+				FBAB1E8225F7A54600112B72 /* VerificationController.swift */,
+			);
+			path = Verification;
+			sourceTree = "<group>";
+		};
+		FB0B919E25FBFA45003AFEBB /* Agreement */ = {
+			isa = PBXGroup;
+			children = (
+				FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */,
+				FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */,
+			);
+			path = Agreement;
+			sourceTree = "<group>";
+		};
+		FB0B919F25FBFA5C003AFEBB /* GetName */ = {
+			isa = PBXGroup;
+			children = (
+				FBBF4C5025F8FAB600341D0E /* GetNameView.swift */,
+				FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */,
+			);
+			path = GetName;
+			sourceTree = "<group>";
+		};
+		FB626D5325FA572B00C8E6B7 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				FBA7CA2225FCB91F0099777F /* APIService.swift */,
+			);
+			name = Service;
+			path = ../../Service;
 			sourceTree = "<group>";
 		};
 		FB664CDB25F4F297000DC55F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				FB664CDC25F4F2BF000DC55F /* UIColor+Extension.swift */,
+				FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */,
+				FBA7CA4925FD03A80099777F /* String+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -323,15 +445,6 @@
 		FB664CE725F4F34B000DC55F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				FB664CD625F4F243000DC55F /* UpdateController.swift */,
-				FB664CF425F50174000DC55F /* CountriesListController.swift */,
-				FB664D1225F5084D000DC55F /* CitiesListController.swift */,
-				FB664D1C25F50BB3000DC55F /* AddressController.swift */,
-				FB664D2625F510E1000DC55F /* BrandsController.swift */,
-				FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */,
-				FBAB1E8225F7A54600112B72 /* VerificationController.swift */,
-				FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */,
-				FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -339,28 +452,32 @@
 		FB664CEB25F4FB3C000DC55F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FB664CEC25F4FB64000DC55F /* UpdateView.swift */,
-				FB664CF925F502BA000DC55F /* CountriesListView.swift */,
-				FB664D1725F50889000DC55F /* CitiesListView.swift */,
-				FB664D2125F50BD6000DC55F /* AddressView.swift */,
-				FB664D2B25F5117F000DC55F /* BrandsView.swift */,
-				FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */,
-				FB626D4625FA48E700C8E6B7 /* VerificationView.swift */,
-				FBBF4C3925F7FCF100341D0E /* OneTimeCodeView.swift */,
-				FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */,
-				FBBF4C5025F8FAB600341D0E /* GetNameView.swift */,
+				FBBF4C3925F7FCF100341D0E /* OTPView.swift */,
 				FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */,
 				FB786F8E25FB57A800ED02D3 /* FormView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		FB664D0125F505A0000DC55F /* Model */ = {
+		FBA7CA2725FCBA9B0099777F /* CountryCodePicker */ = {
 			isa = PBXGroup;
 			children = (
-				FB664D0225F505AA000DC55F /* DummyData.swift */,
+				FBA7CA3225FCBB370099777F /* CountryCodePickerViewModel.swift */,
+				FBA7CA2D25FCBB1C0099777F /* CountryCodePickerView.swift */,
+				FBA7CA2825FCBAB10099777F /* CountryCodePickerViewController.swift */,
 			);
-			path = Model;
+			path = CountryCodePicker;
+			sourceTree = "<group>";
+		};
+		FBA7CA91260220480099777F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E6B175C825ED524000A9F827 /* Assets.xcassets */,
+				FBA7CAC2260245D40099777F /* Localizable+Generated.swift */,
+				FB664D0A25F507DC000DC55F /* LaunchScreen.storyboard */,
+				FBA7CAA72602250E0099777F /* Localizable.strings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -453,6 +570,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = E6B175B325ED523F00A9F827;
 			productRefGroup = E6B175BD25ED523F00A9F827 /* Products */;
@@ -472,6 +590,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB664D0B25F507DC000DC55F /* LaunchScreen.storyboard in Resources */,
+				FBA7CAA52602250E0099777F /* Localizable.strings in Resources */,
 				E6B175C925ED524000A9F827 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -602,9 +721,10 @@
 			files = (
 				E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */,
 				E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */,
+				FBA7CA2925FCBAB10099777F /* CountryCodePickerViewController.swift in Sources */,
 				FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */,
-				FB664CED25F4FB64000DC55F /* UpdateView.swift in Sources */,
 				FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */,
+				FBA7CAC3260245D40099777F /* Localizable+Generated.swift in Sources */,
 				E6DFBE3325FA6E6F0091ABFC /* ServiceLocator.swift in Sources */,
 				E6DFBE2725FA6DFE0091ABFC /* BrandRepositoryMockImpl.swift in Sources */,
 				FB664D0325F505AA000DC55F /* DummyData.swift in Sources */,
@@ -615,19 +735,26 @@
 				FBAB1E7C25F6492700112B72 /* AuthorizationView.swift in Sources */,
 				E6DFBE3B25FA70240091ABFC /* NetworkManager.swift in Sources */,
 				FB664CF525F50174000DC55F /* CountriesListController.swift in Sources */,
+				FBA7CA1625FC9B000099777F /* UITapGestureRecognizer+Extension.swift in Sources */,
+				FBA7CABB260232F30099777F /* BrandViewModel.swift in Sources */,
 				FBAB1E8325F7A54600112B72 /* VerificationController.swift in Sources */,
 				FBAB1E7725F6478A00112B72 /* AuthorizarionController.swift in Sources */,
 				FB626D4F25FA508100C8E6B7 /* AdditionalView.swift in Sources */,
 				FBBF4C4225F8DA6F00341D0E /* AgreementController.swift in Sources */,
 				FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */,
 				FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */,
+				FBA7CA2325FCB91F0099777F /* APIService.swift in Sources */,
+				FBA7CA2E25FCBB1C0099777F /* CountryCodePickerView.swift in Sources */,
 				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
-				FBBF4C3A25F7FCF100341D0E /* OneTimeCodeView.swift in Sources */,
+				FBBF4C3A25F7FCF100341D0E /* OTPView.swift in Sources */,
 				FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */,
+				FBA7CA4A25FD03A80099777F /* String+Extension.swift in Sources */,
 				FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */,
 				FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */,
+				FBA7CA3325FCBB370099777F /* CountryCodePickerViewModel.swift in Sources */,
 				FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */,
 				FBBF4C4C25F8FA9F00341D0E /* GetNameController.swift in Sources */,
+				FBA7CA1B25FCAD870099777F /* Country.swift in Sources */,
 				E6DFBE1B25FA6D6A0091ABFC /* BrandRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -663,11 +790,24 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		FBA7CAA72602250E0099777F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FBA7CAA62602250E0099777F /* en */,
+				FBA7CAAB260225120099777F /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		E6B175E425ED524000A9F827 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -729,6 +869,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
