@@ -20,10 +20,6 @@ class CountryViewModel: NSObject {
     }
     
     func getCountriesFromApi() {
-//        apiService.getCountries { (data) in
-//            self.countryArray = data
-//            dump(self.countryArray)
-//        }
         countryArray = apiService.getCountries()
     }
     
@@ -32,16 +28,13 @@ class CountryViewModel: NSObject {
     }
     
     func unmarkAll() {
-        for i in 0..<numberOfCountries() { // this will add 10 elements to contacts
+        for i in 0..<numberOfCountries() {
             countryArray[i].marked = false
         }
-//        for i in countryArray {
-//            i.marked = false
-//        }
     }
     
     func getMarked() -> Country? {
-        for i in 0..<numberOfCountries() { // this will add 10 elements to contacts
+        for i in 0..<numberOfCountries() {
             if countryArray[i].marked {
                 return countryArray[i]
             }

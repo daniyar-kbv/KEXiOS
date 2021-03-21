@@ -32,7 +32,7 @@ class CountryCodePickerViewController: UIViewController {
         let label = UILabel()
         label.textAlignment = .center
         label.font = .boldSystemFont(ofSize: 18)
-        label.text = "Выберите код страны"
+        label.text = L10n.CountryCodePicker.Navigation.title
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
