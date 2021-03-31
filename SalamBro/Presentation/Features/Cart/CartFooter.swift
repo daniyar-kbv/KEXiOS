@@ -91,6 +91,7 @@ class CartFooter: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
 //    init(delegate: (CartFooterDelegate)) {
 //        self.delegate = delegate
 //        super.init(frame: .zero)

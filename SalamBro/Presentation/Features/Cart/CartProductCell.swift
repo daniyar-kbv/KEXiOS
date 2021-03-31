@@ -81,4 +81,7 @@ class CartProductCell: UITableViewCell {
         }
         productCountLabel.text = "\(counter)"
     }
+    @IBAction func deleteItem(_ sender: UIButton) {
+        delegate.deleteProduct(id: product!.id, isAdditional: false)
+    }
 }

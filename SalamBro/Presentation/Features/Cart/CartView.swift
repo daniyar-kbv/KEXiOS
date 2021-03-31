@@ -15,20 +15,31 @@ class CartView: UIView {
     
     public var delegate: CartViewDelegate?
     
+    
+        lazy var tableViewFooter: CartFooter = {
+//            let view = CartFooter(frame: CGRect.init(x: 0, y: 0, width: itemsTableView.frame.width, height: 160))
+            let view = CartFooter()
+            return view
+        }()
+    
     lazy var itemsTableView: UITableView = {
         let table = UITableView()
         table.allowsSelection = false
         table.register(UINib(nibName: "CartProductCell", bundle: nil), forCellReuseIdentifier: "CartProductCell")
         table.register(UINib(nibName: "CartAdditionalProductCell", bundle: nil), forCellReuseIdentifier: "CartAdditionalProductCell")
-        // hidden header
+        // hidden header fix, usually default headers of section in tableview is sticky
         let dummyViewHeight = CGFloat(56)
         table.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: table.bounds.size.width, height: dummyViewHeight))
         table.contentInset = UIEdgeInsets(top: -dummyViewHeight, left: 0, bottom: 0, right: 0)
-        let footer = CartFooter(frame: CGRect.init(x: 0, y: 0, width: table.frame.width, height: 160))
-        table.tableFooterView = footer
+        
+        tableViewFooter.frame = CGRect.init(x: 0, y: 0, width: table.frame.width, height: 160)
+//        let footer = CartFooter(frame: CGRect.init(x: 0, y: 0, width: table.frame.width, height: 160))
+        table.tableFooterView = tableViewFooter
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
+    
+
     
     lazy var divider: UIView = {
         let view = UIView()
@@ -66,8 +77,10 @@ class CartView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func reloadData() {
-        itemsTableView.reloadData()
+    func updateTableViewFooterUI(cart: Cart) {
+        tableViewFooter.productsLabel.text = "\(cart.totalProducts) items"
+        tableViewFooter.productsPriceLabel.text = "\(cart.totalPrice) tenge"
+//        itemsTableView.reloadData()
     }
     
 }

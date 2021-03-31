@@ -22,8 +22,8 @@ class CartController: UIViewController {
         cart = apiService.getCart()
         configUI()
         rootView.itemsTableView.reloadData()
+        rootView.updateTableViewFooterUI(cart: cart)
     }
-    
 }
 
 //MARK: - UITableView
@@ -79,7 +79,6 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
     }
-    
 }
 
 extension CartController: CellDelegate {
@@ -89,60 +88,60 @@ extension CartController: CellDelegate {
                 cart?.productsAdditional.remove(at: index)
                 let path = IndexPath(row: index, section: 1)
                 rootView.itemsTableView.deleteRows(at: [path], with: .automatic)
-                rootView.itemsTableView.reloadData()
+                
+//                rootView.itemsTableView.reloadData()
 //                itemsInCart.remove(at: index)
-//                let indexPath = IndexPath(row: index, section: 0)
-//                tableView.deleteRows(at: [indexPath], with: .fade)
             }
         } else {
             if let index = cart?.products.firstIndex(where: {$0.id == id})   {
-                cart?.productsAdditional.remove(at: index)
+                cart?.products.remove(at: index)
                 let path = IndexPath(row: index, section: 0)
                 rootView.itemsTableView.deleteRows(at: [path], with: .automatic)
-                rootView.itemsTableView.reloadData()
+//                rootView.itemsTableView.reloadData()
             }
         }
+        rootView.updateTableViewFooterUI(cart: cart)
     }
     
     func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool) {
         print("")
-//        if isAdditional {
-//            DispatchQueue.main.async {
-//                if let index = self.cart.productsAdditional.firstIndex(where: {$0.id == id})   {
-//                if isIncrease {
-//                    self.cart.productsAdditional[index].count += 1
-//                    self.cart?.totalPrice += self.cart!.productsAdditional[index].price
-//                    self.cart?.totalProducts += 1
-//                } else {
-//                    self.cart?.productsAdditional[index].count -= 1
-//                    self.cart?.totalPrice -= self.cart!.productsAdditional[index].price
-//                    self.cart?.totalProducts -= 1
-//                }
-//                    self.rootView.itemsTableView.reloadData()
-//                    self.rootView.itemsTableView.layoutIfNeeded()
-//                    print(self.cart?.totalPrice)
-//                    print(self.cart?.totalProducts)
-////                let indexPath = IndexPath(row: index, section: 0)
-////                tableView.deleteRows(at: [indexPath], with: .fade)
-//            }
-//        } else {
-//            if let index = self.cart?.products.firstIndex(where: {$0.id == id})   {
-//                if isIncrease {
-//                    self.cart?.products[index].count += 1
-//                    self.cart?.totalPrice += self.cart!.products[index].price
-//                    self.cart?.totalProducts += 1
-//                } else {
-//                    self.cart?.products[index].count -= 1
-//                    self.cart?.totalPrice -= self.cart!.products[index].price
-//                    self.cart?.totalProducts -= 1
-//                }
-//                print(self.cart?.totalPrice)
-//                print(self.cart?.totalProducts)
-//                self.rootView.itemsTableView.reloadData()
-//                self.rootView.itemsTableView.layoutIfNeeded()
-//            }
-//        }
-//        }
+        if isAdditional {
+
+                if let index = self.cart?
+                    .productsAdditional.firstIndex(where: {$0.id == id})   {
+                    let price = self.cart?.productsAdditional[index].price
+                    if isIncrease {
+                        self.cart?.productsAdditional[index].count += 1
+                        self.cart?.totalPrice += price!
+                        self.cart?.totalProducts += 1
+                    } else {
+                        self.cart?.productsAdditional[index].count -= 1
+                        self.cart?.totalPrice -= price!
+                        self.cart?.totalProducts -= 1
+                    }
+                    self.rootView.itemsTableView.reloadData()
+                    self.rootView.itemsTableView.layoutIfNeeded()
+        //                let indexPath = IndexPath(row: index, section: 0)
+        //                tableView.deleteRows(at: [indexPath], with: .fade)
+                
+            }
+        } else {
+            if let index = self.cart?.products.firstIndex(where: {$0.id == id})   {
+                let price = self.cart?.products[index].price
+                if isIncrease {
+                    self.cart?.products[index].count += 1
+                    self.cart?.totalPrice += price!
+                    self.cart?.totalProducts += 1
+                } else {
+                    self.cart?.products[index].count -= 1
+                    self.cart?.totalPrice -= price!
+                    self.cart?.totalProducts -= 1
+                }
+                self.rootView.itemsTableView.reloadData()
+                self.rootView.itemsTableView.layoutIfNeeded()
+            }
+        }
+        rootView.updateTableViewFooterUI(cart: cart)
     }
 }
 

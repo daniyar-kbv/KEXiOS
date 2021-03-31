@@ -9,8 +9,6 @@ import UIKit
 
 class MainTabController: UITabBarController {
     
-    static let instance = MainTabController()
-    
     var itemCount: Int = 0
     
     lazy var menu: MenuController = {
