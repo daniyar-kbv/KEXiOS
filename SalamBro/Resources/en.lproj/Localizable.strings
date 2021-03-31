@@ -54,3 +54,9 @@
 "GetName.title" = "What is your name?";
 "GetName.field.title" = "Enter your name";
 "GetName.button.title" = "Next";
+
+// MARK: - MainTab
+"MainTab.Menu.Title" = "Menu";
+"MainTab.Profile.Title" = "Profile";
+"MainTab.Support.Title" = "Help";
+"MainTab.Cart.Title" = "Cart";

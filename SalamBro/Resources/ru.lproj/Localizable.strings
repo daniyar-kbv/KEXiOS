@@ -57,3 +57,9 @@
 "GetName.title" = "Как Вас зовут?";
 "GetName.field.title" = "Введите Ваше имя";
 "GetName.button.title" = "Далее";
+
+// MARK: - MainTab
+"MainTab.Menu.Title" = "Меню";
+"MainTab.Profile.Title" = "Профиль";
+"MainTab.Support.Title" = "Помощь";
+"MainTab.Cart.Title" = "Корзина";

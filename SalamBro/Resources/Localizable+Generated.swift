@@ -131,6 +131,25 @@ internal enum L10n {
     }
   }
 
+  internal enum MainTab {
+    internal enum Cart {
+      /// Cart
+      internal static let title = L10n.tr("Localizable", "MainTab.Cart.Title")
+    }
+    internal enum Menu {
+      /// Menu
+      internal static let title = L10n.tr("Localizable", "MainTab.Menu.Title")
+    }
+    internal enum Profile {
+      /// Profile
+      internal static let title = L10n.tr("Localizable", "MainTab.Profile.Title")
+    }
+    internal enum Support {
+      /// Help
+      internal static let title = L10n.tr("Localizable", "MainTab.Support.Title")
+    }
+  }
+
   internal enum Update {
     internal enum Button {
       /// Update app

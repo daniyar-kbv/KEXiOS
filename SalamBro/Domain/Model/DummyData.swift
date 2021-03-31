@@ -18,3 +18,14 @@ public let cities: [[String]] = [
     ["Nur-Sultan", "Almaty", "Karaganda", "Atyrau", "Aktobe"],
     ["New-York", "Seattle", "Washington"]
 ]
+
+public let profileItems: [String] = [
+    "Order history",
+    "Change application language"
+]
+
+public let languages: [String] = [
+    "Kazakh",
+    "Russian",
+    "English"
+]
