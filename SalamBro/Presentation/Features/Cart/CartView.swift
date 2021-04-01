@@ -15,12 +15,10 @@ class CartView: UIView {
     
     public var delegate: CartViewDelegate?
     
-    
-        lazy var tableViewFooter: CartFooter = {
-//            let view = CartFooter(frame: CGRect.init(x: 0, y: 0, width: itemsTableView.frame.width, height: 160))
-            let view = CartFooter()
-            return view
-        }()
+    lazy var tableViewFooter: CartFooter = {
+        let view = CartFooter()
+        return view
+    }()
     
     lazy var itemsTableView: UITableView = {
         let table = UITableView()
@@ -33,7 +31,6 @@ class CartView: UIView {
         table.contentInset = UIEdgeInsets(top: -dummyViewHeight, left: 0, bottom: 0, right: 0)
         
         tableViewFooter.frame = CGRect.init(x: 0, y: 0, width: table.frame.width, height: 160)
-//        let footer = CartFooter(frame: CGRect.init(x: 0, y: 0, width: table.frame.width, height: 160))
         table.tableFooterView = tableViewFooter
         table.translatesAutoresizingMaskIntoConstraints = false
         return table

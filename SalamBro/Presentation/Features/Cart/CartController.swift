@@ -8,10 +8,13 @@
 import UIKit
 
 class CartController: UIViewController {
+    
     fileprivate lazy var rootView = CartView(delegate: self)
+    
     
     var cart: Cart!
     var apiService = APIService()
+    var mainTabDelegate: MainTabDelegate!
     
     override func loadView() {
         view = rootView
@@ -23,12 +26,12 @@ class CartController: UIViewController {
         configUI()
         rootView.itemsTableView.reloadData()
         rootView.updateTableViewFooterUI(cart: cart)
+        mainTabDelegate.setCount(count: cart.totalProducts)
     }
 }
 
 //MARK: - UITableView
 extension CartController: UITableViewDelegate, UITableViewDataSource {
-
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 56
     }
@@ -88,16 +91,12 @@ extension CartController: CellDelegate {
                 cart?.productsAdditional.remove(at: index)
                 let path = IndexPath(row: index, section: 1)
                 rootView.itemsTableView.deleteRows(at: [path], with: .automatic)
-                
-//                rootView.itemsTableView.reloadData()
-//                itemsInCart.remove(at: index)
             }
         } else {
             if let index = cart?.products.firstIndex(where: {$0.id == id})   {
                 cart?.products.remove(at: index)
                 let path = IndexPath(row: index, section: 0)
                 rootView.itemsTableView.deleteRows(at: [path], with: .automatic)
-//                rootView.itemsTableView.reloadData()
             }
         }
         rootView.updateTableViewFooterUI(cart: cart)
@@ -106,7 +105,6 @@ extension CartController: CellDelegate {
     func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool) {
         print("")
         if isAdditional {
-
                 if let index = self.cart?
                     .productsAdditional.firstIndex(where: {$0.id == id})   {
                     let price = self.cart?.productsAdditional[index].price
@@ -120,10 +118,6 @@ extension CartController: CellDelegate {
                         self.cart?.totalProducts -= 1
                     }
                     self.rootView.itemsTableView.reloadData()
-                    self.rootView.itemsTableView.layoutIfNeeded()
-        //                let indexPath = IndexPath(row: index, section: 0)
-        //                tableView.deleteRows(at: [indexPath], with: .fade)
-                
             }
         } else {
             if let index = self.cart?.products.firstIndex(where: {$0.id == id})   {
@@ -138,10 +132,10 @@ extension CartController: CellDelegate {
                     self.cart?.totalProducts -= 1
                 }
                 self.rootView.itemsTableView.reloadData()
-                self.rootView.itemsTableView.layoutIfNeeded()
             }
         }
         rootView.updateTableViewFooterUI(cart: cart)
+        mainTabDelegate.updateCounter(isIncrease: isIncrease)
     }
 }
 

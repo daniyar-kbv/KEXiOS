@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol MainTabDelegate {
+    func updateCounter(isIncrease: Bool)
+    func setCount(count: Int)
+}
+
 class MainTabController: UITabBarController {
     
     var itemCount: Int = 0
@@ -35,6 +40,7 @@ class MainTabController: UITabBarController {
     
     lazy var cart: CartController = {
         let vc = CartController()
+        vc.mainTabDelegate = self
         vc.tabBarItem.title = L10n.MainTab.Cart.title
         vc.tabBarItem.image = UIImage(named: "cart")
         vc.tabBarItem.badgeColor = .kexRed
@@ -68,12 +74,21 @@ extension MainTabController {
         return nav
     }
     
+
+}
+
+extension MainTabController: MainTabDelegate {
+    func setCount(count: Int) {
+        itemCount = count
+        cart.tabBarItem.badgeValue = "\(itemCount)"
+    }
+    
     func updateCounter(isIncrease: Bool) {
         if isIncrease {
             itemCount += 1
         } else if itemCount != 0 {
             itemCount -= 1
         }
-        cart.tabBarItem.badgeValue = itemCount.description
+        cart.tabBarItem.badgeValue = "\(itemCount)"
     }
 }
