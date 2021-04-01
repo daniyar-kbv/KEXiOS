@@ -9,12 +9,12 @@ import UIKit
 
 class CartController: UIViewController {
     
-    fileprivate lazy var rootView = CartView(delegate: self)
-    
-    
+    var mainTabDelegate: MainTabDelegate!
     var cart: Cart!
     var apiService = APIService()
-    var mainTabDelegate: MainTabDelegate!
+
+    lazy var rootView = CartView(delegate: self)
+    lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: "Go to menu", buttonTitle: "You have no items in cart")
     
     override func loadView() {
         view = rootView
@@ -27,6 +27,13 @@ class CartController: UIViewController {
         rootView.itemsTableView.reloadData()
         rootView.updateTableViewFooterUI(cart: cart)
         mainTabDelegate.setCount(count: cart.totalProducts)
+    }
+}
+
+extension CartController {
+    private func configUI() {
+        navigationItem.title = L10n.CountriesList.Navigation.title
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
 
@@ -84,6 +91,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+//MARK: - Cell Actions
 extension CartController: CellDelegate {
     func deleteProduct(id: Int, isAdditional: Bool) {
         if isAdditional {
@@ -134,6 +142,9 @@ extension CartController: CellDelegate {
                 self.rootView.itemsTableView.reloadData()
             }
         }
+        if self.cart.totalProducts <= 0 {
+            view = emptyCartView
+        }
         rootView.updateTableViewFooterUI(cart: cart)
         mainTabDelegate.updateCounter(isIncrease: isIncrease)
     }
@@ -145,9 +156,8 @@ extension CartController: CartViewDelegate {
     }
 }
 
-extension CartController {
-    private func configUI() {
-        navigationItem.title = L10n.CountriesList.Navigation.title
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+extension CartController: AdditionalViewDelegate {
+    func action() {
+        mainTabDelegate.changeController(id: 0)
     }
 }

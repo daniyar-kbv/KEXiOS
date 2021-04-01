@@ -10,6 +10,7 @@ import UIKit
 protocol MainTabDelegate {
     func updateCounter(isIncrease: Bool)
     func setCount(count: Int)
+    func changeController(id: Int)
 }
 
 class MainTabController: UITabBarController {
@@ -27,7 +28,6 @@ class MainTabController: UITabBarController {
         let vc = ProfileController()
         vc.tabBarItem.title = L10n.MainTab.Profile.title
         vc.tabBarItem.image = UIImage(named: "profile")
-        vc.navigationController?.title = "X"
         return vc
     }()
     
@@ -73,11 +73,13 @@ extension MainTabController {
         nav.navigationBar.tintColor = .white
         return nav
     }
-    
-
 }
 
 extension MainTabController: MainTabDelegate {
+    func changeController(id: Int) {
+        self.selectedIndex = id
+    }
+    
     func setCount(count: Int) {
         itemCount = count
         cart.tabBarItem.badgeValue = "\(itemCount)"

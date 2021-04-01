@@ -9,7 +9,7 @@ import UIKit
 
 class UpdateController: UIViewController {
     
-    fileprivate lazy var rootView = AdditionalView(delegate: self)
+    lazy var rootView = AdditionalView(delegate: self, descriptionTitle: L10n.Update.Title.description, buttonTitle: L10n.Update.Button.title)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,10 +17,7 @@ class UpdateController: UIViewController {
     }
     
     override func loadView() {
-        rootView.descriptionLabel.text = L10n.Update.Title.description
-        rootView.button.setTitle(L10n.Update.Button.title, for: .normal)
         view = rootView
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,7 +42,6 @@ extension UpdateController: AdditionalViewDelegate {
     func action() {
         updateApp()
     }
-    
 }
 
 extension UpdateController {
