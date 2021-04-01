@@ -82,3 +82,18 @@
 // MARK: - CartAdditionalProductCell
 "CartAdditionalProductCell.deleteButton.title" = "Delete";
 "CartAdditionalProductCell.availability.title" = "Product unavailable";
+
+// MARK: - Profile
+"Profile.navigationBar.title" = "Profile";
+"Profile.editButton.title" = "Edit";
+"Profile.orderHistory" = "Order history";
+"Profile.changeLanguage" = "Change application language";
+"Profile.logoutButton.title" = "Logout";
+
+// MARK: - ChangeName
+"ChangeName.navigationBar.title" = "Change name";
+"ChangeName.nameField.placeholder" = "insert name";
+"ChangeName.saveButton.title" = "Save";
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.navigationBar.title" = "Select language";

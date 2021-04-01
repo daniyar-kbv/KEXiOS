@@ -23,7 +23,7 @@ class ChangeNameController: UIViewController {
     }
 
     func setupUI() {
-        navigationController?.title = "change name"
+        parent?.navigationController?.title = L10n.ChangeName.NavigationBar.title
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

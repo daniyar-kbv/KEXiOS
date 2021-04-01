@@ -20,18 +20,18 @@ class ChangeLanguageController: UIViewController {
     override func loadView() {
         view = rootView
     }
-
+    
 }
 
 //MARK: - UITableView
 extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return countries.count
+        return languages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = countries[indexPath.row]
+        cell.textLabel?.text = languages[indexPath.row]
         cell.backgroundColor = .white
         cell.tintColor = .kexRed
         cell.selectionStyle = .none
@@ -41,12 +41,9 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if selectionIndexPath != nil {
             if selectionIndexPath == indexPath {
-                let vc = CitiesListController()
-                vc.countryId = indexPath.row
-                selectionIndexPath = nil
+//                selectionIndexPath = nil
                 self.navigationController?.popViewController(animated: true)
             } else {
-                print(selectionIndexPath!.row)
                 selectionIndexPath = indexPath
                 let cell = tableView.cellForRow(at: selectionIndexPath!)
                 cell?.accessoryType = .checkmark
@@ -73,7 +70,7 @@ extension ChangeLanguageController: ChangeLanguaeViewDelegate {
 
 extension ChangeLanguageController {
     private func configUI() {
-        navigationItem.title = L10n.CountriesList.Navigation.title
+        parent?.navigationItem.title = L10n.ChangeLanguage.NavigationBar.title
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

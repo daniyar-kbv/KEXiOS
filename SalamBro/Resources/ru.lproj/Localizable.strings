@@ -85,3 +85,19 @@
 // MARK: - CartAdditionalProductCell
 "CartAdditionalProductCell.deleteButton.title" = "Удалить";
 "CartAdditionalProductCell.availability.title" = "Товар недоступен";
+
+// MARK: - Profile
+"Profile.navigationBar.title" = "Профиль";
+"Profile.editButton.title" = "Изменить";
+"Profile.orderHistory" = "История заказов";
+"Profile.changeLanguage" = "Сменить язык приложения";
+"Profile.logoutButton.title" = "Выйти из аккаунта";
+
+// MARK: - ChangeName
+"ChangeName.navigationBar.title" = "Изменить имя";
+"ChangeName.nameField.placeholder" = "введите имя";
+"ChangeName.saveButton.title" = "Сохранить";
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.navigationBar.title" = "Выберите язык";
+

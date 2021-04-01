@@ -35,7 +35,7 @@ class ProfileView: UIView {
     
     lazy var changeNameLabel: UIButton = {
         let label = UIButton()
-        label.setTitle("Edit", for: .normal)
+        label.setTitle(L10n.Profile.EditButton.title, for: .normal)
         label.setTitleColor(.kexRed, for: .normal)
         label.translatesAutoresizingMaskIntoConstraints = false
         let tap = UITapGestureRecognizer(target: self, action: #selector(changeName))
@@ -61,7 +61,7 @@ class ProfileView: UIView {
     
     lazy var logoutButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Logout", for: .normal)
+        button.setTitle(L10n.Profile.LogoutButton.title, for: .normal)
         button.setTitleColor(.mildBlue, for: .normal)
         button.addTarget(self, action: #selector(logout), for: .touchUpInside)
         button.borderWidth = 1

@@ -21,7 +21,7 @@ class ProfileController: UIViewController {
     }
 
     func setupUI() {
-        navigationController?.title = "title"
+        parent?.navigationController?.title = L10n.Profile.NavigationBar.title
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

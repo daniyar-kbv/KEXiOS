@@ -17,7 +17,7 @@ class ChangeNameView: UIView {
     
     lazy var nameField: UITextField = {
         let field = UITextField()
-        field.placeholder = "insert name"
+        field.placeholder = L10n.ChangeName.NameField.placeholder
         field.backgroundColor = .lightGray
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
@@ -25,7 +25,7 @@ class ChangeNameView: UIView {
     
     lazy var saveButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Save", for: .normal)
+        button.setTitle(L10n.ChangeName.SaveButton.title, for: .normal)
         button.addTarget(self, action: #selector(saveName), for: .touchUpInside)
         button.backgroundColor = .calmGray
         button.layer.cornerRadius = 10

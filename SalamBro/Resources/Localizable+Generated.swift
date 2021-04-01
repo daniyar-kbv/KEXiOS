@@ -167,6 +167,28 @@ internal enum L10n {
     }
   }
 
+  internal enum ChangeLanguage {
+    internal enum NavigationBar {
+      /// Select language
+      internal static let title = L10n.tr("Localizable", "ChangeLanguage.navigationBar.title")
+    }
+  }
+
+  internal enum ChangeName {
+    internal enum NameField {
+      /// insert name
+      internal static let placeholder = L10n.tr("Localizable", "ChangeName.nameField.placeholder")
+    }
+    internal enum NavigationBar {
+      /// Change name
+      internal static let title = L10n.tr("Localizable", "ChangeName.navigationBar.title")
+    }
+    internal enum SaveButton {
+      /// Save
+      internal static let title = L10n.tr("Localizable", "ChangeName.saveButton.title")
+    }
+  }
+
   internal enum CitiesList {
     internal enum Navigation {
       /// Select your city
@@ -217,6 +239,25 @@ internal enum L10n {
     internal enum Support {
       /// Help
       internal static let title = L10n.tr("Localizable", "MainTab.Support.Title")
+    }
+  }
+
+  internal enum Profile {
+    /// Change application language
+    internal static let changeLanguage = L10n.tr("Localizable", "Profile.changeLanguage")
+    /// Order history
+    internal static let orderHistory = L10n.tr("Localizable", "Profile.orderHistory")
+    internal enum EditButton {
+      /// Edit
+      internal static let title = L10n.tr("Localizable", "Profile.editButton.title")
+    }
+    internal enum LogoutButton {
+      /// Logout
+      internal static let title = L10n.tr("Localizable", "Profile.logoutButton.title")
+    }
+    internal enum NavigationBar {
+      /// Profile
+      internal static let title = L10n.tr("Localizable", "Profile.navigationBar.title")
     }
   }
 
