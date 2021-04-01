@@ -36,8 +36,6 @@ class CartView: UIView {
         return table
     }()
     
-
-    
     lazy var divider: UIView = {
         let view = UIView()
         view.backgroundColor = .mildBlue
@@ -56,7 +54,7 @@ class CartView: UIView {
         button.backgroundColor = .kexRed
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 10
-        button.setTitle("template", for: .normal)
+//        button.setTitle("Order", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -75,9 +73,8 @@ class CartView: UIView {
     }
     
     func updateTableViewFooterUI(cart: Cart) {
-        tableViewFooter.productsLabel.text = "\(cart.totalProducts) items"
-        tableViewFooter.productsPriceLabel.text = "\(cart.totalPrice) tenge"
-//        itemsTableView.reloadData()
+        tableViewFooter.productsLabel.text = L10n.CartFooter.productsCount(cart.totalProducts)
+        tableViewFooter.productsPriceLabel.text = L10n.CartFooter.productsPrice(cart.totalPrice)
     }
     
 }

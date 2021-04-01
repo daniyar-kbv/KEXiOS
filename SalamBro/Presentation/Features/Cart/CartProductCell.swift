@@ -9,6 +9,10 @@ import UIKit
 
 class CartProductCell: UITableViewCell {
 
+    private var counter: Int = 0
+    lazy var product: CartProduct? = nil
+    var delegate: CellDelegate!
+    
     @IBOutlet weak var productTitle: UILabel!
     @IBOutlet weak var productDescription: UILabel!
     @IBOutlet weak var productPrice: UILabel!
@@ -22,16 +26,19 @@ class CartProductCell: UITableViewCell {
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var unavailableLabel: UILabel!
     
-    private var counter: Int = 0
-    lazy var product: CartProduct? = nil
-    var delegate: CellDelegate!
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureUI()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func configureUI() {
+        deleteButton.setTitle(L10n.CartProductCell.DeleteButton.title, for: .normal)
     }
     
     func bindData(with item: CartProduct) {
@@ -46,6 +53,7 @@ class CartProductCell: UITableViewCell {
             unavailableLabel.text = ""
         } else {
             deleteButton.isHidden = false
+            unavailableLabel.text = L10n.CartProductCell.Availability.title
             productTitle.alpha = 0.5
             productDescription.alpha = 0.5
             productPrice.alpha = 0.5
@@ -53,34 +61,28 @@ class CartProductCell: UITableViewCell {
         }
         counter = product!.count
         productCountLabel.text = "\(counter)"
-//        counter.counter = product.count
     }
     
     @IBAction func decreaseItemCount(_ sender: UIButton) {
         if counter > 0 {
             counter -= 1
             delegate.changeItemCount(id: product!.id, isIncrease: false, isAdditional: false)
+            productPrice.text = "\(counter * product!.price) T"
+            productCountLabel.text = "\(counter)"
         } else {
             delegate.deleteProduct(id: product!.id, isAdditional: false)
-            removeFromSuperview()
         }
-        
-        if product != nil {
-            productPrice.text = "\(counter * product!.price) T"
-        }
-        productCountLabel.text = "\(counter)"
     }
     
     @IBAction func increaseItemButton(_ sender: UIButton) {
         if counter < 999 {
             counter += 1
             delegate.changeItemCount(id: product!.id, isIncrease: true, isAdditional: false)
-        }
-        if product != nil {
             productPrice.text = "\(counter * product!.price) T"
+            productCountLabel.text = "\(counter)"
         }
-        productCountLabel.text = "\(counter)"
     }
+    
     @IBAction func deleteItem(_ sender: UIButton) {
         delegate.deleteProduct(id: product!.id, isAdditional: false)
     }

@@ -30,6 +30,7 @@ class CartAdditionalProductCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureUI()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -48,6 +49,7 @@ class CartAdditionalProductCell: UITableViewCell {
             availabilityLabel.text = ""
         } else {
             deleteButton.isHidden = false
+            availabilityLabel.text = L10n.CartAdditionalProductCell.Availability.title
             productTitle.alpha = 0.5
             productPrice.alpha = 0.5
             productLogo.alpha = 0.5
@@ -56,32 +58,28 @@ class CartAdditionalProductCell: UITableViewCell {
         productCountLabel.text = "\(counter)"
     }
     
+    func configureUI() {
+        deleteButton.setTitle(L10n.CartAdditionalProductCell.DeleteButton.title, for: .normal)
+    }
+    
     @IBAction func decreaseItemCount(_ sender: UIButton) {
         if counter > 0 {
             counter -= 1
             delegate.changeItemCount(id: product.id, isIncrease: false, isAdditional: true)
-//            MainTabController.instance.updateCounter(isIncrease: false)
+            productPrice.text = "\(counter * product!.price) T"
+            productCountLabel.text = "\(counter)"
         } else {
-//            removeFromSuperview()
             deleteAction(sender)
         }
-        
-        if product != nil {
-            productPrice.text = "\(counter * product!.price) T"
-        }
-        productCountLabel.text = "\(counter)"
     }
     
     @IBAction func increaseItemButton(_ sender: UIButton) {
         if counter < 999 {
             counter += 1
             delegate.changeItemCount(id: product.id, isIncrease: true, isAdditional: true)
-//            MainTabController.instance.updateCounter(isIncrease: true)
-        }
-        if product != nil {
             productPrice.text = "\(counter * product!.price) T"
+            productCountLabel.text = "\(counter)"
         }
-        productCountLabel.text = "\(counter)"
     }
     
     @IBAction func deleteAction(_ sender: UIButton) {

@@ -49,7 +49,6 @@ extension ProfileController: UITableViewDelegate, UITableViewDataSource {
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
-
         return cell
     }
     

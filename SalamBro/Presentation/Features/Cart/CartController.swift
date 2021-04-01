@@ -14,7 +14,7 @@ class CartController: UIViewController {
     var apiService = APIService()
 
     lazy var rootView = CartView(delegate: self)
-    lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: "Go to menu", buttonTitle: "You have no items in cart")
+    lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title)
     
     override func loadView() {
         view = rootView
@@ -26,13 +26,13 @@ class CartController: UIViewController {
         configUI()
         rootView.itemsTableView.reloadData()
         rootView.updateTableViewFooterUI(cart: cart)
+        rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cart.totalPrice), for: .normal)
         mainTabDelegate.setCount(count: cart.totalProducts)
     }
 }
 
 extension CartController {
     private func configUI() {
-        navigationItem.title = L10n.CountriesList.Navigation.title
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
@@ -48,7 +48,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
             let content = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 56))
             let label = UILabel(frame: CGRect(x: 16, y: 24, width: tableView.frame.size.width, height: 24))
             label.font = .boldSystemFont(ofSize: 18)
-            label.text = "\(cart!.totalProducts) items for \(cart!.totalPrice)"
+            label.text = L10n.Cart.Section0.title(cart!.totalProducts, cart!.totalPrice)
             content.addSubview(label)
             content.backgroundColor = .arcticWhite
             return content
@@ -56,7 +56,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
             let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 56))
             let label = UILabel(frame: CGRect(x: 16, y: 24, width: tableView.frame.size.width, height: 21))
             label.font = .boldSystemFont(ofSize: 16)
-            label.text = "Additional products"
+            label.text = L10n.Cart.Section1.title
             view.addSubview(label)
             view.backgroundColor = .arcticWhite
             return view
@@ -111,7 +111,6 @@ extension CartController: CellDelegate {
     }
     
     func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool) {
-        print("")
         if isAdditional {
                 if let index = self.cart?
                     .productsAdditional.firstIndex(where: {$0.id == id})   {
@@ -146,6 +145,7 @@ extension CartController: CellDelegate {
             view = emptyCartView
         }
         rootView.updateTableViewFooterUI(cart: cart)
+        rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cart.totalPrice), for: .normal)
         mainTabDelegate.updateCounter(isIncrease: isIncrease)
     }
 }

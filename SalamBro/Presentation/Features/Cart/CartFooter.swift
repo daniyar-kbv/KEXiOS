@@ -17,7 +17,6 @@ class CartFooter: UIView {
 
     lazy var productsLabel: UILabel = {
         let label = UILabel()
-        label.text = "7 товаров"
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -26,7 +25,6 @@ class CartFooter: UIView {
     
     lazy var productsPriceLabel: UILabel = {
         let label = UILabel()
-        label.text = "5 160 ₸"
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
         label.textAlignment = .right
@@ -45,7 +43,7 @@ class CartFooter: UIView {
     
     lazy var deliveryLabel: UILabel = {
         let label = UILabel()
-        label.text = "Доставка"
+        label.text = L10n.CartFooter.deliveryLabel
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +52,7 @@ class CartFooter: UIView {
     
     lazy var deliveryPriceLabel: UILabel = {
         let label = UILabel()
-        label.text = "500 ₸"
+        label.text = L10n.CartFooter.deliveryPrice(500)
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
         label.textAlignment = .right
@@ -73,7 +71,7 @@ class CartFooter: UIView {
     
     lazy var promocodeButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Ввести промокод", for: .normal)
+        button.setTitle(L10n.CartFooter.PromocodeButton.title, for: .normal)
         button.backgroundColor = .arcticWhite
         button.setTitleColor(.kexRed, for: .normal)
         button.layer.cornerRadius = 10

@@ -60,3 +60,25 @@
 "MainTab.Profile.Title" = "Profile";
 "MainTab.Support.Title" = "Help";
 "MainTab.Cart.Title" = "Cart";
+
+// MARK: - Cart
+"Cart.section0.title" = "%@ items for %@";
+"Cart.section1.title" = "Additional products";
+"Cart.emptyCart.description" = "You have no items in cart";
+"Cart.emptyCart.button.title" = "Go to menu";
+"Cart.orderButton.title" = "Place an order for %@ ₸";
+
+// MARK: - CartFooter
+"CartFooter.promocodeButton.title" = "Enter promocode";
+"CartFooter.productsPrice" = "%@ ₸";
+"CartFooter.productsCount" = "%@ items";
+"CartFooter.deliveryLabel" = "Delivery";
+"CartFooter.deliveryPrice" = "%@ ₸";
+
+// MARK: - CartProductCell
+"CartProductCell.deleteButton.title" = "Delete";
+"CartProductCell.availability.title" = "Product unavailable";
+
+// MARK: - CartAdditionalProductCell
+"CartAdditionalProductCell.deleteButton.title" = "Delete";
+"CartAdditionalProductCell.availability.title" = "Product unavailable";
