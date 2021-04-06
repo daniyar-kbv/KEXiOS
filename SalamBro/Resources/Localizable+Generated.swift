@@ -97,6 +97,98 @@ internal enum L10n {
     }
   }
 
+  internal enum Cart {
+    internal enum EmptyCart {
+      /// You have no items in cart
+      internal static let description = L10n.tr("Localizable", "Cart.emptyCart.description")
+      internal enum Button {
+        /// Go to menu
+        internal static let title = L10n.tr("Localizable", "Cart.emptyCart.button.title")
+      }
+    }
+    internal enum OrderButton {
+      /// Place an order for %@ ₸
+      internal static func title(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "Cart.orderButton.title", String(describing: p1))
+      }
+    }
+    internal enum Section0 {
+      /// %@ items for %@
+      internal static func title(_ p1: Any, _ p2: Any) -> String {
+        return L10n.tr("Localizable", "Cart.section0.title", String(describing: p1), String(describing: p2))
+      }
+    }
+    internal enum Section1 {
+      /// Additional products
+      internal static let title = L10n.tr("Localizable", "Cart.section1.title")
+    }
+  }
+
+  internal enum CartAdditionalProductCell {
+    internal enum Availability {
+      /// Product unavailable
+      internal static let title = L10n.tr("Localizable", "CartAdditionalProductCell.availability.title")
+    }
+    internal enum DeleteButton {
+      /// Delete
+      internal static let title = L10n.tr("Localizable", "CartAdditionalProductCell.deleteButton.title")
+    }
+  }
+
+  internal enum CartFooter {
+    /// Delivery
+    internal static let deliveryLabel = L10n.tr("Localizable", "CartFooter.deliveryLabel")
+    /// %@ ₸
+    internal static func deliveryPrice(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "CartFooter.deliveryPrice", String(describing: p1))
+    }
+    /// %@ items
+    internal static func productsCount(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "CartFooter.productsCount", String(describing: p1))
+    }
+    /// %@ ₸
+    internal static func productsPrice(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "CartFooter.productsPrice", String(describing: p1))
+    }
+    internal enum PromocodeButton {
+      /// Enter promocode
+      internal static let title = L10n.tr("Localizable", "CartFooter.promocodeButton.title")
+    }
+  }
+
+  internal enum CartProductCell {
+    internal enum Availability {
+      /// Product unavailable
+      internal static let title = L10n.tr("Localizable", "CartProductCell.availability.title")
+    }
+    internal enum DeleteButton {
+      /// Delete
+      internal static let title = L10n.tr("Localizable", "CartProductCell.deleteButton.title")
+    }
+  }
+
+  internal enum ChangeLanguage {
+    internal enum NavigationBar {
+      /// Select language
+      internal static let title = L10n.tr("Localizable", "ChangeLanguage.navigationBar.title")
+    }
+  }
+
+  internal enum ChangeName {
+    internal enum NameField {
+      /// insert name
+      internal static let placeholder = L10n.tr("Localizable", "ChangeName.nameField.placeholder")
+    }
+    internal enum NavigationBar {
+      /// Change name
+      internal static let title = L10n.tr("Localizable", "ChangeName.navigationBar.title")
+    }
+    internal enum SaveButton {
+      /// Save
+      internal static let title = L10n.tr("Localizable", "ChangeName.saveButton.title")
+    }
+  }
+
   internal enum CitiesList {
     internal enum Navigation {
       /// Select your city
@@ -128,6 +220,44 @@ internal enum L10n {
     internal enum Field {
       /// Enter your name
       internal static let title = L10n.tr("Localizable", "GetName.field.title")
+    }
+  }
+
+  internal enum MainTab {
+    internal enum Cart {
+      /// Cart
+      internal static let title = L10n.tr("Localizable", "MainTab.Cart.Title")
+    }
+    internal enum Menu {
+      /// Menu
+      internal static let title = L10n.tr("Localizable", "MainTab.Menu.Title")
+    }
+    internal enum Profile {
+      /// Profile
+      internal static let title = L10n.tr("Localizable", "MainTab.Profile.Title")
+    }
+    internal enum Support {
+      /// Help
+      internal static let title = L10n.tr("Localizable", "MainTab.Support.Title")
+    }
+  }
+
+  internal enum Profile {
+    /// Change application language
+    internal static let changeLanguage = L10n.tr("Localizable", "Profile.changeLanguage")
+    /// Order history
+    internal static let orderHistory = L10n.tr("Localizable", "Profile.orderHistory")
+    internal enum EditButton {
+      /// Edit
+      internal static let title = L10n.tr("Localizable", "Profile.editButton.title")
+    }
+    internal enum LogoutButton {
+      /// Logout
+      internal static let title = L10n.tr("Localizable", "Profile.logoutButton.title")
+    }
+    internal enum NavigationBar {
+      /// Profile
+      internal static let title = L10n.tr("Localizable", "Profile.navigationBar.title")
     }
   }
 

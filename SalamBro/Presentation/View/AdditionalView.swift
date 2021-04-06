@@ -48,10 +48,10 @@ class AdditionalView: UIView {
         return button
     }()
     
-    init(delegate: (AdditionalViewDelegate)) {
-        self.delegate = delegate
+    init(delegate: (AdditionalViewDelegate), descriptionTitle: String, buttonTitle: String) {
         super.init(frame: .zero)
-        setupViews()
+        self.delegate = delegate
+        setupViews(descriptionTitle, buttonTitle)
         setupConstraints()
     }
     
@@ -66,10 +66,11 @@ class AdditionalView: UIView {
 
 
 extension AdditionalView {
-    func setupViews() {
+    func setupViews(_ descriptionText: String, _ buttonText: String) {
         
+        descriptionLabel.text = descriptionText
+        button.setTitle(buttonText, for: .normal)
         backgroundColor = .arcticWhite
-        
         addSubview(logo)
         addSubview(descriptionLabel)
         addSubview(button)

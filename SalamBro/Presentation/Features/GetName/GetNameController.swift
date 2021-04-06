@@ -24,7 +24,7 @@ class GetNameController: UIViewController {
 
 extension GetNameController {
     func submitForms() {
-        print("proceed to next view")
+        self.navigationController?.pushViewController(MainTabController(), animated: true)
     }
 }
 

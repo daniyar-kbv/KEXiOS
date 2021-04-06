@@ -57,3 +57,47 @@
 "GetName.title" = "Как Вас зовут?";
 "GetName.field.title" = "Введите Ваше имя";
 "GetName.button.title" = "Далее";
+
+// MARK: - MainTab
+"MainTab.Menu.Title" = "Меню";
+"MainTab.Profile.Title" = "Профиль";
+"MainTab.Support.Title" = "Помощь";
+"MainTab.Cart.Title" = "Корзина";
+
+// MARK: - Cart
+"Cart.section0.title" = "%@ товаров на %@ ₸";
+"Cart.section1.title" = "Дополнительные покупки";
+"Cart.emptyCart.description" = "Вы еще ничего не выбрали";
+"Cart.emptyCart.button.title" = "Перейти в меню";
+"Cart.orderButton.title" = "Оформить заказ на %@";
+
+// MARK: - CartFooter
+"CartFooter.promocodeButton.title" = "Ввести промокод";
+"CartFooter.productsPrice" = "%@ ₸";
+"CartFooter.productsCount" = "%@ товара";
+"CartFooter.deliveryLabel" = "Доставка";
+"CartFooter.deliveryPrice" = "%@ ₸";
+
+// MARK: - CartProductCell
+"CartProductCell.deleteButton.title" = "Удалить";
+"CartProductCell.availability.title" = "Товар недоступен";
+
+// MARK: - CartAdditionalProductCell
+"CartAdditionalProductCell.deleteButton.title" = "Удалить";
+"CartAdditionalProductCell.availability.title" = "Товар недоступен";
+
+// MARK: - Profile
+"Profile.navigationBar.title" = "Профиль";
+"Profile.editButton.title" = "Изменить";
+"Profile.orderHistory" = "История заказов";
+"Profile.changeLanguage" = "Сменить язык приложения";
+"Profile.logoutButton.title" = "Выйти из аккаунта";
+
+// MARK: - ChangeName
+"ChangeName.navigationBar.title" = "Изменить имя";
+"ChangeName.nameField.placeholder" = "введите имя";
+"ChangeName.saveButton.title" = "Сохранить";
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.navigationBar.title" = "Выберите язык";
+
