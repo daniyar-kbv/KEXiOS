@@ -14,7 +14,6 @@ class BrandsController: UIViewController {
     
     lazy var refreshControl : UIRefreshControl = {
         let action = UIRefreshControl()
-        action.attributedTitle = NSAttributedString(string: "Pull to refresh")
         action.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         return action
     }()
@@ -24,7 +23,6 @@ class BrandsController: UIViewController {
             frame: .zero,
             collectionViewLayout: UICollectionViewLayout()
         )
-
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.register(BrandCell.self, forCellWithReuseIdentifier: "BrandCell")
@@ -34,7 +32,7 @@ class BrandsController: UIViewController {
 
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Choose brand"
+        label.text = L10n.Brands.Navigation.title
         label.font = .systemFont(ofSize: 32)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

@@ -11,7 +11,6 @@ class BrandCell: UICollectionViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "x"
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
