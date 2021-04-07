@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let nav = UINavigationController(rootViewController: MainTabController())
+        let nav = UINavigationController(rootViewController: UpdateController())
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
         return true
