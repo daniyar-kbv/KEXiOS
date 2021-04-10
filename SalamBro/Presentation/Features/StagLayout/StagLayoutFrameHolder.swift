@@ -42,7 +42,6 @@ final class StagLayoutFrameHolder {
         var ratioIndex = 0
 
         for index in 0..<itemCount {
-            print("cell \(index) -  x:\(xOffset) y:\(yOffset) ratioIndex \(ratioIndex)")
             if ratioIndex >= widthHeightRatios.count { ratioIndex = 0 }
 
             let ratios = widthHeightRatios[ratioIndex]
@@ -66,7 +65,6 @@ final class StagLayoutFrameHolder {
                     for i in cache {
                         if i.frame.maxY >= max { max = i.frame.maxY }
                     }
-                    print("maxY : \(max)")
                     yOffset = max + itemSpacing
                 }
 //                if let beforePreviousItemFrame = beforePreviousItemFrame {
@@ -76,12 +74,10 @@ final class StagLayoutFrameHolder {
             
             if let previousItemFrame = previousItemFrame {
                 if previousItemFrame.width + width + itemSpacing > contentWidth {
-                    print( previousItemFrame.width + width + itemSpacing, contentWidth)
                     var max: CGFloat = 0
                     for i in cache {
                         if i.frame.maxY >= max { max = i.frame.maxY }
                     }
-                    print("maxY : \(max)")
                     yOffset = max + itemSpacing
                 }
             }
