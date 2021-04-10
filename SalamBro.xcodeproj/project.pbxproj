@@ -38,7 +38,6 @@
 		FB664D1D25F50BB3000DC55F /* AddressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D1C25F50BB3000DC55F /* AddressController.swift */; };
 		FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2125F50BD6000DC55F /* AddressView.swift */; };
 		FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2625F510E1000DC55F /* BrandsController.swift */; };
-		FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2B25F5117F000DC55F /* BrandsView.swift */; };
 		FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB786F8E25FB57A800ED02D3 /* FormView.swift */; };
 		FBA7CA1625FC9B000099777F /* UITapGestureRecognizer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */; };
 		FBA7CA1B25FCAD870099777F /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA1A25FCAD870099777F /* Country.swift */; };
@@ -48,7 +47,6 @@
 		FBA7CA3325FCBB370099777F /* CountryCodePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA3225FCBB370099777F /* CountryCodePickerViewModel.swift */; };
 		FBA7CA4A25FD03A80099777F /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA4925FD03A80099777F /* String+Extension.swift */; };
 		FBA7CAA52602250E0099777F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FBA7CAA72602250E0099777F /* Localizable.strings */; };
-		FBA7CABB260232F30099777F /* BrandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CABA260232F30099777F /* BrandViewModel.swift */; };
 		FBA7CAC3260245D40099777F /* Localizable+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CAC2260245D40099777F /* Localizable+Generated.swift */; };
 		FBAB1E7725F6478A00112B72 /* AuthorizarionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */; };
 		FBAB1E7C25F6492700112B72 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */; };
@@ -58,6 +56,10 @@
 		FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */; };
 		FBBF4C4C25F8FA9F00341D0E /* GetNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */; };
 		FBBF4C5125F8FAB600341D0E /* GetNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C5025F8FAB600341D0E /* GetNameView.swift */; };
+		FBCCAB73261DDF4800EAEA72 /* StagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCAB72261DDF4800EAEA72 /* StagLayout.swift */; };
+		FBCCAB7B261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCAB7A261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift */; };
+		FBCCAB80261DDF8E00EAEA72 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCAB7F261DDF8E00EAEA72 /* Brand.swift */; };
+		FBCCAB85261DE00A00EAEA72 /* BrandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCAB84261DE00A00EAEA72 /* BrandCell.swift */; };
 		FBF81F0C2608E63D008D5C7F /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF81F0B2608E63D008D5C7F /* MainTabController.swift */; };
 		FBF81F112608E651008D5C7F /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF81F102608E651008D5C7F /* MenuController.swift */; };
 		FBF81F162608E66B008D5C7F /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF81F152608E66B008D5C7F /* ProfileController.swift */; };
@@ -136,7 +138,6 @@
 		FB664D1C25F50BB3000DC55F /* AddressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressController.swift; sourceTree = "<group>"; };
 		FB664D2125F50BD6000DC55F /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		FB664D2625F510E1000DC55F /* BrandsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsController.swift; sourceTree = "<group>"; };
-		FB664D2B25F5117F000DC55F /* BrandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsView.swift; sourceTree = "<group>"; };
 		FB786F8E25FB57A800ED02D3 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Extension.swift"; sourceTree = "<group>"; };
 		FBA7CA1A25FCAD870099777F /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
@@ -147,7 +148,6 @@
 		FBA7CA4925FD03A80099777F /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		FBA7CAA62602250E0099777F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FBA7CAAB260225120099777F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		FBA7CABA260232F30099777F /* BrandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandViewModel.swift; sourceTree = "<group>"; };
 		FBA7CAC2260245D40099777F /* Localizable+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Localizable+Generated.swift"; sourceTree = "<group>"; };
 		FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizarionController.swift; sourceTree = "<group>"; };
 		FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
@@ -157,6 +157,10 @@
 		FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementView.swift; sourceTree = "<group>"; };
 		FBBF4C4B25F8FA9F00341D0E /* GetNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNameController.swift; sourceTree = "<group>"; };
 		FBBF4C5025F8FAB600341D0E /* GetNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNameView.swift; sourceTree = "<group>"; };
+		FBCCAB72261DDF4800EAEA72 /* StagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagLayout.swift; sourceTree = "<group>"; };
+		FBCCAB7A261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagLayoutFrameHolder.swift; sourceTree = "<group>"; };
+		FBCCAB7F261DDF8E00EAEA72 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
+		FBCCAB84261DE00A00EAEA72 /* BrandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandCell.swift; sourceTree = "<group>"; };
 		FBF81F0B2608E63D008D5C7F /* MainTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		FBF81F102608E651008D5C7F /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		FBF81F152608E66B008D5C7F /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
@@ -358,6 +362,7 @@
 				FBF81F422608E770008D5C7F /* Cart.swift */,
 				FBF81F4C2608E779008D5C7F /* CartProduct.swift */,
 				FBF81F472608E775008D5C7F /* CartAdditionalProduct.swift */,
+				FBCCAB7F261DDF8E00EAEA72 /* Brand.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -373,6 +378,7 @@
 		FB0B919625FBF54F003AFEBB /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				FBCCAB71261DDF2C00EAEA72 /* StagLayout */,
 				FB4569C1260CD59C004B702A /* ChangeLanguage */,
 				FB4569B8260CD559004B702A /* OrderHistory */,
 				FB4569AF260CD3DD004B702A /* ChangeName */,
@@ -431,9 +437,8 @@
 		FB0B919B25FBF9F0003AFEBB /* Brands */ = {
 			isa = PBXGroup;
 			children = (
-				FB664D2B25F5117F000DC55F /* BrandsView.swift */,
 				FB664D2625F510E1000DC55F /* BrandsController.swift */,
-				FBA7CABA260232F30099777F /* BrandViewModel.swift */,
+				FBCCAB84261DE00A00EAEA72 /* BrandCell.swift */,
 			);
 			path = Brands;
 			sourceTree = "<group>";
@@ -565,6 +570,15 @@
 				FBA7CAA72602250E0099777F /* Localizable.strings */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		FBCCAB71261DDF2C00EAEA72 /* StagLayout */ = {
+			isa = PBXGroup;
+			children = (
+				FBCCAB72261DDF4800EAEA72 /* StagLayout.swift */,
+				FBCCAB7A261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift */,
+			);
+			path = StagLayout;
 			sourceTree = "<group>";
 		};
 		FBF81F0A2608E630008D5C7F /* MainTab */ = {
@@ -834,12 +848,13 @@
 			files = (
 				E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */,
 				E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */,
+				FBCCAB73261DDF4800EAEA72 /* StagLayout.swift in Sources */,
 				FBA7CA2925FCBAB10099777F /* CountryCodePickerViewController.swift in Sources */,
 				FBF81F632608E93E008D5C7F /* CartView.swift in Sources */,
+				FBCCAB85261DE00A00EAEA72 /* BrandCell.swift in Sources */,
 				FB4569B1260CD3F3004B702A /* ChangeNameController.swift in Sources */,
 				FB4569CB260CD926004B702A /* ChangeLanguageView.swift in Sources */,
 				FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */,
-				FB664D2C25F5117F000DC55F /* BrandsView.swift in Sources */,
 				FBA7CAC3260245D40099777F /* Localizable+Generated.swift in Sources */,
 				FB4569D0260CDC50004B702A /* ChangeNameView.swift in Sources */,
 				E6DFBE3325FA6E6F0091ABFC /* ServiceLocator.swift in Sources */,
@@ -859,7 +874,6 @@
 				FBF81F162608E66B008D5C7F /* ProfileController.swift in Sources */,
 				FB664CF525F50174000DC55F /* CountriesListController.swift in Sources */,
 				FBA7CA1625FC9B000099777F /* UITapGestureRecognizer+Extension.swift in Sources */,
-				FBA7CABB260232F30099777F /* BrandViewModel.swift in Sources */,
 				FBF81F202608E6DF008D5C7F /* CartAdditionalProductCell.swift in Sources */,
 				FBAB1E8325F7A54600112B72 /* VerificationController.swift in Sources */,
 				FBF81F482608E775008D5C7F /* CartAdditionalProduct.swift in Sources */,
@@ -867,7 +881,9 @@
 				FBF81F2A2608E6FE008D5C7F /* CartFooter.swift in Sources */,
 				FB626D4F25FA508100C8E6B7 /* AdditionalView.swift in Sources */,
 				FBBF4C4225F8DA6F00341D0E /* AgreementController.swift in Sources */,
+				FBCCAB7B261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift in Sources */,
 				FBF81F0C2608E63D008D5C7F /* MainTabController.swift in Sources */,
+				FBCCAB80261DDF8E00EAEA72 /* Brand.swift in Sources */,
 				FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */,
 				FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */,
 				FBA7CA2325FCB91F0099777F /* APIService.swift in Sources */,
