@@ -171,9 +171,9 @@ class MapViewController: UIViewController {
             break
         }
         //        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        //        locationManager.requestAlwaysAuthorization()
+//                locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
-        print("tapped")
+//        print("tapped")
         focusToCurrentPosition()
     }
     
@@ -197,7 +197,6 @@ extension MapViewController {
 
 extension MapViewController: YMKUserLocationObjectListener {
     func onObjectAdded(with view: YMKUserLocationView) {
-        view.arrow.setIconWith(UIImage(named:"UserArrow")!)
         let pinPlacemark = view.pin.useCompositeIcon()
         pinPlacemark.setIconWithName(
             "pin",

@@ -26,8 +26,6 @@ class AddressSheetController: UIViewController {
        super.viewWillAppear(animated)
     }
     
-    
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIView.animate(withDuration: 0.3) { [weak self] in
@@ -43,7 +41,7 @@ class AddressSheetController: UIViewController {
     
     
     @IBAction func proceedAction(_ sender: UIButton) {
-        
+        self.navigationController?.pushViewController(MainTabController(), animated: true)
     }
     
     @IBAction func pickAddressAction(_ sender: UIButton) {

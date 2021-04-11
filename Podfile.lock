@@ -1,20 +1,34 @@
 PODS:
   - InputMask (6.1.0)
   - SwiftGen (6.4.0)
+  - YandexMapKit (3.5.0):
+    - YandexRuntime (= 3.5.0)
+  - YandexMapKitSearch (3.5.0):
+    - YandexMapKit (= 3.5.0)
+    - YandexRuntime (= 3.5.0)
+  - YandexRuntime (3.5.0)
 
 DEPENDENCIES:
   - InputMask
   - SwiftGen
+  - YandexMapKit
+  - YandexMapKitSearch
 
 SPEC REPOS:
   trunk:
     - InputMask
     - SwiftGen
+    - YandexMapKit
+    - YandexMapKitSearch
+    - YandexRuntime
 
 SPEC CHECKSUMS:
   InputMask: 71d291dc54d2deaeac6512afb6ec2304228c0bb7
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
+  YandexMapKit: ecd4b78de34a35df63d066ac299e6fd0fe46d1ba
+  YandexMapKitSearch: b46ddd1c80e2e35d006cdfc4ab88070a50cebeda
+  YandexRuntime: 2d55244d06267106cf9b00c25a1e63f72a73b6fd
 
-PODFILE CHECKSUM: 47c142b17aadd54de1d5eadbeac7df83dde41a87
+PODFILE CHECKSUM: 504e0a0c876861297c1bc5c3201899d3154cbe67
 
 COCOAPODS: 1.10.0

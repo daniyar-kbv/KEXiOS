@@ -9,6 +9,11 @@ target 'SalamBro' do
   pod 'InputMask'
   pod 'SwiftGen'
 
+  # Pods for yandex-map
+  pod 'YandexMapKit'
+  # Additional MapKit modules.
+  pod ‘YandexMapKitSearch'
+
   target 'SalamBroTests' do
     inherit! :search_paths
     # Pods for testing
