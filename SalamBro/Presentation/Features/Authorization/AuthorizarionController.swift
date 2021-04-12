@@ -200,12 +200,12 @@ extension AuthorizationController {
         countryCodeButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         countryCodeButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
         
+        aggreementLabel.topAnchor.constraint(equalTo: countryCodeButton.bottomAnchor, constant: 72).isActive = true
         aggreementLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
-        aggreementLabel.bottomAnchor.constraint(equalTo: getButton.topAnchor, constant: -16).isActive = true
         aggreementLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
         
+        getButton.topAnchor.constraint(equalTo: aggreementLabel.bottomAnchor, constant: 16).isActive = true
         getButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
-        getButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32).isActive = true
         getButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
         getButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
     }

@@ -41,6 +41,7 @@ class CartView: UIView {
     
     lazy var footerView: UIView = {
         let view = UIView()
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

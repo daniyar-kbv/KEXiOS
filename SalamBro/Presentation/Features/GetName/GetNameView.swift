@@ -95,8 +95,8 @@ extension GetNameView {
         nameField.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         nameField.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         
+        nextButton.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: 150).isActive = true
         nextButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
-        nextButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -32).isActive = true
         nextButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
         nextButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
     }

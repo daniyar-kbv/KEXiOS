@@ -18,6 +18,7 @@ class CommentarySheetController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -25,7 +26,6 @@ class CommentarySheetController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         yCoordinate = self.view.frame.origin.y
-        print(yCoordinate)
         delegate?.mapShadow(toggle: true)
     }
     
@@ -52,12 +52,12 @@ class CommentarySheetController: UIViewController {
     
     @IBAction func buttonAction(_ sender: UIButton) {
         if commentaryField.text != nil {
-            self.dismiss(animated: true) {
+//            self.dismiss(animated: true) {
                 self.removeFromParent()
                 self.view.removeFromSuperview()
                 self.delegate?.passCommentary(text: self.commentaryField.text!)
                 self.delegate?.hideCommentarySheet()
-            }
+//            }
         }
     }
 }

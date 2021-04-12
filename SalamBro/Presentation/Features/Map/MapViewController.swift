@@ -16,6 +16,7 @@ protocol MapDelegate {
     func showCommentarySheet()
     func hideCommentarySheet()
     func passCommentary(text: String)
+    func dissmissView(viewName: String)
 }
 
 class MapViewController: UIViewController {
@@ -275,6 +276,10 @@ extension MapViewController {
 }
 
 extension MapViewController: MapDelegate {
+    func dissmissView(viewName: String) {
+        print("x")
+    }
+    
     func hideCommentarySheet() {
         addressSheetVC.view.isHidden = false
     }

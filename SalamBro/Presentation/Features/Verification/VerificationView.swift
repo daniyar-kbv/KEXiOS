@@ -101,7 +101,7 @@ extension VerificationView {
         otpField.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         otpField.heightAnchor.constraint(equalToConstant: 65).isActive = true
         
-        getCodeButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        getCodeButton.topAnchor.constraint(equalTo: otpField.bottomAnchor, constant: 72).isActive = true
         getCodeButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
         getCodeButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
         getCodeButton.heightAnchor.constraint(equalToConstant: 43).isActive = true

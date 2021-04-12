@@ -79,7 +79,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="r2J-fj-sGo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="cwF-dO-nnc"/>
                 <constraint firstItem="r2J-fj-sGo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fac-im-k5V"/>
