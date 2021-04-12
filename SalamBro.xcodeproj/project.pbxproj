@@ -19,12 +19,25 @@
 		E6DFBE3B25FA70240091ABFC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3A25FA70240091ABFC /* NetworkManager.swift */; };
 		E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */; };
 		ECB61B520A3013C0E1A20656 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E70522479B758433B9143BB /* Pods_SalamBro.framework */; };
+		FB1E86E526243B93000ACFBE /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */; };
+		FB1E86EA26245C1A000ACFBE /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E86E926245C1A000ACFBE /* MapDelegate.swift */; };
+		FB36A30626238E2800788984 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB36A30526238E2800788984 /* SalamBro-Info.plist */; };
+		FB36A30B26238FC100788984 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36A30A26238FC100788984 /* Constants.swift */; };
 		FB4569AB260CCBD3004B702A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4569AA260CCBD3004B702A /* ProfileView.swift */; };
 		FB4569B1260CD3F3004B702A /* ChangeNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4569B0260CD3F3004B702A /* ChangeNameController.swift */; };
 		FB4569BA260CD570004B702A /* OrderHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4569B9260CD570004B702A /* OrderHistoryController.swift */; };
 		FB4569C3260CD5B1004B702A /* ChangeLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4569C2260CD5B1004B702A /* ChangeLanguageController.swift */; };
 		FB4569CB260CD926004B702A /* ChangeLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4569CA260CD926004B702A /* ChangeLanguageView.swift */; };
 		FB4569D0260CDC50004B702A /* ChangeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4569CF260CDC50004B702A /* ChangeNameView.swift */; };
+		FB48CA31262386B3005A9CDF /* SuggestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB48CA28262386B2005A9CDF /* SuggestController.xib */; };
+		FB48CA32262386B3005A9CDF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48CA29262386B2005A9CDF /* MapViewController.swift */; };
+		FB48CA33262386B3005A9CDF /* AddressSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48CA2A262386B2005A9CDF /* AddressSheetController.swift */; };
+		FB48CA34262386B3005A9CDF /* CommentarySheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48CA2B262386B2005A9CDF /* CommentarySheetController.swift */; };
+		FB48CA35262386B3005A9CDF /* SuggestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48CA2C262386B2005A9CDF /* SuggestCell.swift */; };
+		FB48CA36262386B3005A9CDF /* CommentarySheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB48CA2D262386B2005A9CDF /* CommentarySheetController.xib */; };
+		FB48CA37262386B3005A9CDF /* SuggestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB48CA2E262386B3005A9CDF /* SuggestCell.xib */; };
+		FB48CA38262386B3005A9CDF /* AddressSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB48CA2F262386B3005A9CDF /* AddressSheetController.xib */; };
+		FB48CA39262386B3005A9CDF /* SuggestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48CA30262386B3005A9CDF /* SuggestController.swift */; };
 		FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB626D4625FA48E700C8E6B7 /* VerificationView.swift */; };
 		FB626D4F25FA508100C8E6B7 /* AdditionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */; };
 		FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664CD625F4F243000DC55F /* UpdateController.swift */; };
@@ -119,12 +132,25 @@
 		E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandRepositoryImpl.swift; sourceTree = "<group>"; };
 		F196633B2610CD27C66E1360 /* Pods-SalamBroTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBroTests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBroTests/Pods-SalamBroTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F98B9E95BFE98AE0B8F1A966 /* Pods-SalamBro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.release.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.release.xcconfig"; sourceTree = "<group>"; };
+		FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
+		FB1E86E926245C1A000ACFBE /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
+		FB36A30526238E2800788984 /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
+		FB36A30A26238FC100788984 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FB4569AA260CCBD3004B702A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		FB4569B0260CD3F3004B702A /* ChangeNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameController.swift; sourceTree = "<group>"; };
 		FB4569B9260CD570004B702A /* OrderHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryController.swift; sourceTree = "<group>"; };
 		FB4569C2260CD5B1004B702A /* ChangeLanguageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLanguageController.swift; sourceTree = "<group>"; };
 		FB4569CA260CD926004B702A /* ChangeLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLanguageView.swift; sourceTree = "<group>"; };
 		FB4569CF260CDC50004B702A /* ChangeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameView.swift; sourceTree = "<group>"; };
+		FB48CA28262386B2005A9CDF /* SuggestController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestController.xib; sourceTree = "<group>"; };
+		FB48CA29262386B2005A9CDF /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		FB48CA2A262386B2005A9CDF /* AddressSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressSheetController.swift; sourceTree = "<group>"; };
+		FB48CA2B262386B2005A9CDF /* CommentarySheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentarySheetController.swift; sourceTree = "<group>"; };
+		FB48CA2C262386B2005A9CDF /* SuggestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestCell.swift; sourceTree = "<group>"; };
+		FB48CA2D262386B2005A9CDF /* CommentarySheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentarySheetController.xib; sourceTree = "<group>"; };
+		FB48CA2E262386B3005A9CDF /* SuggestCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestCell.xib; sourceTree = "<group>"; };
+		FB48CA2F262386B3005A9CDF /* AddressSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressSheetController.xib; sourceTree = "<group>"; };
+		FB48CA30262386B3005A9CDF /* SuggestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestController.swift; sourceTree = "<group>"; };
 		FB626D4625FA48E700C8E6B7 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
 		FB626D4E25FA508100C8E6B7 /* AdditionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalView.swift; sourceTree = "<group>"; };
 		FB664CD625F4F243000DC55F /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
@@ -392,6 +418,7 @@
 				FB0B919C25FBFA12003AFEBB /* Authorization */,
 				FB0B919B25FBF9F0003AFEBB /* Brands */,
 				FB0B919A25FBF9DC003AFEBB /* Address */,
+				FB48CA0F26238365005A9CDF /* Map */,
 				FB0B919925FBF580003AFEBB /* CitiesList */,
 				FB0B919825FBF56F003AFEBB /* CountriesList */,
 				FB0B919725FBF559003AFEBB /* Update */,
@@ -505,6 +532,23 @@
 			path = ChangeLanguage;
 			sourceTree = "<group>";
 		};
+		FB48CA0F26238365005A9CDF /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				FB48CA2A262386B2005A9CDF /* AddressSheetController.swift */,
+				FB48CA2F262386B3005A9CDF /* AddressSheetController.xib */,
+				FB48CA2B262386B2005A9CDF /* CommentarySheetController.swift */,
+				FB48CA2D262386B2005A9CDF /* CommentarySheetController.xib */,
+				FB48CA2C262386B2005A9CDF /* SuggestCell.swift */,
+				FB48CA2E262386B3005A9CDF /* SuggestCell.xib */,
+				FB48CA30262386B3005A9CDF /* SuggestController.swift */,
+				FB48CA28262386B2005A9CDF /* SuggestController.xib */,
+				FB48CA29262386B2005A9CDF /* MapViewController.swift */,
+				FB1E86E926245C1A000ACFBE /* MapDelegate.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
 		FB5AD61A260CC80A00794FA2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -530,6 +574,7 @@
 				FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */,
 				FBA7CA4925FD03A80099777F /* String+Extension.swift */,
 				FBF81F3D2608E75C008D5C7F /* UIView+Extension.swift */,
+				FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -568,6 +613,8 @@
 				FBA7CAC2260245D40099777F /* Localizable+Generated.swift */,
 				FB664D0A25F507DC000DC55F /* LaunchScreen.storyboard */,
 				FBA7CAA72602250E0099777F /* Localizable.strings */,
+				FB36A30526238E2800788984 /* SalamBro-Info.plist */,
+				FB36A30A26238FC100788984 /* Constants.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -617,6 +664,7 @@
 				E6B175B925ED523F00A9F827 /* Frameworks */,
 				E6B175BA25ED523F00A9F827 /* Resources */,
 				B2DF8E4C7EA81C1F22C7F3EE /* [CP] Embed Pods Frameworks */,
+				57FABF546DBFB37D11B576BA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -655,6 +703,7 @@
 				E6B175DA25ED524000A9F827 /* Frameworks */,
 				E6B175DB25ED524000A9F827 /* Resources */,
 				3DE4B9F377CE9AC4654282AE /* [CP] Embed Pods Frameworks */,
+				67FC76C023B3B3DE87242459 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -715,10 +764,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB664D0B25F507DC000DC55F /* LaunchScreen.storyboard in Resources */,
+				FB48CA31262386B3005A9CDF /* SuggestController.xib in Resources */,
+				FB48CA38262386B3005A9CDF /* AddressSheetController.xib in Resources */,
+				FB48CA37262386B3005A9CDF /* SuggestCell.xib in Resources */,
 				FBA7CAA52602250E0099777F /* Localizable.strings in Resources */,
 				FBF81F252608E6E5008D5C7F /* CartAdditionalProductCell.xib in Resources */,
+				FB48CA36262386B3005A9CDF /* CommentarySheetController.xib in Resources */,
 				FBF81F342608E709008D5C7F /* CartProductCell.xib in Resources */,
 				E6B175C925ED524000A9F827 /* Assets.xcassets in Resources */,
+				FB36A30626238E2800788984 /* SalamBro-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -776,6 +830,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		57FABF546DBFB37D11B576BA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		67FC76C023B3B3DE87242459 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8F328A2B8A8DC63699768181 /* [CP] Check Pods Manifest.lock */ = {
@@ -850,13 +938,16 @@
 				E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */,
 				FBCCAB73261DDF4800EAEA72 /* StagLayout.swift in Sources */,
 				FBA7CA2925FCBAB10099777F /* CountryCodePickerViewController.swift in Sources */,
+				FB48CA39262386B3005A9CDF /* SuggestController.swift in Sources */,
 				FBF81F632608E93E008D5C7F /* CartView.swift in Sources */,
 				FBCCAB85261DE00A00EAEA72 /* BrandCell.swift in Sources */,
 				FB4569B1260CD3F3004B702A /* ChangeNameController.swift in Sources */,
 				FB4569CB260CD926004B702A /* ChangeLanguageView.swift in Sources */,
+				FB1E86EA26245C1A000ACFBE /* MapDelegate.swift in Sources */,
 				FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */,
 				FBA7CAC3260245D40099777F /* Localizable+Generated.swift in Sources */,
 				FB4569D0260CDC50004B702A /* ChangeNameView.swift in Sources */,
+				FB48CA32262386B3005A9CDF /* MapViewController.swift in Sources */,
 				E6DFBE3325FA6E6F0091ABFC /* ServiceLocator.swift in Sources */,
 				E6DFBE2725FA6DFE0091ABFC /* BrandRepositoryMockImpl.swift in Sources */,
 				FB4569BA260CD570004B702A /* OrderHistoryController.swift in Sources */,
@@ -883,14 +974,17 @@
 				FBBF4C4225F8DA6F00341D0E /* AgreementController.swift in Sources */,
 				FBCCAB7B261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift in Sources */,
 				FBF81F0C2608E63D008D5C7F /* MainTabController.swift in Sources */,
+				FB36A30B26238FC100788984 /* Constants.swift in Sources */,
 				FBCCAB80261DDF8E00EAEA72 /* Brand.swift in Sources */,
 				FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */,
 				FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */,
 				FBA7CA2325FCB91F0099777F /* APIService.swift in Sources */,
 				FBA7CA2E25FCBB1C0099777F /* CountryCodePickerView.swift in Sources */,
+				FB48CA33262386B3005A9CDF /* AddressSheetController.swift in Sources */,
 				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
 				FBBF4C3A25F7FCF100341D0E /* OTPView.swift in Sources */,
 				FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */,
+				FB48CA34262386B3005A9CDF /* CommentarySheetController.swift in Sources */,
 				FB4569C3260CD5B1004B702A /* ChangeLanguageController.swift in Sources */,
 				FBF81F4D2608E779008D5C7F /* CartProduct.swift in Sources */,
 				FBA7CA4A25FD03A80099777F /* String+Extension.swift in Sources */,
@@ -898,9 +992,11 @@
 				FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */,
 				FB4569AB260CCBD3004B702A /* ProfileView.swift in Sources */,
 				FBA7CA3325FCBB370099777F /* CountryCodePickerViewModel.swift in Sources */,
+				FB1E86E526243B93000ACFBE /* UINavigationController+Extension.swift in Sources */,
 				FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */,
 				FBBF4C4C25F8FA9F00341D0E /* GetNameController.swift in Sources */,
 				FBA7CA1B25FCAD870099777F /* Country.swift in Sources */,
+				FB48CA35262386B3005A9CDF /* SuggestCell.swift in Sources */,
 				FBF81F5E2608E938008D5C7F /* CartController.swift in Sources */,
 				FBF81F112608E651008D5C7F /* MenuController.swift in Sources */,
 				E6DFBE1B25FA6D6A0091ABFC /* BrandRepository.swift in Sources */,

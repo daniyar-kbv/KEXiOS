@@ -91,6 +91,10 @@ extension MainTabController: MainTabDelegate {
         } else if itemCount != 0 {
             itemCount -= 1
         }
-        cart.tabBarItem.badgeValue = "\(itemCount)"
+        if itemCount != 0 {
+            cart.tabBarItem.badgeValue = "\(itemCount)"
+        } else {
+            cart.tabBarItem.badgeValue = nil
+        }
     }
 }

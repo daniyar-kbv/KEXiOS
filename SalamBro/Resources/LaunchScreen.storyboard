@@ -16,13 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="6fH-PO-1cX">
-                                <rect key="frame" x="132" y="378" width="150" height="150"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="10b-2u-Ys7"/>
-                                    <constraint firstAttribute="height" constant="150" id="I0R-Ys-UhD"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="kW3-9E-GKW"/>
-                                </constraints>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kexLogo" translatesAutoresizingMaskIntoConstraints="NO" id="6fH-PO-1cX">
+                                <rect key="frame" x="113.5" y="427.5" width="187" height="51"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -39,6 +34,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="1680" height="1188"/>
+        <image name="kexLogo" width="187" height="51"/>
     </resources>
 </document>

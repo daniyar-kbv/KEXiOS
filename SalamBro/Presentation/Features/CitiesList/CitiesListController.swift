@@ -47,7 +47,7 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if selectionIndexPath != nil {
             if selectionIndexPath == indexPath {
-                let vc = AddressController()
+                let vc = BrandsController()
                 selectionIndexPath = nil
                 navigationController?.pushViewController(vc, animated: true)
             } else {

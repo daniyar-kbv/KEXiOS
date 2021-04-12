@@ -97,3 +97,16 @@
 
 // MARK: - ChangeLanguage
 "ChangeLanguage.navigationBar.title" = "Select language";
+
+// MARK: - Map
+"MapView.addressField.title" = "Delivery address";
+"MapView.commentaryLabel.title" = "Commentary(apartment N, entrance, ...)";
+"MapView.proceedButton.title" = "Proceed to order";
+
+// MARK: - Suggest
+"Suggest.addressField.title" = "Enter address";
+"Suggest.button.title" = "Done";
+
+// MARK: - Commentary
+"Commentary.addressField.title" = "Commentary(apartment N, entrance, ...)";
+"Commentary.button.title" = "Done";

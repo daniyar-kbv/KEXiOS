@@ -1,0 +1,124 @@
+//
+//  SuggestViewController.swift
+//  yandex-map
+//
+//  Created by Arystan on 4/6/21.
+//
+
+import UIKit
+import YandexMapKitSearch
+import CoreLocation
+
+class SuggestController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UITextField!
+    @IBOutlet weak var doneButton: UIButton!
+    
+    let locationManager = CLLocationManager()
+    let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
+    
+    var suggestSession: YMKSearchSuggestSession!
+    var suggestResults: [YMKSuggestItem] = []
+    var targetLocation = YMKPoint()
+    
+    var fullQuery: String = ""
+    var delegate: MapDelegate?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+        suggestSession = searchManager.createSuggestSession()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UINib(nibName: "SuggestCell", bundle: nil), forCellReuseIdentifier: "SuggestCell")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        delegate?.mapShadow(toggle: true)
+    }
+    
+    func setupViews() {
+        searchBar.placeholder = L10n.Suggest.AddressField.title
+        doneButton.setTitle(L10n.Suggest.Button.title, for: .normal)
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 10
+        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+    }
+    
+    func onSuggestResponse(_ items: [YMKSuggestItem]) {
+        suggestResults = items
+        tableView.reloadData()
+    }
+
+    func onSuggestError(_ error: Error) {
+        let suggestError = (error as NSError).userInfo[YRTUnderlyingErrorKey] as! YRTError
+        var errorMessage = "Unknown error"
+        if suggestError.isKind(of: YRTNetworkError.self) {
+            errorMessage = "Network error"
+        } else if suggestError.isKind(of: YRTRemoteError.self) {
+            errorMessage = "Remote server error"
+        }
+        
+        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func queryChange(_ sender: UITextField) {
+        let suggestHandler = {(response: [YMKSuggestItem]?, error: Error?) -> Void in
+            if let items = response {
+                self.onSuggestResponse(items)
+            } else {
+                self.onSuggestError(error!)
+            }
+        }
+        let locValue: CLLocationCoordinate2D = locationManager.location!.coordinate
+        let point = YMKPoint(latitude: locValue.latitude, longitude: locValue.longitude)
+        suggestSession.suggest(
+            withText: sender.text!,
+            window: YMKBoundingBox(southWest: point, northEast: point),
+            suggestOptions: YMKSuggestOptions(suggestTypes: .geo, userPosition: point, suggestWords: true),
+            responseHandler: suggestHandler
+        )
+    }
+    
+    @IBAction func selectAddressAction(_ sender: UIButton) {
+        if searchBar.text != nil {
+            self.dismiss(animated: true) {
+                self.delegate?.reverseGeocoding(searchQuery: self.fullQuery, title: self.searchBar.text!)
+                self.delegate?.mapShadow(toggle: false)
+                print("exit select adreess view")
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt path: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SuggestCell", for: path) as! SuggestCell
+        cell.addressTitle.text = suggestResults[path.row].title.text
+        cell.subtitleTitle.text = suggestResults[path.row].subtitle?.text
+        return cell
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return suggestResults.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! SuggestCell
+        searchBar.text = cell.addressTitle.text
+        if let subtitle = cell.subtitleTitle.text {
+            fullQuery = subtitle + cell.addressTitle.text!
+        } else {
+            fullQuery = cell.addressTitle.text!
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
