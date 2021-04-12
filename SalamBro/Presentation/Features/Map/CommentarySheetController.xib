@@ -8,9 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommentarySheetController" customModule="yandex_map" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommentarySheetController" customModule="SalamBro" customModuleProvider="target">
             <connections>
                 <outlet property="commentaryField" destination="m7d-Uh-Lfi" id="YZq-FF-Eza"/>
+                <outlet property="contentView" destination="r2J-fj-sGo" id="Q3s-iJ-fwb"/>
                 <outlet property="proceedButton" destination="dTU-Kb-59h" id="ISJ-de-R13"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -26,7 +27,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Eu-gc-kRX" userLabel="commentaryView">
                             <rect key="frame" x="24" y="24" width="454" height="50"/>
                             <subviews>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Commentary(apartment N, entrance etc.)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m7d-Uh-Lfi">
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Commentary" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m7d-Uh-Lfi">
                                     <rect key="frame" x="16" y="15.5" width="414" height="19"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -52,7 +53,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="43" id="3h3-yI-9y9"/>
                             </constraints>
-                            <state key="normal" title="Proceed to order">
+                            <state key="normal" title="Done">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <userDefinedRuntimeAttributes>

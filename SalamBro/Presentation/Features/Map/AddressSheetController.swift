@@ -10,8 +10,10 @@ import UIKit
 class AddressSheetController: UIViewController {
     
     @IBOutlet weak var addressField: UITextField!
-    @IBOutlet weak var commentaryField: UITextField!
+    
     @IBOutlet weak var proceedButton: UIButton!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var commentaryLabel: UILabel!
     
     var suggestVC: SuggestController?
     var yCoordinate: CGFloat?
@@ -19,7 +21,7 @@ class AddressSheetController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        commentaryField.allowsEditingTextAttributes = false
+        setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,29 +36,46 @@ class AddressSheetController: UIViewController {
             self?.view.frame = CGRect(x: 0, y: yComponent, width: frame!.width, height: frame!.height)
         }
     }
-
-    @IBAction func didBeginEditingCommentary(_ sender: UITextField) {
-        delegate?.showCommentarySheet()
+    
+    func setupViews() {
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 10
+        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+    
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCommentaryLabel))
+        commentaryLabel.addGestureRecognizer(tap)
     }
     
-    
+    @objc func didTapCommentaryLabel(sender: UITapGestureRecognizer) {
+        delegate?.showCommentarySheet()
+    }
+
     @IBAction func proceedAction(_ sender: UIButton) {
         self.navigationController?.pushViewController(MainTabController(), animated: true)
     }
     
     @IBAction func pickAddressAction(_ sender: UIButton) {
-//        view.removeFromSuperview()
-//        removeFromParent()
         suggestVC!.modalPresentationStyle = .overCurrentContext
-//        navigationController?.pushViewController(suggestVC!, animated: true)
         present(suggestVC!, animated: true, completion: nil)
-//        view.removeFromSuperview()
-//        removeFromParent()
     }
 }
 
 extension AddressSheetController {
-    func pointTapped(address: String) {
+    func changeAddress(address: String) {
         addressField.text = "\(address)"
+        if addressField.text != nil {
+            proceedButton.backgroundColor = .kexRed
+            proceedButton.isEnabled = true
+        }
+    }
+    
+    func changeComment(comment: String) {
+        commentaryLabel.text = "\(comment)"
+        commentaryLabel.textColor = .black
+        if commentaryLabel.text == "" {
+            commentaryLabel.text = "Commentary"
+            commentaryLabel.textColor = .calmGray
+        }
+        
     }
 }

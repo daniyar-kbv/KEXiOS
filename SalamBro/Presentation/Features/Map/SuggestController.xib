@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -11,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SuggestController" customModule="SalamBro" customModuleProvider="target">
             <connections>
-                <outlet property="contenView" destination="c15-b8-iwC" id="mda-66-pJ6"/>
+                <outlet property="contentView" destination="c15-b8-iwC" id="mda-66-pJ6"/>
                 <outlet property="doneButton" destination="IPl-qu-Lsn" id="XK9-NX-TQM"/>
                 <outlet property="searchBar" destination="gVv-Af-sMl" id="AeX-NQ-5WC"/>
                 <outlet property="tableView" destination="mdu-w8-zve" id="jNA-xY-IO8"/>
@@ -24,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c15-b8-iwC" userLabel="ContentView">
-                    <rect key="frame" x="0.0" y="76" width="414" height="820"/>
+                    <rect key="frame" x="0.0" y="32" width="414" height="864"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="njA-rb-yOm" userLabel="searchLogo">
                             <rect key="frame" x="24" y="16" width="20" height="20"/>
@@ -59,7 +57,7 @@
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mdu-w8-zve">
-                            <rect key="frame" x="24" y="49" width="366" height="771"/>
+                            <rect key="frame" x="24" y="49" width="366" height="815"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>

@@ -9,6 +9,7 @@ import UIKit
 
 class CommentarySheetController: UIViewController {
     
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var commentaryField: UITextField!
     @IBOutlet weak var proceedButton: UIButton!
     
@@ -17,22 +18,26 @@ class CommentarySheetController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        yCoordinate = self.view.frame.origin.y
-        self.view.layer.cornerRadius = 20
-        self.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        yCoordinate = self.view.frame.origin.y
+        print(yCoordinate)
         delegate?.mapShadow(toggle: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         delegate?.mapShadow(toggle: false)
+    }
+    
+    func setupViews() {
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 10
+        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {

@@ -66,7 +66,7 @@ class MapViewController: UIViewController {
         return view
     }()
     
-    let adressSheetVC = AddressSheetController()
+    let addressSheetVC = AddressSheetController()
     let suggestVC = SuggestController()
     let commentarySheetVC = CommentarySheetController()
     
@@ -75,8 +75,8 @@ class MapViewController: UIViewController {
         suggestVC.delegate = self
         suggestVC.targetLocation = targetLocation
         locationManager.delegate = self
-        adressSheetVC.suggestVC = suggestVC
-        adressSheetVC.delegate = self
+        addressSheetVC.suggestVC = suggestVC
+        addressSheetVC.delegate = self
         setupViews()
         setupConstraints()
         mapView.mapWindow.map.move(
@@ -144,14 +144,14 @@ class MapViewController: UIViewController {
     }
     
     func addBottomSheetView(scrollable: Bool? = true) {
-        self.addChild(adressSheetVC)
-        self.view.addSubview(adressSheetVC.view)
-        adressSheetVC.didMove(toParent: self)
-        adressSheetVC.modalPresentationStyle = .pageSheet
+        self.addChild(addressSheetVC)
+        self.view.addSubview(addressSheetVC.view)
+        addressSheetVC.didMove(toParent: self)
+        addressSheetVC.modalPresentationStyle = .pageSheet
            // 3- Adjust bottomSheet frame and initial position.
         let height: CGFloat = 211.0
         let width  = view.frame.width
-        adressSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
+        addressSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
     }
     
     @objc func imageButtonTapped(_ sender:UIButton!) {
@@ -253,7 +253,7 @@ extension MapViewController {
                     continue
                 }
                 if objMetadata.address.components.count >= 5 {
-                    adressSheetVC.pointTapped(address: response.collection.children[0].obj!.name!)
+                    addressSheetVC.changeAddress(address: response.collection.children[0].obj!.name!)
                     print("searchResponse done")
                     return
                 }
@@ -276,11 +276,11 @@ extension MapViewController {
 
 extension MapViewController: MapDelegate {
     func hideCommentarySheet() {
-        adressSheetVC.view.isHidden = false
+        addressSheetVC.view.isHidden = false
     }
     
     func showCommentarySheet() {
-        adressSheetVC.view.isHidden = true
+        addressSheetVC.view.isHidden = true
         
         self.addChild(commentarySheetVC)
         self.view.addSubview(commentarySheetVC.view)
@@ -294,12 +294,12 @@ extension MapViewController: MapDelegate {
     }
     
     func passCommentary(text: String) {
-        adressSheetVC.commentaryField.text = text
+        addressSheetVC.changeComment(comment: text)
     }
     
     func passData(searchQuery: String, title: String) {
         print("passData Started")
-        adressSheetVC.pointTapped(address: title)
+        addressSheetVC.changeAddress(address: title)
         let responseHandler = {(searchResponse: YMKSearchResponse?, error: Error?) -> Void in
             if let response = searchResponse {
                 for searchResult in response.collection.children {

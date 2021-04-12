@@ -11,7 +11,7 @@ import CoreLocation
 
 class SuggestController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var contenView: UIView!
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UITextField!
     @IBOutlet weak var doneButton: UIButton!
@@ -46,28 +46,9 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func setupViews() {
-        contenView.clipsToBounds = true
-        contenView.layer.cornerRadius = 10
-        contenView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner] // Top right corner, Top left corner respectively
-//        prepareBackgroundView()
-    }
-    
-    func prepareBackgroundView(){
-//        let backgroundView = UIView()
-//        backgroundView.frame = UIScreen.main.bounds
-//        backgroundView.backgroundColor = UIColor.darkGray
-//        backgroundView.alpha = 0.3
-//
-//        view.insertSubview(backgroundView, at: 0)
-        
-//        let blurEffect = UIBlurEffect.init(style: .dark)
-//        let visualEffect = UIVisualEffectView.init(effect: blurEffect)
-//        let bluredView = UIVisualEffectView.init(effect: blurEffect)
-//        bluredView.contentView.addSubview(visualEffect)
-//        visualEffect.frame = UIScreen.main.bounds
-//        bluredView.frame = UIScreen.main.bounds
-//
-//        view.insertSubview(bluredView, at: 0)
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 10
+        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
     
     func onSuggestResponse(_ items: [YMKSuggestItem]) {
