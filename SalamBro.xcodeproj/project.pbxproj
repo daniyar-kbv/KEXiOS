@@ -19,6 +19,7 @@
 		E6DFBE3B25FA70240091ABFC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3A25FA70240091ABFC /* NetworkManager.swift */; };
 		E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */; };
 		ECB61B520A3013C0E1A20656 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E70522479B758433B9143BB /* Pods_SalamBro.framework */; };
+		FB1E86E526243B93000ACFBE /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */; };
 		FB36A30626238E2800788984 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB36A30526238E2800788984 /* SalamBro-Info.plist */; };
 		FB36A30B26238FC100788984 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36A30A26238FC100788984 /* Constants.swift */; };
 		FB4569AB260CCBD3004B702A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4569AA260CCBD3004B702A /* ProfileView.swift */; };
@@ -130,6 +131,7 @@
 		E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandRepositoryImpl.swift; sourceTree = "<group>"; };
 		F196633B2610CD27C66E1360 /* Pods-SalamBroTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBroTests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBroTests/Pods-SalamBroTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F98B9E95BFE98AE0B8F1A966 /* Pods-SalamBro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.release.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.release.xcconfig"; sourceTree = "<group>"; };
+		FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		FB36A30526238E2800788984 /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
 		FB36A30A26238FC100788984 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FB4569AA260CCBD3004B702A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -569,6 +571,7 @@
 				FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */,
 				FBA7CA4925FD03A80099777F /* String+Extension.swift */,
 				FBF81F3D2608E75C008D5C7F /* UIView+Extension.swift */,
+				FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -985,6 +988,7 @@
 				FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */,
 				FB4569AB260CCBD3004B702A /* ProfileView.swift in Sources */,
 				FBA7CA3325FCBB370099777F /* CountryCodePickerViewModel.swift in Sources */,
+				FB1E86E526243B93000ACFBE /* UINavigationController+Extension.swift in Sources */,
 				FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */,
 				FBBF4C4C25F8FA9F00341D0E /* GetNameController.swift in Sources */,
 				FBA7CA1B25FCAD870099777F /* Country.swift in Sources */,

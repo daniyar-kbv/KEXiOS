@@ -14,6 +14,7 @@ protocol ChangeNameViewDelegate {
 class ChangeNameView: UIView {
     
     public var delegate: ChangeNameViewDelegate?
+//    var yCoordinate: CGFloat?
     
     lazy var nameField: UITextField = {
         let field = UITextField()
@@ -39,12 +40,24 @@ class ChangeNameView: UIView {
         super.init(frame: .zero)
         setupViews()
         setupConstraints()
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//            saveButton.frame.origin.y -= keyboardSize.height
+//        }
+//    }
+//
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//        saveButton.frame.origin.y = yCoordinate!
+//    }
 }
 
 extension ChangeNameView {

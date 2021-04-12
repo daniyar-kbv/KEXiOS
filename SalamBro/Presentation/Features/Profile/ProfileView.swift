@@ -126,7 +126,7 @@ extension ProfileView {
 
     @objc
     func changeName(sender:UITapGestureRecognizer) {
-        delegate?.changeName()
+//        delegate?.changeName()
     }
 }
 

@@ -24,7 +24,7 @@ class GetNameController: UIViewController {
 
 extension GetNameController {
     func submitForms() {
-        self.navigationController?.pushViewController(MainTabController(), animated: true)
+        navigationController?.popToViewController(ofClass: MainTabController.self)
     }
 }
 
