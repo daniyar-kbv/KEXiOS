@@ -20,8 +20,8 @@ public let cities: [[String]] = [
 ]
 
 public let profileItems: [String] = [
-    "Order history",
-    "Change application language"
+    L10n.Profile.orderHistory,
+    L10n.Profile.changeLanguage
 ]
 
 public let languages: [String] = [

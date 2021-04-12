@@ -20,3 +20,8 @@ public var apiKey: String {
     return value
   }
 }
+
+public let ZOOM: Float = 18.0
+
+public let ALA_LAT: Double = 43.222015
+public let ALA_LON: Double = 76.851250

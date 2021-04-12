@@ -20,6 +20,7 @@
 		E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */; };
 		ECB61B520A3013C0E1A20656 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E70522479B758433B9143BB /* Pods_SalamBro.framework */; };
 		FB1E86E526243B93000ACFBE /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */; };
+		FB1E86EA26245C1A000ACFBE /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E86E926245C1A000ACFBE /* MapDelegate.swift */; };
 		FB36A30626238E2800788984 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB36A30526238E2800788984 /* SalamBro-Info.plist */; };
 		FB36A30B26238FC100788984 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36A30A26238FC100788984 /* Constants.swift */; };
 		FB4569AB260CCBD3004B702A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4569AA260CCBD3004B702A /* ProfileView.swift */; };
@@ -132,6 +133,7 @@
 		F196633B2610CD27C66E1360 /* Pods-SalamBroTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBroTests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBroTests/Pods-SalamBroTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F98B9E95BFE98AE0B8F1A966 /* Pods-SalamBro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.release.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.release.xcconfig"; sourceTree = "<group>"; };
 		FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
+		FB1E86E926245C1A000ACFBE /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
 		FB36A30526238E2800788984 /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
 		FB36A30A26238FC100788984 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FB4569AA260CCBD3004B702A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 				FB48CA30262386B3005A9CDF /* SuggestController.swift */,
 				FB48CA28262386B2005A9CDF /* SuggestController.xib */,
 				FB48CA29262386B2005A9CDF /* MapViewController.swift */,
+				FB1E86E926245C1A000ACFBE /* MapDelegate.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -940,6 +943,7 @@
 				FBCCAB85261DE00A00EAEA72 /* BrandCell.swift in Sources */,
 				FB4569B1260CD3F3004B702A /* ChangeNameController.swift in Sources */,
 				FB4569CB260CD926004B702A /* ChangeLanguageView.swift in Sources */,
+				FB1E86EA26245C1A000ACFBE /* MapDelegate.swift in Sources */,
 				FB664CFA25F502BA000DC55F /* CountriesListView.swift in Sources */,
 				FBA7CAC3260245D40099777F /* Localizable+Generated.swift in Sources */,
 				FB4569D0260CDC50004B702A /* ChangeNameView.swift in Sources */,

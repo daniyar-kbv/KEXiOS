@@ -35,6 +35,8 @@ class CommentarySheetController: UIViewController {
     }
     
     func setupViews() {
+        commentaryField.placeholder = L10n.Commentary.AddressField.title
+        proceedButton.setTitle(L10n.Commentary.Button.title, for: .normal)
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 10
         contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
@@ -52,6 +54,7 @@ class CommentarySheetController: UIViewController {
     
     @IBAction func buttonAction(_ sender: UIButton) {
         if commentaryField.text != nil {
+//FIXME: - self.dissmiss not working in ios 11, need further investigation
 //            self.dismiss(animated: true) {
                 self.removeFromParent()
                 self.view.removeFromSuperview()

@@ -196,6 +196,17 @@ internal enum L10n {
     }
   }
 
+  internal enum Commentary {
+    internal enum AddressField {
+      /// Commentary(apartment N, entrance, ...)
+      internal static let title = L10n.tr("Localizable", "Commentary.addressField.title")
+    }
+    internal enum Button {
+      /// Done
+      internal static let title = L10n.tr("Localizable", "Commentary.button.title")
+    }
+  }
+
   internal enum CountriesList {
     internal enum Navigation {
       /// Select your country
@@ -242,6 +253,21 @@ internal enum L10n {
     }
   }
 
+  internal enum MapView {
+    internal enum AddressField {
+      /// Delivery address
+      internal static let title = L10n.tr("Localizable", "MapView.addressField.title")
+    }
+    internal enum CommentaryLabel {
+      /// Commentary(apartment N, entrance, ...)
+      internal static let title = L10n.tr("Localizable", "MapView.commentaryLabel.title")
+    }
+    internal enum ProceedButton {
+      /// Proceed to order
+      internal static let title = L10n.tr("Localizable", "MapView.proceedButton.title")
+    }
+  }
+
   internal enum Profile {
     /// Change application language
     internal static let changeLanguage = L10n.tr("Localizable", "Profile.changeLanguage")
@@ -258,6 +284,17 @@ internal enum L10n {
     internal enum NavigationBar {
       /// Profile
       internal static let title = L10n.tr("Localizable", "Profile.navigationBar.title")
+    }
+  }
+
+  internal enum Suggest {
+    internal enum AddressField {
+      /// Enter address
+      internal static let title = L10n.tr("Localizable", "Suggest.addressField.title")
+    }
+    internal enum Button {
+      /// Done
+      internal static let title = L10n.tr("Localizable", "Suggest.button.title")
     }
   }
 

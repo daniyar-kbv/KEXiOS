@@ -10,22 +10,13 @@ import YandexMapKit
 import CoreLocation
 import YandexMapKitSearch
 
-protocol MapDelegate {
-    func passData(searchQuery: String, title: String)
-    func mapShadow(toggle: Bool)
-    func showCommentarySheet()
-    func hideCommentarySheet()
-    func passCommentary(text: String)
-    func dissmissView(viewName: String)
-}
-
 class MapViewController: UIViewController {
     
-    var targetLocation = YMKPoint(latitude: 43.222015, longitude: 76.851250)
+    var targetLocation = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
     let locationManager = CLLocationManager()
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
     var searchSession: YMKSearchSession?
-    let ZOOM: Float = 18.0
+
     
     var mapView: YMKMapView = {
         let view = YMKMapView()
@@ -149,7 +140,6 @@ class MapViewController: UIViewController {
         self.view.addSubview(addressSheetVC.view)
         addressSheetVC.didMove(toParent: self)
         addressSheetVC.modalPresentationStyle = .pageSheet
-           // 3- Adjust bottomSheet frame and initial position.
         let height: CGFloat = 211.0
         let width  = view.frame.width
         addressSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
@@ -171,23 +161,14 @@ class MapViewController: UIViewController {
             print("case always and when in user")
             break
         }
-        //        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//                locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
-//        print("tapped")
         focusToCurrentPosition()
-    }
-    
-    @objc func proceedToCommentary() {
-//        bottomSheetVC.view.removeFromSuperview()
-//        bottomSheetVC.removeFromParent()
     }
 }
 
 extension MapViewController {
     func focusToCurrentPosition() {
         let locValue:CLLocationCoordinate2D = locationManager.location!.coordinate
-//        let newLocation = YMKPoint(latitude: locValue.latitude, longitude: locValue.longitude)
         targetLocation = YMKPoint(latitude: locValue.latitude, longitude: locValue.longitude)
         mapView.mapWindow.map.move(
             with: YMKCameraPosition.init(target: targetLocation, zoom: ZOOM, azimuth: 0, tilt: 0),
@@ -268,6 +249,7 @@ extension MapViewController {
             if let response = searchResponse {
                 self.onSearchResponseName(response)
             } else {
+                //TODO: Error for search
                 //  self.onSearchError(error!)
             }
         }
@@ -302,7 +284,7 @@ extension MapViewController: MapDelegate {
         addressSheetVC.changeComment(comment: text)
     }
     
-    func passData(searchQuery: String, title: String) {
+    func reverseGeocoding(searchQuery: String, title: String) {
         print("passData Started")
         addressSheetVC.changeAddress(address: title)
         let responseHandler = {(searchResponse: YMKSearchResponse?, error: Error?) -> Void in
@@ -313,9 +295,10 @@ extension MapViewController: MapDelegate {
                         guard let objMetadata = response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata else {
                             continue
                         }
-//                        if objMetadata.address.components.count >= 5 {
+
+//                        if objMetadata.address.components.count >= 5 { checking if object is KindHome type
                             self.mapView.mapWindow.map.move(
-                                with: YMKCameraPosition.init(target: YMKPoint(latitude: objMetadata.balloonPoint.latitude, longitude: objMetadata.balloonPoint.longitude), zoom: self.ZOOM, azimuth: 0, tilt: 0),
+                                with: YMKCameraPosition.init(target: YMKPoint(latitude: objMetadata.balloonPoint.latitude, longitude: objMetadata.balloonPoint.longitude), zoom: ZOOM, azimuth: 0, tilt: 0),
                                 animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 3),
                                 cameraCallback: nil)
                             print("passData from mapdelegate is done")
@@ -324,6 +307,7 @@ extension MapViewController: MapDelegate {
                 }
                 self.onSearchResponseName(response)
             } else {
+                //TODO: - Search error for reverseGeocoding
                 //  self.onSearchError(error!)
             }
         }

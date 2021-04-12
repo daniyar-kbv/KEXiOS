@@ -22,10 +22,6 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
     var suggestSession: YMKSearchSuggestSession!
     var suggestResults: [YMKSuggestItem] = []
     var targetLocation = YMKPoint()
-    var BOUNDING_BOX = YMKBoundingBox(
-        southWest: YMKPoint(latitude: 43.222015, longitude: 76.851250),
-        northEast: YMKPoint(latitude: 43.222015, longitude: 76.851250)
-    )
     
     var fullQuery: String = ""
     var delegate: MapDelegate?
@@ -42,10 +38,11 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         delegate?.mapShadow(toggle: true)
-//        prepareBackgroundView()
     }
     
     func setupViews() {
+        searchBar.placeholder = L10n.Suggest.AddressField.title
+        doneButton.setTitle(L10n.Suggest.Button.title, for: .normal)
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 10
         contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
@@ -83,7 +80,7 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
         let point = YMKPoint(latitude: locValue.latitude, longitude: locValue.longitude)
         suggestSession.suggest(
             withText: sender.text!,
-            window: BOUNDING_BOX,
+            window: YMKBoundingBox(southWest: point, northEast: point),
             suggestOptions: YMKSuggestOptions(suggestTypes: .geo, userPosition: point, suggestWords: true),
             responseHandler: suggestHandler
         )
@@ -92,7 +89,7 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
     @IBAction func selectAddressAction(_ sender: UIButton) {
         if searchBar.text != nil {
             self.dismiss(animated: true) {
-                self.delegate?.passData(searchQuery: self.fullQuery, title: self.searchBar.text!)
+                self.delegate?.reverseGeocoding(searchQuery: self.fullQuery, title: self.searchBar.text!)
                 self.delegate?.mapShadow(toggle: false)
                 print("exit select adreess view")
             }

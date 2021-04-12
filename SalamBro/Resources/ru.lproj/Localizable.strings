@@ -101,3 +101,15 @@
 // MARK: - ChangeLanguage
 "ChangeLanguage.navigationBar.title" = "Выберите язык";
 
+// MARK: - Map
+"MapView.addressField.title" = "Адрес доставки";
+"MapView.commentaryLabel.title" = "Комментарий (квартира, подъезд, ...)";
+"MapView.proceedButton.title" = "Перейти к заказу";
+
+// MARK: - Suggest
+"Suggest.addressField.title" = "Введите адрес";
+"Suggest.button.title" = "Готово";
+
+// MARK: - Commentary
+"Commentary.addressField.title" = "Комментарий (квартира, подъезд, ...)";
+"Commentary.button.title" = "Готово";

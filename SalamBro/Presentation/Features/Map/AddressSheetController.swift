@@ -38,10 +38,13 @@ class AddressSheetController: UIViewController {
     }
     
     func setupViews() {
+        addressField.placeholder = L10n.MapView.AddressField.title
+        commentaryLabel.text = L10n.MapView.CommentaryLabel.title
+        proceedButton.setTitle(L10n.MapView.ProceedButton.title, for: .normal)
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 10
         contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-    
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCommentaryLabel))
         commentaryLabel.addGestureRecognizer(tap)
     }
@@ -73,7 +76,7 @@ extension AddressSheetController {
         commentaryLabel.text = "\(comment)"
         commentaryLabel.textColor = .black
         if commentaryLabel.text == "" {
-            commentaryLabel.text = "Commentary"
+            commentaryLabel.text = L10n.MapView.CommentaryLabel.title
             commentaryLabel.textColor = .calmGray
         }
         
