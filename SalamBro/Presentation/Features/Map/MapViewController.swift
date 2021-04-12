@@ -322,6 +322,7 @@ extension MapViewController: MapDelegate {
                 //  self.onSearchError(error!)
             }
         }
+        
         searchSession = searchManager.submit(withText: searchQuery, geometry: YMKGeometry(point: targetLocation), searchOptions: YMKSearchOptions(), responseHandler: responseHandler)
     }
     

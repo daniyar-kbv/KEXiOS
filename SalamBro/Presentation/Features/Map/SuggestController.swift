@@ -16,7 +16,6 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
     @IBOutlet weak var searchBar: UITextField!
     @IBOutlet weak var doneButton: UIButton!
     
-    
     let locationManager = CLLocationManager()
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
     
@@ -25,7 +24,9 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
     var targetLocation = YMKPoint()
     var BOUNDING_BOX = YMKBoundingBox(
         southWest: YMKPoint(latitude: 43.222015, longitude: 76.851250),
-        northEast: YMKPoint(latitude: 43.222015, longitude: 76.851250))
+        northEast: YMKPoint(latitude: 43.222015, longitude: 76.851250)
+    )
+    
     var fullQuery: String = ""
     var delegate: MapDelegate?
     
@@ -36,7 +37,6 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "SuggestCell", bundle: nil), forCellReuseIdentifier: "SuggestCell")
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

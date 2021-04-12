@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol CartViewDelegate {
-    func updateList()
-}
-
 class CartView: UIView {
     
     public var delegate: CartViewDelegate?
@@ -25,11 +21,11 @@ class CartView: UIView {
         table.allowsSelection = false
         table.register(UINib(nibName: "CartProductCell", bundle: nil), forCellReuseIdentifier: "CartProductCell")
         table.register(UINib(nibName: "CartAdditionalProductCell", bundle: nil), forCellReuseIdentifier: "CartAdditionalProductCell")
+        
         // hidden header fix, usually default headers of section in tableview is sticky
         let dummyViewHeight = CGFloat(56)
         table.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: table.bounds.size.width, height: dummyViewHeight))
         table.contentInset = UIEdgeInsets(top: -dummyViewHeight, left: 0, bottom: 0, right: 0)
-        
         tableViewFooter.frame = CGRect.init(x: 0, y: 0, width: table.frame.width, height: 160)
         table.tableFooterView = tableViewFooter
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -50,11 +46,11 @@ class CartView: UIView {
     }()
     
     lazy var orderButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.backgroundColor = .kexRed
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 10
-//        button.setTitle("Order", for: .normal)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -106,5 +102,9 @@ extension CartView {
         itemsTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor).isActive = true
         itemsTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor).isActive = true
         itemsTableView.bottomAnchor.constraint(equalTo: footerView.topAnchor).isActive = true
+    }
+    
+    @objc func buttonAction() {
+        delegate?.proceed()
     }
 }

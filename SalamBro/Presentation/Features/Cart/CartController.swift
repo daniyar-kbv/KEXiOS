@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CartViewDelegate {
+    func proceed()
+}
+
 class CartController: UIViewController {
     
     var mainTabDelegate: MainTabDelegate!
@@ -151,8 +155,8 @@ extension CartController: CellDelegate {
 }
 
 extension CartController: CartViewDelegate {
-    func updateList() {
-        print("update list...")
+    func proceed() {
+        self.navigationController?.pushViewController(AuthorizationController(), animated: true)
     }
 }
 
