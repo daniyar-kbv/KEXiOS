@@ -25,7 +25,13 @@ class MapViewController: UIViewController {
     }()
     
     var backButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.tintColor = .kexRed
+        button.setImage(UIImage(named: "back"), for: .normal)
+        button.layer.cornerRadius = 22
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -64,30 +70,9 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        suggestVC.delegate = self
-        suggestVC.targetLocation = targetLocation
-        locationManager.delegate = self
-        addressSheetVC.suggestVC = suggestVC
-        addressSheetVC.delegate = self
         setupViews()
         setupConstraints()
-        mapView.mapWindow.map.move(
-            with: YMKCameraPosition.init(target: targetLocation, zoom: ZOOM, azimuth: 0, tilt: 0),
-            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 5),
-            cameraCallback: nil)
-        mapView.mapWindow.map.addCameraListener(with: self)
-        mapView.mapWindow.map.isRotateGesturesEnabled = false
-        
-        let scale = UIScreen.main.scale
-        let mapKit = YMKMapKit.sharedInstance()
-        let userLocationLayer = mapKit.createUserLocationLayer(with: mapView.mapWindow)
-
-        userLocationLayer.setVisibleWithOn(true)
-        userLocationLayer.isHeadingEnabled = true
-        userLocationLayer.setAnchorWithAnchorNormal(
-            CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.5 * mapView.frame.size.height * scale),
-            anchorCourse: CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.83 * mapView.frame.size.height * scale))
-        userLocationLayer.setObjectListenerWith(self)
+        setupMap()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -106,8 +91,15 @@ class MapViewController: UIViewController {
     }
     
     func setupViews() {
+        suggestVC.delegate = self
+        suggestVC.targetLocation = targetLocation
+        
+        addressSheetVC.suggestVC = suggestVC
+        addressSheetVC.delegate = self
+        
         view.backgroundColor = .white
         view.addSubview(mapView)
+        view.addSubview(backButton)
         view.addSubview(enableLocationButton)
         view.addSubview(markerView)
         view.addSubview(shadow)
@@ -118,6 +110,11 @@ class MapViewController: UIViewController {
         mapView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         mapView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        backButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         
         enableLocationButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
         enableLocationButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
@@ -135,6 +132,28 @@ class MapViewController: UIViewController {
         shadow.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
+    func setupMap() {
+        locationManager.delegate = self
+        
+        mapView.mapWindow.map.move(
+            with: YMKCameraPosition.init(target: targetLocation, zoom: ZOOM, azimuth: 0, tilt: 0),
+            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 5),
+            cameraCallback: nil)
+        mapView.mapWindow.map.addCameraListener(with: self)
+        mapView.mapWindow.map.isRotateGesturesEnabled = false
+        
+        let scale = UIScreen.main.scale
+        let mapKit = YMKMapKit.sharedInstance()
+        let userLocationLayer = mapKit.createUserLocationLayer(with: mapView.mapWindow)
+
+        userLocationLayer.setVisibleWithOn(true)
+        userLocationLayer.isHeadingEnabled = true
+        userLocationLayer.setAnchorWithAnchorNormal(
+            CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.5 * mapView.frame.size.height * scale),
+            anchorCourse: CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.83 * mapView.frame.size.height * scale))
+        userLocationLayer.setObjectListenerWith(self)
+    }
+    
     func addBottomSheetView(scrollable: Bool? = true) {
         self.addChild(addressSheetVC)
         self.view.addSubview(addressSheetVC.view)
@@ -143,6 +162,10 @@ class MapViewController: UIViewController {
         let height: CGFloat = 211.0
         let width  = view.frame.width
         addressSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
+    }
+    
+    @objc func backButtonTapped(_ sender:UIButton!) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func imageButtonTapped(_ sender:UIButton!) {
