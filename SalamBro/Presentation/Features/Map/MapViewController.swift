@@ -142,16 +142,17 @@ class MapViewController: UIViewController {
         mapView.mapWindow.map.addCameraListener(with: self)
         mapView.mapWindow.map.isRotateGesturesEnabled = false
         
-        let scale = UIScreen.main.scale
-        let mapKit = YMKMapKit.sharedInstance()
-        let userLocationLayer = mapKit.createUserLocationLayer(with: mapView.mapWindow)
-
-        userLocationLayer.setVisibleWithOn(true)
-        userLocationLayer.isHeadingEnabled = true
-        userLocationLayer.setAnchorWithAnchorNormal(
-            CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.5 * mapView.frame.size.height * scale),
-            anchorCourse: CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.83 * mapView.frame.size.height * scale))
-        userLocationLayer.setObjectListenerWith(self)
+//FIXME: - yandex current location fix
+//        let scale = UIScreen.main.scale
+//        let mapKit = YMKMapKit.sharedInstance()
+//        let userLocationLayer = mapKit.createUserLocationLayer(with: mapView.mapWindow)
+//
+//        userLocationLayer.setVisibleWithOn(true)
+//        userLocationLayer.isHeadingEnabled = true
+//        userLocationLayer.setAnchorWithAnchorNormal(
+//            CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.5 * mapView.frame.size.height * scale),
+//            anchorCourse: CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.83 * mapView.frame.size.height * scale))
+//        userLocationLayer.setObjectListenerWith(self)
     }
     
     func addBottomSheetView(scrollable: Bool? = true) {
@@ -169,6 +170,7 @@ class MapViewController: UIViewController {
     }
     
     @objc func imageButtonTapped(_ sender:UIButton!) {
+        print("BUTTON TAPPED")
         let locStatus = CLLocationManager.authorizationStatus()
         switch locStatus {
           case .notDetermined:
@@ -202,20 +204,21 @@ extension MapViewController {
 
 extension MapViewController: YMKUserLocationObjectListener {
     func onObjectAdded(with view: YMKUserLocationView) {
-        let pinPlacemark = view.pin.useCompositeIcon()
-        pinPlacemark.setIconWithName(
-            "pin",
-            image: UIImage(named:"SearchResult")!,
-            style:YMKIconStyle(
-                anchor: CGPoint(x: 0.5, y: 0.5) as NSValue,
-                rotationType:YMKRotationType.rotate.rawValue as NSNumber,
-                zIndex: 1,
-                flat: true,
-                visible: true,
-                scale: 1,
-                tappableArea: nil))
-
-        view.accuracyCircle.fillColor = UIColor.blue
+//FIXME: - should map show the user's locatipon from locationManager?
+//        let pinPlacemark = view.pin.useCompositeIcon()
+//        pinPlacemark.setIconWithName(
+//            "pin",
+//            image: UIImage(named:"SearchResult")!,
+//            style:YMKIconStyle(
+//                anchor: CGPoint(x: 0.5, y: 0.5) as NSValue,
+//                rotationType:YMKRotationType.rotate.rawValue as NSNumber,
+//                zIndex: 1,
+//                flat: true,
+//                visible: true,
+//                scale: 1,
+//                tappableArea: nil))
+//
+//        view.accuracyCircle.fillColor = UIColor.blue
     }
     
     func onObjectRemoved(with view: YMKUserLocationView) {
@@ -229,8 +232,9 @@ extension MapViewController: YMKUserLocationObjectListener {
 
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        focusToCurrentPosition()
-        print("location changed")
+//FIXME: - check proper initialization
+//        focusToCurrentPosition()
+//        print("location changed")
     }
 }
 
