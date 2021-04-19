@@ -9,10 +9,11 @@ import UIKit
 
 class AddressSheetController: UIViewController {
     
+    @IBOutlet weak var addressView: UIView!
     @IBOutlet weak var addressField: UITextField!
-    
     @IBOutlet weak var proceedButton: UIButton!
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var commentaryView: UIView!
     @IBOutlet weak var commentaryLabel: UILabel!
     
     var suggestVC: SuggestController?
@@ -45,21 +46,24 @@ class AddressSheetController: UIViewController {
         contentView.layer.cornerRadius = 10
         contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCommentaryLabel))
-        commentaryLabel.addGestureRecognizer(tap)
+        let tapAddress = UITapGestureRecognizer(target: self, action: #selector(didTapAddressView))
+        addressView.addGestureRecognizer(tapAddress)
+        let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(didTapCommentaryView))
+        commentaryView.addGestureRecognizer(tapCommentary)
     }
     
-    @objc func didTapCommentaryLabel(sender: UITapGestureRecognizer) {
+    @objc func didTapAddressView(sender: UITapGestureRecognizer) {
+        print("pick address button pressed")
+        suggestVC!.modalPresentationStyle = .overCurrentContext
+        present(suggestVC!, animated: true, completion: nil)
+    }
+    
+    @objc func didTapCommentaryView(sender: UITapGestureRecognizer) {
         delegate?.showCommentarySheet()
     }
 
     @IBAction func proceedAction(_ sender: UIButton) {
         self.navigationController?.pushViewController(MainTabController(), animated: true)
-    }
-    
-    @IBAction func pickAddressAction(_ sender: UIButton) {
-        suggestVC!.modalPresentationStyle = .overCurrentContext
-        present(suggestVC!, animated: true, completion: nil)
     }
 }
 

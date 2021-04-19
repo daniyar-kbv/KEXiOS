@@ -142,17 +142,16 @@ class MapViewController: UIViewController {
         mapView.mapWindow.map.addCameraListener(with: self)
         mapView.mapWindow.map.isRotateGesturesEnabled = false
         
-//FIXME: - yandex current location fix
-//        let scale = UIScreen.main.scale
-//        let mapKit = YMKMapKit.sharedInstance()
-//        let userLocationLayer = mapKit.createUserLocationLayer(with: mapView.mapWindow)
-//
-//        userLocationLayer.setVisibleWithOn(true)
-//        userLocationLayer.isHeadingEnabled = true
-//        userLocationLayer.setAnchorWithAnchorNormal(
-//            CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.5 * mapView.frame.size.height * scale),
-//            anchorCourse: CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.83 * mapView.frame.size.height * scale))
-//        userLocationLayer.setObjectListenerWith(self)
+        let scale = UIScreen.main.scale
+        let mapKit = YMKMapKit.sharedInstance()
+        let userLocationLayer = mapKit.createUserLocationLayer(with: mapView.mapWindow)
+
+        userLocationLayer.setVisibleWithOn(true)
+        userLocationLayer.isHeadingEnabled = true
+        userLocationLayer.setAnchorWithAnchorNormal(
+            CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.5 * mapView.frame.size.height * scale),
+            anchorCourse: CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.83 * mapView.frame.size.height * scale))
+        userLocationLayer.setObjectListenerWith(self)
     }
     
     func addBottomSheetView(scrollable: Bool? = true) {
@@ -176,6 +175,7 @@ class MapViewController: UIViewController {
           case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
             print("not determined")
+            return
           case .denied, .restricted:
             let alert = UIAlertController(title: "Location Services are disabled", message: "Please enable Location Services in your Settings", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -205,20 +205,20 @@ extension MapViewController {
 extension MapViewController: YMKUserLocationObjectListener {
     func onObjectAdded(with view: YMKUserLocationView) {
 //FIXME: - should map show the user's locatipon from locationManager?
-//        let pinPlacemark = view.pin.useCompositeIcon()
-//        pinPlacemark.setIconWithName(
-//            "pin",
-//            image: UIImage(named:"SearchResult")!,
-//            style:YMKIconStyle(
-//                anchor: CGPoint(x: 0.5, y: 0.5) as NSValue,
-//                rotationType:YMKRotationType.rotate.rawValue as NSNumber,
-//                zIndex: 1,
-//                flat: true,
-//                visible: true,
-//                scale: 1,
-//                tappableArea: nil))
-//
-//        view.accuracyCircle.fillColor = UIColor.blue
+        let pinPlacemark = view.pin.useCompositeIcon()
+        pinPlacemark.setIconWithName(
+            "pin",
+            image: UIImage(named:"SearchResult")!,
+            style:YMKIconStyle(
+                anchor: CGPoint(x: 0.5, y: 0.5) as NSValue,
+                rotationType:YMKRotationType.rotate.rawValue as NSNumber,
+                zIndex: 1,
+                flat: true,
+                visible: true,
+                scale: 1,
+                tappableArea: nil))
+
+        view.accuracyCircle.fillColor = UIColor.blue
     }
     
     func onObjectRemoved(with view: YMKUserLocationView) {
@@ -261,11 +261,12 @@ extension MapViewController {
                 guard let objMetadata = response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata else {
                     continue
                 }
-                if objMetadata.address.components.count >= 5 {
+//MARK: - checking if object is KindHome type
+//                if objMetadata.address.components.count >= 5 {
                     addressSheetVC.changeAddress(address: response.collection.children[0].obj!.name!)
                     print("searchResponse done")
                     return
-                }
+//                }
             }
         }
         print("searchResponse done")
@@ -322,8 +323,8 @@ extension MapViewController: MapDelegate {
                         guard let objMetadata = response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata else {
                             continue
                         }
-
-//                        if objMetadata.address.components.count >= 5 { checking if object is KindHome type
+//MARK: - checking if object is KindHome type
+//                        if objMetadata.address.components.count >= 5 {
                             self.mapView.mapWindow.map.move(
                                 with: YMKCameraPosition.init(target: YMKPoint(latitude: objMetadata.balloonPoint.latitude, longitude: objMetadata.balloonPoint.longitude), zoom: ZOOM, azimuth: 0, tilt: 0),
                                 animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 3),

@@ -11,7 +11,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressSheetController" customModule="SalamBro" customModuleProvider="target">
             <connections>
                 <outlet property="addressField" destination="0UC-2H-sJ7" id="nYZ-si-ilo"/>
+                <outlet property="addressView" destination="V3V-7M-jTy" id="b2h-jh-cg4"/>
                 <outlet property="commentaryLabel" destination="prS-kf-JYR" id="BQp-0p-QTM"/>
+                <outlet property="commentaryView" destination="UEt-yO-sJu" id="fwc-7P-HDD"/>
                 <outlet property="contentView" destination="rOR-hP-Ezc" id="X5M-J7-QHM"/>
                 <outlet property="proceedButton" destination="3Cf-bO-cX9" id="hrw-6d-5lQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -44,7 +46,7 @@
                                 <action selector="proceedAction:" destination="-1" eventType="touchUpInside" id="f43-iQ-ZuI"/>
                             </connections>
                         </button>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3V-7M-jTy" userLabel="addressField">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3V-7M-jTy" userLabel="addressView">
                             <rect key="frame" x="24" y="24" width="366" height="50"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l6l-YO-sNR" userLabel="pickAddressButton">
@@ -53,11 +55,8 @@
                                     <state key="normal" image="chevron.right">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
-                                    <connections>
-                                        <action selector="pickAddressAction:" destination="-1" eventType="touchUpInside" id="ons-Sq-TWX"/>
-                                    </connections>
                                 </button>
-                                <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0UC-2H-sJ7">
+                                <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0UC-2H-sJ7" userLabel="addressField">
                                     <rect key="frame" x="16" y="14.5" width="310" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -82,7 +81,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UEt-yO-sJu" userLabel="commentaryView">
                             <rect key="frame" x="24" y="90" width="366" height="50"/>
                             <subviews>
-                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Commentary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prS-kf-JYR">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Commentary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prS-kf-JYR" userLabel="commentaryField">
                                     <rect key="frame" x="16" y="15" width="334" height="20"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
