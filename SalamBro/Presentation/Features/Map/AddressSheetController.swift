@@ -70,9 +70,12 @@ class AddressSheetController: UIViewController {
 extension AddressSheetController {
     func changeAddress(address: String) {
         addressField.text = "\(address)"
-        if addressField.text != nil {
+        if addressField.text != "" || addressField.text != nil {
             proceedButton.backgroundColor = .kexRed
             proceedButton.isEnabled = true
+        } else {
+            proceedButton.backgroundColor = .calmGray
+            proceedButton.isEnabled = false
         }
     }
     
@@ -83,6 +86,5 @@ extension AddressSheetController {
             commentaryLabel.text = L10n.MapView.CommentaryLabel.title
             commentaryLabel.textColor = .calmGray
         }
-        
     }
 }

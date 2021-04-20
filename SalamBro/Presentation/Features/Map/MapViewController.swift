@@ -52,14 +52,14 @@ class MapViewController: UIViewController {
         return button
     }()
     
-    var enableLocationButton: UIButton = {
+    var locationButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
         button.tintColor = .lightGray
         button.setImage(UIImage(named: "location"), for: .normal)
         button.layer.cornerRadius = 22
         button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(imageButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(locationButtonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -116,7 +116,7 @@ class MapViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(mapView)
         view.addSubview(backButton)
-        view.addSubview(enableLocationButton)
+        view.addSubview(locationButton)
         view.addSubview(markerView)
         view.addSubview(shadow)
     }
@@ -132,10 +132,10 @@ class MapViewController: UIViewController {
         backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         
-        enableLocationButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
-        enableLocationButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        enableLocationButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        enableLocationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -235).isActive = true
+        locationButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        locationButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        locationButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
+        locationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -235).isActive = true
         
         markerView.widthAnchor.constraint(equalToConstant: 36).isActive = true
         markerView.heightAnchor.constraint(equalToConstant: 44).isActive = true
@@ -179,7 +179,7 @@ class MapViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func imageButtonTapped(_ sender:UIButton!) {
+    @objc func locationButtonAction(_ sender:UIButton!) {
         print("BUTTON TAPPED")
         let locStatus = CLLocationManager.authorizationStatus()
         switch locStatus {
