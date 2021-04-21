@@ -16,13 +16,29 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
     var searchSession: YMKSearchSession?
-
     
     var mapView: YMKMapView = {
         let view = YMKMapView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+//FIXME: - first execution bool
+//    var isItFirstSelection: Bool = true
+    
+    var userLocation: YMKPoint? {
+        didSet {
+            guard userLocation != nil && userLocation?.latitude != 0 && userLocation?.longitude != 0 else { return }
+
+//            if isItFirstSelection {
+//                isItFirstSelection = false
+//                mapView.mapWindow.map.move(
+//                    with: YMKCameraPosition.init(target: userLocation!, zoom: ZOOM, azimuth: 0, tilt: 0),
+//                    animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 1),
+//                    cameraCallback: nil)
+//            }
+        }
+    }
     
     var backButton: UIButton = {
         let button = UIButton()
@@ -36,14 +52,14 @@ class MapViewController: UIViewController {
         return button
     }()
     
-    var enableLocationButton: UIButton = {
+    var locationButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
         button.tintColor = .lightGray
         button.setImage(UIImage(named: "location"), for: .normal)
         button.layer.cornerRadius = 22
         button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(imageButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(locationButtonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -100,7 +116,7 @@ class MapViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(mapView)
         view.addSubview(backButton)
-        view.addSubview(enableLocationButton)
+        view.addSubview(locationButton)
         view.addSubview(markerView)
         view.addSubview(shadow)
     }
@@ -116,10 +132,10 @@ class MapViewController: UIViewController {
         backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         
-        enableLocationButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
-        enableLocationButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        enableLocationButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        enableLocationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -235).isActive = true
+        locationButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        locationButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        locationButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
+        locationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -235).isActive = true
         
         markerView.widthAnchor.constraint(equalToConstant: 36).isActive = true
         markerView.heightAnchor.constraint(equalToConstant: 44).isActive = true
@@ -142,15 +158,10 @@ class MapViewController: UIViewController {
         mapView.mapWindow.map.addCameraListener(with: self)
         mapView.mapWindow.map.isRotateGesturesEnabled = false
         
-        let scale = UIScreen.main.scale
         let mapKit = YMKMapKit.sharedInstance()
         let userLocationLayer = mapKit.createUserLocationLayer(with: mapView.mapWindow)
 
         userLocationLayer.setVisibleWithOn(true)
-        userLocationLayer.isHeadingEnabled = true
-        userLocationLayer.setAnchorWithAnchorNormal(
-            CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.5 * mapView.frame.size.height * scale),
-            anchorCourse: CGPoint(x: 0.5 * mapView.frame.size.width * scale, y: 0.83 * mapView.frame.size.height * scale))
         userLocationLayer.setObjectListenerWith(self)
     }
     
@@ -168,12 +179,14 @@ class MapViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func imageButtonTapped(_ sender:UIButton!) {
+    @objc func locationButtonAction(_ sender:UIButton!) {
+        print("BUTTON TAPPED")
         let locStatus = CLLocationManager.authorizationStatus()
         switch locStatus {
           case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
             print("not determined")
+            return
           case .denied, .restricted:
             let alert = UIAlertController(title: "Location Services are disabled", message: "Please enable Location Services in your Settings", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -185,37 +198,33 @@ class MapViewController: UIViewController {
             break
         }
         locationManager.startUpdatingLocation()
-        focusToCurrentPosition()
-    }
-}
-
-extension MapViewController {
-    func focusToCurrentPosition() {
-        let locValue:CLLocationCoordinate2D = locationManager.location!.coordinate
-        targetLocation = YMKPoint(latitude: locValue.latitude, longitude: locValue.longitude)
-        mapView.mapWindow.map.move(
-            with: YMKCameraPosition.init(target: targetLocation, zoom: ZOOM, azimuth: 0, tilt: 0),
-            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 3),
-            cameraCallback: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if self.userLocation != nil {
+                self.mapView.mapWindow.map.move(
+                    with: YMKCameraPosition.init(target: self.userLocation!, zoom: ZOOM, azimuth: 0, tilt: 0),
+                    animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 1),
+                    cameraCallback: nil)
+            }
+        }
     }
 }
 
 extension MapViewController: YMKUserLocationObjectListener {
     func onObjectAdded(with view: YMKUserLocationView) {
+//FIXME: - should map show the user's location from locationManager?
         let pinPlacemark = view.pin.useCompositeIcon()
         pinPlacemark.setIconWithName(
             "pin",
             image: UIImage(named:"SearchResult")!,
             style:YMKIconStyle(
                 anchor: CGPoint(x: 0.5, y: 0.5) as NSValue,
-                rotationType:YMKRotationType.rotate.rawValue as NSNumber,
+                rotationType: YMKRotationType.rotate.rawValue as NSNumber,
                 zIndex: 1,
-                flat: true,
+                flat: false,
                 visible: true,
                 scale: 1,
                 tappableArea: nil))
-
-        view.accuracyCircle.fillColor = UIColor.blue
+        view.accuracyCircle.fillColor = .clear
     }
     
     func onObjectRemoved(with view: YMKUserLocationView) {
@@ -229,8 +238,7 @@ extension MapViewController: YMKUserLocationObjectListener {
 
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        focusToCurrentPosition()
-        print("location changed")
+        userLocation = YMKPoint(latitude: locations.last!.coordinate.latitude, longitude: locations.last!.coordinate.longitude)
     }
 }
 
@@ -257,11 +265,12 @@ extension MapViewController {
                 guard let objMetadata = response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata else {
                     continue
                 }
-                if objMetadata.address.components.count >= 5 {
+//MARK: - checking if object is KindHome type
+//                if objMetadata.address.components.count >= 5 {
                     addressSheetVC.changeAddress(address: response.collection.children[0].obj!.name!)
                     print("searchResponse done")
                     return
-                }
+//                }
             }
         }
         print("searchResponse done")
@@ -297,6 +306,7 @@ extension MapViewController: MapDelegate {
         commentarySheetVC.delegate = self
         commentarySheetVC.didMove(toParent: self)
         commentarySheetVC.modalPresentationStyle = .overCurrentContext
+        
         let height: CGFloat = 149.0
         let width  = view.frame.width
         commentarySheetVC.view.frame = CGRect(x: 0, y: self.view.frame.height - height, width: width, height: height)
@@ -318,8 +328,8 @@ extension MapViewController: MapDelegate {
                         guard let objMetadata = response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata else {
                             continue
                         }
-
-//                        if objMetadata.address.components.count >= 5 { checking if object is KindHome type
+//MARK: - checking if object is KindHome type
+//                        if objMetadata.address.components.count >= 5 {
                             self.mapView.mapWindow.map.move(
                                 with: YMKCameraPosition.init(target: YMKPoint(latitude: objMetadata.balloonPoint.latitude, longitude: objMetadata.balloonPoint.longitude), zoom: ZOOM, azimuth: 0, tilt: 0),
                                 animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 3),
