@@ -19,6 +19,11 @@
 		E6DFBE3B25FA70240091ABFC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3A25FA70240091ABFC /* NetworkManager.swift */; };
 		E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */; };
 		ECB61B520A3013C0E1A20656 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E70522479B758433B9143BB /* Pods_SalamBro.framework */; };
+		FB1B797726311BD40094927E /* ShareOrderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B797626311BD40094927E /* ShareOrderController.swift */; };
+		FB1B797F26311D250094927E /* ShareOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B797E26311D250094927E /* ShareOrderView.swift */; };
+		FB1B7984263125760094927E /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B7983263125760094927E /* OrderHistoryView.swift */; };
+		FB1B79BD263141460094927E /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B79BB263141460094927E /* RateController.swift */; };
+		FB1B79BE263141460094927E /* RateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB1B79BC263141460094927E /* RateController.xib */; };
 		FB1E86E526243B93000ACFBE /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */; };
 		FB1E86EA26245C1A000ACFBE /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E86E926245C1A000ACFBE /* MapDelegate.swift */; };
 		FB36A30626238E2800788984 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB36A30526238E2800788984 /* SalamBro-Info.plist */; };
@@ -132,6 +137,11 @@
 		E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandRepositoryImpl.swift; sourceTree = "<group>"; };
 		F196633B2610CD27C66E1360 /* Pods-SalamBroTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBroTests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBroTests/Pods-SalamBroTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F98B9E95BFE98AE0B8F1A966 /* Pods-SalamBro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.release.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.release.xcconfig"; sourceTree = "<group>"; };
+		FB1B797626311BD40094927E /* ShareOrderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOrderController.swift; sourceTree = "<group>"; };
+		FB1B797E26311D250094927E /* ShareOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOrderView.swift; sourceTree = "<group>"; };
+		FB1B7983263125760094927E /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
+		FB1B79BB263141460094927E /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
+		FB1B79BC263141460094927E /* RateController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RateController.xib; sourceTree = "<group>"; };
 		FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		FB1E86E926245C1A000ACFBE /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
 		FB36A30526238E2800788984 /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
@@ -406,6 +416,8 @@
 			children = (
 				FBCCAB71261DDF2C00EAEA72 /* StagLayout */,
 				FB4569C1260CD59C004B702A /* ChangeLanguage */,
+				FB1B79BA26313FEB0094927E /* RateOrder */,
+				FB1B797526311A590094927E /* ShareOrder */,
 				FB4569B8260CD559004B702A /* OrderHistory */,
 				FB4569AF260CD3DD004B702A /* ChangeName */,
 				FB5AD61A260CC80A00794FA2 /* Profile */,
@@ -506,6 +518,24 @@
 			path = GetName;
 			sourceTree = "<group>";
 		};
+		FB1B797526311A590094927E /* ShareOrder */ = {
+			isa = PBXGroup;
+			children = (
+				FB1B797626311BD40094927E /* ShareOrderController.swift */,
+				FB1B797E26311D250094927E /* ShareOrderView.swift */,
+			);
+			path = ShareOrder;
+			sourceTree = "<group>";
+		};
+		FB1B79BA26313FEB0094927E /* RateOrder */ = {
+			isa = PBXGroup;
+			children = (
+				FB1B79BB263141460094927E /* RateController.swift */,
+				FB1B79BC263141460094927E /* RateController.xib */,
+			);
+			path = RateOrder;
+			sourceTree = "<group>";
+		};
 		FB4569AF260CD3DD004B702A /* ChangeName */ = {
 			isa = PBXGroup;
 			children = (
@@ -519,6 +549,7 @@
 			isa = PBXGroup;
 			children = (
 				FB4569B9260CD570004B702A /* OrderHistoryController.swift */,
+				FB1B7983263125760094927E /* OrderHistoryView.swift */,
 			);
 			path = OrderHistory;
 			sourceTree = "<group>";
@@ -772,6 +803,7 @@
 				FB48CA36262386B3005A9CDF /* CommentarySheetController.xib in Resources */,
 				FBF81F342608E709008D5C7F /* CartProductCell.xib in Resources */,
 				E6B175C925ED524000A9F827 /* Assets.xcassets in Resources */,
+				FB1B79BE263141460094927E /* RateController.xib in Resources */,
 				FB36A30626238E2800788984 /* SalamBro-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -935,6 +967,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */,
+				FB1B79BD263141460094927E /* RateController.swift in Sources */,
 				E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */,
 				FBCCAB73261DDF4800EAEA72 /* StagLayout.swift in Sources */,
 				FBA7CA2925FCBAB10099777F /* CountryCodePickerViewController.swift in Sources */,
@@ -963,6 +996,7 @@
 				E6DFBE3B25FA70240091ABFC /* NetworkManager.swift in Sources */,
 				FBF81F432608E770008D5C7F /* Cart.swift in Sources */,
 				FBF81F162608E66B008D5C7F /* ProfileController.swift in Sources */,
+				FB1B797F26311D250094927E /* ShareOrderView.swift in Sources */,
 				FB664CF525F50174000DC55F /* CountriesListController.swift in Sources */,
 				FBA7CA1625FC9B000099777F /* UITapGestureRecognizer+Extension.swift in Sources */,
 				FBF81F202608E6DF008D5C7F /* CartAdditionalProductCell.swift in Sources */,
@@ -990,6 +1024,8 @@
 				FBA7CA4A25FD03A80099777F /* String+Extension.swift in Sources */,
 				FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */,
 				FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */,
+				FB1B7984263125760094927E /* OrderHistoryView.swift in Sources */,
+				FB1B797726311BD40094927E /* ShareOrderController.swift in Sources */,
 				FB4569AB260CCBD3004B702A /* ProfileView.swift in Sources */,
 				FBA7CA3325FCBB370099777F /* CountryCodePickerViewModel.swift in Sources */,
 				FB1E86E526243B93000ACFBE /* UINavigationController+Extension.swift in Sources */,
