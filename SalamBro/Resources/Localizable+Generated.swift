@@ -287,6 +287,69 @@ internal enum L10n {
     }
   }
 
+  internal enum RateOrder {
+    /// Rate order
+    internal static let title = L10n.tr("Localizable", "RateOrder.title")
+    internal enum AverageRate {
+      /// Average is not cool. What should we\nfix next time?
+      internal static let subtitle = L10n.tr("Localizable", "RateOrder.averageRate.subtitle")
+      /// Clear! What should we improve?
+      internal static let title = L10n.tr("Localizable", "RateOrder.averageRate.title")
+    }
+    internal enum BadRate {
+      /// We want to fix this! Something went wrong,\nhow do you need it? Your comments will help us much!
+      internal static let subtitle = L10n.tr("Localizable", "RateOrder.badRate.subtitle")
+      /// We apologise! Something went wrong?
+      internal static let title = L10n.tr("Localizable", "RateOrder.badRate.title")
+    }
+    internal enum Cell {
+      internal enum CourierNotFoundClient {
+        /// The courier did not find me
+        internal static let text = L10n.tr("Localizable", "RateOrder.cell.courierNotFoundClient.text")
+      }
+      internal enum CourierWork {
+        /// Courier work
+        internal static let text = L10n.tr("Localizable", "RateOrder.cell.courierWork.text")
+      }
+      internal enum DeliveryTime {
+        /// Delivery time
+        internal static let text = L10n.tr("Localizable", "RateOrder.cell.deliveryTime.text")
+      }
+      internal enum FoodIsCold {
+        /// The food was cold
+        internal static let text = L10n.tr("Localizable", "RateOrder.cell.foodIsCold.text")
+      }
+      internal enum FoodIsMissing {
+        /// Missing dish
+        internal static let text = L10n.tr("Localizable", "RateOrder.cell.foodIsMissing.text")
+      }
+      internal enum GivenTime {
+        /// Suggested time
+        internal static let text = L10n.tr("Localizable", "RateOrder.cell.givenTime.text")
+      }
+    }
+    internal enum CommentaryField {
+      /// Add commentary
+      internal static let placeholder = L10n.tr("Localizable", "RateOrder.commentaryField.placeholder")
+    }
+    internal enum ExcellentRate {
+      /// What did you like the most?
+      internal static let subtitle = L10n.tr("Localizable", "RateOrder.excellentRate.subtitle")
+      /// It's good that everything went well!
+      internal static let title = L10n.tr("Localizable", "RateOrder.excellentRate.title")
+    }
+    internal enum GoodRate {
+      /// 4/5 is good - but not perfect.\nWhat should we improve next time?
+      internal static let subtitle = L10n.tr("Localizable", "RateOrder.goodRate.subtitle")
+      /// Thank you! What could we\nimprove?
+      internal static let title = L10n.tr("Localizable", "RateOrder.goodRate.title")
+    }
+    internal enum SubmitButton {
+      /// Send
+      internal static let title = L10n.tr("Localizable", "RateOrder.submitButton.title")
+    }
+  }
+
   internal enum Suggest {
     internal enum AddressField {
       /// Enter address

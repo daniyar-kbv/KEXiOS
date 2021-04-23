@@ -12,9 +12,9 @@ class RateController: UIViewController {
 
     var data: [String] = []
     
-    var arrayStar13: [String] = ["Работа курьера", "Предлагаемое время", "Курьер не нашел меня", "Отсутствует блюдо", "Еда была холодной"]
-    var arrayStar4: [String] = ["Работа курьера", "Предлагаемое время", "Время доставки", "Еда была холодной"]
-    var arrayStar5: [String] = ["Работа курьера", "Предлагаемое время", "Время доставки"]
+    var arrayStar13: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.CourierNotFoundClient.text, L10n.RateOrder.Cell.FoodIsMissing.text, L10n.RateOrder.Cell.FoodIsCold.text]
+    var arrayStar4: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text, L10n.RateOrder.Cell.FoodIsCold.text]
+    var arrayStar5: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text]
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingView: CosmosView!
@@ -30,6 +30,21 @@ class RateController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
+        
+        
+        
+    }
+    
+    override func viewDidLayoutSubviews () {
+        super.viewDidLayoutSubviews()
+        collectionViewHeightConstraint.constant = collectionView.collectionViewLayout.collectionViewContentSize.height
+    }
+    
+    private func setupViews() {
+        button.setTitle(L10n.RateOrder.SubmitButton.title, for: .normal)
+        commentaryField.placeholder = L10n.RateOrder.CommentaryField.placeholder
+        
         ratingView.didFinishTouchingCosmos = didFinishTouchRating
         
         let layout = UICollectionViewCenterLayout()
@@ -38,23 +53,16 @@ class RateController: UIViewController {
         layout.minimumLineSpacing = 8
         layout.scrollDirection = .vertical
         
-//        let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(didTapCommentaryView))
-//        commentaryView.addGestureRecognizer(tapCommentary)
-        
-
-        
-        
-        
         collectionView.collectionViewLayout = layout
         collectionView.register(UINib(nibName: "RatingItemCell", bundle: nil), forCellWithReuseIdentifier: "RatingItemCell")
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.allowsMultipleSelection = true
-    }
-    
-    override func viewDidLayoutSubviews () {
-        super.viewDidLayoutSubviews()
-        collectionViewHeightConstraint.constant = collectionView.collectionViewLayout.collectionViewContentSize.height
+        
+// future commentary functional
+//        let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(didTapCommentaryView))
+//        commentaryView.addGestureRecognizer(tapCommentary)
+
     }
     
     private func didFinishTouchRating(_ rating: Double) {
@@ -64,28 +72,28 @@ class RateController: UIViewController {
         infoStack.isHidden = false
         switch rating {
         case 1.0..<2.0:
-            subtitleFirstLabel.text = "star 1.0 text"
-            subtitleSecondLabel.text = "star 2.0 description"
+            subtitleFirstLabel.text = L10n.RateOrder.BadRate.title
+            subtitleSecondLabel.text = L10n.RateOrder.BadRate.subtitle
             data = arrayStar13
         case 2.0..<3.0:
-            subtitleFirstLabel.text = "star 2.0 text"
-            subtitleSecondLabel.text = "star 2.0 description"
+            subtitleFirstLabel.text = L10n.RateOrder.BadRate.title
+            subtitleSecondLabel.text = L10n.RateOrder.BadRate.subtitle
             data = arrayStar13
         case 3.0..<4.0:
-            subtitleFirstLabel.text = "star 3.0 text"
-            subtitleSecondLabel.text = "star 3.0 description"
+            subtitleFirstLabel.text = L10n.RateOrder.AverageRate.title
+            subtitleSecondLabel.text = L10n.RateOrder.AverageRate.title
             data = arrayStar13
         case 4.0..<5.0:
-            subtitleFirstLabel.text = "star 4.0 text"
-            subtitleSecondLabel.text = "star 4.0 description"
+            subtitleFirstLabel.text = L10n.RateOrder.GoodRate.title
+            subtitleSecondLabel.text = L10n.RateOrder.GoodRate.subtitle
             data = arrayStar4
         case 5.0:
-            subtitleFirstLabel.text = "star 5.0 text star 5.0 textstar 5.0 textstar 5.0 textstar 5.0 textstar 5.0 textstar 5.0 textstar 5.0 textstar 5.0 text"
-            subtitleSecondLabel.text = "star 5.0 description star 5.0 descriptionstar 5.0 description star 5.0 descriptionstar 5.0 descriptionstar 5.0 descriptionstar 5.0 descriptionstar 5.0 descriptionstar 5.0 descriptionstar 5.0 descriptionstar 5.0 descriptionstar 5.0 description"
+            subtitleFirstLabel.text = L10n.RateOrder.ExcellentRate.title
+            subtitleSecondLabel.text = L10n.RateOrder.ExcellentRate.subtitle
             data = arrayStar5
         default:
-            subtitleFirstLabel.text = "mismatch"
-            subtitleSecondLabel.text = "mismatch"
+            subtitleFirstLabel.text = nil
+            subtitleSecondLabel.text = nil
         }
         collectionView.reloadData()
         collectionView.layoutIfNeeded()
