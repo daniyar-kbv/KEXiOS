@@ -78,6 +78,9 @@
 		FBCCAB7B261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCAB7A261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift */; };
 		FBCCAB80261DDF8E00EAEA72 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCAB7F261DDF8E00EAEA72 /* Brand.swift */; };
 		FBCCAB85261DE00A00EAEA72 /* BrandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCAB84261DE00A00EAEA72 /* BrandCell.swift */; };
+		FBDA14FE26318B320060DE14 /* UICollectionViewCenterLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDA14FD26318B320060DE14 /* UICollectionViewCenterLayout.swift */; };
+		FBDA150E26318BDF0060DE14 /* RatingItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDA150C26318BDF0060DE14 /* RatingItemCell.swift */; };
+		FBDA150F26318BDF0060DE14 /* RatingItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBDA150D26318BDF0060DE14 /* RatingItemCell.xib */; };
 		FBF81F0C2608E63D008D5C7F /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF81F0B2608E63D008D5C7F /* MainTabController.swift */; };
 		FBF81F112608E651008D5C7F /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF81F102608E651008D5C7F /* MenuController.swift */; };
 		FBF81F162608E66B008D5C7F /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF81F152608E66B008D5C7F /* ProfileController.swift */; };
@@ -197,6 +200,9 @@
 		FBCCAB7A261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagLayoutFrameHolder.swift; sourceTree = "<group>"; };
 		FBCCAB7F261DDF8E00EAEA72 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		FBCCAB84261DE00A00EAEA72 /* BrandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandCell.swift; sourceTree = "<group>"; };
+		FBDA14FD26318B320060DE14 /* UICollectionViewCenterLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCenterLayout.swift; sourceTree = "<group>"; };
+		FBDA150C26318BDF0060DE14 /* RatingItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingItemCell.swift; sourceTree = "<group>"; };
+		FBDA150D26318BDF0060DE14 /* RatingItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RatingItemCell.xib; sourceTree = "<group>"; };
 		FBF81F0B2608E63D008D5C7F /* MainTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		FBF81F102608E651008D5C7F /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		FBF81F152608E66B008D5C7F /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
@@ -530,8 +536,11 @@
 		FB1B79BA26313FEB0094927E /* RateOrder */ = {
 			isa = PBXGroup;
 			children = (
+				FBDA150C26318BDF0060DE14 /* RatingItemCell.swift */,
+				FBDA150D26318BDF0060DE14 /* RatingItemCell.xib */,
 				FB1B79BB263141460094927E /* RateController.swift */,
 				FB1B79BC263141460094927E /* RateController.xib */,
+				FBDA14FD26318B320060DE14 /* UICollectionViewCenterLayout.swift */,
 			);
 			path = RateOrder;
 			sourceTree = "<group>";
@@ -797,6 +806,7 @@
 				FB664D0B25F507DC000DC55F /* LaunchScreen.storyboard in Resources */,
 				FB48CA31262386B3005A9CDF /* SuggestController.xib in Resources */,
 				FB48CA38262386B3005A9CDF /* AddressSheetController.xib in Resources */,
+				FBDA150F26318BDF0060DE14 /* RatingItemCell.xib in Resources */,
 				FB48CA37262386B3005A9CDF /* SuggestCell.xib in Resources */,
 				FBA7CAA52602250E0099777F /* Localizable.strings in Resources */,
 				FBF81F252608E6E5008D5C7F /* CartAdditionalProductCell.xib in Resources */,
@@ -1009,6 +1019,7 @@
 				FBCCAB7B261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift in Sources */,
 				FBF81F0C2608E63D008D5C7F /* MainTabController.swift in Sources */,
 				FB36A30B26238FC100788984 /* Constants.swift in Sources */,
+				FBDA150E26318BDF0060DE14 /* RatingItemCell.swift in Sources */,
 				FBCCAB80261DDF8E00EAEA72 /* Brand.swift in Sources */,
 				FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */,
 				FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */,
@@ -1025,6 +1036,7 @@
 				FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */,
 				FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */,
 				FB1B7984263125760094927E /* OrderHistoryView.swift in Sources */,
+				FBDA14FE26318B320060DE14 /* UICollectionViewCenterLayout.swift in Sources */,
 				FB1B797726311BD40094927E /* ShareOrderController.swift in Sources */,
 				FB4569AB260CCBD3004B702A /* ProfileView.swift in Sources */,
 				FBA7CA3325FCBB370099777F /* CountryCodePickerViewModel.swift in Sources */,

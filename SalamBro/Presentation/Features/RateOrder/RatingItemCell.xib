@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="RatingItemCell" customModule="SalamBro" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="171" height="33"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="171" height="33"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uYF-Dx-6Yg" userLabel="cellView">
+                        <rect key="frame" x="0.0" y="0.0" width="171" height="33"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ouq-XA-lfb">
+                                <rect key="frame" x="8" y="8" width="155" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.81960784310000001" green="0.2156862745" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ouq-XA-lfb" firstAttribute="top" secondItem="uYF-Dx-6Yg" secondAttribute="top" constant="8" id="InB-j9-DoQ"/>
+                            <constraint firstItem="Ouq-XA-lfb" firstAttribute="leading" secondItem="uYF-Dx-6Yg" secondAttribute="leading" constant="8" id="ObC-z3-Ddm"/>
+                            <constraint firstAttribute="trailing" secondItem="Ouq-XA-lfb" secondAttribute="trailing" constant="8" id="kGn-xd-oce"/>
+                            <constraint firstAttribute="bottom" secondItem="Ouq-XA-lfb" secondAttribute="bottom" constant="8" id="oh5-ge-jbU"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" red="0.81960784310000001" green="0.2156862745" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="uYF-Dx-6Yg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="GNF-Iy-apv"/>
+                <constraint firstAttribute="bottom" secondItem="uYF-Dx-6Yg" secondAttribute="bottom" id="Xcz-mR-NEH"/>
+                <constraint firstAttribute="trailing" secondItem="uYF-Dx-6Yg" secondAttribute="trailing" id="rqI-I0-tKL"/>
+                <constraint firstItem="uYF-Dx-6Yg" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="wPJ-08-zDW"/>
+            </constraints>
+            <size key="customSize" width="171" height="135"/>
+            <connections>
+                <outlet property="cellView" destination="uYF-Dx-6Yg" id="McT-nt-HWZ"/>
+                <outlet property="titleLabel" destination="Ouq-XA-lfb" id="Mzo-0e-ZP0"/>
+            </connections>
+            <point key="canvasLocation" x="228.2608695652174" y="165.06696428571428"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
