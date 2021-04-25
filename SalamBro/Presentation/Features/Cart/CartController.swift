@@ -16,7 +16,7 @@ class CartController: UIViewController {
     var mainTabDelegate: MainTabDelegate!
     var cart: Cart!
     var apiService = APIService()
-
+    var cartViewModel: CartViewModel?
     lazy var rootView = CartView(delegate: self)
     lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title)
     
@@ -24,9 +24,13 @@ class CartController: UIViewController {
         view = rootView
     }
     
+    // CartViewModel(:CartRepository)
+    // C
     override func viewDidLoad() {
         super.viewDidLoad()
-        cart = apiService.getCart()
+        cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
+//        cart = apiService.getCart()
+        
         configUI()
         rootView.itemsTableView.reloadData()
         rootView.updateTableViewFooterUI(cart: cart)
