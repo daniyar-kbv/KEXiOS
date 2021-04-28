@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="582" height="132"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aF0-Aj-qhP">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fastFood" translatesAutoresizingMaskIntoConstraints="NO" id="aF0-Aj-qhP">
                         <rect key="frame" x="24" y="16" width="115" height="100"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="115" id="BcK-gH-iaW"/>
@@ -44,10 +44,10 @@
                                 <rect key="frame" x="0.0" y="76" width="419" height="24"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xUb-VU-aOJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="43" height="24"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="55" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <inset key="titleEdgeInsets" minX="7" minY="3.5" maxX="7" maxY="3.5"/>
-                                        <state key="normal" title="Button">
+                                        <inset key="contentEdgeInsets" minX="7" minY="3.5" maxX="7" maxY="3.5"/>
+                                        <state key="normal" title="1490T">
                                             <color key="titleColor" red="0.81960784310000001" green="0.2156862745" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -88,6 +88,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="fastFood" width="136" height="136"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

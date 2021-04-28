@@ -9,10 +9,9 @@ import Foundation
 
 class BrandRepositoryImpl: BrandRepository {
 
+    private let networkManager: APIService
     
-    private let networkManager: NetworkManager
-    
-    init(networkManager: NetworkManager) {
+    init(networkManager: APIService) {
         self.networkManager = networkManager
     }
     
