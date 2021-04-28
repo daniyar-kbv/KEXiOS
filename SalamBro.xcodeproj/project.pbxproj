@@ -20,8 +20,6 @@
 		ECB61B520A3013C0E1A20656 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E70522479B758433B9143BB /* Pods_SalamBro.framework */; };
 		FB1E86E526243B93000ACFBE /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */; };
 		FB1E86EA26245C1A000ACFBE /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E86E926245C1A000ACFBE /* MapDelegate.swift */; };
-		FB292AAA2632F59A005D81B2 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB292AA82632F59A005D81B2 /* MenuController.swift */; };
-		FB292AAB2632F59A005D81B2 /* MenuController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB292AA92632F59A005D81B2 /* MenuController.xib */; };
 		FB36A30626238E2800788984 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB36A30526238E2800788984 /* SalamBro-Info.plist */; };
 		FB36A30B26238FC100788984 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36A30A26238FC100788984 /* Constants.swift */; };
 		FB4569AB260CCBD3004B702A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4569AA260CCBD3004B702A /* ProfileView.swift */; };
@@ -41,8 +39,6 @@
 		FB48CA39262386B3005A9CDF /* SuggestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48CA30262386B3005A9CDF /* SuggestController.swift */; };
 		FB557454263318850062F69D /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB557452263318850062F69D /* MenuCell.swift */; };
 		FB557455263318850062F69D /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB557453263318850062F69D /* MenuCell.xib */; };
-		FB55746926331F200062F69D /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB55746726331F200062F69D /* CategoryCell.swift */; };
-		FB55746A26331F200062F69D /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB55746826331F200062F69D /* CategoryCell.xib */; };
 		FB557472263323E10062F69D /* CartRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB557471263323E00062F69D /* CartRepository.swift */; };
 		FB557477263323FC0062F69D /* CartRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB557476263323FC0062F69D /* CartRepositoryImpl.swift */; };
 		FB557482263324510062F69D /* CartRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB557481263324510062F69D /* CartRepositoryMock.swift */; };
@@ -61,6 +57,14 @@
 		FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2125F50BD6000DC55F /* AddressView.swift */; };
 		FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2625F510E1000DC55F /* BrandsController.swift */; };
 		FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB786F8E25FB57A800ED02D3 /* FormView.swift */; };
+		FB7DAD1726381947003F36A4 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD1626381947003F36A4 /* TestController.swift */; };
+		FB7DAD27263833E5003F36A4 /* AddressPickCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD25263833E5003F36A4 /* AddressPickCell.swift */; };
+		FB7DAD28263833E5003F36A4 /* AddressPickCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB7DAD26263833E5003F36A4 /* AddressPickCell.xib */; };
+		FB7DAD2E26383418003F36A4 /* AdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD2C26383418003F36A4 /* AdTableViewCell.swift */; };
+		FB7DAD2F26383418003F36A4 /* AdTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB7DAD2D26383418003F36A4 /* AdTableViewCell.xib */; };
+		FB7DAD382638407E003F36A4 /* MenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD372638407E003F36A4 /* MenuModels.swift */; };
+		FB7DAD5E2638473D003F36A4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD5C2638473D003F36A4 /* CategoryCell.swift */; };
+		FB7DAD5F2638473D003F36A4 /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB7DAD5D2638473D003F36A4 /* CategoryCell.xib */; };
 		FBA7CA1625FC9B000099777F /* UITapGestureRecognizer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */; };
 		FBA7CA1B25FCAD870099777F /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA1A25FCAD870099777F /* Country.swift */; };
 		FBA7CA2325FCB91F0099777F /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA2225FCB91F0099777F /* APIService.swift */; };
@@ -141,8 +145,6 @@
 		F98B9E95BFE98AE0B8F1A966 /* Pods-SalamBro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.release.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.release.xcconfig"; sourceTree = "<group>"; };
 		FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		FB1E86E926245C1A000ACFBE /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
-		FB292AA82632F59A005D81B2 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
-		FB292AA92632F59A005D81B2 /* MenuController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuController.xib; sourceTree = "<group>"; };
 		FB36A30526238E2800788984 /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
 		FB36A30A26238FC100788984 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FB4569AA260CCBD3004B702A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -162,8 +164,6 @@
 		FB48CA30262386B3005A9CDF /* SuggestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestController.swift; sourceTree = "<group>"; };
 		FB557452263318850062F69D /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		FB557453263318850062F69D /* MenuCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
-		FB55746726331F200062F69D /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
-		FB55746826331F200062F69D /* CategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
 		FB557471263323E00062F69D /* CartRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepository.swift; sourceTree = "<group>"; };
 		FB557476263323FC0062F69D /* CartRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepositoryImpl.swift; sourceTree = "<group>"; };
 		FB557481263324510062F69D /* CartRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepositoryMock.swift; sourceTree = "<group>"; };
@@ -182,6 +182,14 @@
 		FB664D2125F50BD6000DC55F /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		FB664D2625F510E1000DC55F /* BrandsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsController.swift; sourceTree = "<group>"; };
 		FB786F8E25FB57A800ED02D3 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
+		FB7DAD1626381947003F36A4 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
+		FB7DAD25263833E5003F36A4 /* AddressPickCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickCell.swift; sourceTree = "<group>"; };
+		FB7DAD26263833E5003F36A4 /* AddressPickCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressPickCell.xib; sourceTree = "<group>"; };
+		FB7DAD2C26383418003F36A4 /* AdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdTableViewCell.swift; sourceTree = "<group>"; };
+		FB7DAD2D26383418003F36A4 /* AdTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdTableViewCell.xib; sourceTree = "<group>"; };
+		FB7DAD372638407E003F36A4 /* MenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModels.swift; sourceTree = "<group>"; };
+		FB7DAD5C2638473D003F36A4 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		FB7DAD5D2638473D003F36A4 /* CategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
 		FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Extension.swift"; sourceTree = "<group>"; };
 		FBA7CA1A25FCAD870099777F /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		FBA7CA2225FCB91F0099777F /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = SalamBro/Service/APIService.swift; sourceTree = SOURCE_ROOT; };
@@ -407,6 +415,7 @@
 				FBF81F4C2608E779008D5C7F /* CartProduct.swift */,
 				FBF81F472608E775008D5C7F /* CartAdditionalProduct.swift */,
 				FBCCAB7F261DDF8E00EAEA72 /* Brand.swift */,
+				FB7DAD372638407E003F36A4 /* MenuModels.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -528,12 +537,12 @@
 		FB292AA02632F2B0005D81B2 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				FB292AA82632F59A005D81B2 /* MenuController.swift */,
-				FB292AA92632F59A005D81B2 /* MenuController.xib */,
-				FB557452263318850062F69D /* MenuCell.swift */,
-				FB557453263318850062F69D /* MenuCell.xib */,
-				FB55746726331F200062F69D /* CategoryCell.swift */,
-				FB55746826331F200062F69D /* CategoryCell.xib */,
+				FB7DAD33263837F9003F36A4 /* Cells */,
+				FB7DAD1626381947003F36A4 /* TestController.swift */,
+				FB7DAD25263833E5003F36A4 /* AddressPickCell.swift */,
+				FB7DAD26263833E5003F36A4 /* AddressPickCell.xib */,
+				FB7DAD2C26383418003F36A4 /* AdTableViewCell.swift */,
+				FB7DAD2D26383418003F36A4 /* AdTableViewCell.xib */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -626,6 +635,17 @@
 				FB786F8E25FB57A800ED02D3 /* FormView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		FB7DAD33263837F9003F36A4 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				FB7DAD5C2638473D003F36A4 /* CategoryCell.swift */,
+				FB7DAD5D2638473D003F36A4 /* CategoryCell.xib */,
+				FB557452263318850062F69D /* MenuCell.swift */,
+				FB557453263318850062F69D /* MenuCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		FBA7CA2725FCBA9B0099777F /* CountryCodePicker */ = {
@@ -797,17 +817,18 @@
 			files = (
 				FB664D0B25F507DC000DC55F /* LaunchScreen.storyboard in Resources */,
 				FB48CA31262386B3005A9CDF /* SuggestController.xib in Resources */,
-				FB292AAB2632F59A005D81B2 /* MenuController.xib in Resources */,
 				FB48CA38262386B3005A9CDF /* AddressSheetController.xib in Resources */,
-				FB55746A26331F200062F69D /* CategoryCell.xib in Resources */,
+				FB7DAD2F26383418003F36A4 /* AdTableViewCell.xib in Resources */,
 				FB48CA37262386B3005A9CDF /* SuggestCell.xib in Resources */,
 				FBA7CAA52602250E0099777F /* Localizable.strings in Resources */,
 				FBF81F252608E6E5008D5C7F /* CartAdditionalProductCell.xib in Resources */,
 				FB557455263318850062F69D /* MenuCell.xib in Resources */,
 				FB48CA36262386B3005A9CDF /* CommentarySheetController.xib in Resources */,
 				FBF81F342608E709008D5C7F /* CartProductCell.xib in Resources */,
+				FB7DAD28263833E5003F36A4 /* AddressPickCell.xib in Resources */,
 				E6B175C925ED524000A9F827 /* Assets.xcassets in Resources */,
 				FB36A30626238E2800788984 /* SalamBro-Info.plist in Resources */,
+				FB7DAD5F2638473D003F36A4 /* CategoryCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -970,11 +991,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */,
-				FB292AAA2632F59A005D81B2 /* MenuController.swift in Sources */,
 				E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */,
 				FBCCAB73261DDF4800EAEA72 /* StagLayout.swift in Sources */,
 				FBA7CA2925FCBAB10099777F /* CountryCodePickerViewController.swift in Sources */,
 				FB48CA39262386B3005A9CDF /* SuggestController.swift in Sources */,
+				FB7DAD2E26383418003F36A4 /* AdTableViewCell.swift in Sources */,
 				FBF81F632608E93E008D5C7F /* CartView.swift in Sources */,
 				FBCCAB85261DE00A00EAEA72 /* BrandCell.swift in Sources */,
 				FB557487263324780062F69D /* CartViewModel.swift in Sources */,
@@ -992,6 +1013,7 @@
 				FB664D1D25F50BB3000DC55F /* AddressController.swift in Sources */,
 				FBF81F3E2608E75C008D5C7F /* UIView+Extension.swift in Sources */,
 				FB664CD725F4F243000DC55F /* UpdateController.swift in Sources */,
+				FB7DAD382638407E003F36A4 /* MenuModels.swift in Sources */,
 				FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */,
 				FBBF4C5125F8FAB600341D0E /* GetNameView.swift in Sources */,
 				FBF81F1B2608E670008D5C7F /* SupportController.swift in Sources */,
@@ -1005,6 +1027,7 @@
 				FBAB1E8325F7A54600112B72 /* VerificationController.swift in Sources */,
 				FBF81F482608E775008D5C7F /* CartAdditionalProduct.swift in Sources */,
 				FBAB1E7725F6478A00112B72 /* AuthorizarionController.swift in Sources */,
+				FB7DAD5E2638473D003F36A4 /* CategoryCell.swift in Sources */,
 				FBF81F2A2608E6FE008D5C7F /* CartFooter.swift in Sources */,
 				FB626D4F25FA508100C8E6B7 /* AdditionalView.swift in Sources */,
 				FBBF4C4225F8DA6F00341D0E /* AgreementController.swift in Sources */,
@@ -1020,11 +1043,12 @@
 				FB48CA33262386B3005A9CDF /* AddressSheetController.swift in Sources */,
 				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
 				FB557482263324510062F69D /* CartRepositoryMock.swift in Sources */,
+				FB7DAD1726381947003F36A4 /* TestController.swift in Sources */,
 				FBBF4C3A25F7FCF100341D0E /* OTPView.swift in Sources */,
 				FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */,
-				FB55746926331F200062F69D /* CategoryCell.swift in Sources */,
 				FB48CA34262386B3005A9CDF /* CommentarySheetController.swift in Sources */,
 				FB4569C3260CD5B1004B702A /* ChangeLanguageController.swift in Sources */,
+				FB7DAD27263833E5003F36A4 /* AddressPickCell.swift in Sources */,
 				FBF81F4D2608E779008D5C7F /* CartProduct.swift in Sources */,
 				FBA7CA4A25FD03A80099777F /* String+Extension.swift in Sources */,
 				FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */,
@@ -1212,14 +1236,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BC29U93WX8;
+				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kz.salambro.app.SalamBro;
+				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1233,14 +1257,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BC29U93WX8;
+				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kz.salambro.app.SalamBro;
+				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
