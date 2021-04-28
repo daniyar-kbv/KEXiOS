@@ -56,6 +56,8 @@
 		FB664D1D25F50BB3000DC55F /* AddressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D1C25F50BB3000DC55F /* AddressController.swift */; };
 		FB664D2225F50BD6000DC55F /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2125F50BD6000DC55F /* AddressView.swift */; };
 		FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB664D2625F510E1000DC55F /* BrandsController.swift */; };
+		FB669D9D2639887D00819608 /* AdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB669D9B2639887D00819608 /* AdCell.swift */; };
+		FB669D9E2639887D00819608 /* AdCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB669D9C2639887D00819608 /* AdCell.xib */; };
 		FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB786F8E25FB57A800ED02D3 /* FormView.swift */; };
 		FB7DAD1726381947003F36A4 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD1626381947003F36A4 /* TestController.swift */; };
 		FB7DAD27263833E5003F36A4 /* AddressPickCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD25263833E5003F36A4 /* AddressPickCell.swift */; };
@@ -181,6 +183,8 @@
 		FB664D1C25F50BB3000DC55F /* AddressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressController.swift; sourceTree = "<group>"; };
 		FB664D2125F50BD6000DC55F /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		FB664D2625F510E1000DC55F /* BrandsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsController.swift; sourceTree = "<group>"; };
+		FB669D9B2639887D00819608 /* AdCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCell.swift; sourceTree = "<group>"; };
+		FB669D9C2639887D00819608 /* AdCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdCell.xib; sourceTree = "<group>"; };
 		FB786F8E25FB57A800ED02D3 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		FB7DAD1626381947003F36A4 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		FB7DAD25263833E5003F36A4 /* AddressPickCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickCell.swift; sourceTree = "<group>"; };
@@ -539,10 +543,6 @@
 			children = (
 				FB7DAD33263837F9003F36A4 /* Cells */,
 				FB7DAD1626381947003F36A4 /* TestController.swift */,
-				FB7DAD25263833E5003F36A4 /* AddressPickCell.swift */,
-				FB7DAD26263833E5003F36A4 /* AddressPickCell.xib */,
-				FB7DAD2C26383418003F36A4 /* AdTableViewCell.swift */,
-				FB7DAD2D26383418003F36A4 /* AdTableViewCell.xib */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -642,6 +642,12 @@
 			children = (
 				FB7DAD5C2638473D003F36A4 /* CategoryCell.swift */,
 				FB7DAD5D2638473D003F36A4 /* CategoryCell.xib */,
+				FB669D9B2639887D00819608 /* AdCell.swift */,
+				FB669D9C2639887D00819608 /* AdCell.xib */,
+				FB7DAD2C26383418003F36A4 /* AdTableViewCell.swift */,
+				FB7DAD2D26383418003F36A4 /* AdTableViewCell.xib */,
+				FB7DAD25263833E5003F36A4 /* AddressPickCell.swift */,
+				FB7DAD26263833E5003F36A4 /* AddressPickCell.xib */,
 				FB557452263318850062F69D /* MenuCell.swift */,
 				FB557453263318850062F69D /* MenuCell.xib */,
 			);
@@ -821,6 +827,7 @@
 				FB7DAD2F26383418003F36A4 /* AdTableViewCell.xib in Resources */,
 				FB48CA37262386B3005A9CDF /* SuggestCell.xib in Resources */,
 				FBA7CAA52602250E0099777F /* Localizable.strings in Resources */,
+				FB669D9E2639887D00819608 /* AdCell.xib in Resources */,
 				FBF81F252608E6E5008D5C7F /* CartAdditionalProductCell.xib in Resources */,
 				FB557455263318850062F69D /* MenuCell.xib in Resources */,
 				FB48CA36262386B3005A9CDF /* CommentarySheetController.xib in Resources */,
@@ -1059,6 +1066,7 @@
 				FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */,
 				FBBF4C4C25F8FA9F00341D0E /* GetNameController.swift in Sources */,
 				FB557472263323E10062F69D /* CartRepository.swift in Sources */,
+				FB669D9D2639887D00819608 /* AdCell.swift in Sources */,
 				FBA7CA1B25FCAD870099777F /* Country.swift in Sources */,
 				FB48CA35262386B3005A9CDF /* SuggestCell.swift in Sources */,
 				FBF81F5E2608E938008D5C7F /* CartController.swift in Sources */,
