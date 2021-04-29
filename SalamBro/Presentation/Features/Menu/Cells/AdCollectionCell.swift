@@ -1,5 +1,5 @@
 //
-//  AdTableViewCell.swift
+//  AdCollectionCell.swift
 //  SalamBro
 //
 //  Created by Arystan on 4/27/21.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class AdTableViewCell: UITableViewCell {
-
+class AdCollectionCell: UITableViewCell {
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func awakeFromNib() {
@@ -33,7 +33,7 @@ class AdTableViewCell: UITableViewCell {
     
 }
 
-extension AdTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)

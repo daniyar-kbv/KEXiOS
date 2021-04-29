@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TestController: UIViewController {
+class MenuController: UIViewController {
     
     var categoryCollectionView: UICollectionView!
     var categories: [FoodType] = APIService.shared.getCategories()
@@ -104,7 +104,7 @@ class TestController: UIViewController {
     }
 }
 
-extension TestController: UITableViewDelegate, UITableViewDataSource {
+extension MenuController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
@@ -161,7 +161,7 @@ extension TestController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension TestController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MenuController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         categoryCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)

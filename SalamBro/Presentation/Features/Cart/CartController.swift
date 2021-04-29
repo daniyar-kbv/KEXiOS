@@ -15,6 +15,7 @@ class CartController: UIViewController {
     
     var mainTabDelegate: MainTabDelegate!
     var cartViewModel: CartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
+    
     lazy var rootView = CartView(delegate: self)
     lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title)
     

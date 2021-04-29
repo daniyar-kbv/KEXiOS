@@ -59,11 +59,11 @@
 		FB669D9D2639887D00819608 /* AdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB669D9B2639887D00819608 /* AdCell.swift */; };
 		FB669D9E2639887D00819608 /* AdCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB669D9C2639887D00819608 /* AdCell.xib */; };
 		FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB786F8E25FB57A800ED02D3 /* FormView.swift */; };
-		FB7DAD1726381947003F36A4 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD1626381947003F36A4 /* TestController.swift */; };
+		FB7DAD1726381947003F36A4 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD1626381947003F36A4 /* MenuController.swift */; };
 		FB7DAD27263833E5003F36A4 /* AddressPickCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD25263833E5003F36A4 /* AddressPickCell.swift */; };
 		FB7DAD28263833E5003F36A4 /* AddressPickCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB7DAD26263833E5003F36A4 /* AddressPickCell.xib */; };
-		FB7DAD2E26383418003F36A4 /* AdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD2C26383418003F36A4 /* AdTableViewCell.swift */; };
-		FB7DAD2F26383418003F36A4 /* AdTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB7DAD2D26383418003F36A4 /* AdTableViewCell.xib */; };
+		FB7DAD2E26383418003F36A4 /* AdCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD2C26383418003F36A4 /* AdCollectionCell.swift */; };
+		FB7DAD2F26383418003F36A4 /* AdCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB7DAD2D26383418003F36A4 /* AdCollectionCell.xib */; };
 		FB7DAD382638407E003F36A4 /* MenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD372638407E003F36A4 /* MenuModels.swift */; };
 		FB7DAD5E2638473D003F36A4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7DAD5C2638473D003F36A4 /* CategoryCell.swift */; };
 		FB7DAD5F2638473D003F36A4 /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB7DAD5D2638473D003F36A4 /* CategoryCell.xib */; };
@@ -79,6 +79,7 @@
 		FBAB1E7725F6478A00112B72 /* AuthorizarionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */; };
 		FBAB1E7C25F6492700112B72 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */; };
 		FBAB1E8325F7A54600112B72 /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB1E8225F7A54600112B72 /* VerificationController.swift */; };
+		FBAE2A852639B37700B7EE83 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAE2A842639B37700B7EE83 /* MenuView.swift */; };
 		FBBF4C3A25F7FCF100341D0E /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C3925F7FCF100341D0E /* OTPView.swift */; };
 		FBBF4C4225F8DA6F00341D0E /* AgreementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */; };
 		FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */; };
@@ -186,11 +187,11 @@
 		FB669D9B2639887D00819608 /* AdCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCell.swift; sourceTree = "<group>"; };
 		FB669D9C2639887D00819608 /* AdCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdCell.xib; sourceTree = "<group>"; };
 		FB786F8E25FB57A800ED02D3 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
-		FB7DAD1626381947003F36A4 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
+		FB7DAD1626381947003F36A4 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		FB7DAD25263833E5003F36A4 /* AddressPickCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickCell.swift; sourceTree = "<group>"; };
 		FB7DAD26263833E5003F36A4 /* AddressPickCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressPickCell.xib; sourceTree = "<group>"; };
-		FB7DAD2C26383418003F36A4 /* AdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdTableViewCell.swift; sourceTree = "<group>"; };
-		FB7DAD2D26383418003F36A4 /* AdTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdTableViewCell.xib; sourceTree = "<group>"; };
+		FB7DAD2C26383418003F36A4 /* AdCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCollectionCell.swift; sourceTree = "<group>"; };
+		FB7DAD2D26383418003F36A4 /* AdCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdCollectionCell.xib; sourceTree = "<group>"; };
 		FB7DAD372638407E003F36A4 /* MenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModels.swift; sourceTree = "<group>"; };
 		FB7DAD5C2638473D003F36A4 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		FB7DAD5D2638473D003F36A4 /* CategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
@@ -207,6 +208,7 @@
 		FBAB1E7625F6478A00112B72 /* AuthorizarionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizarionController.swift; sourceTree = "<group>"; };
 		FBAB1E7B25F6492700112B72 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
 		FBAB1E8225F7A54600112B72 /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
+		FBAE2A842639B37700B7EE83 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		FBBF4C3925F7FCF100341D0E /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
 		FBBF4C4125F8DA6F00341D0E /* AgreementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementController.swift; sourceTree = "<group>"; };
 		FBBF4C4625F8DA9A00341D0E /* AgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementView.swift; sourceTree = "<group>"; };
@@ -542,7 +544,8 @@
 			isa = PBXGroup;
 			children = (
 				FB7DAD33263837F9003F36A4 /* Cells */,
-				FB7DAD1626381947003F36A4 /* TestController.swift */,
+				FB7DAD1626381947003F36A4 /* MenuController.swift */,
+				FBAE2A842639B37700B7EE83 /* MenuView.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -644,8 +647,8 @@
 				FB7DAD5D2638473D003F36A4 /* CategoryCell.xib */,
 				FB669D9B2639887D00819608 /* AdCell.swift */,
 				FB669D9C2639887D00819608 /* AdCell.xib */,
-				FB7DAD2C26383418003F36A4 /* AdTableViewCell.swift */,
-				FB7DAD2D26383418003F36A4 /* AdTableViewCell.xib */,
+				FB7DAD2C26383418003F36A4 /* AdCollectionCell.swift */,
+				FB7DAD2D26383418003F36A4 /* AdCollectionCell.xib */,
 				FB7DAD25263833E5003F36A4 /* AddressPickCell.swift */,
 				FB7DAD26263833E5003F36A4 /* AddressPickCell.xib */,
 				FB557452263318850062F69D /* MenuCell.swift */,
@@ -824,7 +827,7 @@
 				FB664D0B25F507DC000DC55F /* LaunchScreen.storyboard in Resources */,
 				FB48CA31262386B3005A9CDF /* SuggestController.xib in Resources */,
 				FB48CA38262386B3005A9CDF /* AddressSheetController.xib in Resources */,
-				FB7DAD2F26383418003F36A4 /* AdTableViewCell.xib in Resources */,
+				FB7DAD2F26383418003F36A4 /* AdCollectionCell.xib in Resources */,
 				FB48CA37262386B3005A9CDF /* SuggestCell.xib in Resources */,
 				FBA7CAA52602250E0099777F /* Localizable.strings in Resources */,
 				FB669D9E2639887D00819608 /* AdCell.xib in Resources */,
@@ -1002,7 +1005,7 @@
 				FBCCAB73261DDF4800EAEA72 /* StagLayout.swift in Sources */,
 				FBA7CA2925FCBAB10099777F /* CountryCodePickerViewController.swift in Sources */,
 				FB48CA39262386B3005A9CDF /* SuggestController.swift in Sources */,
-				FB7DAD2E26383418003F36A4 /* AdTableViewCell.swift in Sources */,
+				FB7DAD2E26383418003F36A4 /* AdCollectionCell.swift in Sources */,
 				FBF81F632608E93E008D5C7F /* CartView.swift in Sources */,
 				FBCCAB85261DE00A00EAEA72 /* BrandCell.swift in Sources */,
 				FB557487263324780062F69D /* CartViewModel.swift in Sources */,
@@ -1038,6 +1041,7 @@
 				FBF81F2A2608E6FE008D5C7F /* CartFooter.swift in Sources */,
 				FB626D4F25FA508100C8E6B7 /* AdditionalView.swift in Sources */,
 				FBBF4C4225F8DA6F00341D0E /* AgreementController.swift in Sources */,
+				FBAE2A852639B37700B7EE83 /* MenuView.swift in Sources */,
 				FB557477263323FC0062F69D /* CartRepositoryImpl.swift in Sources */,
 				FBCCAB7B261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift in Sources */,
 				FBF81F0C2608E63D008D5C7F /* MainTabController.swift in Sources */,
@@ -1050,7 +1054,7 @@
 				FB48CA33262386B3005A9CDF /* AddressSheetController.swift in Sources */,
 				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
 				FB557482263324510062F69D /* CartRepositoryMock.swift in Sources */,
-				FB7DAD1726381947003F36A4 /* TestController.swift in Sources */,
+				FB7DAD1726381947003F36A4 /* MenuController.swift in Sources */,
 				FBBF4C3A25F7FCF100341D0E /* OTPView.swift in Sources */,
 				FB664D2725F510E1000DC55F /* BrandsController.swift in Sources */,
 				FB48CA34262386B3005A9CDF /* CommentarySheetController.swift in Sources */,

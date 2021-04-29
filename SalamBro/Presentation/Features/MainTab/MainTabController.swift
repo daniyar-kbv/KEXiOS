@@ -17,8 +17,8 @@ class MainTabController: UITabBarController {
     
     var itemCount: Int = 0
     
-    lazy var menu: TestController = {
-        let vc = TestController()
+    lazy var menu: MenuController = {
+        let vc = MenuController()
         vc.tabBarItem.title = L10n.MainTab.Menu.title
         vc.tabBarItem.image = UIImage(named: "menu")
         return vc
