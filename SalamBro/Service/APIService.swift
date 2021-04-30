@@ -114,13 +114,4 @@ class APIService :  NSObject {
             return (0, 0)
         }
     }
-    
-    func getCategories() -> [FoodType] {
-        var temp: [FoodType] = []
-        let titles = ["combos", "sushi", "burgers", "doners", "template", "template", "template", "template", "template"]
-        for i in 0..<9 {
-            temp.append( FoodType(title: titles[i], position: i, foods: []))
-        }
-        return temp
-    }
 }

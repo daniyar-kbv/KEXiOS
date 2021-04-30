@@ -9,9 +9,7 @@ import UIKit
 
 class MenuView: UIView {
 
-    var categoryCollectionView: UICollectionView!
-    var categories: [FoodType] = APIService.shared.getCategories()
-    var item: [Food] = []
+    lazy var categoryCollectionView: UICollectionView = UICollectionView()
     
     lazy var logoView: UIImageView = {
         let view = UIImageView()

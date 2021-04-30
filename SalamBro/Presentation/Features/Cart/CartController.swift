@@ -13,7 +13,7 @@ protocol CartViewDelegate {
 
 class CartController: UIViewController {
     
-    var mainTabDelegate: MainTabDelegate!
+    var mainTabDelegate: MainTabDelegate?
     var cartViewModel: CartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
     
     lazy var rootView = CartView(delegate: self)
@@ -31,7 +31,7 @@ class CartController: UIViewController {
         rootView.itemsTableView.reloadData()
         rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
         rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
-        mainTabDelegate.setCount(count: cartViewModel.cart.totalProducts)
+        mainTabDelegate?.setCount(count: cartViewModel.cart.totalProducts)
     }
 }
 
@@ -150,7 +150,7 @@ extension CartController: CellDelegate {
         }
         rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
         rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
-        mainTabDelegate.updateCounter(isIncrease: isIncrease)
+        mainTabDelegate?.updateCounter(isIncrease: isIncrease)
     }
 }
 
@@ -162,6 +162,6 @@ extension CartController: CartViewDelegate {
 
 extension CartController: AdditionalViewDelegate {
     func action() {
-        mainTabDelegate.changeController(id: 0)
+        mainTabDelegate?.changeController(id: 0)
     }
 }

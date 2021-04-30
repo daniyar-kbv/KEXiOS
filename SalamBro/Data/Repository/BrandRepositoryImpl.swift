@@ -9,10 +9,10 @@ import Foundation
 
 class BrandRepositoryImpl: BrandRepository {
 
-    private let networkManager: APIService
+    private let api: APIService
     
-    init(networkManager: APIService) {
-        self.networkManager = networkManager
+    init(api: APIService) {
+        self.api = api
     }
     
     func getBrands() -> Array<String> {

@@ -7,8 +7,7 @@
 
 import Foundation
 
-class CartRepositoryIml: BrandRepository {
-
+class CartRepositoryIml: CartRepository {
     
     private let api: APIService
     
@@ -16,7 +15,15 @@ class CartRepositoryIml: BrandRepository {
         self.api = api
     }
     
-    func getBrands() -> Array<String> {
-        return Array<String>()
+    func getCartProducts() -> [CartProduct] {
+        return []
+    }
+    
+    func getCartAdditionalProducts() -> [CartAdditionalProduct] {
+        return []
+    }
+    
+    func getCart() -> Cart {
+        return Cart(id: 0, totalProducts: 0, totalPrice: 0, products: [], productsAdditional: [])
     }
 }

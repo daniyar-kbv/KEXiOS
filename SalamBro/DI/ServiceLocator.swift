@@ -12,7 +12,7 @@ final class ServiceLocator {
     private static var networkManager = APIService()
     
     static func getBrandRepository() -> BrandRepository {
-        return BrandRepositoryImpl(networkManager: networkManager)
+        return BrandRepositoryImpl(api: networkManager)
     }
 
     private static func getAPIService() -> APIService {

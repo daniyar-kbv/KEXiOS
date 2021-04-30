@@ -17,5 +17,4 @@ class CartViewModel {
         self.cart = cartRepository.getCart()
     }
     
-    
 }

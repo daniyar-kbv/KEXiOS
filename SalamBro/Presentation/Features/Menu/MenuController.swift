@@ -8,8 +8,9 @@
 import UIKit
 
 class MenuController: UIViewController {
-    var categories: [FoodType] = APIService.shared.getCategories()
     var item: [Food] = []
+    
+    var menuViewModel: MenuViewModel = MenuViewModel(menuRepository: MenuRepositoryMockImpl())
     
     lazy var rootView = MenuView(delegate: self)
     
@@ -19,6 +20,16 @@ class MenuController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }
 
@@ -46,18 +57,11 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 {
-            return "text"
-        }
-        return nil
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 2
         } else {
-            return 10
+            return menuViewModel.items.count
         }
     }
     
@@ -72,7 +76,8 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
             }
             return UITableViewCell()
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as! MenuCell
+            cell.bindData(item: menuViewModel.items[indexPath.row])
             return cell
         }
     }
@@ -85,20 +90,19 @@ extension MenuController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categories.count
+        return menuViewModel.categories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
-        cell.categoryLabel.text = categories[indexPath.row].title
+        cell.categoryLabel.text = menuViewModel.categories[indexPath.row].title
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width: CGFloat
         let height: CGFloat
-        let text = categories[indexPath.row]
-        let textSize = text.title.size(withAttributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 16)])
+        let textSize = menuViewModel.categories[indexPath.row].title.size(withAttributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 16)])
         width = textSize.width + 8
         height = 44
         return .init(width: width, height: height)
