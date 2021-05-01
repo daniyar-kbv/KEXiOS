@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // if you don't have TMDB-Info.plist, just set your key in setApiKey()
         YMKMapKit.setApiKey(apiKey)
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let nav = UINavigationController(rootViewController: MainTabController())
+        let nav = UINavigationController(rootViewController: UpdateController())
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
         return true

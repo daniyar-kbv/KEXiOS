@@ -620,7 +620,6 @@
 				FBDA14FD26318B320060DE14 /* UICollectionViewCenterLayout.swift */,
 			);
 			path = RateOrder;
->>>>>>> SalamBro.xcodeproj/project.pbxproj
 			sourceTree = "<group>";
 		};
 		FB4569AF260CD3DD004B702A /* ChangeName */ = {
