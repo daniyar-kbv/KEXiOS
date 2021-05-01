@@ -9,13 +9,13 @@ import Foundation
 
 final class ServiceLocator {
     
-    private static var networkManager = NetworkManager()
+    private static var networkManager = APIService()
     
     static func getBrandRepository() -> BrandRepository {
-        return BrandRepositoryImpl(networkManager: networkManager)
+        return BrandRepositoryImpl(api: networkManager)
     }
 
-    private static func getNetworkManager() -> NetworkManager {
-        return getNetworkManager()
+    private static func getAPIService() -> APIService {
+        return getAPIService()
     }
 }

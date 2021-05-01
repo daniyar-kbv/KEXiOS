@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public var apiKey: String {
   get {
     guard let filePath = Bundle.main.path(forResource: "SalamBro-Info", ofType: "plist") else {

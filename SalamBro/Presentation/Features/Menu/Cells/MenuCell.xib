@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="132" id="KGk-i7-Jjw" customClass="MenuCell" customModule="SalamBro" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="582" height="132"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="582" height="132"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fastFood" translatesAutoresizingMaskIntoConstraints="NO" id="aF0-Aj-qhP">
+                        <rect key="frame" x="24" y="16" width="115" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="115" id="BcK-gH-iaW"/>
+                            <constraint firstAttribute="height" constant="100" id="LBn-Wl-4S0"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="tEu-on-OHI">
+                        <rect key="frame" x="147" y="16" width="419" height="100"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="752" text="BIG COMBO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwf-5h-rOd">
+                                <rect key="frame" x="0.0" y="0.0" width="419" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Двойной чизбургер (говяжий/куриный), картофель фри, напиток на выбор" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHY-ob-tsn">
+                                <rect key="frame" x="0.0" y="24.5" width="419" height="47.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" verticalHuggingPriority="253" verticalCompressionResistancePriority="753" translatesAutoresizingMaskIntoConstraints="NO" id="xbW-mx-s3a">
+                                <rect key="frame" x="0.0" y="76" width="419" height="24"/>
+                                <subviews>
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t6D-Sd-MOD">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="24"/>
+                                        <inset key="contentEdgeInsets" minX="7" minY="3.5" maxX="7" maxY="3.5"/>
+                                        <state key="normal" title="Button">
+                                            <color key="titleColor" red="0.81960784310000001" green="0.2156862745" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.81960784310000001" green="0.2156862745" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="9oB-id-L1a"/>
+                                    <constraint firstItem="t6D-Sd-MOD" firstAttribute="top" secondItem="xbW-mx-s3a" secondAttribute="top" id="EFI-st-RxT"/>
+                                    <constraint firstAttribute="bottom" secondItem="t6D-Sd-MOD" secondAttribute="bottom" id="Nnn-nY-Aom"/>
+                                    <constraint firstItem="t6D-Sd-MOD" firstAttribute="leading" secondItem="xbW-mx-s3a" secondAttribute="leading" id="wfv-OB-CPL"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="aF0-Aj-qhP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="GOe-bd-38U"/>
+                    <constraint firstAttribute="bottom" secondItem="tEu-on-OHI" secondAttribute="bottom" constant="16" id="HWL-Px-fZk"/>
+                    <constraint firstItem="aF0-Aj-qhP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="MAl-QV-Ack"/>
+                    <constraint firstAttribute="trailing" secondItem="tEu-on-OHI" secondAttribute="trailing" constant="16" id="Tvp-Wc-g8g"/>
+                    <constraint firstItem="tEu-on-OHI" firstAttribute="leading" secondItem="aF0-Aj-qhP" secondAttribute="trailing" constant="8" id="YZL-WK-KPF"/>
+                    <constraint firstItem="tEu-on-OHI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="zVg-1q-Ghl"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="itemDescriptionLabel" destination="lHY-ob-tsn" id="R8i-Kv-kIN"/>
+                <outlet property="itemImage" destination="aF0-Aj-qhP" id="Vmo-In-ABW"/>
+                <outlet property="itemPriceButton" destination="t6D-Sd-MOD" id="6GF-yV-RIm"/>
+                <outlet property="itemTitleLabel" destination="hwf-5h-rOd" id="k19-Yg-4aO"/>
+            </connections>
+            <point key="canvasLocation" x="330.43478260869568" y="119.19642857142857"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="fastFood" width="136" height="136"/>
+    </resources>
+</document>

@@ -13,10 +13,9 @@ protocol CartViewDelegate {
 
 class CartController: UIViewController {
     
-    var mainTabDelegate: MainTabDelegate!
-    var cart: Cart!
-    var apiService = APIService()
-
+    var mainTabDelegate: MainTabDelegate?
+    var cartViewModel: CartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
+    
     lazy var rootView = CartView(delegate: self)
     lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title)
     
@@ -26,12 +25,13 @@ class CartController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cart = apiService.getCart()
+//        cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
+        
         configUI()
         rootView.itemsTableView.reloadData()
-        rootView.updateTableViewFooterUI(cart: cart)
-        rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cart.totalPrice), for: .normal)
-        mainTabDelegate.setCount(count: cart.totalProducts)
+        rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
+        rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
+        mainTabDelegate?.setCount(count: cartViewModel.cart.totalProducts)
     }
 }
 
@@ -52,7 +52,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
             let content = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 56))
             let label = UILabel(frame: CGRect(x: 16, y: 24, width: tableView.frame.size.width, height: 24))
             label.font = .boldSystemFont(ofSize: 18)
-            label.text = L10n.Cart.Section0.title(cart!.totalProducts, cart!.totalPrice)
+            label.text = L10n.Cart.Section0.title(cartViewModel.cart.totalProducts, cartViewModel.cart.totalPrice)
             content.addSubview(label)
             content.backgroundColor = .arcticWhite
             return content
@@ -74,9 +74,9 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return cart!.products.count
+            return cartViewModel.cart.products.count
         } else {
-            return cart!.productsAdditional.count
+            return cartViewModel.cart.productsAdditional.count
         }
     }
     
@@ -84,12 +84,12 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CartProductCell", for: indexPath) as! CartProductCell
             cell.delegate = self
-            cell.bindData(with: cart!.products[indexPath.row])
+            cell.bindData(with: cartViewModel.cart.products[indexPath.row])
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CartAdditionalProductCell", for: indexPath) as! CartAdditionalProductCell
             cell.delegate = self
-            cell.bindData(item: cart!.productsAdditional[indexPath.row])
+            cell.bindData(item: cartViewModel.cart.productsAdditional[indexPath.row])
             return cell
         }
     }
@@ -99,58 +99,58 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
 extension CartController: CellDelegate {
     func deleteProduct(id: Int, isAdditional: Bool) {
         if isAdditional {
-            if let index = cart?.productsAdditional.firstIndex(where: {$0.id == id})   {
-                cart?.productsAdditional.remove(at: index)
+            if let index = cartViewModel.cart.productsAdditional.firstIndex(where: {$0.id == id})   {
+                cartViewModel.cart.productsAdditional.remove(at: index)
                 let path = IndexPath(row: index, section: 1)
                 rootView.itemsTableView.deleteRows(at: [path], with: .automatic)
             }
         } else {
-            if let index = cart?.products.firstIndex(where: {$0.id == id})   {
-                cart?.products.remove(at: index)
+            if let index = cartViewModel.cart.products.firstIndex(where: {$0.id == id})   {
+                cartViewModel.cart.products.remove(at: index)
                 let path = IndexPath(row: index, section: 0)
                 rootView.itemsTableView.deleteRows(at: [path], with: .automatic)
             }
         }
-        rootView.updateTableViewFooterUI(cart: cart)
+        rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
     }
     
     func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool) {
         if isAdditional {
-                if let index = self.cart?
+                if let index = self.cartViewModel.cart
                     .productsAdditional.firstIndex(where: {$0.id == id})   {
-                    let price = self.cart?.productsAdditional[index].price
+                    let price = self.cartViewModel.cart.productsAdditional[index].price
                     if isIncrease {
-                        self.cart?.productsAdditional[index].count += 1
-                        self.cart?.totalPrice += price!
-                        self.cart?.totalProducts += 1
+                        self.cartViewModel.cart.productsAdditional[index].count += 1
+                        self.cartViewModel.cart.totalPrice += price
+                        self.cartViewModel.cart.totalProducts += 1
                     } else {
-                        self.cart?.productsAdditional[index].count -= 1
-                        self.cart?.totalPrice -= price!
-                        self.cart?.totalProducts -= 1
+                        self.cartViewModel.cart.productsAdditional[index].count -= 1
+                        self.cartViewModel.cart.totalPrice -= price
+                        self.cartViewModel.cart.totalProducts -= 1
                     }
                     self.rootView.itemsTableView.reloadData()
             }
         } else {
-            if let index = self.cart?.products.firstIndex(where: {$0.id == id})   {
-                let price = self.cart?.products[index].price
+            if let index = self.cartViewModel.cart.products.firstIndex(where: {$0.id == id})   {
+                let price = self.cartViewModel.cart.products[index].price
                 if isIncrease {
-                    self.cart?.products[index].count += 1
-                    self.cart?.totalPrice += price!
-                    self.cart?.totalProducts += 1
+                    self.cartViewModel.cart.products[index].count += 1
+                    self.cartViewModel.cart.totalPrice += price
+                    self.cartViewModel.cart.totalProducts += 1
                 } else {
-                    self.cart?.products[index].count -= 1
-                    self.cart?.totalPrice -= price!
-                    self.cart?.totalProducts -= 1
+                    self.cartViewModel.cart.products[index].count -= 1
+                    self.cartViewModel.cart.totalPrice -= price
+                    self.cartViewModel.cart.totalProducts -= 1
                 }
                 self.rootView.itemsTableView.reloadData()
             }
         }
-        if self.cart.totalProducts <= 0 {
+        if self.cartViewModel.cart.totalProducts <= 0 {
             view = emptyCartView
         }
-        rootView.updateTableViewFooterUI(cart: cart)
-        rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cart.totalPrice), for: .normal)
-        mainTabDelegate.updateCounter(isIncrease: isIncrease)
+        rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
+        rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
+        mainTabDelegate?.updateCounter(isIncrease: isIncrease)
     }
 }
 
@@ -162,6 +162,6 @@ extension CartController: CartViewDelegate {
 
 extension CartController: AdditionalViewDelegate {
     func action() {
-        mainTabDelegate.changeController(id: 0)
+        mainTabDelegate?.changeController(id: 0)
     }
 }
