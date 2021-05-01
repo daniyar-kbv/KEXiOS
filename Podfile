@@ -14,6 +14,9 @@ target 'SalamBro' do
   # Additional MapKit modules.
   pod ‘YandexMapKitSearch'
 
+  #rateView
+  pod 'Cosmos'
+
   target 'SalamBroTests' do
     inherit! :search_paths
     # Pods for testing

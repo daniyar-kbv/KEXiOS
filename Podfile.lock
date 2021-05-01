@@ -1,4 +1,5 @@
 PODS:
+  - Cosmos (21.0.0)
   - InputMask (6.1.0)
   - SwiftGen (6.4.0)
   - YandexMapKit (3.5.0):
@@ -9,6 +10,7 @@ PODS:
   - YandexRuntime (3.5.0)
 
 DEPENDENCIES:
+  - Cosmos
   - InputMask
   - SwiftGen
   - YandexMapKit
@@ -16,6 +18,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Cosmos
     - InputMask
     - SwiftGen
     - YandexMapKit
@@ -23,12 +26,13 @@ SPEC REPOS:
     - YandexRuntime
 
 SPEC CHECKSUMS:
+  Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
   InputMask: 71d291dc54d2deaeac6512afb6ec2304228c0bb7
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
   YandexMapKit: ecd4b78de34a35df63d066ac299e6fd0fe46d1ba
   YandexMapKitSearch: b46ddd1c80e2e35d006cdfc4ab88070a50cebeda
   YandexRuntime: 2d55244d06267106cf9b00c25a1e63f72a73b6fd
 
-PODFILE CHECKSUM: 504e0a0c876861297c1bc5c3201899d3154cbe67
+PODFILE CHECKSUM: baa65c987c6b76179b3ae47366c749e692bbddf9
 
 COCOAPODS: 1.10.0

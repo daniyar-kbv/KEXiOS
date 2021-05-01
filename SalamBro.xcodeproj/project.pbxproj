@@ -19,8 +19,14 @@
 		E6DFBE3B25FA70240091ABFC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3A25FA70240091ABFC /* NetworkManager.swift */; };
 		E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */; };
 		ECB61B520A3013C0E1A20656 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E70522479B758433B9143BB /* Pods_SalamBro.framework */; };
+		FB1B797726311BD40094927E /* ShareOrderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B797626311BD40094927E /* ShareOrderController.swift */; };
+		FB1B797F26311D250094927E /* ShareOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B797E26311D250094927E /* ShareOrderView.swift */; };
+		FB1B7984263125760094927E /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B7983263125760094927E /* OrderHistoryView.swift */; };
+		FB1B79BD263141460094927E /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B79BB263141460094927E /* RateController.swift */; };
+		FB1B79BE263141460094927E /* RateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB1B79BC263141460094927E /* RateController.xib */; };
 		FB1E86E526243B93000ACFBE /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */; };
 		FB1E86EA26245C1A000ACFBE /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E86E926245C1A000ACFBE /* MapDelegate.swift */; };
+		FB2D801E2636FF30005423FC /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2D801D2636FF30005423FC /* APIService.swift */; };
 		FB36A30626238E2800788984 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB36A30526238E2800788984 /* SalamBro-Info.plist */; };
 		FB36A30B26238FC100788984 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36A30A26238FC100788984 /* Constants.swift */; };
 		FB4569AB260CCBD3004B702A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4569AA260CCBD3004B702A /* ProfileView.swift */; };
@@ -54,7 +60,6 @@
 		FB786F8F25FB57A800ED02D3 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB786F8E25FB57A800ED02D3 /* FormView.swift */; };
 		FBA7CA1625FC9B000099777F /* UITapGestureRecognizer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */; };
 		FBA7CA1B25FCAD870099777F /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA1A25FCAD870099777F /* Country.swift */; };
-		FBA7CA2325FCB91F0099777F /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA2225FCB91F0099777F /* APIService.swift */; };
 		FBA7CA2925FCBAB10099777F /* CountryCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA2825FCBAB10099777F /* CountryCodePickerViewController.swift */; };
 		FBA7CA2E25FCBB1C0099777F /* CountryCodePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA2D25FCBB1C0099777F /* CountryCodePickerView.swift */; };
 		FBA7CA3325FCBB370099777F /* CountryCodePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7CA3225FCBB370099777F /* CountryCodePickerViewModel.swift */; };
@@ -73,6 +78,9 @@
 		FBCCAB7B261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCAB7A261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift */; };
 		FBCCAB80261DDF8E00EAEA72 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCAB7F261DDF8E00EAEA72 /* Brand.swift */; };
 		FBCCAB85261DE00A00EAEA72 /* BrandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCAB84261DE00A00EAEA72 /* BrandCell.swift */; };
+		FBDA14FE26318B320060DE14 /* UICollectionViewCenterLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDA14FD26318B320060DE14 /* UICollectionViewCenterLayout.swift */; };
+		FBDA150E26318BDF0060DE14 /* RatingItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDA150C26318BDF0060DE14 /* RatingItemCell.swift */; };
+		FBDA150F26318BDF0060DE14 /* RatingItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBDA150D26318BDF0060DE14 /* RatingItemCell.xib */; };
 		FBF81F0C2608E63D008D5C7F /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF81F0B2608E63D008D5C7F /* MainTabController.swift */; };
 		FBF81F112608E651008D5C7F /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF81F102608E651008D5C7F /* MenuController.swift */; };
 		FBF81F162608E66B008D5C7F /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF81F152608E66B008D5C7F /* ProfileController.swift */; };
@@ -132,8 +140,14 @@
 		E6DFBE3F25FA70990091ABFC /* BrandRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandRepositoryImpl.swift; sourceTree = "<group>"; };
 		F196633B2610CD27C66E1360 /* Pods-SalamBroTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBroTests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBroTests/Pods-SalamBroTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F98B9E95BFE98AE0B8F1A966 /* Pods-SalamBro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.release.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.release.xcconfig"; sourceTree = "<group>"; };
+		FB1B797626311BD40094927E /* ShareOrderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOrderController.swift; sourceTree = "<group>"; };
+		FB1B797E26311D250094927E /* ShareOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOrderView.swift; sourceTree = "<group>"; };
+		FB1B7983263125760094927E /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
+		FB1B79BB263141460094927E /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
+		FB1B79BC263141460094927E /* RateController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RateController.xib; sourceTree = "<group>"; };
 		FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		FB1E86E926245C1A000ACFBE /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
+		FB2D801D2636FF30005423FC /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		FB36A30526238E2800788984 /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
 		FB36A30A26238FC100788984 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FB4569AA260CCBD3004B702A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -167,7 +181,6 @@
 		FB786F8E25FB57A800ED02D3 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		FBA7CA1525FC9B000099777F /* UITapGestureRecognizer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Extension.swift"; sourceTree = "<group>"; };
 		FBA7CA1A25FCAD870099777F /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
-		FBA7CA2225FCB91F0099777F /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = SalamBro/Service/APIService.swift; sourceTree = SOURCE_ROOT; };
 		FBA7CA2825FCBAB10099777F /* CountryCodePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewController.swift; sourceTree = "<group>"; };
 		FBA7CA2D25FCBB1C0099777F /* CountryCodePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerView.swift; sourceTree = "<group>"; };
 		FBA7CA3225FCBB370099777F /* CountryCodePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewModel.swift; sourceTree = "<group>"; };
@@ -187,6 +200,9 @@
 		FBCCAB7A261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagLayoutFrameHolder.swift; sourceTree = "<group>"; };
 		FBCCAB7F261DDF8E00EAEA72 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		FBCCAB84261DE00A00EAEA72 /* BrandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandCell.swift; sourceTree = "<group>"; };
+		FBDA14FD26318B320060DE14 /* UICollectionViewCenterLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCenterLayout.swift; sourceTree = "<group>"; };
+		FBDA150C26318BDF0060DE14 /* RatingItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingItemCell.swift; sourceTree = "<group>"; };
+		FBDA150D26318BDF0060DE14 /* RatingItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RatingItemCell.xib; sourceTree = "<group>"; };
 		FBF81F0B2608E63D008D5C7F /* MainTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		FBF81F102608E651008D5C7F /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		FBF81F152608E66B008D5C7F /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
@@ -330,7 +346,6 @@
 			isa = PBXGroup;
 			children = (
 				FB0B919625FBF54F003AFEBB /* Features */,
-				FB664CE725F4F34B000DC55F /* Controller */,
 				FB664CEB25F4FB3C000DC55F /* View */,
 			);
 			path = Presentation;
@@ -339,18 +354,10 @@
 		FB0B918C25FBF17F003AFEBB /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				FB0B918D25FBF1D4003AFEBB /* Storage */,
 				FB0B918E25FBF1DB003AFEBB /* Repository */,
 				FB0B918F25FBF1F3003AFEBB /* Network */,
 			);
 			path = Data;
-			sourceTree = "<group>";
-		};
-		FB0B918D25FBF1D4003AFEBB /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Storage;
 			sourceTree = "<group>";
 		};
 		FB0B918E25FBF1DB003AFEBB /* Repository */ = {
@@ -406,6 +413,8 @@
 			children = (
 				FBCCAB71261DDF2C00EAEA72 /* StagLayout */,
 				FB4569C1260CD59C004B702A /* ChangeLanguage */,
+				FB1B79BA26313FEB0094927E /* RateOrder */,
+				FB1B797526311A590094927E /* ShareOrder */,
 				FB4569B8260CD559004B702A /* OrderHistory */,
 				FB4569AF260CD3DD004B702A /* ChangeName */,
 				FB5AD61A260CC80A00794FA2 /* Profile */,
@@ -506,6 +515,27 @@
 			path = GetName;
 			sourceTree = "<group>";
 		};
+		FB1B797526311A590094927E /* ShareOrder */ = {
+			isa = PBXGroup;
+			children = (
+				FB1B797626311BD40094927E /* ShareOrderController.swift */,
+				FB1B797E26311D250094927E /* ShareOrderView.swift */,
+			);
+			path = ShareOrder;
+			sourceTree = "<group>";
+		};
+		FB1B79BA26313FEB0094927E /* RateOrder */ = {
+			isa = PBXGroup;
+			children = (
+				FBDA150C26318BDF0060DE14 /* RatingItemCell.swift */,
+				FBDA150D26318BDF0060DE14 /* RatingItemCell.xib */,
+				FB1B79BB263141460094927E /* RateController.swift */,
+				FB1B79BC263141460094927E /* RateController.xib */,
+				FBDA14FD26318B320060DE14 /* UICollectionViewCenterLayout.swift */,
+			);
+			path = RateOrder;
+			sourceTree = "<group>";
+		};
 		FB4569AF260CD3DD004B702A /* ChangeName */ = {
 			isa = PBXGroup;
 			children = (
@@ -519,6 +549,7 @@
 			isa = PBXGroup;
 			children = (
 				FB4569B9260CD570004B702A /* OrderHistoryController.swift */,
+				FB1B7983263125760094927E /* OrderHistoryView.swift */,
 			);
 			path = OrderHistory;
 			sourceTree = "<group>";
@@ -561,10 +592,9 @@
 		FB626D5325FA572B00C8E6B7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				FBA7CA2225FCB91F0099777F /* APIService.swift */,
+				FB2D801D2636FF30005423FC /* APIService.swift */,
 			);
-			name = Service;
-			path = ../../Service;
+			path = Service;
 			sourceTree = "<group>";
 		};
 		FB664CDB25F4F297000DC55F /* Extensions */ = {
@@ -577,13 +607,6 @@
 				FB1E86E426243B93000ACFBE /* UINavigationController+Extension.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		FB664CE725F4F34B000DC55F /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		FB664CEB25F4FB3C000DC55F /* View */ = {
@@ -766,12 +789,14 @@
 				FB664D0B25F507DC000DC55F /* LaunchScreen.storyboard in Resources */,
 				FB48CA31262386B3005A9CDF /* SuggestController.xib in Resources */,
 				FB48CA38262386B3005A9CDF /* AddressSheetController.xib in Resources */,
+				FBDA150F26318BDF0060DE14 /* RatingItemCell.xib in Resources */,
 				FB48CA37262386B3005A9CDF /* SuggestCell.xib in Resources */,
 				FBA7CAA52602250E0099777F /* Localizable.strings in Resources */,
 				FBF81F252608E6E5008D5C7F /* CartAdditionalProductCell.xib in Resources */,
 				FB48CA36262386B3005A9CDF /* CommentarySheetController.xib in Resources */,
 				FBF81F342608E709008D5C7F /* CartProductCell.xib in Resources */,
 				E6B175C925ED524000A9F827 /* Assets.xcassets in Resources */,
+				FB1B79BE263141460094927E /* RateController.xib in Resources */,
 				FB36A30626238E2800788984 /* SalamBro-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -935,6 +960,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6B175C025ED523F00A9F827 /* AppDelegate.swift in Sources */,
+				FB1B79BD263141460094927E /* RateController.swift in Sources */,
 				E6DFBE4025FA70990091ABFC /* BrandRepositoryImpl.swift in Sources */,
 				FBCCAB73261DDF4800EAEA72 /* StagLayout.swift in Sources */,
 				FBA7CA2925FCBAB10099777F /* CountryCodePickerViewController.swift in Sources */,
@@ -963,6 +989,7 @@
 				E6DFBE3B25FA70240091ABFC /* NetworkManager.swift in Sources */,
 				FBF81F432608E770008D5C7F /* Cart.swift in Sources */,
 				FBF81F162608E66B008D5C7F /* ProfileController.swift in Sources */,
+				FB1B797F26311D250094927E /* ShareOrderView.swift in Sources */,
 				FB664CF525F50174000DC55F /* CountriesListController.swift in Sources */,
 				FBA7CA1625FC9B000099777F /* UITapGestureRecognizer+Extension.swift in Sources */,
 				FBF81F202608E6DF008D5C7F /* CartAdditionalProductCell.swift in Sources */,
@@ -975,10 +1002,10 @@
 				FBCCAB7B261DDF5E00EAEA72 /* StagLayoutFrameHolder.swift in Sources */,
 				FBF81F0C2608E63D008D5C7F /* MainTabController.swift in Sources */,
 				FB36A30B26238FC100788984 /* Constants.swift in Sources */,
+				FBDA150E26318BDF0060DE14 /* RatingItemCell.swift in Sources */,
 				FBCCAB80261DDF8E00EAEA72 /* Brand.swift in Sources */,
 				FB664D1325F5084D000DC55F /* CitiesListController.swift in Sources */,
 				FB664D1825F50889000DC55F /* CitiesListView.swift in Sources */,
-				FBA7CA2325FCB91F0099777F /* APIService.swift in Sources */,
 				FBA7CA2E25FCBB1C0099777F /* CountryCodePickerView.swift in Sources */,
 				FB48CA33262386B3005A9CDF /* AddressSheetController.swift in Sources */,
 				FB664CDD25F4F2BF000DC55F /* UIColor+Extension.swift in Sources */,
@@ -990,6 +1017,9 @@
 				FBA7CA4A25FD03A80099777F /* String+Extension.swift in Sources */,
 				FB626D4725FA48E700C8E6B7 /* VerificationView.swift in Sources */,
 				FBBF4C4725F8DA9A00341D0E /* AgreementView.swift in Sources */,
+				FB1B7984263125760094927E /* OrderHistoryView.swift in Sources */,
+				FBDA14FE26318B320060DE14 /* UICollectionViewCenterLayout.swift in Sources */,
+				FB1B797726311BD40094927E /* ShareOrderController.swift in Sources */,
 				FB4569AB260CCBD3004B702A /* ProfileView.swift in Sources */,
 				FBA7CA3325FCBB370099777F /* CountryCodePickerViewModel.swift in Sources */,
 				FB1E86E526243B93000ACFBE /* UINavigationController+Extension.swift in Sources */,
@@ -999,6 +1029,7 @@
 				FB48CA35262386B3005A9CDF /* SuggestCell.swift in Sources */,
 				FBF81F5E2608E938008D5C7F /* CartController.swift in Sources */,
 				FBF81F112608E651008D5C7F /* MenuController.swift in Sources */,
+				FB2D801E2636FF30005423FC /* APIService.swift in Sources */,
 				E6DFBE1B25FA6D6A0091ABFC /* BrandRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1172,14 +1203,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BC29U93WX8;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kz.salambro.app.SalamBro;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1193,14 +1226,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BC29U93WX8;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kz.salambro.app.SalamBro;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
