@@ -110,3 +110,33 @@
 // MARK: - Commentary
 "Commentary.addressField.title" = "Commentary(apartment N, entrance, ...)";
 "Commentary.button.title" = "Done";
+
+// MARK: - RateOrder
+"RateOrder.title" = "Rate order";
+// bad
+"RateOrder.badRate.title" = "We apologise! Something went wrong?";
+"RateOrder.badRate.subtitle" = "We want to fix this! Something went wrong,
+how do you need it? Your comments will help us much!";
+// average
+"RateOrder.averageRate.title" = "Clear! What should we improve?";
+"RateOrder.averageRate.subtitle" = "Average is not cool. What should we
+fix next time?";
+// good
+"RateOrder.goodRate.title" = "Thank you! What could we
+improve?";
+"RateOrder.goodRate.subtitle" = "4/5 is good - but not perfect.
+What should we improve next time?";
+// excellent
+"RateOrder.excellentRate.title" = "It's good that everything went well!";
+"RateOrder.excellentRate.subtitle" = "What did you like the most?";
+
+// itemCells
+"RateOrder.cell.courierWork.text" = "Courier work";
+"RateOrder.cell.givenTime.text" = "Suggested time";
+"RateOrder.cell.courierNotFoundClient.text" = "The courier did not find me";
+"RateOrder.cell.foodIsMissing.text" = "Missing dish";
+"RateOrder.cell.foodIsCold.text" = "The food was cold";
+"RateOrder.cell.deliveryTime.text" = "Delivery time";
+
+"RateOrder.submitButton.title" = "Send";
+"RateOrder.commentaryField.placeholder" = "Add commentary";
