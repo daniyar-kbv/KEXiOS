@@ -12,3 +12,9 @@ public struct Country {
     let name: String
     let callingCode: String
 }
+
+extension Country: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+}

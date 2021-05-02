@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MenuDTO: Decodable {
+public struct MenuDTO: Codable {
     let foodTypes: [FoodTypeDTO]
 }
 

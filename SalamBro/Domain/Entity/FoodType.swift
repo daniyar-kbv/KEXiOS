@@ -12,3 +12,9 @@ public struct FoodType {
     let position: Int
     let foods: [Food]
 }
+
+extension FoodType: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.title == rhs.title
+    }
+}

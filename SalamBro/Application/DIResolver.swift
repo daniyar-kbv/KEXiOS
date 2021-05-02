@@ -45,8 +45,10 @@ private final class ProvidersAssembly: Assembly {
 }
 
 private final class StoragesAssembly: Assembly {
-    func assemble(container _: Container) {
-        // TODO:
+    func assemble(container: Container) {
+        container.register(Storage.self) { _ in
+            Storage()
+        }.inObjectScope(.container)
     }
 }
 
@@ -67,7 +69,8 @@ private final class RepositoriesAssembly: Assembly {
         }
 
         container.register(GeoRepository.self) { r in
-            GeoRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!)
+            GeoRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!,
+                                        storage: r.resolve(Storage.self)!)
         }
     }
 }

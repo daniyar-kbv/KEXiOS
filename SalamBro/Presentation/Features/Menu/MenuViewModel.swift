@@ -30,6 +30,7 @@ public final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func download() {
+        isAnimating.accept(true)
         firstly {
             self.menuRepository.downloadMenuCategories()
         }.done {
@@ -54,6 +55,7 @@ public final class MenuViewModel: MenuViewModelProtocol {
             // TODO: - написать обработку и презентацию ошибок
         }.finally {
             self.updateTableView.accept(())
+            self.isAnimating.accept(false)
         }
     }
 

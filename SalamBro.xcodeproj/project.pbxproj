@@ -101,6 +101,7 @@
 		B035AFA98B57CB133F6EEC82CFF2F2C9 /* GeoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AF63BA058B328108397FE1F26C519E /* GeoProvider.swift */; };
 		444882E41EBDC841696D38037DFA8F67 /* GeoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00E50604044700E799AA05DB8469743 /* GeoRepository.swift */; };
 		8DA95C5643E0861F60EF118952A3B011 /* GeoRepositoryImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C95E2D3745187D0D8FF3E96462920A6 /* GeoRepositoryImplementation.swift */; };
+		B90B72C795BCBB74C4401620786BCEB3 /* GeoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BFEB3CF7DD3F89352073E78D5CA4237 /* GeoStorage.swift */; };
 		061FDA9002EEFC298AC520B8E1A5AABB /* GetNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F88754811E59BD790D54E25897A0AA0 /* GetNameController.swift */; };
 		B3E6EF750831FF696FC0589A67292D65 /* GetNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED29D5A44CFCFE8298191D33518936 /* GetNameView.swift */; };
 		05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */; };
@@ -141,6 +142,7 @@
 		6F501A6C66166DBF41F343BC3ACE1BD2 /* ShareOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E420D58AA312E46BCD13F06339F8B0 /* ShareOrderView.swift */; };
 		9540806D1714956FA9B2C2E775CB3A5C /* StagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5D8FF5DD4BCFD49996D346C2CDB4E5 /* StagLayout.swift */; };
 		9C12D1A03462E0B25385C737C544CEFB /* StagLayoutFrameHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4285A853318739ED66D9DF9928A5BF12 /* StagLayoutFrameHolder.swift */; };
+		9D6DE6A1B49BCEC225779D5720049B1B /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F205CC495DCB2845E88E88CCFE9C8 /* Storage.swift */; };
 		827ABA24927E12472EE21A0AAC5FD2BF /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F5B8460D143B3F6AB86316114B4EC8 /* String+Extension.swift */; };
 		3773E3FACAD274873D29C9BD5DC10F9F /* SuggestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BD2C5F7C3F82B3047C047ACD541757 /* SuggestCell.swift */; };
 		9873D738F2FF122AB37ACE9981CD027B /* SuggestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A4D12820C95DA3B4FB2C4D72F744144 /* SuggestCell.xib */; };
@@ -270,6 +272,7 @@
 		A5AF63BA058B328108397FE1F26C519E /* GeoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoProvider.swift; sourceTree = "<group>"; };
 		A00E50604044700E799AA05DB8469743 /* GeoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoRepository.swift; sourceTree = "<group>"; };
 		9C95E2D3745187D0D8FF3E96462920A6 /* GeoRepositoryImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoRepositoryImplementation.swift; sourceTree = "<group>"; };
+		9BFEB3CF7DD3F89352073E78D5CA4237 /* GeoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoStorage.swift; sourceTree = "<group>"; };
 		4F88754811E59BD790D54E25897A0AA0 /* GetNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNameController.swift; sourceTree = "<group>"; };
 		C5ED29D5A44CFCFE8298191D33518936 /* GetNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNameView.swift; sourceTree = "<group>"; };
 		3C6169FACF56887087B2E3B796665DC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -321,6 +324,7 @@
 		30E420D58AA312E46BCD13F06339F8B0 /* ShareOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOrderView.swift; sourceTree = "<group>"; };
 		3A5D8FF5DD4BCFD49996D346C2CDB4E5 /* StagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagLayout.swift; sourceTree = "<group>"; };
 		4285A853318739ED66D9DF9928A5BF12 /* StagLayoutFrameHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagLayoutFrameHolder.swift; sourceTree = "<group>"; };
+		850F205CC495DCB2845E88E88CCFE9C8 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		20F5B8460D143B3F6AB86316114B4EC8 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		00BD2C5F7C3F82B3047C047ACD541757 /* SuggestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestCell.swift; sourceTree = "<group>"; };
 		6A4D12820C95DA3B4FB2C4D72F744144 /* SuggestCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestCell.xib; sourceTree = "<group>"; };
@@ -889,6 +893,7 @@
 				334960BC448AD7ABDFF43496EB03D797 /* DTO */,
 				634DF0542321FBAF896E12DD7808EC82 /* Provider */,
 				78FE667594F17AE9A38457052E79F069 /* Repository */,
+				33A5022711A93013634F09CA3D0A4165 /* Storage */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -995,13 +1000,13 @@
 			path = CountriesList;
 			sourceTree = "<group>";
 		};
-		FBA11A60C8AAA5991B82C9B36FF799FC /* CountryCodeCell */ = {
+		33A5022711A93013634F09CA3D0A4165 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				275EEF8250D727EDA1EF45110467D4E9 /* CountryCodeCell.swift */,
-				9B8FDA6E2A58F291D1B7F2649323F60E /* CountryCodeCellViewModel.swift */,
+				9BFEB3CF7DD3F89352073E78D5CA4237 /* GeoStorage.swift */,
+				850F205CC495DCB2845E88E88CCFE9C8 /* Storage.swift */,
 			);
-			path = CountryCodeCell;
+			path = Storage;
 			sourceTree = "<group>";
 		};
 		EC500F7424886F86E75759D4C36759B9 /* Brands */ = {
@@ -1021,6 +1026,15 @@
 				428996346C3FC4F251EF52FA6A8EF051 /* SupportController.swift */,
 			);
 			path = MainTab;
+			sourceTree = "<group>";
+		};
+		FBA11A60C8AAA5991B82C9B36FF799FC /* CountryCodeCell */ = {
+			isa = PBXGroup;
+			children = (
+				275EEF8250D727EDA1EF45110467D4E9 /* CountryCodeCell.swift */,
+				9B8FDA6E2A58F291D1B7F2649323F60E /* CountryCodeCellViewModel.swift */,
+			);
+			path = CountryCodeCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1431,6 +1445,7 @@
 				B035AFA98B57CB133F6EEC82CFF2F2C9 /* GeoProvider.swift in Sources */,
 				444882E41EBDC841696D38037DFA8F67 /* GeoRepository.swift in Sources */,
 				8DA95C5643E0861F60EF118952A3B011 /* GeoRepositoryImplementation.swift in Sources */,
+				B90B72C795BCBB74C4401620786BCEB3 /* GeoStorage.swift in Sources */,
 				061FDA9002EEFC298AC520B8E1A5AABB /* GetNameController.swift in Sources */,
 				B3E6EF750831FF696FC0589A67292D65 /* GetNameView.swift in Sources */,
 				E2453559AD8A47EC6240ADC2635E02A2 /* Localizable+Generated.swift in Sources */,
@@ -1461,6 +1476,7 @@
 				6F501A6C66166DBF41F343BC3ACE1BD2 /* ShareOrderView.swift in Sources */,
 				9540806D1714956FA9B2C2E775CB3A5C /* StagLayout.swift in Sources */,
 				9C12D1A03462E0B25385C737C544CEFB /* StagLayoutFrameHolder.swift in Sources */,
+				9D6DE6A1B49BCEC225779D5720049B1B /* Storage.swift in Sources */,
 				827ABA24927E12472EE21A0AAC5FD2BF /* String+Extension.swift in Sources */,
 				3773E3FACAD274873D29C9BD5DC10F9F /* SuggestCell.swift in Sources */,
 				6905469B3B72AA5D45630F77B7732A08 /* SuggestController.swift in Sources */,

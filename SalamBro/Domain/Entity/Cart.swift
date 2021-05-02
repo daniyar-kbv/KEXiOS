@@ -14,3 +14,9 @@ public struct Cart {
     var products: [CartProduct]
     var productsAdditional: [CartAdditionalProduct]
 }
+
+extension Cart: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+}

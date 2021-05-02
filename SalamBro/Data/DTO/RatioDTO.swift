@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RatioDTO: Decodable {
+public struct RatioDTO: Codable {
     public var x: Float
     public var y: Float
 }

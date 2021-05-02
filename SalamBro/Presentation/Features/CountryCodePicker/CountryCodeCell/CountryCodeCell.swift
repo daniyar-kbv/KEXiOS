@@ -38,6 +38,10 @@ public final class CountryCodeCell: UITableViewCell, Reusable {
         viewModel.title.bind { [unowned self] in
             self.textLabel?.text = $0
         }.disposed(by: disposeBag)
+
+        viewModel.isSelected.bind { [unowned self] in
+            self.accessoryType = $0 ? .checkmark : .none
+        }.disposed(by: disposeBag)
     }
 
     private func setup() {

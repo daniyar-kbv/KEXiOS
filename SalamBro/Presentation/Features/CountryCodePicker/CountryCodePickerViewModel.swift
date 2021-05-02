@@ -16,6 +16,7 @@ public protocol CountryCodePickerViewModelProtocol: ViewModel {
     var isAnimating: BehaviorRelay<Bool> { get }
     func update()
     func country(by index: Int) -> CountryUI
+    func didSelect(index: Int)
 }
 
 public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtocol {
@@ -33,12 +34,19 @@ public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtoco
         countries[index]
     }
 
+    public func didSelect(index: Int) {
+        repository.currentCountry = country(by: index).toDomain()
+    }
+
     private func download() {
         isAnimating.accept(true)
         firstly {
             repository.downloadCountries()
         }.done {
-            self.cellViewModels = $0.map { CountryCodeCellViewModel(country: CountryUI(from: $0)) }
+            self.cellViewModels = $0.map {
+                CountryCodeCellViewModel(country: CountryUI(from: $0),
+                                         isSelected: self.repository.currentCountry == $0)
+            }
             self.countries = $0.map { CountryUI(from: $0) }
         }.catch { _ in
 

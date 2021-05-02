@@ -10,9 +10,18 @@ import PromiseKit
 
 public final class GeoRepositoryImplementation: GeoRepository {
     private let provider: GeoProvider
+    private let storage: GeoStorage
 
-    public init(provider: GeoProvider) {
+    public init(provider: GeoProvider,
+                storage: GeoStorage)
+    {
         self.provider = provider
+        self.storage = storage
+    }
+
+    public var currentCountry: Country? {
+        get { storage.currentCountry?.toDomain() }
+        set { storage.currentCountry = .init(from: newValue) }
     }
 
     public func downloadCountries() -> Promise<[Country]> {

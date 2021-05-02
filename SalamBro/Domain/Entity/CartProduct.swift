@@ -16,3 +16,9 @@ public struct CartProduct {
     let commentary: String?
     let available: Bool
 }
+
+extension CartProduct: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+}

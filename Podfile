@@ -12,6 +12,7 @@ target 'SalamBro' do
   pod 'Swinject'
   pod 'SnapKit'
   pod 'Reusable'
+  pod 'Cache'
 
   # Pods for SalamBro
   pod 'InputMask'

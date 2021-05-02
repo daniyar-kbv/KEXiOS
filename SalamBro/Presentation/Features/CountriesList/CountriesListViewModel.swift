@@ -15,6 +15,7 @@ public protocol CountriesListViewModelProtocol: ViewModel {
     var isAnimating: BehaviorRelay<Bool> { get }
     var updateTableView: BehaviorRelay<Void?> { get }
     func update()
+    func didSelect(index: Int)
 }
 
 public final class CountriesListViewModel: CountriesListViewModelProtocol {
@@ -25,6 +26,10 @@ public final class CountriesListViewModel: CountriesListViewModelProtocol {
 
     public func update() {
         download()
+    }
+
+    public func didSelect(index: Int) {
+        repository.currentCountry = countries[index].toDomain()
     }
 
     private func download() {

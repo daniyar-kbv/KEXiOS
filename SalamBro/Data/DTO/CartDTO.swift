@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CartDTO: Decodable {
+public struct CartDTO: Codable {
     let id: Int
     var totalProducts: Int
     var totalPrice: Int

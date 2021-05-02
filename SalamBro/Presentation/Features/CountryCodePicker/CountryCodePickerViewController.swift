@@ -137,6 +137,7 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
     }
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelect(index: indexPath.row)
         dismiss(animated: true) { [unowned self] in
             self.delegate?.passCountry(country: self.viewModel.country(by: indexPath.row))
         }

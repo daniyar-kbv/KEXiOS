@@ -13,3 +13,9 @@ public struct Food {
     let price: Int
     let description: String
 }
+
+extension Food: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+}

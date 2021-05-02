@@ -10,3 +10,9 @@ import Foundation
 public struct Ad {
     let name: String
 }
+
+extension Ad: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.name == rhs.name
+    }
+}

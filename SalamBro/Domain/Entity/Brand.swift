@@ -12,3 +12,9 @@ public struct Brand {
     public var name: String
     public let priority: Int
 }
+
+extension Brand: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+}

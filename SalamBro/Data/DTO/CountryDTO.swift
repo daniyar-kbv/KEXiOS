@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CountryDTO: Decodable {
+public struct CountryDTO: Codable {
     let id: Int
     let name: String
     let callingCode: String
@@ -20,7 +20,8 @@ public extension CountryDTO {
               callingCode: callingCode)
     }
 
-    init(from domain: Country) {
+    init?(from domain: Country?) {
+        guard let domain = domain else { return nil }
         id = domain.id
         name = domain.name
         callingCode = domain.callingCode

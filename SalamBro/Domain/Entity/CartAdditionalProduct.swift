@@ -14,3 +14,9 @@ public struct CartAdditionalProduct {
     var count: Int = 0
     let available: Bool
 }
+
+extension CartAdditionalProduct: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+}

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CartProductDTO: Decodable {
+public struct CartProductDTO: Codable {
     let id: Int
     let name: String
     let description: String?

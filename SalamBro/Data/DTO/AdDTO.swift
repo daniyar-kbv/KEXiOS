@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct AdDTO: Decodable {
+public struct AdDTO: Codable {
     let name: String
 }
 

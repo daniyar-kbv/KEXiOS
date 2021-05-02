@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.4.3)
+  - Cache (6.0.0)
   - Cosmos (21.0.0)
   - InputMask (6.1.0)
   - PromiseKit (6.13.1):
@@ -34,6 +35,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - Cache
   - Cosmos
   - InputMask
   - PromiseKit
@@ -49,6 +51,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Cache
     - Cosmos
     - InputMask
     - PromiseKit
@@ -65,6 +68,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
   Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
   InputMask: 71d291dc54d2deaeac6512afb6ec2304228c0bb7
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
@@ -79,6 +83,6 @@ SPEC CHECKSUMS:
   YandexMapKitSearch: b46ddd1c80e2e35d006cdfc4ab88070a50cebeda
   YandexRuntime: 2d55244d06267106cf9b00c25a1e63f72a73b6fd
 
-PODFILE CHECKSUM: 66cd1e5890efe6e09fc5c7209916cff2f115f16b
+PODFILE CHECKSUM: 3af7c36ec73871fc3ea0bc38821dbdf04b32ea8c
 
 COCOAPODS: 1.10.1
