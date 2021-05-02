@@ -1,0 +1,7 @@
+#!/bin/sh
+
+gem install bundler
+bundler install
+pod install 
+npm install
+pip install xUnique
