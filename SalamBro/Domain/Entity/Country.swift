@@ -8,8 +8,7 @@
 import Foundation
 
 public struct Country {
-    let id: String
+    let id: Int
     let name: String
     let callingCode: String
-    var marked: Bool = false
 }

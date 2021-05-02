@@ -5,75 +5,111 @@
 //  Created by Arystan on 3/7/21.
 //
 
+import RxCocoa
+import RxSwift
+import SnapKit
 import UIKit
 
-class CountriesListController: UIViewController {
-    
-    fileprivate lazy var rootView = CountriesListView(delegate: self)
-    fileprivate lazy var selectionIndexPath: IndexPath? = nil
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configUI()
-    }
-    
-    override func loadView() {
-        view = rootView
+public final class CountriesListController: UIViewController {
+    private let viewModel: CountriesListViewModelProtocol
+    private let disposeBag: DisposeBag
+
+    private lazy var countriesTableView: UITableView = {
+        let view = UITableView()
+        view.allowsMultipleSelection = false
+        view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        view.tableFooterView = UIView()
+        view.separatorInset.right = view.separatorInset.left + view.separatorInset.left
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = self
+        view.dataSource = self
+        view.refreshControl = refreshControl
+        return view
+    }()
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let view = UIRefreshControl()
+        view.addTarget(self, action: #selector(update), for: .valueChanged)
+        return view
+    }()
+
+    public init(viewModel: CountriesListViewModelProtocol) {
+        self.viewModel = viewModel
+        disposeBag = DisposeBag()
+        super.init(nibName: nil, bundle: nil)
     }
 
+    public required init?(coder _: NSCoder) { nil }
+
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+        setup()
+        bind()
+    }
+
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
+    }
+
+    private func bind() {
+        viewModel.updateTableView
+            .bind(to: countriesTableView.rx.reload)
+            .disposed(by: disposeBag)
+
+        viewModel.isAnimating
+            .bind(to: refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+    }
+
+    private func setupNavigationBar() {
+        navigationItem.title = L10n.CountriesList.Navigation.title
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+
+    private func setup() {
+        setupViews()
+        setupConstraints()
+    }
+
+    private func setupViews() {
+        view.backgroundColor = .white
+        view.addSubview(countriesTableView)
+    }
+
+    private func setupConstraints() {
+        countriesTableView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin)
+            $0.left.right.bottom.equalToSuperview()
+        }
+    }
+
+    @objc
+    private func update() {
+        viewModel.update()
+    }
 }
 
-//MARK: - UITableView
+// MARK: - UITableView
+
 extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return countries.count
+    public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        viewModel.countries.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = countries[indexPath.row]
+        cell.textLabel?.text = viewModel.countries[indexPath.row].name
         cell.backgroundColor = .white
         cell.tintColor = .kexRed
         cell.selectionStyle = .none
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if selectionIndexPath != nil {
-            if selectionIndexPath == indexPath {
-                let vc = CitiesListController()
-                vc.countryId = indexPath.row
-                selectionIndexPath = nil
-                self.navigationController?.pushViewController(vc, animated: true)
-            } else {
-                print(selectionIndexPath!.row)
-                selectionIndexPath = indexPath
-                let cell = tableView.cellForRow(at: selectionIndexPath!)
-                cell?.accessoryType = .checkmark
-            }
-        } else {
-            selectionIndexPath = indexPath
-            let cell = tableView.cellForRow(at: selectionIndexPath!)
-            cell?.accessoryType = .checkmark
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.accessoryType = .none
-    }
-    
-}
 
-extension CountriesListController: CountriesListViewDelegate {
-    func updateList() {
-        print("update list...")
-    }
-}
-
-extension CountriesListController {
-    private func configUI() {
-        navigationItem.title = L10n.CountriesList.Navigation.title
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewModel = CitiesListViewModel(country: viewModel.countries[indexPath.row].id,
+                                            repository: DIResolver.resolve(GeoRepository.self)!)
+        let vc = CitiesListController(viewModel: viewModel)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

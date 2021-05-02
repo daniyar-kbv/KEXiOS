@@ -11,6 +11,10 @@ import PromiseKit
 
 public final class NetworkProvider {
     public func pseudoRequest<T: Decodable>(valueToReturn: T) -> Promise<T> {
-        return .value(valueToReturn)
+        return .init { seal in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                seal.fulfill(valueToReturn)
+            }
+        }
     }
 }

@@ -8,36 +8,32 @@
 import Foundation
 
 class CountryViewModel: NSObject {
-    
-    private var apiService: APIService!
-    
-    var countryArray : [Country]!
-    
+    var countryArray: [Country]!
+
     override init() {
         super.init()
-        self.apiService = APIService()
         getCountriesFromApi()
     }
-    
+
     func getCountriesFromApi() {
-        countryArray = apiService.getCountries()
+//        countryArray = apiService.getCountries()
     }
-    
+
     func numberOfCountries() -> Int {
         return countryArray.count
     }
-    
+
     func unmarkAll() {
-        for i in 0..<numberOfCountries() {
-            countryArray[i].marked = false
+        for i in 0 ..< numberOfCountries() {
+//            countryArray[i].marked = false
         }
     }
-    
+
     func getMarked() -> Country? {
-        for i in 0..<numberOfCountries() {
-            if countryArray[i].marked {
-                return countryArray[i]
-            }
+        for i in 0 ..< numberOfCountries() {
+//            if countryArray[i].marked {
+//                return countryArray[i]
+//            }
         }
         return nil
     }

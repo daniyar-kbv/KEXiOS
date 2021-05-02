@@ -8,24 +8,21 @@
 import Foundation
 
 public struct CountryDTO: Decodable {
-    let id: String
+    let id: Int
     let name: String
     let callingCode: String
-    var marked: Bool = false
 }
 
 public extension CountryDTO {
     func toDomain() -> Country {
         .init(id: id,
               name: name,
-              callingCode: callingCode,
-              marked: marked)
+              callingCode: callingCode)
     }
 
     init(from domain: Country) {
         id = domain.id
         name = domain.name
         callingCode = domain.callingCode
-        marked = domain.marked
     }
 }

@@ -65,5 +65,9 @@ private final class RepositoriesAssembly: Assembly {
         container.register(BrandRepository.self) { r in
             BrandRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!)
         }
+
+        container.register(GeoRepository.self) { r in
+            GeoRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!)
+        }
     }
 }

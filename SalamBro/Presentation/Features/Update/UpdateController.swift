@@ -8,23 +8,22 @@
 import UIKit
 
 class UpdateController: UIViewController {
-    
     lazy var rootView = AdditionalView(delegate: self, descriptionTitle: L10n.Update.Title.description, buttonTitle: L10n.Update.Button.title)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
     }
-    
+
     override func loadView() {
         view = rootView
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -32,9 +31,10 @@ class UpdateController: UIViewController {
 }
 
 // MARK: - Actions
+
 extension UpdateController {
     private func updateApp() {
-        self.navigationController?.pushViewController(CountriesListController(), animated: true)
+        navigationController?.pushViewController(CountriesListController(viewModel: CountriesListViewModel(repository: DIResolver.resolve(GeoRepository.self)!)), animated: true)
     }
 }
 

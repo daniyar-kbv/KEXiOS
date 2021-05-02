@@ -5,72 +5,106 @@
 //  Created by Arystan on 3/7/21.
 //
 
+import RxCocoa
+import RxSwift
+import SnapKit
 import UIKit
 
-class CitiesListController: UIViewController {
-    var countryId: Int = 0
+public final class CitiesListController: UIViewController {
+    private let viewModel: CitiesListViewModelProtocol
+    private let disposeBag: DisposeBag
 
-    fileprivate lazy var rootView = CitiesListView(delegate: self)
-    fileprivate lazy var selectionIndexPath: IndexPath? = nil
+    private lazy var citiesTableView: UITableView = {
+        let view = UITableView()
+        view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        view.tableFooterView = UIView()
+        view.allowsMultipleSelection = false
+        view.separatorInset.right = view.separatorInset.left + view.separatorInset.left
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = self
+        view.dataSource = self
+        view.refreshControl = refreshControl
+        return view
+    }()
 
-    override func viewDidLoad() {
+    private lazy var refreshControl: UIRefreshControl = {
+        let view = UIRefreshControl()
+        view.addTarget(self, action: #selector(update), for: .valueChanged)
+        return view
+    }()
+
+    public init(viewModel: CitiesListViewModelProtocol) {
+        self.viewModel = viewModel
+        disposeBag = DisposeBag()
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder _: NSCoder) { nil }
+
+    override public func viewDidLoad() {
         super.viewDidLoad()
-
-        configUI()
+        setup()
+        bind()
     }
 
-    override func loadView() {
-        view = rootView
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
     }
-}
 
-extension CitiesListController: CitiesListViewDelegate {
-    func test() {
-        print("f")
+    private func bind() {
+        viewModel.isAnimating
+            .bind(to: refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+
+        viewModel.updateTableView
+            .bind(to: citiesTableView.rx.reload)
+            .disposed(by: disposeBag)
+    }
+
+    private func setupNavigationBar() {
+        navigationItem.title = L10n.CitiesList.Navigation.title
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+
+    private func setup() {
+        setupViews()
+        setupConstraints()
+    }
+
+    private func setupViews() {
+        view.backgroundColor = .white
+        view.addSubview(citiesTableView)
+    }
+
+    private func setupConstraints() {
+        citiesTableView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin)
+            $0.left.right.bottom.equalToSuperview()
+        }
+    }
+
+    @objc
+    private func update() {
+        viewModel.update()
     }
 }
 
 extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return cities[countryId].count
+    public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        viewModel.cities.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = cities[countryId][indexPath.row]
+        cell.textLabel?.text = viewModel.cities[indexPath.row]
         cell.tintColor = .kexRed
         cell.selectionStyle = .none
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if selectionIndexPath != nil {
-            if selectionIndexPath == indexPath {
-                let vc = BrandsController(viewModel: BrandViewModel(repository: DIResolver.resolve(BrandRepository.self)!)) // TODO:
-                selectionIndexPath = nil
-                navigationController?.pushViewController(vc, animated: true)
-            } else {
-                print(selectionIndexPath!.row)
-                selectionIndexPath = indexPath
-                let cell = tableView.cellForRow(at: selectionIndexPath!)
-                cell?.accessoryType = .checkmark
-            }
-        } else {
-            selectionIndexPath = indexPath
-            let cell = tableView.cellForRow(at: selectionIndexPath!)
-            cell?.accessoryType = .checkmark
-        }
-    }
-
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.accessoryType = .none
-    }
-}
-
-extension CitiesListController {
-    private func configUI() {
-        navigationItem.title = L10n.CitiesList.Navigation.title
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    public func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
+        let vc = BrandsController(viewModel: BrandViewModel(repository: DIResolver.resolve(BrandRepository.self)!)) // TODO:
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

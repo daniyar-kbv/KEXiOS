@@ -32,6 +32,7 @@ public final class BrandsController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.refreshControl = refreshControl
         return collectionView
     }()
 
@@ -73,7 +74,6 @@ public final class BrandsController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         view.addSubview(collectionView)
-        collectionView.addSubview(refreshControl)
     }
 
     private func setupConstraints() {
