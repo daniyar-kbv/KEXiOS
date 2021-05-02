@@ -7,16 +7,9 @@
 
 import Foundation
 
-public struct Country: Decodable {
+public struct Country {
     let id: String
     let name: String
     let callingCode: String
     var marked: Bool = false
-//    enum CodingKeys: String, CodingKey {
-//        case id
-//        case name
-//        case callingCode
-//    }
 }
-
-

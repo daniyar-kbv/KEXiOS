@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct FoodType: Decodable {
-    let title:              String
-    let position:           Int
-    let foods:              [Food]
+public struct FoodType {
+    let title: String
+    let position: Int
+    let foods: [Food]
 }

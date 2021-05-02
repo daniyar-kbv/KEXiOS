@@ -8,10 +8,10 @@
 import Foundation
 
 public class DownloadMenuCategoriesResponse: Decodable {
-    public var categories: [FoodType]
-    
+    public var categories: [FoodTypeDTO]
+
     // MOCK: - remove
-    public init(categories: [FoodType]) {
+    public init(categories: [FoodTypeDTO]) {
         self.categories = categories
     }
 }
@@ -21,12 +21,12 @@ extension DownloadMenuCategoriesResponse {
     public static var mockResponse: DownloadMenuCategoriesResponse {
         .init(categories: getMenuCategories())
     }
-    
-    private static func getMenuCategories() -> [FoodType] {
-        var temp: [FoodType] = []
+
+    private static func getMenuCategories() -> [FoodTypeDTO] {
+        var temp: [FoodTypeDTO] = []
         let titles = ["combos", "sushi", "burgers", "doners", "template", "template", "template", "template", "template"]
-        for i in 0..<9 {
-            temp.append( FoodType(title: titles[i], position: i, foods: []))
+        for i in 0 ..< 9 {
+            temp.append(FoodTypeDTO(title: titles[i], position: i, foods: []))
         }
         return temp
     }

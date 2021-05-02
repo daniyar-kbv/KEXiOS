@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Cart: Decodable {
+public struct Cart {
     let id: Int
     var totalProducts: Int
     var totalPrice: Int

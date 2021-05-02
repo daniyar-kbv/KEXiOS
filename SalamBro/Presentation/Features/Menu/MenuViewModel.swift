@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import RxSwift
-import RxCocoa
 import PromiseKit
+import RxCocoa
+import RxSwift
 
 public protocol MenuViewModelProtocol: AnyObject {
     var headerViewModels: [ViewModel?] { get }
@@ -28,19 +28,19 @@ public final class MenuViewModel: MenuViewModelProtocol {
         }.done {
             self.headerViewModels = [
                 nil,
-                CategoriesSectionHeaderViewModel(categories: $0.categories)
+                CategoriesSectionHeaderViewModel(categories: $0),
             ]
         }.then {
             self.menuRepository.downloadMenuAds()
         }.done {
             self.cellViewModels.append([
                 AddressPickCellViewModel(),
-                AdCollectionCellViewModel(ads: $0.menuAds)
+                AdCollectionCellViewModel(ads: $0),
             ])
         }.then {
             self.menuRepository.downloadMenuItems()
         }.done {
-            self.cellViewModels.append($0.menuItems.map { MenuCellViewModel(food: $0) }) 
+            self.cellViewModels.append($0.map { MenuCellViewModel(food: $0) })
         }.catch {
             print($0)
             // TODO: - написать обработку и презентацию ошибок
@@ -48,12 +48,12 @@ public final class MenuViewModel: MenuViewModelProtocol {
             self.updateTableView.accept(())
         }
     }
-    
+
     init(menuRepository: MenuRepository) {
-        self.cellViewModels = []
-        self.headerViewModels = []
-        self.updateTableView = .init(value: nil)
+        cellViewModels = []
+        headerViewModels = []
+        updateTableView = .init(value: nil)
         self.menuRepository = menuRepository
-        self.download()
+        download()
     }
 }

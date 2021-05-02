@@ -8,10 +8,10 @@
 import Foundation
 
 public final class DownloadMenuAdsResponse: Decodable {
-    public var menuAds: [Ad]
-    
+    public var menuAds: [AdDTO]
+
     // MOCK: - remove
-    public init(menuAds: [Ad]) {
+    public init(menuAds: [AdDTO]) {
         self.menuAds = menuAds
     }
 }
@@ -21,11 +21,11 @@ extension DownloadMenuAdsResponse {
     public static var mockReponse: DownloadMenuAdsResponse {
         .init(menuAds: getMenuAds())
     }
-    
-    private static func getMenuAds() -> [Ad] {
-        var temp: [Ad] = []
-        for i in 0..<9 {
-            temp.append(Ad(name: "ad\(i)"))
+
+    private static func getMenuAds() -> [AdDTO] {
+        var temp: [AdDTO] = []
+        for i in 0 ..< 9 {
+            temp.append(AdDTO(name: "ad\(i)"))
         }
         return temp
     }

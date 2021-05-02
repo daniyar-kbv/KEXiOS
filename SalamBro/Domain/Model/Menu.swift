@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Menu: Decodable {
-    let foodTypes:          [FoodType]
+public struct Menu {
+    let foodTypes: [FoodType]
 }

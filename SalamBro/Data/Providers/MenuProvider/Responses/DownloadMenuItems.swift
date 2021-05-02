@@ -8,10 +8,10 @@
 import Foundation
 
 public final class DownloadMenuItemsResponse: Decodable {
-    public var menuItems: [Food]
-    
+    public var menuItems: [FoodDTO]
+
     // MOCK: - remove
-    public init(menuItems: [Food]) {
+    public init(menuItems: [FoodDTO]) {
         self.menuItems = menuItems
     }
 }
@@ -20,11 +20,11 @@ extension DownloadMenuItemsResponse {
     public static var mockResponse: DownloadMenuItemsResponse {
         .init(menuItems: getMenuItems())
     }
-    
-    private static func getMenuItems() -> [Food] {
-        var temp: [Food] = []
-        for i in 0..<9 {
-            temp.append(Food(id: i, title: "Бургер\(i)", price: 1490, description: "Двойной чизбургер (говяжий/куриный), картофель фри, напиток на выбор"))
+
+    private static func getMenuItems() -> [FoodDTO] {
+        var temp: [FoodDTO] = []
+        for i in 0 ..< 9 {
+            temp.append(FoodDTO(id: i, title: "Бургер\(i)", price: 1490, description: "Двойной чизбургер (говяжий/куриный), картофель фри, напиток на выбор"))
         }
         return temp
     }

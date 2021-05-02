@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Brand: Decodable {
+public struct Brand {
     public let id: Int
     public var name: String
     public let priority: Int

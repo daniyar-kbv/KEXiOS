@@ -7,9 +7,9 @@
 
 import Foundation
 
-public struct Food: Decodable {
-    let id:                 Int
-    let title:              String
-    let price:              Int
-    let description:        String
+public struct Food {
+    let id: Int
+    let title: String
+    let price: Int
+    let description: String
 }
