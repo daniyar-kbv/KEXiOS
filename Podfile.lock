@@ -1,7 +1,30 @@
 PODS:
+  - Alamofire (5.4.3)
   - Cosmos (21.0.0)
   - InputMask (6.1.0)
+  - PromiseKit (6.13.1):
+    - PromiseKit/CorePromise (= 6.13.1)
+    - PromiseKit/Foundation (= 6.13.1)
+    - PromiseKit/UIKit (= 6.13.1)
+  - PromiseKit/CorePromise (6.13.1)
+  - PromiseKit/Foundation (6.13.1):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.13.1):
+    - PromiseKit/CorePromise
+  - Reusable (4.1.1):
+    - Reusable/Storyboard (= 4.1.1)
+    - Reusable/View (= 4.1.1)
+  - Reusable/Storyboard (4.1.1)
+  - Reusable/View (4.1.1)
+  - RxCocoa (6.1.0):
+    - RxRelay (= 6.1.0)
+    - RxSwift (= 6.1.0)
+  - RxRelay (6.1.0):
+    - RxSwift (= 6.1.0)
+  - RxSwift (6.1.0)
+  - SnapKit (5.0.1)
   - SwiftGen (6.4.0)
+  - Swinject (2.7.1)
   - YandexMapKit (3.5.0):
     - YandexRuntime (= 3.5.0)
   - YandexMapKitSearch (3.5.0):
@@ -10,29 +33,52 @@ PODS:
   - YandexRuntime (3.5.0)
 
 DEPENDENCIES:
+  - Alamofire
   - Cosmos
   - InputMask
+  - PromiseKit
+  - Reusable
+  - RxCocoa
+  - RxSwift
+  - SnapKit
   - SwiftGen
+  - Swinject
   - YandexMapKit
   - YandexMapKitSearch
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - Cosmos
     - InputMask
+    - PromiseKit
+    - Reusable
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+    - SnapKit
     - SwiftGen
+    - Swinject
     - YandexMapKit
     - YandexMapKitSearch
     - YandexRuntime
 
 SPEC CHECKSUMS:
+  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
   InputMask: 71d291dc54d2deaeac6512afb6ec2304228c0bb7
+  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
+  Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
+  RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
+  RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
+  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
+  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   YandexMapKit: ecd4b78de34a35df63d066ac299e6fd0fe46d1ba
   YandexMapKitSearch: b46ddd1c80e2e35d006cdfc4ab88070a50cebeda
   YandexRuntime: 2d55244d06267106cf9b00c25a1e63f72a73b6fd
 
-PODFILE CHECKSUM: baa65c987c6b76179b3ae47366c749e692bbddf9
+PODFILE CHECKSUM: b89950cb6cf132df8d610756db536de532ea4bfa
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

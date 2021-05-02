@@ -6,21 +6,54 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
+import PromiseKit
 
-class MenuViewModel {
-    
+public protocol MenuViewModelProtocol: AnyObject {
+    var headerViewModels: [ViewModel?] { get }
+    var cellViewModels: [[ViewModel]] { get }
+    var updateTableView: BehaviorRelay<Void?> { get }
+}
+
+public final class MenuViewModel: MenuViewModelProtocol {
     private let menuRepository: MenuRepository
-    
-    var ads: [Ad]
-    var categories: [FoodType]
-    var items: [Food]
+    public var headerViewModels: [ViewModel?]
+    public var cellViewModels: [[ViewModel]]
+    public var updateTableView: BehaviorRelay<Void?>
 
-    init(menuRepository: MenuRepository) {
-        self.menuRepository = menuRepository
-        self.ads = menuRepository.getMenuAds()
-        self.categories = menuRepository.getMenuCategories()
-        self.items = menuRepository.getMenuItems()
+    private func download() {
+        firstly {
+            self.menuRepository.downloadMenuCategories()
+        }.done {
+            self.headerViewModels = [
+                nil,
+                CategoriesSectionHeaderViewModel(categories: $0.categories)
+            ]
+        }.then {
+            self.menuRepository.downloadMenuAds()
+        }.done {
+            self.cellViewModels.append([
+                AddressPickCellViewModel(),
+                AdCollectionCellViewModel(ads: $0.menuAds)
+            ])
+        }.then {
+            self.menuRepository.downloadMenuItems()
+        }.done {
+            self.cellViewModels.append($0.menuItems.map { MenuCellViewModel(food: $0) }) 
+        }.catch {
+            print($0)
+            // TODO: - написать обработку и презентацию ошибок
+        }.finally {
+            self.updateTableView.accept(())
+        }
     }
     
-    
+    init(menuRepository: MenuRepository) {
+        self.cellViewModels = []
+        self.headerViewModels = []
+        self.updateTableView = .init(value: nil)
+        self.menuRepository = menuRepository
+        self.download()
+    }
 }

@@ -22,7 +22,7 @@ class CountryCodePickerViewController: UIViewController {
     
     lazy var lineImage: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "line")
+        view.image = Asset.line.image
         view.tintColor = .darkGray
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

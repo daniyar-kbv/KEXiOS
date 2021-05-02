@@ -7,7 +7,7 @@
 
 import UIKit
 
-typealias ratio = (CGFloat, CGFloat)
+public typealias ratio = (CGFloat, CGFloat)
 
 class APIService :  NSObject {
     static let shared = APIService()
