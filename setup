@@ -1,5 +1,6 @@
 #!/bin/sh
 
+brew install swiftformat
 gem install bundler
 bundler install
 pod install 
