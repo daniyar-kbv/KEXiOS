@@ -18,23 +18,24 @@ class MainTabController: UITabBarController {
     var itemCount: Int = 0
     
     lazy var menu: MenuController = {
-        let vc = MenuController()
+        let viewModel = MenuViewModel(menuRepository: DIResolver.resolve(MenuRepository.self)!)
+        let vc = MenuController(viewModel: viewModel)
         vc.tabBarItem.title = L10n.MainTab.Menu.title
-        vc.tabBarItem.image = UIImage(named: "menu")
+        vc.tabBarItem.image = Asset.menu.image
         return vc
     }()
     
     lazy var profile: ProfileController = {
         let vc = ProfileController()
         vc.tabBarItem.title = L10n.MainTab.Profile.title
-        vc.tabBarItem.image = UIImage(named: "profile")
+        vc.tabBarItem.image = Asset.profile.image
         return vc
     }()
     
     lazy var support: SupportController = {
         let vc = SupportController()
         vc.tabBarItem.title = L10n.MainTab.Support.title
-        vc.tabBarItem.image = UIImage(named: "support")
+        vc.tabBarItem.image = Asset.support.image
         return vc
     }()
     
@@ -42,7 +43,7 @@ class MainTabController: UITabBarController {
         let vc = CartController()
         vc.mainTabDelegate = self
         vc.tabBarItem.title = L10n.MainTab.Cart.title
-        vc.tabBarItem.image = UIImage(named: "cart")
+        vc.tabBarItem.image = Asset.cart.image
         vc.tabBarItem.badgeColor = .kexRed
         return vc
     }()

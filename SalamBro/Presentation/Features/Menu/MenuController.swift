@@ -6,105 +6,166 @@
 //
 
 import UIKit
+import SnapKit
+import RxSwift
+import RxCocoa
+import Reusable
 
-class MenuController: UIViewController {
-    var item: [Food] = []
+public final class MenuController: UIViewController {
+    private let viewModel: MenuViewModelProtocol
+    private let disposeBag: DisposeBag
     
-    var menuViewModel: MenuViewModel = MenuViewModel(menuRepository: MenuRepositoryMockImpl())
+    private lazy var logoView: UIImageView = {
+        let view = UIImageView()
+        view.image = Asset.Brands.salamBro4.image
+        view.contentMode = .scaleAspectFit
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
-    lazy var rootView = MenuView(delegate: self)
+    private lazy var brandLabel: UILabel = {
+        let view = UILabel()
+        view.text = "SalamBro"
+        view.font = UIFont.boldSystemFont(ofSize: 20)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
-    override func loadView() {
-        view = rootView
+    private lazy var brandSelectView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var itemTableView: UITableView = {
+        let view = UITableView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.register(cellType: AddressPickCell.self)
+        view.register(cellType: MenuCell.self)
+        view.register(cellType: AdCollectionCell.self)
+        view.register(headerFooterViewType: CategoriesSectionHeader.self)
+        view.delegate = self
+        view.dataSource = self
+        view.showsVerticalScrollIndicator = false
+        view.estimatedRowHeight = 300
+        view.bounces = false
+        view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        return view
+    }()
+    
+    public init(viewModel: MenuViewModelProtocol) {
+        self.viewModel = viewModel
+        self.disposeBag = DisposeBag()
+        super.init(nibName: nil, bundle: nil)
     }
     
-    override func viewDidLoad() {
+    required init?(coder: NSCoder) { nil }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+        bind()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    private func bind() {
+        viewModel.updateTableView
+            .bind(to: itemTableView.rx.reload)
+            .disposed(by: disposeBag)
+    }
+    
+    private func setup() {
+        setupViews()
+        setupConstraints()
+    }
+    
+    private func setupViews() {
+        view.backgroundColor = .white
+        [logoView, brandLabel].forEach { brandSelectView.addSubview($0) }
+        [brandSelectView, itemTableView].forEach { view.addSubview($0) }
+    }
+    
+    func setupConstraints() {
+        logoView.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: 48, height: 48))
+            $0.top.left.equalToSuperview()
+        }
+        
+        brandLabel.snp.makeConstraints {
+            $0.left.equalTo(logoView.snp.right).offset(8)
+            $0.centerY.equalTo(logoView.snp.centerY)
+        }
+        
+        brandSelectView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin).offset(8)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.height.equalTo(48)
+        }
+        
+        itemTableView.snp.makeConstraints {
+            $0.top.equalTo(brandSelectView.snp.bottom).offset(8)
+            $0.left.right.equalToSuperview()
+            $0.bottom.equalTo(view.snp.bottomMargin)
+        }
     }
 }
 
 extension MenuController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 1:
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch viewModel.headerViewModels[section] {
+        case is CategoriesSectionHeaderViewModelProtocol:
             return 44
         default:
             return 0
         }
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        2
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        viewModel.cellViewModels.count
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            return UIView(frame: CGRect.zero)
-        } else if section == 1 {
-            return rootView.categoryCollectionView
-        } else {
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch viewModel.headerViewModels[section] {
+        case let viewModel as CategoriesSectionHeaderViewModelProtocol:
+            let header = tableView.dequeueReusableHeaderFooterView(CategoriesSectionHeader.self)
+            header?.set(viewModel)
+            return header
+        default:
             return nil
         }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 2
-        } else {
-            return menuViewModel.items.count
-        }
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.cellViewModels[section].count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            if indexPath.row == 1 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "AdCollectionCell", for: indexPath)
-                return cell
-            } else if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "AddressPickCell", for: indexPath)
-                return cell
-            }
-            return UITableViewCell()
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as! MenuCell
-            cell.bindData(item: menuViewModel.items[indexPath.row])
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
+        case let viewModel as AddressPickCellViewModelProtocol:
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AddressPickCell.self)
+            cell.set(viewModel)
             return cell
+        case let viewModel as AdCollectionCellViewModelProtocol:
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AdCollectionCell.self)
+            cell.set(viewModel)
+            return cell
+        case let viewModel as MenuCellViewModelProtocol:
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: MenuCell.self)
+            cell.set(viewModel)
+            return cell
+        default:
+            return .init()
         }
-    }
-}
-
-extension MenuController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return menuViewModel.categories.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
-        cell.categoryLabel.text = menuViewModel.categories[indexPath.row].title
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: CGFloat
-        let height: CGFloat
-        let textSize = menuViewModel.categories[indexPath.row].title.size(withAttributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 16)])
-        width = textSize.width + 8
-        height = 44
-        return .init(width: width, height: height)
     }
 }

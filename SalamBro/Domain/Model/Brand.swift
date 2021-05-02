@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Brand: Decodable {
-    let id: Int
-    var name: String
-    let priority: Int
+    public let id: Int
+    public var name: String
+    public let priority: Int
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FoodType: Decodable {
+public struct FoodType: Decodable {
     let title:              String
     let position:           Int
     let foods:              [Food]

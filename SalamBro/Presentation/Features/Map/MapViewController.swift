@@ -44,7 +44,7 @@ class MapViewController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .white
         button.tintColor = .kexRed
-        button.setImage(UIImage(named: "back"), for: .normal)
+        button.setImage(Asset.back.image, for: .normal)
         button.layer.cornerRadius = 22
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
@@ -56,7 +56,7 @@ class MapViewController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .white
         button.tintColor = .lightGray
-        button.setImage(UIImage(named: "location"), for: .normal)
+        button.setImage(Asset.location.image, for: .normal)
         button.layer.cornerRadius = 22
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(locationButtonAction), for: .touchUpInside)
@@ -66,7 +66,7 @@ class MapViewController: UIViewController {
     
     var markerView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "marker")
+        view.image = Asset.marker.image
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -215,7 +215,7 @@ extension MapViewController: YMKUserLocationObjectListener {
         let pinPlacemark = view.pin.useCompositeIcon()
         pinPlacemark.setIconWithName(
             "pin",
-            image: UIImage(named:"SearchResult")!,
+            image: Asset.searchResult.image,
             style:YMKIconStyle(
                 anchor: CGPoint(x: 0.5, y: 0.5) as NSValue,
                 rotationType: YMKRotationType.rotate.rawValue as NSNumber,

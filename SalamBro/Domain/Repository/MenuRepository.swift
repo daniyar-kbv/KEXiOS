@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import PromiseKit
 
-protocol MenuRepository {
-    func getMenuCategories() -> [FoodType]
-    func getMenuItems()  -> [Food]
-    func getMenuAds() -> [Ad]
+public protocol MenuRepository {
+    func downloadMenuCategories() -> Promise<DownloadMenuCategoriesResponse>
+    func downloadMenuItems() -> Promise<DownloadMenuItemsResponse>
+    func downloadMenuAds() -> Promise<DownloadMenuAdsResponse>
 }

@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Ad: Decodable {
+public struct Ad: Decodable {
     let name:       String
 }

@@ -17,7 +17,7 @@ class AdditionalView: UIView {
     
     lazy var logo: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "logo")
+        view.image = Asset.logo.image
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
