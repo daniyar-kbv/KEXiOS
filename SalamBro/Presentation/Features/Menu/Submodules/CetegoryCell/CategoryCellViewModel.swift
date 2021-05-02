@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 public protocol CategoryCellViewModelProtocol: ViewModel {
     var categoryTitle: BehaviorRelay<String?> { get }
@@ -15,8 +15,8 @@ public protocol CategoryCellViewModelProtocol: ViewModel {
 
 public final class CategoryCellViewModel: CategoryCellViewModelProtocol {
     public var categoryTitle: BehaviorRelay<String?>
-    
-    public init(category: FoodType) {
-        self.categoryTitle = .init(value: category.title)
+
+    public init(category: FoodTypeUI) {
+        categoryTitle = .init(value: category.title)
     }
 }

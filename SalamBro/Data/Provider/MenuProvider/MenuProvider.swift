@@ -18,11 +18,11 @@ extension NetworkProvider: MenuProvider {
     public func downloadMenuCategories() -> Promise<DownloadMenuCategoriesResponse> {
         pseudoRequest(valueToReturn: .mockResponse)
     }
-    
+
     public func downloadMenuItems() -> Promise<DownloadMenuItemsResponse> {
         pseudoRequest(valueToReturn: .mockResponse)
     }
-    
+
     public func downloadMenuAds() -> Promise<DownloadMenuAdsResponse> {
         pseudoRequest(valueToReturn: .mockReponse)
     }

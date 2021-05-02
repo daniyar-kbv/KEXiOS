@@ -28,19 +28,20 @@ public final class MenuViewModel: MenuViewModelProtocol {
         }.done {
             self.headerViewModels = [
                 nil,
-                CategoriesSectionHeaderViewModel(categories: $0),
+                CategoriesSectionHeaderViewModel(categories: $0.map { FoodTypeUI(from: $0) }),
             ]
         }.then {
             self.menuRepository.downloadMenuAds()
         }.done {
             self.cellViewModels.append([
                 AddressPickCellViewModel(),
-                AdCollectionCellViewModel(ads: $0),
+                AdCollectionCellViewModel(ads: $0.map { AdUI(from: $0) }),
             ])
         }.then {
             self.menuRepository.downloadMenuItems()
         }.done {
-            self.cellViewModels.append($0.map { MenuCellViewModel(food: $0) })
+            self.cellViewModels.append($0.map { FoodUI(from: $0) }
+                .map { MenuCellViewModel(food: $0) })
         }.catch {
             print($0)
             // TODO: - написать обработку и презентацию ошибок

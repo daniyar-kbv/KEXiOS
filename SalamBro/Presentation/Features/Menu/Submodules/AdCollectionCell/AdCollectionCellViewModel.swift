@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 public protocol AdCollectionCellViewModelProtocol: ViewModel {
     var cellViewModels: [AdCellViewModelProtocol] { get }
@@ -15,7 +15,7 @@ public protocol AdCollectionCellViewModelProtocol: ViewModel {
 
 public final class AdCollectionCellViewModel: AdCollectionCellViewModelProtocol {
     public var cellViewModels: [AdCellViewModelProtocol]
-    public init(ads: [Ad]) {
-        self.cellViewModels = ads.map { AdCellViewModel(ad: $0) }
+    public init(ads: [AdUI]) {
+        cellViewModels = ads.map { AdCellViewModel(ad: $0) }
     }
 }

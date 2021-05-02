@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 public protocol MenuCellViewModelProtocol: ViewModel {
     var itemTitle: BehaviorRelay<String?> { get }
@@ -19,10 +19,10 @@ public final class MenuCellViewModel: MenuCellViewModelProtocol {
     public var itemTitle: BehaviorRelay<String?>
     public var itemDescription: BehaviorRelay<String?>
     public var itemPrice: BehaviorRelay<String?>
-    
-    public init(food: Food) {
-        self.itemTitle = .init(value: food.title)
-        self.itemDescription = .init(value: food.description)
-        self.itemPrice = .init(value: "\(food.price) T") // здесь надо юзать локализацию
+
+    public init(food: FoodUI) {
+        itemTitle = .init(value: food.title)
+        itemDescription = .init(value: food.description)
+        itemPrice = .init(value: "\(food.price) T") // здесь надо юзать локализацию
     }
 }

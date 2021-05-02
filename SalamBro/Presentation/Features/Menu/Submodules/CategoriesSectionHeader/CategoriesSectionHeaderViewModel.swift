@@ -13,7 +13,7 @@ public protocol CategoriesSectionHeaderViewModelProtocol: ViewModel {
 
 public final class CategoriesSectionHeaderViewModel: CategoriesSectionHeaderViewModelProtocol {
     public var cellViewModels: [CategoryCellViewModelProtocol]
-    public init(categories: [FoodType]) {
-        self.cellViewModels = categories.map { CategoryCellViewModel(category: $0) }
+    public init(categories: [FoodTypeUI]) {
+        cellViewModels = categories.map { CategoryCellViewModel(category: $0) }
     }
 }

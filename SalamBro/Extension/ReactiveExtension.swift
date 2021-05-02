@@ -8,9 +8,9 @@
 import Foundation
 import RxSwift
 
-extension Reactive where Base: UITableView {
-    public var reload: Binder<Void?> {
-        return Binder(self.base, binding: {
+public extension Reactive where Base: UITableView {
+    var reload: Binder<Void?> {
+        return Binder(base, binding: {
             guard let _ = $1 else { return }
             $0.reloadData()
         })

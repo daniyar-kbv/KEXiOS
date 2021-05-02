@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 public protocol AdCellViewModelProtocol: ViewModel {
     var adName: BehaviorRelay<String?> { get }
@@ -15,7 +15,7 @@ public protocol AdCellViewModelProtocol: ViewModel {
 
 public final class AdCellViewModel: AdCellViewModelProtocol {
     public var adName: BehaviorRelay<String?>
-    public init(ad: Ad) {
-        self.adName = .init(value: ad.name)
+    public init(ad: AdUI) {
+        adName = .init(value: ad.name)
     }
 }
