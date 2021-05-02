@@ -6,8 +6,8 @@
 //
 
 import Foundation
+import PromiseKit
 
-protocol BrandRepository {
-    
-    func getBrands() -> Array<String>
+public protocol BrandRepository {
+    func downloadBrands() -> Promise<([Brand], [(Float, Float)])>
 }

@@ -16,3 +16,12 @@ public extension Reactive where Base: UITableView {
         })
     }
 }
+
+public extension Reactive where Base: UICollectionView {
+    var reload: Binder<Void?> {
+        return Binder(base, binding: {
+            guard let _ = $1 else { return }
+            $0.reloadData()
+        })
+    }
+}

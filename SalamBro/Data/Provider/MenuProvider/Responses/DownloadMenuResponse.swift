@@ -7,13 +7,8 @@
 
 import Foundation
 
-public class DownloadMenuCategoriesResponse: Decodable {
+public struct DownloadMenuCategoriesResponse: Decodable {
     public var categories: [FoodTypeDTO]
-
-    // MOCK: - remove
-    public init(categories: [FoodTypeDTO]) {
-        self.categories = categories
-    }
 }
 
 // MOCK: - remove

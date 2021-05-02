@@ -10,22 +10,21 @@ import UIKit
 import UIKit
 
 class AddressController: UIViewController {
-
     fileprivate lazy var rootView = AddressView(delegate: self)
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+
         configUI()
     }
-    
+
     override func loadView() {
         view = rootView
     }
-    
+
     @objc func adjustForKeyboard(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
 
@@ -43,13 +42,13 @@ class AddressController: UIViewController {
 
 extension AddressController {
     func submitForms() {
-        let vc = BrandsController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = BrandsController(viewModel: BrandViewModel(repository: DIResolver.resolve(BrandRepository.self)!)) // TODO:
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension AddressController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {}
+    func scrollViewDidScroll(_: UIScrollView) {}
 }
 
 extension AddressController: AddressViewDelegate {

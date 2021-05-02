@@ -7,13 +7,8 @@
 
 import Foundation
 
-public final class DownloadMenuAdsResponse: Decodable {
+public struct DownloadMenuAdsResponse: Decodable {
     public var menuAds: [AdDTO]
-
-    // MOCK: - remove
-    public init(menuAds: [AdDTO]) {
-        self.menuAds = menuAds
-    }
 }
 
 // MOCK: - remove

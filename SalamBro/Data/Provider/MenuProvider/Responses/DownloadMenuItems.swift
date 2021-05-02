@@ -7,13 +7,8 @@
 
 import Foundation
 
-public final class DownloadMenuItemsResponse: Decodable {
+public struct DownloadMenuItemsResponse: Decodable {
     public var menuItems: [FoodDTO]
-
-    // MOCK: - remove
-    public init(menuItems: [FoodDTO]) {
-        self.menuItems = menuItems
-    }
 }
 
 extension DownloadMenuItemsResponse {

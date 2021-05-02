@@ -8,18 +8,17 @@
 import UIKit
 
 class CitiesListController: UIViewController {
-    
     var countryId: Int = 0
-    
+
     fileprivate lazy var rootView = CitiesListView(delegate: self)
     fileprivate lazy var selectionIndexPath: IndexPath? = nil
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         configUI()
     }
-    
+
     override func loadView() {
         view = rootView
     }
@@ -32,10 +31,10 @@ extension CitiesListController: CitiesListViewDelegate {
 }
 
 extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return cities[countryId].count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = cities[countryId][indexPath.row]
@@ -43,11 +42,11 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if selectionIndexPath != nil {
             if selectionIndexPath == indexPath {
-                let vc = BrandsController()
+                let vc = BrandsController(viewModel: BrandViewModel(repository: DIResolver.resolve(BrandRepository.self)!)) // TODO:
                 selectionIndexPath = nil
                 navigationController?.pushViewController(vc, animated: true)
             } else {
@@ -61,9 +60,8 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.cellForRow(at: selectionIndexPath!)
             cell?.accessoryType = .checkmark
         }
-        
     }
-    
+
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.accessoryType = .none

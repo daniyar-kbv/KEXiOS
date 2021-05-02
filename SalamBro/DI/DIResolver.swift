@@ -31,28 +31,28 @@ public final class DIResolver {
 }
 
 private final class ApplicationAssembly: Assembly {
-    func assemble(container: Container) {
-        // TODO
+    func assemble(container _: Container) {
+        // TODO:
     }
 }
 
 private final class ProvidersAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(NetworkProvider.self) { r in
+        container.register(NetworkProvider.self) { _ in
             NetworkProvider()
         }.inObjectScope(.container)
     }
 }
 
 private final class StoragesAssembly: Assembly {
-    func assemble(container: Container) {
-        // TODO
+    func assemble(container _: Container) {
+        // TODO:
     }
 }
 
 private final class ManagersAssembly: Assembly {
-    func assemble(container: Container) {
-        // TODO
+    func assemble(container _: Container) {
+        // TODO:
     }
 }
 
@@ -61,6 +61,9 @@ private final class RepositoriesAssembly: Assembly {
         container.register(MenuRepository.self) { r in
             MenuRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!)
         }
+
+        container.register(BrandRepository.self) { r in
+            BrandRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!)
+        }
     }
 }
-
