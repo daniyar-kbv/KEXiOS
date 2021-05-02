@@ -6,35 +6,54 @@
 //
 
 import Foundation
+import PromiseKit
+import RxCocoa
+import RxSwift
 
-class CountryViewModel: NSObject {
-    var countryArray: [Country]!
+public protocol CountryCodePickerViewModelProtocol: ViewModel {
+    var cellViewModels: [CountryCodeCellViewModelProtocol] { get }
+    var updateTableView: BehaviorRelay<Void?> { get }
+    var isAnimating: BehaviorRelay<Bool> { get }
+    func update()
+    func country(by index: Int) -> CountryUI
+}
 
-    override init() {
-        super.init()
-        getCountriesFromApi()
+public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtocol {
+    private let repository: GeoRepository
+    public var cellViewModels: [CountryCodeCellViewModelProtocol]
+    public var updateTableView: BehaviorRelay<Void?>
+    public var isAnimating: BehaviorRelay<Bool>
+    private var countries: [CountryUI]
+
+    public func update() {
+        download()
     }
 
-    func getCountriesFromApi() {
-//        countryArray = apiService.getCountries()
+    public func country(by index: Int) -> CountryUI {
+        countries[index]
     }
 
-    func numberOfCountries() -> Int {
-        return countryArray.count
-    }
+    private func download() {
+        isAnimating.accept(true)
+        firstly {
+            repository.downloadCountries()
+        }.done {
+            self.cellViewModels = $0.map { CountryCodeCellViewModel(country: CountryUI(from: $0)) }
+            self.countries = $0.map { CountryUI(from: $0) }
+        }.catch { _ in
 
-    func unmarkAll() {
-        for i in 0 ..< numberOfCountries() {
-//            countryArray[i].marked = false
+        }.finally {
+            self.isAnimating.accept(false)
+            self.updateTableView.accept(())
         }
     }
 
-    func getMarked() -> Country? {
-        for i in 0 ..< numberOfCountries() {
-//            if countryArray[i].marked {
-//                return countryArray[i]
-//            }
-        }
-        return nil
+    public init(repository: GeoRepository) {
+        self.repository = repository
+        cellViewModels = []
+        updateTableView = .init(value: nil)
+        isAnimating = .init(value: false)
+        countries = []
+        download()
     }
 }

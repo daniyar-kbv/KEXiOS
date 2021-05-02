@@ -5,19 +5,16 @@
 //  Created by Arystan on 3/8/21.
 //
 
-import UIKit
 import InputMask
+import UIKit
 
 class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener {
-    
-    private var countryViewModel : CountryViewModel!
-    
     lazy var maskedDelegate: MaskedTextFieldDelegate = {
         let delegate = MaskedTextFieldDelegate(primaryFormat: "([000]) [000] [00] [00]")
         delegate.listener = self
         return delegate
     }()
-    
+
     lazy var maintitle: UILabel = {
         let label = UILabel()
         label.text = L10n.Authorization.title
@@ -27,7 +24,7 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     lazy var subtitle: UILabel = {
         let label = UILabel()
         label.text = L10n.Authorization.subtitle
@@ -36,7 +33,7 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     lazy var numberField: UITextField = {
         let field = UITextField()
         field.keyboardType = .numberPad
@@ -45,7 +42,7 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
-    
+
     lazy var aggreementLabel: UILabel = {
         let label = UILabel()
         let textAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.darkGray]
@@ -62,7 +59,7 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     lazy var countryCodeButton: UIButton = {
         let button = UIButton()
 //        button.setTitle("X", for: .normal)
@@ -74,7 +71,7 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     let getButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.Authorization.Button.title, for: .normal)
@@ -87,38 +84,34 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.countryViewModel =  CountryViewModel()
         configUI()
         setupViews()
         setupConstraints()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        guard let country = countryViewModel.getMarked() else {
-            return
-        }
-        countryCodeButton.setTitle(country.callingCode, for: .normal)
+
+    override func viewWillAppear(_: Bool) {
+        countryCodeButton.setTitle("+7", for: .normal) // TODO:
     }
 }
 
 extension AuthorizationController {
     func authorize() {
         let vc = VerificationController()
-        vc.number = countryViewModel.getMarked()!.callingCode + numberField.text!
-        self.navigationController?.pushViewController(vc, animated: true)
+        vc.number = countryCodeButton.title(for: .normal)! + numberField.text!
+        navigationController?.pushViewController(vc, animated: true)
     }
-    
+
     @objc func proceedToAgreementView() {
         let vc = AgreementController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
-    
+
     @objc func chooseCountryCode() {
-        let vc = CountryCodePickerViewController()
-        vc.countryViewModel = self.countryViewModel
+        let viewModel = CountryCodePickerViewModel(repository: DIResolver.resolve(GeoRepository.self)!)
+        let vc = CountryCodePickerViewController(viewModel: viewModel)
         vc.delegate = self
         vc.modalPresentationStyle = .pageSheet
         present(vc, animated: true, completion: nil)
@@ -126,7 +119,7 @@ extension AuthorizationController {
 }
 
 extension AuthorizationController: CountryCodePickerDelegate {
-    func passCountry(country: Country) {
+    func passCountry(country: CountryUI) {
         countryCodeButton.setTitle(country.callingCode, for: .normal)
     }
 }
@@ -142,21 +135,21 @@ extension AuthorizationController {
     @objc func getCode() {
         authorize()
     }
-    
+
     @objc func handleTapOnLabel(_ recognizer: UITapGestureRecognizer) {
-        
         guard let text = aggreementLabel.attributedText?.string else {
             return
         }
 
         if let range = text.range(of: L10n.Authorization.Agreement.Active.title),
-            recognizer.didTapAttributedTextInLabel(label: aggreementLabel, inRange: NSRange(range, in: text)) {
+           recognizer.didTapAttributedTextInLabel(label: aggreementLabel, inRange: NSRange(range, in: text))
+        {
             proceedToAgreementView()
         }
     }
-    
+
     func textField(
-        _ textField: UITextField,
+        _: UITextField,
         didFillMandatoryCharacters complete: Bool,
         didExtractValue value: String
     ) {
@@ -174,7 +167,7 @@ extension AuthorizationController {
         maskedDelegate.listener = self
         numberField.delegate = maskedDelegate
         view.backgroundColor = .white
-        
+
         view.addSubview(maintitle)
         view.addSubview(subtitle)
         view.addSubview(numberField)
@@ -187,23 +180,23 @@ extension AuthorizationController {
         maintitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         maintitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         maintitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-        
+
         subtitle.topAnchor.constraint(equalTo: maintitle.bottomAnchor).isActive = true
         subtitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         subtitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-        
+
         numberField.leftAnchor.constraint(equalTo: countryCodeButton.safeAreaLayoutGuide.rightAnchor, constant: 24).isActive = true
         numberField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         numberField.centerYAnchor.constraint(equalTo: countryCodeButton.titleLabel!.centerYAnchor).isActive = true
-            
+
         countryCodeButton.topAnchor.constraint(equalTo: subtitle.safeAreaLayoutGuide.bottomAnchor, constant: 40).isActive = true
         countryCodeButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         countryCodeButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        
+
         aggreementLabel.topAnchor.constraint(equalTo: countryCodeButton.bottomAnchor, constant: 72).isActive = true
         aggreementLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
         aggreementLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
-        
+
         getButton.topAnchor.constraint(equalTo: aggreementLabel.bottomAnchor, constant: 16).isActive = true
         getButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
         getButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true

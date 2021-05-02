@@ -5,21 +5,22 @@
 //  Created by Arystan on 3/13/21.
 //
 
+import RxCocoa
+import RxSwift
+import SnapKit
 import UIKit
 
-protocol CountryCodePickerDelegate: AnyObject {
-    func passCountry(country: Country)
+public protocol CountryCodePickerDelegate: AnyObject {
+    func passCountry(country: CountryUI)
 }
 
-class CountryCodePickerViewController: UIViewController {
-    fileprivate lazy var selectionIndexPath: IndexPath? = nil
+public final class CountryCodePickerViewController: UIViewController {
+    private let viewModel: CountryCodePickerViewModelProtocol
+    private let disposeBag: DisposeBag
 
-    var countryViewModel: CountryViewModel!
-    var viewTranslation = CGPoint(x: 0, y: 0)
+    public weak var delegate: CountryCodePickerDelegate?
 
-    weak var delegate: CountryCodePickerDelegate?
-
-    lazy var lineImage: UIImageView = {
+    private lazy var lineImage: UIImageView = {
         let view = UIImageView()
         view.image = Asset.line.image
         view.tintColor = .darkGray
@@ -27,7 +28,7 @@ class CountryCodePickerViewController: UIViewController {
         return view
     }()
 
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = .boldSystemFont(ofSize: 18)
@@ -36,105 +37,108 @@ class CountryCodePickerViewController: UIViewController {
         return label
     }()
 
-    lazy var citiesTableView: UITableView = {
-        let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        table.tableFooterView = UIView()
-        table.allowsMultipleSelection = false
-        table.separatorInset.right = table.separatorInset.left + table.separatorInset.left
-        table.translatesAutoresizingMaskIntoConstraints = false
-        return table
+    private lazy var citiesTableView: UITableView = {
+        let view = UITableView()
+        view.register(cellType: CountryCodeCell.self)
+        view.tableFooterView = UIView()
+        view.allowsMultipleSelection = false
+        view.separatorInset.right = view.separatorInset.left + view.separatorInset.left
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = self
+        view.dataSource = self
+        view.refreshControl = refreshControl
+        return view
     }()
 
-    override func viewDidLoad() {
-        callToViewModelForUIUpdate()
+    private lazy var refreshControl: UIRefreshControl = {
+        let view = UIRefreshControl()
+        view.addTarget(self, action: #selector(update), for: .valueChanged)
+        return view
+    }()
+
+    public init(viewModel: CountryCodePickerViewModelProtocol) {
+        self.viewModel = viewModel
+        disposeBag = DisposeBag()
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    public required init?(coder _: NSCoder) { nil }
+
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
-        configUI()
+        setup()
+        bind()
+    }
+
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
+    }
+
+    private func bind() {
+        viewModel.updateTableView
+            .bind(to: citiesTableView.rx.reload)
+            .disposed(by: disposeBag)
+
+        viewModel.isAnimating
+            .bind(to: refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+    }
+
+    private func setupNavigationBar() {
+        navigationItem.title = L10n.CountryCodePicker.Navigation.title
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+
+    private func setup() {
         setupViews()
         setupConstraints()
     }
 
-    func callToViewModelForUIUpdate() {
-        updateDataSource()
+    private func setupViews() {
+        view.backgroundColor = .white
+        [lineImage, titleLabel, citiesTableView].forEach { view.addSubview($0) }
     }
 
-    public func reloadData() {
-        citiesTableView.reloadData()
-    }
-
-    func updateDataSource() {
-        DispatchQueue.main.async {
-            self.citiesTableView.delegate = self
-            self.citiesTableView.dataSource = self
-            self.reloadData()
+    private func setupConstraints() {
+        lineImage.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(6)
+            $0.centerX.equalToSuperview()
+            $0.size.equalTo(CGSize(width: 36, height: 6))
         }
+
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(lineImage.snp.bottom).offset(12)
+            $0.centerX.equalToSuperview()
+        }
+
+        citiesTableView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(22)
+            $0.left.right.bottom.equalToSuperview()
+        }
+    }
+
+    @objc
+    private func update() {
+        viewModel.update()
     }
 }
 
-// MARK: - UITableView
-
 extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return countryViewModel.numberOfCountries()
+    public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        viewModel.cellViewModels.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = countryViewModel.countryArray[indexPath.row].name + "   " + countryViewModel.countryArray[indexPath.row].callingCode
-//        if countryViewModel.countryArray[indexPath.row].marked {
-//            cell.accessoryType = .checkmark
-//        } else {
-//            cell .accessoryType = .none
-//        }
-        cell.backgroundColor = .white
-        cell.tintColor = .kexRed
-        cell.selectionStyle = .none
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CountryCodeCell.self)
+        cell.set(viewModel.cellViewModels[indexPath.row])
         return cell
     }
 
-    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath)
-        countryViewModel.unmarkAll()
-//        countryViewModel.countryArray[indexPath.row].marked.toggle()
-        dismiss(animated: true) {
-            self.delegate?.passCountry(country: self.countryViewModel.countryArray[indexPath.row])
+    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dismiss(animated: true) { [unowned self] in
+            self.delegate?.passCountry(country: self.viewModel.country(by: indexPath.row))
         }
-    }
-
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.accessoryType = .none
-    }
-}
-
-extension CountryCodePickerViewController {
-    private func configUI() {
-        navigationItem.title = L10n.CountryCodePicker.Navigation.title
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-    }
-}
-
-extension CountryCodePickerViewController {
-    func setupViews() {
-        view.backgroundColor = .white
-        view.addSubview(lineImage)
-        view.addSubview(titleLabel)
-        view.addSubview(citiesTableView)
-    }
-
-    func setupConstraints() {
-        lineImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 6).isActive = true
-        lineImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        lineImage.heightAnchor.constraint(equalToConstant: 6).isActive = true
-        lineImage.widthAnchor.constraint(equalToConstant: 36).isActive = true
-
-        titleLabel.topAnchor.constraint(equalTo: lineImage.safeAreaLayoutGuide.bottomAnchor, constant: 12).isActive = true
-        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-
-        citiesTableView.topAnchor.constraint(equalTo: titleLabel.safeAreaLayoutGuide.bottomAnchor, constant: 22).isActive = true
-        citiesTableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        citiesTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        citiesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
 }
