@@ -146,6 +146,10 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
             let vc = MenuDetailController(viewModel: viewModel)
             vc.modalPresentationStyle = .pageSheet
             present(vc, animated: true, completion: nil)
+        case let viewModel as AddressPickCellViewModel:
+            let vc = AddressPickController()
+            vc.modalPresentationStyle = .pageSheet
+            present(vc, animated: true, completion: nil)
         default:
             print("other")
         }
@@ -183,14 +187,17 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
         switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
         case let viewModel as AddressPickCellViewModelProtocol:
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AddressPickCell.self)
+            cell.selectionStyle = .none
             cell.set(viewModel)
             return cell
         case let viewModel as AdCollectionCellViewModelProtocol:
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AdCollectionCell.self)
+            cell.selectionStyle = .none
             cell.set(viewModel)
             return cell
         case let viewModel as MenuCellViewModelProtocol:
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: MenuCell.self)
+            cell.selectionStyle = .none
             cell.set(viewModel)
             return cell
         default:
