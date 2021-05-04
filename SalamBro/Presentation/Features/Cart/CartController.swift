@@ -12,21 +12,20 @@ protocol CartViewDelegate {
 }
 
 class CartController: UIViewController {
-    
     var mainTabDelegate: MainTabDelegate?
-    var cartViewModel: CartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
-    
+    var cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
+
     lazy var rootView = CartView(delegate: self)
-    lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title)
-    
+    lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title, image: UIImage(named: "emptyCart")!)
+
     override func loadView() {
         view = rootView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 //        cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
-        
+
         configUI()
         rootView.itemsTableView.reloadData()
         rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
@@ -41,12 +40,13 @@ extension CartController {
     }
 }
 
-//MARK: - UITableView
+// MARK: - UITableView
+
 extension CartController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         return 56
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let content = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 56))
@@ -67,19 +67,18 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         2
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return cartViewModel.cart.products.count
         } else {
             return cartViewModel.cart.productsAdditional.count
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CartProductCell", for: indexPath) as! CartProductCell
@@ -95,17 +94,18 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//MARK: - Cell Actions
+// MARK: - Cell Actions
+
 extension CartController: CellDelegate {
     func deleteProduct(id: Int, isAdditional: Bool) {
         if isAdditional {
-            if let index = cartViewModel.cart.productsAdditional.firstIndex(where: {$0.id == id})   {
+            if let index = cartViewModel.cart.productsAdditional.firstIndex(where: { $0.id == id }) {
                 cartViewModel.cart.productsAdditional.remove(at: index)
                 let path = IndexPath(row: index, section: 1)
                 rootView.itemsTableView.deleteRows(at: [path], with: .automatic)
             }
         } else {
-            if let index = cartViewModel.cart.products.firstIndex(where: {$0.id == id})   {
+            if let index = cartViewModel.cart.products.firstIndex(where: { $0.id == id }) {
                 cartViewModel.cart.products.remove(at: index)
                 let path = IndexPath(row: index, section: 0)
                 rootView.itemsTableView.deleteRows(at: [path], with: .automatic)
@@ -113,39 +113,40 @@ extension CartController: CellDelegate {
         }
         rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
     }
-    
+
     func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool) {
         if isAdditional {
-                if let index = self.cartViewModel.cart
-                    .productsAdditional.firstIndex(where: {$0.id == id})   {
-                    let price = self.cartViewModel.cart.productsAdditional[index].price
-                    if isIncrease {
-                        self.cartViewModel.cart.productsAdditional[index].count += 1
-                        self.cartViewModel.cart.totalPrice += price
-                        self.cartViewModel.cart.totalProducts += 1
-                    } else {
-                        self.cartViewModel.cart.productsAdditional[index].count -= 1
-                        self.cartViewModel.cart.totalPrice -= price
-                        self.cartViewModel.cart.totalProducts -= 1
-                    }
-                    self.rootView.itemsTableView.reloadData()
+            if let index = cartViewModel.cart
+                .productsAdditional.firstIndex(where: { $0.id == id })
+            {
+                let price = cartViewModel.cart.productsAdditional[index].price
+                if isIncrease {
+                    cartViewModel.cart.productsAdditional[index].count += 1
+                    cartViewModel.cart.totalPrice += price
+                    cartViewModel.cart.totalProducts += 1
+                } else {
+                    cartViewModel.cart.productsAdditional[index].count -= 1
+                    cartViewModel.cart.totalPrice -= price
+                    cartViewModel.cart.totalProducts -= 1
+                }
+                rootView.itemsTableView.reloadData()
             }
         } else {
-            if let index = self.cartViewModel.cart.products.firstIndex(where: {$0.id == id})   {
-                let price = self.cartViewModel.cart.products[index].price
+            if let index = cartViewModel.cart.products.firstIndex(where: { $0.id == id }) {
+                let price = cartViewModel.cart.products[index].price
                 if isIncrease {
-                    self.cartViewModel.cart.products[index].count += 1
-                    self.cartViewModel.cart.totalPrice += price
-                    self.cartViewModel.cart.totalProducts += 1
+                    cartViewModel.cart.products[index].count += 1
+                    cartViewModel.cart.totalPrice += price
+                    cartViewModel.cart.totalProducts += 1
                 } else {
-                    self.cartViewModel.cart.products[index].count -= 1
-                    self.cartViewModel.cart.totalPrice -= price
-                    self.cartViewModel.cart.totalProducts -= 1
+                    cartViewModel.cart.products[index].count -= 1
+                    cartViewModel.cart.totalPrice -= price
+                    cartViewModel.cart.totalProducts -= 1
                 }
-                self.rootView.itemsTableView.reloadData()
+                rootView.itemsTableView.reloadData()
             }
         }
-        if self.cartViewModel.cart.totalProducts <= 0 {
+        if cartViewModel.cart.totalProducts <= 0 {
             view = emptyCartView
         }
         rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
@@ -156,7 +157,7 @@ extension CartController: CellDelegate {
 
 extension CartController: CartViewDelegate {
     func proceed() {
-        self.navigationController?.pushViewController(AuthorizationController(), animated: true)
+        navigationController?.pushViewController(AuthorizationController(), animated: true)
     }
 }
 
