@@ -65,6 +65,7 @@ internal enum Asset {
     internal static let cart = ImageAsset(name: "cart")
     internal static let chevronRight = ImageAsset(name: "chevron.right")
     internal static let emptyCart = ImageAsset(name: "emptyCart")
+    internal static let cola = ImageAsset(name: "cola")
     internal static let fastFood = ImageAsset(name: "fastFood")
     internal static let kexLogo = ImageAsset(name: "kexLogo")
     internal static let location = ImageAsset(name: "location")

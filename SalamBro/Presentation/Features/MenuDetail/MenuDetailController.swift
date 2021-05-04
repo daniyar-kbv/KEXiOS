@@ -41,6 +41,7 @@ class MenuDetailController: UIViewController {
         view.backgroundColor = .lightGray
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
+        view.isUserInteractionEnabled = true
         let tap = UIGestureRecognizer(target: self, action: #selector(commentaryViewTapped))
         view.addGestureRecognizer(tap)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -236,10 +237,13 @@ class MenuDetailController: UIViewController {
 
     @objc func additionalItemChangeButtonTapped() {
         print("additionalItemChangeButtonTapped")
+        let vc = AdditionalItemChooseController()
+        vc.modalPresentationStyle = .pageSheet
+        present(vc, animated: true, completion: nil)
     }
 
-    @objc func commentaryViewTapped(_: UIGestureRecognizer) {
-        print("commentaryViewTapped")
+    @objc func commentaryViewTapped() {
+        print("commentary")
     }
 
     @objc func backButtonTapped(_: UIButton!) {
