@@ -108,7 +108,7 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelect(index: indexPath.row)
-        let viewModel = CitiesListViewModel(country: viewModel.countries[indexPath.row].id,
+        let viewModel = CitiesListViewModel(country: self.viewModel.countries[indexPath.row].id,
                                             repository: DIResolver.resolve(GeoRepository.self)!)
         let vc = CitiesListController(viewModel: viewModel)
         navigationController?.pushViewController(vc, animated: true)

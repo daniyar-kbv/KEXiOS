@@ -72,5 +72,9 @@ private final class RepositoriesAssembly: Assembly {
             GeoRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!,
                                         storage: r.resolve(Storage.self)!)
         }
+
+        container.register(MenuDetailRepository.self) { r in
+            MenuDetailRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!)
+        }
     }
 }

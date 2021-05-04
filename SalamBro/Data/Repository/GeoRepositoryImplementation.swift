@@ -21,7 +21,7 @@ public final class GeoRepositoryImplementation: GeoRepository {
 
     public var currentCountry: Country? {
         get { storage.currentCountry?.toDomain() }
-        set { storage.currentCountry = .init(from: newValue) }
+        set { storage.currentCountry = CountryDTO(from: newValue) }
     }
 
     public func downloadCountries() -> Promise<[Country]> {

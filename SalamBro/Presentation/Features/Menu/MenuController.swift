@@ -139,6 +139,18 @@ public final class MenuController: UIViewController {
 }
 
 extension MenuController: UITableViewDelegate, UITableViewDataSource {
+    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
+        case let viewModel as MenuCellViewModel:
+            let viewModel = MenuDetailViewModel(menuDetailRepository: DIResolver.resolve(MenuDetailRepository.self)!)
+            let vc = MenuDetailController(viewModel: viewModel)
+            vc.modalPresentationStyle = .pageSheet
+            present(vc, animated: true, completion: nil)
+        default:
+            print("other")
+        }
+    }
+
     public func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch viewModel.headerViewModels[section] {
         case is CategoriesSectionHeaderViewModelProtocol:
