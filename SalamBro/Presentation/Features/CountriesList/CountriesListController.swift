@@ -63,7 +63,11 @@ public final class CountriesListController: UIViewController {
     }
 
     private func setupNavigationBar() {
+        navigationController?.navigationBar.tintColor = .kexRed
         navigationItem.title = L10n.CountriesList.Navigation.title
+        navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.black,
+             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 

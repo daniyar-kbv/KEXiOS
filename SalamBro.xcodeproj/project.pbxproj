@@ -21,6 +21,8 @@
 		2702D03BD7115CA54D87BC04ADC13486 /* AddressPickCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F094E5B32E65789F60DD982ADBA96721 /* AddressPickCell.swift */; };
 		CCB2F351AF28727E7426B539A3D57F00 /* AddressPickCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADC6ACE052097DFDFB39639B78B07233 /* AddressPickCell.xib */; };
 		6566780DF1E9A36A7181CE239EEFEBB5 /* AddressPickCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F881646E5957B1DA5667921DCE76B57 /* AddressPickCellViewModel.swift */; };
+		8A234CF7B3FBA9148E9F0058730F283B /* AddressPickController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627AEA105E148D27D69E57A23C450CC /* AddressPickController.swift */; };
+		AF2A5B9779C79CF3D4DABC243F088FC6 /* AddressPickController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14F036AFDBBB93E32195593EEFD897B7 /* AddressPickController.xib */; };
 		84D162FC25BAB627F5989308861562C4 /* AddressSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373055F1FF6ADCC5661CF068DA7B78A3 /* AddressSheetController.swift */; };
 		A9999B2C8EB50DE5CFBF201C504DA28E /* AddressSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CF76F8377585959F665EC6E7A08DC94 /* AddressSheetController.xib */; };
 		8F582EF2F9E5F850D4C44B42B787C016 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E840062E24A02D16754165127CD7D26 /* AddressView.swift */; };
@@ -198,6 +200,8 @@
 		F094E5B32E65789F60DD982ADBA96721 /* AddressPickCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickCell.swift; sourceTree = "<group>"; };
 		ADC6ACE052097DFDFB39639B78B07233 /* AddressPickCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressPickCell.xib; sourceTree = "<group>"; };
 		9F881646E5957B1DA5667921DCE76B57 /* AddressPickCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickCellViewModel.swift; sourceTree = "<group>"; };
+		8627AEA105E148D27D69E57A23C450CC /* AddressPickController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickController.swift; sourceTree = "<group>"; };
+		14F036AFDBBB93E32195593EEFD897B7 /* AddressPickController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressPickController.xib; sourceTree = "<group>"; };
 		373055F1FF6ADCC5661CF068DA7B78A3 /* AddressSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressSheetController.swift; sourceTree = "<group>"; };
 		2CF76F8377585959F665EC6E7A08DC94 /* AddressSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressSheetController.xib; sourceTree = "<group>"; };
 		6E840062E24A02D16754165127CD7D26 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
@@ -645,6 +649,7 @@
 			isa = PBXGroup;
 			children = (
 				835C6F154C1048070BF344EE1E7FDA84 /* Address */,
+				E74AC5C717ACAC51533B04D19DDA5096 /* AddressPick */,
 				66174B70E610873B846EA2DFDBC446DA /* Agreement */,
 				912CFB71D3B69BFC0A983E3C88ADC2AB /* Authorization */,
 				EC500F7424886F86E75759D4C36759B9 /* Brands */,
@@ -867,6 +872,14 @@
 			path = MenuProvider;
 			sourceTree = "<group>";
 		};
+		8EE0D4DFD00A2454CF6754D76C85CACC /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				B19742C64B17125D06E84C7CD6F76F4C /* DownloadMenuDetailItemResponse.swift */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
 		912CFB71D3B69BFC0A983E3C88ADC2AB /* Authorization */ = {
 			isa = PBXGroup;
 			children = (
@@ -1016,6 +1029,15 @@
 			path = Menu;
 			sourceTree = "<group>";
 		};
+		D2EB93B9DAB6B0B77A0A7FA5E71DA30A /* MenuDetailProvider */ = {
+			isa = PBXGroup;
+			children = (
+				8EE0D4DFD00A2454CF6754D76C85CACC /* Responses */,
+				50CEE743CBD6A9AC2B953C7C235B6D54 /* MenuDetailProvider.swift */,
+			);
+			path = MenuDetailProvider;
+			sourceTree = "<group>";
+		};
 		E3A84D39E52FB49A9CC3B84AAD89CC4F /* CountriesList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1035,15 +1057,6 @@
 			path = Brands;
 			sourceTree = "<group>";
 		};
-		F243C4DA58D4A6AEE6AACAD35BDB3898 /* MainTab */ = {
-			isa = PBXGroup;
-			children = (
-				80138187206C51166E0AAAA7510BD0A6 /* MainTabController.swift */,
-				428996346C3FC4F251EF52FA6A8EF051 /* SupportController.swift */,
-			);
-			path = MainTab;
-			sourceTree = "<group>";
-		};
 		EC79EFD4E50C8A795F56CC2637BD7CFB /* MenuDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -1053,21 +1066,22 @@
 			path = MenuDetail;
 			sourceTree = "<group>";
 		};
-		D2EB93B9DAB6B0B77A0A7FA5E71DA30A /* MenuDetailProvider */ = {
+		F243C4DA58D4A6AEE6AACAD35BDB3898 /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
-				8EE0D4DFD00A2454CF6754D76C85CACC /* Responses */,
-				50CEE743CBD6A9AC2B953C7C235B6D54 /* MenuDetailProvider.swift */,
+				80138187206C51166E0AAAA7510BD0A6 /* MainTabController.swift */,
+				428996346C3FC4F251EF52FA6A8EF051 /* SupportController.swift */,
 			);
-			path = MenuDetailProvider;
+			path = MainTab;
 			sourceTree = "<group>";
 		};
-		8EE0D4DFD00A2454CF6754D76C85CACC /* Responses */ = {
+		E74AC5C717ACAC51533B04D19DDA5096 /* AddressPick */ = {
 			isa = PBXGroup;
 			children = (
-				B19742C64B17125D06E84C7CD6F76F4C /* DownloadMenuDetailItemResponse.swift */,
+				8627AEA105E148D27D69E57A23C450CC /* AddressPickController.swift */,
+				14F036AFDBBB93E32195593EEFD897B7 /* AddressPickController.xib */,
 			);
-			path = Responses;
+			path = AddressPick;
 			sourceTree = "<group>";
 		};
 		FBA11A60C8AAA5991B82C9B36FF799FC /* CountryCodeCell */ = {
@@ -1201,6 +1215,7 @@
 				28B8D9B67589D06594DB830A634B3D58 /* AdCell.xib in Resources */,
 				226FE8AD81B3EDEC8E52D4D43393041E /* AdCollectionCell.xib in Resources */,
 				CCB2F351AF28727E7426B539A3D57F00 /* AddressPickCell.xib in Resources */,
+				AF2A5B9779C79CF3D4DABC243F088FC6 /* AddressPickController.xib in Resources */,
 				A9999B2C8EB50DE5CFBF201C504DA28E /* AddressSheetController.xib in Resources */,
 				9617C33EE7EC0B11879A840A0FCEDD8D /* Assets.xcassets in Resources */,
 				A02952F94F6C0221691B8B4A441EEE59 /* CartAdditionalProductCell.xib in Resources */,
@@ -1413,6 +1428,7 @@
 				A9F16D68B511CA753A806D4262BC6BAB /* AddressController.swift in Sources */,
 				2702D03BD7115CA54D87BC04ADC13486 /* AddressPickCell.swift in Sources */,
 				6566780DF1E9A36A7181CE239EEFEBB5 /* AddressPickCellViewModel.swift in Sources */,
+				8A234CF7B3FBA9148E9F0058730F283B /* AddressPickController.swift in Sources */,
 				84D162FC25BAB627F5989308861562C4 /* AddressSheetController.swift in Sources */,
 				8F582EF2F9E5F850D4C44B42B787C016 /* AddressView.swift in Sources */,
 				5397C0B0398219322EB7AB2C3B1A8AF0 /* AgreementController.swift in Sources */,

@@ -64,6 +64,9 @@ public final class CitiesListController: UIViewController {
 
     private func setupNavigationBar() {
         navigationItem.title = L10n.CitiesList.Navigation.title
+        navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.black,
+             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
