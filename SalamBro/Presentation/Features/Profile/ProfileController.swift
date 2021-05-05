@@ -8,39 +8,42 @@
 import UIKit
 
 class ProfileController: UIViewController {
-
     fileprivate lazy var rootView = ProfileView(delegate: self)
-    
+
     override func loadView() {
         view = rootView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
     }
 
-    func setupUI() {
-        parent?.navigationController?.title = L10n.Profile.NavigationBar.title
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override public func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }
 
 extension ProfileController: ProfileViewDelegate {
     func changeName() {
-        self.navigationController?.pushViewController(ChangeNameController(), animated: true)
+        navigationController?.pushViewController(ChangeNameController(), animated: true)
     }
-    
+
     func logout() {
         print("logout action")
     }
 }
 
 extension ProfileController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         2
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = profileItems[indexPath.row]
@@ -51,14 +54,12 @@ extension ProfileController: UITableViewDelegate, UITableViewDataSource {
         cell.layoutMargins = UIEdgeInsets.zero
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            self.navigationController?.pushViewController(OrderHistoryController(), animated: true)
+            navigationController?.pushViewController(OrderHistoryController(), animated: true)
         } else {
-            self.navigationController?.pushViewController(ChangeLanguageController(), animated: true)
+            navigationController?.pushViewController(ChangeLanguageController(), animated: true)
         }
     }
-    
 }
-

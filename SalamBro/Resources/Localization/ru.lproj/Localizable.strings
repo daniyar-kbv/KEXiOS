@@ -46,7 +46,7 @@
 "Verification.button.title" = "Отправить повторно через:%@";
 
 // MARK: - Agreement
-"Agreement.navigation.title" = "Пользовательское соглашение";
+"Agreement.navigation.title" = "Правовые документы";
 
 // MARK: - CountryCodePicker
 "CountryCodePicker.navigation.title" = "Выберите код страны";

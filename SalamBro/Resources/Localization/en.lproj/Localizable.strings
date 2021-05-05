@@ -45,7 +45,7 @@
 "Verification.button.title" = "Resend again in: %@";
 
 // MARK: - Agreement
-"Agreement.navigation.title" = "User agreement";
+"Agreement.navigation.title" = "Legal documents";
 
 // MARK: - CountryCodePicker
 "CountryCodePicker.navigation.title" = "Select country code";

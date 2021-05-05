@@ -64,8 +64,9 @@ internal enum Asset {
 
     internal static let cart = ImageAsset(name: "cart")
     internal static let chevronRight = ImageAsset(name: "chevron.right")
-    internal static let emptyCart = ImageAsset(name: "emptyCart")
     internal static let cola = ImageAsset(name: "cola")
+    internal static let documents = ImageAsset(name: "documents")
+    internal static let emptyCart = ImageAsset(name: "emptyCart")
     internal static let fastFood = ImageAsset(name: "fastFood")
     internal static let kexLogo = ImageAsset(name: "kexLogo")
     internal static let location = ImageAsset(name: "location")
@@ -74,6 +75,14 @@ internal enum Asset {
     internal static let menu = ImageAsset(name: "menu")
     internal static let profile = ImageAsset(name: "profile")
     internal static let search = ImageAsset(name: "search")
+    internal static let shareToInstagram = ImageAsset(name: "shareToInstagram")
+    internal enum Support {
+        internal static let insta = ImageAsset(name: "insta")
+        internal static let mail = ImageAsset(name: "mail")
+        internal static let tiktok = ImageAsset(name: "tiktok")
+        internal static let vk = ImageAsset(name: "vk")
+    }
+
     internal static let support = ImageAsset(name: "support")
 }
 

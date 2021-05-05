@@ -13,9 +13,17 @@ protocol ProfileViewDelegate {
 }
 
 class ProfileView: UIView {
-    
     public var delegate: ProfileViewDelegate?
-    
+
+    lazy var titleLabel: UILabel = {
+        let view = UILabel()
+        view.text = L10n.Profile.NavigationBar.title
+        view.font = .systemFont(ofSize: 18, weight: .semibold)
+        view.textAlignment = .center
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     lazy var phoneTitle: UILabel = {
         let label = UILabel()
         label.text = "+7 (702) 000 00 00"
@@ -32,7 +40,7 @@ class ProfileView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     lazy var changeNameLabel: UIButton = {
         let label = UIButton()
         label.setTitle(L10n.Profile.EditButton.title, for: .normal)
@@ -43,13 +51,14 @@ class ProfileView: UIView {
         label.addGestureRecognizer(tap)
         return label
     }()
-    
+
     lazy var tableView: UITableView = {
         let table = UITableView()
         table.tableFooterView = UIView()
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.showsVerticalScrollIndicator = false
         table.translatesAutoresizingMaskIntoConstraints = false
+        table.bounces = false
         // Top separator
         let px = 1 / UIScreen.main.scale
         let frame = CGRect(x: 0, y: 0, width: table.frame.size.width, height: px)
@@ -58,7 +67,7 @@ class ProfileView: UIView {
         line.backgroundColor = table.separatorColor
         return table
     }()
-    
+
     lazy var logoutButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.Profile.LogoutButton.title, for: .normal)
@@ -71,8 +80,8 @@ class ProfileView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-    init(delegate: (UITableViewDelegate & UITableViewDataSource & ProfileViewDelegate)) {
+
+    init(delegate: UITableViewDelegate & UITableViewDataSource & ProfileViewDelegate) {
         self.delegate = delegate
         super.init(frame: .zero)
         tableView.delegate = delegate
@@ -80,53 +89,52 @@ class ProfileView: UIView {
         setupViews()
         setupConstraints()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension ProfileView {
     func setupViews() {
         backgroundColor = .arcticWhite
-        
-        addSubview(phoneTitle)
-        addSubview(nameLabel)
-        addSubview(changeNameLabel)
-        addSubview(tableView)
-        addSubview(logoutButton)
+        [titleLabel, phoneTitle, nameLabel, changeNameLabel, tableView, logoutButton].forEach { addSubview($0) }
     }
-    
+
     func setupConstraints() {
-        phoneTitle.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+
+        phoneTitle.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 26).isActive = true
         phoneTitle.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         phoneTitle.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-        
+
         nameLabel.topAnchor.constraint(equalTo: phoneTitle.bottomAnchor, constant: 8).isActive = true
         nameLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        
+
         changeNameLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
         changeNameLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-        
+
         tableView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 22).isActive = true
         tableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         tableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         tableView.bottomAnchor.constraint(equalTo: logoutButton.topAnchor, constant: -8).isActive = true
-        
+
         logoutButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
         logoutButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 54).isActive = true
         logoutButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -54).isActive = true
         logoutButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -32).isActive = true
     }
-    
+
     @objc func logout() {
         delegate?.logout()
     }
 
     @objc
-    func changeName(sender:UITapGestureRecognizer) {
+    func changeName(sender _: UITapGestureRecognizer) {
         delegate?.changeName()
     }
 }
-
