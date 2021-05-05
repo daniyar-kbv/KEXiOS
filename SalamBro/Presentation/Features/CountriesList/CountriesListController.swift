@@ -18,7 +18,6 @@ public final class CountriesListController: UIViewController {
         view.allowsMultipleSelection = false
         view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.tableFooterView = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.delegate = self
         view.dataSource = self

@@ -19,13 +19,15 @@ public final class CitiesListController: UIViewController {
         view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.tableFooterView = UIView()
         view.allowsMultipleSelection = false
-        view.separatorInset.right = view.separatorInset.left + view.separatorInset.left
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.delegate = self
         view.dataSource = self
+        view.bounces = false
         view.refreshControl = refreshControl
         return view
     }()
+
+    private lazy var separator = SeparatorView()
 
     private lazy var refreshControl: UIRefreshControl = {
         let view = UIRefreshControl()
@@ -78,12 +80,20 @@ public final class CitiesListController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         view.addSubview(citiesTableView)
+        view.addSubview(separator)
     }
 
     private func setupConstraints() {
         citiesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
+            $0.top.equalTo(view.snp.topMargin).offset(16)
             $0.left.right.bottom.equalToSuperview()
+        }
+
+        separator.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.bottom.equalTo(citiesTableView.snp.top)
+            $0.height.equalTo(0.30)
         }
     }
 
@@ -94,6 +104,10 @@ public final class CitiesListController: UIViewController {
 }
 
 extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
+    public func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return 50
+    }
+
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         viewModel.cities.count
     }
@@ -101,6 +115,9 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = viewModel.cities[indexPath.row]
+        cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        cell.textLabel?.textColor = .darkGray
+        cell.backgroundColor = .white
         cell.tintColor = .kexRed
         cell.selectionStyle = .none
         return cell

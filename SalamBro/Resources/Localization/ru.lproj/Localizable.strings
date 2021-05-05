@@ -11,10 +11,10 @@
 "Update.button.title" = "Обновить приложение";
 
 // MARK: - CountriesList
-"CountriesList.navigation.title" = "Выберите вашу страну";
+"CountriesList.navigation.title" = "Выберите страну";
 
 // MARK: - CitiesList
-"CitiesList.navigation.title" = "Выберите ваш город";
+"CitiesList.navigation.title" = "Выберите город";
 
 // MARK: - Address
 "Address.form.country.title" = "Страна*";
@@ -141,3 +141,18 @@
 
 "RateOrder.submitButton.title" = "Отправить";
 "RateOrder.commentaryField.placeholder" = "Добавить комментарий";
+
+// MARK: - Country
+"Country.Kazakhstan" = "Казахстан";
+"Country.Russia" = "Россия";
+"Country.USA" = "США";
+
+// MARK: - Cities
+"Cities.almaty" = "Алматы";
+"Cities.nursultan" = "Астана";
+"Cities.aktobe" = "Актобе";
+"Cities.taldykorgan" = "Талдыкорган";
+"Cities.uralsk" = "Уральск";
+"Cities.aktau" = "Актау";
+"Cities.shymkent" = "Шымкент";
+"Cities.taraz" = "Тараз";

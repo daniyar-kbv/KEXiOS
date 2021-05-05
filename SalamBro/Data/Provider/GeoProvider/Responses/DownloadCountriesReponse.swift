@@ -20,7 +20,7 @@ extension DownloadCountriesReponse {
     private static func getCountries() -> [CountryDTO] {
         var temp: [CountryDTO] = []
         let ids = [1, 2, 3]
-        let names = ["Kazakhstan", "Russian Federation", "United Stated of America"]
+        let names = [L10n.Country.kazakhstan, L10n.Country.russia, L10n.Country.usa]
         let callingCodes = ["+7", "+7", "+1"]
         for i in 0 ..< ids.count {
             temp.append(CountryDTO(id: ids[i],

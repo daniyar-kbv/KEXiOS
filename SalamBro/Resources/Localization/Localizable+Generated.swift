@@ -210,9 +210,28 @@ internal enum L10n {
         }
     }
 
+    internal enum Cities {
+        /// Aktau
+        internal static let aktau = L10n.tr("Localizable", "Cities.aktau")
+        /// Aktobe
+        internal static let aktobe = L10n.tr("Localizable", "Cities.aktobe")
+        /// Almaty
+        internal static let almaty = L10n.tr("Localizable", "Cities.almaty")
+        /// Nur-Sultan
+        internal static let nursultan = L10n.tr("Localizable", "Cities.nursultan")
+        /// Shymkent
+        internal static let shymkent = L10n.tr("Localizable", "Cities.shymkent")
+        /// Taldykorgan
+        internal static let taldykorgan = L10n.tr("Localizable", "Cities.taldykorgan")
+        /// Taraz
+        internal static let taraz = L10n.tr("Localizable", "Cities.taraz")
+        /// Uralsk
+        internal static let uralsk = L10n.tr("Localizable", "Cities.uralsk")
+    }
+
     internal enum CitiesList {
         internal enum Navigation {
-            /// Select your city
+            /// Select city
             internal static let title = L10n.tr("Localizable", "CitiesList.navigation.title")
         }
     }
@@ -231,9 +250,18 @@ internal enum L10n {
 
     internal enum CountriesList {
         internal enum Navigation {
-            /// Select your country
+            /// Select country
             internal static let title = L10n.tr("Localizable", "CountriesList.navigation.title")
         }
+    }
+
+    internal enum Country {
+        /// Kazakhstan
+        internal static let kazakhstan = L10n.tr("Localizable", "Country.Kazakhstan")
+        /// Russian Federation
+        internal static let russia = L10n.tr("Localizable", "Country.Russia")
+        /// USA
+        internal static let usa = L10n.tr("Localizable", "Country.USA")
     }
 
     internal enum CountryCodePicker {

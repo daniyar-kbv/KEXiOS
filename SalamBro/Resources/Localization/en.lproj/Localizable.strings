@@ -11,10 +11,10 @@
 "Update.button.title" = "Update app";
 
 // MARK: - CountriesList
-"CountriesList.navigation.title" = "Select your country";
+"CountriesList.navigation.title" = "Select country";
 
 // MARK: - CitiesList
-"CitiesList.navigation.title" = "Select your city";
+"CitiesList.navigation.title" = "Select city";
 
 // MARK: - Address
 "Address.form.country.title" = "Country*";
@@ -140,3 +140,20 @@ What should we improve next time?";
 
 "RateOrder.submitButton.title" = "Send";
 "RateOrder.commentaryField.placeholder" = "Add commentary";
+
+
+// MARK: - Country
+"Country.Kazakhstan" = "Kazakhstan";
+"Country.Russia" = "Russian Federation";
+"Country.USA" = "USA";
+
+
+// MARK: - Cities
+"Cities.almaty" = "Almaty";
+"Cities.nursultan" = "Nur-Sultan";
+"Cities.aktobe" = "Aktobe";
+"Cities.taldykorgan" = "Taldykorgan";
+"Cities.uralsk" = "Uralsk";
+"Cities.aktau" = "Aktau";
+"Cities.shymkent" = "Shymkent";
+"Cities.taraz" = "Taraz";

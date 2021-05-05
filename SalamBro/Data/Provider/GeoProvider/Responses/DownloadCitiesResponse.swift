@@ -14,6 +14,6 @@ public struct DownloadCitiesResponse: Decodable {
 // MOCK: - remove
 public extension DownloadCitiesResponse {
     static var mockResponse: DownloadCitiesResponse {
-        .init(cities: ["Nur-Sultan", "Almaty", "Karaganda", "Atyrau", "Aktobe"])
+        .init(cities: [L10n.Cities.almaty, L10n.Cities.nursultan, L10n.Cities.aktobe, L10n.Cities.taldykorgan, L10n.Cities.uralsk, L10n.Cities.aktau, L10n.Cities.taraz])
     }
 }
