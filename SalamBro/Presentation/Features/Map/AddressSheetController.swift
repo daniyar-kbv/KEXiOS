@@ -8,27 +8,26 @@
 import UIKit
 
 class AddressSheetController: UIViewController {
-    
-    @IBOutlet weak var addressView: UIView!
-    @IBOutlet weak var addressField: UITextField!
-    @IBOutlet weak var proceedButton: UIButton!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var commentaryView: UIView!
-    @IBOutlet weak var commentaryLabel: UILabel!
-    
+    @IBOutlet var addressView: UIView!
+    @IBOutlet var addressField: UITextField!
+    @IBOutlet var proceedButton: UIButton!
+    @IBOutlet var contentView: UIView!
+    @IBOutlet var commentaryView: UIView!
+    @IBOutlet var commentaryLabel: UILabel!
+
     var suggestVC: SuggestController?
     var yCoordinate: CGFloat?
     var delegate: MapDelegate?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
-       super.viewWillAppear(animated)
+        super.viewWillAppear(animated)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIView.animate(withDuration: 0.3) { [weak self] in
@@ -37,7 +36,7 @@ class AddressSheetController: UIViewController {
             self?.view.frame = CGRect(x: 0, y: yComponent, width: frame!.width, height: frame!.height)
         }
     }
-    
+
     func setupViews() {
         addressField.placeholder = L10n.MapView.AddressField.title
         commentaryLabel.text = L10n.MapView.CommentaryLabel.title
@@ -45,32 +44,32 @@ class AddressSheetController: UIViewController {
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 10
         contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        
+
         let tapAddress = UITapGestureRecognizer(target: self, action: #selector(didTapAddressView))
         addressView.addGestureRecognizer(tapAddress)
         let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(didTapCommentaryView))
         commentaryView.addGestureRecognizer(tapCommentary)
     }
-    
-    @objc func didTapAddressView(sender: UITapGestureRecognizer) {
+
+    @objc func didTapAddressView(sender _: UITapGestureRecognizer) {
         print("pick address button pressed")
         suggestVC!.modalPresentationStyle = .overCurrentContext
         present(suggestVC!, animated: true, completion: nil)
     }
-    
-    @objc func didTapCommentaryView(sender: UITapGestureRecognizer) {
+
+    @objc func didTapCommentaryView(sender _: UITapGestureRecognizer) {
         delegate?.showCommentarySheet()
     }
 
-    @IBAction func proceedAction(_ sender: UIButton) {
-        self.navigationController?.pushViewController(MainTabController(), animated: true)
+    @IBAction func proceedAction(_: UIButton) {
+        navigationController?.pushViewController(MainTabController(), animated: true)
     }
 }
 
 extension AddressSheetController {
     func changeAddress(address: String) {
         addressField.text = "\(address)"
-        if addressField.text != "" || addressField.text != nil {
+        if address != "" {
             proceedButton.backgroundColor = .kexRed
             proceedButton.isEnabled = true
         } else {
@@ -78,11 +77,11 @@ extension AddressSheetController {
             proceedButton.isEnabled = false
         }
     }
-    
+
     func changeComment(comment: String) {
         commentaryLabel.text = "\(comment)"
         commentaryLabel.textColor = .black
-        if commentaryLabel.text == "" {
+        if comment == "" {
             commentaryLabel.text = L10n.MapView.CommentaryLabel.title
             commentaryLabel.textColor = .calmGray
         }

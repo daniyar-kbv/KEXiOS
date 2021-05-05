@@ -426,7 +426,7 @@ internal enum L10n {
         }
 
         internal enum Button {
-            /// Done
+            /// Cancel
             internal static let title = L10n.tr("Localizable", "Suggest.button.title")
         }
     }

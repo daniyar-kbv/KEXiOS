@@ -106,7 +106,7 @@
 
 // MARK: - Suggest
 "Suggest.addressField.title" = "Введите адрес";
-"Suggest.button.title" = "Готово";
+"Suggest.button.title" = "Отменить";
 
 // MARK: - Commentary
 "Commentary.addressField.title" = "Комментарий (квартира, подъезд, ...)";
