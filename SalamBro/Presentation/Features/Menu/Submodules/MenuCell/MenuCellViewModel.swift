@@ -23,6 +23,6 @@ public final class MenuCellViewModel: MenuCellViewModelProtocol {
     public init(food: FoodUI) {
         itemTitle = .init(value: food.title)
         itemDescription = .init(value: food.description)
-        itemPrice = .init(value: "\(food.price) T") // здесь надо юзать локализацию
+        itemPrice = .init(value: "\(food.price) ₸") // здесь надо юзать локализацию
     }
 }

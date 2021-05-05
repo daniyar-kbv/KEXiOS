@@ -19,7 +19,6 @@ public final class MenuController: UIViewController {
         let view = UIImageView()
         view.image = Asset.Brands.salamBro4.image
         view.contentMode = .scaleAspectFit
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -27,20 +26,20 @@ public final class MenuController: UIViewController {
         let view = UILabel()
         view.text = "SalamBro"
         view.font = UIFont.boldSystemFont(ofSize: 20)
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    private lazy var brandSelectView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var bottomChevronImage: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "chevron.bottom")
         return view
     }()
+
+    private lazy var brandSelectView = UIView()
 
     private lazy var itemTableView: UITableView = {
         let view = UITableView()
         view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.register(cellType: AddressPickCell.self)
         view.register(cellType: MenuCell.self)
         view.register(cellType: AdCollectionCell.self)
@@ -81,10 +80,11 @@ public final class MenuController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
-    override public func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
+    // re-neabling navigation bar appereance
+//    override public func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        navigationController?.setNavigationBarHidden(false, animated: animated)
+//    }
 
     private func bind() {
         viewModel.updateTableView
@@ -103,7 +103,7 @@ public final class MenuController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [logoView, brandLabel].forEach { brandSelectView.addSubview($0) }
+        [logoView, brandLabel, bottomChevronImage].forEach { brandSelectView.addSubview($0) }
         [brandSelectView, itemTableView].forEach { view.addSubview($0) }
     }
 
@@ -116,6 +116,12 @@ public final class MenuController: UIViewController {
         brandLabel.snp.makeConstraints {
             $0.left.equalTo(logoView.snp.right).offset(8)
             $0.centerY.equalTo(logoView.snp.centerY)
+        }
+
+        bottomChevronImage.snp.makeConstraints {
+            $0.top.equalTo(brandLabel.snp.top)
+            $0.left.equalTo(brandLabel.snp.right)
+            $0.height.width.equalTo(24)
         }
 
         brandSelectView.snp.makeConstraints {

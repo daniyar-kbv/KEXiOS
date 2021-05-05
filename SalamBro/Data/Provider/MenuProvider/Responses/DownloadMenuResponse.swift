@@ -19,8 +19,8 @@ extension DownloadMenuCategoriesResponse {
 
     private static func getMenuCategories() -> [FoodTypeDTO] {
         var temp: [FoodTypeDTO] = []
-        let titles = ["combos", "sushi", "burgers", "doners", "template", "template", "template", "template", "template"]
-        for i in 0 ..< 9 {
+        let titles = [L10n.Menu.Categories.combo, L10n.Menu.Categories.burgers, L10n.Menu.Categories.hotdogs, L10n.Menu.Categories.drinks, L10n.Menu.Categories.sauces, L10n.Menu.Categories.other]
+        for i in 0 ..< 6 {
             temp.append(FoodTypeDTO(title: titles[i], position: i, foods: []))
         }
         return temp

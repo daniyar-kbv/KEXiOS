@@ -157,3 +157,18 @@ What should we improve next time?";
 "Cities.aktau" = "Aktau";
 "Cities.shymkent" = "Shymkent";
 "Cities.taraz" = "Taraz";
+
+// MARK: - Menu
+"Menu.categories.combo" = "Combo";
+"Menu.categories.burgers" = "Burgers";
+"Menu.categories.hotdogs" = "Hot-dogs";
+"Menu.categories.drinks" = "Drinks";
+"Menu.categories.sauces" = "Sauces";
+"Menu.categories.other" = "Other";
+
+
+// MARK: - MenuDetail
+"MenuDetail.proceedButton" = "Add to cart for";
+"MenuDetail.additionalItemLabel" = "Choose drink";
+"MenuDetail.commentaryField" = "Commentary to dish";
+"MenuDetail.chooseAdditionalItemButton" = "Change";

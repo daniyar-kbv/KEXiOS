@@ -52,16 +52,6 @@ class MainTabController: UITabBarController {
         configureUI()
         configureViewControllers()
     }
-
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
-    override public func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
 }
 
 extension MainTabController {

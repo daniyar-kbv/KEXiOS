@@ -156,3 +156,18 @@
 "Cities.aktau" = "Актау";
 "Cities.shymkent" = "Шымкент";
 "Cities.taraz" = "Тараз";
+
+
+// MARK: - Menu
+"Menu.categories.combo" = "Комбо";
+"Menu.categories.burgers" = "Бургеры";
+"Menu.categories.hotdogs" = "Хот-Доги";
+"Menu.categories.drinks" = "Напитки";
+"Menu.categories.sauces" = "Соусы";
+"Menu.categories.other" = "Другое";
+
+// MARK: - MenuDetail
+"MenuDetail.proceedButton" = "В корзину за";
+"MenuDetail.additionalItemLabel" = "Выберите напиток";
+"MenuDetail.commentaryField" = "Комментарий к блюду";
+"MenuDetail.chooseAdditionalItemButton" = "Изменить";

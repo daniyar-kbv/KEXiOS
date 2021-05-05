@@ -32,7 +32,7 @@ class MenuDetailController: UIViewController {
 
     lazy var descriptionLabel: UILabel = {
         let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.font = .systemFont(ofSize: 12)
         return view
     }()
 
@@ -44,23 +44,16 @@ class MenuDetailController: UIViewController {
         view.isUserInteractionEnabled = true
         let tap = UIGestureRecognizer(target: self, action: #selector(commentaryViewTapped))
         view.addGestureRecognizer(tap)
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    lazy var chooseAdditionalItemView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
+    lazy var chooseAdditionalItemView = UIView()
     lazy var chooseAdditionalItemLabel: UILabel = {
         let view = UILabel()
         view.backgroundColor = .white
-        view.text = "Choose item"
+        view.text = L10n.MenuDetail.additionalItemLabel
         view.textColor = .systemGray
         view.font = .systemFont(ofSize: 14)
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -68,24 +61,21 @@ class MenuDetailController: UIViewController {
         let view = UILabel()
         view.text = "Cola 0.5"
         view.font = .systemFont(ofSize: 16, weight: .medium)
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     lazy var chooseAdditionalItemButton: UIButton = {
         let view = UIButton()
-        view.setTitle("Change", for: .normal)
+        view.setTitle(L10n.MenuDetail.chooseAdditionalItemButton, for: .normal)
         view.setTitleColor(.systemRed, for: .normal)
         view.addTarget(self, action: #selector(additionalItemChangeButtonTapped), for: .touchUpInside)
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     lazy var commentaryField: UITextField = {
         let view = UITextField()
-        view.placeholder = "Commentary"
-        view.isUserInteractionEnabled = false
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.placeholder = L10n.MenuDetail.commentaryField
+        view.isEnabled = false
         return view
     }()
 
@@ -156,7 +146,7 @@ class MenuDetailController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-
+        tabBarController?.tabBar.backgroundColor = .white
         [chooseAdditionalItemLabel, additionalItemLabel, chooseAdditionalItemButton].forEach { chooseAdditionalItemView.addSubview($0) }
         commentaryView.addSubview(commentaryField)
         [imageView, itemTitleLabel, descriptionLabel, chooseAdditionalItemView, commentaryView, proceedButton, backButton].forEach { view.addSubview($0) }
@@ -164,9 +154,9 @@ class MenuDetailController: UIViewController {
 
     func setupConstraints() {
         imageView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(8)
+            $0.top.equalTo(view.snp.topMargin).offset(46)
             $0.left.equalToSuperview().offset(39)
-            $0.right.equalToSuperview().offset(-38)
+            $0.right.equalToSuperview().offset(-39)
             $0.height.equalTo(216)
         }
 
@@ -221,9 +211,9 @@ class MenuDetailController: UIViewController {
         }
 
         proceedButton.snp.makeConstraints {
-            $0.top.equalTo(commentaryView.snp.bottom).offset(32)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
+            $0.bottom.equalTo(view.snp.bottomMargin).offset(-16)
             $0.height.equalTo(43)
         }
 

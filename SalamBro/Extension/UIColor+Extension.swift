@@ -12,7 +12,7 @@ extension UIColor {
     static let darkGray = UIColor(red: 51, green: 51, blue: 51)
     static let arcticWhite = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
     static let mildBlue = UIColor(red: 165, green: 173, blue: 182)
-    static let lightGray = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1)
+    static let lightGray = UIColor(red: 242, green: 242, blue: 242)
     static let calmGray = UIColor(red: 0.827, green: 0.835, blue: 0.851, alpha: 1)
 }
 

@@ -12,6 +12,8 @@ class AdditionalItemCell: UICollectionViewCell {
         let view = UIImageView()
         view.image = UIImage(named: "cola")
         view.contentMode = .scaleAspectFit
+        view.layer.cornerRadius = 10
+        view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

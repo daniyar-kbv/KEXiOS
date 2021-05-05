@@ -324,6 +324,34 @@ internal enum L10n {
         }
     }
 
+    internal enum Menu {
+        internal enum Categories {
+            /// Burgers
+            internal static let burgers = L10n.tr("Localizable", "Menu.categories.burgers")
+            /// Combo
+            internal static let combo = L10n.tr("Localizable", "Menu.categories.combo")
+            /// Drinks
+            internal static let drinks = L10n.tr("Localizable", "Menu.categories.drinks")
+            /// Hot-dogs
+            internal static let hotdogs = L10n.tr("Localizable", "Menu.categories.hotdogs")
+            /// Other
+            internal static let other = L10n.tr("Localizable", "Menu.categories.other")
+            /// Sauces
+            internal static let sauces = L10n.tr("Localizable", "Menu.categories.sauces")
+        }
+    }
+
+    internal enum MenuDetail {
+        /// Choose drink
+        internal static let additionalItemLabel = L10n.tr("Localizable", "MenuDetail.additionalItemLabel")
+        /// Change
+        internal static let chooseAdditionalItemButton = L10n.tr("Localizable", "MenuDetail.chooseAdditionalItemButton")
+        /// Commentary to dish
+        internal static let commentaryField = L10n.tr("Localizable", "MenuDetail.commentaryField")
+        /// Add to cart for
+        internal static let proceedButton = L10n.tr("Localizable", "MenuDetail.proceedButton")
+    }
+
     internal enum Profile {
         /// Change application language
         internal static let changeLanguage = L10n.tr("Localizable", "Profile.changeLanguage")

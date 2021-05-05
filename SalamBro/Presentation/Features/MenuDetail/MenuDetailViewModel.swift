@@ -33,7 +33,7 @@ public final class MenuDetailViewModel: MenuDetailViewModelProtocol {
         }.done {
             self.itemTitle.accept("\($0.title)")
             self.itemDescription.accept("\($0.description)")
-            self.itemPrice.accept("M\($0.price)")
+            self.itemPrice.accept(L10n.MenuDetail.proceedButton + " \($0.price) ₸")
         }.catch {
             print($0)
             // TODO: - написать обработку и презентацию ошибок
