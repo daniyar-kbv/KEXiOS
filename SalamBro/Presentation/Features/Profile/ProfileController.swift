@@ -16,11 +16,16 @@ class ProfileController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
     }
 
-    func setupUI() {
-        parent?.navigationController?.title = L10n.Profile.NavigationBar.title
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override public func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }
 

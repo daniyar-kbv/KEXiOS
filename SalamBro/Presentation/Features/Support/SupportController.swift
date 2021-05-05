@@ -76,7 +76,6 @@ class SupportController: UIViewController {
     func setupViews() {
         ["insta", "tiktok", "mail", "vk"].forEach { logoStack.addArrangedSubview(UIImageView(image: UIImage(named: $0))) }
         [titleLabel, separator, tableView, logoStack, callButton].forEach { view.addSubview($0) }
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     func setupConstraints() {
