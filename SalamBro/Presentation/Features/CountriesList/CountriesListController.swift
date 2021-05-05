@@ -13,17 +13,17 @@ import UIKit
 public final class CountriesListController: UIViewController {
     private let viewModel: CountriesListViewModelProtocol
     private let disposeBag: DisposeBag
-
     private lazy var countriesTableView: UITableView = {
         let view = UITableView()
         view.allowsMultipleSelection = false
         view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.tableFooterView = UIView()
-        view.separatorInset.right = view.separatorInset.left + view.separatorInset.left
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.delegate = self
         view.dataSource = self
         view.refreshControl = refreshControl
+        view.bounces = false
         return view
     }()
 
@@ -32,6 +32,8 @@ public final class CountriesListController: UIViewController {
         view.addTarget(self, action: #selector(update), for: .valueChanged)
         return view
     }()
+
+    private lazy var separator = SeparatorView()
 
     public init(viewModel: CountriesListViewModelProtocol) {
         self.viewModel = viewModel
@@ -64,9 +66,13 @@ public final class CountriesListController: UIViewController {
 
     private func setupNavigationBar() {
         navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.layoutIfNeeded()
         navigationItem.title = L10n.CountriesList.Navigation.title
         navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.black,
+            [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
              NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
@@ -79,12 +85,22 @@ public final class CountriesListController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         view.addSubview(countriesTableView)
+        view.addSubview(separator)
     }
 
     private func setupConstraints() {
         countriesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
-            $0.left.right.bottom.equalToSuperview()
+            $0.top.equalTo(view.snp.topMargin).offset(16)
+            $0.left.equalToSuperview()
+            $0.right.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+
+        separator.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.bottom.equalTo(countriesTableView.snp.top)
+            $0.height.equalTo(0.30)
         }
     }
 
@@ -97,6 +113,10 @@ public final class CountriesListController: UIViewController {
 // MARK: - UITableView
 
 extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
+    public func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return 50
+    }
+
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         viewModel.countries.count
     }
@@ -104,6 +124,8 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = viewModel.countries[indexPath.row].name
+        cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        cell.textLabel?.textColor = .darkGray
         cell.backgroundColor = .white
         cell.tintColor = .kexRed
         cell.selectionStyle = .none
