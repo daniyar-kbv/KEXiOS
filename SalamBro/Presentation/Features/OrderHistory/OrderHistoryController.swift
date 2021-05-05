@@ -14,6 +14,27 @@ protocol OrderHistoryDelegate {
 }
 
 class OrderHistoryController: UIViewController {
+    lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.tintColor = .systemRed
+        button.setImage(UIImage(named: "back"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.layer.cornerRadius = 22
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    lazy var titleLabel: UILabel = {
+        let view = UILabel()
+        view.text = "История заказов"
+        view.font = .systemFont(ofSize: 18, weight: .semibold)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     lazy var tableView: UITableView = {
         let view = UITableView()
         view.register(OrderTestCell.self, forCellReuseIdentifier: "Cell")
@@ -37,20 +58,32 @@ class OrderHistoryController: UIViewController {
 
     func setupViews() {
         view.backgroundColor = .white
-
-        navigationItem.title = "Order history"
-        navigationController?.navigationBar.backgroundColor = .white
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         view.addSubview(tableView)
+        view.addSubview(titleLabel)
+        view.addSubview(backButton)
     }
 
     func setupConstraints() {
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+
+        backButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22).isActive = true
+        backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
+
         tableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
+            $0.top.equalTo(titleLabel.snp.bottom)
+
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
             $0.bottom.equalTo(view.snp.bottomMargin).offset(-32)
         }
+    }
+
+    @objc func backButtonTapped(_: UIButton!) {
+        navigationController?.popViewController(animated: true)
     }
 }
 

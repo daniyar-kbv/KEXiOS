@@ -133,8 +133,6 @@
 		C40464BD631044407C3EDAD10DA2A0F8 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */; };
 		ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */; };
 		52E54610F9597E5FB759023469158B05 /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38E1406896D56B0D3EB30561C58641D /* OTPView.swift */; };
-		5D3BBE61CE5F39ADA8DD15A87CA672D7 /* OrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A54DBFA4068BB97C1ED4A2ACF3C7D /* OrderCell.swift */; };
-		A0CA3D6AB7DFD019B64E956638585222 /* OrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50AFFD293F5E15187D320DF5662E571F /* OrderCell.xib */; };
 		836766507334DCE6B1273433E608713C /* OrderHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */; };
 		7B1C03CF0090494FD9F085DC483E94DF /* OrderTestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D7CBF5AAA6491FB72FECC42FABB91B /* OrderTestCell.swift */; };
 		1814F54CFAC26967B8C664F02E4AA121 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C9392BFA56499DD56ECB2AF1FC231E8 /* Pods_SalamBro.framework */; };
@@ -320,8 +318,6 @@
 		6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		C38E1406896D56B0D3EB30561C58641D /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
-		1E1A54DBFA4068BB97C1ED4A2ACF3C7D /* OrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCell.swift; sourceTree = "<group>"; };
-		50AFFD293F5E15187D320DF5662E571F /* OrderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderCell.xib; sourceTree = "<group>"; };
 		64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryController.swift; sourceTree = "<group>"; };
 		22D7CBF5AAA6491FB72FECC42FABB91B /* OrderTestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTestCell.swift; sourceTree = "<group>"; };
 		8C4C164B21125043DA7278DDEE6014FD /* Pods-SalamBro-SalamBroUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro-SalamBroUITests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -794,8 +790,6 @@
 		7FFF4378B5DD89D3B1B951BEF401C379 /* OrderHistory */ = {
 			isa = PBXGroup;
 			children = (
-				1E1A54DBFA4068BB97C1ED4A2ACF3C7D /* OrderCell.swift */,
-				50AFFD293F5E15187D320DF5662E571F /* OrderCell.xib */,
 				64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */,
 				22D7CBF5AAA6491FB72FECC42FABB91B /* OrderTestCell.swift */,
 			);
@@ -1258,7 +1252,6 @@
 				7AF8512BF8FCD22EB59FC289865E33A4 /* CommentarySheetController.xib in Resources */,
 				05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */,
 				49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */,
-				A0CA3D6AB7DFD019B64E956638585222 /* OrderCell.xib in Resources */,
 				C53C4DDB0C305025A6F252C490347231 /* RateController.xib in Resources */,
 				BE4EA1B911B2935E34C0F82BF9520125 /* RatingItemCell.xib in Resources */,
 				164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */,
@@ -1566,7 +1559,6 @@
 				C40464BD631044407C3EDAD10DA2A0F8 /* MenuViewModel.swift in Sources */,
 				ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */,
 				52E54610F9597E5FB759023469158B05 /* OTPView.swift in Sources */,
-				5D3BBE61CE5F39ADA8DD15A87CA672D7 /* OrderCell.swift in Sources */,
 				836766507334DCE6B1273433E608713C /* OrderHistoryController.swift in Sources */,
 				7B1C03CF0090494FD9F085DC483E94DF /* OrderTestCell.swift in Sources */,
 				DDDA6D913F65119481671703D67E0D78 /* ProfileController.swift in Sources */,

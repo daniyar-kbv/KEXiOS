@@ -125,6 +125,7 @@ public final class OrderTestCell: UITableViewCell, Reusable {
     lazy var sendCheckButon: UIButton = {
         let view = UIButton()
         view.setTitle("Отправить чек на почту", for: .normal)
+        view.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         view.setTitleColor(.black, for: .normal)
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
@@ -178,6 +179,7 @@ public final class OrderTestCell: UITableViewCell, Reusable {
     lazy var rateOrderButton: UIButton = {
         let view = UIButton()
         view.setTitle("Оценить заказ", for: .normal)
+        view.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         view.setTitleColor(.kexRed, for: .normal)
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
@@ -190,6 +192,7 @@ public final class OrderTestCell: UITableViewCell, Reusable {
     lazy var repeatOrderButton: UIButton = {
         let view = UIButton()
         view.setTitle("Повторить заказ", for: .normal)
+        view.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         view.setTitleColor(.mildBlue, for: .normal)
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
@@ -197,6 +200,11 @@ public final class OrderTestCell: UITableViewCell, Reusable {
         view.layer.borderWidth = 1
         return view
     }()
+
+    lazy var stack1 = UIStackView(arrangedSubviews: [item1Label, item1PriceLabel])
+    lazy var stack2 = UIStackView(arrangedSubviews: [item2Label, item2PriceLabel])
+    lazy var stack3 = UIStackView(arrangedSubviews: [deliveryLabel, deliveryPriceLabel])
+    lazy var stack4 = UIStackView(arrangedSubviews: [totalLabel, totalPriceLabel])
 
     lazy var topView = UIView()
 
@@ -217,15 +225,19 @@ public final class OrderTestCell: UITableViewCell, Reusable {
     }
 
     private func setupViews() {
-        priceStack.addArrangedSubview(UIStackView(arrangedSubviews: [item1Label, item1PriceLabel]))
-        priceStack.addArrangedSubview(UIStackView(arrangedSubviews: [item2Label, item2PriceLabel]))
-        priceStack.addArrangedSubview(UIStackView(arrangedSubviews: [deliveryLabel, deliveryPriceLabel]))
-        priceStack.addArrangedSubview(UIStackView(arrangedSubviews: [totalLabel, totalPriceLabel]))
+        [stack1, stack2, stack3, stack4].forEach {
+            priceStack.addArrangedSubview($0)
+        }
 
         [logoView, orderInfoStack, shareToInstagramButton, priceStack, sendCheckButon, deliveryAddressTitleLabel, deliveryAddressLabel, paymentTitleLabel, paymentLabel, orderStatusTitleLabel, orderStatusLabel, rateOrderButton, repeatOrderButton].forEach { contentView.addSubview($0) }
     }
 
     private func setupConstraints() {
+        stack1.snp.makeConstraints { $0.left.right.equalToSuperview() }
+        stack2.snp.makeConstraints { $0.left.right.equalToSuperview() }
+        stack3.snp.makeConstraints { $0.left.right.equalToSuperview() }
+        stack4.snp.makeConstraints { $0.left.right.equalToSuperview() }
+
         logoView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(32)
             $0.left.equalToSuperview()
