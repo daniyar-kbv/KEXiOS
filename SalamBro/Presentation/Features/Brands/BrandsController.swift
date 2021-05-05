@@ -80,16 +80,13 @@ public final class BrandsController: UIViewController {
         collectionView.snp.makeConstraints {
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
-            $0.top.equalTo(view.snp.topMargin).offset(16)
+            $0.top.equalTo(view.snp.topMargin).offset(8)
             $0.bottom.equalTo(view.snp.bottomMargin)
         }
     }
 
     func setupNavigationBar() {
         navigationItem.title = L10n.Brands.Navigation.title
-        navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.black,
-             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]
     }
 
     @objc
