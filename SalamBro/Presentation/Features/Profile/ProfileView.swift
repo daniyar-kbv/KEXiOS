@@ -111,6 +111,7 @@ extension ProfileView {
     func setupViews() {
         backgroundColor = .arcticWhite
         [titleLabel, phoneTitle, nameLabel, changeNameLabel, tableView, logoutButton, emailLabel, separator].forEach { addSubview($0) }
+        separator.translatesAutoresizingMaskIntoConstraints = false
     }
 
     func setupConstraints() {
@@ -137,15 +138,15 @@ extension ProfileView {
         separator.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 0.3).isActive = true
 
-        tableView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 22).isActive = true
+        tableView.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 19).isActive = true
         tableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: logoutButton.topAnchor, constant: -8).isActive = true
 
         logoutButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
-        logoutButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 54).isActive = true
-        logoutButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -54).isActive = true
-        logoutButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -32).isActive = true
+        logoutButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
+        logoutButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
+        logoutButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -24).isActive = true
     }
 
     @objc func logout() {

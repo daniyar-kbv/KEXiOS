@@ -31,7 +31,7 @@ class ChangeLanguageController: UIViewController {
         table.allowsMultipleSelection = false
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.tableFooterView = UIView()
-        table.separatorInset.right = table.separatorInset.left + table.separatorInset.left
+        table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: -24)
         table.dataSource = self
         table.delegate = self
         return table
@@ -140,6 +140,6 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        cell?.accessoryType = .none
+        cell?.accessoryView = .none
     }
 }

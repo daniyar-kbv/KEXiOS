@@ -40,7 +40,7 @@ public final class CountryCodeCell: UITableViewCell, Reusable {
         }.disposed(by: disposeBag)
 
         viewModel.isSelected.bind { [unowned self] in
-            self.accessoryView = $0 ? checkmark : UIView()
+            self.accessoryView = $0 ? checkmark : .none
         }.disposed(by: disposeBag)
     }
 
