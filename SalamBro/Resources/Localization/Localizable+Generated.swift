@@ -387,6 +387,8 @@ internal enum L10n {
     }
 
     internal enum RateOrder {
+        /// Your rate will help us to increase quality of delivery
+        internal static let description = L10n.tr("Localizable", "RateOrder.description")
         /// Rate order
         internal static let title = L10n.tr("Localizable", "RateOrder.title")
         internal enum AverageRate {

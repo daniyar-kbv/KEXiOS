@@ -141,6 +141,9 @@
 
 "RateOrder.submitButton.title" = "Отправить";
 "RateOrder.commentaryField.placeholder" = "Добавить комментарий";
+"RateOrder.title" = "Оцените заказ";
+"RateOrder.description" = "Ваша оценка поможет улучшить качество
+нашей доставки";
 
 // MARK: - Country
 "Country.Kazakhstan" = "Казахстан";

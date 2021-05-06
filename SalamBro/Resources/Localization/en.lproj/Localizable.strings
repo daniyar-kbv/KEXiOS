@@ -140,7 +140,8 @@ What should we improve next time?";
 
 "RateOrder.submitButton.title" = "Send";
 "RateOrder.commentaryField.placeholder" = "Add commentary";
-
+"RateOrder.title" = "Rate order";
+"RateOrder.description" = "Your rate will help us to increase quality of delivery";
 
 // MARK: - Country
 "Country.Kazakhstan" = "Kazakhstan";

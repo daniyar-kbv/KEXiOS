@@ -84,6 +84,8 @@ internal enum Asset {
     internal static let profile = ImageAsset(name: "profile")
     internal static let search = ImageAsset(name: "search")
     internal static let shareToInstagram = ImageAsset(name: "shareToInstagram")
+    internal static let starEmpty = ImageAsset(name: "star.empty")
+    internal static let starFilled = ImageAsset(name: "star.filled")
     internal enum Support {
         internal static let insta = ImageAsset(name: "insta")
         internal static let mail = ImageAsset(name: "mail")

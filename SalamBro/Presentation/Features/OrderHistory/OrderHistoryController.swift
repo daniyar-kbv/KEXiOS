@@ -104,6 +104,8 @@ extension OrderHistoryController: OrderHistoryDelegate {
     }
 
     func rate() {
-        navigationController?.pushViewController(RateController(), animated: true)
+        let vc = RateController()
+        vc.modalPresentationStyle = .pageSheet
+        present(vc, animated: true, completion: nil)
     }
 }
