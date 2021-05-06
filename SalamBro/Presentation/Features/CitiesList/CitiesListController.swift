@@ -14,6 +14,8 @@ public final class CitiesListController: UIViewController {
     private let viewModel: CitiesListViewModelProtocol
     private let disposeBag: DisposeBag
 
+    private lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.CitiesList.Navigation.title)
+
     private lazy var citiesTableView: UITableView = {
         let view = UITableView()
         view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -49,11 +51,6 @@ public final class CitiesListController: UIViewController {
         bind()
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationBar()
-    }
-
     private func bind() {
         viewModel.isAnimating
             .bind(to: refreshControl.rx.isRefreshing)
@@ -64,14 +61,6 @@ public final class CitiesListController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func setupNavigationBar() {
-        navigationItem.title = L10n.CitiesList.Navigation.title
-        navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.black,
-             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-    }
-
     private func setup() {
         setupViews()
         setupConstraints()
@@ -79,13 +68,20 @@ public final class CitiesListController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        view.addSubview(citiesTableView)
-        view.addSubview(separator)
+        [navbar, separator, citiesTableView].forEach { view.addSubview($0) }
+        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        navbar.titleLabel.font = .systemFont(ofSize: 26, weight: .regular)
     }
 
     private func setupConstraints() {
+        navbar.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(44)
+        }
+
         citiesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(16)
+            $0.top.equalTo(navbar.snp.bottom).offset(16)
             $0.left.right.bottom.equalToSuperview()
         }
 
@@ -97,9 +93,12 @@ public final class CitiesListController: UIViewController {
         }
     }
 
-    @objc
-    private func update() {
+    @objc private func update() {
         viewModel.update()
+    }
+
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
