@@ -334,7 +334,7 @@
 		EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateItemCell.swift; sourceTree = "<group>"; };
 		4E52B0649F2E590371E5C5E5A88064AE /* RateItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RateItemCell.xib; sourceTree = "<group>"; };
 		81D907407B02F778FF81888E372DE8D8 /* RatingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingCell.swift; sourceTree = "<group>"; };
-		E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RatingController.swift; path = ../../../../../DetailView/DetailView/Rating/RatingController.swift; sourceTree = "<group>"; };
+		E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingController.swift; sourceTree = "<group>"; };
 		4B14A0696DDBA1767A46E3E9946E03A3 /* RatioDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatioDTO.swift; sourceTree = "<group>"; };
 		D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtension.swift; sourceTree = "<group>"; };
 		A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
@@ -1046,6 +1046,16 @@
 			path = ShareOrder;
 			sourceTree = "<group>";
 		};
+		CEA5D6A068880C63142AE2ABBBB54648 /* Rating */ = {
+			isa = PBXGroup;
+			children = (
+				963541475F483ED939FA8CD9C71E8855 /* CustomSegment.swift */,
+				81D907407B02F778FF81888E372DE8D8 /* RatingCell.swift */,
+				E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */,
+			);
+			path = Rating;
+			sourceTree = "<group>";
+		};
 		CF86187F6E3E40AD84E132FE8AF6445E /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1117,16 +1127,6 @@
 				9B8FDA6E2A58F291D1B7F2649323F60E /* CountryCodeCellViewModel.swift */,
 			);
 			path = CountryCodeCell;
-			sourceTree = "<group>";
-		};
-		CEA5D6A068880C63142AE2ABBBB54648 /* Rating */ = {
-			isa = PBXGroup;
-			children = (
-				963541475F483ED939FA8CD9C71E8855 /* CustomSegment.swift */,
-				81D907407B02F778FF81888E372DE8D8 /* RatingCell.swift */,
-				E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */,
-			);
-			path = Rating;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
