@@ -96,6 +96,8 @@
 "ChangeName.navigationBar.title" = "Change name";
 "ChangeName.nameField.placeholder" = "insert name";
 "ChangeName.saveButton.title" = "Save";
+"ChangeName.nameLabel" = "Name";
+"ChangeName.emailLabel" = "E-mail";
 
 // MARK: - ChangeLanguage
 "ChangeLanguage.navigationBar.title" = "Select language";

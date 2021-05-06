@@ -211,6 +211,10 @@ internal enum L10n {
     }
 
     internal enum ChangeName {
+        /// E-mail
+        internal static let emailLabel = L10n.tr("Localizable", "ChangeName.emailLabel")
+        /// Name
+        internal static let nameLabel = L10n.tr("Localizable", "ChangeName.nameLabel")
         internal enum NameField {
             /// insert name
             internal static let placeholder = L10n.tr("Localizable", "ChangeName.nameField.placeholder")

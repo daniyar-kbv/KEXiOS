@@ -96,6 +96,9 @@
 "ChangeName.navigationBar.title" = "Изменить имя";
 "ChangeName.nameField.placeholder" = "введите имя";
 "ChangeName.saveButton.title" = "Сохранить";
+"ChangeName.nameLabel" = "Имя";
+"ChangeName.emailLabel" = "E-mail";
+
 
 // MARK: - ChangeLanguage
 "ChangeLanguage.navigationBar.title" = "Выберите язык";
