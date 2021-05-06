@@ -15,6 +15,8 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         return delegate
     }()
 
+    lazy var navbar = CustomNavigationBarView(navigationTitle: " ")
+
     lazy var maintitle: UILabel = {
         let label = UILabel()
         label.text = L10n.Authorization.title
@@ -45,17 +47,14 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
 
     lazy var aggreementLabel: UILabel = {
         let label = UILabel()
-        let textAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.darkGray]
-        let linkAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.blue, NSAttributedString.Key.underlineColor: UIColor.blue]
-        let inactiveString = NSMutableAttributedString(string: L10n.Authorization.Agreement.Inactive.title, attributes: textAttributes)
-        let activeString = NSAttributedString(string: L10n.Authorization.Agreement.Active.title, attributes: linkAttributes)
-        inactiveString.append(activeString)
+        label.text = L10n.Authorization.Agreement.Inactive.title + L10n.Authorization.Agreement.Active.title
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .mildBlue
         label.numberOfLines = 0
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
-        label.attributedText = inactiveString
         label.isUserInteractionEnabled = true
-        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel(_:))))
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel)))
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -72,13 +71,20 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         return button
     }()
 
+    lazy var chevronView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "chevron.bottom")
+        view.contentMode = .scaleAspectFit
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     let getButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.Authorization.Button.title, for: .normal)
         button.addTarget(self, action: #selector(getCode), for: .touchUpInside)
-        button.backgroundColor = UIColor(red: 0.82, green: 0.216, blue: 0.192, alpha: 1.0)
+        button.backgroundColor = .calmGray
         button.isEnabled = false
-        button.alpha = 0.5
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +99,7 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
     }
 
     override func viewWillAppear(_: Bool) {
-        countryCodeButton.setTitle("+7", for: .normal) // TODO:
+        countryCodeButton.setTitle("+7", for: .normal)
     }
 }
 
@@ -136,16 +142,8 @@ extension AuthorizationController {
         authorize()
     }
 
-    @objc func handleTapOnLabel(_ recognizer: UITapGestureRecognizer) {
-        guard let text = aggreementLabel.attributedText?.string else {
-            return
-        }
-
-        if let range = text.range(of: L10n.Authorization.Agreement.Active.title),
-           recognizer.didTapAttributedTextInLabel(label: aggreementLabel, inRange: NSRange(range, in: text))
-        {
-            proceedToAgreementView()
-        }
+    @objc func handleTapOnLabel() {
+        proceedToAgreementView()
     }
 
     func textField(
@@ -167,17 +165,25 @@ extension AuthorizationController {
         maskedDelegate.listener = self
         numberField.delegate = maskedDelegate
         view.backgroundColor = .white
+        navbar.translatesAutoresizingMaskIntoConstraints = false
 
+        view.addSubview(navbar)
         view.addSubview(maintitle)
         view.addSubview(subtitle)
         view.addSubview(numberField)
+        view.addSubview(chevronView)
         view.addSubview(countryCodeButton)
         view.addSubview(aggreementLabel)
         view.addSubview(getButton)
     }
 
     func setupConstraints() {
-        maintitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        navbar.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        navbar.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        maintitle.topAnchor.constraint(equalTo: navbar.bottomAnchor).isActive = true
         maintitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         maintitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
 
@@ -185,9 +191,14 @@ extension AuthorizationController {
         subtitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         subtitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
 
-        numberField.leftAnchor.constraint(equalTo: countryCodeButton.safeAreaLayoutGuide.rightAnchor, constant: 24).isActive = true
+        numberField.leftAnchor.constraint(equalTo: chevronView.rightAnchor, constant: 8).isActive = true
         numberField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         numberField.centerYAnchor.constraint(equalTo: countryCodeButton.titleLabel!.centerYAnchor).isActive = true
+
+        chevronView.leftAnchor.constraint(equalTo: countryCodeButton.rightAnchor).isActive = true
+        chevronView.centerYAnchor.constraint(equalTo: countryCodeButton.centerYAnchor).isActive = true
+        chevronView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        chevronView.widthAnchor.constraint(equalToConstant: 24).isActive = true
 
         countryCodeButton.topAnchor.constraint(equalTo: subtitle.safeAreaLayoutGuide.bottomAnchor, constant: 40).isActive = true
         countryCodeButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true

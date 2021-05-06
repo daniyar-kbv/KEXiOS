@@ -34,7 +34,6 @@
 		46F990DF2E31B43C108404183AF39F30 /* Assets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43214490E665631BDBAA16AC960299A8 /* Assets+Generated.swift */; };
 		9617C33EE7EC0B11879A840A0FCEDD8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33245888AA0FFE7AA10F461052BAC542 /* Assets.xcassets */; };
 		A915305A60D5AF64305222E245140984 /* AuthorizarionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9ECE54EF2CF5B7D9D57EAF770B55B /* AuthorizarionController.swift */; };
-		DBF089E89679465832921500EE839500 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94635D639F2E89EA882CBE1BD6605455 /* AuthorizationView.swift */; };
 		135202002E2C1E10BE430D1F0605796A /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42462CD57C52DD7E9B34B1B89C48FAEE /* Brand.swift */; };
 		71D333BEF1DFEA41A8AB924C24B58EBE /* BrandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DE629519C362DB82ABA57E2B063C2E /* BrandCell.swift */; };
 		DEED4A454AEFC2ED051B2469A2D108A2 /* BrandCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0E7BEE47465FCE319E056A1E4182BD /* BrandCellViewModel.swift */; };
@@ -216,7 +215,6 @@
 		43214490E665631BDBAA16AC960299A8 /* Assets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assets+Generated.swift"; sourceTree = "<group>"; };
 		33245888AA0FFE7AA10F461052BAC542 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DAD9ECE54EF2CF5B7D9D57EAF770B55B /* AuthorizarionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizarionController.swift; sourceTree = "<group>"; };
-		94635D639F2E89EA882CBE1BD6605455 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
 		42462CD57C52DD7E9B34B1B89C48FAEE /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		21DE629519C362DB82ABA57E2B063C2E /* BrandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandCell.swift; sourceTree = "<group>"; };
 		8F0E7BEE47465FCE319E056A1E4182BD /* BrandCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandCellViewModel.swift; sourceTree = "<group>"; };
@@ -910,7 +908,6 @@
 			isa = PBXGroup;
 			children = (
 				DAD9ECE54EF2CF5B7D9D57EAF770B55B /* AuthorizarionController.swift */,
-				94635D639F2E89EA882CBE1BD6605455 /* AuthorizationView.swift */,
 			);
 			path = Authorization;
 			sourceTree = "<group>";
@@ -1463,7 +1460,6 @@
 				9917C9CA8C142731664889CA05B15F12 /* AppDelegate.swift in Sources */,
 				46F990DF2E31B43C108404183AF39F30 /* Assets+Generated.swift in Sources */,
 				A915305A60D5AF64305222E245140984 /* AuthorizarionController.swift in Sources */,
-				DBF089E89679465832921500EE839500 /* AuthorizationView.swift in Sources */,
 				135202002E2C1E10BE430D1F0605796A /* Brand.swift in Sources */,
 				71D333BEF1DFEA41A8AB924C24B58EBE /* BrandCell.swift in Sources */,
 				DEED4A454AEFC2ED051B2469A2D108A2 /* BrandCellViewModel.swift in Sources */,
