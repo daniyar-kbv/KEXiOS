@@ -135,7 +135,7 @@ internal enum L10n {
         }
 
         internal enum Section0 {
-            /// %@ items for %@
+            /// %@ items for %@ ₸
             internal static func title(_ p1: Any, _ p2: Any) -> String {
                 return L10n.tr("Localizable", "Cart.section0.title", String(describing: p1), String(describing: p2))
             }

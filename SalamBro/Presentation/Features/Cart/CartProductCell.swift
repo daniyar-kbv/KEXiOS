@@ -64,7 +64,7 @@ class CartProductCell: UITableViewCell {
         if counter > 0 {
             counter -= 1
             delegate.changeItemCount(id: product!.id, isIncrease: false, isAdditional: false)
-            productPrice.text = "\(counter * product!.price) T"
+            productPrice.text = "\(counter * product!.price) ₸"
             productCountLabel.text = "\(counter)"
         } else {
             delegate.deleteProduct(id: product!.id, isAdditional: false)
@@ -75,7 +75,7 @@ class CartProductCell: UITableViewCell {
         if counter < 999 {
             counter += 1
             delegate.changeItemCount(id: product!.id, isIncrease: true, isAdditional: false)
-            productPrice.text = "\(counter * product!.price) T"
+            productPrice.text = "\(counter * product!.price) ₸"
             productCountLabel.text = "\(counter)"
         }
     }

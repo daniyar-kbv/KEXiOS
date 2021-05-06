@@ -62,7 +62,7 @@
 "MainTab.Cart.Title" = "Cart";
 
 // MARK: - Cart
-"Cart.section0.title" = "%@ items for %@";
+"Cart.section0.title" = "%@ items for %@ ₸";
 "Cart.section1.title" = "Additional products";
 "Cart.emptyCart.description" = "You have no items in cart";
 "Cart.emptyCart.button.title" = "Go to menu";
