@@ -41,7 +41,7 @@ extension ProfileController: ProfileViewDelegate {
 
 extension ProfileController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        2
+        3
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,6 +52,16 @@ extension ProfileController: UITableViewDelegate, UITableViewDataSource {
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
+        switch indexPath.row {
+        case 0:
+            cell.imageView?.image = UIImage(named: "history")
+        case 1:
+            cell.imageView?.image = UIImage(named: "language")
+        case 2:
+            cell.imageView?.image = UIImage(named: "address")
+        default:
+            break
+        }
         return cell
     }
 

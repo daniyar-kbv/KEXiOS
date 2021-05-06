@@ -64,6 +64,13 @@ internal enum L10n {
         }
     }
 
+    internal enum AddressPickCell {
+        /// Change
+        internal static let changeButton = L10n.tr("Localizable", "AddressPickCell.changeButton")
+        /// Deliver to:
+        internal static let deliverLabel = L10n.tr("Localizable", "AddressPickCell.deliverLabel")
+    }
+
     internal enum Agreement {
         internal enum Navigation {
             /// Legal documents
@@ -368,6 +375,8 @@ internal enum L10n {
     internal enum Profile {
         /// Change application language
         internal static let changeLanguage = L10n.tr("Localizable", "Profile.changeLanguage")
+        /// Delivery addresses
+        internal static let deliveryAddress = L10n.tr("Localizable", "Profile.deliveryAddress")
         /// Order history
         internal static let orderHistory = L10n.tr("Localizable", "Profile.orderHistory")
         internal enum EditButton {

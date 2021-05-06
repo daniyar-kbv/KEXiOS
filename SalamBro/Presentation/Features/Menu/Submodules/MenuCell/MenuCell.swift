@@ -39,10 +39,10 @@ public final class MenuCell: UITableViewCell, Reusable {
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .regular)
         button.setTitleColor(.kexRed, for: .normal)
         button.titleLabel?.textAlignment = .left
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = 6
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.kexRed.cgColor
-        button.contentEdgeInsets = UIEdgeInsets(top: 3.5, left: 7, bottom: 3.5, right: 7)
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 11)
         return button
     }()
 

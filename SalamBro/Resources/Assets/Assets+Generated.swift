@@ -26,6 +26,7 @@ internal enum Asset {
     internal static let logo1024 = ImageAsset(name: "Logo1024")
     internal static let searchResult = ImageAsset(name: "SearchResult")
     internal static let ad = ImageAsset(name: "ad")
+    internal static let address = ImageAsset(name: "address")
     internal static let back = ImageAsset(name: "back")
     internal enum Brands {
         internal static let chicken1 = ImageAsset(name: "Chicken1")
@@ -70,7 +71,9 @@ internal enum Asset {
     internal static let documents = ImageAsset(name: "documents")
     internal static let emptyCart = ImageAsset(name: "emptyCart")
     internal static let fastFood = ImageAsset(name: "fastFood")
+    internal static let history = ImageAsset(name: "history")
     internal static let kexLogo = ImageAsset(name: "kexLogo")
+    internal static let language = ImageAsset(name: "language")
     internal enum Languages {
         internal static let english = ImageAsset(name: "english")
         internal static let kazakh = ImageAsset(name: "kazakh")

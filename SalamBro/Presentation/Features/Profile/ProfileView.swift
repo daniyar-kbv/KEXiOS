@@ -41,6 +41,14 @@ class ProfileView: UIView {
         return label
     }()
 
+    lazy var emailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "alibek_777@gmail.com"
+        label.font = .systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     lazy var changeNameLabel: UIButton = {
         let label = UIButton()
         label.setTitle(L10n.Profile.EditButton.title, for: .normal)
@@ -59,6 +67,7 @@ class ProfileView: UIView {
         table.showsVerticalScrollIndicator = false
         table.translatesAutoresizingMaskIntoConstraints = false
         table.bounces = false
+        table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: -24)
         // Top separator
         let px = 0.3 / UIScreen.main.scale
         let frame = CGRect(x: 0, y: 0, width: table.frame.size.width, height: px)
@@ -81,6 +90,8 @@ class ProfileView: UIView {
         return button
     }()
 
+    lazy var separator = SeparatorView()
+
     init(delegate: UITableViewDelegate & UITableViewDataSource & ProfileViewDelegate) {
         self.delegate = delegate
         super.init(frame: .zero)
@@ -99,7 +110,7 @@ class ProfileView: UIView {
 extension ProfileView {
     func setupViews() {
         backgroundColor = .arcticWhite
-        [titleLabel, phoneTitle, nameLabel, changeNameLabel, tableView, logoutButton].forEach { addSubview($0) }
+        [titleLabel, phoneTitle, nameLabel, changeNameLabel, tableView, logoutButton, emailLabel, separator].forEach { addSubview($0) }
     }
 
     func setupConstraints() {
@@ -115,12 +126,20 @@ extension ProfileView {
         nameLabel.topAnchor.constraint(equalTo: phoneTitle.bottomAnchor, constant: 8).isActive = true
         nameLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
 
+        emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
+        emailLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
+
         changeNameLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
         changeNameLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
 
-        tableView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 22).isActive = true
-        tableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        tableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
+        separator.bottomAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+        separator.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
+        separator.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: 0.3).isActive = true
+
+        tableView.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 19).isActive = true
+        tableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: logoutButton.topAnchor, constant: -8).isActive = true
 
         logoutButton.heightAnchor.constraint(equalToConstant: 43).isActive = true

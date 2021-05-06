@@ -89,6 +89,7 @@
 "Profile.orderHistory" = "Order history";
 "Profile.changeLanguage" = "Change application language";
 "Profile.logoutButton.title" = "Logout";
+"Profile.deliveryAddress" = "Delivery addresses";
 
 // MARK: - ChangeName
 "ChangeName.navigationBar.title" = "Change name";
@@ -166,6 +167,10 @@ What should we improve next time?";
 "Menu.categories.drinks" = "Drinks";
 "Menu.categories.sauces" = "Sauces";
 "Menu.categories.other" = "Other";
+
+// MARK: - AddressPickCell
+"AddressPickCell.changeButton" = "Change";
+"AddressPickCell.deliverLabel" = "Deliver to:";
 
 
 // MARK: - MenuDetail

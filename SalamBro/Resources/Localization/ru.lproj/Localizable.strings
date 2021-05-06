@@ -90,6 +90,7 @@
 "Profile.orderHistory" = "История заказов";
 "Profile.changeLanguage" = "Сменить язык приложения";
 "Profile.logoutButton.title" = "Выйти из аккаунта";
+"Profile.deliveryAddress" = "Адреса доставки";
 
 // MARK: - ChangeName
 "ChangeName.navigationBar.title" = "Изменить имя";
@@ -168,6 +169,10 @@
 "Menu.categories.drinks" = "Напитки";
 "Menu.categories.sauces" = "Соусы";
 "Menu.categories.other" = "Другое";
+
+// MARK: - AddressPickCell
+"AddressPickCell.changeButton" = "Изменить";
+"AddressPickCell.deliverLabel" = "Доставим на:";
 
 // MARK: - MenuDetail
 "MenuDetail.proceedButton" = "В корзину за";
