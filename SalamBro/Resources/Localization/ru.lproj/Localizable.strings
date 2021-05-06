@@ -68,7 +68,7 @@
 "Cart.emptyCart.description" = "Вы еще ничего не выбрали";
 "Cart.emptyCart.button.title" = "Перейти в меню";
 "Cart.orderButton.title" = "Оформить заказ на %@";
-
+"Cart.title" = "Корзина";
 // MARK: - CartFooter
 "CartFooter.promocodeButton.title" = "Ввести промокод";
 "CartFooter.productsPrice" = "%@ ₸";

@@ -116,6 +116,8 @@ internal enum L10n {
     }
 
     internal enum Cart {
+        /// Cart
+        internal static let title = L10n.tr("Localizable", "Cart.title")
         internal enum EmptyCart {
             /// You have no items in cart
             internal static let description = L10n.tr("Localizable", "Cart.emptyCart.description")

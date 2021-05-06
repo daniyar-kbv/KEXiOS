@@ -31,7 +31,7 @@ class ChangeLanguageController: UIViewController {
         table.allowsMultipleSelection = false
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.tableFooterView = UIView()
-        table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: -24)
+        table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         table.dataSource = self
         table.delegate = self
         return table

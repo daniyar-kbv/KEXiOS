@@ -67,6 +67,7 @@
 "Cart.emptyCart.description" = "You have no items in cart";
 "Cart.emptyCart.button.title" = "Go to menu";
 "Cart.orderButton.title" = "Place an order for %@ ₸";
+"Cart.title" = "Cart";
 
 // MARK: - CartFooter
 "CartFooter.promocodeButton.title" = "Enter promocode";
