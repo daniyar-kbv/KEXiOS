@@ -29,7 +29,7 @@ class CartController: UIViewController {
         configUI()
         rootView.itemsTableView.reloadData()
         rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
-        rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
+        rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice) + " ₸", for: .normal)
         mainTabDelegate?.setCount(count: cartViewModel.cart.totalProducts)
     }
 }

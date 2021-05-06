@@ -73,6 +73,7 @@ internal enum Asset {
     internal static let emptyCart = ImageAsset(name: "emptyCart")
     internal static let fastFood = ImageAsset(name: "fastFood")
     internal static let history = ImageAsset(name: "history")
+    internal static let ketchup = ImageAsset(name: "ketchup")
     internal static let kexLogo = ImageAsset(name: "kexLogo")
     internal static let language = ImageAsset(name: "language")
     internal enum Languages {
