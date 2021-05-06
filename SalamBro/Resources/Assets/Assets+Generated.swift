@@ -64,12 +64,19 @@ internal enum Asset {
 
     internal static let cart = ImageAsset(name: "cart")
     internal static let chevronBottom = ImageAsset(name: "chevron.bottom")
+    internal static let chevronLeft = ImageAsset(name: "chevron.left")
     internal static let chevronRight = ImageAsset(name: "chevron.right")
     internal static let cola = ImageAsset(name: "cola")
     internal static let documents = ImageAsset(name: "documents")
     internal static let emptyCart = ImageAsset(name: "emptyCart")
     internal static let fastFood = ImageAsset(name: "fastFood")
     internal static let kexLogo = ImageAsset(name: "kexLogo")
+    internal enum Languages {
+        internal static let english = ImageAsset(name: "english")
+        internal static let kazakh = ImageAsset(name: "kazakh")
+        internal static let russian = ImageAsset(name: "russian")
+    }
+
     internal static let location = ImageAsset(name: "location")
     internal static let logo = ImageAsset(name: "logo")
     internal static let marker = ImageAsset(name: "marker")

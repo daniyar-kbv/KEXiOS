@@ -177,3 +177,13 @@ What should we improve next time?";
 "Support.title" = "Support";
 "Support.documents" = "Legal documents";
 "Support.callcenter" = "Сall the call-center";
+
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.title" = "Application Language";
+"ChangeLanguage.kazakh" = "Kazakh";
+"ChangeLanguage.russian" = "Russian";
+"ChangeLanguage.english" = "English";
+
+// MARK: - OrderHistory
+"OrderHistory.title" = "Order history";

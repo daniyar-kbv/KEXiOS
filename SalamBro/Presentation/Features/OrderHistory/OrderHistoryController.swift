@@ -18,20 +18,16 @@ class OrderHistoryController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .white
         button.tintColor = .systemRed
-        button.setImage(UIImage(named: "back"), for: .normal)
+        button.setImage(UIImage(named: "chevron.left"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
-        button.layer.cornerRadius = 22
-        button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
     lazy var titleLabel: UILabel = {
         let view = UILabel()
-        view.text = "История заказов"
+        view.text = L10n.OrderHistory.title
         view.font = .systemFont(ofSize: 18, weight: .semibold)
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -65,17 +61,19 @@ class OrderHistoryController: UIViewController {
     }
 
     func setupConstraints() {
-        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
+        titleLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(backButton.snp.centerY)
+        }
 
-        backButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22).isActive = true
-        backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin).offset(10)
+            $0.left.equalToSuperview().offset(18)
+            $0.height.width.equalTo(24)
+        }
 
         tableView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom)
-
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
             $0.bottom.equalTo(view.snp.bottomMargin).offset(-32)

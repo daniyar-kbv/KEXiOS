@@ -187,6 +187,14 @@ internal enum L10n {
     }
 
     internal enum ChangeLanguage {
+        /// English
+        internal static let english = L10n.tr("Localizable", "ChangeLanguage.english")
+        /// Kazakh
+        internal static let kazakh = L10n.tr("Localizable", "ChangeLanguage.kazakh")
+        /// Russian
+        internal static let russian = L10n.tr("Localizable", "ChangeLanguage.russian")
+        /// Application Language
+        internal static let title = L10n.tr("Localizable", "ChangeLanguage.title")
         internal enum NavigationBar {
             /// Select language
             internal static let title = L10n.tr("Localizable", "ChangeLanguage.navigationBar.title")
@@ -350,6 +358,11 @@ internal enum L10n {
         internal static let commentaryField = L10n.tr("Localizable", "MenuDetail.commentaryField")
         /// Add to cart for
         internal static let proceedButton = L10n.tr("Localizable", "MenuDetail.proceedButton")
+    }
+
+    internal enum OrderHistory {
+        /// Order history
+        internal static let title = L10n.tr("Localizable", "OrderHistory.title")
     }
 
     internal enum Profile {

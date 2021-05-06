@@ -71,7 +71,6 @@
 		0E96D7BC5903E86646AF94C2AD8DDDAA /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F685664DA3F838FCB4DBAA119681CEF1 /* CategoryCell.xib */; };
 		BFD292C07BF79AD7348D22003F211F54 /* CategoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F3B254C6DDBCB881C28052ED834011 /* CategoryCellViewModel.swift */; };
 		86FC0A8C4E303A323E41C1DEFA432C2A /* ChangeLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */; };
-		E4A032B55DCE9DF66A64E46F05937A9D /* ChangeLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEA28DECAB616A0CA79E0231E68440 /* ChangeLanguageView.swift */; };
 		E4E066B4032248830E3B0F8452C2C4F6 /* ChangeNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906133A86D4AF5C94A475D4892939FB8 /* ChangeNameController.swift */; };
 		5520290605FA2A6BF51199D8077E8783 /* ChangeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD53D09D8BB320C553DDBDC20A49B8 /* ChangeNameView.swift */; };
 		B19672E96C8149F312FD01ED7224045B /* CitiesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25165BC9C032E5EB5B8F281DB57E61 /* CitiesListController.swift */; };
@@ -254,7 +253,6 @@
 		F685664DA3F838FCB4DBAA119681CEF1 /* CategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
 		90F3B254C6DDBCB881C28052ED834011 /* CategoryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellViewModel.swift; sourceTree = "<group>"; };
 		B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLanguageController.swift; sourceTree = "<group>"; };
-		B0AEA28DECAB616A0CA79E0231E68440 /* ChangeLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLanguageView.swift; sourceTree = "<group>"; };
 		906133A86D4AF5C94A475D4892939FB8 /* ChangeNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameController.swift; sourceTree = "<group>"; };
 		B1BD53D09D8BB320C553DDBDC20A49B8 /* ChangeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameView.swift; sourceTree = "<group>"; };
 		7B25165BC9C032E5EB5B8F281DB57E61 /* CitiesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListController.swift; sourceTree = "<group>"; };
@@ -853,7 +851,6 @@
 			isa = PBXGroup;
 			children = (
 				B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */,
-				B0AEA28DECAB616A0CA79E0231E68440 /* ChangeLanguageView.swift */,
 			);
 			path = ChangeLanguage;
 			sourceTree = "<group>";
@@ -1500,7 +1497,6 @@
 				C9B2C06C576C1D95EBDA8038C373C76A /* CategoryCell.swift in Sources */,
 				BFD292C07BF79AD7348D22003F211F54 /* CategoryCellViewModel.swift in Sources */,
 				86FC0A8C4E303A323E41C1DEFA432C2A /* ChangeLanguageController.swift in Sources */,
-				E4A032B55DCE9DF66A64E46F05937A9D /* ChangeLanguageView.swift in Sources */,
 				E4E066B4032248830E3B0F8452C2C4F6 /* ChangeNameController.swift in Sources */,
 				5520290605FA2A6BF51199D8077E8783 /* ChangeNameView.swift in Sources */,
 				B19672E96C8149F312FD01ED7224045B /* CitiesListController.swift in Sources */,

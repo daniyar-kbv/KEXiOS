@@ -176,3 +176,12 @@
 "Support.title" = "Помощь";
 "Support.documents" = "Правовые документы";
 "Support.callcenter" = "Позвонить в Call-центр";
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.title" = "Язык приложения";
+"ChangeLanguage.kazakh" = "Русский";
+"ChangeLanguage.russian" = "Казахский";
+"ChangeLanguage.english" = "Английский";
+
+// MARK: - OrderHistory
+"OrderHistory.title" = "История заказов";
