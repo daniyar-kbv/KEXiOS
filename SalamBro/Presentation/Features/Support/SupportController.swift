@@ -111,6 +111,7 @@ extension SupportController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0, indexPath.row == 0 {
+            let vc = AgreementController()
             navigationController?.pushViewController(AgreementController(), animated: true)
         }
     }

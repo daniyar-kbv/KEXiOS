@@ -5,28 +5,53 @@
 //  Created by Arystan on 3/10/21.
 //
 
+import SnapKit
 import UIKit
 import WebKit
+
 class AgreementController: UIViewController {
-    fileprivate lazy var rootView = AgreementView(delegate: self)
+    lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.Agreement.Navigation.title)
+
+    lazy var webView: WKWebView = {
+        let webConfiguration = WKWebViewConfiguration()
+        let webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.uiDelegate = self
+        return webView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configUI()
-    }
-
-    override func loadView() {
-        view = rootView
+        setupViews()
+        setupConstraints()
     }
 }
 
 extension AgreementController {
-    private func configUI() {
-        navigationItem.title = L10n.Agreement.Navigation.title
-        navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.black,
-             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .semibold)]
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    fileprivate func setupViews() {
+        view.backgroundColor = .arcticWhite
+        let myURL = URL(string: "https://www.google.com")
+        let myRequest = URLRequest(url: myURL!)
+        webView.load(myRequest)
+        view.addSubview(webView)
+        view.addSubview(navbar)
+        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+    }
+
+    fileprivate func setupConstraints() {
+        navbar.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(44)
+        }
+
+        webView.snp.makeConstraints {
+            $0.top.equalTo(navbar.snp.bottom).offset(24)
+            $0.left.right.bottom.equalToSuperview()
+        }
+    }
+
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
