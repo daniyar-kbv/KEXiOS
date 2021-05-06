@@ -10,9 +10,15 @@ import RxSwift
 import SnapKit
 import UIKit
 
+public protocol CountriesListControllerDelegate: AnyObject {
+    func didSelectCountry(controller: CountriesListController, country: CountryUI)
+}
+
 public final class CountriesListController: UIViewController {
     private let viewModel: CountriesListViewModelProtocol
     private let disposeBag: DisposeBag
+
+    public weak var delegate: CountriesListControllerDelegate?
 
     private lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.CountriesList.Navigation.title)
 
@@ -145,7 +151,9 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
     }
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelect(index: indexPath.row)
+        let country = viewModel.didSelect(index: indexPath.row)
+        delegate?.didSelectCountry(controller: self,
+                                   country: country)
         let viewModel = CitiesListViewModel(country: self.viewModel.countries[indexPath.row].id,
                                             repository: DIResolver.resolve(GeoRepository.self)!)
         let vc = CitiesListController(viewModel: viewModel)

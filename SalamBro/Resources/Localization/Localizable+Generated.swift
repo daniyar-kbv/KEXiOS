@@ -544,6 +544,21 @@ internal enum L10n {
             }
         }
     }
+
+    internal enum SelectMainInfo {
+        /// Address
+        internal static let address = L10n.tr("Localizable", "select_main_info.address")
+        /// Brand
+        internal static let brand = L10n.tr("Localizable", "select_main_info.brand")
+        /// City
+        internal static let city = L10n.tr("Localizable", "select_main_info.city")
+        /// Country
+        internal static let country = L10n.tr("Localizable", "select_main_info.country")
+        /// Наличие или отсутствие того или иного бренда - зависит от Вашего\nадреса доставки
+        internal static let description = L10n.tr("Localizable", "select_main_info.description")
+        /// Delivery address
+        internal static let title = L10n.tr("Localizable", "select_main_info.title")
+    }
 }
 
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

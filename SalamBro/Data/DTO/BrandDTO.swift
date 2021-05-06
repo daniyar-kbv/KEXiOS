@@ -20,7 +20,8 @@ public extension BrandDTO {
               priority: priority)
     }
 
-    init(from domain: Brand) {
+    init?(from domain: Brand?) {
+        guard let domain = domain else { return nil }
         id = domain.id
         name = domain.name
         priority = domain.priority

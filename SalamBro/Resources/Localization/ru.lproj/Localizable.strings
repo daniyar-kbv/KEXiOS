@@ -207,3 +207,12 @@
 "Rating.sum" = "СУММА";
 "Rating.participate" = "Участвовать";
 "Rating.information" = "Инфомация";
+
+// MARK: - Select Main Info
+"select_main_info.country" = "Страна";
+"select_main_info.city" = "Город";
+"select_main_info.address" = "Адрес";
+"select_main_info.brand" = "Бренд";
+"select_main_info.title" = "Адрес доставки";
+"select_main_info.description" = "Наличие или отсутствие того или иного бренда - зависит от Вашего
+адреса доставки";

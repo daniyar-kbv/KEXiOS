@@ -15,7 +15,7 @@ public protocol CountriesListViewModelProtocol: ViewModel {
     var isAnimating: BehaviorRelay<Bool> { get }
     var updateTableView: BehaviorRelay<Void?> { get }
     func update()
-    func didSelect(index: Int)
+    func didSelect(index: Int) -> CountryUI
 }
 
 public final class CountriesListViewModel: CountriesListViewModelProtocol {
@@ -28,8 +28,10 @@ public final class CountriesListViewModel: CountriesListViewModelProtocol {
         download()
     }
 
-    public func didSelect(index: Int) {
-        repository.currentCountry = countries[index].toDomain()
+    public func didSelect(index: Int) -> CountryUI {
+        let country = countries[index]
+        repository.currentCountry = country.toDomain()
+        return country
     }
 
     private func download() {

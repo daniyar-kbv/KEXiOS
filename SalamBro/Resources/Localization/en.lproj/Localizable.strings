@@ -206,3 +206,12 @@ What should we improve next time?";
 "Rating.sum" = "SUM";
 "Rating.participate" = "Participate";
 "Rating.information" = "Information";
+
+// MARK: - Select Main Info
+"select_main_info.country" = "Country";
+"select_main_info.city" = "City";
+"select_main_info.address" = "Address";
+"select_main_info.brand" = "Brand";
+"select_main_info.title" = "Delivery address";
+"select_main_info.description" = "Наличие или отсутствие того или иного бренда - зависит от Вашего
+адреса доставки ";

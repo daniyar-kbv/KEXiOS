@@ -15,6 +15,7 @@ public protocol CitiesListViewModelProtocol: ViewModel {
     var isAnimating: BehaviorRelay<Bool> { get }
     var updateTableView: BehaviorRelay<Void?> { get }
     func update()
+    func didSelect(index: Int) -> String
 }
 
 public final class CitiesListViewModel: CitiesListViewModelProtocol {
@@ -26,6 +27,12 @@ public final class CitiesListViewModel: CitiesListViewModelProtocol {
 
     public func update() {
         download()
+    }
+
+    public func didSelect(index: Int) -> String {
+        let city = cities[index]
+        repository.currentCity = city
+        return city
     }
 
     private func download() {

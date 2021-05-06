@@ -35,7 +35,13 @@ public final class MenuController: UIViewController {
         return view
     }()
 
-    private lazy var brandSelectView = UIView()
+    private lazy var brandSelectView: UIView = {
+        let view = UIView()
+        let gestureRecognizer = UITapGestureRecognizer(target: self,
+                                                       action: #selector(changeBrands))
+        view.addGestureRecognizer(gestureRecognizer)
+        return view
+    }()
 
     private lazy var itemTableView: UITableView = {
         let view = UITableView()
@@ -94,6 +100,10 @@ public final class MenuController: UIViewController {
         viewModel.isAnimating
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
+
+        viewModel.brandName
+            .bind(to: brandLabel.rx.text)
+            .disposed(by: disposeBag)
     }
 
     private func setup() {
@@ -141,6 +151,19 @@ public final class MenuController: UIViewController {
     @objc
     private func update() {
         viewModel.update()
+    }
+
+    @objc
+    private func changeBrands() {
+        let viewModel = SelectMainInformationViewModel(geoRepository: DIResolver.resolve(GeoRepository.self)!, brandRepository: DIResolver.resolve(BrandRepository.self)!)
+        let vc = SelectMainInformationViewController(viewModel: viewModel)
+        present(vc, animated: true)
+    }
+}
+
+extension MenuController: BrandsControllerDelegate {
+    public func didSelectBrand(controller _: BrandsController, brand: BrandUI) {
+        viewModel.brandName.accept(brand.name)
     }
 }
 

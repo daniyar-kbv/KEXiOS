@@ -15,15 +15,31 @@ public protocol MenuViewModelProtocol: AnyObject {
     var cellViewModels: [[ViewModel]] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
     var isAnimating: BehaviorRelay<Bool> { get }
+    var brandName: BehaviorRelay<String?> { get }
     func update()
 }
 
 public final class MenuViewModel: MenuViewModelProtocol {
     private let menuRepository: MenuRepository
+    private let brandRepository: BrandRepository
     public var headerViewModels: [ViewModel?]
     public var cellViewModels: [[ViewModel]]
     public var updateTableView: BehaviorRelay<Void?>
     public var isAnimating: BehaviorRelay<Bool>
+    public var brandName: BehaviorRelay<String?>
+
+    init(menuRepository: MenuRepository,
+         brandRepository: BrandRepository)
+    {
+        cellViewModels = []
+        headerViewModels = []
+        updateTableView = .init(value: nil)
+        isAnimating = .init(value: false)
+        self.menuRepository = menuRepository
+        self.brandRepository = brandRepository
+        brandName = .init(value: brandRepository.brand?.name)
+        download()
+    }
 
     public func update() {
         download()
@@ -57,14 +73,5 @@ public final class MenuViewModel: MenuViewModelProtocol {
             self.updateTableView.accept(())
             self.isAnimating.accept(false)
         }
-    }
-
-    init(menuRepository: MenuRepository) {
-        cellViewModels = []
-        headerViewModels = []
-        updateTableView = .init(value: nil)
-        isAnimating = .init(value: false)
-        self.menuRepository = menuRepository
-        download()
     }
 }

@@ -13,6 +13,7 @@ target 'SalamBro' do
   pod 'SnapKit'
   pod 'Reusable'
   pod 'Cache'
+  pod 'DropDown'
 
   # Pods for SalamBro
   pod 'InputMask'

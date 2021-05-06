@@ -2,6 +2,7 @@ PODS:
   - Alamofire (5.4.3)
   - Cache (6.0.0)
   - Cosmos (21.0.0)
+  - DropDown (2.3.13)
   - InputMask (6.1.0)
   - PromiseKit (6.13.1):
     - PromiseKit/CorePromise (= 6.13.1)
@@ -37,6 +38,7 @@ DEPENDENCIES:
   - Alamofire
   - Cache
   - Cosmos
+  - DropDown
   - InputMask
   - PromiseKit
   - Reusable
@@ -53,6 +55,7 @@ SPEC REPOS:
     - Alamofire
     - Cache
     - Cosmos
+    - DropDown
     - InputMask
     - PromiseKit
     - Reusable
@@ -70,6 +73,7 @@ SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
   Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   InputMask: 71d291dc54d2deaeac6512afb6ec2304228c0bb7
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
@@ -83,6 +87,6 @@ SPEC CHECKSUMS:
   YandexMapKitSearch: b46ddd1c80e2e35d006cdfc4ab88070a50cebeda
   YandexRuntime: 2d55244d06267106cf9b00c25a1e63f72a73b6fd
 
-PODFILE CHECKSUM: 3af7c36ec73871fc3ea0bc38821dbdf04b32ea8c
+PODFILE CHECKSUM: e1a40e6c3216f6cd723566105ac634ad0cc46d27
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

@@ -41,6 +41,7 @@
 		47F69C11C5470EA570BE6E93BA4D5234 /* BrandProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89375DD8D85E41009E2E3529C7BD6BDB /* BrandProvider.swift */; };
 		8C89E3262E8A7AB69E262392A309B5F0 /* BrandRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885DA76CDEEBE6E961A22C02F820B150 /* BrandRepository.swift */; };
 		7600A2486E59AE598FEEA06B217E6844 /* BrandRepositoryImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF868E483CF49DBCD126242D28EA00D /* BrandRepositoryImplementation.swift */; };
+		29E4821595144564D771AFD98194F74E /* BrandStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14065DB27BD126CA11873A25301E93B9 /* BrandStorage.swift */; };
 		35F42176B9CB32F151A832C11F7BF099 /* BrandUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2E45EE3A118575D56EAF3068EDCDBE /* BrandUI.swift */; };
 		6727A4AA44CED6239221DE4401C7E05D /* BrandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E443827D843D4CFE5D709A96B3E7E4 /* BrandViewModel.swift */; };
 		D81D86AFE50D2382A0C1AA9757114A02 /* BrandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513C0A393A13F75FF2DE285047A8B4F0 /* BrandsController.swift */; };
@@ -94,6 +95,7 @@
 		BA3986EBAA957489BB7A86DF3B233D5B /* DownloadMenuDetailItemResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19742C64B17125D06E84C7CD6F76F4C /* DownloadMenuDetailItemResponse.swift */; };
 		C14BC8ED85C2EF44AFC41B61D38568BE /* DownloadMenuItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2090F304B8C9172B4EE964E580055340 /* DownloadMenuItems.swift */; };
 		9D77CD188A0C63A0770B3FDD67A3F7E2 /* DownloadMenuResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16780CBBF4F09F5AFD2415FC10614C9A /* DownloadMenuResponse.swift */; };
+		675F9DB343D809C8708E407215325F04 /* DropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BAE7C98BCB42839F474B17AD6DFE1A /* DropDownTextField.swift */; };
 		478411ABCDDE53A12C0A7B2560943BC1 /* DummyDataDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9282583306D4405BF3AF0ABAAB4431C2 /* DummyDataDTO.swift */; };
 		4E6054A4E9F642C0406E6FFD6504E70F /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637DF3DFF8D4BDA978EE891BE0369F5F /* Food.swift */; };
 		F7B1CAD04CDBC2064171A2221F3C820E /* FoodDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC207C21E8DECAACB676C1065CD196 /* FoodDTO.swift */; };
@@ -149,6 +151,8 @@
 		164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */; };
 		6382A29270DC95FE20964786BA382045 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */; };
 		825FC113C253F87745C6F961C47C9DAF /* SalamBroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B2A30C6F7592F9FD9C8743F0474722 /* SalamBroUITests.swift */; };
+		A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */; };
+		5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */; };
 		B02D897C5EDE03C822AEE074C3564A42 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */; };
 		1F46DD5C2E968C972E578A066C125F8E /* ShareOrderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D2E0A8BCB565935BCEC645CC08C32 /* ShareOrderController.swift */; };
 		6F501A6C66166DBF41F343BC3ACE1BD2 /* ShareOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E420D58AA312E46BCD13F06339F8B0 /* ShareOrderView.swift */; };
@@ -224,6 +228,7 @@
 		89375DD8D85E41009E2E3529C7BD6BDB /* BrandProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandProvider.swift; sourceTree = "<group>"; };
 		885DA76CDEEBE6E961A22C02F820B150 /* BrandRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandRepository.swift; sourceTree = "<group>"; };
 		3AF868E483CF49DBCD126242D28EA00D /* BrandRepositoryImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandRepositoryImplementation.swift; sourceTree = "<group>"; };
+		14065DB27BD126CA11873A25301E93B9 /* BrandStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandStorage.swift; sourceTree = "<group>"; };
 		FD2E45EE3A118575D56EAF3068EDCDBE /* BrandUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandUI.swift; sourceTree = "<group>"; };
 		E0E443827D843D4CFE5D709A96B3E7E4 /* BrandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandViewModel.swift; sourceTree = "<group>"; };
 		513C0A393A13F75FF2DE285047A8B4F0 /* BrandsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsController.swift; sourceTree = "<group>"; };
@@ -277,6 +282,7 @@
 		B19742C64B17125D06E84C7CD6F76F4C /* DownloadMenuDetailItemResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadMenuDetailItemResponse.swift; sourceTree = "<group>"; };
 		2090F304B8C9172B4EE964E580055340 /* DownloadMenuItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadMenuItems.swift; sourceTree = "<group>"; };
 		16780CBBF4F09F5AFD2415FC10614C9A /* DownloadMenuResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadMenuResponse.swift; sourceTree = "<group>"; };
+		56BAE7C98BCB42839F474B17AD6DFE1A /* DropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTextField.swift; sourceTree = "<group>"; };
 		9282583306D4405BF3AF0ABAAB4431C2 /* DummyDataDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyDataDTO.swift; sourceTree = "<group>"; };
 		637DF3DFF8D4BDA978EE891BE0369F5F /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		58AC207C21E8DECAACB676C1065CD196 /* FoodDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodDTO.swift; sourceTree = "<group>"; };
@@ -343,6 +349,8 @@
 		8BFF09AAA95688451AD0A7F94154E2B1 /* SalamBroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalamBroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42B2A30C6F7592F9FD9C8743F0474722 /* SalamBroUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalamBroUITests.swift; sourceTree = "<group>"; };
 		37E5A59F4E859046E802C46121F892EE /* SalamBroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalamBroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationViewController.swift; sourceTree = "<group>"; };
+		E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationViewModel.swift; sourceTree = "<group>"; };
 		CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		263D2E0A8BCB565935BCEC645CC08C32 /* ShareOrderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOrderController.swift; sourceTree = "<group>"; };
 		30E420D58AA312E46BCD13F06339F8B0 /* ShareOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOrderView.swift; sourceTree = "<group>"; };
@@ -577,6 +585,7 @@
 		33A5022711A93013634F09CA3D0A4165 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				14065DB27BD126CA11873A25301E93B9 /* BrandStorage.swift */,
 				9BFEB3CF7DD3F89352073E78D5CA4237 /* GeoStorage.swift */,
 				850F205CC495DCB2845E88E88CCFE9C8 /* Storage.swift */,
 			);
@@ -686,6 +695,7 @@
 				ADAB19D3E3411B093570797EDBC8AD4A /* Profile */,
 				3514A0ED8067D94E56F9A4E0764ED522 /* RateOrder */,
 				CEA5D6A068880C63142AE2ABBBB54648 /* Rating */,
+				E10130B54A9EC2E434FD8501CA35EC13 /* SelectMainInformation */,
 				C784ED3E9F108E0374C1D8FE1036352C /* ShareOrder */,
 				BFE504AA65D986F68D0C208E3052531A /* StagLayout */,
 				13AE80E6E86EBBEBA54DCDD57FE7CC76 /* Support */,
@@ -1082,6 +1092,16 @@
 				ABE8F0C0656ADF5E6D0788F28A90266A /* CountriesListViewModel.swift */,
 			);
 			path = CountriesList;
+			sourceTree = "<group>";
+		};
+		E10130B54A9EC2E434FD8501CA35EC13 /* SelectMainInformation */ = {
+			isa = PBXGroup;
+			children = (
+				56BAE7C98BCB42839F474B17AD6DFE1A /* DropDownTextField.swift */,
+				D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */,
+				E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */,
+			);
+			path = SelectMainInformation;
 			sourceTree = "<group>";
 		};
 		E74AC5C717ACAC51533B04D19DDA5096 /* AddressPick */ = {
@@ -1481,6 +1501,7 @@
 				47F69C11C5470EA570BE6E93BA4D5234 /* BrandProvider.swift in Sources */,
 				8C89E3262E8A7AB69E262392A309B5F0 /* BrandRepository.swift in Sources */,
 				7600A2486E59AE598FEEA06B217E6844 /* BrandRepositoryImplementation.swift in Sources */,
+				29E4821595144564D771AFD98194F74E /* BrandStorage.swift in Sources */,
 				35F42176B9CB32F151A832C11F7BF099 /* BrandUI.swift in Sources */,
 				6727A4AA44CED6239221DE4401C7E05D /* BrandViewModel.swift in Sources */,
 				D81D86AFE50D2382A0C1AA9757114A02 /* BrandsController.swift in Sources */,
@@ -1530,6 +1551,7 @@
 				BA3986EBAA957489BB7A86DF3B233D5B /* DownloadMenuDetailItemResponse.swift in Sources */,
 				C14BC8ED85C2EF44AFC41B61D38568BE /* DownloadMenuItems.swift in Sources */,
 				9D77CD188A0C63A0770B3FDD67A3F7E2 /* DownloadMenuResponse.swift in Sources */,
+				675F9DB343D809C8708E407215325F04 /* DropDownTextField.swift in Sources */,
 				478411ABCDDE53A12C0A7B2560943BC1 /* DummyDataDTO.swift in Sources */,
 				4E6054A4E9F642C0406E6FFD6504E70F /* Food.swift in Sources */,
 				F7B1CAD04CDBC2064171A2221F3C820E /* FoodDTO.swift in Sources */,
@@ -1575,6 +1597,8 @@
 				63DF66EFC9CE86EA55106CC54910C009 /* RatingController.swift in Sources */,
 				C7D144869475F0B1D989BA3BE88943F7 /* RatioDTO.swift in Sources */,
 				14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */,
+				A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */,
+				5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */,
 				B02D897C5EDE03C822AEE074C3564A42 /* SeparatorView.swift in Sources */,
 				1F46DD5C2E968C972E578A066C125F8E /* ShareOrderController.swift in Sources */,
 				6F501A6C66166DBF41F343BC3ACE1BD2 /* ShareOrderView.swift in Sources */,

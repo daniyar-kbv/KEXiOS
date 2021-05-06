@@ -11,9 +11,15 @@ import RxSwift
 import SnapKit
 import UIKit
 
+public protocol BrandsControllerDelegate: AnyObject {
+    func didSelectBrand(controller: BrandsController, brand: BrandUI)
+}
+
 public final class BrandsController: UIViewController {
     private let viewModel: BrandViewModelProtocol
     private let disposeBag: DisposeBag
+
+    public weak var delegate: BrandsControllerDelegate?
 
     private lazy var refreshControl: UIRefreshControl = {
         let action = UIRefreshControl()
@@ -100,14 +106,27 @@ public final class BrandsController: UIViewController {
     }
 
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        // TODO:
+        if presentingViewController == nil {
+            navigationController?.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
     }
 }
 
 extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate {
-    public func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
-        let vc = MapViewController()
-        navigationController?.pushViewController(vc, animated: true)
+    public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // TODO:
+        let brand = viewModel.didSelect(index: indexPath.row)
+        delegate?.didSelectBrand(controller: self,
+                                 brand: brand)
+        if presentingViewController == nil {
+            let vc = MapViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            dismiss(animated: true)
+        }
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {

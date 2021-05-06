@@ -10,9 +10,15 @@ import RxSwift
 import SnapKit
 import UIKit
 
+public protocol CitiesListControllerDelegate: AnyObject {
+    func didSelect(controller: CitiesListController, city: String?)
+}
+
 public final class CitiesListController: UIViewController {
     private let viewModel: CitiesListViewModelProtocol
     private let disposeBag: DisposeBag
+
+    public weak var delegate: CitiesListControllerDelegate?
 
     private lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.CitiesList.Navigation.title)
 
@@ -122,8 +128,14 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 
-    public func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
-        let vc = BrandsController(viewModel: BrandViewModel(repository: DIResolver.resolve(BrandRepository.self)!)) // TODO:
-        navigationController?.pushViewController(vc, animated: true)
+    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let city = viewModel.didSelect(index: indexPath.row)
+        delegate?.didSelect(controller: self, city: city)
+        if presentingViewController == nil {
+            let vc = BrandsController(viewModel: BrandViewModel(repository: DIResolver.resolve(BrandRepository.self)!)) // TODO:
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            dismiss(animated: true)
+        }
     }
 }
