@@ -73,7 +73,7 @@ class CartView: UIView {
 
     func updateTableViewFooterUI(cart: Cart) {
         tableViewFooter.productsLabel.text = L10n.CartFooter.productsCount(cart.totalProducts)
-        tableViewFooter.productsPriceLabel.text = L10n.CartFooter.productsPrice(cart.totalPrice)
+        tableViewFooter.productsPriceLabel.text = L10n.CartFooter.productsPrice(cart.totalPrice) + " ₸"
     }
 }
 
