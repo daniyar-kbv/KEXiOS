@@ -459,6 +459,15 @@ internal enum L10n {
         }
     }
 
+    internal enum Support {
+        /// Сall the call-center
+        internal static let callcenter = L10n.tr("Localizable", "Support.callcenter")
+        /// Legal documents
+        internal static let documents = L10n.tr("Localizable", "Support.documents")
+        /// Support
+        internal static let title = L10n.tr("Localizable", "Support.title")
+    }
+
     internal enum Update {
         internal enum Button {
             /// Update app

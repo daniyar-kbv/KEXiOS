@@ -172,3 +172,8 @@ What should we improve next time?";
 "MenuDetail.additionalItemLabel" = "Choose drink";
 "MenuDetail.commentaryField" = "Commentary to dish";
 "MenuDetail.chooseAdditionalItemButton" = "Change";
+
+// MARK: - Support
+"Support.title" = "Support";
+"Support.documents" = "Legal documents";
+"Support.callcenter" = "Сall the call-center";

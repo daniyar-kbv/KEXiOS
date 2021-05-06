@@ -171,3 +171,8 @@
 "MenuDetail.additionalItemLabel" = "Выберите напиток";
 "MenuDetail.commentaryField" = "Комментарий к блюду";
 "MenuDetail.chooseAdditionalItemButton" = "Изменить";
+
+// MARK: - Support
+"Support.title" = "Помощь";
+"Support.documents" = "Правовые документы";
+"Support.callcenter" = "Позвонить в Call-центр";

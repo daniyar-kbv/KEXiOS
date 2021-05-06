@@ -60,7 +60,7 @@ class ProfileView: UIView {
         table.translatesAutoresizingMaskIntoConstraints = false
         table.bounces = false
         // Top separator
-        let px = 1 / UIScreen.main.scale
+        let px = 0.3 / UIScreen.main.scale
         let frame = CGRect(x: 0, y: 0, width: table.frame.size.width, height: px)
         let line = UIView(frame: frame)
         table.tableHeaderView = line

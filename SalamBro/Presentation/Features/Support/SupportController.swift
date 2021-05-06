@@ -11,16 +11,12 @@ import UIKit
 class SupportController: UIViewController {
     lazy var titleLabel: UILabel = {
         let view = UILabel()
-        view.text = "Помощь"
+        view.text = L10n.Support.title
         view.font = .systemFont(ofSize: 18, weight: .semibold)
         return view
     }()
 
-    lazy var separator: UIView = {
-        let view = UIView()
-        view.backgroundColor = .mildBlue
-        return view
-    }()
+    lazy var separator = SeparatorView()
 
     lazy var tableView: UITableView = {
         let view = UITableView()
@@ -46,8 +42,9 @@ class SupportController: UIViewController {
 
     lazy var callButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Позвонить в Call-центр", for: .normal)
+        button.setTitle(L10n.Support.callcenter, for: .normal)
         button.setTitleColor(.kexRed, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.addTarget(self, action: #selector(call), for: .touchUpInside)
         button.borderWidth = 1
         button.borderColor = .kexRed
@@ -62,16 +59,6 @@ class SupportController: UIViewController {
         setupViews()
         setupConstraints()
     }
-
-//    override public func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: animated)
-//    }
-//
-//    override public func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        navigationController?.setNavigationBarHidden(false, animated: animated)
-//    }
 
     func setupViews() {
         ["insta", "tiktok", "mail", "vk"].forEach { logoStack.addArrangedSubview(UIImageView(image: UIImage(named: $0))) }
@@ -88,7 +75,7 @@ class SupportController: UIViewController {
             $0.top.equalTo(titleLabel.snp.bottom).offset(34)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
-            $0.height.equalTo(1)
+            $0.height.equalTo(0.3)
         }
 
         tableView.snp.makeConstraints {
@@ -118,6 +105,10 @@ class SupportController: UIViewController {
 }
 
 extension SupportController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return 50
+    }
+
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0, indexPath.row == 0 {
             navigationController?.pushViewController(AgreementController(), animated: true)
@@ -132,7 +123,8 @@ extension SupportController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0, indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
             cell.selectionStyle = .none
-            cell.textLabel?.text = L10n.Agreement.Navigation.title
+            cell.textLabel?.text = L10n.Support.documents
+            cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
             cell.imageView?.image = UIImage(named: "documents")
             return cell
         }

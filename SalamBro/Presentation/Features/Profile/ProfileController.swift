@@ -57,7 +57,8 @@ extension ProfileController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            navigationController?.pushViewController(OrderHistoryController(), animated: true)
+            let vc = OrderHistoryController()
+            navigationController?.pushViewController(vc, animated: true)
         } else {
             navigationController?.pushViewController(ChangeLanguageController(), animated: true)
         }
