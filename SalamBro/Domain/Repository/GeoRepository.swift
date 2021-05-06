@@ -13,6 +13,8 @@ public protocol GeoRepository: AnyObject {
     var currentCity: String? { get set }
     var countries: [Country] { get }
     var cities: [String] { get }
+    var addresses: [Address]? { get set }
+    var currentAddress: Address? { get set }
     func downloadCountries() -> Promise<[Country]>
     func downloadCities(country id: Int) -> Promise<[String]>
 }

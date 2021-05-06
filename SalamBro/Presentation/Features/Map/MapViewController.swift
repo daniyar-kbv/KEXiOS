@@ -15,6 +15,7 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
     var searchSession: YMKSearchSession?
+    private let geoRepository = DIResolver.resolve(GeoRepository.self)!
 
     var mapView: YMKMapView = {
         let view = YMKMapView()
@@ -152,7 +153,7 @@ class MapViewController: UIViewController {
 
         mapView.mapWindow.map.move(
             with: YMKCameraPosition(target: targetLocation, zoom: ZOOM, azimuth: 0, tilt: 0),
-            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 5),
+            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 0),
             cameraCallback: nil
         )
         mapView.mapWindow.map.addCameraListener(with: self)
@@ -203,8 +204,7 @@ class MapViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             if self.userLocation != nil {
                 self.mapView.mapWindow.map.move(
-                    with: YMKCameraPosition(target: self.userLocation!, zoom: ZOOM, azimuth: 0, tilt: 0),
-                    animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 1),
+                    with: YMKCameraPosition(target: self.userLocation!, zoom: ZOOM, azimuth: 0, tilt: 0), animationType: .init(type: .linear, duration: 0),
                     cameraCallback: nil
                 )
             }
@@ -275,7 +275,9 @@ extension MapViewController {
                 // MARK: - checking if object is KindHome type
 
 //                if objMetadata.address.components.count >= 5 {
-                addressSheetVC.changeAddress(address: response.collection.children[0].obj!.name!)
+                addressSheetVC.changeAddress(address: objMetadata.address.formattedAddress,
+                                             longitude: objMetadata.balloonPoint.longitude,
+                                             latitude: objMetadata.balloonPoint.latitude)
                 print("searchResponse done")
                 return
 //                }
@@ -325,9 +327,8 @@ extension MapViewController: MapDelegate {
         addressSheetVC.changeComment(comment: text)
     }
 
-    func reverseGeocoding(searchQuery: String, title: String) {
+    func reverseGeocoding(searchQuery: String, title _: String) {
         print("passData Started")
-        addressSheetVC.changeAddress(address: title)
         let responseHandler = { (searchResponse: YMKSearchResponse?, _: Error?) -> Void in
             if let response = searchResponse {
                 for searchResult in response.collection.children {
@@ -337,12 +338,16 @@ extension MapViewController: MapDelegate {
                             continue
                         }
 
+                        self.addressSheetVC.changeAddress(address: objMetadata.address.formattedAddress,
+                                                          longitude: objMetadata.balloonPoint.longitude,
+                                                          latitude: objMetadata.balloonPoint.latitude)
+
                         // MARK: - checking if object is KindHome type
 
 //                        if objMetadata.address.components.count >= 5 {
                         self.mapView.mapWindow.map.move(
                             with: YMKCameraPosition(target: YMKPoint(latitude: objMetadata.balloonPoint.latitude, longitude: objMetadata.balloonPoint.longitude), zoom: ZOOM, azimuth: 0, tilt: 0),
-                            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 3),
+                            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 1),
                             cameraCallback: nil
                         )
                         print("passData from mapdelegate is done")

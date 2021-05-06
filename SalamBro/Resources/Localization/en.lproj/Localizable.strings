@@ -215,3 +215,8 @@ What should we improve next time?";
 "select_main_info.title" = "Delivery address";
 "select_main_info.description" = "Наличие или отсутствие того или иного бренда - зависит от Вашего
 адреса доставки ";
+"select_main_info.save" = "Save";
+
+// MARK: Address Picker
+"address_picker.add" = "Добавить новый адрес";
+"address_picker.title" = "Адрес доставки";

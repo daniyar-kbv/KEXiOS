@@ -12,6 +12,8 @@ public protocol GeoStorage: AnyObject {
     var currentCity: String? { get set }
     var countries: [CountryDTO]? { get set }
     var cities: [String]? { get set }
+    var addresses: [AddressDTO]? { get set }
+    var currentAddress: AddressDTO? { get set }
 }
 
 extension Storage: GeoStorage {
@@ -20,6 +22,8 @@ extension Storage: GeoStorage {
         case currentCity
         case countries
         case cities
+        case addresses
+        case currentAddress
     }
 
     public var currentCountry: CountryDTO? {
@@ -40,5 +44,15 @@ extension Storage: GeoStorage {
     public var cities: [String]? {
         get { get(key: Keys.cities.rawValue) }
         set { save(key: Keys.cities.rawValue, object: newValue) }
+    }
+
+    public var addresses: [AddressDTO]? {
+        get { get(key: Keys.addresses.rawValue) }
+        set { save(key: Keys.addresses.rawValue, object: newValue) }
+    }
+
+    public var currentAddress: AddressDTO? {
+        get { get(key: Keys.currentAddress.rawValue) }
+        set { save(key: Keys.currentAddress.rawValue, object: newValue) }
     }
 }

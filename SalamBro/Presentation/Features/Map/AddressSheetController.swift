@@ -17,6 +17,8 @@ class AddressSheetController: UIViewController {
     var suggestVC: SuggestController?
     var yCoordinate: CGFloat?
     var delegate: MapDelegate?
+    private var address: Address?
+    private let geoRepository = DIResolver.resolve(GeoRepository.self)!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,13 +63,20 @@ class AddressSheetController: UIViewController {
     }
 
     @IBAction func proceedAction(_: UIButton) {
+        if let address = address {
+            geoRepository.addresses?.append(address)
+            geoRepository.currentAddress = address
+        }
         navigationController?.pushViewController(MainTabController(), animated: true)
     }
 }
 
 extension AddressSheetController {
-    func changeAddress(address: String) {
+    func changeAddress(address: String, longitude: Double, latitude: Double) {
         addressField.text = "\(address)"
+        self.address = .init(name: address,
+                             longitude: longitude,
+                             latitude: latitude)
         if address != "" {
             proceedButton.backgroundColor = .kexRed
             proceedButton.isEnabled = true

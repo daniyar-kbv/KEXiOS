@@ -176,8 +176,10 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
             vc.modalPresentationStyle = .pageSheet
             present(vc, animated: true, completion: nil)
         case let viewModel as AddressPickCellViewModel:
-            let vc = AddressPickController()
+            let viewModel = AddressPickerViewModel(repository: DIResolver.resolve(GeoRepository.self)!)
+            let vc = AddressPickController(viewModel: viewModel)
             vc.modalPresentationStyle = .pageSheet
+            vc.delegate = self
             present(vc, animated: true, completion: nil)
         case let viewModel as AdCollectionCellViewModel:
             navigationController?.pushViewController(RatingController(), animated: true)
@@ -241,5 +243,11 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
 extension MenuController: AddCollectionCellDelegate {
     public func goToRating() {
         navigationController?.pushViewController(RatingController(), animated: true)
+    }
+}
+
+extension MenuController: AddressPickControllerDelegate {
+    public func didSelect(controller _: AddressPickController, address _: Address) {
+        viewModel.update()
     }
 }

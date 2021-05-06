@@ -545,6 +545,13 @@ internal enum L10n {
         }
     }
 
+    internal enum AddressPicker {
+        /// Добавить новый адрес
+        internal static let add = L10n.tr("Localizable", "address_picker.add")
+        /// Адрес доставки
+        internal static let title = L10n.tr("Localizable", "address_picker.title")
+    }
+
     internal enum SelectMainInfo {
         /// Address
         internal static let address = L10n.tr("Localizable", "select_main_info.address")
@@ -556,6 +563,8 @@ internal enum L10n {
         internal static let country = L10n.tr("Localizable", "select_main_info.country")
         /// Наличие или отсутствие того или иного бренда - зависит от Вашего\nадреса доставки
         internal static let description = L10n.tr("Localizable", "select_main_info.description")
+        /// Save
+        internal static let save = L10n.tr("Localizable", "select_main_info.save")
         /// Delivery address
         internal static let title = L10n.tr("Localizable", "select_main_info.title")
     }

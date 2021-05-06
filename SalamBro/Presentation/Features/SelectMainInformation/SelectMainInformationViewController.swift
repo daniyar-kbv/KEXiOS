@@ -48,15 +48,40 @@ public final class SelectMainInformationViewController: UIViewController {
         return view
     }()
 
+    private lazy var addressTextField: DropDownTextField = {
+        let view = DropDownTextField(options: nil)
+        view.selectionAction = { [weak self] in
+            let viewModel = AddressPickerViewModel(repository: DIResolver.resolve(GeoRepository.self)!)
+            let vc = AddressPickController(viewModel: viewModel)
+            vc.delegate = self
+            self?.present(vc, animated: true)
+        }
+        view.delegate = self
+        view.placeholderText = L10n.SelectMainInfo.address
+        return view
+    }()
+
     private lazy var stackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [
             countryTextField,
             citiesTextField,
+            addressTextField,
             brandsTextField,
         ])
         view.axis = .vertical
         view.spacing = 16
         return view
+    }()
+
+    private lazy var saveButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .kexRed
+        button.layer.cornerRadius = 10
+        button.setTitle(L10n.SelectMainInfo.save, for: .normal)
+        button.addTarget(self, action: #selector(back), for: .touchUpInside)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .regular)
+        return button
     }()
 
     public init(viewModel: SelectMainInformationViewModelProtocol) {
@@ -82,6 +107,10 @@ public final class SelectMainInformationViewController: UIViewController {
         viewModel.brandName.bind { [unowned self] in
             self.brandsTextField.currentValue = $0
         }.disposed(by: disposeBag)
+
+        viewModel.address.bind { [unowned self] in
+            self.addressTextField.currentValue = $0
+        }.disposed(by: disposeBag)
     }
 
     private func setup() {
@@ -91,7 +120,7 @@ public final class SelectMainInformationViewController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [navbar, stackView].forEach { view.addSubview($0) }
+        [navbar, stackView, saveButton].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
@@ -105,6 +134,13 @@ public final class SelectMainInformationViewController: UIViewController {
             $0.top.equalTo(navbar.snp.bottom).offset(24)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
+        }
+
+        saveButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.snp.bottomMargin).offset(-16)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.height.equalTo(43)
         }
     }
 
@@ -130,5 +166,11 @@ extension SelectMainInformationViewController: DropDownTextFieldDelegate {
         default:
             break
         }
+    }
+}
+
+extension SelectMainInformationViewController: AddressPickControllerDelegate {
+    public func didSelect(controller _: AddressPickController, address: Address) {
+        viewModel.didChange(address: address)
     }
 }

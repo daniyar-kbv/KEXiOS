@@ -22,6 +22,7 @@ public protocol MenuViewModelProtocol: AnyObject {
 public final class MenuViewModel: MenuViewModelProtocol {
     private let menuRepository: MenuRepository
     private let brandRepository: BrandRepository
+    private let geoRepository: GeoRepository
     public var headerViewModels: [ViewModel?]
     public var cellViewModels: [[ViewModel]]
     public var updateTableView: BehaviorRelay<Void?>
@@ -29,7 +30,8 @@ public final class MenuViewModel: MenuViewModelProtocol {
     public var brandName: BehaviorRelay<String?>
 
     init(menuRepository: MenuRepository,
-         brandRepository: BrandRepository)
+         brandRepository: BrandRepository,
+         geoRepository: GeoRepository)
     {
         cellViewModels = []
         headerViewModels = []
@@ -37,6 +39,7 @@ public final class MenuViewModel: MenuViewModelProtocol {
         isAnimating = .init(value: false)
         self.menuRepository = menuRepository
         self.brandRepository = brandRepository
+        self.geoRepository = geoRepository
         brandName = .init(value: brandRepository.brand?.name)
         download()
     }
@@ -46,7 +49,11 @@ public final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func download() {
+        guard !isAnimating.value else { return }
         isAnimating.accept(true)
+        cellViewModels = []
+        headerViewModels = []
+        updateTableView.accept(())
         firstly {
             self.menuRepository.downloadMenuCategories()
         }.done {
@@ -58,7 +65,7 @@ public final class MenuViewModel: MenuViewModelProtocol {
             self.menuRepository.downloadMenuAds()
         }.done {
             self.cellViewModels.append([
-                AddressPickCellViewModel(),
+                AddressPickCellViewModel(address: self.geoRepository.currentAddress),
                 AdCollectionCellViewModel(ads: $0.map { AdUI(from: $0) }),
             ])
         }.then {

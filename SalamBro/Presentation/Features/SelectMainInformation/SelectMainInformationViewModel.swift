@@ -13,12 +13,14 @@ public protocol SelectMainInformationViewModelProtocol: AnyObject {
     var countryName: BehaviorRelay<String?> { get }
     var cityName: BehaviorRelay<String?> { get }
     var brandName: BehaviorRelay<String?> { get }
+    var address: BehaviorRelay<String?> { get }
     var countries: [String] { get }
     var cities: [String] { get }
     var brands: [String] { get }
     func didChange(city: String)
     func didChange(country index: Int)
     func didChange(brand: BrandUI)
+    func didChange(address: Address)
 }
 
 public final class SelectMainInformationViewModel: SelectMainInformationViewModelProtocol {
@@ -28,6 +30,7 @@ public final class SelectMainInformationViewModel: SelectMainInformationViewMode
     public var countryName: BehaviorRelay<String?>
     public var cityName: BehaviorRelay<String?>
     public var brandName: BehaviorRelay<String?>
+    public var address: BehaviorRelay<String?>
     public var countries: [String]
     public var cities: [String]
     public var brands: [String]
@@ -48,6 +51,11 @@ public final class SelectMainInformationViewModel: SelectMainInformationViewMode
         brandName.accept(brand.name)
     }
 
+    public func didChange(address: Address) {
+        geoRepository.currentAddress = address
+        self.address.accept(address.name)
+    }
+
     public init(geoRepository: GeoRepository,
                 brandRepository: BrandRepository)
     {
@@ -59,5 +67,6 @@ public final class SelectMainInformationViewModel: SelectMainInformationViewMode
         countries = geoRepository.countries.map { $0.name }
         cities = geoRepository.cities
         brands = brandRepository.brands.map { $0.name }
+        address = .init(value: geoRepository.currentAddress?.name)
     }
 }

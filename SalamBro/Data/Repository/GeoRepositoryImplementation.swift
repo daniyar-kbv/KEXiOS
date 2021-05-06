@@ -29,6 +29,16 @@ public final class GeoRepositoryImplementation: GeoRepository {
         set { storage.currentCity = newValue }
     }
 
+    public var addresses: [Address]? {
+        get { storage.addresses?.map { $0.toDomain() } ?? [] }
+        set { storage.addresses = newValue?.compactMap { AddressDTO(from: $0) }.uniqued() }
+    }
+
+    public var currentAddress: Address? {
+        get { storage.currentAddress?.toDomain() }
+        set { storage.currentAddress = AddressDTO(from: newValue) }
+    }
+
     public var countries: [Country] { storage.countries?.map { $0.toDomain() } ?? [] }
     public var cities: [String] { storage.cities ?? [] }
 

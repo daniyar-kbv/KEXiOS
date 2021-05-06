@@ -18,7 +18,8 @@ class MainTabController: UITabBarController {
 
     lazy var menu: MenuController = {
         let viewModel = MenuViewModel(menuRepository: DIResolver.resolve(MenuRepository.self)!,
-                                      brandRepository: DIResolver.resolve(BrandRepository.self)!)
+                                      brandRepository: DIResolver.resolve(BrandRepository.self)!,
+                                      geoRepository: DIResolver.resolve(GeoRepository.self)!)
         let vc = MenuController(viewModel: viewModel)
         vc.tabBarItem.title = L10n.MainTab.Menu.title
         vc.tabBarItem.image = Asset.menu.image

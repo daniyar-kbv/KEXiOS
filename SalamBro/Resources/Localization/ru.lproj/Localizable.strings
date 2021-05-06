@@ -214,5 +214,9 @@
 "select_main_info.address" = "Адрес";
 "select_main_info.brand" = "Бренд";
 "select_main_info.title" = "Адрес доставки";
-"select_main_info.description" = "Наличие или отсутствие того или иного бренда - зависит от Вашего
-адреса доставки";
+"select_main_info.description" = "Наличие или отсутствие того или иного бренда - зависит от Вашего адреса доставки";
+"select_main_info.save" = "Сохранить";
+
+// MARK: Address Picker
+"address_picker.add" = "Добавить новый адрес";
+"address_picker.title" = "Адрес доставки";

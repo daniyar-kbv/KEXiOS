@@ -13,6 +13,7 @@ import UIKit
 public final class AddressPickCell: UITableViewCell, NibReusable {
     @IBOutlet var changeButton: UIButton!
     @IBOutlet var deliverTitleLabel: UILabel!
+    @IBOutlet var addressLabel: UILabel!
 
     private var viewModel: AddressPickCellViewModelProtocol! {
         didSet { bind() }
@@ -42,5 +43,9 @@ public final class AddressPickCell: UITableViewCell, NibReusable {
         self.viewModel = viewModel
     }
 
-    private func bind() {}
+    private func bind() {
+        viewModel.address
+            .bind(to: addressLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
 }
