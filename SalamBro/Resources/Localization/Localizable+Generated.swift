@@ -221,7 +221,7 @@ internal enum L10n {
         }
 
         internal enum NavigationBar {
-            /// Change name
+            /// Change
             internal static let title = L10n.tr("Localizable", "ChangeName.navigationBar.title")
         }
 
@@ -475,6 +475,25 @@ internal enum L10n {
             /// Send
             internal static let title = L10n.tr("Localizable", "RateOrder.submitButton.title")
         }
+    }
+
+    internal enum Rating {
+        /// Information
+        internal static let information = L10n.tr("Localizable", "Rating.information")
+        /// General
+        internal static let overall = L10n.tr("Localizable", "Rating.overall")
+        /// Participate
+        internal static let participate = L10n.tr("Localizable", "Rating.participate")
+        /// PLACE
+        internal static let place = L10n.tr("Localizable", "Rating.place")
+        /// SUM
+        internal static let sum = L10n.tr("Localizable", "Rating.sum")
+        /// Ratings
+        internal static let title = L10n.tr("Localizable", "Rating.title")
+        /// USER
+        internal static let user = L10n.tr("Localizable", "Rating.user")
+        /// Weekly
+        internal static let weekly = L10n.tr("Localizable", "Rating.weekly")
     }
 
     internal enum Suggest {

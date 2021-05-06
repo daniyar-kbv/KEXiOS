@@ -156,6 +156,8 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
             let vc = AddressPickController()
             vc.modalPresentationStyle = .pageSheet
             present(vc, animated: true, completion: nil)
+        case let viewModel as AdCollectionCellViewModel:
+            navigationController?.pushViewController(RatingController(), animated: true)
         default:
             print("other")
         }
@@ -200,6 +202,7 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AdCollectionCell.self)
             cell.selectionStyle = .none
             cell.set(viewModel)
+            cell.delegate = self
             return cell
         case let viewModel as MenuCellViewModelProtocol:
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: MenuCell.self)
@@ -209,5 +212,11 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
         default:
             return .init()
         }
+    }
+}
+
+extension MenuController: AddCollectionCellDelegate {
+    public func goToRating() {
+        navigationController?.pushViewController(RatingController(), animated: true)
     }
 }

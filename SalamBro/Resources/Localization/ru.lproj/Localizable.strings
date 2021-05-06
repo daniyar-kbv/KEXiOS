@@ -94,7 +94,7 @@
 "Profile.deliveryAddress" = "Адреса доставки";
 
 // MARK: - ChangeName
-"ChangeName.navigationBar.title" = "Изменить имя";
+"ChangeName.navigationBar.title" = "Изменить";
 "ChangeName.nameField.placeholder" = "введите имя";
 "ChangeName.saveButton.title" = "Сохранить";
 "ChangeName.nameLabel" = "Имя";
@@ -197,3 +197,13 @@
 
 // MARK: - OrderHistory
 "OrderHistory.title" = "История заказов";
+
+// MARK: - Rating
+"Rating.title" = "Рейтинги";
+"Rating.overall" = "Общий";
+"Rating.weekly" = "За неделю";
+"Rating.place" = "МЕСТО";
+"Rating.user" = "ПОЛЬЗОВАТЕЛЬ";
+"Rating.sum" = "СУММА";
+"Rating.participate" = "Участвовать";
+"Rating.information" = "Инфомация";

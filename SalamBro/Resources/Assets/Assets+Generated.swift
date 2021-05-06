@@ -72,7 +72,9 @@ internal enum Asset {
     internal static let documents = ImageAsset(name: "documents")
     internal static let emptyCart = ImageAsset(name: "emptyCart")
     internal static let fastFood = ImageAsset(name: "fastFood")
+    internal static let firstPlace = ImageAsset(name: "firstPlace")
     internal static let history = ImageAsset(name: "history")
+    internal static let info = ImageAsset(name: "info")
     internal static let ketchup = ImageAsset(name: "ketchup")
     internal static let kexLogo = ImageAsset(name: "kexLogo")
     internal static let language = ImageAsset(name: "language")
@@ -88,6 +90,7 @@ internal enum Asset {
     internal static let menu = ImageAsset(name: "menu")
     internal static let profile = ImageAsset(name: "profile")
     internal static let search = ImageAsset(name: "search")
+    internal static let secondPlace = ImageAsset(name: "secondPlace")
     internal static let shareToInstagram = ImageAsset(name: "shareToInstagram")
     internal static let starEmpty = ImageAsset(name: "star.empty")
     internal static let starFilled = ImageAsset(name: "star.filled")
@@ -99,6 +102,7 @@ internal enum Asset {
     }
 
     internal static let support = ImageAsset(name: "support")
+    internal static let thirdPlace = ImageAsset(name: "thirdPlace")
 }
 
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

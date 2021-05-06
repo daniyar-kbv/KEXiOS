@@ -7,26 +7,23 @@
 
 import UIKit
 
-class RatingItemCell: UICollectionViewCell {
-
-    @IBOutlet weak var cellView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
-        
+class RateItemCell: UICollectionViewCell {
+    @IBOutlet var cellView: UIView!
+    @IBOutlet var titleLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
+
     func bindData(text: String) {
         titleLabel.text = text
     }
-    
-    func toggleSelected ()
-    {
-        if (isSelected){
+
+    func toggleSelected() {
+        if isSelected {
             cellView.backgroundColor = .kexRed
             titleLabel.textColor = .arcticWhite
-        }else {
+        } else {
             cellView.backgroundColor = .arcticWhite
             titleLabel.textColor = .kexRed
         }

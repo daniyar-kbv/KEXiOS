@@ -93,7 +93,7 @@
 "Profile.deliveryAddress" = "Delivery addresses";
 
 // MARK: - ChangeName
-"ChangeName.navigationBar.title" = "Change name";
+"ChangeName.navigationBar.title" = "Change";
 "ChangeName.nameField.placeholder" = "insert name";
 "ChangeName.saveButton.title" = "Save";
 "ChangeName.nameLabel" = "Name";
@@ -196,3 +196,13 @@ What should we improve next time?";
 
 // MARK: - OrderHistory
 "OrderHistory.title" = "Order history";
+
+// MARK: - Rating
+"Rating.title" = "Ratings";
+"Rating.overall" = "General";
+"Rating.weekly" = "Weekly";
+"Rating.place" = "PLACE";
+"Rating.user" = "USER";
+"Rating.sum" = "SUM";
+"Rating.participate" = "Participate";
+"Rating.information" = "Information";

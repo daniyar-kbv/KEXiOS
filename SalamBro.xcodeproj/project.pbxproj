@@ -85,6 +85,7 @@
 		F0D0B18F3DC10A511979BF3402DEF606 /* CountryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05D6012ED51BE498D15390B73B21085 /* CountryDTO.swift */; };
 		801372CAE290046CCF1F73E1D02A7A34 /* CountryUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BE128CAC3E2EC2AD3B77CFB2AF2F0B /* CountryUI.swift */; };
 		5AE68312D2243610D73C32575AD1C14B /* CustomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CB97DD7F73E33F63C77A02067E813A /* CustomNavigationBarView.swift */; };
+		E95A37069C2F7A6F6AE30B44D9509E82 /* CustomSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963541475F483ED939FA8CD9C71E8855 /* CustomSegment.swift */; };
 		C0D715EB3522001368FA454E5A8BC64D /* DIResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA62232AE7AE7B47A63EF65C389A973 /* DIResolver.swift */; };
 		47CF0DEDEF170736EBD6FAB8111A1A45 /* DownloadBrandsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F3A877AC95906EA4D41A9E1BB03A13 /* DownloadBrandsResponse.swift */; };
 		1F87D7808130083644F93BE774E62209 /* DownloadCitiesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79645258495036B406F8AB135A5665E /* DownloadCitiesResponse.swift */; };
@@ -139,8 +140,10 @@
 		DDB97E999180D5DF89B4C40E50D70EA3 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A56E17FF10703C24CC4172E0F01609 /* ProfileView.swift */; };
 		A26DAD8BD3AE115B3711AFA885725699 /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */; };
 		C53C4DDB0C305025A6F252C490347231 /* RateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B024823DA276215DE019CC233F211E2C /* RateController.xib */; };
-		43902A217DE3BD9A8194AFF90928B7DC /* RatingItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198F1F63BEE93FE8928C1822E124FB5D /* RatingItemCell.swift */; };
-		BE4EA1B911B2935E34C0F82BF9520125 /* RatingItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AB7B21F85EF8699D75CC310ECE8824D /* RatingItemCell.xib */; };
+		F5BD4046B597F112547C5320F4898774 /* RateItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */; };
+		705A3188A9E050961D6A7EB65C63278E /* RateItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E52B0649F2E590371E5C5E5A88064AE /* RateItemCell.xib */; };
+		60B654CFA78535C5C47844F489215806 /* RatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D907407B02F778FF81888E372DE8D8 /* RatingCell.swift */; };
+		63DF66EFC9CE86EA55106CC54910C009 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */; };
 		C7D144869475F0B1D989BA3BE88943F7 /* RatioDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B14A0696DDBA1767A46E3E9946E03A3 /* RatioDTO.swift */; };
 		14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */; };
 		164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */; };
@@ -265,6 +268,7 @@
 		A05D6012ED51BE498D15390B73B21085 /* CountryDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryDTO.swift; sourceTree = "<group>"; };
 		31BE128CAC3E2EC2AD3B77CFB2AF2F0B /* CountryUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryUI.swift; sourceTree = "<group>"; };
 		12CB97DD7F73E33F63C77A02067E813A /* CustomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBarView.swift; sourceTree = "<group>"; };
+		963541475F483ED939FA8CD9C71E8855 /* CustomSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegment.swift; sourceTree = "<group>"; };
 		FFA62232AE7AE7B47A63EF65C389A973 /* DIResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIResolver.swift; sourceTree = "<group>"; };
 		F2F3A877AC95906EA4D41A9E1BB03A13 /* DownloadBrandsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadBrandsResponse.swift; sourceTree = "<group>"; };
 		B79645258495036B406F8AB135A5665E /* DownloadCitiesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCitiesResponse.swift; sourceTree = "<group>"; };
@@ -327,8 +331,10 @@
 		D8A56E17FF10703C24CC4172E0F01609 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
 		B024823DA276215DE019CC233F211E2C /* RateController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RateController.xib; sourceTree = "<group>"; };
-		198F1F63BEE93FE8928C1822E124FB5D /* RatingItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingItemCell.swift; sourceTree = "<group>"; };
-		5AB7B21F85EF8699D75CC310ECE8824D /* RatingItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RatingItemCell.xib; sourceTree = "<group>"; };
+		EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateItemCell.swift; sourceTree = "<group>"; };
+		4E52B0649F2E590371E5C5E5A88064AE /* RateItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RateItemCell.xib; sourceTree = "<group>"; };
+		81D907407B02F778FF81888E372DE8D8 /* RatingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingCell.swift; sourceTree = "<group>"; };
+		E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RatingController.swift; path = ../../../../../DetailView/DetailView/Rating/RatingController.swift; sourceTree = "<group>"; };
 		4B14A0696DDBA1767A46E3E9946E03A3 /* RatioDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatioDTO.swift; sourceTree = "<group>"; };
 		D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtension.swift; sourceTree = "<group>"; };
 		A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
@@ -598,8 +604,8 @@
 			children = (
 				EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */,
 				B024823DA276215DE019CC233F211E2C /* RateController.xib */,
-				198F1F63BEE93FE8928C1822E124FB5D /* RatingItemCell.swift */,
-				5AB7B21F85EF8699D75CC310ECE8824D /* RatingItemCell.xib */,
+				EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */,
+				4E52B0649F2E590371E5C5E5A88064AE /* RateItemCell.xib */,
 				774846F1F181F3043DE14327D51E4080 /* UICollectionViewCenterLayout.swift */,
 			);
 			path = RateOrder;
@@ -679,6 +685,7 @@
 				7FFF4378B5DD89D3B1B951BEF401C379 /* OrderHistory */,
 				ADAB19D3E3411B093570797EDBC8AD4A /* Profile */,
 				3514A0ED8067D94E56F9A4E0764ED522 /* RateOrder */,
+				CEA5D6A068880C63142AE2ABBBB54648 /* Rating */,
 				C784ED3E9F108E0374C1D8FE1036352C /* ShareOrder */,
 				BFE504AA65D986F68D0C208E3052531A /* StagLayout */,
 				13AE80E6E86EBBEBA54DCDD57FE7CC76 /* Support */,
@@ -1112,6 +1119,16 @@
 			path = CountryCodeCell;
 			sourceTree = "<group>";
 		};
+		CEA5D6A068880C63142AE2ABBBB54648 /* Rating */ = {
+			isa = PBXGroup;
+			children = (
+				963541475F483ED939FA8CD9C71E8855 /* CustomSegment.swift */,
+				81D907407B02F778FF81888E372DE8D8 /* RatingCell.swift */,
+				E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */,
+			);
+			path = Rating;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1244,7 +1261,7 @@
 				05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */,
 				49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */,
 				C53C4DDB0C305025A6F252C490347231 /* RateController.xib in Resources */,
-				BE4EA1B911B2935E34C0F82BF9520125 /* RatingItemCell.xib in Resources */,
+				705A3188A9E050961D6A7EB65C63278E /* RateItemCell.xib in Resources */,
 				164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */,
 				9873D738F2FF122AB37ACE9981CD027B /* SuggestCell.xib in Resources */,
 				03E6561668E5D06B6FBDA66F21751F25 /* SuggestController.xib in Resources */,
@@ -1504,6 +1521,7 @@
 				F0D0B18F3DC10A511979BF3402DEF606 /* CountryDTO.swift in Sources */,
 				801372CAE290046CCF1F73E1D02A7A34 /* CountryUI.swift in Sources */,
 				5AE68312D2243610D73C32575AD1C14B /* CustomNavigationBarView.swift in Sources */,
+				E95A37069C2F7A6F6AE30B44D9509E82 /* CustomSegment.swift in Sources */,
 				C0D715EB3522001368FA454E5A8BC64D /* DIResolver.swift in Sources */,
 				47CF0DEDEF170736EBD6FAB8111A1A45 /* DownloadBrandsResponse.swift in Sources */,
 				1F87D7808130083644F93BE774E62209 /* DownloadCitiesResponse.swift in Sources */,
@@ -1552,7 +1570,9 @@
 				DDDA6D913F65119481671703D67E0D78 /* ProfileController.swift in Sources */,
 				DDB97E999180D5DF89B4C40E50D70EA3 /* ProfileView.swift in Sources */,
 				A26DAD8BD3AE115B3711AFA885725699 /* RateController.swift in Sources */,
-				43902A217DE3BD9A8194AFF90928B7DC /* RatingItemCell.swift in Sources */,
+				F5BD4046B597F112547C5320F4898774 /* RateItemCell.swift in Sources */,
+				60B654CFA78535C5C47844F489215806 /* RatingCell.swift in Sources */,
+				63DF66EFC9CE86EA55106CC54910C009 /* RatingController.swift in Sources */,
 				C7D144869475F0B1D989BA3BE88943F7 /* RatioDTO.swift in Sources */,
 				14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */,
 				B02D897C5EDE03C822AEE074C3564A42 /* SeparatorView.swift in Sources */,

@@ -51,7 +51,7 @@ class RateController: UIViewController {
         layout.scrollDirection = .vertical
 
         collectionView.collectionViewLayout = layout
-        collectionView.register(UINib(nibName: "RatingItemCell", bundle: nil), forCellWithReuseIdentifier: "RatingItemCell")
+        collectionView.register(UINib(nibName: "RateItemCell", bundle: nil), forCellWithReuseIdentifier: "RateItemCell")
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.allowsMultipleSelection = true
@@ -104,18 +104,18 @@ extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlow
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: RatingItemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "RatingItemCell", for: indexPath) as! RatingItemCell
+        let cell: RateItemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "RateItemCell", for: indexPath) as! RateItemCell
         cell.titleLabel.text = data[indexPath.row]
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! RatingItemCell
+        let cell = collectionView.cellForItem(at: indexPath) as! RateItemCell
         cell.toggleSelected()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! RatingItemCell
+        let cell = collectionView.cellForItem(at: indexPath) as! RateItemCell
         cell.toggleSelected()
     }
 }
