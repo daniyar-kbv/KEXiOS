@@ -137,7 +137,7 @@ extension ProfileView {
         separator.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 0.3).isActive = true
 
-        tableView.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 19).isActive = true
+        tableView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 22).isActive = true
         tableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: logoutButton.topAnchor, constant: -8).isActive = true

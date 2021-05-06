@@ -57,6 +57,8 @@ class MainTabController: UITabBarController {
 extension MainTabController {
     func configureUI() {
         view.tintColor = .kexRed
+        tabBar.barTintColor = .white
+
         navigationItem.setHidesBackButton(true, animated: true)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }

@@ -129,12 +129,12 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 selectionIndexPath = indexPath
                 let cell = tableView.cellForRow(at: selectionIndexPath!)
-                cell?.accessoryType = .checkmark
+                cell?.accessoryView = checkmark
             }
         } else {
             selectionIndexPath = indexPath
             let cell = tableView.cellForRow(at: selectionIndexPath!)
-            cell?.accessoryType = .checkmark
+            cell?.accessoryView = checkmark
         }
     }
 

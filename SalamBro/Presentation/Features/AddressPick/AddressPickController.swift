@@ -31,7 +31,7 @@ extension AddressPickController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             cell.textLabel?.text = "Алматы, мкр. Орбита 1, 41"
             cell.tintColor = .kexRed
-            cell.accessoryType = .checkmark
+            cell.accessoryView = checkmark
         } else {
             cell.textLabel?.text = "Алматы, мкр. Орбита 2, 28"
             cell.tintColor = .mildBlue
