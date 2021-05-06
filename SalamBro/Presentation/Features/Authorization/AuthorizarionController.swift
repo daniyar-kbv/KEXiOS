@@ -166,7 +166,7 @@ extension AuthorizationController {
         numberField.delegate = maskedDelegate
         view.backgroundColor = .white
         navbar.translatesAutoresizingMaskIntoConstraints = false
-
+        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         view.addSubview(navbar)
         view.addSubview(maintitle)
         view.addSubview(subtitle)
@@ -212,5 +212,9 @@ extension AuthorizationController {
         getButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
         getButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
         getButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
+    }
+
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
