@@ -73,10 +73,10 @@ class AddressSheetController: UIViewController {
 
 extension AddressSheetController {
     func changeAddress(address: String, longitude: Double, latitude: Double) {
-        addressField.text = "\(address)"
         self.address = .init(name: address,
                              longitude: longitude,
                              latitude: latitude)
+        addressField.text = "\(address)"
         if address != "" {
             proceedButton.backgroundColor = .kexRed
             proceedButton.isEnabled = true

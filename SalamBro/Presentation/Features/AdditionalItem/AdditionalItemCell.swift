@@ -52,9 +52,9 @@ class AdditionalItemCell: UICollectionViewCell {
     }
 
     func setupConstraints() {
-        itemImageView.widthAnchor.constraint(equalToConstant: 160).isActive = true
-        itemImageView.heightAnchor.constraint(equalToConstant: 155).isActive = true
         itemImageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        itemImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        itemImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         itemImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
 
         itemTitleLabel.topAnchor.constraint(equalTo: itemImageView.bottomAnchor, constant: 8).isActive = true

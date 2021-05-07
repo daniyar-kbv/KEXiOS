@@ -46,6 +46,7 @@ class ProfileController: UIViewController {
         let label = UIButton()
         label.setTitle(L10n.Profile.EditButton.title, for: .normal)
         label.setTitleColor(.kexRed, for: .normal)
+        label.titleLabel?.font = .systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         let tap = UITapGestureRecognizer(target: self, action: #selector(changeName))
         label.isUserInteractionEnabled = true
@@ -169,9 +170,12 @@ extension ProfileController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             let vc = OrderHistoryController()
+            tabBarController?.hidesBottomBarWhenPushed = false
             navigationController?.pushViewController(vc, animated: true)
-        } else {
+        } else if indexPath.row == 1 {
             navigationController?.pushViewController(ChangeLanguageController(), animated: true)
+        } else {
+            navigationController?.pushViewController(AddressListController(), animated: true)
         }
     }
 }

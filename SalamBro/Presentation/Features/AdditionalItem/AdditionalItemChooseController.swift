@@ -30,18 +30,19 @@ class AdditionalItemChooseController: UIViewController {
     }()
 
     lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.estimatedItemSize = CGSize(width: 160, height: 195)
-
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.delegate = self
-        view.dataSource = self
-        view.register(AdditionalItemCell.self, forCellWithReuseIdentifier: "AdditionalItemCell")
-        view.showsVerticalScrollIndicator = false
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: .init()
+        )
+        collectionView.register(AdditionalItemCell.self, forCellWithReuseIdentifier: "AdditionalItemCell")
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.collectionViewLayout = StagLayout(widthHeightRatios: [(0.5, 0.6), (0.5, 0.6)], itemSpacing: 8)
+        return collectionView
     }()
 
     override func viewDidLoad() {
@@ -70,7 +71,7 @@ class AdditionalItemChooseController: UIViewController {
         collectionView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 24).isActive = true
         collectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         collectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
     @objc func backButtonTapped(_: UIButton!) {
@@ -79,6 +80,14 @@ class AdditionalItemChooseController: UIViewController {
 }
 
 extension AdditionalItemChooseController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let height = view.frame.size.height
+//        let width = view.frame.size.width
+//        // in case you you want the cell to be 40% of your controllers view
+//        return CGSize(width: width * 0.45, height: width * 0.45)
+//    }
+
     func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
         dismiss(animated: true, completion: nil)
     }

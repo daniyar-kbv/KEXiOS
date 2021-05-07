@@ -26,6 +26,7 @@ internal enum Asset {
     internal static let logo1024 = ImageAsset(name: "Logo1024")
     internal static let searchResult = ImageAsset(name: "SearchResult")
     internal static let ad = ImageAsset(name: "ad")
+    internal static let add = ImageAsset(name: "add")
     internal static let address = ImageAsset(name: "address")
     internal static let back = ImageAsset(name: "back")
     internal enum Brands {
@@ -103,6 +104,7 @@ internal enum Asset {
 
     internal static let support = ImageAsset(name: "support")
     internal static let thirdPlace = ImageAsset(name: "thirdPlace")
+    internal static let trash = ImageAsset(name: "trash")
 }
 
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

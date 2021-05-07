@@ -33,6 +33,8 @@ class SuggestController: UIViewController {
         tableView.delegate = self
         tableView.register(UINib(nibName: "SuggestCell", bundle: nil), forCellReuseIdentifier: "SuggestCell")
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .onDrag
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -76,8 +78,7 @@ class SuggestController: UIViewController {
                 self.onSuggestError(error!)
             }
         }
-        let locValue: CLLocationCoordinate2D = locationManager.location!.coordinate
-        let point = YMKPoint(latitude: locValue.latitude, longitude: locValue.longitude)
+        let point = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
         suggestSession.suggest(
             withText: sender.text!,
             window: YMKBoundingBox(southWest: point, northEast: point),

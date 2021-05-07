@@ -27,6 +27,7 @@ class MenuDetailController: UIViewController {
     lazy var itemTitleLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
+        view.text = "Чизбургер куриный"
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -34,6 +35,7 @@ class MenuDetailController: UIViewController {
     lazy var descriptionLabel: UILabel = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 12)
+        view.text = "Чизбургер куриный"
         return view
     }()
 
@@ -85,7 +87,7 @@ class MenuDetailController: UIViewController {
     lazy var proceedButton: UIButton = {
         let view = UIButton()
         view.backgroundColor = .systemRed
-        view.setTitle("Add to cart", for: .normal)
+        view.setTitle("В корзину за 1 490 ₸", for: .normal)
         view.setTitleColor(.white, for: .normal)
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
@@ -124,8 +126,8 @@ class MenuDetailController: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+//        bind()
         setup()
-        bind()
     }
 
     override public func viewWillAppear(_ animated: Bool) {
@@ -138,17 +140,17 @@ class MenuDetailController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
-    private func bind() {
-        viewModel.itemTitle
-            .bind(to: itemTitleLabel.rx.text)
-            .disposed(by: disposeBag)
-        viewModel.itemDescription
-            .bind(to: descriptionLabel.rx.text)
-            .disposed(by: disposeBag)
-        viewModel.itemPrice
-            .bind(to: proceedButton.rx.title())
-            .disposed(by: disposeBag)
-    }
+//    private func bind() {
+//        viewModel.itemTitle
+//            .bind(to: itemTitleLabel.rx.text)
+//            .disposed(by: disposeBag)
+//        viewModel.itemDescription
+//            .bind(to: descriptionLabel.rx.text)
+//            .disposed(by: disposeBag)
+//        viewModel.itemPrice
+//            .bind(to: proceedButton.rx.title())
+//            .disposed(by: disposeBag)
+//    }
 
     private func setup() {
         setupViews()

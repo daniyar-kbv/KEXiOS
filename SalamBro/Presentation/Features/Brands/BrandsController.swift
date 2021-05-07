@@ -97,7 +97,7 @@ public final class BrandsController: UIViewController {
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
             $0.top.equalTo(navbar.snp.bottom).offset(8)
-            $0.bottom.equalTo(view.snp.bottomMargin)
+            $0.bottom.equalTo(view.snp.bottom)
         }
     }
 
