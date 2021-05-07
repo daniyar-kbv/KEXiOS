@@ -153,10 +153,10 @@ extension AuthorizationController {
     ) {
         if complete {
             getButton.isEnabled = true
-            getButton.alpha = 1.0
+            getButton.backgroundColor = .kexRed
         } else {
             getButton.isEnabled = false
-            getButton.alpha = 0.5
+            getButton.backgroundColor = .calmGray
         }
         print(value)
     }

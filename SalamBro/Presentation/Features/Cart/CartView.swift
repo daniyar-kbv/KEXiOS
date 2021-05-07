@@ -96,7 +96,7 @@ extension CartView {
         navbar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
         navbar.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor).isActive = true
         navbar.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor).isActive = true
-        navbar.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        navbar.heightAnchor.constraint(equalToConstant: 44).isActive = true
 
         orderButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor).isActive = true
         orderButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 24).isActive = true
@@ -108,7 +108,7 @@ extension CartView {
         footerView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
         footerView.heightAnchor.constraint(equalToConstant: 75).isActive = true
 
-        itemsTableView.topAnchor.constraint(equalTo: navbar.bottomAnchor, constant: 16).isActive = true
+        itemsTableView.topAnchor.constraint(equalTo: navbar.bottomAnchor).isActive = true
         itemsTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor).isActive = true
         itemsTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor).isActive = true
         itemsTableView.bottomAnchor.constraint(equalTo: footerView.topAnchor).isActive = true
