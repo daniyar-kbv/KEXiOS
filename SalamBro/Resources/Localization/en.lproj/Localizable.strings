@@ -220,7 +220,8 @@ delivery addresses";
 
 // MARK: Address Picker
 "address_picker.add" = "Add a new delivery address";
-"address_picker.title" = "Delivery address";
+"address_picker.titleOne" = "Delivery address";
+"address_picker.titleMany" = "Delivery addresses";
 
 //MARK: ShareOrder
 "ShareOrder.submitButton" = "Share";

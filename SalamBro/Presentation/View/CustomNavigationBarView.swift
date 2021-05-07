@@ -12,7 +12,7 @@ class CustomNavigationBarView: UIView {
     lazy var backButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
-        button.tintColor = .systemRed
+        button.tintColor = .kexRed
         button.setImage(UIImage(named: "chevron.left"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         return button

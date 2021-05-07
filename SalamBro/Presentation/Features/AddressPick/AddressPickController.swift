@@ -21,7 +21,7 @@ public final class AddressPickController: UIViewController {
     public weak var delegate: AddressPickControllerDelegate?
 
     private lazy var navbar: CustomNavigationBarView = {
-        let navBar = CustomNavigationBarView(navigationTitle: L10n.AddressPicker.title)
+        let navBar = CustomNavigationBarView(navigationTitle: L10n.AddressPicker.titleOne)
         navBar.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         return navBar
     }()
@@ -81,7 +81,7 @@ public final class AddressPickController: UIViewController {
 
     private func setupConstraints() {
         navbar.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
+            $0.top.equalTo(view.snp.top).offset(12)
             $0.left.right.equalToSuperview()
             $0.height.equalTo(44)
         }

@@ -128,7 +128,7 @@ public final class SelectMainInformationViewController: UIViewController {
 
     private func setupConstraints() {
         navbar.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
+            $0.top.equalTo(view.snp.topMargin).offset(12)
             $0.left.right.equalToSuperview()
             $0.height.equalTo(44)
         }

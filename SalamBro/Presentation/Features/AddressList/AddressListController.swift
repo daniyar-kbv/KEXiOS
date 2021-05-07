@@ -9,7 +9,7 @@ import SnapKit
 import UIKit
 
 class AddressListController: UIViewController {
-    private lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.AddressPicker.title)
+    private lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.AddressPicker.titleMany)
 
     var addresses = ["Алматы, мкр. Орбита 1, 41", "проспект Абылай Хана, 131"]
 
@@ -88,6 +88,7 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
         print(indexPath.row)
         let vc = AddressDetailController()
         vc.addressLabel.text = addresses[indexPath.row]
+        vc.navbar.titleLabel.text = L10n.AddressPicker.titleOne
         vc.commentaryLabel.text = "Квартира, подъезд, домофон, этаж, и очень длинный комментарий примерно в две"
         navigationController?.pushViewController(vc, animated: true)
     }

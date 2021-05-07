@@ -562,8 +562,10 @@ internal enum L10n {
     internal enum AddressPicker {
         /// Add a new delivery address
         internal static let add = L10n.tr("Localizable", "address_picker.add")
+        /// Delivery addresses
+        internal static let titleMany = L10n.tr("Localizable", "address_picker.titleMany")
         /// Delivery address
-        internal static let title = L10n.tr("Localizable", "address_picker.title")
+        internal static let titleOne = L10n.tr("Localizable", "address_picker.titleOne")
     }
 
     internal enum SelectMainInfo {

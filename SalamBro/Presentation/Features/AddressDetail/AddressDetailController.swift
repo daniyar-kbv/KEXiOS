@@ -8,7 +8,7 @@
 import UIKit
 
 class AddressDetailController: UIViewController {
-    private lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.AddressPicker.title)
+    lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.AddressPicker.titleOne)
 
     lazy var deleteButton: UIButton = {
         let view = UIButton()
@@ -21,7 +21,7 @@ class AddressDetailController: UIViewController {
     lazy var addressTitleLabel: UILabel = {
         let view = UILabel()
         view.textColor = .mildBlue
-        view.text = L10n.AddressPicker.title
+        view.text = L10n.AddressPicker.titleOne
         view.font = .systemFont(ofSize: 10, weight: .medium)
         return view
     }()
@@ -36,6 +36,7 @@ class AddressDetailController: UIViewController {
         let view = UILabel()
         view.textColor = .mildBlue
         view.font = .systemFont(ofSize: 10, weight: .medium)
+        view.numberOfLines = 0
         view.text = "Комментарий"
         return view
     }()
@@ -61,7 +62,7 @@ class AddressDetailController: UIViewController {
         navbar.addSubview(deleteButton)
         [addressLabel, addressTitleLabel, commentaryLabel, commentaryTitleLabel, navbar].forEach { view.addSubview($0) }
         navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        navbar.titleLabel.font = .systemFont(ofSize: 26, weight: .regular)
+        navbar.titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
     }
 
     private func setupConstraints() {

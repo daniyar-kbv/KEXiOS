@@ -72,7 +72,7 @@ class MenuDetailController: UIViewController {
     lazy var chooseAdditionalItemButton: UIButton = {
         let view = UIButton()
         view.setTitle(L10n.MenuDetail.chooseAdditionalItemButton, for: .normal)
-        view.setTitleColor(.systemRed, for: .normal)
+        view.setTitleColor(.kexRed, for: .normal)
         view.addTarget(self, action: #selector(additionalItemChangeButtonTapped), for: .touchUpInside)
         return view
     }()
@@ -98,7 +98,7 @@ class MenuDetailController: UIViewController {
     lazy var backButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
-        button.tintColor = .systemRed
+        button.tintColor = .kexRed
         button.setImage(Asset.back.image, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.layer.cornerRadius = 22
