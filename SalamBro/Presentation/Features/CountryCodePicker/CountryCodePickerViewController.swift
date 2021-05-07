@@ -20,20 +20,13 @@ public final class CountryCodePickerViewController: UIViewController {
 
     public weak var delegate: CountryCodePickerDelegate?
 
-    private lazy var lineImage: UIImageView = {
-        let view = UIImageView()
-        view.image = Asset.line.image
-        view.tintColor = .darkGray
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private lazy var separator = SeparatorView()
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .boldSystemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.text = L10n.CountryCodePicker.Navigation.title
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -42,11 +35,12 @@ public final class CountryCodePickerViewController: UIViewController {
         view.register(cellType: CountryCodeCell.self)
         view.tableFooterView = UIView()
         view.allowsMultipleSelection = false
-        view.separatorInset.right = view.separatorInset.left + view.separatorInset.left
+        view.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.delegate = self
         view.dataSource = self
         view.refreshControl = refreshControl
+        view.bounces = false
         return view
     }()
 
@@ -98,24 +92,26 @@ public final class CountryCodePickerViewController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [lineImage, titleLabel, citiesTableView].forEach { view.addSubview($0) }
+        [titleLabel, citiesTableView, separator].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
-        lineImage.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(6)
-            $0.centerX.equalToSuperview()
-            $0.size.equalTo(CGSize(width: 36, height: 6))
-        }
-
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(lineImage.snp.bottom).offset(12)
+            $0.top.equalToSuperview().offset(24)
             $0.centerX.equalToSuperview()
         }
 
+        separator.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.height.equalTo(0.3)
+            $0.bottom.equalTo(citiesTableView.snp.top)
+        }
         citiesTableView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(22)
-            $0.left.right.bottom.equalToSuperview()
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.bottom.equalToSuperview()
         }
     }
 
@@ -126,6 +122,10 @@ public final class CountryCodePickerViewController: UIViewController {
 }
 
 extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataSource {
+    public func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        50
+    }
+
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         viewModel.cellViewModels.count
     }

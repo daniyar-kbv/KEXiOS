@@ -44,6 +44,7 @@
 "Verification.title" = "Введите код из сообщения";
 "Verification.subtitle" = "Мы отправили его на номер%@";
 "Verification.button.title" = "Отправить повторно через:%@";
+"Verification.button.timeout" = "Отправить код повторно";
 
 // MARK: - Agreement
 "Agreement.navigation.title" = "Правовые документы";
@@ -223,3 +224,7 @@
 
 //MARK: ShareOrder
 "ShareOrder.submitButton" = "Опубликовать";
+
+//MARK: Promocode
+"Promocode.button" = "Применить";
+"Promocode.field" = "Введите промокод";

@@ -18,6 +18,20 @@ public final class CountryCodeCell: UITableViewCell, Reusable {
 
     private var disposeBag = DisposeBag()
 
+    private lazy var codeLabel: UILabel = {
+        let view = UILabel()
+        view.font = .systemFont(ofSize: 16, weight: .medium)
+        return view
+    }()
+
+    private lazy var countryLabel: UILabel = {
+        let view = UILabel()
+        view.text = "text"
+        view.font = .systemFont(ofSize: 16, weight: .medium)
+        view.textColor = .mildBlue
+        return view
+    }()
+
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
@@ -36,7 +50,11 @@ public final class CountryCodeCell: UITableViewCell, Reusable {
 
     private func bind() {
         viewModel.title.bind { [unowned self] in
-            self.textLabel?.text = $0
+            self.countryLabel.text = $0
+        }.disposed(by: disposeBag)
+
+        viewModel.code.bind { [unowned self] in
+            self.codeLabel.text = $0
         }.disposed(by: disposeBag)
 
         viewModel.isSelected.bind { [unowned self] in
@@ -48,5 +66,19 @@ public final class CountryCodeCell: UITableViewCell, Reusable {
         backgroundColor = .white
         tintColor = .kexRed
         selectionStyle = .none
+        contentView.addSubview(codeLabel)
+        contentView.addSubview(countryLabel)
+        setupConstraints()
+    }
+
+    private func setupConstraints() {
+        codeLabel.snp.makeConstraints {
+            $0.left.centerY.equalToSuperview()
+        }
+
+        countryLabel.snp.makeConstraints {
+            $0.left.equalTo(codeLabel.snp.right).offset(32)
+            $0.centerY.equalToSuperview()
+        }
     }
 }

@@ -14,6 +14,7 @@ import UIKit
 class MenuDetailController: UIViewController {
     private var viewModel: MenuDetailViewModelProtocol
     private let disposeBag: DisposeBag
+    lazy var commentarySheetVC = CommentarySheetController()
 
     lazy var imageView: UIImageView = {
         let view = UIImageView()
@@ -42,12 +43,14 @@ class MenuDetailController: UIViewController {
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         view.isUserInteractionEnabled = true
-        let tap = UIGestureRecognizer(target: self, action: #selector(commentaryViewTapped))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.commetaryViewTapped(_:)))
         view.addGestureRecognizer(tap)
+
         return view
     }()
 
     lazy var chooseAdditionalItemView = UIView()
+
     lazy var chooseAdditionalItemLabel: UILabel = {
         let view = UILabel()
         view.backgroundColor = .white
@@ -103,6 +106,14 @@ class MenuDetailController: UIViewController {
         return button
     }()
 
+    lazy var shadow: UIView = {
+        let view = UIView()
+        view.backgroundColor = .darkGray
+        view.layer.opacity = 0.7
+        view.isHidden = true
+        return view
+    }()
+
     public init(viewModel: MenuDetailViewModelProtocol) {
         self.viewModel = viewModel
         disposeBag = DisposeBag()
@@ -149,10 +160,14 @@ class MenuDetailController: UIViewController {
         tabBarController?.tabBar.backgroundColor = .white
         [chooseAdditionalItemLabel, additionalItemLabel, chooseAdditionalItemButton].forEach { chooseAdditionalItemView.addSubview($0) }
         commentaryView.addSubview(commentaryField)
-        [imageView, itemTitleLabel, descriptionLabel, chooseAdditionalItemView, commentaryView, proceedButton, backButton].forEach { view.addSubview($0) }
+        [imageView, itemTitleLabel, descriptionLabel, chooseAdditionalItemView, commentaryView, proceedButton, backButton, shadow].forEach { view.addSubview($0) }
     }
 
     func setupConstraints() {
+        shadow.snp.makeConstraints {
+            $0.top.left.right.bottom.equalToSuperview()
+        }
+
         imageView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(46)
             $0.left.equalToSuperview().offset(39)
@@ -232,12 +247,54 @@ class MenuDetailController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
 
-    @objc func commentaryViewTapped() {
-        print("commentary")
+    @objc func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
+        showCommentarySheet()
     }
 
-    @objc func backButtonTapped(_: UIButton!) {
+    @objc func backButtonTapped() {
         print("go back")
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension MenuDetailController: MapDelegate {
+    func dissmissView(viewName _: String) {
+//        print("x")
+    }
+
+    func hideCommentarySheet() {
+//        addressSheetVC.view.isHidden = false
+    }
+
+    func showCommentarySheet() {
+//        addressSheetVC.view.isHidden = true
+
+        addChild(commentarySheetVC)
+        view.addSubview(commentarySheetVC.view)
+        commentarySheetVC.commentaryField.placeholder = L10n.MenuDetail.commentaryField
+        commentarySheetVC.delegate = self
+        commentarySheetVC.didMove(toParent: self)
+        commentarySheetVC.modalPresentationStyle = .overCurrentContext
+
+        let height: CGFloat = 149.0
+        let width = view.frame.width
+        commentarySheetVC.view.frame = CGRect(x: 0, y: view.frame.height - height, width: width, height: height)
+        print("view frame height: \(view.frame.height)")
+    }
+
+    func passCommentary(text: String) {
+        commentaryField.text = text
+    }
+
+    func reverseGeocoding(searchQuery _: String, title _: String) {
+        print("cartController shoud have mapdelegate...")
+    }
+
+    func mapShadow(toggle: Bool) {
+        if toggle {
+            shadow.isHidden = false
+        } else {
+            shadow.isHidden = true
+        }
     }
 }

@@ -8,11 +8,11 @@
 import UIKit
 
 protocol CartFooterDelegate {
-    func action()
+    func openPromocode()
 }
 
 class CartFooter: UIView {
-//    public var delegate: CartFooterDelegate?
+    public var delegate: CartFooterDelegate?
 
     lazy var productsLabel: UILabel = {
         let label = UILabel()
@@ -108,7 +108,7 @@ class CartFooter: UIView {
     }
 
     @objc private func buttonAction() {
-//        delegate?.action()
+        delegate?.openPromocode()
     }
 }
 

@@ -83,6 +83,7 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         let button = UIButton()
         button.setTitle(L10n.Authorization.Button.title, for: .normal)
         button.addTarget(self, action: #selector(getCode), for: .touchUpInside)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.backgroundColor = .calmGray
         button.isEnabled = false
         button.layer.cornerRadius = 10
@@ -153,10 +154,10 @@ extension AuthorizationController {
     ) {
         if complete {
             getButton.isEnabled = true
-            getButton.alpha = 1.0
+            getButton.backgroundColor = .kexRed
         } else {
             getButton.isEnabled = false
-            getButton.alpha = 0.5
+            getButton.backgroundColor = .calmGray
         }
         print(value)
     }

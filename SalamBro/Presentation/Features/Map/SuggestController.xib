@@ -53,14 +53,14 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RvZ-Ln-YYD" userLabel="separator">
-                            <rect key="frame" x="24" y="48" width="366" height="1"/>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <rect key="frame" x="24" y="48" width="366" height="0.5"/>
+                            <color key="backgroundColor" red="0.64705882349999999" green="0.67843137249999996" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="1" id="UOA-Xx-lem"/>
+                                <constraint firstAttribute="height" constant="0.29999999999999999" id="UOA-Xx-lem"/>
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mdu-w8-zve">
-                            <rect key="frame" x="24" y="49" width="366" height="771"/>
+                            <rect key="frame" x="24" y="48.5" width="366" height="771.5"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
