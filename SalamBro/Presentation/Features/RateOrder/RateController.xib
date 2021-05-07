@@ -139,7 +139,7 @@
                                 <constraint firstAttribute="height" constant="24" id="aGc-fX-I7c"/>
                                 <constraint firstAttribute="width" constant="24" id="lCM-i6-POv"/>
                             </constraints>
-                            <state key="normal" image="back"/>
+                            <state key="normal" image="chevron.left"/>
                             <connections>
                                 <action selector="backButtonTapped:" destination="-1" eventType="touchUpInside" id="L7b-hJ-5hX"/>
                             </connections>
@@ -197,7 +197,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="back" width="24" height="24"/>
+        <image name="chevron.left" width="24" height="24"/>
         <image name="star.empty" width="30" height="30"/>
         <image name="star.filled" width="30" height="30"/>
         <systemColor name="systemBackgroundColor">

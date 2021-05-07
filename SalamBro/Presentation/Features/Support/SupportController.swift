@@ -94,7 +94,7 @@ class SupportController: UIViewController {
         callButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalTo(view.snp.bottomMargin).offset(-32)
+            $0.bottom.equalTo(view.snp.bottomMargin).offset(-24)
             $0.height.equalTo(43)
         }
     }
