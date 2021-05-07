@@ -89,6 +89,7 @@ class MapViewController: UIViewController {
         setupViews()
         setupConstraints()
         setupMap()
+        locationManager.requestWhenInUseAuthorization()
     }
 
     override func viewWillAppear(_ animated: Bool) {

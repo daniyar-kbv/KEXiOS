@@ -46,6 +46,7 @@ class ProfileController: UIViewController {
         let label = UIButton()
         label.setTitle(L10n.Profile.EditButton.title, for: .normal)
         label.setTitleColor(.kexRed, for: .normal)
+        label.titleLabel?.font = .systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         let tap = UITapGestureRecognizer(target: self, action: #selector(changeName))
         label.isUserInteractionEnabled = true
