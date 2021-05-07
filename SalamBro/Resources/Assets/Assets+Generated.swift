@@ -103,6 +103,7 @@ internal enum Asset {
 
     internal static let support = ImageAsset(name: "support")
     internal static let thirdPlace = ImageAsset(name: "thirdPlace")
+    internal static let trash = ImageAsset(name: "trash")
 }
 
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

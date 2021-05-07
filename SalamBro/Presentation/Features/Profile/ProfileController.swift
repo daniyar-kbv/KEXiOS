@@ -169,9 +169,12 @@ extension ProfileController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             let vc = OrderHistoryController()
+            tabBarController?.hidesBottomBarWhenPushed = false
             navigationController?.pushViewController(vc, animated: true)
-        } else {
+        } else if indexPath.row == 1 {
             navigationController?.pushViewController(ChangeLanguageController(), animated: true)
+        } else {
+            navigationController?.pushViewController(AddressListController(), animated: true)
         }
     }
 }

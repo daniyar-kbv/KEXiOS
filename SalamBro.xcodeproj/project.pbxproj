@@ -21,8 +21,11 @@
 		8E983EC855A59E65AE9A8BB57488EECA /* AdditionalItemChooseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC656149DDCAA1920C444E75063D46 /* AdditionalItemChooseController.swift */; };
 		F6C36BBA69444554E157EB4CECD52014 /* AdditionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C237F005FB77CB66813D0BB00914887 /* AdditionalView.swift */; };
 		0ED64A16D000A8C1F460110562B36A44 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC272ED9BE814639824746F9038BA6D /* Address.swift */; };
+		BD9B3F60A0234A42F1BDF378C448C30D /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757805B8AE99AE51BB41F1F0DAE7F1CC /* AddressCell.swift */; };
 		A9F16D68B511CA753A806D4262BC6BAB /* AddressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D47018EB7753617726E2D323C4B72F /* AddressController.swift */; };
 		4DE18EF888C5A2C54C5F1E9A76986EDD /* AddressDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDEFF9F25AE0469403598834AA59983 /* AddressDTO.swift */; };
+		8058AEF62B18DD388EF908D14851CA43 /* AddressDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */; };
+		D8B431EFFC7D1C8EABE1C263785C1F7F /* AddressListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE579AAB62F7285D13D8932137024BD /* AddressListController.swift */; };
 		2702D03BD7115CA54D87BC04ADC13486 /* AddressPickCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F094E5B32E65789F60DD982ADBA96721 /* AddressPickCell.swift */; };
 		CCB2F351AF28727E7426B539A3D57F00 /* AddressPickCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADC6ACE052097DFDFB39639B78B07233 /* AddressPickCell.xib */; };
 		6566780DF1E9A36A7181CE239EEFEBB5 /* AddressPickCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F881646E5957B1DA5667921DCE76B57 /* AddressPickCellViewModel.swift */; };
@@ -211,8 +214,11 @@
 		B8BC656149DDCAA1920C444E75063D46 /* AdditionalItemChooseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalItemChooseController.swift; sourceTree = "<group>"; };
 		2C237F005FB77CB66813D0BB00914887 /* AdditionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalView.swift; sourceTree = "<group>"; };
 		5AC272ED9BE814639824746F9038BA6D /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		757805B8AE99AE51BB41F1F0DAE7F1CC /* AddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
 		21D47018EB7753617726E2D323C4B72F /* AddressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressController.swift; sourceTree = "<group>"; };
 		FCDEFF9F25AE0469403598834AA59983 /* AddressDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDTO.swift; sourceTree = "<group>"; };
+		A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailController.swift; sourceTree = "<group>"; };
+		8CE579AAB62F7285D13D8932137024BD /* AddressListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListController.swift; sourceTree = "<group>"; };
 		F094E5B32E65789F60DD982ADBA96721 /* AddressPickCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickCell.swift; sourceTree = "<group>"; };
 		ADC6ACE052097DFDFB39639B78B07233 /* AddressPickCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressPickCell.xib; sourceTree = "<group>"; };
 		9F881646E5957B1DA5667921DCE76B57 /* AddressPickCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickCellViewModel.swift; sourceTree = "<group>"; };
@@ -692,6 +698,8 @@
 			children = (
 				90D365FE61ADEB905C3F4889CABBF6D6 /* AdditionalItem */,
 				835C6F154C1048070BF344EE1E7FDA84 /* Address */,
+				60141896C391F19C1F6D4735ECDD030E /* AddressDetail */,
+				BAB7E4EF174196AA71ACF383207D12D4 /* AddressList */,
 				E74AC5C717ACAC51533B04D19DDA5096 /* AddressPick */,
 				66174B70E610873B846EA2DFDBC446DA /* Agreement */,
 				912CFB71D3B69BFC0A983E3C88ADC2AB /* Authorization */,
@@ -1165,6 +1173,23 @@
 			path = AddressPickerCell;
 			sourceTree = "<group>";
 		};
+		BAB7E4EF174196AA71ACF383207D12D4 /* AddressList */ = {
+			isa = PBXGroup;
+			children = (
+				757805B8AE99AE51BB41F1F0DAE7F1CC /* AddressCell.swift */,
+				8CE579AAB62F7285D13D8932137024BD /* AddressListController.swift */,
+			);
+			path = AddressList;
+			sourceTree = "<group>";
+		};
+		60141896C391F19C1F6D4735ECDD030E /* AddressDetail */ = {
+			isa = PBXGroup;
+			children = (
+				A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */,
+			);
+			path = AddressDetail;
+			sourceTree = "<group>";
+		};
 		FBA11A60C8AAA5991B82C9B36FF799FC /* CountryCodeCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1509,8 +1534,11 @@
 				8E983EC855A59E65AE9A8BB57488EECA /* AdditionalItemChooseController.swift in Sources */,
 				F6C36BBA69444554E157EB4CECD52014 /* AdditionalView.swift in Sources */,
 				0ED64A16D000A8C1F460110562B36A44 /* Address.swift in Sources */,
+				BD9B3F60A0234A42F1BDF378C448C30D /* AddressCell.swift in Sources */,
 				A9F16D68B511CA753A806D4262BC6BAB /* AddressController.swift in Sources */,
 				4DE18EF888C5A2C54C5F1E9A76986EDD /* AddressDTO.swift in Sources */,
+				8058AEF62B18DD388EF908D14851CA43 /* AddressDetailController.swift in Sources */,
+				D8B431EFFC7D1C8EABE1C263785C1F7F /* AddressListController.swift in Sources */,
 				2702D03BD7115CA54D87BC04ADC13486 /* AddressPickCell.swift in Sources */,
 				6566780DF1E9A36A7181CE239EEFEBB5 /* AddressPickCellViewModel.swift in Sources */,
 				8A234CF7B3FBA9148E9F0058730F283B /* AddressPickController.swift in Sources */,

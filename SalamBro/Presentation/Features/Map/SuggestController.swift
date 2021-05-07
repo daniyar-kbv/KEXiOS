@@ -76,8 +76,7 @@ class SuggestController: UIViewController {
                 self.onSuggestError(error!)
             }
         }
-        let locValue: CLLocationCoordinate2D = locationManager.location!.coordinate
-        let point = YMKPoint(latitude: locValue.latitude, longitude: locValue.longitude)
+        let point = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
         suggestSession.suggest(
             withText: sender.text!,
             window: YMKBoundingBox(southWest: point, northEast: point),
