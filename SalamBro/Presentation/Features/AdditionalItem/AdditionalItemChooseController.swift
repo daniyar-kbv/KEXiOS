@@ -80,14 +80,6 @@ class AdditionalItemChooseController: UIViewController {
 }
 
 extension AdditionalItemChooseController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let height = view.frame.size.height
-//        let width = view.frame.size.width
-//        // in case you you want the cell to be 40% of your controllers view
-//        return CGSize(width: width * 0.45, height: width * 0.45)
-//    }
-
     func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
         dismiss(animated: true, completion: nil)
     }

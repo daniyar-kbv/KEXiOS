@@ -86,7 +86,7 @@ class MenuDetailController: UIViewController {
 
     lazy var proceedButton: UIButton = {
         let view = UIButton()
-        view.backgroundColor = .systemRed
+        view.backgroundColor = .kexRed
         view.setTitle("В корзину за 1 490 ₸", for: .normal)
         view.setTitleColor(.white, for: .normal)
         view.layer.cornerRadius = 10

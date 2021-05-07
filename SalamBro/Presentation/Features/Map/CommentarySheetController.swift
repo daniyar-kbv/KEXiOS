@@ -20,11 +20,12 @@ class CommentarySheetController: UIViewController {
         setupViews()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        yCoordinate = view.frame.origin.y
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        yCoordinate = view.frame.origin.y
+
         commentaryField.becomeFirstResponder()
         delegate?.mapShadow(toggle: true)
     }

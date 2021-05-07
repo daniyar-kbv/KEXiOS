@@ -135,8 +135,9 @@ class MapViewController: UIViewController {
         locationButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         locationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -251).isActive = true
 
-        markerView.widthAnchor.constraint(equalToConstant: 36).isActive = true
-        markerView.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        let width = view.frame.size.width
+        markerView.widthAnchor.constraint(equalToConstant: width * 0.15).isActive = true
+        markerView.heightAnchor.constraint(equalToConstant: (width * 0.15) * 1.22).isActive = true
         markerView.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         markerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
