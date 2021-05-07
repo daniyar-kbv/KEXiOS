@@ -11,7 +11,7 @@ class AdditionalItemChooseController: UIViewController {
     lazy var backButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
-        button.tintColor = .systemRed
+        button.tintColor = .kexRed
         button.setImage(UIImage(named: "back"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.layer.cornerRadius = 22
