@@ -20,18 +20,20 @@ class CommentarySheetController: UIViewController {
         setupViews()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        yCoordinate = view.frame.origin.y
+        NotificationCenter.default.addObserver(self, selector: #selector(hideTextField), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(beginEdit), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        commentaryField.becomeFirstResponder()
+        yCoordinate = view.frame.origin.y
+        beginEdit()
         delegate?.mapShadow(toggle: true)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        view.endEditing(true)
         delegate?.mapShadow(toggle: false)
     }
 
@@ -63,5 +65,13 @@ class CommentarySheetController: UIViewController {
             delegate?.hideCommentarySheet()
 //            }
         }
+    }
+
+    @objc func hideTextField() {
+        commentaryField.endEditing(true)
+    }
+
+    @objc func beginEdit() {
+        commentaryField.becomeFirstResponder()
     }
 }
