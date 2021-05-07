@@ -160,7 +160,6 @@
 		5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */; };
 		B02D897C5EDE03C822AEE074C3564A42 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */; };
 		1F46DD5C2E968C972E578A066C125F8E /* ShareOrderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D2E0A8BCB565935BCEC645CC08C32 /* ShareOrderController.swift */; };
-		6F501A6C66166DBF41F343BC3ACE1BD2 /* ShareOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E420D58AA312E46BCD13F06339F8B0 /* ShareOrderView.swift */; };
 		9540806D1714956FA9B2C2E775CB3A5C /* StagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5D8FF5DD4BCFD49996D346C2CDB4E5 /* StagLayout.swift */; };
 		9C12D1A03462E0B25385C737C544CEFB /* StagLayoutFrameHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4285A853318739ED66D9DF9928A5BF12 /* StagLayoutFrameHolder.swift */; };
 		9D6DE6A1B49BCEC225779D5720049B1B /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F205CC495DCB2845E88E88CCFE9C8 /* Storage.swift */; };
@@ -363,7 +362,6 @@
 		E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationViewModel.swift; sourceTree = "<group>"; };
 		CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		263D2E0A8BCB565935BCEC645CC08C32 /* ShareOrderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOrderController.swift; sourceTree = "<group>"; };
-		30E420D58AA312E46BCD13F06339F8B0 /* ShareOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOrderView.swift; sourceTree = "<group>"; };
 		3A5D8FF5DD4BCFD49996D346C2CDB4E5 /* StagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagLayout.swift; sourceTree = "<group>"; };
 		4285A853318739ED66D9DF9928A5BF12 /* StagLayoutFrameHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagLayoutFrameHolder.swift; sourceTree = "<group>"; };
 		850F205CC495DCB2845E88E88CCFE9C8 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
@@ -649,6 +647,14 @@
 				0F4C910FC72C2E0F539A9D10BAFA4CAE /* VerificationView.swift */,
 			);
 			path = Verification;
+			sourceTree = "<group>";
+		};
+		4D7E69B632383A7935F032312E57DCBB /* Submodules */ = {
+			isa = PBXGroup;
+			children = (
+				F90EA7022F5DE66531C8C81E5F9F3F74 /* AddressPickerCell */,
+			);
+			path = Submodules;
 			sourceTree = "<group>";
 		};
 		4E19440ACAD62C043400869627B233D2 /* SalamBro */ = {
@@ -1064,7 +1070,6 @@
 			isa = PBXGroup;
 			children = (
 				263D2E0A8BCB565935BCEC645CC08C32 /* ShareOrderController.swift */,
-				30E420D58AA312E46BCD13F06339F8B0 /* ShareOrderView.swift */,
 			);
 			path = ShareOrder;
 			sourceTree = "<group>";
@@ -1117,23 +1122,6 @@
 			path = CountriesList;
 			sourceTree = "<group>";
 		};
-		4D7E69B632383A7935F032312E57DCBB /* Submodules */ = {
-			isa = PBXGroup;
-			children = (
-				F90EA7022F5DE66531C8C81E5F9F3F74 /* AddressPickerCell */,
-			);
-			path = Submodules;
-			sourceTree = "<group>";
-		};
-		F90EA7022F5DE66531C8C81E5F9F3F74 /* AddressPickerCell */ = {
-			isa = PBXGroup;
-			children = (
-				E3F18B94D7AEEFF0237C4943D966FF16 /* AddressPickerCell.swift */,
-				0F3570DDBBC114B9742BA2D2F9EE8634 /* AddressPickerCellViewModel.swift */,
-			);
-			path = AddressPickerCell;
-			sourceTree = "<group>";
-		};
 		E74AC5C717ACAC51533B04D19DDA5096 /* AddressPick */ = {
 			isa = PBXGroup;
 			children = (
@@ -1169,6 +1157,15 @@
 				80138187206C51166E0AAAA7510BD0A6 /* MainTabController.swift */,
 			);
 			path = MainTab;
+			sourceTree = "<group>";
+		};
+		F90EA7022F5DE66531C8C81E5F9F3F74 /* AddressPickerCell */ = {
+			isa = PBXGroup;
+			children = (
+				E3F18B94D7AEEFF0237C4943D966FF16 /* AddressPickerCell.swift */,
+				0F3570DDBBC114B9742BA2D2F9EE8634 /* AddressPickerCellViewModel.swift */,
+			);
+			path = AddressPickerCell;
 			sourceTree = "<group>";
 		};
 		FBA11A60C8AAA5991B82C9B36FF799FC /* CountryCodeCell */ = {
@@ -1637,7 +1634,6 @@
 				5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */,
 				B02D897C5EDE03C822AEE074C3564A42 /* SeparatorView.swift in Sources */,
 				1F46DD5C2E968C972E578A066C125F8E /* ShareOrderController.swift in Sources */,
-				6F501A6C66166DBF41F343BC3ACE1BD2 /* ShareOrderView.swift in Sources */,
 				9540806D1714956FA9B2C2E775CB3A5C /* StagLayout.swift in Sources */,
 				9C12D1A03462E0B25385C737C544CEFB /* StagLayoutFrameHolder.swift in Sources */,
 				9D6DE6A1B49BCEC225779D5720049B1B /* Storage.swift in Sources */,

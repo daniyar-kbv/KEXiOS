@@ -496,6 +496,11 @@ internal enum L10n {
         internal static let weekly = L10n.tr("Localizable", "Rating.weekly")
     }
 
+    internal enum ShareOrder {
+        /// Share
+        internal static let submitButton = L10n.tr("Localizable", "ShareOrder.submitButton")
+    }
+
     internal enum Suggest {
         internal enum AddressField {
             /// Enter address
@@ -546,9 +551,9 @@ internal enum L10n {
     }
 
     internal enum AddressPicker {
-        /// Добавить новый адрес
+        /// Add a new delivery address
         internal static let add = L10n.tr("Localizable", "address_picker.add")
-        /// Адрес доставки
+        /// Delivery address
         internal static let title = L10n.tr("Localizable", "address_picker.title")
     }
 
@@ -561,7 +566,7 @@ internal enum L10n {
         internal static let city = L10n.tr("Localizable", "select_main_info.city")
         /// Country
         internal static let country = L10n.tr("Localizable", "select_main_info.country")
-        /// Наличие или отсутствие того или иного бренда - зависит от Вашего\nадреса доставки
+        /// The presence or absence of a particular brand depends on your\ndelivery addresses
         internal static let description = L10n.tr("Localizable", "select_main_info.description")
         /// Save
         internal static let save = L10n.tr("Localizable", "select_main_info.save")

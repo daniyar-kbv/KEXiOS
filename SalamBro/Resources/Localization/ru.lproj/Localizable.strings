@@ -220,3 +220,6 @@
 // MARK: Address Picker
 "address_picker.add" = "Добавить новый адрес";
 "address_picker.title" = "Адрес доставки";
+
+//MARK: ShareOrder
+"ShareOrder.submitButton" = "Опубликовать";

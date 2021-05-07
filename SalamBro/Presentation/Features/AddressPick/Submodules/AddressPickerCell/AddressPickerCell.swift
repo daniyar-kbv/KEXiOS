@@ -41,7 +41,7 @@ public final class AddressPickerCell: UITableViewCell, Reusable {
         }.disposed(by: disposeBag)
 
         viewModel.isSelected.bind { [unowned self] in
-            self.accessoryType = $0 ? .checkmark : .none
+            self.accessoryView = $0 ? checkmark : .none
         }.disposed(by: disposeBag)
     }
 
