@@ -101,11 +101,6 @@ class MapViewController: UIViewController {
         addBottomSheetView()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-
     func setupViews() {
         suggestVC.delegate = self
         suggestVC.targetLocation = targetLocation

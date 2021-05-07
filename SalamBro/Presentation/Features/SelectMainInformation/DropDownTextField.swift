@@ -89,7 +89,7 @@ public final class DropDownTextField: UIView {
         dropDown.textColor = .darkGray
         dropDown.backgroundColor = .white
         dropDown.selectionBackgroundColor = .lightGray
-        dropDown.shadowColor = .black.withAlphaComponent(0.07)
+        dropDown.shadowColor = UIColor.black.withAlphaComponent(0.07)
         dropDown.layer.cornerRadius = 4
         return dropDown
     }()
