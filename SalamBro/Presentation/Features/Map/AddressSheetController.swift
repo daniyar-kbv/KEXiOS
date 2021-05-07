@@ -76,22 +76,26 @@ extension AddressSheetController {
         self.address = .init(name: address,
                              longitude: longitude,
                              latitude: latitude)
-        addressField.text = "\(address)"
-        if address != "" {
-            proceedButton.backgroundColor = .kexRed
-            proceedButton.isEnabled = true
-        } else {
-            proceedButton.backgroundColor = .calmGray
-            proceedButton.isEnabled = false
+        if addressField != nil {
+            addressField.text = "\(address)"
+            if address != "" {
+                proceedButton.backgroundColor = .kexRed
+                proceedButton.isEnabled = true
+            } else {
+                proceedButton.backgroundColor = .calmGray
+                proceedButton.isEnabled = false
+            }
         }
     }
 
     func changeComment(comment: String) {
-        commentaryLabel.text = "\(comment)"
-        commentaryLabel.textColor = .black
-        if comment == "" {
-            commentaryLabel.text = L10n.MapView.CommentaryLabel.title
-            commentaryLabel.textColor = .calmGray
+        if commentaryLabel != nil {
+            commentaryLabel.text = "\(comment)"
+            commentaryLabel.textColor = .black
+            if comment == "" {
+                commentaryLabel.text = L10n.MapView.CommentaryLabel.title
+                commentaryLabel.textColor = .calmGray
+            }
         }
     }
 }
