@@ -39,7 +39,7 @@ class AddressListController: UIViewController {
         view.backgroundColor = .white
         [navbar, separator, citiesTableView].forEach { view.addSubview($0) }
         navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        navbar.titleLabel.font = .systemFont(ofSize: 26, weight: .regular)
+        navbar.titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
     }
 
     func setupConstraints() {
