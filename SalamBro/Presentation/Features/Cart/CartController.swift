@@ -15,28 +15,131 @@ class CartController: UIViewController {
     var mainTabDelegate: MainTabDelegate?
     var cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
 
-    lazy var rootView = CartView(delegate: self)
     lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title, image: UIImage(named: "emptyCart")!)
+    lazy var commentarySheetVC = CommentarySheetController()
 
-    override func loadView() {
-        view = rootView
-    }
+    lazy var tableViewFooter: CartFooter = {
+        let view = CartFooter()
+        view.delegate = self
+        return view
+    }()
+
+    lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.Cart.title)
+
+    lazy var itemsTableView: UITableView = {
+        let table = UITableView()
+        table.allowsSelection = false
+        table.register(UINib(nibName: "CartProductCell", bundle: nil), forCellReuseIdentifier: "CartProductCell")
+        table.register(UINib(nibName: "CartAdditionalProductCell", bundle: nil), forCellReuseIdentifier: "CartAdditionalProductCell")
+        table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        table.dataSource = self
+        table.delegate = self
+        // hidden header fix, usually default headers of section in tableview is sticky
+        let dummyViewHeight = CGFloat(56)
+        table.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: table.bounds.size.width, height: dummyViewHeight))
+        table.contentInset = UIEdgeInsets(top: -dummyViewHeight, left: 0, bottom: 0, right: 0)
+        tableViewFooter.frame = CGRect(x: 0, y: 0, width: table.frame.width, height: 160)
+        table.tableFooterView = tableViewFooter
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
+
+    lazy var divider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .mildBlue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    lazy var footerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    lazy var orderButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .kexRed
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    var shadow: UIView = {
+        let view = UIView()
+        view.backgroundColor = .darkGray
+        view.layer.opacity = 0.7
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 //        cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
+        setupViews()
+        setupConstraints()
 
-        configUI()
-        rootView.itemsTableView.reloadData()
-        rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
-        rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
+        itemsTableView.reloadData()
+        updateTableViewFooterUI(cart: cartViewModel.cart)
+        orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
         mainTabDelegate?.setCount(count: cartViewModel.cart.totalProducts)
     }
 }
 
 extension CartController {
-    private func configUI() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    fileprivate func setupViews() {
+        view.backgroundColor = .white
+        footerView.addSubview(divider)
+        footerView.addSubview(orderButton)
+        view.addSubview(itemsTableView)
+        view.addSubview(footerView)
+        view.addSubview(navbar)
+        view.addSubview(shadow)
+        navbar.backButton.isHidden = true
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    fileprivate func setupConstraints() {
+        shadow.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        shadow.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        shadow.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        shadow.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        divider.widthAnchor.constraint(equalTo: footerView.widthAnchor).isActive = true
+
+        navbar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        navbar.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        navbar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+
+        orderButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor).isActive = true
+        orderButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 24).isActive = true
+        orderButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -24).isActive = true
+        orderButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
+
+        footerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        footerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        footerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        footerView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+
+        itemsTableView.topAnchor.constraint(equalTo: navbar.bottomAnchor).isActive = true
+        itemsTableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        itemsTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        itemsTableView.bottomAnchor.constraint(equalTo: footerView.topAnchor).isActive = true
+    }
+
+    func updateTableViewFooterUI(cart: Cart) {
+        tableViewFooter.productsLabel.text = L10n.CartFooter.productsCount(cart.totalProducts)
+        tableViewFooter.productsPriceLabel.text = L10n.CartFooter.productsPrice(cart.totalPrice)
+    }
+
+    @objc func buttonAction() {
+        navigationController?.pushViewController(AuthorizationController(), animated: true)
     }
 }
 
@@ -102,16 +205,16 @@ extension CartController: CellDelegate {
             if let index = cartViewModel.cart.productsAdditional.firstIndex(where: { $0.id == id }) {
                 cartViewModel.cart.productsAdditional.remove(at: index)
                 let path = IndexPath(row: index, section: 1)
-                rootView.itemsTableView.deleteRows(at: [path], with: .automatic)
+                itemsTableView.deleteRows(at: [path], with: .automatic)
             }
         } else {
             if let index = cartViewModel.cart.products.firstIndex(where: { $0.id == id }) {
                 cartViewModel.cart.products.remove(at: index)
                 let path = IndexPath(row: index, section: 0)
-                rootView.itemsTableView.deleteRows(at: [path], with: .automatic)
+                itemsTableView.deleteRows(at: [path], with: .automatic)
             }
         }
-        rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
+        updateTableViewFooterUI(cart: cartViewModel.cart)
     }
 
     func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool) {
@@ -129,7 +232,7 @@ extension CartController: CellDelegate {
                     cartViewModel.cart.totalPrice -= price
                     cartViewModel.cart.totalProducts -= 1
                 }
-                rootView.itemsTableView.reloadData()
+                itemsTableView.reloadData()
             }
         } else {
             if let index = cartViewModel.cart.products.firstIndex(where: { $0.id == id }) {
@@ -143,26 +246,68 @@ extension CartController: CellDelegate {
                     cartViewModel.cart.totalPrice -= price
                     cartViewModel.cart.totalProducts -= 1
                 }
-                rootView.itemsTableView.reloadData()
+                itemsTableView.reloadData()
             }
         }
         if cartViewModel.cart.totalProducts <= 0 {
             view = emptyCartView
         }
-        rootView.updateTableViewFooterUI(cart: cartViewModel.cart)
-        rootView.orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
+        updateTableViewFooterUI(cart: cartViewModel.cart)
+        orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
         mainTabDelegate?.updateCounter(isIncrease: isIncrease)
-    }
-}
-
-extension CartController: CartViewDelegate {
-    func proceed() {
-        navigationController?.pushViewController(AuthorizationController(), animated: true)
     }
 }
 
 extension CartController: AdditionalViewDelegate {
     func action() {
         mainTabDelegate?.changeController(id: 0)
+    }
+}
+
+extension CartController: CartFooterDelegate {
+    func openPromocode() {
+        showCommentarySheet()
+    }
+}
+
+extension CartController: MapDelegate {
+    func dissmissView(viewName _: String) {
+//        print("x")
+    }
+
+    func hideCommentarySheet() {
+//        addressSheetVC.view.isHidden = false
+    }
+
+    func showCommentarySheet() {
+//        addressSheetVC.view.isHidden = true
+
+        addChild(commentarySheetVC)
+        view.addSubview(commentarySheetVC.view)
+        commentarySheetVC.proceedButton.setTitle(L10n.Promocode.button, for: .normal)
+        commentarySheetVC.commentaryField.placeholder = L10n.Promocode.field
+        commentarySheetVC.delegate = self
+        commentarySheetVC.didMove(toParent: self)
+        commentarySheetVC.modalPresentationStyle = .overCurrentContext
+        let height: CGFloat = 149.0
+        let width = view.frame.width
+        commentarySheetVC.view.frame = CGRect(x: 0, y: view.frame.height - height, width: width, height: height)
+        print("view frame height: \(view.frame.height)")
+    }
+
+    func passCommentary(text _: String) {
+//        addressSheetVC.changeComment(comment: text)
+    }
+
+    func reverseGeocoding(searchQuery _: String, title _: String) {
+        print("cartController shoud have mapdelegate...")
+    }
+
+    func mapShadow(toggle: Bool) {
+        if toggle {
+            shadow.isHidden = false
+        } else {
+            shadow.isHidden = true
+        }
     }
 }

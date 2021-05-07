@@ -43,6 +43,7 @@
 "Verification.title" = "Enter the code from the message";
 "Verification.subtitle" = "We sent it to number %@";
 "Verification.button.title" = "Resend again in: %@";
+"Verification.button.timeout" = "Resend code again";
 
 // MARK: - Agreement
 "Agreement.navigation.title" = "Legal documents";
@@ -223,3 +224,8 @@ delivery addresses";
 
 //MARK: ShareOrder
 "ShareOrder.submitButton" = "Share";
+
+
+//MARK: Promocode
+"Promocode.button" = "Use";
+"Promocode.field" = "Enter promocode";

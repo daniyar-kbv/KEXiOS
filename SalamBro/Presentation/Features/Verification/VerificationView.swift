@@ -24,7 +24,7 @@ class VerificationView: UIView {
     lazy var maintitle: UILabel = {
         let label = UILabel()
         label.text = L10n.Verification.title
-        label.font = .boldSystemFont(ofSize: 32)
+        label.font = .systemFont(ofSize: 32, weight: .semibold)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +56,8 @@ class VerificationView: UIView {
         button.backgroundColor = .white
         button.isEnabled = false
         button.setTitle(L10n.Verification.Button.title(" 01:30"), for: .disabled)
-        button.setTitleColor(.darkGray, for: .disabled)
+        button.setTitleColor(.mildBlue, for: .disabled)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
@@ -149,7 +150,7 @@ extension VerificationView {
         } else {
             getCodeButton.isEnabled = true
             getCodeButton.backgroundColor = .kexRed
-            getCodeButton.setTitle(L10n.Verification.Button.title(""), for: .normal)
+            getCodeButton.setTitle(L10n.Verification.Button.timeout, for: .normal)
         }
     }
 

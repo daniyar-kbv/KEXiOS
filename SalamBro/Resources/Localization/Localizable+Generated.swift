@@ -401,6 +401,13 @@ internal enum L10n {
         }
     }
 
+    internal enum Promocode {
+        /// Use
+        internal static let button = L10n.tr("Localizable", "Promocode.button")
+        /// Enter promocode
+        internal static let field = L10n.tr("Localizable", "Promocode.field")
+    }
+
     internal enum RateOrder {
         /// Your rate will help us to increase quality of delivery
         internal static let description = L10n.tr("Localizable", "RateOrder.description")
@@ -543,6 +550,8 @@ internal enum L10n {
         /// Enter the code from the message
         internal static let title = L10n.tr("Localizable", "Verification.title")
         internal enum Button {
+            /// Resend code again
+            internal static let timeout = L10n.tr("Localizable", "Verification.button.timeout")
             /// Resend again in: %@
             internal static func title(_ p1: Any) -> String {
                 return L10n.tr("Localizable", "Verification.button.title", String(describing: p1))
