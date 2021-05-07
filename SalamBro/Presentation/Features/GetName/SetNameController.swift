@@ -7,38 +7,32 @@
 
 import UIKit
 
-class GetNameController: UIViewController {
+class SetNameController: UIViewController {
+    fileprivate lazy var rootView = SetNameView(delegate: self)
 
-    fileprivate lazy var rootView = GetNameView(delegate: self)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
     }
-    
+
     override func loadView() {
         view = rootView
     }
-
 }
 
-extension GetNameController {
-    func submitForms() {
+extension SetNameController: GetNameViewDelegate {
+    func back() {
+        navigationController?.popViewController(animated: true)
+    }
+
+    func submit() {
         navigationController?.popToViewController(ofClass: MainTabController.self)
     }
 }
 
-extension GetNameController: GetNameViewDelegate {
-    func submit() {
-        submitForms()
-    }
-}
-
-
-extension GetNameController {
+extension SetNameController {
     private func configUI() {
         navigationItem.title = ""
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
-

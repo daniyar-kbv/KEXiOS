@@ -38,7 +38,7 @@ extension VerificationController: VerificationViewDelegate {
     }
 
     func passCode() {
-        let vc = GetNameController()
+        let vc = SetNameController()
         navigationController?.pushViewController(vc, animated: true)
     }
 }
