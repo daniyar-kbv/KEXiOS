@@ -36,7 +36,7 @@ public final class AddressPickController: UIViewController {
 
     private lazy var plusButton: UIButton = {
         let button = UIButton()
-        button.setTitle("+", for: .normal)
+        button.setImage(UIImage(named: "add"), for: .normal)
         button.addTarget(self, action: #selector(add), for: .touchUpInside)
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 24, weight: .medium)
@@ -52,6 +52,8 @@ public final class AddressPickController: UIViewController {
         view.separatorInset = .init(top: 0, left: 24, bottom: 0, right: 24)
         return view
     }()
+
+    private lazy var separator = SeparatorView()
 
     public init(viewModel: AddressPickerViewModelProtocol) {
         self.viewModel = viewModel
@@ -74,7 +76,7 @@ public final class AddressPickController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [navbar, addLabel, plusButton, tableView].forEach { view.addSubview($0) }
+        [navbar, addLabel, plusButton, tableView, separator].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
@@ -93,6 +95,13 @@ public final class AddressPickController: UIViewController {
             $0.centerY.equalTo(addLabel.snp.centerY)
             $0.right.equalToSuperview().offset(-24)
             $0.left.greaterThanOrEqualTo(addLabel.snp.right).offset(8)
+        }
+
+        separator.snp.makeConstraints {
+            $0.bottom.equalTo(tableView.snp.top)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.height.equalTo(0.3)
         }
 
         tableView.snp.makeConstraints {
@@ -114,7 +123,9 @@ extension AddressPickController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let address = viewModel.didSelect(index: indexPath.row)
         delegate?.didSelect(controller: self, address: address)
-        dismiss(animated: true)
+        let vc = BrandsController(viewModel: BrandViewModel(repository: DIResolver.resolve(BrandRepository.self)!)) // TODO:
+        vc.modalPresentationStyle = .pageSheet
+        present(vc, animated: true, completion: nil)
     }
 
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {

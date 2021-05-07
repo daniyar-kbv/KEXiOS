@@ -33,6 +33,8 @@ class SuggestController: UIViewController {
         tableView.delegate = self
         tableView.register(UINib(nibName: "SuggestCell", bundle: nil), forCellReuseIdentifier: "SuggestCell")
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .onDrag
     }
 
     override func viewWillAppear(_ animated: Bool) {

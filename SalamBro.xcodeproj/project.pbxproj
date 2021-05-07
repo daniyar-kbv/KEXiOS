@@ -176,6 +176,7 @@
 		4C8D8329E4A222925EEB832CDB05B27B /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99F4BF639255B023117FDAF61D897FF /* UINavigationController+Extension.swift */; };
 		011DF4475BCBF906150D911398CF2A03 /* UITapGestureRecognizer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F639B99B0FD59273B06960568F7B4 /* UITapGestureRecognizer+Extension.swift */; };
 		B8E8F18212F6159EAB6B844CE37B070E /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CEDB14AEF3AEBD246905B8FBE76ED /* UIView+Extension.swift */; };
+		C7EA573E1B7947AC6844F19B0447B2D9 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AD8559B1194198F403317A8B1FDB88 /* UIViewController+Extension.swift */; };
 		F758B6D9AC73394B5515B206040856CD /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C7E8CE52D9B2EDAD2AE0C3C1FD8C6E /* UpdateController.swift */; };
 		1A64DBDA3FDE3A5BA964DAE39D5AEE75 /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E02A86B7D30F86B51AD0216C52C36C5 /* VerificationController.swift */; };
 		12EC0118BE1AB33AB9362A27A9FEEEB0 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4C910FC72C2E0F539A9D10BAFA4CAE /* VerificationView.swift */; };
@@ -380,6 +381,7 @@
 		D99F4BF639255B023117FDAF61D897FF /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		DE1F639B99B0FD59273B06960568F7B4 /* UITapGestureRecognizer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Extension.swift"; sourceTree = "<group>"; };
 		CF8CEDB14AEF3AEBD246905B8FBE76ED /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		81AD8559B1194198F403317A8B1FDB88 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		49C7E8CE52D9B2EDAD2AE0C3C1FD8C6E /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
 		8E02A86B7D30F86B51AD0216C52C36C5 /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
 		0F4C910FC72C2E0F539A9D10BAFA4CAE /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
@@ -738,6 +740,14 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		60141896C391F19C1F6D4735ECDD030E /* AddressDetail */ = {
+			isa = PBXGroup;
+			children = (
+				A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */,
+			);
+			path = AddressDetail;
+			sourceTree = "<group>";
+		};
 		634DF0542321FBAF896E12DD7808EC82 /* Provider */ = {
 			isa = PBXGroup;
 			children = (
@@ -840,6 +850,7 @@
 				D99F4BF639255B023117FDAF61D897FF /* UINavigationController+Extension.swift */,
 				DE1F639B99B0FD59273B06960568F7B4 /* UITapGestureRecognizer+Extension.swift */,
 				CF8CEDB14AEF3AEBD246905B8FBE76ED /* UIView+Extension.swift */,
+				81AD8559B1194198F403317A8B1FDB88 /* UIViewController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1041,6 +1052,15 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
+		BAB7E4EF174196AA71ACF383207D12D4 /* AddressList */ = {
+			isa = PBXGroup;
+			children = (
+				757805B8AE99AE51BB41F1F0DAE7F1CC /* AddressCell.swift */,
+				8CE579AAB62F7285D13D8932137024BD /* AddressListController.swift */,
+			);
+			path = AddressList;
+			sourceTree = "<group>";
+		};
 		BFE504AA65D986F68D0C208E3052531A /* StagLayout */ = {
 			isa = PBXGroup;
 			children = (
@@ -1171,23 +1191,6 @@
 				0F3570DDBBC114B9742BA2D2F9EE8634 /* AddressPickerCellViewModel.swift */,
 			);
 			path = AddressPickerCell;
-			sourceTree = "<group>";
-		};
-		BAB7E4EF174196AA71ACF383207D12D4 /* AddressList */ = {
-			isa = PBXGroup;
-			children = (
-				757805B8AE99AE51BB41F1F0DAE7F1CC /* AddressCell.swift */,
-				8CE579AAB62F7285D13D8932137024BD /* AddressListController.swift */,
-			);
-			path = AddressList;
-			sourceTree = "<group>";
-		};
-		60141896C391F19C1F6D4735ECDD030E /* AddressDetail */ = {
-			isa = PBXGroup;
-			children = (
-				A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */,
-			);
-			path = AddressDetail;
 			sourceTree = "<group>";
 		};
 		FBA11A60C8AAA5991B82C9B36FF799FC /* CountryCodeCell */ = {
@@ -1670,6 +1673,7 @@
 				4C8D8329E4A222925EEB832CDB05B27B /* UINavigationController+Extension.swift in Sources */,
 				011DF4475BCBF906150D911398CF2A03 /* UITapGestureRecognizer+Extension.swift in Sources */,
 				B8E8F18212F6159EAB6B844CE37B070E /* UIView+Extension.swift in Sources */,
+				C7EA573E1B7947AC6844F19B0447B2D9 /* UIViewController+Extension.swift in Sources */,
 				F758B6D9AC73394B5515B206040856CD /* UpdateController.swift in Sources */,
 				1A64DBDA3FDE3A5BA964DAE39D5AEE75 /* VerificationController.swift in Sources */,
 				12EC0118BE1AB33AB9362A27A9FEEEB0 /* VerificationView.swift in Sources */,

@@ -26,6 +26,7 @@ internal enum Asset {
     internal static let logo1024 = ImageAsset(name: "Logo1024")
     internal static let searchResult = ImageAsset(name: "SearchResult")
     internal static let ad = ImageAsset(name: "ad")
+    internal static let add = ImageAsset(name: "add")
     internal static let address = ImageAsset(name: "address")
     internal static let back = ImageAsset(name: "back")
     internal enum Brands {
