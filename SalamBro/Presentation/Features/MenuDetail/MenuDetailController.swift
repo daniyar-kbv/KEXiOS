@@ -99,7 +99,7 @@ class MenuDetailController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .white
         button.tintColor = .kexRed
-        button.setImage(UIImage(named: "chevronk.left"), for: .normal)
+        button.setImage(UIImage(named: "chevron.left"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.layer.cornerRadius = 22
         button.layer.masksToBounds = true

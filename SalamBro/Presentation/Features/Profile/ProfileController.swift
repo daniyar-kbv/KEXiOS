@@ -112,7 +112,7 @@ extension ProfileController {
         emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
         emailLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
 
-        changeNameLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
+        changeNameLabel.lastBaselineAnchor.constraint(equalTo: nameLabel.lastBaselineAnchor).isActive = true
         changeNameLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
 
         separator.bottomAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
