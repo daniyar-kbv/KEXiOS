@@ -264,15 +264,8 @@ public final class OrderTestCell: UITableViewCell, Reusable {
             $0.right.equalToSuperview()
         }
 
-        sendCheckButon.snp.makeConstraints {
-            $0.top.equalTo(priceStack.snp.bottom).offset(16)
-            $0.left.equalToSuperview()
-            $0.right.equalToSuperview()
-            $0.height.equalTo(43)
-        }
-        //        sendCheckButon, deliveryAddressTitleLabel, deliveryAddressLabel, paymentTitleLabel, paymentLabel, orderStatusTitleLabel, orderStatusLabel, rateOrderButton, repeatOrderButton
         deliveryAddressTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(sendCheckButon.snp.bottom).offset(16)
+            $0.top.equalTo(priceStack.snp.bottom).offset(16)
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
         }
@@ -306,8 +299,15 @@ public final class OrderTestCell: UITableViewCell, Reusable {
             $0.right.equalToSuperview()
         }
 
-        rateOrderButton.snp.makeConstraints {
+        sendCheckButon.snp.makeConstraints {
             $0.top.equalTo(orderStatusLabel.snp.bottom).offset(16)
+            $0.left.equalToSuperview()
+            $0.right.equalToSuperview()
+            $0.height.equalTo(43)
+        }
+
+        rateOrderButton.snp.makeConstraints {
+            $0.top.equalTo(sendCheckButon.snp.bottom).offset(16)
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
             $0.height.equalTo(43)
