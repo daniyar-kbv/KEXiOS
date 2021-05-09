@@ -16,7 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // if you don't have TMDB-Info.plist, just set your key in setApiKey()
         YMKMapKit.setApiKey(apiKey)
         window = UIWindow(frame: UIScreen.main.bounds)
-        let nav = UINavigationController(rootViewController: CountriesListController(viewModel: CountriesListViewModel(repository: DIResolver.resolve(GeoRepository.self)!)))
+        let nav = QFNavigationController(rootViewController: CountriesListController(viewModel: CountriesListViewModel(repository: DIResolver.resolve(GeoRepository.self)!)))
+//        let nav = UINavigationController(rootViewController: CountriesListController(viewModel: CountriesListViewModel(repository: DIResolver.resolve(GeoRepository.self)!)))
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
         return true

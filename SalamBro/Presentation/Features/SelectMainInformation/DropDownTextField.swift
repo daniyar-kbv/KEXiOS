@@ -33,6 +33,11 @@ public final class DropDownTextField: UIView {
         set { titleLabel.text = newValue }
     }
 
+    public var placeholderColor: UIColor? {
+        get { contentLabel.textColor }
+        set { contentLabel.textColor = newValue }
+    }
+
     public var currentValue: String? {
         get { contentLabel.text }
         set { contentLabel.text = newValue }

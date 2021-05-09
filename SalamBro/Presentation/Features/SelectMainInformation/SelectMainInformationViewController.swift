@@ -45,6 +45,7 @@ public final class SelectMainInformationViewController: UIViewController {
             self?.present(vc, animated: true)
         }
         view.delegate = self
+        view.placeholderColor = .darkGray
         view.placeholderText = L10n.SelectMainInfo.brand
         view.descriptionText = L10n.SelectMainInfo.description
         return view

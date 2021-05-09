@@ -39,6 +39,7 @@ public final class CountriesListController: UIViewController {
     private lazy var refreshControl: UIRefreshControl = {
         let view = UIRefreshControl()
         view.addTarget(self, action: #selector(update), for: .valueChanged)
+
         return view
     }()
 

@@ -44,7 +44,7 @@ class MapViewController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .white
         button.tintColor = .kexRed
-        button.setImage(Asset.back.image, for: .normal)
+        button.setImage(UIImage(named: "chevron.left"), for: .normal)
         button.layer.cornerRadius = 22
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
@@ -294,7 +294,7 @@ extension MapViewController {
 extension MapViewController: MapDelegate {
     func dissmissView() {
         if let window = UIApplication.shared.keyWindow {
-            let tabVC = UINavigationController(rootViewController: MainTabController())
+            let tabVC = QFNavigationController(rootViewController: MainTabController())
             window.rootViewController = tabVC
         }
 //        self.navigationController?.pushViewController(MainTabController(), animated: true)

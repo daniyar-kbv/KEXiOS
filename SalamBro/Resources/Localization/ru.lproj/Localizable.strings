@@ -207,7 +207,7 @@
 "Rating.user" = "ПОЛЬЗОВАТЕЛЬ";
 "Rating.sum" = "СУММА";
 "Rating.participate" = "Участвовать";
-"Rating.information" = "Инфомация";
+"Rating.information" = "Информация";
 
 // MARK: - Select Main Info
 "select_main_info.country" = "Страна";

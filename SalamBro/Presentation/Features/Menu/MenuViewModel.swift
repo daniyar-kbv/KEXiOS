@@ -51,6 +51,7 @@ public final class MenuViewModel: MenuViewModelProtocol {
     private func download() {
         guard !isAnimating.value else { return }
         isAnimating.accept(true)
+
         cellViewModels = []
         headerViewModels = []
         updateTableView.accept(())

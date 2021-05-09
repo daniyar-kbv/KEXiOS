@@ -170,18 +170,18 @@ extension MenuController: BrandsControllerDelegate {
 extension MenuController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
-        case let viewModel as MenuCellViewModel:
+        case _ as MenuCellViewModel:
             let viewModel = MenuDetailViewModel(menuDetailRepository: DIResolver.resolve(MenuDetailRepository.self)!)
             let vc = MenuDetailController(viewModel: viewModel)
             vc.modalPresentationStyle = .pageSheet
             present(vc, animated: true, completion: nil)
-        case let viewModel as AddressPickCellViewModel:
+        case _ as AddressPickCellViewModel:
             let viewModel = AddressPickerViewModel(repository: DIResolver.resolve(GeoRepository.self)!)
             let vc = AddressPickController(viewModel: viewModel)
-            vc.modalPresentationStyle = .pageSheet
+//            vc.modalPresentationStyle = .pageSheet
             vc.delegate = self
             present(vc, animated: true, completion: nil)
-        case let viewModel as AdCollectionCellViewModel:
+        case _ as AdCollectionCellViewModel:
             navigationController?.pushViewController(RatingController(), animated: true)
         default:
             print("other")
