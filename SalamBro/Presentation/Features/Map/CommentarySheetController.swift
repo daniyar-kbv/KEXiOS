@@ -12,7 +12,7 @@ class CommentarySheetController: UIViewController {
     @IBOutlet var commentaryField: UITextField!
     @IBOutlet var proceedButton: UIButton!
 
-    var delegate: MapDelegate?
+    weak var delegate: MapDelegate?
     var yCoordinate: CGFloat?
 
     override func viewDidLoad() {

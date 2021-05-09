@@ -87,6 +87,11 @@ class ProfileController: UIViewController {
         setupViews()
         setupConstraints()
     }
+
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
 }
 
 extension ProfileController {
@@ -136,7 +141,9 @@ extension ProfileController {
     }
 
     @objc func changeName(sender _: UITapGestureRecognizer) {
-        navigationController?.pushViewController(ChangeNameController(), animated: true)
+        let vc = ChangeNameController()
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -170,12 +177,16 @@ extension ProfileController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             let vc = OrderHistoryController()
-            tabBarController?.hidesBottomBarWhenPushed = false
+            vc.hidesBottomBarWhenPushed = false
             navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.row == 1 {
-            navigationController?.pushViewController(ChangeLanguageController(), animated: true)
+            let vc = ChangeLanguageController()
+            vc.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(vc, animated: true)
         } else {
-            navigationController?.pushViewController(AddressListController(), animated: true)
+            let vc = AddressListController()
+            vc.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

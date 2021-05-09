@@ -66,7 +66,7 @@ extension MainTabController {
     }
 
     func configureViewControllers() {
-        let controllers = [menu, profile, support, cart]
+        let controllers = [menu, templateNavigationController(title: L10n.MainTab.Profile.title, image: Asset.profile.image, rootViewController: profile), support, cart]
         viewControllers = controllers
     }
 

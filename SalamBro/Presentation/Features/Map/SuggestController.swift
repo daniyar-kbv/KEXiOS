@@ -23,7 +23,7 @@ class SuggestController: UIViewController {
     var targetLocation = YMKPoint()
 
     var fullQuery: String = ""
-    var delegate: MapDelegate?
+    weak var delegate: MapDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()

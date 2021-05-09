@@ -42,6 +42,7 @@ class OrderHistoryController: UIViewController {
         view.dataSource = self
         view.bounces = false
         view.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         return view
 
     }()
@@ -50,6 +51,11 @@ class OrderHistoryController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hidesBottomBarWhenPushed = false
     }
 
     func setupViews() {
@@ -76,7 +82,7 @@ class OrderHistoryController: UIViewController {
             $0.top.equalTo(titleLabel.snp.bottom)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalTo(view.snp.bottomMargin).offset(-32)
+            $0.bottom.equalTo(view.snp.bottomMargin)
         }
     }
 

@@ -260,7 +260,7 @@ class MenuDetailController: UIViewController {
 }
 
 extension MenuDetailController: MapDelegate {
-    func dissmissView(viewName _: String) {
+    func dissmissView() {
 //        print("x")
     }
 

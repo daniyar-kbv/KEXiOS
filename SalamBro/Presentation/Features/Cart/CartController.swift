@@ -271,7 +271,7 @@ extension CartController: CartFooterDelegate {
 }
 
 extension CartController: MapDelegate {
-    func dissmissView(viewName _: String) {
+    func dissmissView() {
 //        print("x")
     }
 

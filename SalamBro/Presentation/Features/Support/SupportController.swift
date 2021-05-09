@@ -32,6 +32,46 @@ class SupportController: UIViewController {
         return view
     }()
 
+    lazy var instagramView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "insta")
+        view.isUserInteractionEnabled = true
+        let tap = CustomTapGestureRecognizer(target: self, action: #selector(imagePressed(sender:)))
+        tap.source = "insta"
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+
+    lazy var tiktokView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "tiktok")
+        view.isUserInteractionEnabled = true
+        let tap = CustomTapGestureRecognizer(target: self, action: #selector(imagePressed(sender:)))
+        tap.source = "tiktok"
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+
+    lazy var mailView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "mail")
+        view.isUserInteractionEnabled = true
+        let tap = CustomTapGestureRecognizer(target: self, action: #selector(imagePressed(sender:)))
+        tap.source = "mail"
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+
+    lazy var vkView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "vk")
+        view.isUserInteractionEnabled = true
+        let tap = CustomTapGestureRecognizer(target: self, action: #selector(imagePressed(sender:)))
+        tap.source = "vk"
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+
     lazy var logoStack: UIStackView = {
         let view = UIStackView()
         view.alignment = .fill
@@ -61,7 +101,7 @@ class SupportController: UIViewController {
     }
 
     func setupViews() {
-        ["insta", "tiktok", "mail", "vk"].forEach { logoStack.addArrangedSubview(UIImageView(image: UIImage(named: $0))) }
+        [instagramView, tiktokView, mailView, vkView].forEach { logoStack.addArrangedSubview($0) }
         [titleLabel, separator, tableView, logoStack, callButton].forEach { view.addSubview($0) }
     }
 
@@ -99,6 +139,29 @@ class SupportController: UIViewController {
         }
     }
 
+    @objc func imagePressed(sender: CustomTapGestureRecognizer) {
+        var url = ""
+        switch sender.source {
+        case "insta":
+            url = "https://www.instagram.com/kex_brands/"
+        case "tiktok":
+            url = "https://www.tiktok.com/@kex.house"
+        case "mail":
+            url = "mailto:info@kexbrands.kz"
+        case "vk":
+            url = "https://www.vk.com"
+        default:
+            break
+        }
+        if let url = URL(string: url) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+
     @objc func call() {
         print("call-center")
     }
@@ -131,4 +194,8 @@ extension SupportController: UITableViewDelegate, UITableViewDataSource {
         }
         return UITableViewCell()
     }
+}
+
+class CustomTapGestureRecognizer: UITapGestureRecognizer {
+    var source: String?
 }

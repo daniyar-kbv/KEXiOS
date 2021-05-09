@@ -292,8 +292,13 @@ extension MapViewController {
 }
 
 extension MapViewController: MapDelegate {
-    func dissmissView(viewName _: String) {
-        print("x")
+    func dissmissView() {
+        if let window = UIApplication.shared.keyWindow {
+            let tabVC = UINavigationController(rootViewController: MainTabController())
+            window.rootViewController = tabVC
+        }
+//        self.navigationController?.pushViewController(MainTabController(), animated: true)
+//        self.navigationController?.popViewController(animated: true)
     }
 
     func hideCommentarySheet() {

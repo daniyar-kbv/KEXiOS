@@ -14,9 +14,9 @@ class AddressSheetController: UIViewController {
     @IBOutlet var commentaryView: UIView!
     @IBOutlet var commentaryLabel: UILabel!
 
-    var suggestVC: SuggestController?
+    weak var suggestVC: SuggestController?
     var yCoordinate: CGFloat?
-    var delegate: MapDelegate?
+    weak var delegate: MapDelegate?
     private var address: Address?
     private let geoRepository = DIResolver.resolve(GeoRepository.self)!
 
@@ -67,7 +67,11 @@ class AddressSheetController: UIViewController {
             geoRepository.addresses?.append(address)
             geoRepository.currentAddress = address
         }
-        navigationController?.pushViewController(MainTabController(), animated: true)
+//        if let window = UIApplication.shared.keyWindow {
+//           let tabVC = UINavigationController(rootViewController: MainTabController())
+//           window.rootViewController = tabVC
+//        }
+        delegate?.dissmissView()
     }
 }
 

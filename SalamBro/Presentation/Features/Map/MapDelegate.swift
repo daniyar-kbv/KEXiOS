@@ -7,12 +7,11 @@
 
 import Foundation
 
-
-protocol MapDelegate {
+protocol MapDelegate: class {
     func reverseGeocoding(searchQuery: String, title: String)
     func mapShadow(toggle: Bool)
     func showCommentarySheet()
     func hideCommentarySheet()
     func passCommentary(text: String)
-    func dissmissView(viewName: String)
+    func dissmissView()
 }
