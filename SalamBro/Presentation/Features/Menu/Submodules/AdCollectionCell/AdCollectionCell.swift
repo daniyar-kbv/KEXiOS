@@ -27,8 +27,6 @@ public final class AdCollectionCell: UITableViewCell, NibReusable {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         layout.scrollDirection = .horizontal
-
-        collectionView.bounces = false
         collectionView.collectionViewLayout = layout
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.dataSource = self

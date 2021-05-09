@@ -46,14 +46,14 @@ public final class AddressPickController: UIViewController {
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.tableFooterView = .init()
+        view.separatorColor = .mildBlue
         view.delegate = self
         view.dataSource = self
         view.register(cellType: AddressPickerCell.self)
+        view.addTableHeaderViewLine()
         view.separatorInset = .init(top: 0, left: 24, bottom: 0, right: 24)
         return view
     }()
-
-    private lazy var separator = SeparatorView()
 
     public init(viewModel: AddressPickerViewModelProtocol) {
         self.viewModel = viewModel
@@ -76,7 +76,7 @@ public final class AddressPickController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [navbar, addLabel, plusButton, tableView, separator].forEach { view.addSubview($0) }
+        [navbar, addLabel, plusButton, tableView].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
@@ -95,13 +95,6 @@ public final class AddressPickController: UIViewController {
             $0.centerY.equalTo(addLabel.snp.centerY)
             $0.right.equalToSuperview().offset(-24)
             $0.left.greaterThanOrEqualTo(addLabel.snp.right).offset(8)
-        }
-
-        separator.snp.makeConstraints {
-            $0.bottom.equalTo(tableView.snp.top)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.height.equalTo(0.3)
         }
 
         tableView.snp.makeConstraints {

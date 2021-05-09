@@ -45,6 +45,7 @@ public final class MenuController: UIViewController {
 
     private lazy var itemTableView: UITableView = {
         let view = UITableView()
+        view.separatorColor = .mildBlue
         view.backgroundColor = .white
         view.register(cellType: AddressPickCell.self)
         view.register(cellType: MenuCell.self)
@@ -54,7 +55,6 @@ public final class MenuController: UIViewController {
         view.dataSource = self
         view.showsVerticalScrollIndicator = false
         view.estimatedRowHeight = 300
-        view.bounces = false
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.tableFooterView = UIView()
         view.refreshControl = refreshControl

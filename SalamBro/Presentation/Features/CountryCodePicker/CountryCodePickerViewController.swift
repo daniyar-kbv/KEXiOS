@@ -20,8 +20,6 @@ public final class CountryCodePickerViewController: UIViewController {
 
     public weak var delegate: CountryCodePickerDelegate?
 
-    private lazy var separator = SeparatorView()
-
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -32,6 +30,8 @@ public final class CountryCodePickerViewController: UIViewController {
 
     private lazy var citiesTableView: UITableView = {
         let view = UITableView()
+        view.separatorColor = .mildBlue
+        view.addTableHeaderViewLine()
         view.register(cellType: CountryCodeCell.self)
         view.tableFooterView = UIView()
         view.allowsMultipleSelection = false
@@ -40,7 +40,6 @@ public final class CountryCodePickerViewController: UIViewController {
         view.delegate = self
         view.dataSource = self
         view.refreshControl = refreshControl
-        view.bounces = false
         return view
     }()
 
@@ -92,7 +91,7 @@ public final class CountryCodePickerViewController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [titleLabel, citiesTableView, separator].forEach { view.addSubview($0) }
+        [titleLabel, citiesTableView].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
@@ -101,12 +100,6 @@ public final class CountryCodePickerViewController: UIViewController {
             $0.centerX.equalToSuperview()
         }
 
-        separator.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.height.equalTo(0.3)
-            $0.bottom.equalTo(citiesTableView.snp.top)
-        }
         citiesTableView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(22)
             $0.left.equalToSuperview().offset(24)

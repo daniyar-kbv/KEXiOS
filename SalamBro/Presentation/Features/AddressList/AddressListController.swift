@@ -19,15 +19,14 @@ class AddressListController: UIViewController {
         view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.showsVerticalScrollIndicator = false
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.bounces = false
+        view.separatorColor = .mildBlue
         view.delegate = self
         view.dataSource = self
         view.allowsMultipleSelection = false
+        view.addTableHeaderViewLine()
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         return view
     }()
-
-    private lazy var separator = SeparatorView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +36,7 @@ class AddressListController: UIViewController {
 
     func setupViews() {
         view.backgroundColor = .white
-        [navbar, separator, citiesTableView].forEach { view.addSubview($0) }
+        [navbar, citiesTableView].forEach { view.addSubview($0) }
         navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         navbar.titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
     }
@@ -52,13 +51,6 @@ class AddressListController: UIViewController {
         citiesTableView.snp.makeConstraints {
             $0.top.equalTo(navbar.snp.bottom).offset(24)
             $0.left.right.bottom.equalToSuperview()
-        }
-
-        separator.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalTo(citiesTableView.snp.top)
-            $0.height.equalTo(0.30)
         }
     }
 

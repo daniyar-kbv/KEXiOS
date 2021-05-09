@@ -24,6 +24,7 @@ public final class CountriesListController: UIViewController {
 
     private lazy var countriesTableView: UITableView = {
         let view = UITableView()
+        view.separatorColor = .mildBlue
         view.allowsMultipleSelection = false
         view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.tableFooterView = UIView()
@@ -31,7 +32,7 @@ public final class CountriesListController: UIViewController {
         view.delegate = self
         view.dataSource = self
         view.refreshControl = refreshControl
-        view.bounces = false
+        view.addTableHeaderViewLine()
         return view
     }()
 
@@ -40,8 +41,6 @@ public final class CountriesListController: UIViewController {
         view.addTarget(self, action: #selector(update), for: .valueChanged)
         return view
     }()
-
-    private lazy var separator = SeparatorView()
 
     public init(viewModel: CountriesListViewModelProtocol) {
         self.viewModel = viewModel
@@ -94,7 +93,6 @@ public final class CountriesListController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(navbar)
         view.addSubview(countriesTableView)
-        view.addSubview(separator)
 
         navbar.backButton.isHidden = true
         navbar.titleLabel.font = .systemFont(ofSize: 26, weight: .regular)
@@ -112,13 +110,6 @@ public final class CountriesListController: UIViewController {
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
             $0.bottom.equalToSuperview()
-        }
-
-        separator.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalTo(countriesTableView.snp.top)
-            $0.height.equalTo(0.30)
         }
     }
 

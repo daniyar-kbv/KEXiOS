@@ -22,20 +22,19 @@ public final class CitiesListController: UIViewController {
 
     private lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.CitiesList.Navigation.title)
 
-    private lazy var citiesTableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let view = UITableView()
+        view.addTableHeaderViewLine()
+        view.separatorColor = .mildBlue
         view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.tableFooterView = UIView()
         view.allowsMultipleSelection = false
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.delegate = self
         view.dataSource = self
-        view.bounces = false
         view.refreshControl = refreshControl
         return view
     }()
-
-    private lazy var separator = SeparatorView()
 
     private lazy var refreshControl: UIRefreshControl = {
         let view = UIRefreshControl()
@@ -63,7 +62,7 @@ public final class CitiesListController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.updateTableView
-            .bind(to: citiesTableView.rx.reload)
+            .bind(to: tableView.rx.reload)
             .disposed(by: disposeBag)
     }
 
@@ -74,7 +73,7 @@ public final class CitiesListController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [navbar, separator, citiesTableView].forEach { view.addSubview($0) }
+        [navbar, tableView].forEach { view.addSubview($0) }
         navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         navbar.titleLabel.font = .systemFont(ofSize: 26, weight: .regular)
     }
@@ -86,16 +85,9 @@ public final class CitiesListController: UIViewController {
             $0.height.equalTo(44)
         }
 
-        citiesTableView.snp.makeConstraints {
+        tableView.snp.makeConstraints {
             $0.top.equalTo(navbar.snp.bottom).offset(16)
             $0.left.right.bottom.equalToSuperview()
-        }
-
-        separator.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalTo(citiesTableView.snp.top)
-            $0.height.equalTo(0.30)
         }
     }
 

@@ -7,6 +7,8 @@
 
 import UIKit
 
+public let screenSize: CGRect = UIScreen.main.bounds
+
 public var apiKey: String {
     guard let filePath = Bundle.main.path(forResource: "SalamBro-Info", ofType: "plist") else {
         fatalError("Couldn't find file 'TMDB-Info.plist'.")

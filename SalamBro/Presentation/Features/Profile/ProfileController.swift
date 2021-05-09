@@ -56,11 +56,12 @@ class ProfileController: UIViewController {
 
     lazy var tableView: UITableView = {
         let table = UITableView()
+        table.separatorColor = .mildBlue
+        table.addTableHeaderViewLine()
         table.tableFooterView = UIView()
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.showsVerticalScrollIndicator = false
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.bounces = false
         table.delegate = self
         table.dataSource = self
         table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
@@ -80,8 +81,6 @@ class ProfileController: UIViewController {
         return button
     }()
 
-    lazy var separator = SeparatorView()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -97,8 +96,7 @@ class ProfileController: UIViewController {
 extension ProfileController {
     func setupViews() {
         view.backgroundColor = .arcticWhite
-        [titleLabel, phoneTitle, nameLabel, changeNameLabel, tableView, logoutButton, emailLabel, separator].forEach { view.addSubview($0) }
-        separator.translatesAutoresizingMaskIntoConstraints = false
+        [titleLabel, phoneTitle, nameLabel, changeNameLabel, tableView, logoutButton, emailLabel].forEach { view.addSubview($0) }
     }
 
     func setupConstraints() {
@@ -119,11 +117,6 @@ extension ProfileController {
 
         changeNameLabel.lastBaselineAnchor.constraint(equalTo: nameLabel.lastBaselineAnchor).isActive = true
         changeNameLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-
-        separator.bottomAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
-        separator.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        separator.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 0.3).isActive = true
 
         tableView.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 19).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true

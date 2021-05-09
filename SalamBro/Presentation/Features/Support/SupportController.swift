@@ -16,10 +16,10 @@ class SupportController: UIViewController {
         return view
     }()
 
-    lazy var separator = SeparatorView()
-
     lazy var tableView: UITableView = {
         let view = UITableView()
+        view.separatorColor = .mildBlue
+        view.addTableHeaderViewLine()
         view.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         view.showsVerticalScrollIndicator = false
         view.backgroundColor = .clear
@@ -27,7 +27,6 @@ class SupportController: UIViewController {
         view.tableFooterView = UIView()
         view.delegate = self
         view.dataSource = self
-        view.bounces = false
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         return view
     }()
@@ -102,7 +101,7 @@ class SupportController: UIViewController {
 
     func setupViews() {
         [instagramView, tiktokView, mailView, vkView].forEach { logoStack.addArrangedSubview($0) }
-        [titleLabel, separator, tableView, logoStack, callButton].forEach { view.addSubview($0) }
+        [titleLabel, tableView, logoStack, callButton].forEach { view.addSubview($0) }
     }
 
     func setupConstraints() {
@@ -111,15 +110,8 @@ class SupportController: UIViewController {
             $0.centerX.equalToSuperview()
         }
 
-        separator.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(34)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.height.equalTo(0.3)
-        }
-
         tableView.snp.makeConstraints {
-            $0.top.equalTo(separator.snp.bottom)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(34)
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
             $0.bottom.equalTo(logoStack.snp.top).offset(-16)
@@ -148,11 +140,19 @@ class SupportController: UIViewController {
             url = "https://www.tiktok.com/@kex.house"
         case "mail":
             url = "mailto:info@kexbrands.kz"
+            let appURL = URL(string: url)!
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(appURL, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(appURL)
+            }
+            return
         case "vk":
             url = "https://www.vk.com"
         default:
             break
         }
+
         if let url = URL(string: url) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url)
@@ -163,7 +163,13 @@ class SupportController: UIViewController {
     }
 
     @objc func call() {
-        print("call-center")
+        if let url = URL(string: "tel://5888"), UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
     }
 }
 

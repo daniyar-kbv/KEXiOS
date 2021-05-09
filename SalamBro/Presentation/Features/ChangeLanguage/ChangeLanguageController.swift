@@ -29,15 +29,15 @@ class ChangeLanguageController: UIViewController {
     lazy var countriesTableView: UITableView = {
         let table = UITableView()
         table.allowsMultipleSelection = false
+        table.separatorColor = .mildBlue
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.tableFooterView = UIView()
         table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         table.dataSource = self
         table.delegate = self
+        table.addTableHeaderViewLine()
         return table
     }()
-
-    lazy var separator = SeparatorView()
 
     fileprivate lazy var selectionIndexPath: IndexPath? = nil
 
@@ -52,7 +52,6 @@ class ChangeLanguageController: UIViewController {
         view.addSubview(countriesTableView)
         view.addSubview(backButton)
         view.addSubview(titleLabel)
-        view.addSubview(separator)
     }
 
     fileprivate func setupConstraints() {
@@ -72,18 +71,6 @@ class ChangeLanguageController: UIViewController {
             $0.left.right.equalToSuperview()
             $0.bottom.equalTo(view.snp.bottomMargin)
         }
-
-        separator.snp.makeConstraints {
-            $0.bottom.equalTo(countriesTableView.snp.top)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.height.equalTo(0.3)
-        }
-
-//        countriesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24).isActive = true
-//        countriesTableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-//        countriesTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-//        countriesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
 
     @objc func backButtonTapped() {

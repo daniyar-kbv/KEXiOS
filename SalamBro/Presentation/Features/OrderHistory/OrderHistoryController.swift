@@ -33,6 +33,7 @@ class OrderHistoryController: UIViewController {
 
     lazy var tableView: UITableView = {
         let view = UITableView()
+        view.separatorColor = .mildBlue
         view.register(OrderTestCell.self, forCellReuseIdentifier: "Cell")
         view.showsVerticalScrollIndicator = false
         view.backgroundColor = .clear
@@ -40,7 +41,6 @@ class OrderHistoryController: UIViewController {
         view.tableFooterView = UIView()
         view.delegate = self
         view.dataSource = self
-        view.bounces = false
         view.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         return view

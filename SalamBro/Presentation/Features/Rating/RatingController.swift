@@ -73,6 +73,7 @@ class RatingController: UIViewController {
 
     lazy var ratingTable: UITableView = {
         let view = UITableView()
+        view.separatorColor = .mildBlue
         view.register(RatingCell.self, forCellReuseIdentifier: "RatingCell")
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white

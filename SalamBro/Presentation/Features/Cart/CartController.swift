@@ -29,6 +29,7 @@ class CartController: UIViewController {
     lazy var itemsTableView: UITableView = {
         let table = UITableView()
         table.allowsSelection = false
+        table.separatorColor = .mildBlue
         table.register(UINib(nibName: "CartProductCell", bundle: nil), forCellReuseIdentifier: "CartProductCell")
         table.register(UINib(nibName: "CartAdditionalProductCell", bundle: nil), forCellReuseIdentifier: "CartAdditionalProductCell")
         table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
