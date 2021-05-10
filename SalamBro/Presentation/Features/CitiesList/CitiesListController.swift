@@ -14,8 +14,6 @@ public final class CitiesListController: ViewController {
     private let viewModel: CitiesListViewModelProtocol
     private let disposeBag: DisposeBag
 
-    private lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.CitiesList.Navigation.title)
-
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.addTableHeaderViewLine()
@@ -60,6 +58,14 @@ public final class CitiesListController: ViewController {
             .disposed(by: disposeBag)
     }
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.CitiesList.Navigation.title
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+        ]
+    }
+
     private func setup() {
         setupViews()
         setupConstraints()
@@ -67,20 +73,12 @@ public final class CitiesListController: ViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [navbar, tableView].forEach { view.addSubview($0) }
-        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        navbar.titleLabel.font = .systemFont(ofSize: 26, weight: .regular)
+        [tableView].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
-        navbar.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(44)
-        }
-
         tableView.snp.makeConstraints {
-            $0.top.equalTo(navbar.snp.bottom).offset(16)
+            $0.top.equalTo(view.snp.topMargin).offset(16)
             $0.left.right.bottom.equalToSuperview()
         }
     }

@@ -67,10 +67,6 @@ class AddressSheetController: ViewController {
             geoRepository.addresses?.append(address)
             geoRepository.currentAddress = address
         }
-//        if let window = UIApplication.shared.keyWindow {
-//           let tabVC = UINavigationController(rootViewController: MainTabController())
-//           window.rootViewController = tabVC
-//        }
         delegate?.dissmissView()
     }
 }

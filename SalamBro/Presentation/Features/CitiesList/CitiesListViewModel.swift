@@ -43,10 +43,10 @@ public final class CitiesListViewModel: CitiesListViewModelProtocol {
         didSelectCity?(city)
         switch type {
         case .select:
-            router.dismiss()
-        case .change:
             let context = CitiesListRouter.RouteType.brands
             router.enqueueRoute(with: context)
+        case .change:
+            close()
         }
     }
 

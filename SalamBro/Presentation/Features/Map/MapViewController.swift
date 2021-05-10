@@ -15,7 +15,8 @@ class MapViewController: ViewController {
     let locationManager = CLLocationManager()
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
     var searchSession: YMKSearchSession?
-    private let geoRepository = DIResolver.resolve(GeoRepository.self)!
+    private let geoRepository = DIResolver.resolve(GeoRepository.self)! // TODO:
+    private let coordinator = DIResolver.resolve(Coordinator.self)! // TODO:
 
     var mapView: YMKMapView = {
         let view = YMKMapView()
@@ -293,12 +294,7 @@ extension MapViewController {
 
 extension MapViewController: MapDelegate {
     func dissmissView() {
-        if let window = UIApplication.shared.keyWindow {
-            let tabVC = QFNavigationController(rootViewController: MainTabController())
-            window.rootViewController = tabVC
-        }
-//        self.navigationController?.pushViewController(MainTabController(), animated: true)
-//        self.navigationController?.popViewController(animated: true)
+        coordinator.start()
     }
 
     func hideCommentarySheet() {
