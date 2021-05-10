@@ -226,7 +226,10 @@ delivery addresses";
 //MARK: ShareOrder
 "ShareOrder.submitButton" = "Share";
 
-
 //MARK: Promocode
 "Promocode.button" = "Use";
 "Promocode.field" = "Enter promocode";
+
+// MARK: - Close
+"Common.error" = "Error";
+"Common.close" = "Close";

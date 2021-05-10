@@ -155,15 +155,7 @@ public final class MenuController: UIViewController {
 
     @objc
     private func changeBrands() {
-        let viewModel = SelectMainInformationViewModel(geoRepository: DIResolver.resolve(GeoRepository.self)!, brandRepository: DIResolver.resolve(BrandRepository.self)!)
-        let vc = SelectMainInformationViewController(viewModel: viewModel)
-        present(vc, animated: true)
-    }
-}
-
-extension MenuController: BrandsControllerDelegate {
-    public func didSelectBrand(controller _: BrandsController, brand: BrandUI) {
-        viewModel.brandName.accept(brand.name)
+        viewModel.selectMainInfo()
     }
 }
 
@@ -176,11 +168,7 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
             vc.modalPresentationStyle = .pageSheet
             present(vc, animated: true, completion: nil)
         case _ as AddressPickCellViewModel:
-            let viewModel = AddressPickerViewModel(repository: DIResolver.resolve(GeoRepository.self)!)
-            let vc = AddressPickController(viewModel: viewModel)
-//            vc.modalPresentationStyle = .pageSheet
-            vc.delegate = self
-            present(vc, animated: true, completion: nil)
+            viewModel.selectAddress()
         case _ as AdCollectionCellViewModel:
             navigationController?.pushViewController(RatingController(), animated: true)
         default:
@@ -243,11 +231,5 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
 extension MenuController: AddCollectionCellDelegate {
     public func goToRating() {
         navigationController?.pushViewController(RatingController(), animated: true)
-    }
-}
-
-extension MenuController: AddressPickControllerDelegate {
-    public func didSelect(controller _: AddressPickController, address _: Address) {
-        viewModel.update()
     }
 }

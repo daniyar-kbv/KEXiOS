@@ -16,19 +16,34 @@ public protocol BrandViewModelProtocol: ViewModel {
     var updateCollectionView: BehaviorRelay<Void?> { get }
     var isAnimating: BehaviorRelay<Bool> { get }
     func refresh()
-    func didSelect(index: Int) -> BrandUI
+    func didSelect(index: Int)
 }
 
 public final class BrandViewModel: BrandViewModelProtocol {
+    public enum FlowType {
+        case change
+        case select
+    }
+
+    public var router: Router
     private let repository: BrandRepository
+    private let type: FlowType
     public var cellViewModels: [BrandCellViewModelProtocol]
     public var ratios: [(Float, Float)]
     public var updateCollectionView: BehaviorRelay<Void?>
     public var isAnimating: BehaviorRelay<Bool>
     private var brands: [BrandUI]
+    private let didSelectBrand: ((BrandUI) -> Void)?
 
-    public init(repository: BrandRepository) {
+    public init(router: Router,
+                repository: BrandRepository,
+                type: FlowType,
+                didSelectBrand: ((BrandUI) -> Void)?)
+    {
+        self.router = router
         self.repository = repository
+        self.type = type
+        self.didSelectBrand = didSelectBrand
         cellViewModels = []
         ratios = []
         brands = []
@@ -41,10 +56,17 @@ public final class BrandViewModel: BrandViewModelProtocol {
         download()
     }
 
-    public func didSelect(index: Int) -> BrandUI {
+    public func didSelect(index: Int) {
         let brand = brands[index]
         repository.brand = brand.toDomain()
-        return brand
+        didSelectBrand?(brand)
+        switch type {
+        case .change:
+            router.dismiss()
+        case .select:
+            let context = BrandsRouter.RouteType.map
+            router.enqueueRoute(with: context)
+        }
     }
 
     private func download() {
@@ -54,11 +76,12 @@ public final class BrandViewModel: BrandViewModelProtocol {
         }.done {
             self.cellViewModels = $0.0
                 .map { BrandUI(from: $0) }
-                .map { BrandCellViewModel(brand: $0) }
+                .map { BrandCellViewModel(router: self.router,
+                                          brand: $0) }
             self.ratios = $0.1
             self.brands = $0.0.map { BrandUI(from: $0) }
-        }.catch { _ in
-            // TODO:
+        }.catch {
+            self.router.alert(error: $0)
         }.finally {
             self.isAnimating.accept(false)
             self.updateCollectionView.accept(())

@@ -33,9 +33,7 @@ class UpdateController: UIViewController {
 // MARK: - Actions
 
 extension UpdateController {
-    private func updateApp() {
-        navigationController?.pushViewController(CountriesListController(viewModel: CountriesListViewModel(repository: DIResolver.resolve(GeoRepository.self)!)), animated: true)
-    }
+    private func updateApp() {}
 }
 
 extension UpdateController: AdditionalViewDelegate {

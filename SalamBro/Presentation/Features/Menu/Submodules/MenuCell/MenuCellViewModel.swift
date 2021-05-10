@@ -16,11 +16,15 @@ public protocol MenuCellViewModelProtocol: ViewModel {
 }
 
 public final class MenuCellViewModel: MenuCellViewModelProtocol {
+    public var router: Router
     public var itemTitle: BehaviorRelay<String?>
     public var itemDescription: BehaviorRelay<String?>
     public var itemPrice: BehaviorRelay<String?>
 
-    public init(food: FoodUI) {
+    public init(router: Router,
+                food: FoodUI)
+    {
+        self.router = router
         itemTitle = .init(value: food.title)
         itemDescription = .init(value: food.description)
         itemPrice = .init(value: "\(food.price) ₸") // здесь надо юзать локализацию

@@ -9,7 +9,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-public protocol SelectMainInformationViewModelProtocol: AnyObject {
+public protocol SelectMainInformationViewModelProtocol: ViewModel {
     var countryName: BehaviorRelay<String?> { get }
     var cityName: BehaviorRelay<String?> { get }
     var brandName: BehaviorRelay<String?> { get }
@@ -21,9 +21,13 @@ public protocol SelectMainInformationViewModelProtocol: AnyObject {
     func didChange(country index: Int)
     func didChange(brand: BrandUI)
     func didChange(address: Address)
+    func selectBrand()
+    func selectAddress()
+    func save()
 }
 
 public final class SelectMainInformationViewModel: SelectMainInformationViewModelProtocol {
+    public var router: Router
     private let geoRepository: GeoRepository
     private let brandRepository: BrandRepository
 
@@ -34,6 +38,7 @@ public final class SelectMainInformationViewModel: SelectMainInformationViewMode
     public var countries: [String]
     public var cities: [String]
     public var brands: [String]
+    private let didSave: (() -> Void)?
 
     public func didChange(city: String) {
         geoRepository.currentCity = city
@@ -56,11 +61,34 @@ public final class SelectMainInformationViewModel: SelectMainInformationViewMode
         self.address.accept(address.name)
     }
 
-    public init(geoRepository: GeoRepository,
-                brandRepository: BrandRepository)
+    public func selectBrand() {
+        let context = SelectMainInformationRouter.RouteType.selectBrand { [unowned self] in
+            self.didChange(brand: $0)
+        }
+        router.enqueueRoute(with: context)
+    }
+
+    public func selectAddress() {
+        let context = SelectMainInformationRouter.RouteType.selectAddress { [unowned self] in
+            self.didChange(address: $0)
+        }
+        router.enqueueRoute(with: context)
+    }
+
+    public func save() {
+        didSave?()
+        router.dismiss()
+    }
+
+    public init(router: Router,
+                geoRepository: GeoRepository,
+                brandRepository: BrandRepository,
+                didSave: (() -> Void)?)
     {
+        self.router = router
         self.geoRepository = geoRepository
         self.brandRepository = brandRepository
+        self.didSave = didSave
         countryName = .init(value: geoRepository.currentCountry?.name)
         cityName = .init(value: geoRepository.currentCity)
         brandName = .init(value: brandRepository.brand?.name)

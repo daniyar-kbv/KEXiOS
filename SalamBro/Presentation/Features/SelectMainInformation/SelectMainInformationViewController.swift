@@ -37,10 +37,7 @@ public final class SelectMainInformationViewController: UIViewController {
     private lazy var brandsTextField: DropDownTextField = {
         let view = DropDownTextField(options: nil)
         view.selectionAction = { [weak self] in
-            let viewModel = BrandViewModel(repository: DIResolver.resolve(BrandRepository.self)!)
-            let vc = BrandsController(viewModel: viewModel)
-            vc.delegate = self
-            self?.present(vc, animated: true)
+            self?.viewModel.selectBrand()
         }
         view.delegate = self
         view.placeholderColor = .darkGray
@@ -52,10 +49,7 @@ public final class SelectMainInformationViewController: UIViewController {
     private lazy var addressTextField: DropDownTextField = {
         let view = DropDownTextField(options: nil)
         view.selectionAction = { [weak self] in
-            let viewModel = AddressPickerViewModel(repository: DIResolver.resolve(GeoRepository.self)!)
-            let vc = AddressPickController(viewModel: viewModel)
-            vc.delegate = self
-            self?.present(vc, animated: true)
+            self?.viewModel.selectAddress()
         }
         view.delegate = self
         view.placeholderText = L10n.SelectMainInfo.address
@@ -80,7 +74,7 @@ public final class SelectMainInformationViewController: UIViewController {
         button.backgroundColor = .kexRed
         button.layer.cornerRadius = 10
         button.setTitle(L10n.SelectMainInfo.save, for: .normal)
-        button.addTarget(self, action: #selector(back), for: .touchUpInside)
+        button.addTarget(self, action: #selector(save), for: .touchUpInside)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .regular)
         return button
     }()
@@ -149,11 +143,10 @@ public final class SelectMainInformationViewController: UIViewController {
     private func back() {
         dismiss(animated: true)
     }
-}
 
-extension SelectMainInformationViewController: BrandsControllerDelegate {
-    public func didSelectBrand(controller _: BrandsController, brand: BrandUI) {
-        viewModel.didChange(brand: brand)
+    @objc
+    private func save() {
+        viewModel.save()
     }
 }
 
@@ -167,11 +160,5 @@ extension SelectMainInformationViewController: DropDownTextFieldDelegate {
         default:
             break
         }
-    }
-}
-
-extension SelectMainInformationViewController: AddressPickControllerDelegate {
-    public func didSelect(controller _: AddressPickController, address: Address) {
-        viewModel.didChange(address: address)
     }
 }

@@ -14,8 +14,12 @@ public protocol BrandCellViewModelProtocol: ViewModel {
 }
 
 public final class BrandCellViewModel: BrandCellViewModelProtocol {
+    public var router: Router
     public var name: BehaviorRelay<String>
-    public init(brand: BrandUI) {
+    public init(router: Router,
+                brand: BrandUI)
+    {
+        self.router = router
         name = .init(value: brand.name + brand.priority.description)
     }
 }

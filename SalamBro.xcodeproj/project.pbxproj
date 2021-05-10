@@ -32,11 +32,13 @@
 		8A234CF7B3FBA9148E9F0058730F283B /* AddressPickController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627AEA105E148D27D69E57A23C450CC /* AddressPickController.swift */; };
 		D7880641164EE5E77FB7597F5AFAA7B7 /* AddressPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F18B94D7AEEFF0237C4943D966FF16 /* AddressPickerCell.swift */; };
 		8B013DB263210D715AAE6703B073C968 /* AddressPickerCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3570DDBBC114B9742BA2D2F9EE8634 /* AddressPickerCellViewModel.swift */; };
+		C05517CA38B389592FAD01B930A7C919 /* AddressPickerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BA6199CF990C4A5D8F72A5ADE3E76C /* AddressPickerRouter.swift */; };
 		52AB291AB55CB5ACD40C0696B0A2FDBD /* AddressPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFF148FFDBDA9582757463337B3048C /* AddressPickerViewModel.swift */; };
 		84D162FC25BAB627F5989308861562C4 /* AddressSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373055F1FF6ADCC5661CF068DA7B78A3 /* AddressSheetController.swift */; };
 		A9999B2C8EB50DE5CFBF201C504DA28E /* AddressSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CF76F8377585959F665EC6E7A08DC94 /* AddressSheetController.xib */; };
 		8F582EF2F9E5F850D4C44B42B787C016 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E840062E24A02D16754165127CD7D26 /* AddressView.swift */; };
 		5397C0B0398219322EB7AB2C3B1A8AF0 /* AgreementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3B5393FD540E00FAACC28FCE38C64 /* AgreementController.swift */; };
+		6E16A5D35A3B837C2FBE3DF6A02585A1 /* AlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5D5B4984175892889CAB949489C3A0 /* AlertRouter.swift */; };
 		9917C9CA8C142731664889CA05B15F12 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EEE5D86DC6A55586D8809FABE54E7A /* AppDelegate.swift */; };
 		403496A52D4F3B4A1577C9E218633E48 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124DBD746EE1979C264DE83DC21C0306 /* ArrayExtension.swift */; };
 		46F990DF2E31B43C108404183AF39F30 /* Assets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43214490E665631BDBAA16AC960299A8 /* Assets+Generated.swift */; };
@@ -53,6 +55,7 @@
 		35F42176B9CB32F151A832C11F7BF099 /* BrandUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2E45EE3A118575D56EAF3068EDCDBE /* BrandUI.swift */; };
 		6727A4AA44CED6239221DE4401C7E05D /* BrandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E443827D843D4CFE5D709A96B3E7E4 /* BrandViewModel.swift */; };
 		D81D86AFE50D2382A0C1AA9757114A02 /* BrandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513C0A393A13F75FF2DE285047A8B4F0 /* BrandsController.swift */; };
+		EBC9AEE26DBB7DB6821F17770FC482C2 /* BrandsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473DE62F6A7A0F1885926425B7183D2 /* BrandsRouter.swift */; };
 		7D169FECFFDF41B27725CC4DE53FED49 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0F0AC62CAA558710F76120E512D518 /* Cart.swift */; };
 		0284EBB47BAD2563A418FFEC22C047BA /* CartAdditionalProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E2DD1A2C5A27E4C8DEFAE54FF54B1E /* CartAdditionalProduct.swift */; };
 		8B28BE6093A3384007889CA3392A34CD /* CartAdditionalProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AFDD3EFFC698527808DEFFB7074E7B /* CartAdditionalProductCell.swift */; };
@@ -79,16 +82,19 @@
 		86FC0A8C4E303A323E41C1DEFA432C2A /* ChangeLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */; };
 		E4E066B4032248830E3B0F8452C2C4F6 /* ChangeNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906133A86D4AF5C94A475D4892939FB8 /* ChangeNameController.swift */; };
 		B19672E96C8149F312FD01ED7224045B /* CitiesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25165BC9C032E5EB5B8F281DB57E61 /* CitiesListController.swift */; };
+		EF9C4850CAD8AB9AB2FA41B21BB28FB1 /* CitiesListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0496FA447BBC85A945DD8C42806DEE7D /* CitiesListRouter.swift */; };
 		99F4A299BE0748BF7799C7D14705F46E /* CitiesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C4535D2136E4D06E0D57D74B2B1904 /* CitiesListViewModel.swift */; };
 		203FEAE5A71D4288431F6FE079723817 /* CommentarySheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1F706E554BF92C0C9FBC8B08CDF5 /* CommentarySheetController.swift */; };
 		7AF8512BF8FCD22EB59FC289865E33A4 /* CommentarySheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 964B1BD97295E975C80FD3370E95B8DB /* CommentarySheetController.xib */; };
 		56EF0190AA0C382AE88C80A7550E9C1F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */; };
 		66B870D68955101F2655ABB0AB6AB36A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFD287A9DA50230ACE28CA1D282AB4B /* Coordinator.swift */; };
 		925C56EC65A2720BA77896F87D2E7129 /* CountriesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932B930707FC6465A3499C3C4E75923A /* CountriesListController.swift */; };
+		5B9991885E71AAF24ED31CE9D375D0C7 /* CountriesListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C7956D34179A2E987E7456DD3C8FD5 /* CountriesListRouter.swift */; };
 		BC3F05EF16B7BF128151AE46E8AA435C /* CountriesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE8F0C0656ADF5E6D0788F28A90266A /* CountriesListViewModel.swift */; };
 		EF79079D47659AF7F16F161BE3F3B62F /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10604C73072B1F2221AD2169F187A578 /* Country.swift */; };
 		58D3F87F8A39C6AEA3D860F5EC3111F4 /* CountryCodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275EEF8250D727EDA1EF45110467D4E9 /* CountryCodeCell.swift */; };
 		603330DEF1ED4320D2EDC29BC052B490 /* CountryCodeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FDA6E2A58F291D1B7F2649323F60E /* CountryCodeCellViewModel.swift */; };
+		F8DD9B63A3FC45BA206E452A6FE65FED /* CountryCodePickerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4BCCB3A47A0125E4C31AAD89222F49 /* CountryCodePickerRouter.swift */; };
 		732833AB8FE813B445943C4655EF1860 /* CountryCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A988FB1195ABF1FB19E3689CB20AF5A7 /* CountryCodePickerViewController.swift */; };
 		76875FC32A32E60A761D6C8A131DAB28 /* CountryCodePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3378C0DAD04D05898AE55A83BDD896C2 /* CountryCodePickerViewModel.swift */; };
 		F0D0B18F3DC10A511979BF3402DEF606 /* CountryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05D6012ED51BE498D15390B73B21085 /* CountryDTO.swift */; };
@@ -135,6 +141,7 @@
 		01BBC853F5DA48144239ACD03AE001F5 /* MenuProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86EEEA9142E399267FD627842AED34A /* MenuProvider.swift */; };
 		99C46BFA50B5C1A847040C7176BFEDD0 /* MenuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3B9FF57626CA80C3BDFF085DDCA8F7 /* MenuRepository.swift */; };
 		4BBBA5828B9A02DCFD15A88939D03F6C /* MenuRepositoryImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE88F76214090822E3C4BDA713F7A077 /* MenuRepositoryImplementation.swift */; };
+		10468D05ADE74298B254F3535BBE9F6F /* MenuRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693C5AFFBE854B1E6A26D41045DAA54 /* MenuRouter.swift */; };
 		6A7945358129F690820556EE0D53EF33 /* MenuUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C389CCC2D1DC71D82F424A7F9CA434 /* MenuUI.swift */; };
 		C40464BD631044407C3EDAD10DA2A0F8 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */; };
 		ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */; };
@@ -155,9 +162,11 @@
 		63DF66EFC9CE86EA55106CC54910C009 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */; };
 		C7D144869475F0B1D989BA3BE88943F7 /* RatioDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B14A0696DDBA1767A46E3E9946E03A3 /* RatioDTO.swift */; };
 		14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */; };
+		413312877FB0B9D7C0A39FF594D2BA03 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225F182EC83DB84ACEE8356FD8D9C7B /* Router.swift */; };
 		164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */; };
 		6382A29270DC95FE20964786BA382045 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */; };
 		825FC113C253F87745C6F961C47C9DAF /* SalamBroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B2A30C6F7592F9FD9C8743F0474722 /* SalamBroUITests.swift */; };
+		13C35E332B133B1AC2CF1B0090215AC0 /* SelectMainInformationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9827947B088C8CBD45A172758877ABB0 /* SelectMainInformationRouter.swift */; };
 		A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */; };
 		5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */; };
 		B02D897C5EDE03C822AEE074C3564A42 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */; };
@@ -229,11 +238,13 @@
 		8627AEA105E148D27D69E57A23C450CC /* AddressPickController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickController.swift; sourceTree = "<group>"; };
 		E3F18B94D7AEEFF0237C4943D966FF16 /* AddressPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickerCell.swift; sourceTree = "<group>"; };
 		0F3570DDBBC114B9742BA2D2F9EE8634 /* AddressPickerCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickerCellViewModel.swift; sourceTree = "<group>"; };
+		C5BA6199CF990C4A5D8F72A5ADE3E76C /* AddressPickerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickerRouter.swift; sourceTree = "<group>"; };
 		9AFF148FFDBDA9582757463337B3048C /* AddressPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickerViewModel.swift; sourceTree = "<group>"; };
 		373055F1FF6ADCC5661CF068DA7B78A3 /* AddressSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressSheetController.swift; sourceTree = "<group>"; };
 		2CF76F8377585959F665EC6E7A08DC94 /* AddressSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressSheetController.xib; sourceTree = "<group>"; };
 		6E840062E24A02D16754165127CD7D26 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		EFB3B5393FD540E00FAACC28FCE38C64 /* AgreementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementController.swift; sourceTree = "<group>"; };
+		0D5D5B4984175892889CAB949489C3A0 /* AlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertRouter.swift; sourceTree = "<group>"; };
 		32EEE5D86DC6A55586D8809FABE54E7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		124DBD746EE1979C264DE83DC21C0306 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		43214490E665631BDBAA16AC960299A8 /* Assets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assets+Generated.swift"; sourceTree = "<group>"; };
@@ -250,6 +261,7 @@
 		FD2E45EE3A118575D56EAF3068EDCDBE /* BrandUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandUI.swift; sourceTree = "<group>"; };
 		E0E443827D843D4CFE5D709A96B3E7E4 /* BrandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandViewModel.swift; sourceTree = "<group>"; };
 		513C0A393A13F75FF2DE285047A8B4F0 /* BrandsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsController.swift; sourceTree = "<group>"; };
+		9473DE62F6A7A0F1885926425B7183D2 /* BrandsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsRouter.swift; sourceTree = "<group>"; };
 		BF0F0AC62CAA558710F76120E512D518 /* Cart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		94E2DD1A2C5A27E4C8DEFAE54FF54B1E /* CartAdditionalProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartAdditionalProduct.swift; sourceTree = "<group>"; };
 		93AFDD3EFFC698527808DEFFB7074E7B /* CartAdditionalProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartAdditionalProductCell.swift; sourceTree = "<group>"; };
@@ -276,16 +288,19 @@
 		B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLanguageController.swift; sourceTree = "<group>"; };
 		906133A86D4AF5C94A475D4892939FB8 /* ChangeNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameController.swift; sourceTree = "<group>"; };
 		7B25165BC9C032E5EB5B8F281DB57E61 /* CitiesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListController.swift; sourceTree = "<group>"; };
+		0496FA447BBC85A945DD8C42806DEE7D /* CitiesListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListRouter.swift; sourceTree = "<group>"; };
 		01C4535D2136E4D06E0D57D74B2B1904 /* CitiesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListViewModel.swift; sourceTree = "<group>"; };
 		E8CD1F706E554BF92C0C9FBC8B08CDF5 /* CommentarySheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentarySheetController.swift; sourceTree = "<group>"; };
 		964B1BD97295E975C80FD3370E95B8DB /* CommentarySheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentarySheetController.xib; sourceTree = "<group>"; };
 		76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DBFD287A9DA50230ACE28CA1D282AB4B /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		932B930707FC6465A3499C3C4E75923A /* CountriesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListController.swift; sourceTree = "<group>"; };
+		56C7956D34179A2E987E7456DD3C8FD5 /* CountriesListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListRouter.swift; sourceTree = "<group>"; };
 		ABE8F0C0656ADF5E6D0788F28A90266A /* CountriesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListViewModel.swift; sourceTree = "<group>"; };
 		10604C73072B1F2221AD2169F187A578 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		275EEF8250D727EDA1EF45110467D4E9 /* CountryCodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeCell.swift; sourceTree = "<group>"; };
 		9B8FDA6E2A58F291D1B7F2649323F60E /* CountryCodeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeCellViewModel.swift; sourceTree = "<group>"; };
+		DF4BCCB3A47A0125E4C31AAD89222F49 /* CountryCodePickerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerRouter.swift; sourceTree = "<group>"; };
 		A988FB1195ABF1FB19E3689CB20AF5A7 /* CountryCodePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewController.swift; sourceTree = "<group>"; };
 		3378C0DAD04D05898AE55A83BDD896C2 /* CountryCodePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewModel.swift; sourceTree = "<group>"; };
 		A05D6012ED51BE498D15390B73B21085 /* CountryDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryDTO.swift; sourceTree = "<group>"; };
@@ -334,6 +349,7 @@
 		A86EEEA9142E399267FD627842AED34A /* MenuProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuProvider.swift; sourceTree = "<group>"; };
 		6E3B9FF57626CA80C3BDFF085DDCA8F7 /* MenuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRepository.swift; sourceTree = "<group>"; };
 		CE88F76214090822E3C4BDA713F7A077 /* MenuRepositoryImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRepositoryImplementation.swift; sourceTree = "<group>"; };
+		4693C5AFFBE854B1E6A26D41045DAA54 /* MenuRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRouter.swift; sourceTree = "<group>"; };
 		40C389CCC2D1DC71D82F424A7F9CA434 /* MenuUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuUI.swift; sourceTree = "<group>"; };
 		6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
@@ -360,12 +376,14 @@
 		E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingController.swift; sourceTree = "<group>"; };
 		4B14A0696DDBA1767A46E3E9946E03A3 /* RatioDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatioDTO.swift; sourceTree = "<group>"; };
 		D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtension.swift; sourceTree = "<group>"; };
+		F225F182EC83DB84ACEE8356FD8D9C7B /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
 		E109EA25F926DD19FBD62E082F1EA9E0 /* SalamBro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalamBro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalamBroTests.swift; sourceTree = "<group>"; };
 		8BFF09AAA95688451AD0A7F94154E2B1 /* SalamBroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalamBroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42B2A30C6F7592F9FD9C8743F0474722 /* SalamBroUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalamBroUITests.swift; sourceTree = "<group>"; };
 		37E5A59F4E859046E802C46121F892EE /* SalamBroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalamBroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9827947B088C8CBD45A172758877ABB0 /* SelectMainInformationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationRouter.swift; sourceTree = "<group>"; };
 		D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationViewController.swift; sourceTree = "<group>"; };
 		E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationViewModel.swift; sourceTree = "<group>"; };
 		CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
@@ -719,6 +737,7 @@
 				BAB7E4EF174196AA71ACF383207D12D4 /* AddressList */,
 				E74AC5C717ACAC51533B04D19DDA5096 /* AddressPick */,
 				66174B70E610873B846EA2DFDBC446DA /* Agreement */,
+				C9C593394FAD0DEF8268ECB6D5E6B930 /* Alert */,
 				912CFB71D3B69BFC0A983E3C88ADC2AB /* Authorization */,
 				EC500F7424886F86E75759D4C36759B9 /* Brands */,
 				8AF05D5445C74C7309FB6D8336409E75 /* Cart */,
@@ -799,6 +818,7 @@
 			isa = PBXGroup;
 			children = (
 				7B25165BC9C032E5EB5B8F281DB57E61 /* CitiesListController.swift */,
+				0496FA447BBC85A945DD8C42806DEE7D /* CitiesListRouter.swift */,
 				01C4535D2136E4D06E0D57D74B2B1904 /* CitiesListViewModel.swift */,
 			);
 			path = CitiesList;
@@ -820,6 +840,7 @@
 		7590876295E5D12A9F57BF50B149708D /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				F225F182EC83DB84ACEE8356FD8D9C7B /* Router.swift */,
 				90D518B65F82AAFDA5E793620A6E128C /* ViewModel.swift */,
 			);
 			path = Protocols;
@@ -876,6 +897,7 @@
 			isa = PBXGroup;
 			children = (
 				FBA11A60C8AAA5991B82C9B36FF799FC /* CountryCodeCell */,
+				DF4BCCB3A47A0125E4C31AAD89222F49 /* CountryCodePickerRouter.swift */,
 				A988FB1195ABF1FB19E3689CB20AF5A7 /* CountryCodePickerViewController.swift */,
 				3378C0DAD04D05898AE55A83BDD896C2 /* CountryCodePickerViewModel.swift */,
 			);
@@ -1131,6 +1153,7 @@
 			children = (
 				71ABCCF50A3B4102B911CE7EF8C8ED25 /* Submodules */,
 				6CBC22771588BAF24202F1C7E9CA5E65 /* MenuController.swift */,
+				4693C5AFFBE854B1E6A26D41045DAA54 /* MenuRouter.swift */,
 				6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */,
 			);
 			path = Menu;
@@ -1149,6 +1172,7 @@
 			isa = PBXGroup;
 			children = (
 				56BAE7C98BCB42839F474B17AD6DFE1A /* DropDownTextField.swift */,
+				9827947B088C8CBD45A172758877ABB0 /* SelectMainInformationRouter.swift */,
 				D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */,
 				E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */,
 			);
@@ -1159,9 +1183,18 @@
 			isa = PBXGroup;
 			children = (
 				932B930707FC6465A3499C3C4E75923A /* CountriesListController.swift */,
+				56C7956D34179A2E987E7456DD3C8FD5 /* CountriesListRouter.swift */,
 				ABE8F0C0656ADF5E6D0788F28A90266A /* CountriesListViewModel.swift */,
 			);
 			path = CountriesList;
+			sourceTree = "<group>";
+		};
+		C9C593394FAD0DEF8268ECB6D5E6B930 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				0D5D5B4984175892889CAB949489C3A0 /* AlertRouter.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 		E74AC5C717ACAC51533B04D19DDA5096 /* AddressPick */ = {
@@ -1169,6 +1202,7 @@
 			children = (
 				4D7E69B632383A7935F032312E57DCBB /* Submodules */,
 				8627AEA105E148D27D69E57A23C450CC /* AddressPickController.swift */,
+				C5BA6199CF990C4A5D8F72A5ADE3E76C /* AddressPickerRouter.swift */,
 				9AFF148FFDBDA9582757463337B3048C /* AddressPickerViewModel.swift */,
 			);
 			path = AddressPick;
@@ -1180,6 +1214,7 @@
 				216B35B3BA8B98C2802AEF3B5C83F672 /* Submodules */,
 				E0E443827D843D4CFE5D709A96B3E7E4 /* BrandViewModel.swift */,
 				513C0A393A13F75FF2DE285047A8B4F0 /* BrandsController.swift */,
+				9473DE62F6A7A0F1885926425B7183D2 /* BrandsRouter.swift */,
 			);
 			path = Brands;
 			sourceTree = "<group>";
@@ -1564,10 +1599,12 @@
 				8A234CF7B3FBA9148E9F0058730F283B /* AddressPickController.swift in Sources */,
 				D7880641164EE5E77FB7597F5AFAA7B7 /* AddressPickerCell.swift in Sources */,
 				8B013DB263210D715AAE6703B073C968 /* AddressPickerCellViewModel.swift in Sources */,
+				C05517CA38B389592FAD01B930A7C919 /* AddressPickerRouter.swift in Sources */,
 				52AB291AB55CB5ACD40C0696B0A2FDBD /* AddressPickerViewModel.swift in Sources */,
 				84D162FC25BAB627F5989308861562C4 /* AddressSheetController.swift in Sources */,
 				8F582EF2F9E5F850D4C44B42B787C016 /* AddressView.swift in Sources */,
 				5397C0B0398219322EB7AB2C3B1A8AF0 /* AgreementController.swift in Sources */,
+				6E16A5D35A3B837C2FBE3DF6A02585A1 /* AlertRouter.swift in Sources */,
 				9917C9CA8C142731664889CA05B15F12 /* AppDelegate.swift in Sources */,
 				403496A52D4F3B4A1577C9E218633E48 /* ArrayExtension.swift in Sources */,
 				46F990DF2E31B43C108404183AF39F30 /* Assets+Generated.swift in Sources */,
@@ -1583,6 +1620,7 @@
 				35F42176B9CB32F151A832C11F7BF099 /* BrandUI.swift in Sources */,
 				6727A4AA44CED6239221DE4401C7E05D /* BrandViewModel.swift in Sources */,
 				D81D86AFE50D2382A0C1AA9757114A02 /* BrandsController.swift in Sources */,
+				EBC9AEE26DBB7DB6821F17770FC482C2 /* BrandsRouter.swift in Sources */,
 				7D169FECFFDF41B27725CC4DE53FED49 /* Cart.swift in Sources */,
 				0284EBB47BAD2563A418FFEC22C047BA /* CartAdditionalProduct.swift in Sources */,
 				8B28BE6093A3384007889CA3392A34CD /* CartAdditionalProductCell.swift in Sources */,
@@ -1606,15 +1644,18 @@
 				86FC0A8C4E303A323E41C1DEFA432C2A /* ChangeLanguageController.swift in Sources */,
 				E4E066B4032248830E3B0F8452C2C4F6 /* ChangeNameController.swift in Sources */,
 				B19672E96C8149F312FD01ED7224045B /* CitiesListController.swift in Sources */,
+				EF9C4850CAD8AB9AB2FA41B21BB28FB1 /* CitiesListRouter.swift in Sources */,
 				99F4A299BE0748BF7799C7D14705F46E /* CitiesListViewModel.swift in Sources */,
 				203FEAE5A71D4288431F6FE079723817 /* CommentarySheetController.swift in Sources */,
 				56EF0190AA0C382AE88C80A7550E9C1F /* Constants.swift in Sources */,
 				66B870D68955101F2655ABB0AB6AB36A /* Coordinator.swift in Sources */,
 				925C56EC65A2720BA77896F87D2E7129 /* CountriesListController.swift in Sources */,
+				5B9991885E71AAF24ED31CE9D375D0C7 /* CountriesListRouter.swift in Sources */,
 				BC3F05EF16B7BF128151AE46E8AA435C /* CountriesListViewModel.swift in Sources */,
 				EF79079D47659AF7F16F161BE3F3B62F /* Country.swift in Sources */,
 				58D3F87F8A39C6AEA3D860F5EC3111F4 /* CountryCodeCell.swift in Sources */,
 				603330DEF1ED4320D2EDC29BC052B490 /* CountryCodeCellViewModel.swift in Sources */,
+				F8DD9B63A3FC45BA206E452A6FE65FED /* CountryCodePickerRouter.swift in Sources */,
 				732833AB8FE813B445943C4655EF1860 /* CountryCodePickerViewController.swift in Sources */,
 				76875FC32A32E60A761D6C8A131DAB28 /* CountryCodePickerViewModel.swift in Sources */,
 				F0D0B18F3DC10A511979BF3402DEF606 /* CountryDTO.swift in Sources */,
@@ -1659,6 +1700,7 @@
 				01BBC853F5DA48144239ACD03AE001F5 /* MenuProvider.swift in Sources */,
 				99C46BFA50B5C1A847040C7176BFEDD0 /* MenuRepository.swift in Sources */,
 				4BBBA5828B9A02DCFD15A88939D03F6C /* MenuRepositoryImplementation.swift in Sources */,
+				10468D05ADE74298B254F3535BBE9F6F /* MenuRouter.swift in Sources */,
 				6A7945358129F690820556EE0D53EF33 /* MenuUI.swift in Sources */,
 				C40464BD631044407C3EDAD10DA2A0F8 /* MenuViewModel.swift in Sources */,
 				ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */,
@@ -1674,6 +1716,8 @@
 				63DF66EFC9CE86EA55106CC54910C009 /* RatingController.swift in Sources */,
 				C7D144869475F0B1D989BA3BE88943F7 /* RatioDTO.swift in Sources */,
 				14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */,
+				413312877FB0B9D7C0A39FF594D2BA03 /* Router.swift in Sources */,
+				13C35E332B133B1AC2CF1B0090215AC0 /* SelectMainInformationRouter.swift in Sources */,
 				A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */,
 				5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */,
 				B02D897C5EDE03C822AEE074C3564A42 /* SeparatorView.swift in Sources */,

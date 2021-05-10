@@ -17,10 +17,13 @@ class MainTabController: UITabBarController {
     var itemCount: Int = 0
 
     lazy var menu: MenuController = {
-        let viewModel = MenuViewModel(menuRepository: DIResolver.resolve(MenuRepository.self)!,
+        let router = MenuRouter()
+        let viewModel = MenuViewModel(router: router,
+                                      menuRepository: DIResolver.resolve(MenuRepository.self)!,
                                       brandRepository: DIResolver.resolve(BrandRepository.self)!,
                                       geoRepository: DIResolver.resolve(GeoRepository.self)!)
         let vc = MenuController(viewModel: viewModel)
+        router.baseViewController = vc
         vc.tabBarItem.title = L10n.MainTab.Menu.title
         vc.tabBarItem.image = Asset.menu.image
         return vc
@@ -66,7 +69,18 @@ extension MainTabController {
     }
 
     func configureViewControllers() {
-        let controllers = [menu, templateNavigationController(title: L10n.MainTab.Profile.title, image: Asset.profile.image, rootViewController: profile), support, cart]
+        let controllers = [templateNavigationController(title: L10n.MainTab.Menu.title,
+                                                        image: Asset.menu.image,
+                                                        rootViewController: menu),
+                           templateNavigationController(title: L10n.MainTab.Profile.title,
+                                                        image: Asset.profile.image,
+                                                        rootViewController: profile),
+                           templateNavigationController(title: L10n.MainTab.Support.title,
+                                                        image: Asset.support.image,
+                                                        rootViewController: support),
+                           templateNavigationController(title: L10n.MainTab.Cart.title,
+                                                        image: Asset.cart.image,
+                                                        rootViewController: cart)]
         viewControllers = controllers
     }
 

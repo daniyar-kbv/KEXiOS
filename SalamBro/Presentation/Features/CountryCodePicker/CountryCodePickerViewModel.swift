@@ -15,27 +15,26 @@ public protocol CountryCodePickerViewModelProtocol: ViewModel {
     var updateTableView: BehaviorRelay<Void?> { get }
     var isAnimating: BehaviorRelay<Bool> { get }
     func update()
-    func country(by index: Int) -> CountryUI
     func didSelect(index: Int)
 }
 
 public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtocol {
+    public var router: Router
     private let repository: GeoRepository
     public var cellViewModels: [CountryCodeCellViewModelProtocol]
     public var updateTableView: BehaviorRelay<Void?>
     public var isAnimating: BehaviorRelay<Bool>
     private var countries: [CountryUI]
+    private let didSelectCountry: ((CountryUI) -> Void)?
 
     public func update() {
         download()
     }
 
-    public func country(by index: Int) -> CountryUI {
-        countries[index]
-    }
-
     public func didSelect(index: Int) {
-        repository.currentCountry = country(by: index).toDomain()
+        let country = countries[index]
+        repository.currentCountry = country.toDomain()
+        didSelectCountry?(country)
     }
 
     private func download() {
@@ -44,7 +43,8 @@ public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtoco
             repository.downloadCountries()
         }.done {
             self.cellViewModels = $0.map {
-                CountryCodeCellViewModel(country: CountryUI(from: $0),
+                CountryCodeCellViewModel(router: self.router,
+                                         country: CountryUI(from: $0),
                                          isSelected: self.repository.currentCountry == $0)
             }
             self.countries = $0.map { CountryUI(from: $0) }
@@ -56,8 +56,13 @@ public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtoco
         }
     }
 
-    public init(repository: GeoRepository) {
+    public init(router: Router,
+                repository: GeoRepository,
+                didSelectCountry: ((CountryUI) -> Void)?)
+    {
+        self.router = router
         self.repository = repository
+        self.didSelectCountry = didSelectCountry
         cellViewModels = []
         updateTableView = .init(value: nil)
         isAnimating = .init(value: false)

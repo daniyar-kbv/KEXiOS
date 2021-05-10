@@ -117,17 +117,14 @@ extension AuthorizationController {
     }
 
     @objc func chooseCountryCode() {
-        let viewModel = CountryCodePickerViewModel(repository: DIResolver.resolve(GeoRepository.self)!)
+        let router = CountryCodePickerRouter()
+        let viewModel = CountryCodePickerViewModel(router: router,
+                                                   repository: DIResolver.resolve(GeoRepository.self)!) { [unowned self] in
+            countryCodeButton.setTitle($0.callingCode, for: .normal)
+        }
         let vc = CountryCodePickerViewController(viewModel: viewModel)
-        vc.delegate = self
         vc.modalPresentationStyle = .pageSheet
         present(vc, animated: true, completion: nil)
-    }
-}
-
-extension AuthorizationController: CountryCodePickerDelegate {
-    func passCountry(country: CountryUI) {
-        countryCodeButton.setTitle(country.callingCode, for: .normal)
     }
 }
 

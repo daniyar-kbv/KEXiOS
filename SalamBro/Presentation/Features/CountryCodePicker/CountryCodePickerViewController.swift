@@ -10,15 +10,9 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public protocol CountryCodePickerDelegate: AnyObject {
-    func passCountry(country: CountryUI)
-}
-
 public final class CountryCodePickerViewController: UIViewController {
     private let viewModel: CountryCodePickerViewModelProtocol
     private let disposeBag: DisposeBag
-
-    public weak var delegate: CountryCodePickerDelegate?
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -131,8 +125,5 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelect(index: indexPath.row)
-        dismiss(animated: true) { [unowned self] in
-            self.delegate?.passCountry(country: self.viewModel.country(by: indexPath.row))
-        }
     }
 }

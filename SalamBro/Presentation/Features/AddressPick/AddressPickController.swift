@@ -10,15 +10,9 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-public protocol AddressPickControllerDelegate: AnyObject {
-    func didSelect(controller: AddressPickController, address: Address)
-}
-
 public final class AddressPickController: UIViewController {
     private let viewModel: AddressPickerViewModelProtocol
     private let disposeBag: DisposeBag
-
-    public weak var delegate: AddressPickControllerDelegate?
 
     private lazy var navbar: CustomNavigationBarView = {
         let navBar = CustomNavigationBarView(navigationTitle: L10n.AddressPicker.titleOne)
@@ -114,9 +108,7 @@ public final class AddressPickController: UIViewController {
 
 extension AddressPickController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let address = viewModel.didSelect(index: indexPath.row)
-        delegate?.didSelect(controller: self, address: address)
-        dismiss(animated: true)
+        viewModel.didSelect(index: indexPath.row)
     }
 
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {

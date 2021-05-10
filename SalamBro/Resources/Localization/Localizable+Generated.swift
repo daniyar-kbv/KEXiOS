@@ -269,6 +269,13 @@ internal enum L10n {
         }
     }
 
+    internal enum Common {
+        /// Close
+        internal static let close = L10n.tr("Localizable", "Common.close")
+        /// Error
+        internal static let error = L10n.tr("Localizable", "Common.error")
+    }
+
     internal enum CountriesList {
         internal enum Navigation {
             /// Select country

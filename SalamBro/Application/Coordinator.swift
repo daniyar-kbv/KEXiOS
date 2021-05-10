@@ -30,8 +30,13 @@ public final class Coordinator {
     }
 
     private func startFirstFlow() {
-        let viewModel = CountriesListViewModel(repository: DIResolver.resolve(GeoRepository.self)!)
+        let router = CountriesListRouter()
+        let viewModel = CountriesListViewModel(router: router,
+                                               repository: DIResolver.resolve(GeoRepository.self)!,
+                                               type: .select,
+                                               didSelectCountry: nil)
         let vc = CountriesListController(viewModel: viewModel)
+        router.baseViewController = vc
         let navVC = QFNavigationController(rootViewController: vc)
         setRootView(navVC)
     }

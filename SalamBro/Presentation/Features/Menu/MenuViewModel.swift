@@ -10,16 +10,19 @@ import PromiseKit
 import RxCocoa
 import RxSwift
 
-public protocol MenuViewModelProtocol: AnyObject {
+public protocol MenuViewModelProtocol: ViewModel {
     var headerViewModels: [ViewModel?] { get }
     var cellViewModels: [[ViewModel]] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
     var isAnimating: BehaviorRelay<Bool> { get }
     var brandName: BehaviorRelay<String?> { get }
     func update()
+    func selectMainInfo()
+    func selectAddress()
 }
 
 public final class MenuViewModel: MenuViewModelProtocol {
+    public var router: Router
     private let menuRepository: MenuRepository
     private let brandRepository: BrandRepository
     private let geoRepository: GeoRepository
@@ -29,10 +32,12 @@ public final class MenuViewModel: MenuViewModelProtocol {
     public var isAnimating: BehaviorRelay<Bool>
     public var brandName: BehaviorRelay<String?>
 
-    init(menuRepository: MenuRepository,
+    init(router: Router,
+         menuRepository: MenuRepository,
          brandRepository: BrandRepository,
          geoRepository: GeoRepository)
     {
+        self.router = router
         cellViewModels = []
         headerViewModels = []
         updateTableView = .init(value: nil)
@@ -46,6 +51,21 @@ public final class MenuViewModel: MenuViewModelProtocol {
 
     public func update() {
         download()
+        brandName.accept(brandRepository.brand?.name)
+    }
+
+    public func selectMainInfo() {
+        let context = MenuRouter.RouteType.selectMainInfo { [unowned self] in
+            self.update()
+        }
+        router.enqueueRoute(with: context)
+    }
+
+    public func selectAddress() {
+        let context = MenuRouter.RouteType.selectAddress { [unowned self] _ in
+            self.update()
+        }
+        router.enqueueRoute(with: context)
     }
 
     private func download() {
@@ -60,23 +80,26 @@ public final class MenuViewModel: MenuViewModelProtocol {
         }.done {
             self.headerViewModels = [
                 nil,
-                CategoriesSectionHeaderViewModel(categories: $0.map { FoodTypeUI(from: $0) }),
+                CategoriesSectionHeaderViewModel(router: self.router,
+                                                 categories: $0.map { FoodTypeUI(from: $0) }),
             ]
         }.then {
             self.menuRepository.downloadMenuAds()
         }.done {
             self.cellViewModels.append([
-                AddressPickCellViewModel(address: self.geoRepository.currentAddress),
-                AdCollectionCellViewModel(ads: $0.map { AdUI(from: $0) }),
+                AddressPickCellViewModel(router: self.router,
+                                         address: self.geoRepository.currentAddress),
+                AdCollectionCellViewModel(router: self.router,
+                                          ads: $0.map { AdUI(from: $0) }),
             ])
         }.then {
             self.menuRepository.downloadMenuItems()
         }.done {
             self.cellViewModels.append($0.map { FoodUI(from: $0) }
-                .map { MenuCellViewModel(food: $0) })
+                .map { MenuCellViewModel(router: self.router,
+                                         food: $0) })
         }.catch {
-            print($0)
-            // TODO: - написать обработку и презентацию ошибок
+            self.router.alert(error: $0)
         }.finally {
             self.updateTableView.accept(())
             self.isAnimating.accept(false)

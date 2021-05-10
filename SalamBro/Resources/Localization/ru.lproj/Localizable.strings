@@ -229,3 +229,7 @@
 //MARK: Promocode
 "Promocode.button" = "Применить";
 "Promocode.field" = "Введите промокод";
+
+// MARK: - Close
+"Common.error" = "Ошибка";
+"Common.close" = "Закрыть";

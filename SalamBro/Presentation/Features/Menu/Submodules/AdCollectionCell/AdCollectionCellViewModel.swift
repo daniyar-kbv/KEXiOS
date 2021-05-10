@@ -14,8 +14,13 @@ public protocol AdCollectionCellViewModelProtocol: ViewModel {
 }
 
 public final class AdCollectionCellViewModel: AdCollectionCellViewModelProtocol {
+    public var router: Router
     public var cellViewModels: [AdCellViewModelProtocol]
-    public init(ads: [AdUI]) {
-        cellViewModels = ads.map { AdCellViewModel(ad: $0) }
+    public init(router: Router,
+                ads: [AdUI])
+    {
+        self.router = router
+        cellViewModels = ads.map { AdCellViewModel(router: router,
+                                                   ad: $0) }
     }
 }
