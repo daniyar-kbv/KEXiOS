@@ -7,13 +7,8 @@
 
 import UIKit
 
-class SetNameController: UIViewController {
+class SetNameController: ViewController {
     fileprivate lazy var rootView = SetNameView(delegate: self)
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configUI()
-    }
 
     override func loadView() {
         view = rootView
@@ -26,13 +21,6 @@ extension SetNameController: GetNameViewDelegate {
     }
 
     func submit() {
-        navigationController?.popToViewController(ofClass: MainTabController.self)
-    }
-}
-
-extension SetNameController {
-    private func configUI() {
-        navigationItem.title = ""
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationController?.popToRootViewController(animated: true)
     }
 }

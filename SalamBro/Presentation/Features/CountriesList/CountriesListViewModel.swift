@@ -42,7 +42,7 @@ public final class CountriesListViewModel: CountriesListViewModelProtocol {
         didSelectCountry?(country)
         switch type {
         case .change:
-            break
+            close()
         case .select:
             let context = CountriesListRouter.RouteType.cities(countryId: countries[index].id)
             router.enqueueRoute(with: context)
@@ -55,8 +55,8 @@ public final class CountriesListViewModel: CountriesListViewModelProtocol {
             repository.downloadCountries()
         }.done {
             self.countries = $0.map { CountryUI(from: $0) }
-        }.catch { _ in
-
+        }.catch {
+            self.router.alert(error: $0)
         }.finally {
             self.updateTableView.accept(())
             self.isAnimating.accept(false)

@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-class MenuDetailController: UIViewController {
+class MenuDetailController: ViewController {
     private var viewModel: MenuDetailViewModelProtocol
     private let disposeBag: DisposeBag
     lazy var commentarySheetVC = CommentarySheetController()

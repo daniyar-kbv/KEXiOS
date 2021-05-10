@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AdditionalItemChooseController: UIViewController {
+class AdditionalItemChooseController: ViewController {
     lazy var backButton: UIButton = {
         let button = UIButton()
         button.tintColor = .kexRed

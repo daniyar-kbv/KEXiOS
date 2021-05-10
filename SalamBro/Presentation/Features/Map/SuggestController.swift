@@ -9,7 +9,7 @@ import CoreLocation
 import UIKit
 import YandexMapKitSearch
 
-class SuggestController: UIViewController {
+class SuggestController: ViewController {
     @IBOutlet var contentView: UIView!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var searchBar: UITextField!

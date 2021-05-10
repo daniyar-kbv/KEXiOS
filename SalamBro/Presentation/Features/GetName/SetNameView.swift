@@ -15,8 +15,6 @@ protocol GetNameViewDelegate {
 class SetNameView: UIView {
     public var delegate: GetNameViewDelegate?
 
-    lazy var navbar = CustomNavigationBarView(navigationTitle: "")
-
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.GetName.title
@@ -85,9 +83,6 @@ class SetNameView: UIView {
 extension SetNameView {
     func setupViews() {
         backgroundColor = .arcticWhite
-        navbar.translatesAutoresizingMaskIntoConstraints = false
-        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        addSubview(navbar)
         addSubview(titleLabel)
         addSubview(nextButton)
         nameView.addSubview(nameField)
@@ -95,12 +90,7 @@ extension SetNameView {
     }
 
     func setupConstraints() {
-        navbar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
-        navbar.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor).isActive = true
-        navbar.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor).isActive = true
-        navbar.heightAnchor.constraint(equalToConstant: 44).isActive = true
-
-        titleLabel.topAnchor.constraint(equalTo: navbar.bottomAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
         titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         titleLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
 

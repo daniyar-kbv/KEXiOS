@@ -13,9 +13,7 @@ protocol OrderHistoryDelegate {
     func rate()
 }
 
-class OrderHistoryController: UIViewController {
-    lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.OrderHistory.title)
-
+class OrderHistoryController: ViewController {
     lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
@@ -40,26 +38,22 @@ class OrderHistoryController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        hidesBottomBarWhenPushed = false
+        setupNavigationBar()
+    }
+
+    override internal func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.OrderHistory.title
     }
 
     func setupViews() {
-        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         view.backgroundColor = .white
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         view.addSubview(tableView)
-        view.addSubview(navbar)
     }
 
     func setupConstraints() {
-        navbar.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(44)
-        }
-
         tableView.snp.makeConstraints {
-            $0.top.equalTo(navbar.snp.bottom)
+            $0.top.equalTo(view.snp.topMargin)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
             $0.bottom.equalTo(view.snp.bottomMargin)

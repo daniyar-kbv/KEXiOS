@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CommentarySheetController: UIViewController {
+class CommentarySheetController: ViewController {
     @IBOutlet var contentView: UIView!
     @IBOutlet var commentaryField: UITextField!
     @IBOutlet var proceedButton: UIButton!

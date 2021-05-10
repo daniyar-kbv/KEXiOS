@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddressSheetController: UIViewController {
+class AddressSheetController: ViewController {
     @IBOutlet var addressView: UIView!
     @IBOutlet var addressField: UITextField!
     @IBOutlet var proceedButton: UIButton!

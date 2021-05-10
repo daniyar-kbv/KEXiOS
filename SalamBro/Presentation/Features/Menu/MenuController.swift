@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class MenuController: UIViewController {
+public final class MenuController: ViewController {
     private let viewModel: MenuViewModelProtocol
     private let disposeBag: DisposeBag
 
@@ -24,14 +24,13 @@ public final class MenuController: UIViewController {
 
     private lazy var brandLabel: UILabel = {
         let view = UILabel()
-        view.text = "SalamBro"
         view.font = UIFont.boldSystemFont(ofSize: 20)
         return view
     }()
 
     private lazy var bottomChevronImage: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "chevron.bottom")
+        view.image = Asset.chevronBottom.image
         return view
     }()
 
@@ -83,14 +82,8 @@ public final class MenuController: UIViewController {
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        setupNavigationBar()
     }
-
-    // re-neabling navigation bar appereance
-//    override public func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        navigationController?.setNavigationBarHidden(false, animated: animated)
-//    }
 
     private func bind() {
         viewModel.updateTableView
@@ -104,6 +97,10 @@ public final class MenuController: UIViewController {
         viewModel.brandName
             .bind(to: brandLabel.rx.text)
             .disposed(by: disposeBag)
+    }
+
+    override func setupNavigationBar() {
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     private func setup() {

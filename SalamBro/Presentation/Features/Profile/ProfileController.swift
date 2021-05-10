@@ -7,16 +7,7 @@
 
 import UIKit
 
-class ProfileController: UIViewController {
-    lazy var titleLabel: UILabel = {
-        let view = UILabel()
-        view.text = L10n.Profile.NavigationBar.title
-        view.font = .systemFont(ofSize: 18, weight: .semibold)
-        view.textAlignment = .center
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
+class ProfileController: ViewController {
     lazy var phoneTitle: UILabel = {
         let label = UILabel()
         label.text = "+7 (702) 000 00 00"
@@ -89,23 +80,23 @@ class ProfileController: UIViewController {
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        setupNavigationBar()
+    }
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.Profile.NavigationBar.title
     }
 }
 
 extension ProfileController {
     func setupViews() {
         view.backgroundColor = .arcticWhite
-        [titleLabel, phoneTitle, nameLabel, changeNameLabel, tableView, logoutButton, emailLabel].forEach { view.addSubview($0) }
+        [phoneTitle, nameLabel, changeNameLabel, tableView, logoutButton, emailLabel].forEach { view.addSubview($0) }
     }
 
     func setupConstraints() {
-        titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-
-        phoneTitle.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 26).isActive = true
+        phoneTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 26).isActive = true
         phoneTitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         phoneTitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
 

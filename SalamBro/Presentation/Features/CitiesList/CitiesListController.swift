@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class CitiesListController: UIViewController {
+public final class CitiesListController: ViewController {
     private let viewModel: CitiesListViewModelProtocol
     private let disposeBag: DisposeBag
 

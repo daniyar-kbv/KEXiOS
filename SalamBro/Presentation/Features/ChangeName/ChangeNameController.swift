@@ -7,10 +7,8 @@
 
 import UIKit
 
-class ChangeNameController: UIViewController {
+class ChangeNameController: ViewController {
     var yCoordinate: CGFloat?
-
-    lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.ChangeName.NavigationBar.title)
 
     lazy var nameLabel: UILabel = {
         let view = UILabel()
@@ -84,16 +82,18 @@ class ChangeNameController: UIViewController {
         setupConstraints()
     }
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.ChangeName.NavigationBar.title
+    }
+
     func setupUI() {
         yCoordinate = saveButton.frame.origin.y
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
 
 extension ChangeNameController {
     func setupViews() {
-        navbar.translatesAutoresizingMaskIntoConstraints = false
-        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         view.backgroundColor = .white
         nameView.addSubview(nameField)
         emailView.addSubview(emailField)
@@ -102,15 +102,9 @@ extension ChangeNameController {
         view.addSubview(emailLabel)
         view.addSubview(emailView)
         view.addSubview(saveButton)
-        view.addSubview(navbar)
     }
 
     func setupConstraints() {
-        navbar.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        navbar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        navbar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        navbar.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-
         nameLabel.leftAnchor.constraint(equalTo: nameView.leftAnchor, constant: 16).isActive = true
         nameLabel.bottomAnchor.constraint(equalTo: nameView.topAnchor, constant: -4).isActive = true
 
@@ -119,7 +113,7 @@ extension ChangeNameController {
         nameField.centerYAnchor.constraint(equalTo: nameView.centerYAnchor).isActive = true
 
         nameView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        nameView.topAnchor.constraint(equalTo: navbar.bottomAnchor, constant: 40).isActive = true
+        nameView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
         nameView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         nameView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
 

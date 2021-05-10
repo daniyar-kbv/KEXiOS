@@ -8,14 +8,14 @@
 import InputMask
 import UIKit
 
-class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener {
+class AuthorizationController: ViewController, MaskedTextFieldDelegateListener {
     lazy var maskedDelegate: MaskedTextFieldDelegate = {
         let delegate = MaskedTextFieldDelegate(primaryFormat: "([000]) [000] [00] [00]")
         delegate.listener = self
         return delegate
     }()
 
-    lazy var navbar = CustomNavigationBarView(navigationTitle: " ")
+    private let geoRepository = DIResolver.resolve(GeoRepository.self)! // TODO: add view model
 
     lazy var maintitle: UILabel = {
         let label = UILabel()
@@ -61,7 +61,7 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
 
     lazy var countryCodeButton: UIButton = {
         let button = UIButton()
-//        button.setTitle("X", for: .normal)
+        button.setTitle(geoRepository.currentCountry?.callingCode, for: .normal)
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 26)
         button.titleLabel?.textAlignment = .center
@@ -98,10 +98,6 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         setupViews()
         setupConstraints()
     }
-
-    override func viewWillAppear(_: Bool) {
-        countryCodeButton.setTitle("+7", for: .normal)
-    }
 }
 
 extension AuthorizationController {
@@ -118,13 +114,10 @@ extension AuthorizationController {
 
     @objc func chooseCountryCode() {
         let router = CountryCodePickerRouter()
-        let viewModel = CountryCodePickerViewModel(router: router,
-                                                   repository: DIResolver.resolve(GeoRepository.self)!) { [unowned self] in
-            countryCodeButton.setTitle($0.callingCode, for: .normal)
+        let context = CountryCodePickerRouter.PresentationContext.present { [unowned self] in
+            self.countryCodeButton.setTitle($0.callingCode, for: .normal)
         }
-        let vc = CountryCodePickerViewController(viewModel: viewModel)
-        vc.modalPresentationStyle = .pageSheet
-        present(vc, animated: true, completion: nil)
+        router.present(on: self, context: context)
     }
 }
 
@@ -163,9 +156,6 @@ extension AuthorizationController {
         maskedDelegate.listener = self
         numberField.delegate = maskedDelegate
         view.backgroundColor = .white
-        navbar.translatesAutoresizingMaskIntoConstraints = false
-        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        view.addSubview(navbar)
         view.addSubview(maintitle)
         view.addSubview(subtitle)
         view.addSubview(numberField)
@@ -176,12 +166,7 @@ extension AuthorizationController {
     }
 
     func setupConstraints() {
-        navbar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        navbar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        navbar.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        navbar.heightAnchor.constraint(equalToConstant: 50).isActive = true
-
-        maintitle.topAnchor.constraint(equalTo: navbar.bottomAnchor).isActive = true
+        maintitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         maintitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         maintitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
 

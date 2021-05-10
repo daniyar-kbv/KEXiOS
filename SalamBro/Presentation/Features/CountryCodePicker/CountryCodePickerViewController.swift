@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class CountryCodePickerViewController: UIViewController {
+public final class CountryCodePickerViewController: ViewController {
     private let viewModel: CountryCodePickerViewModelProtocol
     private let disposeBag: DisposeBag
 
@@ -73,9 +73,9 @@ public final class CountryCodePickerViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func setupNavigationBar() {
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
         navigationItem.title = L10n.CountryCodePicker.Navigation.title
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     private func setup() {

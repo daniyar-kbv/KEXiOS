@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class CountriesListController: UIViewController {
+public final class CountriesListController: ViewController {
     private let viewModel: CountriesListViewModelProtocol
     private let disposeBag: DisposeBag
 
@@ -67,16 +67,12 @@ public final class CountriesListController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func setupNavigationBar() {
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
         navigationController?.navigationBar.layoutIfNeeded()
         navigationController?.navigationBar.titleTextAttributes =
             [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
              NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     private func setup() {

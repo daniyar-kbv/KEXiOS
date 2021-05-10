@@ -9,7 +9,7 @@ import UIKit
 
 import UIKit
 
-class AddressController: UIViewController {
+class AddressController: ViewController {
     fileprivate lazy var rootView = AddressView(delegate: self)
 
     override func viewDidLoad() {

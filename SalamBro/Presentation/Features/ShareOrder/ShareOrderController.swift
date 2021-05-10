@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class ShareOrderController: UIViewController {
+class ShareOrderController: ViewController {
     lazy var webView: WKWebView = {
         let webConfiguration = WKWebViewConfiguration()
         let webView = WKWebView(frame: .zero, configuration: webConfiguration)

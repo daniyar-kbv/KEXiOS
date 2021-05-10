@@ -7,9 +7,7 @@
 
 import UIKit
 
-class RatingController: UIViewController {
-    lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.Rating.title)
-
+class RatingController: ViewController {
     lazy var segmentedControlView: CustomSegmentedControl = {
         let view = CustomSegmentedControl(buttonTitle: [L10n.Rating.overall, L10n.Rating.weekly])
         view.selectorViewColor = .kexRed
@@ -116,26 +114,26 @@ class RatingController: UIViewController {
         setupViews()
         setupConstraints()
     }
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.Rating.title
+        navigationItem.rightBarButtonItem = .init(customView: infoButton)
+    }
 }
 
 extension RatingController {
     func setupViews() {
-        navbar.translatesAutoresizingMaskIntoConstraints = false
-        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         view.backgroundColor = .white
-        navbar.addSubview(infoButton)
         outerView.addSubview(segmentedControlView)
         participationView.addSubview(divider)
         participationView.addSubview(participateButton)
-        [placeLabel, userLabel, sumLabel, outerView, ratingTable, participationView, navbar].forEach {
+        [placeLabel, userLabel, sumLabel, outerView, ratingTable, participationView].forEach {
             view.addSubview($0)
         }
     }
 
     func setupConstraints() {
-        infoButton.rightAnchor.constraint(equalTo: navbar.rightAnchor, constant: -20).isActive = true
-        infoButton.centerYAnchor.constraint(equalTo: navbar.centerYAnchor).isActive = true
-
         placeLabel.topAnchor.constraint(equalTo: outerView.bottomAnchor, constant: 16).isActive = true
         placeLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24).isActive = true
 
@@ -145,12 +143,7 @@ extension RatingController {
         sumLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24).isActive = true
         sumLabel.centerYAnchor.constraint(equalTo: placeLabel.centerYAnchor).isActive = true
 
-        navbar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        navbar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        navbar.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        navbar.heightAnchor.constraint(equalToConstant: 50).isActive = true
-
-        outerView.topAnchor.constraint(equalTo: navbar.bottomAnchor, constant: 8).isActive = true
+        outerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
         outerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         outerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         outerView.heightAnchor.constraint(equalToConstant: 34).isActive = true
@@ -181,13 +174,8 @@ extension RatingController {
         participationView.heightAnchor.constraint(equalToConstant: 75).isActive = true
     }
 
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-
     @objc func infoButtonTapped() {
         let vc = AgreementController()
-        vc.navbar.titleLabel.text = L10n.Rating.information
         navigationController?.pushViewController(vc, animated: true)
     }
 }

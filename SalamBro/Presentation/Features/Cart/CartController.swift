@@ -11,7 +11,7 @@ protocol CartViewDelegate {
     func proceed()
 }
 
-class CartController: UIViewController {
+class CartController: ViewController {
     var mainTabDelegate: MainTabDelegate?
     var cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
 
@@ -23,8 +23,6 @@ class CartController: UIViewController {
         view.delegate = self
         return view
     }()
-
-    lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.Cart.title)
 
     lazy var itemsTableView: UITableView = {
         let table = UITableView()
@@ -89,6 +87,11 @@ class CartController: UIViewController {
         orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
         mainTabDelegate?.setCount(count: cartViewModel.cart.totalProducts)
     }
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.Cart.title
+    }
 }
 
 extension CartController {
@@ -98,10 +101,7 @@ extension CartController {
         footerView.addSubview(orderButton)
         view.addSubview(itemsTableView)
         view.addSubview(footerView)
-        view.addSubview(navbar)
         view.addSubview(shadow)
-        navbar.backButton.isHidden = true
-        navbar.translatesAutoresizingMaskIntoConstraints = false
     }
 
     fileprivate func setupConstraints() {
@@ -113,11 +113,6 @@ extension CartController {
         divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
         divider.widthAnchor.constraint(equalTo: footerView.widthAnchor).isActive = true
 
-        navbar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        navbar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        navbar.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        navbar.heightAnchor.constraint(equalToConstant: 44).isActive = true
-
         orderButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor).isActive = true
         orderButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 24).isActive = true
         orderButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -24).isActive = true
@@ -128,7 +123,7 @@ extension CartController {
         footerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         footerView.heightAnchor.constraint(equalToConstant: 75).isActive = true
 
-        itemsTableView.topAnchor.constraint(equalTo: navbar.bottomAnchor).isActive = true
+        itemsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         itemsTableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         itemsTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         itemsTableView.bottomAnchor.constraint(equalTo: footerView.topAnchor).isActive = true

@@ -30,6 +30,7 @@ public final class CountryCodePickerRouter: Router {
                                                        repository: DIResolver.resolve(GeoRepository.self)!,
                                                        didSelectCountry: didSelectCountry)
             let vc = CountryCodePickerViewController(viewModel: viewModel)
+            baseViewController = vc
             baseVC.present(vc, animated: animated, completion: completion)
         }
     }
@@ -48,5 +49,7 @@ public final class CountryCodePickerRouter: Router {
         switch routeType {}
     }
 
-    public func dismiss(animated _: Bool, completion _: (() -> Void)?) {}
+    public func dismiss(animated: Bool, completion: (() -> Void)?) {
+        baseViewController?.dismiss(animated: animated, completion: completion)
+    }
 }

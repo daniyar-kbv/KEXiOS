@@ -56,5 +56,7 @@ public final class CountriesListRouter: Router {
         }
     }
 
-    public func dismiss(animated _: Bool, completion _: (() -> Void)?) {}
+    public func dismiss(animated: Bool, completion: (() -> Void)?) {
+        baseViewController?.dismiss(animated: animated, completion: completion)
+    }
 }

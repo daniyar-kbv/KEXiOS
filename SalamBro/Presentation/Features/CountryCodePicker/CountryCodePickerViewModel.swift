@@ -35,6 +35,7 @@ public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtoco
         let country = countries[index]
         repository.currentCountry = country.toDomain()
         didSelectCountry?(country)
+        close()
     }
 
     private func download() {
@@ -48,8 +49,8 @@ public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtoco
                                          isSelected: self.repository.currentCountry == $0)
             }
             self.countries = $0.map { CountryUI(from: $0) }
-        }.catch { _ in
-
+        }.catch {
+            self.router.alert(error: $0)
         }.finally {
             self.isAnimating.accept(false)
             self.updateTableView.accept(())

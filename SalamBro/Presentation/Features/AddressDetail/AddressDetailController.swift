@@ -7,9 +7,7 @@
 
 import UIKit
 
-class AddressDetailController: UIViewController {
-    lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.AddressPicker.titleOne)
-
+class AddressDetailController: ViewController {
     lazy var deleteButton: UIButton = {
         let view = UIButton()
         view.tintColor = .kexRed
@@ -57,28 +55,20 @@ class AddressDetailController: UIViewController {
         setupConstraints()
     }
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.AddressPicker.titleOne
+        navigationItem.rightBarButtonItem = .init(customView: deleteButton)
+    }
+
     private func setupViews() {
         view.backgroundColor = .white
-        navbar.addSubview(deleteButton)
-        [addressLabel, addressTitleLabel, commentaryLabel, commentaryTitleLabel, navbar].forEach { view.addSubview($0) }
-        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        navbar.titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
+        [addressLabel, addressTitleLabel, commentaryLabel, commentaryTitleLabel].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
-        deleteButton.snp.makeConstraints {
-            $0.right.equalToSuperview().offset(-20)
-            $0.centerY.equalToSuperview()
-        }
-
-        navbar.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(44)
-        }
-
         addressTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(navbar.snp.bottom).offset(24)
+            $0.top.equalTo(view.snp.topMargin).offset(24)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
         }

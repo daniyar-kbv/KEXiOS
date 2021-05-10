@@ -19,8 +19,6 @@ class VerificationView: UIView {
     var delegate: VerificationViewDelegate?
     var number: String?
 
-    lazy var navbar = CustomNavigationBarView(navigationTitle: "")
-
     lazy var maintitle: UILabel = {
         let label = UILabel()
         label.text = L10n.Verification.title
@@ -83,9 +81,6 @@ class VerificationView: UIView {
 extension VerificationView {
     func setupViews() {
         backgroundColor = .white
-        navbar.translatesAutoresizingMaskIntoConstraints = false
-        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        addSubview(navbar)
         addSubview(maintitle)
         addSubview(subtitle)
         addSubview(otpField)
@@ -93,12 +88,7 @@ extension VerificationView {
     }
 
     func setupConstraints() {
-        navbar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
-        navbar.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor).isActive = true
-        navbar.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor).isActive = true
-        navbar.heightAnchor.constraint(equalToConstant: 44).isActive = true
-
-        maintitle.topAnchor.constraint(equalTo: navbar.bottomAnchor).isActive = true
+        maintitle.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
         maintitle.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         maintitle.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
 

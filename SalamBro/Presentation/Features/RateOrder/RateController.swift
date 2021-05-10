@@ -8,7 +8,7 @@
 import Cosmos
 import UIKit
 
-class RateController: UIViewController {
+class RateController: ViewController {
     var data: [String] = []
 
     var arrayStar13: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.CourierNotFoundClient.text, L10n.RateOrder.Cell.FoodIsMissing.text, L10n.RateOrder.Cell.FoodIsCold.text]

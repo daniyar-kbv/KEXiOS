@@ -7,13 +7,12 @@
 
 import UIKit
 
-class VerificationController: UIViewController {
+class VerificationController: ViewController {
     var number: String = ""
     fileprivate lazy var rootView = VerificationView(delegate: self, number: number)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configUI()
     }
 
     override func loadView() {
@@ -40,12 +39,5 @@ extension VerificationController: VerificationViewDelegate {
     func passCode() {
         let vc = SetNameController()
         navigationController?.pushViewController(vc, animated: true)
-    }
-}
-
-extension VerificationController {
-    private func configUI() {
-        navigationItem.title = ""
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

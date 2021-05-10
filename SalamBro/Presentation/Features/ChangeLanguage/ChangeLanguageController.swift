@@ -8,24 +8,7 @@
 import SnapKit
 import UIKit
 
-class ChangeLanguageController: UIViewController {
-    lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.tintColor = .kexRed
-        button.setImage(UIImage(named: "chevron.left"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return button
-    }()
-
-    lazy var titleLabel: UILabel = {
-        let view = UILabel()
-        view.text = L10n.ChangeLanguage.title
-        view.font = .systemFont(ofSize: 18, weight: .semibold)
-        return view
-    }()
-
+class ChangeLanguageController: ViewController {
     lazy var countriesTableView: UITableView = {
         let table = UITableView()
         table.allowsMultipleSelection = false
@@ -47,34 +30,22 @@ class ChangeLanguageController: UIViewController {
         setupConstraints()
     }
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.ChangeLanguage.title
+    }
+
     fileprivate func setupViews() {
         view.backgroundColor = .white
         view.addSubview(countriesTableView)
-        view.addSubview(backButton)
-        view.addSubview(titleLabel)
     }
 
     fileprivate func setupConstraints() {
-        titleLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalTo(backButton.snp.centerY)
-        }
-
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(10)
-            $0.left.equalToSuperview().offset(18)
-            $0.height.width.equalTo(24)
-        }
-
         countriesTableView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(34)
+            $0.top.equalTo(view.snp.topMargin).offset(34)
             $0.left.right.equalToSuperview()
             $0.bottom.equalTo(view.snp.bottomMargin)
         }
-    }
-
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
     }
 }
 

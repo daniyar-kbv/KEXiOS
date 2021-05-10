@@ -10,7 +10,7 @@ import UIKit
 import YandexMapKit
 import YandexMapKitSearch
 
-class MapViewController: UIViewController {
+class MapViewController: ViewController {
     var targetLocation = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
     let locationManager = CLLocationManager()
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)

@@ -8,14 +8,7 @@
 import SnapKit
 import UIKit
 
-class SupportController: UIViewController {
-    lazy var titleLabel: UILabel = {
-        let view = UILabel()
-        view.text = L10n.Support.title
-        view.font = .systemFont(ofSize: 18, weight: .semibold)
-        return view
-    }()
-
+class SupportController: ViewController {
     lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
@@ -99,19 +92,19 @@ class SupportController: UIViewController {
         setupConstraints()
     }
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.Support.title
+    }
+
     func setupViews() {
         [instagramView, tiktokView, mailView, vkView].forEach { logoStack.addArrangedSubview($0) }
-        [titleLabel, tableView, logoStack, callButton].forEach { view.addSubview($0) }
+        [tableView, logoStack, callButton].forEach { view.addSubview($0) }
     }
 
     func setupConstraints() {
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(12)
-            $0.centerX.equalToSuperview()
-        }
-
         tableView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(34)
+            $0.top.equalTo(view.snp.topMargin).offset(34)
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
             $0.bottom.equalTo(logoStack.snp.top).offset(-16)

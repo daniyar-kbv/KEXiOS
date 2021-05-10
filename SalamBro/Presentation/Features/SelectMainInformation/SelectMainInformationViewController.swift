@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class SelectMainInformationViewController: UIViewController {
+public final class SelectMainInformationViewController: ViewController {
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
 

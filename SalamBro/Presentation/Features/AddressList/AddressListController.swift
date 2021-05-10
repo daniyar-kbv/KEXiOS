@@ -8,9 +8,7 @@
 import SnapKit
 import UIKit
 
-class AddressListController: UIViewController {
-    private lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.AddressPicker.titleMany)
-
+class AddressListController: ViewController {
     var addresses = ["Алматы, мкр. Орбита 1, 41", "проспект Абылай Хана, 131"]
 
     lazy var citiesTableView: UITableView = {
@@ -34,22 +32,19 @@ class AddressListController: UIViewController {
         setupConstraints()
     }
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.AddressPicker.titleMany
+    }
+
     func setupViews() {
         view.backgroundColor = .white
-        [navbar, citiesTableView].forEach { view.addSubview($0) }
-        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        navbar.titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
+        [citiesTableView].forEach { view.addSubview($0) }
     }
 
     func setupConstraints() {
-        navbar.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(44)
-        }
-
         citiesTableView.snp.makeConstraints {
-            $0.top.equalTo(navbar.snp.bottom).offset(24)
+            $0.top.equalTo(view.snp.topMargin).offset(24)
             $0.left.right.bottom.equalToSuperview()
         }
     }
@@ -80,7 +75,6 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
         print(indexPath.row)
         let vc = AddressDetailController()
         vc.addressLabel.text = addresses[indexPath.row]
-        vc.navbar.titleLabel.text = L10n.AddressPicker.titleOne
         vc.commentaryLabel.text = "Квартира, подъезд, домофон, этаж, и очень длинный комментарий примерно в две"
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -88,6 +82,7 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 50
     }
+
 //    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
 //        print(indexPath.row)
 //        let vc = AddressDetailController()

@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-public final class AddressPickController: UIViewController {
+public final class AddressPickController: ViewController {
     private let viewModel: AddressPickerViewModelProtocol
     private let disposeBag: DisposeBag
 
