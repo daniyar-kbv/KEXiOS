@@ -116,9 +116,7 @@ extension AddressPickController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let address = viewModel.didSelect(index: indexPath.row)
         delegate?.didSelect(controller: self, address: address)
-        let vc = BrandsController(viewModel: BrandViewModel(repository: DIResolver.resolve(BrandRepository.self)!)) // TODO:
-        vc.modalPresentationStyle = .pageSheet
-        present(vc, animated: true, completion: nil)
+        dismiss(animated: true)
     }
 
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {

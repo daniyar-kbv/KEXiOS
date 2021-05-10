@@ -24,7 +24,6 @@ public final class SelectMainInformationViewController: UIViewController {
         let view = DropDownTextField(options: viewModel.countries)
         view.delegate = self
         view.placeholderText = L10n.SelectMainInfo.country
-        view.isUserInteractionEnabled = false
         return view
     }()
 
@@ -32,7 +31,6 @@ public final class SelectMainInformationViewController: UIViewController {
         let view = DropDownTextField(options: viewModel.cities)
         view.delegate = self
         view.placeholderText = L10n.SelectMainInfo.city
-        view.isUserInteractionEnabled = false
         return view
     }()
 
@@ -61,7 +59,6 @@ public final class SelectMainInformationViewController: UIViewController {
         }
         view.delegate = self
         view.placeholderText = L10n.SelectMainInfo.address
-        view.isUserInteractionEnabled = false
         return view
     }()
 
