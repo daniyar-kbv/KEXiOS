@@ -23,7 +23,7 @@ public final class AddressPickerViewModel: AddressPickerViewModelProtocol {
         let address = addresses[index]
         repository.currentAddress = address
         didSelectAddress?(addresses[index])
-        router.dismiss()
+        close()
     }
 
     public init(router: Router,

@@ -15,7 +15,6 @@ public final class AddressPickerRouter: Router {
     public enum RouteType {}
 
     public var baseViewController: UIViewController?
-    private var context: PresentationContext?
 
     public func present(on baseVC: UIViewController, animated: Bool, context: Any?, completion: (() -> Void)?) {
         guard let context = context as? PresentationContext else {
@@ -24,7 +23,6 @@ public final class AddressPickerRouter: Router {
         }
 
         baseViewController = baseVC
-        self.context = context
 
         switch context {
         case let .select(didSelectAddress):
@@ -32,7 +30,9 @@ public final class AddressPickerRouter: Router {
                                                    repository: DIResolver.resolve(GeoRepository.self)!,
                                                    didSelectAddress: didSelectAddress)
             let vc = AddressPickController(viewModel: viewModel)
-            baseVC.present(vc, animated: animated, completion: completion)
+            let navVC = NavigationController(rootViewController: vc)
+            baseViewController = vc
+            baseVC.present(navVC, animated: animated, completion: completion)
         }
     }
 
@@ -51,6 +51,6 @@ public final class AddressPickerRouter: Router {
     }
 
     public func dismiss(animated: Bool, completion: (() -> Void)?) {
-        baseViewController?.dismiss(animated: animated, completion: completion)
+        baseViewController?.navigationController?.dismiss(animated: animated, completion: completion)
     }
 }

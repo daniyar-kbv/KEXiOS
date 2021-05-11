@@ -32,12 +32,15 @@ class ShareOrderController: ViewController {
         return view
     }()
 
-    lazy var navbar = CustomNavigationBarView(navigationTitle: "")
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
+    }
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.rightBarButtonItem = .init(customView: submitButton)
     }
 
     func setupUI() {
@@ -45,24 +48,12 @@ class ShareOrderController: ViewController {
         webView.loadHTMLString(htmlString, baseURL: nil)
         view.backgroundColor = .white
         contentView.backgroundColor = .white
-        navbar.translatesAutoresizingMaskIntoConstraints = false
-        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         contentView.addSubview(webView)
-        navbar.addSubview(submitButton)
         view.addSubview(contentView)
-        view.addSubview(navbar)
     }
 
     fileprivate func setupConstraints() {
-        submitButton.rightAnchor.constraint(equalTo: navbar.rightAnchor, constant: -24).isActive = true
-        submitButton.centerYAnchor.constraint(equalTo: navbar.centerYAnchor).isActive = true
-
-        navbar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        navbar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        navbar.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        navbar.heightAnchor.constraint(equalToConstant: 43).isActive = true
-
-        contentView.topAnchor.constraint(equalTo: navbar.bottomAnchor).isActive = true
+        contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         contentView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         contentView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true

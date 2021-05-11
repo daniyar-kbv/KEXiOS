@@ -14,12 +14,6 @@ public final class AddressPickController: ViewController {
     private let viewModel: AddressPickerViewModelProtocol
     private let disposeBag: DisposeBag
 
-    private lazy var navbar: CustomNavigationBarView = {
-        let navBar = CustomNavigationBarView(navigationTitle: L10n.AddressPicker.titleOne)
-        navBar.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-        return navBar
-    }()
-
     private lazy var addLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .medium)
@@ -63,6 +57,11 @@ public final class AddressPickController: ViewController {
 
     private func bind() {}
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.AddressPicker.titleMany
+    }
+
     private func setup() {
         setupViews()
         setupConstraints()
@@ -70,18 +69,12 @@ public final class AddressPickController: ViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [navbar, addLabel, plusButton, tableView].forEach { view.addSubview($0) }
+        [addLabel, plusButton, tableView].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
-        navbar.snp.makeConstraints {
-            $0.top.equalTo(view.snp.top).offset(12)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(44)
-        }
-
         addLabel.snp.makeConstraints {
-            $0.top.equalTo(navbar.snp.bottom).offset(24)
+            $0.top.equalTo(view.snp.topMargin).offset(24)
             $0.left.equalToSuperview().offset(24)
         }
 

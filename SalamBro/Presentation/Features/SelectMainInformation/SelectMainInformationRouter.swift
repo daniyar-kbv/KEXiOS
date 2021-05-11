@@ -38,10 +38,9 @@ public final class SelectMainInformationRouter: Router {
                                                            brandRepository: DIResolver.resolve(BrandRepository.self)!,
                                                            didSave: didSave)
             let vc = SelectMainInformationViewController(viewModel: viewModel)
+            let navVC = NavigationController(rootViewController: vc)
             baseViewController = vc
-            baseVC.present(vc,
-                           animated: animated,
-                           completion: completion)
+            baseVC.present(navVC, animated: animated, completion: completion)
         }
     }
 
@@ -69,6 +68,6 @@ public final class SelectMainInformationRouter: Router {
     }
 
     public func dismiss(animated: Bool, completion: (() -> Void)?) {
-        baseViewController?.dismiss(animated: animated, completion: completion)
+        baseViewController?.navigationController?.dismiss(animated: animated, completion: completion)
     }
 }

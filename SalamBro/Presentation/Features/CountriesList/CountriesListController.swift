@@ -14,7 +14,7 @@ public final class CountriesListController: ViewController {
     private let viewModel: CountriesListViewModelProtocol
     private let disposeBag: DisposeBag
 
-    private lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.CountriesList.Navigation.title)
+    override var shouldShowBackItem: Bool { false }
 
     private lazy var countriesTableView: UITableView = {
         let view = UITableView()
@@ -51,12 +51,6 @@ public final class CountriesListController: ViewController {
         bind()
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationBar()
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
     private func bind() {
         viewModel.updateTableView
             .bind(to: countriesTableView.rx.reload)
@@ -69,6 +63,7 @@ public final class CountriesListController: ViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
+        navigationItem.title = L10n.CountriesList.Navigation.title
         navigationController?.navigationBar.layoutIfNeeded()
         navigationController?.navigationBar.titleTextAttributes =
             [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
@@ -82,22 +77,12 @@ public final class CountriesListController: ViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        view.addSubview(navbar)
         view.addSubview(countriesTableView)
-
-        navbar.backButton.isHidden = true
-        navbar.titleLabel.font = .systemFont(ofSize: 26, weight: .regular)
     }
 
     private func setupConstraints() {
-        navbar.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(44)
-        }
-
         countriesTableView.snp.makeConstraints {
-            $0.top.equalTo(navbar.snp.bottom).offset(16)
+            $0.top.equalTo(view.snp.topMargin).offset(16)
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
             $0.bottom.equalToSuperview()

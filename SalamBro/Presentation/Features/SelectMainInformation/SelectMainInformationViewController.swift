@@ -14,12 +14,6 @@ public final class SelectMainInformationViewController: ViewController {
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
 
-    private lazy var navbar: CustomNavigationBarView = {
-        let navBar = CustomNavigationBarView(navigationTitle: L10n.SelectMainInfo.title)
-        navBar.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-        return navBar
-    }()
-
     private lazy var countryTextField: DropDownTextField = {
         let view = DropDownTextField(options: viewModel.countries)
         view.delegate = self
@@ -115,18 +109,12 @@ public final class SelectMainInformationViewController: ViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [navbar, stackView, saveButton].forEach { view.addSubview($0) }
+        [stackView, saveButton].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
-        navbar.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(12)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(44)
-        }
-
         stackView.snp.makeConstraints {
-            $0.top.equalTo(navbar.snp.bottom).offset(24)
+            $0.top.equalTo(view.snp.topMargin).offset(24)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
         }
