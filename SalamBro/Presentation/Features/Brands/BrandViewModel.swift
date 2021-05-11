@@ -14,7 +14,6 @@ public protocol BrandViewModelProtocol: ViewModel {
     var cellViewModels: [BrandCellViewModelProtocol] { get }
     var ratios: [(Float, Float)] { get }
     var updateCollectionView: BehaviorRelay<Void?> { get }
-    var isAnimating: BehaviorRelay<Bool> { get }
     func refresh()
     func didSelect(index: Int)
 }
@@ -31,7 +30,6 @@ public final class BrandViewModel: BrandViewModelProtocol {
     public var cellViewModels: [BrandCellViewModelProtocol]
     public var ratios: [(Float, Float)]
     public var updateCollectionView: BehaviorRelay<Void?>
-    public var isAnimating: BehaviorRelay<Bool>
     private var brands: [BrandUI]
     private let didSelectBrand: ((BrandUI) -> Void)?
 
@@ -48,7 +46,6 @@ public final class BrandViewModel: BrandViewModelProtocol {
         ratios = []
         brands = []
         updateCollectionView = .init(value: nil)
-        isAnimating = .init(value: false)
         download()
     }
 
@@ -70,7 +67,7 @@ public final class BrandViewModel: BrandViewModelProtocol {
     }
 
     private func download() {
-        isAnimating.accept(true)
+        startAnimation()
         firstly {
             repository.downloadBrands()
         }.done {
@@ -83,7 +80,7 @@ public final class BrandViewModel: BrandViewModelProtocol {
         }.catch {
             self.router.alert(error: $0)
         }.finally {
-            self.isAnimating.accept(false)
+            self.stopAnimation()
             self.updateCollectionView.accept(())
         }
     }

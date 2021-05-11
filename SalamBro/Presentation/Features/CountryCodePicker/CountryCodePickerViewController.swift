@@ -67,10 +67,6 @@ public final class CountryCodePickerViewController: ViewController {
         viewModel.updateTableView
             .bind(to: citiesTableView.rx.reload)
             .disposed(by: disposeBag)
-
-        viewModel.isAnimating
-            .bind(to: refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
     }
 
     override func setupNavigationBar() {

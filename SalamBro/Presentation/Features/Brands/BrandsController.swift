@@ -59,10 +59,6 @@ public final class BrandsController: ViewController {
                                                                       itemSpacing: 16)
             }.bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
-
-        viewModel.isAnimating
-            .bind(to: refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
     }
 
     override func setupNavigationBar() {

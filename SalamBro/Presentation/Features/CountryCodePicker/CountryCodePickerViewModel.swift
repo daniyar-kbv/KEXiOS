@@ -13,7 +13,6 @@ import RxSwift
 public protocol CountryCodePickerViewModelProtocol: ViewModel {
     var cellViewModels: [CountryCodeCellViewModelProtocol] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
-    var isAnimating: BehaviorRelay<Bool> { get }
     func update()
     func didSelect(index: Int)
 }
@@ -23,7 +22,6 @@ public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtoco
     private let repository: GeoRepository
     public var cellViewModels: [CountryCodeCellViewModelProtocol]
     public var updateTableView: BehaviorRelay<Void?>
-    public var isAnimating: BehaviorRelay<Bool>
     private var countries: [CountryUI]
     private let didSelectCountry: ((CountryUI) -> Void)?
 
@@ -39,7 +37,7 @@ public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtoco
     }
 
     private func download() {
-        isAnimating.accept(true)
+        startAnimation()
         firstly {
             repository.downloadCountries()
         }.done {
@@ -52,7 +50,7 @@ public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtoco
         }.catch {
             self.router.alert(error: $0)
         }.finally {
-            self.isAnimating.accept(false)
+            self.stopAnimation()
             self.updateTableView.accept(())
         }
     }
@@ -66,7 +64,6 @@ public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtoco
         self.didSelectCountry = didSelectCountry
         cellViewModels = []
         updateTableView = .init(value: nil)
-        isAnimating = .init(value: false)
         countries = []
         download()
     }

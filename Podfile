@@ -14,6 +14,7 @@ target 'SalamBro' do
   pod 'Reusable'
   pod 'Cache'
   pod 'DropDown'
+  pod 'SVProgressHUD'
 
   # Pods for SalamBro
   pod 'InputMask'

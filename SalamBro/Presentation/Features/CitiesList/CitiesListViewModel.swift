@@ -12,7 +12,6 @@ import RxSwift
 
 public protocol CitiesListViewModelProtocol: ViewModel {
     var cities: [String] { get }
-    var isAnimating: BehaviorRelay<Bool> { get }
     var updateTableView: BehaviorRelay<Void?> { get }
     func update()
     func didSelect(index: Int)
@@ -28,7 +27,6 @@ public final class CitiesListViewModel: CitiesListViewModelProtocol {
     private let repository: GeoRepository
     private let type: FlowType
     public var cities: [String]
-    public var isAnimating: BehaviorRelay<Bool>
     public var updateTableView: BehaviorRelay<Void?>
     private let countryId: Int
     private let didSelectCity: ((String) -> Void)?
@@ -51,7 +49,7 @@ public final class CitiesListViewModel: CitiesListViewModelProtocol {
     }
 
     private func download() {
-        isAnimating.accept(true)
+        startAnimation()
         firstly {
             repository.downloadCities(country: self.countryId)
         }.done {
@@ -59,7 +57,7 @@ public final class CitiesListViewModel: CitiesListViewModelProtocol {
         }.catch {
             self.router.alert(error: $0)
         }.finally {
-            self.isAnimating.accept(false)
+            self.stopAnimation()
             self.updateTableView.accept(())
         }
     }
@@ -76,7 +74,6 @@ public final class CitiesListViewModel: CitiesListViewModelProtocol {
         self.didSelectCity = didSelectCity
         countryId = id
         cities = []
-        isAnimating = .init(value: false)
         updateTableView = .init(value: nil)
         download()
     }

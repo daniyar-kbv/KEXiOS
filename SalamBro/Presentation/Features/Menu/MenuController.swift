@@ -91,10 +91,6 @@ public final class MenuController: ViewController {
             .bind(to: itemTableView.rx.reload)
             .disposed(by: disposeBag)
 
-        viewModel.isAnimating
-            .bind(to: refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
-
         viewModel.brandName
             .bind(to: brandLabel.rx.text)
             .disposed(by: disposeBag)

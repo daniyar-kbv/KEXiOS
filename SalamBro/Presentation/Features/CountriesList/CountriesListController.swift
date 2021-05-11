@@ -55,10 +55,6 @@ public final class CountriesListController: ViewController {
         viewModel.updateTableView
             .bind(to: countriesTableView.rx.reload)
             .disposed(by: disposeBag)
-
-        viewModel.isAnimating
-            .bind(to: refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
     }
 
     override func setupNavigationBar() {

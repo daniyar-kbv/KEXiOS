@@ -9,12 +9,12 @@ import Foundation
 import PromiseKit
 import RxCocoa
 import RxSwift
+import SVProgressHUD
 
 public protocol MenuViewModelProtocol: ViewModel {
     var headerViewModels: [ViewModel?] { get }
     var cellViewModels: [[ViewModel]] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
-    var isAnimating: BehaviorRelay<Bool> { get }
     var brandName: BehaviorRelay<String?> { get }
     func update()
     func selectMainInfo()
@@ -29,7 +29,6 @@ public final class MenuViewModel: MenuViewModelProtocol {
     public var headerViewModels: [ViewModel?]
     public var cellViewModels: [[ViewModel]]
     public var updateTableView: BehaviorRelay<Void?>
-    public var isAnimating: BehaviorRelay<Bool>
     public var brandName: BehaviorRelay<String?>
 
     init(router: Router,
@@ -41,7 +40,6 @@ public final class MenuViewModel: MenuViewModelProtocol {
         cellViewModels = []
         headerViewModels = []
         updateTableView = .init(value: nil)
-        isAnimating = .init(value: false)
         self.menuRepository = menuRepository
         self.brandRepository = brandRepository
         self.geoRepository = geoRepository
@@ -69,9 +67,7 @@ public final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func download() {
-        guard !isAnimating.value else { return }
-        isAnimating.accept(true)
-
+        startAnimation()
         cellViewModels = []
         headerViewModels = []
         updateTableView.accept(())
@@ -102,7 +98,7 @@ public final class MenuViewModel: MenuViewModelProtocol {
             self.router.alert(error: $0)
         }.finally {
             self.updateTableView.accept(())
-            self.isAnimating.accept(false)
+            self.stopAnimation()
         }
     }
 }

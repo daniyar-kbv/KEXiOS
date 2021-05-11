@@ -49,10 +49,6 @@ public final class CitiesListController: ViewController {
     }
 
     private func bind() {
-        viewModel.isAnimating
-            .bind(to: refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
-
         viewModel.updateTableView
             .bind(to: tableView.rx.reload)
             .disposed(by: disposeBag)
