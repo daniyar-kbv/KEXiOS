@@ -21,8 +21,6 @@ public final class BrandsController: ViewController {
         return action
     }()
 
-    private lazy var navbar = CustomNavigationBarView(navigationTitle: L10n.Brands.Navigation.title)
-
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
@@ -67,6 +65,14 @@ public final class BrandsController: ViewController {
             .disposed(by: disposeBag)
     }
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.Brands.Navigation.title
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+        ]
+    }
+
     private func setup() {
         setupViews()
         setupConstraints()
@@ -74,23 +80,14 @@ public final class BrandsController: ViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        view.addSubview(navbar)
         view.addSubview(collectionView)
-        navbar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        navbar.titleLabel.font = .systemFont(ofSize: 26, weight: .regular)
     }
 
     private func setupConstraints() {
-        navbar.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(44)
-        }
-
         collectionView.snp.makeConstraints {
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
-            $0.top.equalTo(navbar.snp.bottom).offset(8)
+            $0.top.equalTo(view.snp.topMargin).offset(8)
             $0.bottom.equalTo(view.snp.bottom)
         }
     }

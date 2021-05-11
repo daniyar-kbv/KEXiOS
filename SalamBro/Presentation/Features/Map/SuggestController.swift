@@ -42,6 +42,11 @@ class SuggestController: ViewController {
         delegate?.mapShadow(toggle: true)
     }
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
     func setupViews() {
         searchBar.placeholder = L10n.Suggest.AddressField.title
         cancelButton.setTitle(L10n.Suggest.Button.title, for: .normal)

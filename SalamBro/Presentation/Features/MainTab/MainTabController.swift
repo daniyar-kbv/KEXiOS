@@ -85,7 +85,7 @@ extension MainTabController {
     }
 
     func templateNavigationController(title: String, image: UIImage?, rootViewController: UIViewController) -> UINavigationController {
-        let nav = QFNavigationController(rootViewController: rootViewController)
+        let nav = NavigationController(rootViewController: rootViewController)
         nav.tabBarItem.title = title
         nav.tabBarItem.image = image
         nav.navigationBar.tintColor = .white

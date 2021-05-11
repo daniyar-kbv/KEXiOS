@@ -38,6 +38,11 @@ class AddressSheetController: ViewController {
         }
     }
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
     func setupViews() {
         addressField.placeholder = L10n.MapView.AddressField.title
         commentaryLabel.text = L10n.MapView.CommentaryLabel.title

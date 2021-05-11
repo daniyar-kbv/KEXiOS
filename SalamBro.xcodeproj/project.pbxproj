@@ -144,6 +144,7 @@
 		10468D05ADE74298B254F3535BBE9F6F /* MenuRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693C5AFFBE854B1E6A26D41045DAA54 /* MenuRouter.swift */; };
 		6A7945358129F690820556EE0D53EF33 /* MenuUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C389CCC2D1DC71D82F424A7F9CA434 /* MenuUI.swift */; };
 		C40464BD631044407C3EDAD10DA2A0F8 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */; };
+		5511AAB58AAC1D89074EBB44E8919753 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6D50FB7B1ACD7D182B37D756B22E4E /* NavigationController.swift */; };
 		ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */; };
 		52E54610F9597E5FB759023469158B05 /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38E1406896D56B0D3EB30561C58641D /* OTPView.swift */; };
 		836766507334DCE6B1273433E608713C /* OrderHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */; };
@@ -153,7 +154,6 @@
 		772A73F421F49431296C00EDC5197B97 /* Pods_SalamBro_SalamBroUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AF4E2B9C5CAC0C1D126B547533E2FB0 /* Pods_SalamBro_SalamBroUITests.framework */; };
 		DDDA6D913F65119481671703D67E0D78 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B432D20EEDD2E0AD9E70AB79CAB6A6 /* ProfileController.swift */; };
 		DDB97E999180D5DF89B4C40E50D70EA3 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A56E17FF10703C24CC4172E0F01609 /* ProfileView.swift */; };
-		A59BE5D03D0D241F587A314879280C95 /* QFNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123AAD67299FC2F65F5FF6C8E3D1ADFC /* QFNavigationController.swift */; };
 		A26DAD8BD3AE115B3711AFA885725699 /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */; };
 		C53C4DDB0C305025A6F252C490347231 /* RateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B024823DA276215DE019CC233F211E2C /* RateController.xib */; };
 		F5BD4046B597F112547C5320F4898774 /* RateItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */; };
@@ -353,6 +353,7 @@
 		4693C5AFFBE854B1E6A26D41045DAA54 /* MenuRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRouter.swift; sourceTree = "<group>"; };
 		40C389CCC2D1DC71D82F424A7F9CA434 /* MenuUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuUI.swift; sourceTree = "<group>"; };
 		6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		FB6D50FB7B1ACD7D182B37D756B22E4E /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		C38E1406896D56B0D3EB30561C58641D /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
 		64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryController.swift; sourceTree = "<group>"; };
@@ -368,7 +369,6 @@
 		7AF4E2B9C5CAC0C1D126B547533E2FB0 /* Pods_SalamBro_SalamBroUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SalamBro_SalamBroUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3B432D20EEDD2E0AD9E70AB79CAB6A6 /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		D8A56E17FF10703C24CC4172E0F01609 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		123AAD67299FC2F65F5FF6C8E3D1ADFC /* QFNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QFNavigationController.swift; sourceTree = "<group>"; };
 		EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
 		B024823DA276215DE019CC233F211E2C /* RateController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RateController.xib; sourceTree = "<group>"; };
 		EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateItemCell.swift; sourceTree = "<group>"; };
@@ -726,7 +726,7 @@
 		573BBF43A6F98EDE156BE5383BD92FD4 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				123AAD67299FC2F65F5FF6C8E3D1ADFC /* QFNavigationController.swift */,
+				FB6D50FB7B1ACD7D182B37D756B22E4E /* NavigationController.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -1706,13 +1706,13 @@
 				10468D05ADE74298B254F3535BBE9F6F /* MenuRouter.swift in Sources */,
 				6A7945358129F690820556EE0D53EF33 /* MenuUI.swift in Sources */,
 				C40464BD631044407C3EDAD10DA2A0F8 /* MenuViewModel.swift in Sources */,
+				5511AAB58AAC1D89074EBB44E8919753 /* NavigationController.swift in Sources */,
 				ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */,
 				52E54610F9597E5FB759023469158B05 /* OTPView.swift in Sources */,
 				836766507334DCE6B1273433E608713C /* OrderHistoryController.swift in Sources */,
 				7B1C03CF0090494FD9F085DC483E94DF /* OrderTestCell.swift in Sources */,
 				DDDA6D913F65119481671703D67E0D78 /* ProfileController.swift in Sources */,
 				DDB97E999180D5DF89B4C40E50D70EA3 /* ProfileView.swift in Sources */,
-				A59BE5D03D0D241F587A314879280C95 /* QFNavigationController.swift in Sources */,
 				A26DAD8BD3AE115B3711AFA885725699 /* RateController.swift in Sources */,
 				F5BD4046B597F112547C5320F4898774 /* RateItemCell.swift in Sources */,
 				60B654CFA78535C5C47844F489215806 /* RatingCell.swift in Sources */,

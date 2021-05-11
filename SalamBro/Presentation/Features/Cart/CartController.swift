@@ -12,6 +12,7 @@ protocol CartViewDelegate {
 }
 
 class CartController: ViewController {
+    override var shouldShowBackItem: Bool { false }
     var mainTabDelegate: MainTabDelegate?
     var cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
 

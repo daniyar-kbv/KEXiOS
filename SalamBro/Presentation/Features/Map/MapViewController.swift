@@ -94,15 +94,14 @@ class MapViewController: ViewController {
         locationManager.requestWhenInUseAuthorization()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-//        addBottomSheetView()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         addBottomSheetView()
+    }
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     func setupViews() {

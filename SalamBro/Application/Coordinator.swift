@@ -37,7 +37,7 @@ public final class Coordinator {
                                                didSelectCountry: nil)
         let vc = CountriesListController(viewModel: viewModel)
         router.baseViewController = vc
-        let navVC = QFNavigationController(rootViewController: vc)
+        let navVC = NavigationController(rootViewController: vc)
         setRootView(navVC)
     }
 

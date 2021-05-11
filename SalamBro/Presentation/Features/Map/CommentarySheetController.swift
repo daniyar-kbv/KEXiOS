@@ -37,6 +37,11 @@ class CommentarySheetController: ViewController {
         delegate?.mapShadow(toggle: false)
     }
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
     func setupViews() {
         commentaryField.placeholder = L10n.Commentary.AddressField.title
         proceedButton.setTitle(L10n.Commentary.Button.title, for: .normal)
