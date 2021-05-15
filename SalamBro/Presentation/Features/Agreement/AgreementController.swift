@@ -5,29 +5,45 @@
 //  Created by Arystan on 3/10/21.
 //
 
+import SnapKit
 import UIKit
 import WebKit
-class AgreementController: UIViewController {
-    
-    fileprivate lazy var rootView = AgreementView(delegate: self)
+
+class AgreementController: ViewController {
+    lazy var webView: WKWebView = {
+        let webConfiguration = WKWebViewConfiguration()
+        let webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.uiDelegate = self
+        return webView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configUI()
+        setupViews()
+        setupConstraints()
     }
-    
-    override func loadView() {
-        view = rootView
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.Rating.information
     }
 }
 
-extension AgreementController {
-    private func configUI() {
-        navigationItem.title = L10n.Agreement.Navigation.title
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+private extension AgreementController {
+    func setupViews() {
+        view.backgroundColor = .arcticWhite
+        let myURL = URL(string: "https://www.google.com")
+        let myRequest = URLRequest(url: myURL!)
+        webView.load(myRequest)
+        view.addSubview(webView)
+    }
+
+    func setupConstraints() {
+        webView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin).offset(24)
+            $0.left.right.bottom.equalToSuperview()
+        }
     }
 }
 
-extension AgreementController: WKUIDelegate {
-    
-}
+extension AgreementController: WKUIDelegate {}

@@ -5,27 +5,26 @@
 //  Created by Arystan on 4/6/21.
 //
 
+import CoreLocation
 import UIKit
 import YandexMapKitSearch
-import CoreLocation
 
-class SuggestController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UITextField!
-    @IBOutlet weak var doneButton: UIButton!
-    
+class SuggestController: ViewController {
+    @IBOutlet var contentView: UIView!
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var searchBar: UITextField!
+    @IBOutlet var cancelButton: UIButton!
+
     let locationManager = CLLocationManager()
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
-    
+
     var suggestSession: YMKSearchSuggestSession!
     var suggestResults: [YMKSuggestItem] = []
     var targetLocation = YMKPoint()
-    
+
     var fullQuery: String = ""
-    var delegate: MapDelegate?
-    
+    weak var delegate: MapDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -33,21 +32,29 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "SuggestCell", bundle: nil), forCellReuseIdentifier: "SuggestCell")
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .onDrag
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         delegate?.mapShadow(toggle: true)
     }
-    
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
     func setupViews() {
         searchBar.placeholder = L10n.Suggest.AddressField.title
-        doneButton.setTitle(L10n.Suggest.Button.title, for: .normal)
+        cancelButton.setTitle(L10n.Suggest.Button.title, for: .normal)
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 10
         contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
-    
+
     func onSuggestResponse(_ items: [YMKSuggestItem]) {
         suggestResults = items
         tableView.reloadData()
@@ -61,23 +68,22 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
         } else if suggestError.isKind(of: YRTRemoteError.self) {
             errorMessage = "Remote server error"
         }
-        
+
         let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
+
         present(alert, animated: true, completion: nil)
     }
-    
+
     @IBAction func queryChange(_ sender: UITextField) {
-        let suggestHandler = {(response: [YMKSuggestItem]?, error: Error?) -> Void in
+        let suggestHandler = { (response: [YMKSuggestItem]?, error: Error?) -> Void in
             if let items = response {
                 self.onSuggestResponse(items)
             } else {
                 self.onSuggestError(error!)
             }
         }
-        let locValue: CLLocationCoordinate2D = locationManager.location!.coordinate
-        let point = YMKPoint(latitude: locValue.latitude, longitude: locValue.longitude)
+        let point = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
         suggestSession.suggest(
             withText: sender.text!,
             window: YMKBoundingBox(southWest: point, northEast: point),
@@ -85,32 +91,31 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
             responseHandler: suggestHandler
         )
     }
-    
-    @IBAction func selectAddressAction(_ sender: UIButton) {
-        if searchBar.text != nil {
-            self.dismiss(animated: true) {
-                self.delegate?.reverseGeocoding(searchQuery: self.fullQuery, title: self.searchBar.text!)
-                self.delegate?.mapShadow(toggle: false)
-                print("exit select adreess view")
-            }
+
+    @IBAction func cancelAction(_: UIButton) {
+        dismiss(animated: true) {
+            self.delegate?.mapShadow(toggle: false)
         }
     }
-    
+}
+
+extension SuggestController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt path: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SuggestCell", for: path) as! SuggestCell
         cell.addressTitle.text = suggestResults[path.row].title.text
         cell.subtitleTitle.text = suggestResults[path.row].subtitle?.text
+        cell.selectionStyle = .none
         return cell
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         return 1
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return suggestResults.count
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! SuggestCell
         searchBar.text = cell.addressTitle.text
@@ -120,5 +125,9 @@ class SuggestController: UIViewController, UITableViewDataSource, UITableViewDel
             fullQuery = cell.addressTitle.text!
         }
         tableView.deselectRow(at: indexPath, animated: true)
+        dismiss(animated: true) {
+            self.delegate?.reverseGeocoding(searchQuery: self.fullQuery, title: self.searchBar.text!)
+            self.delegate?.mapShadow(toggle: false)
+        }
     }
 }

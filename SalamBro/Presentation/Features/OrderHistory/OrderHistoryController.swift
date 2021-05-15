@@ -8,30 +8,84 @@
 import UIKit
 import WebKit
 
-class OrderHistoryController: UIViewController {
+protocol OrderHistoryDelegate {
+    func share()
+    func rate()
+}
 
-    fileprivate lazy var rootView = OrderHistoryView()
-    
+class OrderHistoryController: ViewController {
+    lazy var tableView: UITableView = {
+        let view = UITableView()
+        view.separatorColor = .mildBlue
+        view.register(OrderTestCell.self, forCellReuseIdentifier: "Cell")
+        view.showsVerticalScrollIndicator = false
+        view.backgroundColor = .clear
+        view.estimatedRowHeight = 500
+        view.tableFooterView = UIView()
+        view.delegate = self
+        view.dataSource = self
+        view.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
+        return view
+
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupViews()
+        setupConstraints()
     }
-    
-    override func loadView() {
-        view = rootView
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
     }
-    
-    func setupUI() {
-        navigationController?.title = "Order history"
-        rootView.shareToInstagramButton.addTarget(self, action: #selector(shareToInstagramAction), for: .touchUpInside)
-        rootView.rateOrderButton.addTarget(self, action: #selector(rateOrderAction), for: .touchUpInside)
+
+    override internal func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.OrderHistory.title
     }
-    
-    @objc func shareToInstagramAction() {
+
+    func setupViews() {
+        view.backgroundColor = .white
+        view.addSubview(tableView)
+    }
+
+    func setupConstraints() {
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.bottom.equalTo(view.snp.bottomMargin)
+        }
+    }
+
+    @objc func backButtonTapped(_: UIButton!) {
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        4
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! OrderTestCell
+        cell.delegate = self
+        cell.selectionStyle = .none
+        return cell
+    }
+}
+
+extension OrderHistoryController: OrderHistoryDelegate {
+    func share() {
         navigationController?.pushViewController(ShareOrderController(), animated: true)
     }
-    
-    @objc func rateOrderAction() {
-        navigationController?.pushViewController(RateController(), animated: true)
+
+    func rate() {
+        let vc = RateController()
+        vc.modalPresentationStyle = .pageSheet
+        present(vc, animated: true, completion: nil)
     }
 }

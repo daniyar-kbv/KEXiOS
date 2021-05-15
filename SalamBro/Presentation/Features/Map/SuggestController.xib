@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -9,8 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SuggestController" customModule="SalamBro" customModuleProvider="target">
             <connections>
+                <outlet property="cancelButton" destination="IPl-qu-Lsn" id="XK9-NX-TQM"/>
                 <outlet property="contentView" destination="c15-b8-iwC" id="mda-66-pJ6"/>
-                <outlet property="doneButton" destination="IPl-qu-Lsn" id="XK9-NX-TQM"/>
                 <outlet property="searchBar" destination="gVv-Af-sMl" id="AeX-NQ-5WC"/>
                 <outlet property="tableView" destination="mdu-w8-zve" id="jNA-xY-IO8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -22,18 +24,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c15-b8-iwC" userLabel="ContentView">
-                    <rect key="frame" x="0.0" y="32" width="414" height="864"/>
+                    <rect key="frame" x="0.0" y="76" width="414" height="820"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="njA-rb-yOm" userLabel="searchLogo">
-                            <rect key="frame" x="24" y="16" width="20" height="20"/>
+                            <rect key="frame" x="24" y="16" width="24" height="24"/>
                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="20" id="3Bc-I3-6gS"/>
-                                <constraint firstAttribute="width" constant="20" id="Ij1-34-g5J"/>
+                                <constraint firstAttribute="height" constant="24" id="3Bc-I3-6gS"/>
+                                <constraint firstAttribute="width" constant="24" id="Ij1-34-g5J"/>
                             </constraints>
                         </imageView>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gVv-Af-sMl" userLabel="searchBar">
-                            <rect key="frame" x="52" y="17" width="293" height="18.5"/>
+                            <rect key="frame" x="56" y="19" width="289" height="18.5"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -41,23 +44,23 @@
                             </connections>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IPl-qu-Lsn">
-                            <rect key="frame" x="353" y="16" width="37" height="20"/>
+                            <rect key="frame" x="353" y="16" width="37" height="24"/>
                             <state key="normal" title="Done">
                                 <color key="titleColor" red="0.81960784310000001" green="0.2156862745" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
-                                <action selector="selectAddressAction:" destination="-1" eventType="touchUpInside" id="YXc-EX-P7d"/>
+                                <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="YXc-EX-P7d"/>
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RvZ-Ln-YYD" userLabel="separator">
-                            <rect key="frame" x="24" y="48" width="366" height="1"/>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <rect key="frame" x="24" y="52" width="366" height="0.5"/>
+                            <color key="backgroundColor" red="0.64705882349999999" green="0.67843137249999996" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="1" id="UOA-Xx-lem"/>
+                                <constraint firstAttribute="height" constant="0.29999999999999999" id="UOA-Xx-lem"/>
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mdu-w8-zve">
-                            <rect key="frame" x="24" y="49" width="366" height="815"/>
+                            <rect key="frame" x="24" y="52.5" width="366" height="767.5"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -92,7 +95,7 @@
         </view>
     </objects>
     <resources>
-        <image name="search" width="17" height="17"/>
+        <image name="search" width="20" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

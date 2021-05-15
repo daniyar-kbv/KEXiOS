@@ -14,8 +14,12 @@ public protocol AdCellViewModelProtocol: ViewModel {
 }
 
 public final class AdCellViewModel: AdCellViewModelProtocol {
+    public var router: Router
     public var adName: BehaviorRelay<String?>
-    public init(ad: AdUI) {
+    public init(router: Router,
+                ad: AdUI)
+    {
+        self.router = router
         adName = .init(value: ad.name)
     }
 }

@@ -10,26 +10,30 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class CountriesListController: UIViewController {
+public final class CountriesListController: ViewController {
     private let viewModel: CountriesListViewModelProtocol
     private let disposeBag: DisposeBag
 
+    override var shouldShowBackItem: Bool { false }
+
     private lazy var countriesTableView: UITableView = {
         let view = UITableView()
+        view.separatorColor = .mildBlue
         view.allowsMultipleSelection = false
         view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.tableFooterView = UIView()
-        view.separatorInset.right = view.separatorInset.left + view.separatorInset.left
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.delegate = self
         view.dataSource = self
         view.refreshControl = refreshControl
+        view.addTableHeaderViewLine()
         return view
     }()
 
     private lazy var refreshControl: UIRefreshControl = {
         let view = UIRefreshControl()
         view.addTarget(self, action: #selector(update), for: .valueChanged)
+
         return view
     }()
 
@@ -47,24 +51,19 @@ public final class CountriesListController: UIViewController {
         bind()
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationBar()
-    }
-
     private func bind() {
         viewModel.updateTableView
             .bind(to: countriesTableView.rx.reload)
             .disposed(by: disposeBag)
-
-        viewModel.isAnimating
-            .bind(to: refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
     }
 
-    private func setupNavigationBar() {
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
         navigationItem.title = L10n.CountriesList.Navigation.title
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationController?.navigationBar.layoutIfNeeded()
+        navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]
     }
 
     private func setup() {
@@ -79,8 +78,10 @@ public final class CountriesListController: UIViewController {
 
     private func setupConstraints() {
         countriesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
-            $0.left.right.bottom.equalToSuperview()
+            $0.top.equalTo(view.snp.topMargin).offset(16)
+            $0.left.equalToSuperview()
+            $0.right.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
 
@@ -90,9 +91,11 @@ public final class CountriesListController: UIViewController {
     }
 }
 
-// MARK: - UITableView
-
 extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
+    public func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return 50
+    }
+
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         viewModel.countries.count
     }
@@ -100,6 +103,8 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = viewModel.countries[indexPath.row].name
+        cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        cell.textLabel?.textColor = .darkGray
         cell.backgroundColor = .white
         cell.tintColor = .kexRed
         cell.selectionStyle = .none
@@ -108,9 +113,5 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelect(index: indexPath.row)
-        let viewModel = CitiesListViewModel(country: viewModel.countries[indexPath.row].id,
-                                            repository: DIResolver.resolve(GeoRepository.self)!)
-        let vc = CitiesListController(viewModel: viewModel)
-        navigationController?.pushViewController(vc, animated: true)
     }
 }

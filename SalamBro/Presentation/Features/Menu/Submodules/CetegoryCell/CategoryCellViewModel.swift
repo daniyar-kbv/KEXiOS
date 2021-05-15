@@ -14,9 +14,13 @@ public protocol CategoryCellViewModelProtocol: ViewModel {
 }
 
 public final class CategoryCellViewModel: CategoryCellViewModelProtocol {
+    public var router: Router
     public var categoryTitle: BehaviorRelay<String?>
 
-    public init(category: FoodTypeUI) {
+    public init(router: Router,
+                category: FoodTypeUI)
+    {
+        self.router = router
         categoryTitle = .init(value: category.title)
     }
 }

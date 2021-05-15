@@ -14,31 +14,35 @@ protocol MainTabDelegate {
 }
 
 class MainTabController: UITabBarController {
-    
     var itemCount: Int = 0
-    
+
     lazy var menu: MenuController = {
-        let viewModel = MenuViewModel(menuRepository: DIResolver.resolve(MenuRepository.self)!)
+        let router = MenuRouter()
+        let viewModel = MenuViewModel(router: router,
+                                      menuRepository: DIResolver.resolve(MenuRepository.self)!,
+                                      brandRepository: DIResolver.resolve(BrandRepository.self)!,
+                                      geoRepository: DIResolver.resolve(GeoRepository.self)!)
         let vc = MenuController(viewModel: viewModel)
+        router.baseViewController = vc
         vc.tabBarItem.title = L10n.MainTab.Menu.title
         vc.tabBarItem.image = Asset.menu.image
         return vc
     }()
-    
+
     lazy var profile: ProfileController = {
         let vc = ProfileController()
         vc.tabBarItem.title = L10n.MainTab.Profile.title
         vc.tabBarItem.image = Asset.profile.image
         return vc
     }()
-    
+
     lazy var support: SupportController = {
         let vc = SupportController()
         vc.tabBarItem.title = L10n.MainTab.Support.title
         vc.tabBarItem.image = Asset.support.image
         return vc
     }()
-    
+
     lazy var cart: CartController = {
         let vc = CartController()
         vc.mainTabDelegate = self
@@ -47,28 +51,41 @@ class MainTabController: UITabBarController {
         vc.tabBarItem.badgeColor = .kexRed
         return vc
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         configureViewControllers()
     }
-
 }
 
 extension MainTabController {
     func configureUI() {
         view.tintColor = .kexRed
+        tabBar.barTintColor = .white
+
         navigationItem.setHidesBackButton(true, animated: true)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     func configureViewControllers() {
-        let controllers = [menu, profile, support, cart]
+        let controllers = [templateNavigationController(title: L10n.MainTab.Menu.title,
+                                                        image: Asset.menu.image,
+                                                        rootViewController: menu),
+                           templateNavigationController(title: L10n.MainTab.Profile.title,
+                                                        image: Asset.profile.image,
+                                                        rootViewController: profile),
+                           templateNavigationController(title: L10n.MainTab.Support.title,
+                                                        image: Asset.support.image,
+                                                        rootViewController: support),
+                           templateNavigationController(title: L10n.MainTab.Cart.title,
+                                                        image: Asset.cart.image,
+                                                        rootViewController: cart)]
         viewControllers = controllers
     }
 
     func templateNavigationController(title: String, image: UIImage?, rootViewController: UIViewController) -> UINavigationController {
-        let nav = UINavigationController(rootViewController: rootViewController)
+        let nav = NavigationController(rootViewController: rootViewController)
         nav.tabBarItem.title = title
         nav.tabBarItem.image = image
         nav.navigationBar.tintColor = .white
@@ -78,14 +95,14 @@ extension MainTabController {
 
 extension MainTabController: MainTabDelegate {
     func changeController(id: Int) {
-        self.selectedIndex = id
+        selectedIndex = id
     }
-    
+
     func setCount(count: Int) {
         itemCount = count
         cart.tabBarItem.badgeValue = "\(itemCount)"
     }
-    
+
     func updateCounter(isIncrease: Bool) {
         if isIncrease {
             itemCount += 1

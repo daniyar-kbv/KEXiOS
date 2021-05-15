@@ -7,25 +7,23 @@
 
 import UIKit
 
-class VerificationController: UIViewController {
-    
+class VerificationController: ViewController {
     var number: String = ""
     fileprivate lazy var rootView = VerificationView(delegate: self, number: number)
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        configUI()
     }
-    
+
     override func loadView() {
         view = rootView
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
+
+    override func viewWillAppear(_: Bool) {
         rootView.startTimer()
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
+
+    override func viewDidDisappear(_: Bool) {
         rootView.otpField.text = ""
         rootView.otpField.clearLabels()
         rootView.timer.invalidate()
@@ -34,15 +32,12 @@ class VerificationController: UIViewController {
 }
 
 extension VerificationController: VerificationViewDelegate {
-    func passCode() {
-        let vc = GetNameController()
-        self.navigationController?.pushViewController(vc, animated: true)
+    func back() {
+        navigationController?.popViewController(animated: true)
     }
-}
 
-extension VerificationController {
-    private func configUI() {
-        navigationItem.title = ""
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    func passCode() {
+        let vc = SetNameController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

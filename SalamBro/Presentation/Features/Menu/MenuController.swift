@@ -11,36 +11,42 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class MenuController: UIViewController {
+public final class MenuController: ViewController {
     private let viewModel: MenuViewModelProtocol
     private let disposeBag: DisposeBag
+    override var shouldShowBackItem: Bool { false }
 
     private lazy var logoView: UIImageView = {
         let view = UIImageView()
         view.image = Asset.Brands.salamBro4.image
         view.contentMode = .scaleAspectFit
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     private lazy var brandLabel: UILabel = {
         let view = UILabel()
-        view.text = "SalamBro"
         view.font = UIFont.boldSystemFont(ofSize: 20)
-        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var bottomChevronImage: UIImageView = {
+        let view = UIImageView()
+        view.image = Asset.chevronBottom.image
         return view
     }()
 
     private lazy var brandSelectView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        let gestureRecognizer = UITapGestureRecognizer(target: self,
+                                                       action: #selector(changeBrands))
+        view.addGestureRecognizer(gestureRecognizer)
         return view
     }()
 
     private lazy var itemTableView: UITableView = {
         let view = UITableView()
+        view.separatorColor = .mildBlue
         view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.register(cellType: AddressPickCell.self)
         view.register(cellType: MenuCell.self)
         view.register(cellType: AdCollectionCell.self)
@@ -49,7 +55,6 @@ public final class MenuController: UIViewController {
         view.dataSource = self
         view.showsVerticalScrollIndicator = false
         view.estimatedRowHeight = 300
-        view.bounces = false
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.tableFooterView = UIView()
         view.refreshControl = refreshControl
@@ -78,12 +83,7 @@ public final class MenuController: UIViewController {
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
-    override public func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        setupNavigationBar()
     }
 
     private func bind() {
@@ -91,9 +91,13 @@ public final class MenuController: UIViewController {
             .bind(to: itemTableView.rx.reload)
             .disposed(by: disposeBag)
 
-        viewModel.isAnimating
-            .bind(to: refreshControl.rx.isRefreshing)
+        viewModel.brandName
+            .bind(to: brandLabel.rx.text)
             .disposed(by: disposeBag)
+    }
+
+    override func setupNavigationBar() {
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     private func setup() {
@@ -103,7 +107,7 @@ public final class MenuController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [logoView, brandLabel].forEach { brandSelectView.addSubview($0) }
+        [logoView, brandLabel, bottomChevronImage].forEach { brandSelectView.addSubview($0) }
         [brandSelectView, itemTableView].forEach { view.addSubview($0) }
     }
 
@@ -116,6 +120,12 @@ public final class MenuController: UIViewController {
         brandLabel.snp.makeConstraints {
             $0.left.equalTo(logoView.snp.right).offset(8)
             $0.centerY.equalTo(logoView.snp.centerY)
+        }
+
+        bottomChevronImage.snp.makeConstraints {
+            $0.top.equalTo(brandLabel.snp.top)
+            $0.left.equalTo(brandLabel.snp.right)
+            $0.height.width.equalTo(24)
         }
 
         brandSelectView.snp.makeConstraints {
@@ -136,9 +146,30 @@ public final class MenuController: UIViewController {
     private func update() {
         viewModel.update()
     }
+
+    @objc
+    private func changeBrands() {
+        viewModel.selectMainInfo()
+    }
 }
 
 extension MenuController: UITableViewDelegate, UITableViewDataSource {
+    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
+        case _ as MenuCellViewModel:
+            let viewModel = MenuDetailViewModel(menuDetailRepository: DIResolver.resolve(MenuDetailRepository.self)!)
+            let vc = MenuDetailController(viewModel: viewModel)
+            vc.modalPresentationStyle = .pageSheet
+            present(vc, animated: true, completion: nil)
+        case _ as AddressPickCellViewModel:
+            viewModel.selectAddress()
+        case _ as AdCollectionCellViewModel:
+            navigationController?.pushViewController(RatingController(), animated: true)
+        default:
+            print("other")
+        }
+    }
+
     public func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch viewModel.headerViewModels[section] {
         case is CategoriesSectionHeaderViewModelProtocol:
@@ -171,18 +202,28 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
         switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
         case let viewModel as AddressPickCellViewModelProtocol:
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AddressPickCell.self)
+            cell.selectionStyle = .none
             cell.set(viewModel)
             return cell
         case let viewModel as AdCollectionCellViewModelProtocol:
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AdCollectionCell.self)
+            cell.selectionStyle = .none
             cell.set(viewModel)
+            cell.delegate = self
             return cell
         case let viewModel as MenuCellViewModelProtocol:
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: MenuCell.self)
+            cell.selectionStyle = .none
             cell.set(viewModel)
             return cell
         default:
             return .init()
         }
+    }
+}
+
+extension MenuController: AddCollectionCellDelegate {
+    public func goToRating() {
+        navigationController?.pushViewController(RatingController(), animated: true)
     }
 }

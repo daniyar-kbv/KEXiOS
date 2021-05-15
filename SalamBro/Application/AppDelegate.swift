@@ -5,6 +5,7 @@
 //  Created by Murager on 01.03.2021.
 //
 
+import SVProgressHUD
 import UIKit
 import YandexMapKit
 
@@ -12,13 +13,25 @@ import YandexMapKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
+    private let coordinator = DIResolver.resolve(Coordinator.self)!
+
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // if you don't have TMDB-Info.plist, just set your key in setApiKey()
         YMKMapKit.setApiKey(apiKey)
+        configureProgressHUD()
         window = UIWindow(frame: UIScreen.main.bounds)
-        let nav = UINavigationController(rootViewController: UpdateController())
-        window?.rootViewController = nav
         window?.makeKeyAndVisible()
+        coordinator.start()
         return true
+    }
+
+    private func configureProgressHUD() {
+        SVProgressHUD.setDefaultStyle(.custom)
+        SVProgressHUD.setRingNoTextRadius(12)
+        SVProgressHUD.setCornerRadius(4)
+        SVProgressHUD.setBackgroundColor(.lightGray)
+        SVProgressHUD.setDefaultAnimationType(.flat)
+        SVProgressHUD.setRingThickness(2)
+        SVProgressHUD.setForegroundColor(.kexRed)
     }
 }

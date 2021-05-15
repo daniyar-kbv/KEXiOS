@@ -11,10 +11,10 @@
 "Update.button.title" = "Обновить приложение";
 
 // MARK: - CountriesList
-"CountriesList.navigation.title" = "Выберите вашу страну";
+"CountriesList.navigation.title" = "Выберите страну";
 
 // MARK: - CitiesList
-"CitiesList.navigation.title" = "Выберите ваш город";
+"CitiesList.navigation.title" = "Выберите город";
 
 // MARK: - Address
 "Address.form.country.title" = "Страна*";
@@ -44,9 +44,10 @@
 "Verification.title" = "Введите код из сообщения";
 "Verification.subtitle" = "Мы отправили его на номер%@";
 "Verification.button.title" = "Отправить повторно через:%@";
+"Verification.button.timeout" = "Отправить код повторно";
 
 // MARK: - Agreement
-"Agreement.navigation.title" = "Пользовательское соглашение";
+"Agreement.navigation.title" = "Правовые документы";
 
 // MARK: - CountryCodePicker
 "CountryCodePicker.navigation.title" = "Выберите код страны";
@@ -67,7 +68,8 @@
 "Cart.section1.title" = "Дополнительные покупки";
 "Cart.emptyCart.description" = "Вы еще ничего не выбрали";
 "Cart.emptyCart.button.title" = "Перейти в меню";
-"Cart.orderButton.title" = "Оформить заказ на %@";
+"Cart.orderButton.title" = "Оформить заказ на %@ ₸";
+"Cart.title" = "Корзина";
 
 // MARK: - CartFooter
 "CartFooter.promocodeButton.title" = "Ввести промокод";
@@ -90,11 +92,15 @@
 "Profile.orderHistory" = "История заказов";
 "Profile.changeLanguage" = "Сменить язык приложения";
 "Profile.logoutButton.title" = "Выйти из аккаунта";
+"Profile.deliveryAddress" = "Адреса доставки";
 
 // MARK: - ChangeName
-"ChangeName.navigationBar.title" = "Изменить имя";
+"ChangeName.navigationBar.title" = "Изменить";
 "ChangeName.nameField.placeholder" = "введите имя";
 "ChangeName.saveButton.title" = "Сохранить";
+"ChangeName.nameLabel" = "Имя";
+"ChangeName.emailLabel" = "E-mail";
+
 
 // MARK: - ChangeLanguage
 "ChangeLanguage.navigationBar.title" = "Выберите язык";
@@ -106,7 +112,7 @@
 
 // MARK: - Suggest
 "Suggest.addressField.title" = "Введите адрес";
-"Suggest.button.title" = "Готово";
+"Suggest.button.title" = "Отменить";
 
 // MARK: - Commentary
 "Commentary.addressField.title" = "Комментарий (квартира, подъезд, ...)";
@@ -141,3 +147,89 @@
 
 "RateOrder.submitButton.title" = "Отправить";
 "RateOrder.commentaryField.placeholder" = "Добавить комментарий";
+"RateOrder.title" = "Оцените заказ";
+"RateOrder.description" = "Ваша оценка поможет улучшить качество
+нашей доставки";
+
+// MARK: - Country
+"Country.Kazakhstan" = "Казахстан";
+"Country.Russia" = "Россия";
+"Country.USA" = "США";
+
+// MARK: - Cities
+"Cities.almaty" = "Алматы";
+"Cities.nursultan" = "Астана";
+"Cities.aktobe" = "Актобе";
+"Cities.taldykorgan" = "Талдыкорган";
+"Cities.uralsk" = "Уральск";
+"Cities.aktau" = "Актау";
+"Cities.shymkent" = "Шымкент";
+"Cities.taraz" = "Тараз";
+
+
+// MARK: - Menu
+"Menu.categories.combo" = "Комбо";
+"Menu.categories.burgers" = "Бургеры";
+"Menu.categories.hotdogs" = "Хот-Доги";
+"Menu.categories.drinks" = "Напитки";
+"Menu.categories.sauces" = "Соусы";
+"Menu.categories.other" = "Другое";
+
+// MARK: - AddressPickCell
+"AddressPickCell.changeButton" = "Изменить";
+"AddressPickCell.deliverLabel" = "Доставим на:";
+
+// MARK: - MenuDetail
+"MenuDetail.proceedButton" = "В корзину за";
+"MenuDetail.additionalItemLabel" = "Выберите напиток";
+"MenuDetail.commentaryField" = "Комментарий к блюду";
+"MenuDetail.chooseAdditionalItemButton" = "Изменить";
+
+// MARK: - Support
+"Support.title" = "Помощь";
+"Support.documents" = "Правовые документы";
+"Support.callcenter" = "Позвонить в Call-центр";
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.title" = "Язык приложения";
+"ChangeLanguage.kazakh" = "Русский";
+"ChangeLanguage.russian" = "Казахский";
+"ChangeLanguage.english" = "Английский";
+
+// MARK: - OrderHistory
+"OrderHistory.title" = "История заказов";
+
+// MARK: - Rating
+"Rating.title" = "Рейтинги";
+"Rating.overall" = "Общий";
+"Rating.weekly" = "За неделю";
+"Rating.place" = "МЕСТО";
+"Rating.user" = "ПОЛЬЗОВАТЕЛЬ";
+"Rating.sum" = "СУММА";
+"Rating.participate" = "Участвовать";
+"Rating.information" = "Информация";
+
+// MARK: - Select Main Info
+"select_main_info.country" = "Страна";
+"select_main_info.city" = "Город";
+"select_main_info.address" = "Адрес";
+"select_main_info.brand" = "Бренд";
+"select_main_info.title" = "Адрес доставки";
+"select_main_info.description" = "Наличие или отсутствие того или иного бренда - зависит от Вашего адреса доставки";
+"select_main_info.save" = "Сохранить";
+
+// MARK: Address Picker
+"address_picker.add" = "Добавить новый адрес";
+"address_picker.titleOne" = "Адрес доставки";
+"address_picker.titleMany" = "Адреса доставки";
+
+//MARK: ShareOrder
+"ShareOrder.submitButton" = "Опубликовать";
+
+//MARK: Promocode
+"Promocode.button" = "Применить";
+"Promocode.field" = "Введите промокод";
+
+// MARK: - Close
+"Common.error" = "Ошибка";
+"Common.close" = "Закрыть";

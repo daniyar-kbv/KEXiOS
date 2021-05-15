@@ -12,8 +12,13 @@ public protocol CategoriesSectionHeaderViewModelProtocol: ViewModel {
 }
 
 public final class CategoriesSectionHeaderViewModel: CategoriesSectionHeaderViewModelProtocol {
+    public var router: Router
     public var cellViewModels: [CategoryCellViewModelProtocol]
-    public init(categories: [FoodTypeUI]) {
-        cellViewModels = categories.map { CategoryCellViewModel(category: $0) }
+    public init(router: Router,
+                categories: [FoodTypeUI])
+    {
+        self.router = router
+        cellViewModels = categories.map { CategoryCellViewModel(router: router,
+                                                                category: $0) }
     }
 }

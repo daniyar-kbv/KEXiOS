@@ -13,54 +13,57 @@ import RxSwift
 public protocol CountryCodePickerViewModelProtocol: ViewModel {
     var cellViewModels: [CountryCodeCellViewModelProtocol] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
-    var isAnimating: BehaviorRelay<Bool> { get }
     func update()
-    func country(by index: Int) -> CountryUI
     func didSelect(index: Int)
 }
 
 public final class CountryCodePickerViewModel: CountryCodePickerViewModelProtocol {
+    public var router: Router
     private let repository: GeoRepository
     public var cellViewModels: [CountryCodeCellViewModelProtocol]
     public var updateTableView: BehaviorRelay<Void?>
-    public var isAnimating: BehaviorRelay<Bool>
     private var countries: [CountryUI]
+    private let didSelectCountry: ((CountryUI) -> Void)?
 
     public func update() {
         download()
     }
 
-    public func country(by index: Int) -> CountryUI {
-        countries[index]
-    }
-
     public func didSelect(index: Int) {
-        repository.currentCountry = country(by: index).toDomain()
+        let country = countries[index]
+        repository.currentCountry = country.toDomain()
+        didSelectCountry?(country)
+        close()
     }
 
     private func download() {
-        isAnimating.accept(true)
+        startAnimation()
         firstly {
             repository.downloadCountries()
         }.done {
             self.cellViewModels = $0.map {
-                CountryCodeCellViewModel(country: CountryUI(from: $0),
+                CountryCodeCellViewModel(router: self.router,
+                                         country: CountryUI(from: $0),
                                          isSelected: self.repository.currentCountry == $0)
             }
             self.countries = $0.map { CountryUI(from: $0) }
-        }.catch { _ in
-
+        }.catch {
+            self.router.alert(error: $0)
         }.finally {
-            self.isAnimating.accept(false)
+            self.stopAnimation()
             self.updateTableView.accept(())
         }
     }
 
-    public init(repository: GeoRepository) {
+    public init(router: Router,
+                repository: GeoRepository,
+                didSelectCountry: ((CountryUI) -> Void)?)
+    {
+        self.router = router
         self.repository = repository
+        self.didSelectCountry = didSelectCountry
         cellViewModels = []
         updateTableView = .init(value: nil)
-        isAnimating = .init(value: false)
         countries = []
         download()
     }

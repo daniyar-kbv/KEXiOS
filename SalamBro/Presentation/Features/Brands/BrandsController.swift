@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class BrandsController: UIViewController {
+public final class BrandsController: ViewController {
     private let viewModel: BrandViewModelProtocol
     private let disposeBag: DisposeBag
 
@@ -48,7 +48,6 @@ public final class BrandsController: UIViewController {
         super.viewDidLoad()
         setup()
         bind()
-        setupNavigationBar()
     }
 
     private func bind() {
@@ -60,10 +59,14 @@ public final class BrandsController: UIViewController {
                                                                       itemSpacing: 16)
             }.bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
+    }
 
-        viewModel.isAnimating
-            .bind(to: refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.Brands.Navigation.title
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+        ]
     }
 
     private func setup() {
@@ -80,28 +83,28 @@ public final class BrandsController: UIViewController {
         collectionView.snp.makeConstraints {
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
-            $0.top.equalTo(view.snp.topMargin).offset(16)
-            $0.bottom.equalTo(view.snp.bottomMargin)
+            $0.top.equalTo(view.snp.topMargin).offset(8)
+            $0.bottom.equalTo(view.snp.bottom)
         }
     }
 
-    func setupNavigationBar() {
-        navigationItem.title = L10n.Brands.Navigation.title
-        navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.black,
-             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]
+    @objc func refresh(_: AnyObject) {
+        viewModel.refresh()
     }
 
-    @objc
-    func refresh(_: AnyObject) {
-        viewModel.refresh()
+    @objc func backButtonTapped() {
+        // TODO:
+        if presentingViewController == nil {
+            navigationController?.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
     }
 }
 
 extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate {
-    public func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
-        let vc = MapViewController()
-        navigationController?.pushViewController(vc, animated: true)
+    public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelect(index: indexPath.row)
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {

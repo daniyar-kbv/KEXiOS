@@ -8,12 +8,14 @@
 import InputMask
 import UIKit
 
-class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener {
+class AuthorizationController: ViewController, MaskedTextFieldDelegateListener {
     lazy var maskedDelegate: MaskedTextFieldDelegate = {
         let delegate = MaskedTextFieldDelegate(primaryFormat: "([000]) [000] [00] [00]")
         delegate.listener = self
         return delegate
     }()
+
+    private let geoRepository = DIResolver.resolve(GeoRepository.self)! // TODO: add view model
 
     lazy var maintitle: UILabel = {
         let label = UILabel()
@@ -45,24 +47,21 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
 
     lazy var aggreementLabel: UILabel = {
         let label = UILabel()
-        let textAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.darkGray]
-        let linkAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.blue, NSAttributedString.Key.underlineColor: UIColor.blue]
-        let inactiveString = NSMutableAttributedString(string: L10n.Authorization.Agreement.Inactive.title, attributes: textAttributes)
-        let activeString = NSAttributedString(string: L10n.Authorization.Agreement.Active.title, attributes: linkAttributes)
-        inactiveString.append(activeString)
+        label.text = L10n.Authorization.Agreement.Inactive.title + L10n.Authorization.Agreement.Active.title
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .mildBlue
         label.numberOfLines = 0
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
-        label.attributedText = inactiveString
         label.isUserInteractionEnabled = true
-        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel(_:))))
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel)))
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     lazy var countryCodeButton: UIButton = {
         let button = UIButton()
-//        button.setTitle("X", for: .normal)
+        button.setTitle(geoRepository.currentCountry?.callingCode, for: .normal)
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 26)
         button.titleLabel?.textAlignment = .center
@@ -72,13 +71,21 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         return button
     }()
 
+    lazy var chevronView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "chevron.bottom")
+        view.contentMode = .scaleAspectFit
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     let getButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.Authorization.Button.title, for: .normal)
         button.addTarget(self, action: #selector(getCode), for: .touchUpInside)
-        button.backgroundColor = UIColor(red: 0.82, green: 0.216, blue: 0.192, alpha: 1.0)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.backgroundColor = .calmGray
         button.isEnabled = false
-        button.alpha = 0.5
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -90,10 +97,6 @@ class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener
         configUI()
         setupViews()
         setupConstraints()
-    }
-
-    override func viewWillAppear(_: Bool) {
-        countryCodeButton.setTitle("+7", for: .normal) // TODO:
     }
 }
 
@@ -110,17 +113,11 @@ extension AuthorizationController {
     }
 
     @objc func chooseCountryCode() {
-        let viewModel = CountryCodePickerViewModel(repository: DIResolver.resolve(GeoRepository.self)!)
-        let vc = CountryCodePickerViewController(viewModel: viewModel)
-        vc.delegate = self
-        vc.modalPresentationStyle = .pageSheet
-        present(vc, animated: true, completion: nil)
-    }
-}
-
-extension AuthorizationController: CountryCodePickerDelegate {
-    func passCountry(country: CountryUI) {
-        countryCodeButton.setTitle(country.callingCode, for: .normal)
+        let router = CountryCodePickerRouter()
+        let context = CountryCodePickerRouter.PresentationContext.present { [unowned self] in
+            self.countryCodeButton.setTitle($0.callingCode, for: .normal)
+        }
+        router.present(on: self, context: context)
     }
 }
 
@@ -136,16 +133,8 @@ extension AuthorizationController {
         authorize()
     }
 
-    @objc func handleTapOnLabel(_ recognizer: UITapGestureRecognizer) {
-        guard let text = aggreementLabel.attributedText?.string else {
-            return
-        }
-
-        if let range = text.range(of: L10n.Authorization.Agreement.Active.title),
-           recognizer.didTapAttributedTextInLabel(label: aggreementLabel, inRange: NSRange(range, in: text))
-        {
-            proceedToAgreementView()
-        }
+    @objc func handleTapOnLabel() {
+        proceedToAgreementView()
     }
 
     func textField(
@@ -155,10 +144,10 @@ extension AuthorizationController {
     ) {
         if complete {
             getButton.isEnabled = true
-            getButton.alpha = 1.0
+            getButton.backgroundColor = .kexRed
         } else {
             getButton.isEnabled = false
-            getButton.alpha = 0.5
+            getButton.backgroundColor = .calmGray
         }
         print(value)
     }
@@ -167,10 +156,10 @@ extension AuthorizationController {
         maskedDelegate.listener = self
         numberField.delegate = maskedDelegate
         view.backgroundColor = .white
-
         view.addSubview(maintitle)
         view.addSubview(subtitle)
         view.addSubview(numberField)
+        view.addSubview(chevronView)
         view.addSubview(countryCodeButton)
         view.addSubview(aggreementLabel)
         view.addSubview(getButton)
@@ -185,9 +174,14 @@ extension AuthorizationController {
         subtitle.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
         subtitle.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
 
-        numberField.leftAnchor.constraint(equalTo: countryCodeButton.safeAreaLayoutGuide.rightAnchor, constant: 24).isActive = true
+        numberField.leftAnchor.constraint(equalTo: chevronView.rightAnchor, constant: 8).isActive = true
         numberField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
         numberField.centerYAnchor.constraint(equalTo: countryCodeButton.titleLabel!.centerYAnchor).isActive = true
+
+        chevronView.leftAnchor.constraint(equalTo: countryCodeButton.rightAnchor).isActive = true
+        chevronView.centerYAnchor.constraint(equalTo: countryCodeButton.centerYAnchor).isActive = true
+        chevronView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        chevronView.widthAnchor.constraint(equalToConstant: 24).isActive = true
 
         countryCodeButton.topAnchor.constraint(equalTo: subtitle.safeAreaLayoutGuide.bottomAnchor, constant: 40).isActive = true
         countryCodeButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
@@ -201,5 +195,9 @@ extension AuthorizationController {
         getButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
         getButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
         getButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
+    }
+
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }

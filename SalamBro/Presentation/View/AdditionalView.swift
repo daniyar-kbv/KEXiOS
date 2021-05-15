@@ -12,9 +12,8 @@ protocol AdditionalViewDelegate {
 }
 
 class AdditionalView: UIView {
-    
     public var delegate: AdditionalViewDelegate?
-    
+
     lazy var logo: UIImageView = {
         let view = UIImageView()
         view.image = Asset.logo.image
@@ -33,7 +32,7 @@ class AdditionalView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     lazy var button: UIButton = {
         let button = UIButton()
         button.setTitle("template", for: .normal)
@@ -47,15 +46,16 @@ class AdditionalView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-    init(delegate: (AdditionalViewDelegate), descriptionTitle: String, buttonTitle: String) {
+
+    init(delegate: AdditionalViewDelegate, descriptionTitle: String, buttonTitle: String, image: UIImage) {
         super.init(frame: .zero)
         self.delegate = delegate
-        setupViews(descriptionTitle, buttonTitle)
+        setupViews(descriptionTitle, buttonTitle, image)
         setupConstraints()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -64,33 +64,30 @@ class AdditionalView: UIView {
     }
 }
 
-
 extension AdditionalView {
-    func setupViews(_ descriptionText: String, _ buttonText: String) {
-        
+    func setupViews(_ descriptionText: String, _ buttonText: String, _ image: UIImage) {
         descriptionLabel.text = descriptionText
         button.setTitle(buttonText, for: .normal)
+        logo.image = image
         backgroundColor = .arcticWhite
         addSubview(logo)
         addSubview(descriptionLabel)
         addSubview(button)
     }
-    
+
     func setupConstraints() {
-        
         descriptionLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: -10).isActive = true
         descriptionLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 32).isActive = true
         descriptionLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -32).isActive = true
-        
+
         button.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 32).isActive = true
         button.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 54).isActive = true
         button.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -54).isActive = true
         button.heightAnchor.constraint(equalToConstant: 43).isActive = true
-        
+
         logo.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
         logo.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -8).isActive = true
         logo.heightAnchor.constraint(equalToConstant: 150).isActive = true
         logo.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
-
 }

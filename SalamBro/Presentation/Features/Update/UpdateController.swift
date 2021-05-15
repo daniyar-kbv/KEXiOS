@@ -7,8 +7,8 @@
 
 import UIKit
 
-class UpdateController: UIViewController {
-    lazy var rootView = AdditionalView(delegate: self, descriptionTitle: L10n.Update.Title.description, buttonTitle: L10n.Update.Button.title)
+class UpdateController: ViewController {
+    lazy var rootView = AdditionalView(delegate: self, descriptionTitle: L10n.Update.Title.description, buttonTitle: L10n.Update.Button.title, image: UIImage(named: "logo")!)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +33,7 @@ class UpdateController: UIViewController {
 // MARK: - Actions
 
 extension UpdateController {
-    private func updateApp() {
-        navigationController?.pushViewController(CountriesListController(viewModel: CountriesListViewModel(repository: DIResolver.resolve(GeoRepository.self)!)), animated: true)
-    }
+    private func updateApp() {}
 }
 
 extension UpdateController: AdditionalViewDelegate {

@@ -11,10 +11,10 @@
 "Update.button.title" = "Update app";
 
 // MARK: - CountriesList
-"CountriesList.navigation.title" = "Select your country";
+"CountriesList.navigation.title" = "Select country";
 
 // MARK: - CitiesList
-"CitiesList.navigation.title" = "Select your city";
+"CitiesList.navigation.title" = "Select city";
 
 // MARK: - Address
 "Address.form.country.title" = "Country*";
@@ -43,9 +43,10 @@
 "Verification.title" = "Enter the code from the message";
 "Verification.subtitle" = "We sent it to number %@";
 "Verification.button.title" = "Resend again in: %@";
+"Verification.button.timeout" = "Resend code again";
 
 // MARK: - Agreement
-"Agreement.navigation.title" = "User agreement";
+"Agreement.navigation.title" = "Legal documents";
 
 // MARK: - CountryCodePicker
 "CountryCodePicker.navigation.title" = "Select country code";
@@ -62,11 +63,12 @@
 "MainTab.Cart.Title" = "Cart";
 
 // MARK: - Cart
-"Cart.section0.title" = "%@ items for %@";
+"Cart.section0.title" = "%@ items for %@ ₸";
 "Cart.section1.title" = "Additional products";
 "Cart.emptyCart.description" = "You have no items in cart";
 "Cart.emptyCart.button.title" = "Go to menu";
 "Cart.orderButton.title" = "Place an order for %@ ₸";
+"Cart.title" = "Cart";
 
 // MARK: - CartFooter
 "CartFooter.promocodeButton.title" = "Enter promocode";
@@ -89,11 +91,14 @@
 "Profile.orderHistory" = "Order history";
 "Profile.changeLanguage" = "Change application language";
 "Profile.logoutButton.title" = "Logout";
+"Profile.deliveryAddress" = "Delivery addresses";
 
 // MARK: - ChangeName
-"ChangeName.navigationBar.title" = "Change name";
+"ChangeName.navigationBar.title" = "Change";
 "ChangeName.nameField.placeholder" = "insert name";
 "ChangeName.saveButton.title" = "Save";
+"ChangeName.nameLabel" = "Name";
+"ChangeName.emailLabel" = "E-mail";
 
 // MARK: - ChangeLanguage
 "ChangeLanguage.navigationBar.title" = "Select language";
@@ -105,7 +110,7 @@
 
 // MARK: - Suggest
 "Suggest.addressField.title" = "Enter address";
-"Suggest.button.title" = "Done";
+"Suggest.button.title" = "Cancel";
 
 // MARK: - Commentary
 "Commentary.addressField.title" = "Commentary(apartment N, entrance, ...)";
@@ -140,3 +145,91 @@ What should we improve next time?";
 
 "RateOrder.submitButton.title" = "Send";
 "RateOrder.commentaryField.placeholder" = "Add commentary";
+"RateOrder.title" = "Rate order";
+"RateOrder.description" = "Your rate will help us to increase quality of delivery";
+
+// MARK: - Country
+"Country.Kazakhstan" = "Kazakhstan";
+"Country.Russia" = "Russian Federation";
+"Country.USA" = "USA";
+
+
+// MARK: - Cities
+"Cities.almaty" = "Almaty";
+"Cities.nursultan" = "Nur-Sultan";
+"Cities.aktobe" = "Aktobe";
+"Cities.taldykorgan" = "Taldykorgan";
+"Cities.uralsk" = "Uralsk";
+"Cities.aktau" = "Aktau";
+"Cities.shymkent" = "Shymkent";
+"Cities.taraz" = "Taraz";
+
+// MARK: - Menu
+"Menu.categories.combo" = "Combo";
+"Menu.categories.burgers" = "Burgers";
+"Menu.categories.hotdogs" = "Hot-dogs";
+"Menu.categories.drinks" = "Drinks";
+"Menu.categories.sauces" = "Sauces";
+"Menu.categories.other" = "Other";
+
+// MARK: - AddressPickCell
+"AddressPickCell.changeButton" = "Change";
+"AddressPickCell.deliverLabel" = "Deliver to:";
+
+
+// MARK: - MenuDetail
+"MenuDetail.proceedButton" = "Add to cart for";
+"MenuDetail.additionalItemLabel" = "Choose drink";
+"MenuDetail.commentaryField" = "Commentary to dish";
+"MenuDetail.chooseAdditionalItemButton" = "Change";
+
+// MARK: - Support
+"Support.title" = "Support";
+"Support.documents" = "Legal documents";
+"Support.callcenter" = "Сall the call-center";
+
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.title" = "Application Language";
+"ChangeLanguage.kazakh" = "Kazakh";
+"ChangeLanguage.russian" = "Russian";
+"ChangeLanguage.english" = "English";
+
+// MARK: - OrderHistory
+"OrderHistory.title" = "Order history";
+
+// MARK: - Rating
+"Rating.title" = "Ratings";
+"Rating.overall" = "General";
+"Rating.weekly" = "Weekly";
+"Rating.place" = "PLACE";
+"Rating.user" = "USER";
+"Rating.sum" = "SUM";
+"Rating.participate" = "Participate";
+"Rating.information" = "Information";
+
+// MARK: - Select Main Info
+"select_main_info.country" = "Country";
+"select_main_info.city" = "City";
+"select_main_info.address" = "Address";
+"select_main_info.brand" = "Brand";
+"select_main_info.title" = "Delivery address";
+"select_main_info.description" = "The presence or absence of a particular brand depends on your
+delivery addresses";
+"select_main_info.save" = "Save";
+
+// MARK: Address Picker
+"address_picker.add" = "Add a new delivery address";
+"address_picker.titleOne" = "Delivery address";
+"address_picker.titleMany" = "Delivery addresses";
+
+//MARK: ShareOrder
+"ShareOrder.submitButton" = "Share";
+
+//MARK: Promocode
+"Promocode.button" = "Use";
+"Promocode.field" = "Enter promocode";
+
+// MARK: - Close
+"Common.error" = "Error";
+"Common.close" = "Close";

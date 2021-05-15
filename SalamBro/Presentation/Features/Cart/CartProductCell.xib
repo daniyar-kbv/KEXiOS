@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -42,8 +42,8 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRICE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sDp-ob-ZfM">
                                 <rect key="frame" x="0.0" y="20.5" width="101" height="14.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -144,13 +144,13 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="user commentary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d5K-DY-dKe">
-                        <rect key="frame" x="24" y="79" width="272" height="17"/>
+                        <rect key="frame" x="96" y="79" width="200" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Product unavailable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BaM-uS-0NQ">
-                        <rect key="frame" x="24" y="100" width="272" height="15"/>
+                        <rect key="frame" x="96" y="100" width="200" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.81960784310000001" green="0.2156862745" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -158,8 +158,8 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="DGE-g7-PAs" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="1ap-10-O4h"/>
+                    <constraint firstItem="BaM-uS-0NQ" firstAttribute="leading" secondItem="DGE-g7-PAs" secondAttribute="trailing" constant="8" id="5a4-fh-LOW"/>
                     <constraint firstItem="BaM-uS-0NQ" firstAttribute="top" secondItem="d5K-DY-dKe" secondAttribute="bottom" constant="4" id="BCc-8t-JKt"/>
-                    <constraint firstItem="d5K-DY-dKe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="EWB-6O-Gu1"/>
                     <constraint firstAttribute="bottom" secondItem="BaM-uS-0NQ" secondAttribute="bottom" constant="8" id="Foa-jI-Vam"/>
                     <constraint firstItem="d5K-DY-dKe" firstAttribute="top" secondItem="SN2-vq-puq" secondAttribute="bottom" constant="8.5" id="KvE-ro-KOi"/>
                     <constraint firstItem="SN2-vq-puq" firstAttribute="top" secondItem="kNS-Xb-gGc" secondAttribute="bottom" constant="4" id="PSl-Ti-d3t"/>
@@ -167,8 +167,8 @@
                     <constraint firstItem="SN2-vq-puq" firstAttribute="leading" secondItem="DGE-g7-PAs" secondAttribute="trailing" constant="8" symbolic="YES" id="UbJ-oT-DN3"/>
                     <constraint firstItem="DGE-g7-PAs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="WdD-re-u9V"/>
                     <constraint firstItem="1gA-lq-5Sj" firstAttribute="leading" secondItem="SN2-vq-puq" secondAttribute="trailing" constant="8" id="aGx-2V-7yX"/>
+                    <constraint firstItem="d5K-DY-dKe" firstAttribute="leading" secondItem="DGE-g7-PAs" secondAttribute="trailing" constant="8" id="cGc-I0-TAc"/>
                     <constraint firstAttribute="trailing" secondItem="BaM-uS-0NQ" secondAttribute="trailing" constant="24" id="m3g-pT-l9p"/>
-                    <constraint firstItem="BaM-uS-0NQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="ptz-iL-1E2"/>
                     <constraint firstAttribute="trailing" secondItem="d5K-DY-dKe" secondAttribute="trailing" constant="24" id="qj9-wl-gpG"/>
                     <constraint firstItem="kNS-Xb-gGc" firstAttribute="leading" secondItem="DGE-g7-PAs" secondAttribute="trailing" constant="8" id="qlh-af-YHg"/>
                     <constraint firstAttribute="trailing" secondItem="1gA-lq-5Sj" secondAttribute="trailing" constant="25" id="rxV-J3-Ijn"/>
@@ -193,7 +193,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="fastFood" width="64" height="48"/>
+        <image name="fastFood" width="1192" height="869"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

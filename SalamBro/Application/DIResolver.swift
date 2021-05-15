@@ -31,8 +31,11 @@ public final class DIResolver {
 }
 
 private final class ApplicationAssembly: Assembly {
-    func assemble(container _: Container) {
-        // TODO:
+    func assemble(container: Container) {
+        container.register(Coordinator.self) { r in
+            Coordinator(geoRepository: r.resolve(GeoRepository.self)!,
+                        brandRepository: r.resolve(BrandRepository.self)!)
+        }
     }
 }
 
@@ -65,12 +68,17 @@ private final class RepositoriesAssembly: Assembly {
         }
 
         container.register(BrandRepository.self) { r in
-            BrandRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!)
+            BrandRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!,
+                                          storage: r.resolve(Storage.self)!)
         }
 
         container.register(GeoRepository.self) { r in
             GeoRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!,
                                         storage: r.resolve(Storage.self)!)
+        }
+
+        container.register(MenuDetailRepository.self) { r in
+            MenuDetailRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!)
         }
     }
 }

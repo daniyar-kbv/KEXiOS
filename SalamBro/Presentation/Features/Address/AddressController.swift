@@ -9,7 +9,7 @@ import UIKit
 
 import UIKit
 
-class AddressController: UIViewController {
+class AddressController: ViewController {
     fileprivate lazy var rootView = AddressView(delegate: self)
 
     override func viewDidLoad() {
@@ -42,8 +42,9 @@ class AddressController: UIViewController {
 
 extension AddressController {
     func submitForms() {
-        let vc = BrandsController(viewModel: BrandViewModel(repository: DIResolver.resolve(BrandRepository.self)!)) // TODO:
-        navigationController?.pushViewController(vc, animated: true)
+        let router = BrandsRouter()
+        let context = BrandsRouter.PresentationContext.select
+        router.present(on: self, context: context)
     }
 }
 

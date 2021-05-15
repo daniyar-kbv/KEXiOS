@@ -8,6 +8,8 @@
 import Foundation
 import PromiseKit
 
-public protocol BrandRepository {
+public protocol BrandRepository: AnyObject {
+    var brand: Brand? { get set }
+    var brands: [Brand] { get }
     func downloadBrands() -> Promise<([Brand], [(Float, Float)])>
 }

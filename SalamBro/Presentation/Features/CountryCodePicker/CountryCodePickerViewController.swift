@@ -10,39 +10,26 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public protocol CountryCodePickerDelegate: AnyObject {
-    func passCountry(country: CountryUI)
-}
-
-public final class CountryCodePickerViewController: UIViewController {
+public final class CountryCodePickerViewController: ViewController {
     private let viewModel: CountryCodePickerViewModelProtocol
     private let disposeBag: DisposeBag
-
-    public weak var delegate: CountryCodePickerDelegate?
-
-    private lazy var lineImage: UIImageView = {
-        let view = UIImageView()
-        view.image = Asset.line.image
-        view.tintColor = .darkGray
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .boldSystemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.text = L10n.CountryCodePicker.Navigation.title
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     private lazy var citiesTableView: UITableView = {
         let view = UITableView()
+        view.separatorColor = .mildBlue
+        view.addTableHeaderViewLine()
         view.register(cellType: CountryCodeCell.self)
         view.tableFooterView = UIView()
         view.allowsMultipleSelection = false
-        view.separatorInset.right = view.separatorInset.left + view.separatorInset.left
+        view.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.delegate = self
         view.dataSource = self
@@ -80,15 +67,11 @@ public final class CountryCodePickerViewController: UIViewController {
         viewModel.updateTableView
             .bind(to: citiesTableView.rx.reload)
             .disposed(by: disposeBag)
-
-        viewModel.isAnimating
-            .bind(to: refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
     }
 
-    private func setupNavigationBar() {
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
         navigationItem.title = L10n.CountryCodePicker.Navigation.title
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     private func setup() {
@@ -98,24 +81,20 @@ public final class CountryCodePickerViewController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [lineImage, titleLabel, citiesTableView].forEach { view.addSubview($0) }
+        [titleLabel, citiesTableView].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
-        lineImage.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(6)
-            $0.centerX.equalToSuperview()
-            $0.size.equalTo(CGSize(width: 36, height: 6))
-        }
-
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(lineImage.snp.bottom).offset(12)
+            $0.top.equalToSuperview().offset(24)
             $0.centerX.equalToSuperview()
         }
 
         citiesTableView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(22)
-            $0.left.right.bottom.equalToSuperview()
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.bottom.equalToSuperview()
         }
     }
 
@@ -126,6 +105,10 @@ public final class CountryCodePickerViewController: UIViewController {
 }
 
 extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataSource {
+    public func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        50
+    }
+
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         viewModel.cellViewModels.count
     }
@@ -138,8 +121,5 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelect(index: indexPath.row)
-        dismiss(animated: true) { [unowned self] in
-            self.delegate?.passCountry(country: self.viewModel.country(by: indexPath.row))
-        }
     }
 }

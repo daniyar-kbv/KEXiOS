@@ -10,17 +10,18 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class CitiesListController: UIViewController {
+public final class CitiesListController: ViewController {
     private let viewModel: CitiesListViewModelProtocol
     private let disposeBag: DisposeBag
 
-    private lazy var citiesTableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let view = UITableView()
+        view.addTableHeaderViewLine()
+        view.separatorColor = .mildBlue
         view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.tableFooterView = UIView()
         view.allowsMultipleSelection = false
-        view.separatorInset.right = view.separatorInset.left + view.separatorInset.left
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.delegate = self
         view.dataSource = self
         view.refreshControl = refreshControl
@@ -47,24 +48,18 @@ public final class CitiesListController: UIViewController {
         bind()
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationBar()
-    }
-
     private func bind() {
-        viewModel.isAnimating
-            .bind(to: refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
-
         viewModel.updateTableView
-            .bind(to: citiesTableView.rx.reload)
+            .bind(to: tableView.rx.reload)
             .disposed(by: disposeBag)
     }
 
-    private func setupNavigationBar() {
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
         navigationItem.title = L10n.CitiesList.Navigation.title
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+        ]
     }
 
     private func setup() {
@@ -74,23 +69,30 @@ public final class CitiesListController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        view.addSubview(citiesTableView)
+        [tableView].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
-        citiesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin).offset(16)
             $0.left.right.bottom.equalToSuperview()
         }
     }
 
-    @objc
-    private func update() {
+    @objc private func update() {
         viewModel.update()
+    }
+
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
 extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
+    public func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return 50
+    }
+
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         viewModel.cities.count
     }
@@ -98,13 +100,15 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = viewModel.cities[indexPath.row]
+        cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        cell.textLabel?.textColor = .darkGray
+        cell.backgroundColor = .white
         cell.tintColor = .kexRed
         cell.selectionStyle = .none
         return cell
     }
 
-    public func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
-        let vc = BrandsController(viewModel: BrandViewModel(repository: DIResolver.resolve(BrandRepository.self)!)) // TODO:
-        navigationController?.pushViewController(vc, animated: true)
+    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelect(index: indexPath.row)
     }
 }
