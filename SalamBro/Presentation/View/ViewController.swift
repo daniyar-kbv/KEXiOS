@@ -8,16 +8,27 @@
 import UIKit
 
 public class ViewController: UIViewController {
-    internal var shouldShowBackItem: Bool { true }
-
     override public func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+
+        guard navigationController?.presentingViewController != nil,
+              navigationController?.viewControllers.count == 1
+        else {
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            navigationItem.leftBarButtonItem = nil
+            return
+        }
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: Asset.chevronLeft.image, style: .plain, target: self, action: #selector(popCurrentViewController))
+    }
+
+    @objc private func popCurrentViewController() {
+        dismiss(animated: true, completion: nil)
     }
 
     internal func setupNavigationBar() {

@@ -143,7 +143,6 @@
 		10468D05ADE74298B254F3535BBE9F6F /* MenuRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693C5AFFBE854B1E6A26D41045DAA54 /* MenuRouter.swift */; };
 		6A7945358129F690820556EE0D53EF33 /* MenuUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C389CCC2D1DC71D82F424A7F9CA434 /* MenuUI.swift */; };
 		C40464BD631044407C3EDAD10DA2A0F8 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */; };
-		5511AAB58AAC1D89074EBB44E8919753 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6D50FB7B1ACD7D182B37D756B22E4E /* NavigationController.swift */; };
 		ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */; };
 		52E54610F9597E5FB759023469158B05 /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38E1406896D56B0D3EB30561C58641D /* OTPView.swift */; };
 		836766507334DCE6B1273433E608713C /* OrderHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */; };
@@ -351,7 +350,6 @@
 		4693C5AFFBE854B1E6A26D41045DAA54 /* MenuRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRouter.swift; sourceTree = "<group>"; };
 		40C389CCC2D1DC71D82F424A7F9CA434 /* MenuUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuUI.swift; sourceTree = "<group>"; };
 		6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
-		FB6D50FB7B1ACD7D182B37D756B22E4E /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		C38E1406896D56B0D3EB30561C58641D /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
 		64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryController.swift; sourceTree = "<group>"; };
@@ -720,14 +718,6 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		573BBF43A6F98EDE156BE5383BD92FD4 /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				FB6D50FB7B1ACD7D182B37D756B22E4E /* NavigationController.swift */,
-			);
-			path = Navigation;
-			sourceTree = "<group>";
-		};
 		5841AA7EA96954F1D5CFD95285FE32AC /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -751,7 +741,6 @@
 				2F628A76C84D0A63A5754B0554662DFA /* Map */,
 				CF86187F6E3E40AD84E132FE8AF6445E /* Menu */,
 				EC79EFD4E50C8A795F56CC2637BD7CFB /* MenuDetail */,
-				573BBF43A6F98EDE156BE5383BD92FD4 /* Navigation */,
 				7FFF4378B5DD89D3B1B951BEF401C379 /* OrderHistory */,
 				ADAB19D3E3411B093570797EDBC8AD4A /* Profile */,
 				3514A0ED8067D94E56F9A4E0764ED522 /* RateOrder */,
@@ -1702,7 +1691,6 @@
 				10468D05ADE74298B254F3535BBE9F6F /* MenuRouter.swift in Sources */,
 				6A7945358129F690820556EE0D53EF33 /* MenuUI.swift in Sources */,
 				C40464BD631044407C3EDAD10DA2A0F8 /* MenuViewModel.swift in Sources */,
-				5511AAB58AAC1D89074EBB44E8919753 /* NavigationController.swift in Sources */,
 				ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */,
 				52E54610F9597E5FB759023469158B05 /* OTPView.swift in Sources */,
 				836766507334DCE6B1273433E608713C /* OrderHistoryController.swift in Sources */,

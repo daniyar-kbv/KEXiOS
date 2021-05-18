@@ -4,6 +4,7 @@ PODS:
   - Cosmos (21.0.0)
   - DropDown (2.3.13)
   - InputMask (6.1.0)
+  - IQKeyboardManagerSwift (6.5.6)
   - PromiseKit (6.13.1):
     - PromiseKit/CorePromise (= 6.13.1)
     - PromiseKit/Foundation (= 6.13.1)
@@ -41,6 +42,7 @@ DEPENDENCIES:
   - Cosmos
   - DropDown
   - InputMask
+  - IQKeyboardManagerSwift
   - PromiseKit
   - Reusable
   - RxCocoa
@@ -59,6 +61,7 @@ SPEC REPOS:
     - Cosmos
     - DropDown
     - InputMask
+    - IQKeyboardManagerSwift
     - PromiseKit
     - Reusable
     - RxCocoa
@@ -78,6 +81,7 @@ SPEC CHECKSUMS:
   Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   InputMask: 71d291dc54d2deaeac6512afb6ec2304228c0bb7
+  IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
   RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
@@ -91,6 +95,6 @@ SPEC CHECKSUMS:
   YandexMapKitSearch: b46ddd1c80e2e35d006cdfc4ab88070a50cebeda
   YandexRuntime: 2d55244d06267106cf9b00c25a1e63f72a73b6fd
 
-PODFILE CHECKSUM: 7ba65ee7dac7dc30b2d8d08b1f8cd31398bcedd6
+PODFILE CHECKSUM: 0f764280e072ece16e6b76bf43357e2bd61c9532
 
 COCOAPODS: 1.10.1

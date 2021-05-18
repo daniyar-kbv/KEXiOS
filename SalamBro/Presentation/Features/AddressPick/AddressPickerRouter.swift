@@ -30,7 +30,8 @@ public final class AddressPickerRouter: Router {
                                                    repository: DIResolver.resolve(GeoRepository.self)!,
                                                    didSelectAddress: didSelectAddress)
             let vc = AddressPickController(viewModel: viewModel)
-            let navVC = NavigationController(rootViewController: vc)
+
+            let navVC = UINavigationController(rootViewController: vc)
             baseViewController = vc
             baseVC.present(navVC, animated: animated, completion: completion)
         }

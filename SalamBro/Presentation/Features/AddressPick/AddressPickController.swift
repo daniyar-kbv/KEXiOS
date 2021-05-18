@@ -92,11 +92,6 @@ public final class AddressPickController: ViewController {
 
     @objc
     private func add() {}
-
-    @objc
-    private func back() {
-        dismiss(animated: true)
-    }
 }
 
 extension AddressPickController: UITableViewDelegate, UITableViewDataSource {

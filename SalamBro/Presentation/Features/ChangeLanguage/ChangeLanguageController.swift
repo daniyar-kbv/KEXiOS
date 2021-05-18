@@ -33,6 +33,7 @@ class ChangeLanguageController: ViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         navigationItem.title = L10n.ChangeLanguage.title
+        navigationController?.navigationBar.backgroundColor = .white
     }
 
     fileprivate func setupViews() {
@@ -42,9 +43,8 @@ class ChangeLanguageController: ViewController {
 
     fileprivate func setupConstraints() {
         countriesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(34)
-            $0.left.right.equalToSuperview()
-            $0.bottom.equalTo(view.snp.bottomMargin)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.left.right.bottom.equalToSuperview()
         }
     }
 }

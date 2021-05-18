@@ -9,8 +9,6 @@ import SnapKit
 import UIKit
 
 class SupportController: ViewController {
-    override var shouldShowBackItem: Bool { false }
-
     lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue

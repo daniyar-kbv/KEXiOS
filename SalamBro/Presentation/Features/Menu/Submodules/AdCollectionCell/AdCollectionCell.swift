@@ -68,11 +68,9 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
     }
 
     public func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
-        let width: CGFloat
-        let height: CGFloat
-        width = 312
-        height = 112
-        return .init(width: width, height: height)
+        let width: CGFloat = UIScreen.main.bounds.width * 0.8
+        let height: CGFloat = 112
+        return CGSize(width: width, height: height)
     }
 }
 
