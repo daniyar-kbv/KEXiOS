@@ -33,7 +33,6 @@ class ChangeLanguageController: ViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         navigationItem.title = L10n.ChangeLanguage.title
-        navigationController?.navigationBar.backgroundColor = .white
     }
 
     fileprivate func setupViews() {

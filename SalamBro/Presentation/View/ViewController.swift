@@ -41,6 +41,8 @@ public class ViewController: UIViewController {
             .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
             .foregroundColor: UIColor.black,
         ]
+        navigationController?.navigationBar.backIndicatorImage = Asset.chevronLeft.image
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = Asset.chevronLeft.image
         navigationItem.title = nil
     }
 }
