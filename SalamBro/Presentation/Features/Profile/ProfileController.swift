@@ -8,8 +8,6 @@
 import UIKit
 
 class ProfileController: ViewController {
-    override var shouldShowBackItem: Bool { false }
-
     lazy var phoneTitle: UILabel = {
         let label = UILabel()
         label.text = "+7 (702) 000 00 00"

@@ -36,7 +36,7 @@ public final class BrandsRouter: Router {
                                            type: .change,
                                            didSelectBrand: didSelectBrand)
             let vc = BrandsController(viewModel: viewModel)
-            let navVC = NavigationController(rootViewController: vc)
+            let navVC = UINavigationController(rootViewController: vc)
             baseVC.present(navVC, animated: animated, completion: completion)
         case .select:
             let viewModel = BrandViewModel(router: self,

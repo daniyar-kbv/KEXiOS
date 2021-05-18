@@ -38,7 +38,7 @@ public final class SelectMainInformationRouter: Router {
                                                            brandRepository: DIResolver.resolve(BrandRepository.self)!,
                                                            didSave: didSave)
             let vc = SelectMainInformationViewController(viewModel: viewModel)
-            let navVC = NavigationController(rootViewController: vc)
+            let navVC = UINavigationController(rootViewController: vc)
             baseViewController = vc
             baseVC.present(navVC, animated: animated, completion: completion)
         }

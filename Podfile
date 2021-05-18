@@ -15,6 +15,8 @@ target 'SalamBro' do
   pod 'Cache'
   pod 'DropDown'
   pod 'SVProgressHUD'
+  pod 'IQKeyboardManagerSwift'
+
 
   # Pods for SalamBro
   pod 'InputMask'

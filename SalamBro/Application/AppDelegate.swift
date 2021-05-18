@@ -8,6 +8,7 @@
 import SVProgressHUD
 import UIKit
 import YandexMapKit
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // if you don't have TMDB-Info.plist, just set your key in setApiKey()
         YMKMapKit.setApiKey(apiKey)
         configureProgressHUD()
+        configureKeyboardManager()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         coordinator.start()
@@ -33,5 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SVProgressHUD.setDefaultAnimationType(.flat)
         SVProgressHUD.setRingThickness(2)
         SVProgressHUD.setForegroundColor(.kexRed)
+    }
+    
+    private func configureKeyboardManager() {
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.toolbarTintColor = .kexRed
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
     }
 }

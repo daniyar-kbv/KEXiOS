@@ -14,7 +14,6 @@ import UIKit
 public final class MenuController: ViewController {
     private let viewModel: MenuViewModelProtocol
     private let disposeBag: DisposeBag
-    override var shouldShowBackItem: Bool { false }
 
     private lazy var logoView: UIImageView = {
         let view = UIImageView()

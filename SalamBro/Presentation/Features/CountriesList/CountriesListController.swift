@@ -14,8 +14,6 @@ public final class CountriesListController: ViewController {
     private let viewModel: CountriesListViewModelProtocol
     private let disposeBag: DisposeBag
 
-    override var shouldShowBackItem: Bool { false }
-
     private lazy var countriesTableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue

@@ -166,7 +166,8 @@ class MapViewController: ViewController {
         view.addSubview(addressSheetVC.view)
         addressSheetVC.didMove(toParent: self)
         addressSheetVC.modalPresentationStyle = .pageSheet
-        let height: CGFloat = 211.0
+        // MARK: +16 потому что в AddressSheetController почему-то делается -16, видимо для отступа какого-то, по-хорошему нужно переписать класс MapViewController и AddressSheetController
+        let height: CGFloat = 211.0 + 16
         let width = view.frame.width
         addressSheetVC.view.frame = CGRect(x: 0, y: view.frame.maxY, width: width, height: height + bottomPadding!)
     }
@@ -256,26 +257,20 @@ extension MapViewController: YMKMapCameraListener {
 
 extension MapViewController {
     func onSearchResponseName(_ response: YMKSearchResponse) {
-        print("searchResponse started")
         for searchResult in response.collection.children {
             if let _ = searchResult.obj!.geometry.first?.point {
-                print(response.collection.children[0].obj!.name!)
                 guard let objMetadata = response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata else {
                     continue
                 }
+                
+                let address = searchResult.obj?.name ?? objMetadata.address.formattedAddress
 
-                // MARK: - checking if object is KindHome type
-
-//                if objMetadata.address.components.count >= 5 {
-                addressSheetVC.changeAddress(address: objMetadata.address.formattedAddress,
+                addressSheetVC.changeAddress(address: address,
                                              longitude: objMetadata.balloonPoint.longitude,
                                              latitude: objMetadata.balloonPoint.latitude)
-                print("searchResponse done")
                 return
-//                }
             }
         }
-        print("searchResponse done")
     }
 
     func getName(point: YMKPoint, zoom: NSNumber) {
