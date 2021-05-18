@@ -14,14 +14,6 @@ public final class CountryCodePickerViewController: ViewController {
     private let viewModel: CountryCodePickerViewModelProtocol
     private let disposeBag: DisposeBag
 
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 18, weight: .semibold)
-        label.text = L10n.CountryCodePicker.Navigation.title
-        return label
-    }()
-
     private lazy var citiesTableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
@@ -58,11 +50,6 @@ public final class CountryCodePickerViewController: ViewController {
         bind()
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationBar()
-    }
-
     private func bind() {
         viewModel.updateTableView
             .bind(to: citiesTableView.rx.reload)
@@ -81,17 +68,12 @@ public final class CountryCodePickerViewController: ViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [titleLabel, citiesTableView].forEach { view.addSubview($0) }
+        [citiesTableView].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
-        titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(24)
-            $0.centerX.equalToSuperview()
-        }
-
         citiesTableView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(22)
+            $0.top.equalTo(view.snp.topMargin).offset(22)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
             $0.bottom.equalToSuperview()

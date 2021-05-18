@@ -102,6 +102,11 @@ public final class SelectMainInformationViewController: ViewController {
         }.disposed(by: disposeBag)
     }
 
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.SelectMainInfo.title
+    }
+
     private func setup() {
         setupViews()
         setupConstraints()

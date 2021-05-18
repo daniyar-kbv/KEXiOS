@@ -31,7 +31,8 @@ public final class CountryCodePickerRouter: Router {
                                                        didSelectCountry: didSelectCountry)
             let vc = CountryCodePickerViewController(viewModel: viewModel)
             baseViewController = vc
-            baseVC.present(vc, animated: animated, completion: completion)
+            let navVC = UINavigationController(rootViewController: vc)
+            baseVC.present(navVC, animated: animated, completion: completion)
         }
     }
 
