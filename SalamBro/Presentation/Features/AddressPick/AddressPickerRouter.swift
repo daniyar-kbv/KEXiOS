@@ -12,7 +12,9 @@ public final class AddressPickerRouter: Router {
         case select(didSelectAddress: ((Address) -> Void)?)
     }
 
-    public enum RouteType {}
+    public enum RouteType {
+        case changeAddress
+    }
 
     public var baseViewController: UIViewController?
 
@@ -48,7 +50,11 @@ public final class AddressPickerRouter: Router {
             return
         }
 
-        switch routeType {}
+        switch routeType {
+        case .changeAddress:
+            let router: Router = ChangeAddressRouter()
+            router.present(on: baseVC, context: nil)
+        }
     }
 
     public func dismiss(animated: Bool, completion: (() -> Void)?) {

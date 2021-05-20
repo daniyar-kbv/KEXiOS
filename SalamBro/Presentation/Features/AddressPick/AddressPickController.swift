@@ -59,7 +59,7 @@ public final class AddressPickController: ViewController {
     private func bind() {
         plusButton.rx.tap
             .bind { [weak self] in
-                debugPrint("tapped")
+                self?.viewModel.changeAddress()
             }
             .disposed(by: disposeBag)
     }

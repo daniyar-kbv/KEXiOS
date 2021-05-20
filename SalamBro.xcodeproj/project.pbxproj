@@ -33,6 +33,7 @@
 		D7880641164EE5E77FB7597F5AFAA7B7 /* AddressPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F18B94D7AEEFF0237C4943D966FF16 /* AddressPickerCell.swift */; };
 		8B013DB263210D715AAE6703B073C968 /* AddressPickerCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3570DDBBC114B9742BA2D2F9EE8634 /* AddressPickerCellViewModel.swift */; };
 		C05517CA38B389592FAD01B930A7C919 /* AddressPickerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BA6199CF990C4A5D8F72A5ADE3E76C /* AddressPickerRouter.swift */; };
+		579097A57308DA6E9FCAA418F9B588DD /* AddressPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE33885CEA30E2BBDF9AB41E47CBE645 /* AddressPickerView.swift */; };
 		52AB291AB55CB5ACD40C0696B0A2FDBD /* AddressPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFF148FFDBDA9582757463337B3048C /* AddressPickerViewModel.swift */; };
 		84D162FC25BAB627F5989308861562C4 /* AddressSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373055F1FF6ADCC5661CF068DA7B78A3 /* AddressSheetController.swift */; };
 		A9999B2C8EB50DE5CFBF201C504DA28E /* AddressSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CF76F8377585959F665EC6E7A08DC94 /* AddressSheetController.xib */; };
@@ -79,6 +80,12 @@
 		C9B2C06C576C1D95EBDA8038C373C76A /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513BDCCE89A44A5F73A0E1C4B9314A76 /* CategoryCell.swift */; };
 		0E96D7BC5903E86646AF94C2AD8DDDAA /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F685664DA3F838FCB4DBAA119681CEF1 /* CategoryCell.xib */; };
 		BFD292C07BF79AD7348D22003F211F54 /* CategoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F3B254C6DDBCB881C28052ED834011 /* CategoryCellViewModel.swift */; };
+		F6FD1EFE77D377962FCA01A48920088B /* ChangeAddressBrandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6931ED0C52871A5C9F8EA0155E2C6817 /* ChangeAddressBrandCell.swift */; };
+		C774D57F2F93BD7BF7E82A8B22226CE5 /* ChangeAddressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC853D23869FDA939A75899AE252DD /* ChangeAddressController.swift */; };
+		334B795B90A840E1A73CCF310A3035AA /* ChangeAddressEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2891B50CDF85F57ED30F522C394B876 /* ChangeAddressEmptyCell.swift */; };
+		97679C33BB7D6E3B97CC413374C4E713 /* ChangeAddressRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B32BBC5AAAC9E76DD6B5D43ABE8A50 /* ChangeAddressRouter.swift */; };
+		BD8C23BF475AEE66C5673C4B1777ECE4 /* ChangeAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7890DA3741A8500C4738352B95DA9B83 /* ChangeAddressTableViewCell.swift */; };
+		E2ED2BA29EE68CCF38E40BE2A04897A9 /* ChangeAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625E693ECD65B77CD7F46941048696B0 /* ChangeAddressViewModel.swift */; };
 		86FC0A8C4E303A323E41C1DEFA432C2A /* ChangeLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */; };
 		E4E066B4032248830E3B0F8452C2C4F6 /* ChangeNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906133A86D4AF5C94A475D4892939FB8 /* ChangeNameController.swift */; };
 		B19672E96C8149F312FD01ED7224045B /* CitiesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25165BC9C032E5EB5B8F281DB57E61 /* CitiesListController.swift */; };
@@ -161,6 +168,7 @@
 		C7D144869475F0B1D989BA3BE88943F7 /* RatioDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B14A0696DDBA1767A46E3E9946E03A3 /* RatioDTO.swift */; };
 		14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */; };
 		413312877FB0B9D7C0A39FF594D2BA03 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225F182EC83DB84ACEE8356FD8D9C7B /* Router.swift */; };
+		249E54E5058664B559F40AB97FE33AA6 /* SMPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FA0391E18BA13EE5B28ABA0384078 /* SMPickerView.swift */; };
 		164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */; };
 		6382A29270DC95FE20964786BA382045 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */; };
 		825FC113C253F87745C6F961C47C9DAF /* SalamBroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B2A30C6F7592F9FD9C8743F0474722 /* SalamBroUITests.swift */; };
@@ -238,6 +246,7 @@
 		E3F18B94D7AEEFF0237C4943D966FF16 /* AddressPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickerCell.swift; sourceTree = "<group>"; };
 		0F3570DDBBC114B9742BA2D2F9EE8634 /* AddressPickerCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickerCellViewModel.swift; sourceTree = "<group>"; };
 		C5BA6199CF990C4A5D8F72A5ADE3E76C /* AddressPickerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickerRouter.swift; sourceTree = "<group>"; };
+		AE33885CEA30E2BBDF9AB41E47CBE645 /* AddressPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickerView.swift; sourceTree = "<group>"; };
 		9AFF148FFDBDA9582757463337B3048C /* AddressPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPickerViewModel.swift; sourceTree = "<group>"; };
 		373055F1FF6ADCC5661CF068DA7B78A3 /* AddressSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressSheetController.swift; sourceTree = "<group>"; };
 		2CF76F8377585959F665EC6E7A08DC94 /* AddressSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressSheetController.xib; sourceTree = "<group>"; };
@@ -284,6 +293,12 @@
 		513BDCCE89A44A5F73A0E1C4B9314A76 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		F685664DA3F838FCB4DBAA119681CEF1 /* CategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
 		90F3B254C6DDBCB881C28052ED834011 /* CategoryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellViewModel.swift; sourceTree = "<group>"; };
+		6931ED0C52871A5C9F8EA0155E2C6817 /* ChangeAddressBrandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressBrandCell.swift; sourceTree = "<group>"; };
+		57CC853D23869FDA939A75899AE252DD /* ChangeAddressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressController.swift; sourceTree = "<group>"; };
+		A2891B50CDF85F57ED30F522C394B876 /* ChangeAddressEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressEmptyCell.swift; sourceTree = "<group>"; };
+		80B32BBC5AAAC9E76DD6B5D43ABE8A50 /* ChangeAddressRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressRouter.swift; sourceTree = "<group>"; };
+		7890DA3741A8500C4738352B95DA9B83 /* ChangeAddressTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressTableViewCell.swift; sourceTree = "<group>"; };
+		625E693ECD65B77CD7F46941048696B0 /* ChangeAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressViewModel.swift; sourceTree = "<group>"; };
 		B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLanguageController.swift; sourceTree = "<group>"; };
 		906133A86D4AF5C94A475D4892939FB8 /* ChangeNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameController.swift; sourceTree = "<group>"; };
 		7B25165BC9C032E5EB5B8F281DB57E61 /* CitiesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListController.swift; sourceTree = "<group>"; };
@@ -374,6 +389,7 @@
 		4B14A0696DDBA1767A46E3E9946E03A3 /* RatioDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatioDTO.swift; sourceTree = "<group>"; };
 		D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtension.swift; sourceTree = "<group>"; };
 		F225F182EC83DB84ACEE8356FD8D9C7B /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		0B6FA0391E18BA13EE5B28ABA0384078 /* SMPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMPickerView.swift; sourceTree = "<group>"; };
 		A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
 		E109EA25F926DD19FBD62E082F1EA9E0 /* SalamBro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalamBro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalamBroTests.swift; sourceTree = "<group>"; };
@@ -731,6 +747,7 @@
 				912CFB71D3B69BFC0A983E3C88ADC2AB /* Authorization */,
 				EC500F7424886F86E75759D4C36759B9 /* Brands */,
 				8AF05D5445C74C7309FB6D8336409E75 /* Cart */,
+				5BF558556431303A3BD1BBCF1DF4EE39 /* ChangeAddress */,
 				8A2649A3D2DC3217F088C02899CF2504 /* ChangeLanguage */,
 				324830A97FF4C9828115987BC05C2DDA /* ChangeName */,
 				6C4B4D6C9C3A1E331D075EA7CD43E6BF /* CitiesList */,
@@ -770,6 +787,37 @@
 				A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */,
 			);
 			path = AddressDetail;
+			sourceTree = "<group>";
+		};
+		5BF558556431303A3BD1BBCF1DF4EE39 /* ChangeAddress */ = {
+			isa = PBXGroup;
+			children = (
+				11304DF9A77DE0F2F7C296C777320665 /* Submodules */,
+				57CC853D23869FDA939A75899AE252DD /* ChangeAddressController.swift */,
+				80B32BBC5AAAC9E76DD6B5D43ABE8A50 /* ChangeAddressRouter.swift */,
+				625E693ECD65B77CD7F46941048696B0 /* ChangeAddressViewModel.swift */,
+			);
+			path = ChangeAddress;
+			sourceTree = "<group>";
+		};
+		11304DF9A77DE0F2F7C296C777320665 /* Submodules */ = {
+			isa = PBXGroup;
+			children = (
+				3FE6C0835B013106A0B7C9203F0708C1 /* ChangeAddressCells */,
+				AE33885CEA30E2BBDF9AB41E47CBE645 /* AddressPickerView.swift */,
+				0B6FA0391E18BA13EE5B28ABA0384078 /* SMPickerView.swift */,
+			);
+			path = Submodules;
+			sourceTree = "<group>";
+		};
+		3FE6C0835B013106A0B7C9203F0708C1 /* ChangeAddressCells */ = {
+			isa = PBXGroup;
+			children = (
+				6931ED0C52871A5C9F8EA0155E2C6817 /* ChangeAddressBrandCell.swift */,
+				A2891B50CDF85F57ED30F522C394B876 /* ChangeAddressEmptyCell.swift */,
+				7890DA3741A8500C4738352B95DA9B83 /* ChangeAddressTableViewCell.swift */,
+			);
+			path = ChangeAddressCells;
 			sourceTree = "<group>";
 		};
 		634DF0542321FBAF896E12DD7808EC82 /* Provider */ = {
@@ -1589,6 +1637,7 @@
 				D7880641164EE5E77FB7597F5AFAA7B7 /* AddressPickerCell.swift in Sources */,
 				8B013DB263210D715AAE6703B073C968 /* AddressPickerCellViewModel.swift in Sources */,
 				C05517CA38B389592FAD01B930A7C919 /* AddressPickerRouter.swift in Sources */,
+				579097A57308DA6E9FCAA418F9B588DD /* AddressPickerView.swift in Sources */,
 				52AB291AB55CB5ACD40C0696B0A2FDBD /* AddressPickerViewModel.swift in Sources */,
 				84D162FC25BAB627F5989308861562C4 /* AddressSheetController.swift in Sources */,
 				8F582EF2F9E5F850D4C44B42B787C016 /* AddressView.swift in Sources */,
@@ -1630,6 +1679,12 @@
 				7BF0D16347463241B4ABC8878123D6E5 /* CategoriesSectionHeaderViewModel.swift in Sources */,
 				C9B2C06C576C1D95EBDA8038C373C76A /* CategoryCell.swift in Sources */,
 				BFD292C07BF79AD7348D22003F211F54 /* CategoryCellViewModel.swift in Sources */,
+				F6FD1EFE77D377962FCA01A48920088B /* ChangeAddressBrandCell.swift in Sources */,
+				C774D57F2F93BD7BF7E82A8B22226CE5 /* ChangeAddressController.swift in Sources */,
+				334B795B90A840E1A73CCF310A3035AA /* ChangeAddressEmptyCell.swift in Sources */,
+				97679C33BB7D6E3B97CC413374C4E713 /* ChangeAddressRouter.swift in Sources */,
+				BD8C23BF475AEE66C5673C4B1777ECE4 /* ChangeAddressTableViewCell.swift in Sources */,
+				E2ED2BA29EE68CCF38E40BE2A04897A9 /* ChangeAddressViewModel.swift in Sources */,
 				86FC0A8C4E303A323E41C1DEFA432C2A /* ChangeLanguageController.swift in Sources */,
 				E4E066B4032248830E3B0F8452C2C4F6 /* ChangeNameController.swift in Sources */,
 				B19672E96C8149F312FD01ED7224045B /* CitiesListController.swift in Sources */,
@@ -1704,6 +1759,7 @@
 				C7D144869475F0B1D989BA3BE88943F7 /* RatioDTO.swift in Sources */,
 				14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */,
 				413312877FB0B9D7C0A39FF594D2BA03 /* Router.swift in Sources */,
+				249E54E5058664B559F40AB97FE33AA6 /* SMPickerView.swift in Sources */,
 				13C35E332B133B1AC2CF1B0090215AC0 /* SelectMainInformationRouter.swift in Sources */,
 				A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */,
 				5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */,
