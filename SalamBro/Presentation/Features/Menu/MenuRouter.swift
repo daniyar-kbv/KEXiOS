@@ -43,6 +43,7 @@ public final class MenuRouter: Router {
         case let .selectMainInfo(didSave):
             let router = SelectMainInformationRouter()
             let context = SelectMainInformationRouter.PresentationContext.present(didSave: didSave)
+
             router.present(on: baseVC, context: context)
         case let .selectAddress(didSelectAddress):
             let router = AddressPickerRouter()

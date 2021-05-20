@@ -18,7 +18,6 @@ final class ChangeAddressController: ViewController {
         btn.setTitle("Сохранить", for: .normal)
         btn.setTitleColor(.white, for: .normal)
         btn.backgroundColor = .calmGray
-        btn.isEnabled = false
         btn.layer.cornerRadius = 10
         btn.layer.masksToBounds = true
         return btn
@@ -40,6 +39,7 @@ final class ChangeAddressController: ViewController {
         navigationController?.navigationBar.titleTextAttributes = [
             .font: UIFont.systemFont(ofSize: 26, weight: .regular),
         ]
+        viewModel.checkInputs()
     }
 
     override func viewDidLoad() {
@@ -49,7 +49,45 @@ final class ChangeAddressController: ViewController {
         bind()
     }
 
-    private func bind() {}
+    private func bind() {
+        viewModel.outputs.reloadCellAt
+            .bind { [weak self] indexPath in
+                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didEnterValidInputs
+            .subscribe(onNext: { [weak self] isEnabled in
+                self?.saveButton.isEnabled = isEnabled
+                if isEnabled {
+                    self?.saveButton.backgroundColor = .kexRed
+                    return
+                }
+                self?.saveButton.backgroundColor = .calmGray
+
+            })
+            .disposed(by: disposeBag)
+
+        saveButton.rx.tap
+            .bind { [weak self] in
+                self?.showConfirmationAlert()
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func showConfirmationAlert() {
+        let alert = UIAlertController(title: "Вы уверены?", message: "Если Вы сейчас смените адрес, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить адрес?", preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Нет", style: .default) { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+            self?.viewModel.changeAddress()
+        }
+
+        [cancelAction, yesAction].forEach { alert.addAction($0) }
+
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 // MARK: Configure UI & layout
@@ -120,5 +158,7 @@ extension ChangeAddressController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {}
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.changeRoute(indexPath: indexPath)
+    }
 }

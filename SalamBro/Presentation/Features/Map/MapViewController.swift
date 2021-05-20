@@ -18,6 +18,9 @@ class MapViewController: ViewController {
     private let geoRepository = DIResolver.resolve(GeoRepository.self)! // TODO:
     private let coordinator = DIResolver.resolve(Coordinator.self)! // TODO:
 
+    var selectedAddress: ((String) -> Void)?
+    var isAddressChangeFlow: Bool = false
+
     var mapView: YMKMapView = {
         let view = YMKMapView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -166,7 +169,9 @@ class MapViewController: ViewController {
         view.addSubview(addressSheetVC.view)
         addressSheetVC.didMove(toParent: self)
         addressSheetVC.modalPresentationStyle = .pageSheet
+
         // MARK: +16 потому что в AddressSheetController почему-то делается -16, видимо для отступа какого-то, по-хорошему нужно переписать класс MapViewController и AddressSheetController
+
         let height: CGFloat = 211.0 + 16
         let width = view.frame.width
         addressSheetVC.view.frame = CGRect(x: 0, y: view.frame.maxY, width: width, height: height + bottomPadding!)
@@ -262,7 +267,7 @@ extension MapViewController {
                 guard let objMetadata = response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata else {
                     continue
                 }
-                
+
                 let address = searchResult.obj?.name ?? objMetadata.address.formattedAddress
 
                 addressSheetVC.changeAddress(address: address,
@@ -288,6 +293,14 @@ extension MapViewController {
 
 extension MapViewController: MapDelegate {
     func dissmissView() {
+        if isAddressChangeFlow,
+           let address = geoRepository.currentAddress?.name
+        {
+            selectedAddress?(address)
+            dismiss(animated: true, completion: nil)
+            return
+        }
+
         coordinator.start()
     }
 
