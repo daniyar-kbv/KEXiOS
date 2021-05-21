@@ -178,6 +178,10 @@ class MapViewController: ViewController {
     }
 
     @objc func backButtonTapped(_: UIButton!) {
+        if isAddressChangeFlow {
+            dismiss(animated: true, completion: nil)
+        }
+
         navigationController?.popViewController(animated: true)
     }
 

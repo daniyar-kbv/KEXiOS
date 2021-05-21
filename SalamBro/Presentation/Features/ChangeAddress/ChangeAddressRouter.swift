@@ -56,6 +56,7 @@ final class ChangeAddressRouter: Router {
             router.present(on: baseVC, context: context)
         case .map:
             let mapController = MapViewController()
+            mapController.modalPresentationStyle = .fullScreen
             mapController.isAddressChangeFlow = true
             mapController.selectedAddress = { [weak self] address in
                 self?.selectedAddress?(address)
