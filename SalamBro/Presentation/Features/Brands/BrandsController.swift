@@ -81,8 +81,8 @@ public final class BrandsController: ViewController {
 
     private func setupConstraints() {
         collectionView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(view.snp.topMargin).offset(8)
             $0.bottom.equalTo(view.snp.bottom)
         }
@@ -90,15 +90,6 @@ public final class BrandsController: ViewController {
 
     @objc func refresh(_: AnyObject) {
         viewModel.refresh()
-    }
-
-    @objc func backButtonTapped() {
-        // TODO:
-        if presentingViewController == nil {
-            navigationController?.popViewController(animated: true)
-        } else {
-            dismiss(animated: true)
-        }
     }
 }
 
