@@ -112,7 +112,7 @@ extension ChangeAddressController {
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
             $0.height.equalTo(42)
-            $0.bottom.equalToSuperview().offset(-16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
         }
 
         view.addSubview(tableView)
