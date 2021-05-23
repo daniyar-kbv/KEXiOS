@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -29,26 +29,32 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jyf-rB-wef">
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jyf-rB-wef">
                     <rect key="frame" x="16" y="186" width="382" height="585"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o2L-80-kZS">
-                            <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o2L-80-kZS">
+                            <rect key="frame" x="0.0" y="0.0" width="382" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="kcP-NY-Mj9"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7u-5c-62k">
-                            <rect key="frame" x="0.0" y="66" width="382" height="0.0"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7u-5c-62k">
+                            <rect key="frame" x="0.0" y="48" width="382" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="Ihv-GO-KVc"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="254" verticalCompressionResistancePriority="754" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="FMy-GW-XrI">
-                            <rect key="frame" x="0.0" y="82" width="382" height="344.5"/>
+                            <rect key="frame" x="0.0" y="96" width="382" height="360"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="344.5" identifier="collectionViewHeightConstraint" id="j3y-Xp-rjW"/>
+                                <constraint firstAttribute="height" constant="360" identifier="collectionViewHeightConstraint" id="j3y-Xp-rjW"/>
                             </constraints>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qmc-DY-djd">
                                 <size key="itemSize" width="128" height="128"/>
@@ -58,7 +64,7 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <view contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="eOM-CX-kow" userLabel="CommentaryView">
-                            <rect key="frame" x="0.0" y="442.5" width="382" height="50"/>
+                            <rect key="frame" x="0.0" y="480" width="382" height="50"/>
                             <subviews>
                                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add commentary..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cbN-YH-hbF" userLabel="CommentaryField">
                                     <rect key="frame" x="16" y="14.5" width="350" height="21"/>
@@ -69,8 +75,9 @@
                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="cbN-YH-hbF" secondAttribute="trailing" constant="16" id="2tW-Xg-SWQ"/>
+                                <constraint firstItem="cbN-YH-hbF" firstAttribute="centerY" secondItem="eOM-CX-kow" secondAttribute="centerY" id="Stf-1I-XDk"/>
                                 <constraint firstAttribute="height" constant="50" id="Y48-Xm-Lxt"/>
-                                <constraint firstItem="cbN-YH-hbF" firstAttribute="centerY" secondItem="eOM-CX-kow" secondAttribute="centerY" id="nHM-NE-d4D"/>
+                                <constraint firstItem="cbN-YH-hbF" firstAttribute="centerX" secondItem="eOM-CX-kow" secondAttribute="centerX" id="ZLx-aK-41e"/>
                                 <constraint firstItem="cbN-YH-hbF" firstAttribute="leading" secondItem="eOM-CX-kow" secondAttribute="leading" constant="16" id="w2J-OY-hR4"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
@@ -81,10 +88,13 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <view contentMode="scaleToFill" verticalHuggingPriority="248" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="tM5-rX-MVR">
-                            <rect key="frame" x="0.0" y="508.5" width="382" height="76.5"/>
+                            <rect key="frame" x="0.0" y="554" width="382" height="31"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                     </subviews>
+                    <constraints>
+                        <constraint firstItem="eOM-CX-kow" firstAttribute="top" secondItem="FMy-GW-XrI" secondAttribute="bottom" constant="24" id="Mhb-ZA-8Db"/>
+                    </constraints>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u80-mE-Dsu" customClass="CosmosView" customModule="Cosmos">
                     <rect key="frame" x="100" y="124" width="214" height="30"/>
