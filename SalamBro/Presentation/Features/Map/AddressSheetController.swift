@@ -33,7 +33,7 @@ class AddressSheetController: ViewController {
         super.viewDidAppear(animated)
         UIView.animate(withDuration: 0.3) { [weak self] in
             let frame = self?.view.frame
-            let yComponent = UIScreen.main.bounds.height - 211 - 16
+            let yComponent = UIScreen.main.bounds.height - 211
             self?.view.frame = CGRect(x: 0, y: yComponent, width: frame!.width, height: frame!.height)
         }
     }
@@ -47,8 +47,7 @@ class AddressSheetController: ViewController {
         addressField.placeholder = L10n.MapView.AddressField.title
         commentaryLabel.text = L10n.MapView.CommentaryLabel.title
         proceedButton.setTitle(L10n.MapView.ProceedButton.title, for: .normal)
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 10
+        view.layer.cornerRadius = 18
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
 
         let tapAddress = UITapGestureRecognizer(target: self, action: #selector(didTapAddressView))
