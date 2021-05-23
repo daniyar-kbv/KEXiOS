@@ -42,8 +42,8 @@
 
 // MARK: - Verification
 "Verification.title" = "Введите код из сообщения";
-"Verification.subtitle" = "Мы отправили его на номер%@";
-"Verification.button.title" = "Отправить повторно через:%@";
+"Verification.subtitle" = "Мы отправили его на номер %@";
+"Verification.button.title" = "Отправить повторно через: %@";
 "Verification.button.timeout" = "Отправить код повторно";
 
 // MARK: - Agreement

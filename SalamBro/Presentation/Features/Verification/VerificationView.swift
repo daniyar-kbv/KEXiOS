@@ -34,6 +34,8 @@ class VerificationView: UIView {
         label.text = L10n.Verification.subtitle(" " + number!)
         label.font = .systemFont(ofSize: 12)
         label.textColor = .mildBlue
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -53,7 +55,7 @@ class VerificationView: UIView {
         let button = UIButton()
         button.backgroundColor = .white
         button.isEnabled = false
-        button.setTitle(L10n.Verification.Button.title(" 01:30"), for: .disabled)
+        button.setTitle(L10n.Verification.Button.title("01:30"), for: .disabled)
         button.setTitleColor(.mildBlue, for: .disabled)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.setTitleColor(.white, for: .normal)
@@ -94,7 +96,7 @@ extension VerificationView {
 
         subtitle.topAnchor.constraint(equalTo: maintitle.bottomAnchor).isActive = true
         subtitle.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        subtitle.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
+        subtitle.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16).isActive = true
 
         otpField.topAnchor.constraint(equalTo: subtitle.bottomAnchor, constant: 40).isActive = true
         otpField.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true

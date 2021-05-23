@@ -27,7 +27,7 @@ class VerificationController: ViewController {
         rootView.otpField.text = ""
         rootView.otpField.clearLabels()
         rootView.timer.invalidate()
-        rootView.getCodeButton.setTitle(L10n.Verification.Button.title(" 01:30"), for: .disabled)
+        rootView.getCodeButton.setTitle(L10n.Verification.Button.title("01:30"), for: .disabled)
     }
 }
 

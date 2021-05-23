@@ -62,7 +62,7 @@ class OTPView: UITextField {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.font = .systemFont(ofSize: 40)
+            label.font = .systemFont(ofSize: 26)
             label.backgroundColor = .lightGray
             label.isUserInteractionEnabled = true
             label.layer.cornerRadius = 10
