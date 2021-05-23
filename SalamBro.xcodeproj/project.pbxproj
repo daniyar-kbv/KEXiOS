@@ -132,6 +132,7 @@
 		E2453559AD8A47EC6240ADC2635E02A2 /* Localizable+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03CEB3646262E2848B1FB78A29E5EC2 /* Localizable+Generated.swift */; };
 		49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0CD4620DB0111EEE4B4AF43B25022AE /* Localizable.strings */; };
 		374F938CC0F72905CF6FFFC093C49330 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80138187206C51166E0AAAA7510BD0A6 /* MainTabController.swift */; };
+		85B006654D7FDA2A1B7182D622754078 /* MapActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD223078A8DA8448126C04F410D86618 /* MapActionButton.swift */; };
 		3A023187DCAC7AF414F8C664A58F5D11 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8337AEB6392A7665CCF4C387EDD96FE /* MapDelegate.swift */; };
 		EFB4E4CC46FE8A8FE205477E24A291AB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F37EC0641F7BD251AD5D13A6938B162 /* MapViewController.swift */; };
 		628513BB67C93F357F280D7CDD57A34B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800203D18AD781D7B19BF897B2305911 /* Menu.swift */; };
@@ -347,6 +348,7 @@
 		118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F03CEB3646262E2848B1FB78A29E5EC2 /* Localizable+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Localizable+Generated.swift"; sourceTree = "<group>"; };
 		80138187206C51166E0AAAA7510BD0A6 /* MainTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
+		FD223078A8DA8448126C04F410D86618 /* MapActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButton.swift; sourceTree = "<group>"; };
 		E8337AEB6392A7665CCF4C387EDD96FE /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
 		1F37EC0641F7BD251AD5D13A6938B162 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		800203D18AD781D7B19BF897B2305911 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -488,6 +490,16 @@
 			path = Responses;
 			sourceTree = "<group>";
 		};
+		11304DF9A77DE0F2F7C296C777320665 /* Submodules */ = {
+			isa = PBXGroup;
+			children = (
+				3FE6C0835B013106A0B7C9203F0708C1 /* ChangeAddressCells */,
+				AE33885CEA30E2BBDF9AB41E47CBE645 /* AddressPickerView.swift */,
+				0B6FA0391E18BA13EE5B28ABA0384078 /* SMPickerView.swift */,
+			);
+			path = Submodules;
+			sourceTree = "<group>";
+		};
 		131A8D0B21C23C0C6A8A7C1A42D48A7D /* BrandCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -598,6 +610,7 @@
 				2CF76F8377585959F665EC6E7A08DC94 /* AddressSheetController.xib */,
 				E8CD1F706E554BF92C0C9FBC8B08CDF5 /* CommentarySheetController.swift */,
 				964B1BD97295E975C80FD3370E95B8DB /* CommentarySheetController.xib */,
+				FD223078A8DA8448126C04F410D86618 /* MapActionButton.swift */,
 				E8337AEB6392A7665CCF4C387EDD96FE /* MapDelegate.swift */,
 				1F37EC0641F7BD251AD5D13A6938B162 /* MapViewController.swift */,
 				00BD2C5F7C3F82B3047C047ACD541757 /* SuggestCell.swift */,
@@ -672,6 +685,16 @@
 				774846F1F181F3043DE14327D51E4080 /* UICollectionViewCenterLayout.swift */,
 			);
 			path = RateOrder;
+			sourceTree = "<group>";
+		};
+		3FE6C0835B013106A0B7C9203F0708C1 /* ChangeAddressCells */ = {
+			isa = PBXGroup;
+			children = (
+				6931ED0C52871A5C9F8EA0155E2C6817 /* ChangeAddressBrandCell.swift */,
+				A2891B50CDF85F57ED30F522C394B876 /* ChangeAddressEmptyCell.swift */,
+				7890DA3741A8500C4738352B95DA9B83 /* ChangeAddressTableViewCell.swift */,
+			);
+			path = ChangeAddressCells;
 			sourceTree = "<group>";
 		};
 		42E786AAFD279CAD3952989F4BF46ECF /* AdCell */ = {
@@ -772,6 +795,17 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
+		5BF558556431303A3BD1BBCF1DF4EE39 /* ChangeAddress */ = {
+			isa = PBXGroup;
+			children = (
+				11304DF9A77DE0F2F7C296C777320665 /* Submodules */,
+				57CC853D23869FDA939A75899AE252DD /* ChangeAddressController.swift */,
+				80B32BBC5AAAC9E76DD6B5D43ABE8A50 /* ChangeAddressRouter.swift */,
+				625E693ECD65B77CD7F46941048696B0 /* ChangeAddressViewModel.swift */,
+			);
+			path = ChangeAddress;
+			sourceTree = "<group>";
+		};
 		5D908F0160906F7C346E463377BC337B /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -787,37 +821,6 @@
 				A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */,
 			);
 			path = AddressDetail;
-			sourceTree = "<group>";
-		};
-		5BF558556431303A3BD1BBCF1DF4EE39 /* ChangeAddress */ = {
-			isa = PBXGroup;
-			children = (
-				11304DF9A77DE0F2F7C296C777320665 /* Submodules */,
-				57CC853D23869FDA939A75899AE252DD /* ChangeAddressController.swift */,
-				80B32BBC5AAAC9E76DD6B5D43ABE8A50 /* ChangeAddressRouter.swift */,
-				625E693ECD65B77CD7F46941048696B0 /* ChangeAddressViewModel.swift */,
-			);
-			path = ChangeAddress;
-			sourceTree = "<group>";
-		};
-		11304DF9A77DE0F2F7C296C777320665 /* Submodules */ = {
-			isa = PBXGroup;
-			children = (
-				3FE6C0835B013106A0B7C9203F0708C1 /* ChangeAddressCells */,
-				AE33885CEA30E2BBDF9AB41E47CBE645 /* AddressPickerView.swift */,
-				0B6FA0391E18BA13EE5B28ABA0384078 /* SMPickerView.swift */,
-			);
-			path = Submodules;
-			sourceTree = "<group>";
-		};
-		3FE6C0835B013106A0B7C9203F0708C1 /* ChangeAddressCells */ = {
-			isa = PBXGroup;
-			children = (
-				6931ED0C52871A5C9F8EA0155E2C6817 /* ChangeAddressBrandCell.swift */,
-				A2891B50CDF85F57ED30F522C394B876 /* ChangeAddressEmptyCell.swift */,
-				7890DA3741A8500C4738352B95DA9B83 /* ChangeAddressTableViewCell.swift */,
-			);
-			path = ChangeAddressCells;
 			sourceTree = "<group>";
 		};
 		634DF0542321FBAF896E12DD7808EC82 /* Provider */ = {
@@ -1728,6 +1731,7 @@
 				B90B72C795BCBB74C4401620786BCEB3 /* GeoStorage.swift in Sources */,
 				E2453559AD8A47EC6240ADC2635E02A2 /* Localizable+Generated.swift in Sources */,
 				374F938CC0F72905CF6FFFC093C49330 /* MainTabController.swift in Sources */,
+				85B006654D7FDA2A1B7182D622754078 /* MapActionButton.swift in Sources */,
 				3A023187DCAC7AF414F8C664A58F5D11 /* MapDelegate.swift in Sources */,
 				EFB4E4CC46FE8A8FE205477E24A291AB /* MapViewController.swift in Sources */,
 				628513BB67C93F357F280D7CDD57A34B /* Menu.swift in Sources */,

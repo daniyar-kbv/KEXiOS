@@ -27,45 +27,22 @@ class MapViewController: ViewController {
         return view
     }()
 
-    // FIXME: - first execution bool
-//    var isItFirstSelection: Bool = true
-
     var userLocation: YMKPoint? {
         didSet {
             guard userLocation != nil, userLocation?.latitude != 0, userLocation?.longitude != 0 else { return }
-
-//            if isItFirstSelection {
-//                isItFirstSelection = false
-//                mapView.mapWindow.map.move(
-//                    with: YMKCameraPosition.init(target: userLocation!, zoom: ZOOM, azimuth: 0, tilt: 0),
-//                    animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 1),
-//                    cameraCallback: nil)
-//            }
         }
     }
 
-    var backButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.tintColor = .kexRed
-        button.setImage(UIImage(named: "chevron.left"), for: .normal)
-        button.layer.cornerRadius = 22
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private lazy var backButton: MapActionButton = {
+        let btn = MapActionButton(image: Asset.chevronLeft.image)
+        btn.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return btn
     }()
 
-    var locationButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.tintColor = .lightGray
-        button.setImage(Asset.location.image, for: .normal)
-        button.layer.cornerRadius = 22
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(locationButtonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private lazy var locationButton: MapActionButton = {
+        let btn = MapActionButton(image: Asset.location.image)
+        btn.addTarget(self, action: #selector(locationButtonAction), for: .touchUpInside)
+        return btn
     }()
 
     var markerView: UIImageView = {
@@ -128,15 +105,11 @@ class MapViewController: ViewController {
         mapView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
-        backButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-
-        locationButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
-        locationButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        locationButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        locationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -251).isActive = true
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.size.equalTo(44)
+            $0.leading.equalToSuperview().offset(24)
+        }
 
         let width = view.frame.size.width
         markerView.widthAnchor.constraint(equalToConstant: width * 0.15).isActive = true
@@ -162,19 +135,21 @@ class MapViewController: ViewController {
     }
 
     func addBottomSheetView(scrollable _: Bool? = true) {
-        let window = UIApplication.shared.keyWindow
-        let bottomPadding = window?.safeAreaInsets.bottom
-
         addChild(addressSheetVC)
         view.addSubview(addressSheetVC.view)
         addressSheetVC.didMove(toParent: self)
         addressSheetVC.modalPresentationStyle = .pageSheet
 
-        // MARK: +16 потому что в AddressSheetController почему-то делается -16, видимо для отступа какого-то, по-хорошему нужно переписать класс MapViewController и AddressSheetController
-
-        let height: CGFloat = 211.0 + 16
+        let height: CGFloat = 211 // UIScreen.main.bounds.height * 0.32
         let width = view.frame.width
-        addressSheetVC.view.frame = CGRect(x: 0, y: view.frame.maxY, width: width, height: height + bottomPadding!)
+
+        addressSheetVC.view.frame = CGRect(x: 0, y: view.frame.height - height, width: width, height: height) // + bottomPadding!
+
+        locationButton.snp.makeConstraints {
+            $0.size.equalTo(44)
+            $0.leading.equalToSuperview().offset(24)
+            $0.bottom.equalTo(addressSheetVC.view.snp.top).offset(-24)
+        }
     }
 
     @objc func backButtonTapped(_: UIButton!) {
@@ -186,7 +161,6 @@ class MapViewController: ViewController {
     }
 
     @objc func locationButtonAction(_: UIButton!) {
-        print("BUTTON TAPPED")
         let locStatus = CLLocationManager.authorizationStatus()
         switch locStatus {
         case .notDetermined:
@@ -201,6 +175,8 @@ class MapViewController: ViewController {
             return
         case .authorizedAlways, .authorizedWhenInUse:
             print("case always and when in user")
+        @unknown default:
+            fatalError()
         }
         locationManager.startUpdatingLocation()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -213,35 +189,6 @@ class MapViewController: ViewController {
         }
     }
 }
-
-// extension MapViewController: YMKUserLocationObjectListener {
-//    func onObjectAdded(with view: YMKUserLocationView) {
-//        // FIXME: - should map show the user's location from locationManager?
-//        let pinPlacemark = view.pin.useCompositeIcon()
-//        pinPlacemark.setIconWithName(
-//            "pin",
-//            image: Asset.searchResult.image,
-//            style: YMKIconStyle(
-//                anchor: CGPoint(x: 0.5, y: 0.5) as NSValue,
-//                rotationType: YMKRotationType.rotate.rawValue as NSNumber,
-//                zIndex: 1,
-//                flat: false,
-//                visible: true,
-//                scale: 1,
-//                tappableArea: nil
-//            )
-//        )
-//        view.accuracyCircle.fillColor = .clear
-//    }
-//
-//    func onObjectRemoved(with _: YMKUserLocationView) {
-//        print("removed object")
-//    }
-//
-//    func onObjectUpdated(with _: YMKUserLocationView, event _: YMKObjectEvent) {
-//        print("object updated")
-//    }
-// }
 
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
