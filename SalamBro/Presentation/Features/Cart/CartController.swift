@@ -276,8 +276,6 @@ extension CartController: MapDelegate {
     }
 
     func showCommentarySheet() {
-//        addressSheetVC.view.isHidden = true
-
         addChild(commentarySheetVC)
         view.addSubview(commentarySheetVC.view)
         commentarySheetVC.proceedButton.setTitle(L10n.Promocode.button, for: .normal)
@@ -288,7 +286,6 @@ extension CartController: MapDelegate {
         let height: CGFloat = 149.0
         let width = view.frame.width
         commentarySheetVC.view.frame = CGRect(x: 0, y: view.frame.height - height, width: width, height: height)
-        print("view frame height: \(view.frame.height)")
     }
 
     func passCommentary(text _: String) {

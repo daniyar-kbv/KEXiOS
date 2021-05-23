@@ -5,10 +5,10 @@
 //  Created by Murager on 01.03.2021.
 //
 
+import IQKeyboardManagerSwift
 import SVProgressHUD
 import UIKit
 import YandexMapKit
-import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -36,10 +36,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SVProgressHUD.setRingThickness(2)
         SVProgressHUD.setForegroundColor(.kexRed)
     }
-    
+
     private func configureKeyboardManager() {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.toolbarTintColor = .kexRed
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        IQKeyboardManager.shared.enableAutoToolbar = false
     }
 }
