@@ -17,6 +17,7 @@ class VerificationController: ViewController {
 
     override func loadView() {
         view = rootView
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     override func viewWillAppear(_: Bool) {
