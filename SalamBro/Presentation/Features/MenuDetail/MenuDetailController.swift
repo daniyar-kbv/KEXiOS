@@ -234,7 +234,6 @@ class MenuDetailController: ViewController {
         proceedButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
-//            $0.bottom.equalTo(view.snp.bottomMargin).offset(-16)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(43)
         }
