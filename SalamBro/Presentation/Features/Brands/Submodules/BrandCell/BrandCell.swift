@@ -25,9 +25,11 @@ public final class BrandCell: UICollectionViewCell, Reusable {
         return view
     }()
 
+    private let containerView = UIView()
+
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        layoutUI()
     }
 
     public required init?(coder _: NSCoder) { nil }
@@ -48,19 +50,37 @@ public final class BrandCell: UICollectionViewCell, Reusable {
             .disposed(by: disposeBag)
     }
 
-    private func setup() {
-        setupViews()
-        setupConstraints()
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        configureShadow()
     }
 
-    private func setupViews() {
+    private func configureShadow() {
+        containerView.clipsToBounds = false
+        containerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        containerView.layer.shadowOpacity = 1
+        containerView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        containerView.layer.shadowRadius = 4
+        containerView.layer.shadowPath = UIBezierPath(roundedRect: containerView.bounds, cornerRadius: 16).cgPath
+
+        contentView.clipsToBounds = false
+    }
+
+    private func layoutUI() {
         backgroundColor = .clear
-        layer.cornerRadius = 16
-        layer.masksToBounds = true
-        contentView.addSubview(imageView)
-    }
 
-    private func setupConstraints() {
+        contentView.addSubview(containerView)
+        containerView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().offset(4)
+            $0.trailing.equalToSuperview().offset(-4)
+            $0.bottom.equalToSuperview()
+        }
+
+        imageView.layer.cornerRadius = 16
+        imageView.layer.masksToBounds = true
+
+        containerView.addSubview(imageView)
         imageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }

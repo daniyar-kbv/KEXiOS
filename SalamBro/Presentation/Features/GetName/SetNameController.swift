@@ -13,6 +13,12 @@ class SetNameController: ViewController {
     override func loadView() {
         view = rootView
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+//        navigationItem.backButtonTitle = ""
+    }
 }
 
 extension SetNameController: GetNameViewDelegate {

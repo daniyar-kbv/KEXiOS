@@ -17,6 +17,7 @@ class VerificationController: ViewController {
 
     override func loadView() {
         view = rootView
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     override func viewWillAppear(_: Bool) {
@@ -27,7 +28,7 @@ class VerificationController: ViewController {
         rootView.otpField.text = ""
         rootView.otpField.clearLabels()
         rootView.timer.invalidate()
-        rootView.getCodeButton.setTitle(L10n.Verification.Button.title(" 01:30"), for: .disabled)
+        rootView.getCodeButton.setTitle(L10n.Verification.Button.title("01:30"), for: .disabled)
     }
 }
 

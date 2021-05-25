@@ -20,23 +20,25 @@ class MenuDetailController: ViewController {
         let view = UIImageView()
         view.image = Asset.fastFood.image
         view.contentMode = .scaleAspectFit
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     lazy var itemTitleLabel: UILabel = {
-        let view = UILabel()
-        view.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
-        view.text = "Чизбургер куриный"
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
+        label.text = "Чизбургер куриный"
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        return label
     }()
 
     lazy var descriptionLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 12)
-        view.text = "Чизбургер куриный"
-        return view
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.text = "Чизбургер куриный"
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        return label
     }()
 
     lazy var commentaryView: UIView = {
@@ -58,7 +60,7 @@ class MenuDetailController: ViewController {
         view.backgroundColor = .white
         view.text = L10n.MenuDetail.additionalItemLabel
         view.textColor = .systemGray
-        view.font = .systemFont(ofSize: 14)
+        view.font = .systemFont(ofSize: 12)
         return view
     }()
 
@@ -72,6 +74,7 @@ class MenuDetailController: ViewController {
     lazy var chooseAdditionalItemButton: UIButton = {
         let view = UIButton()
         view.setTitle(L10n.MenuDetail.chooseAdditionalItemButton, for: .normal)
+        view.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         view.setTitleColor(.kexRed, for: .normal)
         view.addTarget(self, action: #selector(additionalItemChangeButtonTapped), for: .touchUpInside)
         return view
@@ -172,9 +175,9 @@ class MenuDetailController: ViewController {
 
         imageView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(46)
-            $0.left.equalToSuperview().offset(39)
-            $0.right.equalToSuperview().offset(-39)
-            $0.height.equalTo(216)
+            $0.left.equalToSuperview().offset(40)
+            $0.right.equalToSuperview().offset(-40)
+            $0.height.equalToSuperview().multipliedBy(0.33)
         }
 
         itemTitleLabel.snp.makeConstraints {
@@ -215,13 +218,14 @@ class MenuDetailController: ViewController {
         }
 
         commentaryField.snp.makeConstraints {
+            $0.top.equalTo(chooseAdditionalItemView.snp.bottom).offset(16)
             $0.left.equalToSuperview().offset(16)
             $0.right.equalToSuperview().offset(-16)
-            $0.centerY.equalToSuperview()
+            $0.height.equalTo(50)
         }
 
         commentaryView.snp.makeConstraints {
-            $0.top.equalTo(chooseAdditionalItemView.snp.bottom).offset(24)
+            $0.top.equalTo(chooseAdditionalItemView.snp.bottom).offset(16)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
             $0.height.equalTo(50)
@@ -230,7 +234,7 @@ class MenuDetailController: ViewController {
         proceedButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalTo(view.snp.bottomMargin).offset(-16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(43)
         }
 

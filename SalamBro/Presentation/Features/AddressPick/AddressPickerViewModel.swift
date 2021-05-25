@@ -10,6 +10,7 @@ import Foundation
 public protocol AddressPickerViewModelProtocol: ViewModel {
     var cellViewModels: [AddressPickerCellViewModelProtocol] { get }
     func didSelect(index: Int)
+    func changeAddress()
 }
 
 public final class AddressPickerViewModel: AddressPickerViewModelProtocol {
@@ -24,6 +25,10 @@ public final class AddressPickerViewModel: AddressPickerViewModelProtocol {
         repository.currentAddress = address
         didSelectAddress?(addresses[index])
         close()
+    }
+
+    public func changeAddress() {
+        router.enqueueRoute(with: AddressPickerRouter.RouteType.changeAddress, animated: true, completion: nil)
     }
 
     public init(router: Router,
