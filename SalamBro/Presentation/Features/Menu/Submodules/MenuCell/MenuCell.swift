@@ -21,7 +21,7 @@ public final class MenuCell: UITableViewCell, Reusable {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 17, weight: .regular)
+        label.font = .systemFont(ofSize: 17, weight: .medium)
         label.numberOfLines = 0
         return label
     }()

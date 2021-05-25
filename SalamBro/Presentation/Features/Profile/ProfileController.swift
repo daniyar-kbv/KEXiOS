@@ -11,7 +11,7 @@ class ProfileController: ViewController {
     lazy var phoneTitle: UILabel = {
         let label = UILabel()
         label.text = "+7 (702) 000 00 00"
-        label.font = .systemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.textColor = .mildBlue
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -20,7 +20,7 @@ class ProfileController: ViewController {
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Alibek"
-        label.font = .systemFont(ofSize: 32)
+        label.font = .systemFont(ofSize: 32, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -63,6 +63,7 @@ class ProfileController: ViewController {
         let button = UIButton()
         button.setTitle(L10n.Profile.LogoutButton.title, for: .normal)
         button.setTitleColor(.mildBlue, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
         button.addTarget(self, action: #selector(logout), for: .touchUpInside)
         button.borderWidth = 1
         button.borderColor = .mildBlue
@@ -143,6 +144,7 @@ extension ProfileController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = profileItems[indexPath.row]
+        cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         cell.tintColor = .kexRed
         cell.selectionStyle = .none
         switch indexPath.row {
