@@ -10,6 +10,8 @@ import RxCocoa
 import RxSwift
 import UIKit
 
+// MARK: Tech debt, нужно переписать.
+
 public final class AddressPickController: ViewController {
     private let viewModel: AddressPickerViewModelProtocol
     private let disposeBag: DisposeBag
@@ -25,7 +27,6 @@ public final class AddressPickController: ViewController {
     private lazy var plusButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "add"), for: .normal)
-        button.addTarget(self, action: #selector(add), for: .touchUpInside)
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 24, weight: .medium)
         return button
@@ -55,7 +56,13 @@ public final class AddressPickController: ViewController {
         nil
     }
 
-    private func bind() {}
+    private func bind() {
+        plusButton.rx.tap
+            .bind { [weak self] in
+                self?.viewModel.changeAddress()
+            }
+            .disposed(by: disposeBag)
+    }
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
@@ -74,14 +81,14 @@ public final class AddressPickController: ViewController {
 
     private func setupConstraints() {
         addLabel.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(24)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             $0.left.equalToSuperview().offset(24)
         }
 
         plusButton.snp.makeConstraints {
-            $0.centerY.equalTo(addLabel.snp.centerY)
-            $0.right.equalToSuperview().offset(-24)
-            $0.left.greaterThanOrEqualTo(addLabel.snp.right).offset(8)
+            $0.centerY.equalTo(addLabel)
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.size.equalTo(24)
         }
 
         tableView.snp.makeConstraints {
@@ -89,9 +96,6 @@ public final class AddressPickController: ViewController {
             $0.left.right.bottom.equalToSuperview()
         }
     }
-
-    @objc
-    private func add() {}
 }
 
 extension AddressPickController: UITableViewDelegate, UITableViewDataSource {

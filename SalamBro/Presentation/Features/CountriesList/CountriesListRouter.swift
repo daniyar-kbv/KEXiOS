@@ -33,7 +33,8 @@ public final class CountriesListRouter: Router {
                                                    type: .change,
                                                    didSelectCountry: didSelectCountry)
             let vc = CountriesListController(viewModel: viewModel)
-            baseVC.present(vc, animated: animated, completion: completion)
+            let navVC = UINavigationController(rootViewController: vc)
+            baseVC.present(navVC, animated: animated, completion: completion)
         }
     }
 

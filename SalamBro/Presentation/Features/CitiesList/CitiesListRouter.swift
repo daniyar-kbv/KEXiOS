@@ -37,7 +37,8 @@ public final class CitiesListRouter: Router {
                                                 type: .change,
                                                 didSelectCity: didSelectBrand)
             let vc = CitiesListController(viewModel: viewModel)
-            baseVC.present(vc, animated: animated, completion: completion)
+            let navVC = UINavigationController(rootViewController: vc)
+            baseVC.present(navVC, animated: animated, completion: completion)
         case let .select(id):
             let viewModel = CitiesListViewModel(router: self,
                                                 country: id,

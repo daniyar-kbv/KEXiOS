@@ -13,7 +13,7 @@ class CommentarySheetController: ViewController {
     @IBOutlet var proceedButton: UIButton!
 
     weak var delegate: MapDelegate?
-    var yCoordinate: CGFloat?
+    private var yCoordinate: CGFloat!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,7 @@ class CommentarySheetController: ViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        yCoordinate = view.frame.origin.y
+        yCoordinate = view.frame.origin.y - 49
         beginEdit()
         delegate?.mapShadow(toggle: true)
     }
@@ -46,7 +46,7 @@ class CommentarySheetController: ViewController {
         commentaryField.placeholder = L10n.Commentary.AddressField.title
         proceedButton.setTitle(L10n.Commentary.Button.title, for: .normal)
         contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 10
+        contentView.layer.cornerRadius = 18
         contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
 

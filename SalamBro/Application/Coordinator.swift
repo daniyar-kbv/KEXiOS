@@ -32,7 +32,7 @@ public final class Coordinator {
     private func startFirstFlow() {
         let router = CountriesListRouter()
         let viewModel = CountriesListViewModel(router: router,
-                                               repository: DIResolver.resolve(GeoRepository.self)!,
+                                               repository: geoRepository,
                                                type: .select,
                                                didSelectCountry: nil)
         let vc = CountriesListController(viewModel: viewModel)
