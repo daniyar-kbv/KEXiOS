@@ -105,8 +105,6 @@
 		F8DD9B63A3FC45BA206E452A6FE65FED /* CountryCodePickerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4BCCB3A47A0125E4C31AAD89222F49 /* CountryCodePickerRouter.swift */; };
 		732833AB8FE813B445943C4655EF1860 /* CountryCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A988FB1195ABF1FB19E3689CB20AF5A7 /* CountryCodePickerViewController.swift */; };
 		76875FC32A32E60A761D6C8A131DAB28 /* CountryCodePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3378C0DAD04D05898AE55A83BDD896C2 /* CountryCodePickerViewModel.swift */; };
-		F0D0B18F3DC10A511979BF3402DEF606 /* CountryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05D6012ED51BE498D15390B73B21085 /* CountryDTO.swift */; };
-		801372CAE290046CCF1F73E1D02A7A34 /* CountryUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BE128CAC3E2EC2AD3B77CFB2AF2F0B /* CountryUI.swift */; };
 		E95A37069C2F7A6F6AE30B44D9509E82 /* CustomSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963541475F483ED939FA8CD9C71E8855 /* CustomSegment.swift */; };
 		C0D715EB3522001368FA454E5A8BC64D /* DIResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA62232AE7AE7B47A63EF65C389A973 /* DIResolver.swift */; };
 		47CF0DEDEF170736EBD6FAB8111A1A45 /* DownloadBrandsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F3A877AC95906EA4D41A9E1BB03A13 /* DownloadBrandsResponse.swift */; };
@@ -324,8 +322,6 @@
 		DF4BCCB3A47A0125E4C31AAD89222F49 /* CountryCodePickerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerRouter.swift; sourceTree = "<group>"; };
 		A988FB1195ABF1FB19E3689CB20AF5A7 /* CountryCodePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewController.swift; sourceTree = "<group>"; };
 		3378C0DAD04D05898AE55A83BDD896C2 /* CountryCodePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewModel.swift; sourceTree = "<group>"; };
-		A05D6012ED51BE498D15390B73B21085 /* CountryDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryDTO.swift; sourceTree = "<group>"; };
-		31BE128CAC3E2EC2AD3B77CFB2AF2F0B /* CountryUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryUI.swift; sourceTree = "<group>"; };
 		963541475F483ED939FA8CD9C71E8855 /* CustomSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegment.swift; sourceTree = "<group>"; };
 		FFA62232AE7AE7B47A63EF65C389A973 /* DIResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIResolver.swift; sourceTree = "<group>"; };
 		F2F3A877AC95906EA4D41A9E1BB03A13 /* DownloadBrandsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadBrandsResponse.swift; sourceTree = "<group>"; };
@@ -548,6 +544,16 @@
 			path = Update;
 			sourceTree = "<group>";
 		};
+		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C9392BFA56499DD56ECB2AF1FC231E8 /* Pods_SalamBro.framework */,
+				24A13733093DD55DBE42A20FB059CFAB /* Pods_SalamBroTests.framework */,
+				7AF4E2B9C5CAC0C1D126B547533E2FB0 /* Pods_SalamBro_SalamBroUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		19CBDBA2F0B21A768111888DA9776F23 /* BrandProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -591,6 +597,16 @@
 				47B4882B846EE55133F2EA0DC79C96E2 /* SetNameView.swift */,
 			);
 			path = GetName;
+			sourceTree = "<group>";
+		};
+		2E14EB83A15F8D470F0076E286CB6BDF /* BusinessLayer */ = {
+			isa = PBXGroup;
+			children = (
+				DB68AE98DF401CDC7C551CDA355C599D /* Models */,
+				90D26D8C3FA6247B6261E9F02331ACB6 /* Network */,
+				6D5B15D00E9EDEA7D90A5387D020416C /* Services */,
+			);
+			path = BusinessLayer;
 			sourceTree = "<group>";
 		};
 		2F1DCAE1C9B592EF6F4C7C1F545DF14D /* Products */ = {
@@ -638,7 +654,6 @@
 				540553DFE30143D918A9C664D5FD9EBC /* CartAdditionalProductDTO.swift */,
 				FCF307719DB134F2822AFF83618DF7A9 /* CartDTO.swift */,
 				07E291CB2A5CC5F0FBCD05C7640076A7 /* CartProductDTO.swift */,
-				A05D6012ED51BE498D15390B73B21085 /* CountryDTO.swift */,
 				9282583306D4405BF3AF0ABAAB4431C2 /* DummyDataDTO.swift */,
 				58AC207C21E8DECAACB676C1065CD196 /* FoodDTO.swift */,
 				24059732B326715E412DADF7EBA90770 /* FoodTypeDTO.swift */,
@@ -824,49 +839,6 @@
 			path = AddressDetail;
 			sourceTree = "<group>";
 		};
-		2E14EB83A15F8D470F0076E286CB6BDF /* BusinessLayer */ = {
-			isa = PBXGroup;
-			children = (
-				DB68AE98DF401CDC7C551CDA355C599D /* Models */,
-				90D26D8C3FA6247B6261E9F02331ACB6 /* Network */,
-				6D5B15D00E9EDEA7D90A5387D020416C /* Services */,
-			);
-			path = BusinessLayer;
-			sourceTree = "<group>";
-		};
-		6D5B15D00E9EDEA7D90A5387D020416C /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				F7F254AE6752CFEF94722885B2637746 /* LocationService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
-		90D26D8C3FA6247B6261E9F02331ACB6 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				CEED03B221B71F9A10CA3920C4D290B1 /* LocationAPI.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		DB68AE98DF401CDC7C551CDA355C599D /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				D6108DED1E47690C3D872D7EA28A241D /* Responses */,
-				BC38CD54AA71E4C20246F3181F40C8D9 /* NetworkError.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		D6108DED1E47690C3D872D7EA28A241D /* Responses */ = {
-			isa = PBXGroup;
-			children = (
-				DEC1F0863C3CF15A586800BFA2AC3838 /* CountriesResponse.swift */,
-			);
-			path = Responses;
-			sourceTree = "<group>";
-		};
 		634DF0542321FBAF896E12DD7808EC82 /* Provider */ = {
 			isa = PBXGroup;
 			children = (
@@ -906,6 +878,14 @@
 				01C4535D2136E4D06E0D57D74B2B1904 /* CitiesListViewModel.swift */,
 			);
 			path = CitiesList;
+			sourceTree = "<group>";
+		};
+		6D5B15D00E9EDEA7D90A5387D020416C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F7F254AE6752CFEF94722885B2637746 /* LocationService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		71ABCCF50A3B4102B911CE7EF8C8ED25 /* Submodules */ = {
@@ -1067,6 +1047,14 @@
 			path = Responses;
 			sourceTree = "<group>";
 		};
+		90D26D8C3FA6247B6261E9F02331ACB6 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				CEED03B221B71F9A10CA3920C4D290B1 /* LocationAPI.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		90D365FE61ADEB905C3F4889CABBF6D6 /* AdditionalItem */ = {
 			isa = PBXGroup;
 			children = (
@@ -1112,7 +1100,6 @@
 				DCB40194A8C1EC2915B93AF7514E3B2C /* CartAdditionalProductUI.swift */,
 				F15D4DF5C9A0363EF339FA50B8DDCC1B /* CartProductUI.swift */,
 				F89F41E8896BF6C6BEF78FE574B2F1D6 /* CartUI.swift */,
-				31BE128CAC3E2EC2AD3B77CFB2AF2F0B /* CountryUI.swift */,
 				8E03B60A765AD6A232733C9E7A5DBAF2 /* FoodTypeUI.swift */,
 				30B273E03737E54790AD7775DD048037 /* FoodUI.swift */,
 				40C389CCC2D1DC71D82F424A7F9CA434 /* MenuUI.swift */,
@@ -1261,6 +1248,23 @@
 			path = MenuDetailProvider;
 			sourceTree = "<group>";
 		};
+		D6108DED1E47690C3D872D7EA28A241D /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				DEC1F0863C3CF15A586800BFA2AC3838 /* CountriesResponse.swift */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
+		DB68AE98DF401CDC7C551CDA355C599D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D6108DED1E47690C3D872D7EA28A241D /* Responses */,
+				BC38CD54AA71E4C20246F3181F40C8D9 /* NetworkError.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E10130B54A9EC2E434FD8501CA35EC13 /* SelectMainInformation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1311,16 +1315,6 @@
 				A149A08B6C3B89EB477BB7C1D8D66FA4 /* MenuDetailViewModel.swift */,
 			);
 			path = MenuDetail;
-			sourceTree = "<group>";
-		};
-		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9C9392BFA56499DD56ECB2AF1FC231E8 /* Pods_SalamBro.framework */,
-				24A13733093DD55DBE42A20FB059CFAB /* Pods_SalamBroTests.framework */,
-				7AF4E2B9C5CAC0C1D126B547533E2FB0 /* Pods_SalamBro_SalamBroUITests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		F243C4DA58D4A6AEE6AACAD35BDB3898 /* MainTab */ = {
@@ -1497,96 +1491,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9661D946FD185ADB45999E3C99B320DA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F9F4B0C67FF2E2E020C315DDB3CE2B61 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AF8C389205F0CDB75427EF1F9D3B0CDB /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SalamBro-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8AF21AEFE17B7B2D0FE8A5822920D1B5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1C08C138C7899740AAEC4BA62E0E6EA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		02F346A79A192E94F4C4138CDDFA1BFD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1629,6 +1533,96 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8AF21AEFE17B7B2D0FE8A5822920D1B5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9661D946FD185ADB45999E3C99B320DA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF8C389205F0CDB75427EF1F9D3B0CDB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SalamBro-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E1C08C138C7899740AAEC4BA62E0E6EA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F9F4B0C67FF2E2E020C315DDB3CE2B61 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FDA3F36C746C7D4EC61E3CE9EAC8C181 /* SwiftGen */ = {
@@ -1761,8 +1755,6 @@
 				F8DD9B63A3FC45BA206E452A6FE65FED /* CountryCodePickerRouter.swift in Sources */,
 				732833AB8FE813B445943C4655EF1860 /* CountryCodePickerViewController.swift in Sources */,
 				76875FC32A32E60A761D6C8A131DAB28 /* CountryCodePickerViewModel.swift in Sources */,
-				F0D0B18F3DC10A511979BF3402DEF606 /* CountryDTO.swift in Sources */,
-				801372CAE290046CCF1F73E1D02A7A34 /* CountryUI.swift in Sources */,
 				E95A37069C2F7A6F6AE30B44D9509E82 /* CustomSegment.swift in Sources */,
 				C0D715EB3522001368FA454E5A8BC64D /* DIResolver.swift in Sources */,
 				47CF0DEDEF170736EBD6FAB8111A1A45 /* DownloadBrandsResponse.swift in Sources */,
