@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class SelectMainInformationViewController: ViewController {
+final class SelectMainInformationViewController: ViewController {
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
 
@@ -73,7 +73,7 @@ public final class SelectMainInformationViewController: ViewController {
         return button
     }()
 
-    public init(viewModel: SelectMainInformationViewModelProtocol) {
+    init(viewModel: SelectMainInformationViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         setup()

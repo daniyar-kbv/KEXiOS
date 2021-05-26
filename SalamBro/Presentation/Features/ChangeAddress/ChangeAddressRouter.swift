@@ -21,7 +21,7 @@ final class ChangeAddressRouter: Router {
     private var context: PresentationContext?
 
     var selectedBrand: ((BrandUI) -> Void)?
-    var selectedCountry: ((CountryUI) -> Void)?
+    var selectedCountry: ((Country) -> Void)?
     var selectedCity: ((String) -> Void)?
     var selectedAddress: ((String) -> Void)?
 

@@ -10,7 +10,7 @@ import PromiseKit
 import RxCocoa
 import RxSwift
 
-public protocol BrandViewModelProtocol: ViewModel {
+protocol BrandViewModelProtocol: ViewModel {
     var cellViewModels: [BrandCellViewModelProtocol] { get }
     var ratios: [(Float, Float)] { get }
     var updateCollectionView: BehaviorRelay<Void?> { get }
@@ -18,13 +18,13 @@ public protocol BrandViewModelProtocol: ViewModel {
     func didSelect(index: Int)
 }
 
-public final class BrandViewModel: BrandViewModelProtocol {
+final class BrandViewModel: BrandViewModelProtocol {
     public enum FlowType {
         case change
         case select
     }
 
-    public var router: Router
+    var router: Router
     private let repository: BrandRepository
     private let type: FlowType
     public var cellViewModels: [BrandCellViewModelProtocol]

@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class BrandsController: ViewController {
+final class BrandsController: ViewController {
     private let viewModel: BrandViewModelProtocol
     private let disposeBag: DisposeBag
 

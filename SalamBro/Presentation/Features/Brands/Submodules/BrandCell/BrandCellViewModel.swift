@@ -9,15 +9,15 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-public protocol BrandCellViewModelProtocol: ViewModel {
+protocol BrandCellViewModelProtocol: ViewModel {
     var name: BehaviorRelay<String> { get }
 }
 
-public final class BrandCellViewModel: BrandCellViewModelProtocol {
-    public var router: Router
-    public var name: BehaviorRelay<String>
-    public init(router: Router,
-                brand: BrandUI)
+final class BrandCellViewModel: BrandCellViewModelProtocol {
+    var router: Router
+    var name: BehaviorRelay<String>
+    init(router: Router,
+         brand: BrandUI)
     {
         self.router = router
         name = .init(value: brand.name + brand.priority.description)

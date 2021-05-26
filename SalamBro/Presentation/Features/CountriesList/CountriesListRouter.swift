@@ -7,18 +7,18 @@
 
 import UIKit
 
-public final class CountriesListRouter: Router {
-    public enum PresentationContext {
-        case present(didSelectCountry: ((CountryUI) -> Void)?)
+final class CountriesListRouter: Router {
+    enum PresentationContext {
+        case present(didSelectCountry: ((Country) -> Void)?)
     }
 
-    public enum RouteType {
+    enum RouteType {
         case cities(countryId: Int)
     }
 
-    public var baseViewController: UIViewController?
+    var baseViewController: UIViewController?
 
-    public func present(on baseVC: UIViewController, animated: Bool, context: Any?, completion: (() -> Void)?) {
+    func present(on baseVC: UIViewController, animated: Bool, context: Any?, completion: (() -> Void)?) {
         guard let context = context as? PresentationContext else {
             assertionFailure("The context type mismatch")
             return
@@ -29,7 +29,8 @@ public final class CountriesListRouter: Router {
         switch context {
         case let .present(didSelectCountry):
             let viewModel = CountriesListViewModel(router: self,
-                                                   repository: DIResolver.resolve(GeoRepository.self)!,
+                                                   service: DIResolver.resolve(LocationService.self)!,
+                                                   repository: DIResolver.resolve(LocationRepository.self)!,
                                                    type: .change,
                                                    didSelectCountry: didSelectCountry)
             let vc = CountriesListController(viewModel: viewModel)
@@ -38,7 +39,7 @@ public final class CountriesListRouter: Router {
         }
     }
 
-    public func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {
+    func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {
         guard let routeType = context as? RouteType else {
             assertionFailure("The route type mismatch")
             return
@@ -57,7 +58,7 @@ public final class CountriesListRouter: Router {
         }
     }
 
-    public func dismiss(animated: Bool, completion: (() -> Void)?) {
+    func dismiss(animated: Bool, completion: (() -> Void)?) {
         baseViewController?.dismiss(animated: animated, completion: completion)
     }
 }

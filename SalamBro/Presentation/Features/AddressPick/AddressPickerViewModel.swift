@@ -7,13 +7,13 @@
 
 import Foundation
 
-public protocol AddressPickerViewModelProtocol: ViewModel {
+protocol AddressPickerViewModelProtocol: ViewModel {
     var cellViewModels: [AddressPickerCellViewModelProtocol] { get }
     func didSelect(index: Int)
     func changeAddress()
 }
 
-public final class AddressPickerViewModel: AddressPickerViewModelProtocol {
+final class AddressPickerViewModel: AddressPickerViewModelProtocol {
     public var router: Router
     private let repository: GeoRepository
     public var cellViewModels: [AddressPickerCellViewModelProtocol]
@@ -31,9 +31,9 @@ public final class AddressPickerViewModel: AddressPickerViewModelProtocol {
         router.enqueueRoute(with: AddressPickerRouter.RouteType.changeAddress, animated: true, completion: nil)
     }
 
-    public init(router: Router,
-                repository: GeoRepository,
-                didSelectAddress: ((Address) -> Void)?)
+    init(router: Router,
+         repository: GeoRepository,
+         didSelectAddress: ((Address) -> Void)?)
     {
         self.router = router
         self.repository = repository

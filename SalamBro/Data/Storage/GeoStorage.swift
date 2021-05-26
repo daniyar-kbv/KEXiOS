@@ -7,10 +7,10 @@
 
 import Foundation
 
-public protocol GeoStorage: AnyObject {
-    var currentCountry: CountryDTO? { get set }
+protocol GeoStorage: AnyObject {
+    var currentCountry: Country? { get set }
     var currentCity: String? { get set }
-    var countries: [CountryDTO]? { get set }
+    var countries: [Country]? { get set }
     var cities: [String]? { get set }
     var addresses: [AddressDTO]? { get set }
     var currentAddress: AddressDTO? { get set }
@@ -26,32 +26,32 @@ extension Storage: GeoStorage {
         case currentAddress
     }
 
-    public var currentCountry: CountryDTO? {
+    var currentCountry: Country? {
         get { get(key: Keys.currentCountry.rawValue) }
         set { save(key: Keys.currentCountry.rawValue, object: newValue) }
     }
 
-    public var currentCity: String? {
+    var currentCity: String? {
         get { get(key: Keys.currentCity.rawValue) }
         set { save(key: Keys.currentCity.rawValue, object: newValue) }
     }
 
-    public var countries: [CountryDTO]? {
+    var countries: [Country]? {
         get { get(key: Keys.countries.rawValue) }
         set { save(key: Keys.countries.rawValue, object: newValue) }
     }
 
-    public var cities: [String]? {
+    var cities: [String]? {
         get { get(key: Keys.cities.rawValue) }
         set { save(key: Keys.cities.rawValue, object: newValue) }
     }
 
-    public var addresses: [AddressDTO]? {
+    var addresses: [AddressDTO]? {
         get { get(key: Keys.addresses.rawValue) }
         set { save(key: Keys.addresses.rawValue, object: newValue) }
     }
 
-    public var currentAddress: AddressDTO? {
+    var currentAddress: AddressDTO? {
         get { get(key: Keys.currentAddress.rawValue) }
         set { save(key: Keys.currentAddress.rawValue, object: newValue) }
     }

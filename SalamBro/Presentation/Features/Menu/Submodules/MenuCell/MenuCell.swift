@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class MenuCell: UITableViewCell, Reusable {
+final class MenuCell: UITableViewCell, Reusable {
     private lazy var foodImageView: UIImageView = {
         let view = UIImageView()
         view.image = Asset.fastFood.image
@@ -77,7 +77,7 @@ public final class MenuCell: UITableViewCell, Reusable {
         disposeBag = DisposeBag()
     }
 
-    public func set(_ viewModel: MenuCellViewModelProtocol?) {
+    func set(_ viewModel: MenuCellViewModelProtocol?) {
         self.viewModel = viewModel
     }
 

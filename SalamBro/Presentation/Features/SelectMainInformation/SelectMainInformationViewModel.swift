@@ -9,7 +9,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-public protocol SelectMainInformationViewModelProtocol: ViewModel {
+protocol SelectMainInformationViewModelProtocol: ViewModel {
     var countryName: BehaviorRelay<String?> { get }
     var cityName: BehaviorRelay<String?> { get }
     var brandName: BehaviorRelay<String?> { get }
@@ -26,8 +26,8 @@ public protocol SelectMainInformationViewModelProtocol: ViewModel {
     func save()
 }
 
-public final class SelectMainInformationViewModel: SelectMainInformationViewModelProtocol {
-    public var router: Router
+final class SelectMainInformationViewModel: SelectMainInformationViewModelProtocol {
+    var router: Router
     private let geoRepository: GeoRepository
     private let brandRepository: BrandRepository
 
@@ -40,50 +40,50 @@ public final class SelectMainInformationViewModel: SelectMainInformationViewMode
     public var brands: [String]
     private let didSave: (() -> Void)?
 
-    public func didChange(city: String) {
+    func didChange(city: String) {
         geoRepository.currentCity = city
         cityName.accept(city)
     }
 
-    public func didChange(country index: Int) {
+    func didChange(country index: Int) {
         let country = geoRepository.countries[index]
         geoRepository.currentCountry = country
         countryName.accept(country.name)
     }
 
-    public func didChange(brand: BrandUI) {
+    func didChange(brand: BrandUI) {
         brandRepository.brand = brand.toDomain()
         brandName.accept(brand.name)
     }
 
-    public func didChange(address: Address) {
+    func didChange(address: Address) {
         geoRepository.currentAddress = address
         self.address.accept(address.name)
     }
 
-    public func selectBrand() {
+    func selectBrand() {
         let context = SelectMainInformationRouter.RouteType.selectBrand { [unowned self] in
             self.didChange(brand: $0)
         }
         router.enqueueRoute(with: context)
     }
 
-    public func selectAddress() {
+    func selectAddress() {
         let context = SelectMainInformationRouter.RouteType.selectAddress { [unowned self] in
             self.didChange(address: $0)
         }
         router.enqueueRoute(with: context)
     }
 
-    public func save() {
+    func save() {
         didSave?()
         router.dismiss()
     }
 
-    public init(router: Router,
-                geoRepository: GeoRepository,
-                brandRepository: BrandRepository,
-                didSave: (() -> Void)?)
+    init(router: Router,
+         geoRepository: GeoRepository,
+         brandRepository: BrandRepository,
+         didSave: (() -> Void)?)
     {
         self.router = router
         self.geoRepository = geoRepository

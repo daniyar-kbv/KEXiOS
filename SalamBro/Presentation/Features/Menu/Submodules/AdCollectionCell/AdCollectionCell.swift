@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-public final class AdCollectionCell: UITableViewCell, NibReusable {
+final class AdCollectionCell: UITableViewCell, NibReusable {
     public var delegate: AddCollectionCellDelegate?
 
     @IBOutlet var collectionView: UICollectionView!

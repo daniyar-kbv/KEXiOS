@@ -7,12 +7,12 @@
 
 import UIKit
 
-public final class Coordinator {
+final class Coordinator {
     private let geoRepository: GeoRepository
     private let brandRepository: BrandRepository
 
-    public init(geoRepository: GeoRepository,
-                brandRepository: BrandRepository)
+    init(geoRepository: GeoRepository,
+         brandRepository: BrandRepository)
     {
         self.geoRepository = geoRepository
         self.brandRepository = brandRepository
@@ -32,7 +32,8 @@ public final class Coordinator {
     private func startFirstFlow() {
         let router = CountriesListRouter()
         let viewModel = CountriesListViewModel(router: router,
-                                               repository: geoRepository,
+                                               service: DIResolver.resolve(LocationService.self)!,
+                                               repository: DIResolver.resolve(LocationRepository.self)!,
                                                type: .select,
                                                didSelectCountry: nil)
         let vc = CountriesListController(viewModel: viewModel)

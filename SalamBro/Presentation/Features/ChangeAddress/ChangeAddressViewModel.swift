@@ -23,7 +23,7 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
     private let router: Router
     private(set) var outputs = Output()
     private var city: String?
-    private var country: CountryUI?
+    private var country: Country?
     private var brand: BrandUI?
     private var address: String?
 

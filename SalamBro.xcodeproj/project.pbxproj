@@ -98,6 +98,7 @@
 		925C56EC65A2720BA77896F87D2E7129 /* CountriesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932B930707FC6465A3499C3C4E75923A /* CountriesListController.swift */; };
 		5B9991885E71AAF24ED31CE9D375D0C7 /* CountriesListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C7956D34179A2E987E7456DD3C8FD5 /* CountriesListRouter.swift */; };
 		BC3F05EF16B7BF128151AE46E8AA435C /* CountriesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE8F0C0656ADF5E6D0788F28A90266A /* CountriesListViewModel.swift */; };
+		46BD291D265290FEE27294A6AB747319 /* CountriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC1F0863C3CF15A586800BFA2AC3838 /* CountriesResponse.swift */; };
 		EF79079D47659AF7F16F161BE3F3B62F /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10604C73072B1F2221AD2169F187A578 /* Country.swift */; };
 		58D3F87F8A39C6AEA3D860F5EC3111F4 /* CountryCodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275EEF8250D727EDA1EF45110467D4E9 /* CountryCodeCell.swift */; };
 		603330DEF1ED4320D2EDC29BC052B490 /* CountryCodeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FDA6E2A58F291D1B7F2649323F60E /* CountryCodeCellViewModel.swift */; };
@@ -131,6 +132,9 @@
 		05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */; };
 		E2453559AD8A47EC6240ADC2635E02A2 /* Localizable+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03CEB3646262E2848B1FB78A29E5EC2 /* Localizable+Generated.swift */; };
 		49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0CD4620DB0111EEE4B4AF43B25022AE /* Localizable.strings */; };
+		D9694C0384AF61AD44F547D62272DB12 /* LocationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEED03B221B71F9A10CA3920C4D290B1 /* LocationAPI.swift */; };
+		B2A04A8D01CBDFB6D197C40E7490726F /* LocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3703B6283B75BE08799884AD20A710 /* LocationRepository.swift */; };
+		E4F547CBF6744C5EF2E8591ACA2B0F32 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F254AE6752CFEF94722885B2637746 /* LocationService.swift */; };
 		374F938CC0F72905CF6FFFC093C49330 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80138187206C51166E0AAAA7510BD0A6 /* MainTabController.swift */; };
 		85B006654D7FDA2A1B7182D622754078 /* MapActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD223078A8DA8448126C04F410D86618 /* MapActionButton.swift */; };
 		3A023187DCAC7AF414F8C664A58F5D11 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8337AEB6392A7665CCF4C387EDD96FE /* MapDelegate.swift */; };
@@ -151,6 +155,7 @@
 		10468D05ADE74298B254F3535BBE9F6F /* MenuRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693C5AFFBE854B1E6A26D41045DAA54 /* MenuRouter.swift */; };
 		6A7945358129F690820556EE0D53EF33 /* MenuUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C389CCC2D1DC71D82F424A7F9CA434 /* MenuUI.swift */; };
 		C40464BD631044407C3EDAD10DA2A0F8 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */; };
+		6632F1A3E40EC8C580007678F6538D31 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC38CD54AA71E4C20246F3181F40C8D9 /* NetworkError.swift */; };
 		ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */; };
 		52E54610F9597E5FB759023469158B05 /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38E1406896D56B0D3EB30561C58641D /* OTPView.swift */; };
 		836766507334DCE6B1273433E608713C /* OrderHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */; };
@@ -312,6 +317,7 @@
 		932B930707FC6465A3499C3C4E75923A /* CountriesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListController.swift; sourceTree = "<group>"; };
 		56C7956D34179A2E987E7456DD3C8FD5 /* CountriesListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListRouter.swift; sourceTree = "<group>"; };
 		ABE8F0C0656ADF5E6D0788F28A90266A /* CountriesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListViewModel.swift; sourceTree = "<group>"; };
+		DEC1F0863C3CF15A586800BFA2AC3838 /* CountriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesResponse.swift; sourceTree = "<group>"; };
 		10604C73072B1F2221AD2169F187A578 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		275EEF8250D727EDA1EF45110467D4E9 /* CountryCodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeCell.swift; sourceTree = "<group>"; };
 		9B8FDA6E2A58F291D1B7F2649323F60E /* CountryCodeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeCellViewModel.swift; sourceTree = "<group>"; };
@@ -347,6 +353,9 @@
 		82DF8DD4A94962F1A97777FAD3747A32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F03CEB3646262E2848B1FB78A29E5EC2 /* Localizable+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Localizable+Generated.swift"; sourceTree = "<group>"; };
+		CEED03B221B71F9A10CA3920C4D290B1 /* LocationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPI.swift; sourceTree = "<group>"; };
+		CA3703B6283B75BE08799884AD20A710 /* LocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepository.swift; sourceTree = "<group>"; };
+		F7F254AE6752CFEF94722885B2637746 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		80138187206C51166E0AAAA7510BD0A6 /* MainTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		FD223078A8DA8448126C04F410D86618 /* MapActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButton.swift; sourceTree = "<group>"; };
 		E8337AEB6392A7665CCF4C387EDD96FE /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
@@ -367,6 +376,7 @@
 		4693C5AFFBE854B1E6A26D41045DAA54 /* MenuRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRouter.swift; sourceTree = "<group>"; };
 		40C389CCC2D1DC71D82F424A7F9CA434 /* MenuUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuUI.swift; sourceTree = "<group>"; };
 		6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		BC38CD54AA71E4C20246F3181F40C8D9 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		C38E1406896D56B0D3EB30561C58641D /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
 		64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryController.swift; sourceTree = "<group>"; };
@@ -536,16 +546,6 @@
 				49C7E8CE52D9B2EDAD2AE0C3C1FD8C6E /* UpdateController.swift */,
 			);
 			path = Update;
-			sourceTree = "<group>";
-		};
-		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9C9392BFA56499DD56ECB2AF1FC231E8 /* Pods_SalamBro.framework */,
-				24A13733093DD55DBE42A20FB059CFAB /* Pods_SalamBroTests.framework */,
-				7AF4E2B9C5CAC0C1D126B547533E2FB0 /* Pods_SalamBro_SalamBroUITests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		19CBDBA2F0B21A768111888DA9776F23 /* BrandProvider */ = {
@@ -728,6 +728,7 @@
 			isa = PBXGroup;
 			children = (
 				519DE37A52F61C573D7587DB19AFA400 /* Application */,
+				2E14EB83A15F8D470F0076E286CB6BDF /* BusinessLayer */,
 				A5EF4B00679392501D04503542537B13 /* Data */,
 				88BC934535DF893EFCD41E6302CCA86A /* Domain */,
 				8225A88D78EDBA0CAB41D761FA594BEF /* Extension */,
@@ -823,6 +824,49 @@
 			path = AddressDetail;
 			sourceTree = "<group>";
 		};
+		2E14EB83A15F8D470F0076E286CB6BDF /* BusinessLayer */ = {
+			isa = PBXGroup;
+			children = (
+				DB68AE98DF401CDC7C551CDA355C599D /* Models */,
+				90D26D8C3FA6247B6261E9F02331ACB6 /* Network */,
+				6D5B15D00E9EDEA7D90A5387D020416C /* Services */,
+			);
+			path = BusinessLayer;
+			sourceTree = "<group>";
+		};
+		6D5B15D00E9EDEA7D90A5387D020416C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F7F254AE6752CFEF94722885B2637746 /* LocationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		90D26D8C3FA6247B6261E9F02331ACB6 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				CEED03B221B71F9A10CA3920C4D290B1 /* LocationAPI.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		DB68AE98DF401CDC7C551CDA355C599D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D6108DED1E47690C3D872D7EA28A241D /* Responses */,
+				BC38CD54AA71E4C20246F3181F40C8D9 /* NetworkError.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D6108DED1E47690C3D872D7EA28A241D /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				DEC1F0863C3CF15A586800BFA2AC3838 /* CountriesResponse.swift */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
 		634DF0542321FBAF896E12DD7808EC82 /* Provider */ = {
 			isa = PBXGroup;
 			children = (
@@ -902,6 +946,7 @@
 				3AF868E483CF49DBCD126242D28EA00D /* BrandRepositoryImplementation.swift */,
 				A600C66047D6CBE456AF75F88D5D219D /* CartRepositoryMockImpl.swift */,
 				9C95E2D3745187D0D8FF3E96462920A6 /* GeoRepositoryImplementation.swift */,
+				CA3703B6283B75BE08799884AD20A710 /* LocationRepository.swift */,
 				7C10AB32F7F1DB7B4DA30C1A9A4076F2 /* MenuDetailRepositoryImplementation.swift */,
 				CE88F76214090822E3C4BDA713F7A077 /* MenuRepositoryImplementation.swift */,
 			);
@@ -1268,6 +1313,16 @@
 			path = MenuDetail;
 			sourceTree = "<group>";
 		};
+		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C9392BFA56499DD56ECB2AF1FC231E8 /* Pods_SalamBro.framework */,
+				24A13733093DD55DBE42A20FB059CFAB /* Pods_SalamBroTests.framework */,
+				7AF4E2B9C5CAC0C1D126B547533E2FB0 /* Pods_SalamBro_SalamBroUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F243C4DA58D4A6AEE6AACAD35BDB3898 /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -1442,6 +1497,96 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		9661D946FD185ADB45999E3C99B320DA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F9F4B0C67FF2E2E020C315DDB3CE2B61 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF8C389205F0CDB75427EF1F9D3B0CDB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SalamBro-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8AF21AEFE17B7B2D0FE8A5822920D1B5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E1C08C138C7899740AAEC4BA62E0E6EA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		02F346A79A192E94F4C4138CDDFA1BFD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1484,96 +1629,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8AF21AEFE17B7B2D0FE8A5822920D1B5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9661D946FD185ADB45999E3C99B320DA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AF8C389205F0CDB75427EF1F9D3B0CDB /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SalamBro-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1C08C138C7899740AAEC4BA62E0E6EA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F9F4B0C67FF2E2E020C315DDB3CE2B61 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FDA3F36C746C7D4EC61E3CE9EAC8C181 /* SwiftGen */ = {
@@ -1699,6 +1754,7 @@
 				925C56EC65A2720BA77896F87D2E7129 /* CountriesListController.swift in Sources */,
 				5B9991885E71AAF24ED31CE9D375D0C7 /* CountriesListRouter.swift in Sources */,
 				BC3F05EF16B7BF128151AE46E8AA435C /* CountriesListViewModel.swift in Sources */,
+				46BD291D265290FEE27294A6AB747319 /* CountriesResponse.swift in Sources */,
 				EF79079D47659AF7F16F161BE3F3B62F /* Country.swift in Sources */,
 				58D3F87F8A39C6AEA3D860F5EC3111F4 /* CountryCodeCell.swift in Sources */,
 				603330DEF1ED4320D2EDC29BC052B490 /* CountryCodeCellViewModel.swift in Sources */,
@@ -1730,6 +1786,9 @@
 				8DA95C5643E0861F60EF118952A3B011 /* GeoRepositoryImplementation.swift in Sources */,
 				B90B72C795BCBB74C4401620786BCEB3 /* GeoStorage.swift in Sources */,
 				E2453559AD8A47EC6240ADC2635E02A2 /* Localizable+Generated.swift in Sources */,
+				D9694C0384AF61AD44F547D62272DB12 /* LocationAPI.swift in Sources */,
+				B2A04A8D01CBDFB6D197C40E7490726F /* LocationRepository.swift in Sources */,
+				E4F547CBF6744C5EF2E8591ACA2B0F32 /* LocationService.swift in Sources */,
 				374F938CC0F72905CF6FFFC093C49330 /* MainTabController.swift in Sources */,
 				85B006654D7FDA2A1B7182D622754078 /* MapActionButton.swift in Sources */,
 				3A023187DCAC7AF414F8C664A58F5D11 /* MapDelegate.swift in Sources */,
@@ -1750,6 +1809,7 @@
 				10468D05ADE74298B254F3535BBE9F6F /* MenuRouter.swift in Sources */,
 				6A7945358129F690820556EE0D53EF33 /* MenuUI.swift in Sources */,
 				C40464BD631044407C3EDAD10DA2A0F8 /* MenuViewModel.swift in Sources */,
+				6632F1A3E40EC8C580007678F6538D31 /* NetworkError.swift in Sources */,
 				ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */,
 				52E54610F9597E5FB759023469158B05 /* OTPView.swift in Sources */,
 				836766507334DCE6B1273433E608713C /* OrderHistoryController.swift in Sources */,

@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class CitiesListController: ViewController {
+final class CitiesListController: ViewController {
     private let viewModel: CitiesListViewModelProtocol
     private let disposeBag: DisposeBag
 
@@ -34,7 +34,7 @@ public final class CitiesListController: ViewController {
         return view
     }()
 
-    public init(viewModel: CitiesListViewModelProtocol) {
+    init(viewModel: CitiesListViewModelProtocol) {
         self.viewModel = viewModel
         disposeBag = DisposeBag()
         super.init(nibName: nil, bundle: nil)

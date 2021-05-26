@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class BrandCell: UICollectionViewCell, Reusable {
+final class BrandCell: UICollectionViewCell, Reusable {
     private var viewModel: BrandCellViewModelProtocol! {
         didSet { bind() }
     }

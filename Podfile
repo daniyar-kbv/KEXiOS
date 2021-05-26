@@ -16,6 +16,7 @@ target 'SalamBro' do
   pod 'DropDown'
   pod 'SVProgressHUD'
   pod 'IQKeyboardManagerSwift'
+  pod 'Moya/RxSwift', '~> 14.0'
 
 
   # Pods for SalamBro

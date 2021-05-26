@@ -10,14 +10,14 @@ import PromiseKit
 import RxCocoa
 import RxSwift
 
-public protocol CitiesListViewModelProtocol: ViewModel {
+protocol CitiesListViewModelProtocol: ViewModel {
     var cities: [String] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
     func update()
     func didSelect(index: Int)
 }
 
-public final class CitiesListViewModel: CitiesListViewModelProtocol {
+final class CitiesListViewModel: CitiesListViewModelProtocol {
     public enum FlowType {
         case change
         case select
@@ -62,11 +62,11 @@ public final class CitiesListViewModel: CitiesListViewModelProtocol {
         }
     }
 
-    public init(router: Router,
-                country id: Int,
-                repository: GeoRepository,
-                type: FlowType,
-                didSelectCity: ((String) -> Void)?)
+    init(router: Router,
+         country id: Int,
+         repository: GeoRepository,
+         type: FlowType,
+         didSelectCity: ((String) -> Void)?)
     {
         self.router = router
         self.repository = repository

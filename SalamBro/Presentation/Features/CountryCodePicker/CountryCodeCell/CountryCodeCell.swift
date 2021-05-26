@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class CountryCodeCell: UITableViewCell, Reusable {
+final class CountryCodeCell: UITableViewCell, Reusable {
     private var viewModel: CountryCodeCellViewModelProtocol! {
         didSet { bind() }
     }
@@ -44,7 +44,7 @@ public final class CountryCodeCell: UITableViewCell, Reusable {
         disposeBag = DisposeBag()
     }
 
-    public func set(_ viewModel: CountryCodeCellViewModelProtocol?) {
+    func set(_ viewModel: CountryCodeCellViewModelProtocol?) {
         self.viewModel = viewModel
     }
 

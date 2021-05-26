@@ -45,7 +45,7 @@ public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusabl
         disposeBag = DisposeBag()
     }
 
-    public func set(_ viewModel: CategoriesSectionHeaderViewModelProtocol?) {
+    func set(_ viewModel: CategoriesSectionHeaderViewModelProtocol?) {
         self.viewModel = viewModel
     }
 

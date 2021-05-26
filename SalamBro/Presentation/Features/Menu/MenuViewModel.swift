@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import SVProgressHUD
 
-public protocol MenuViewModelProtocol: ViewModel {
+protocol MenuViewModelProtocol: ViewModel {
     var headerViewModels: [ViewModel?] { get }
     var cellViewModels: [[ViewModel]] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
@@ -21,7 +21,7 @@ public protocol MenuViewModelProtocol: ViewModel {
     func selectAddress()
 }
 
-public final class MenuViewModel: MenuViewModelProtocol {
+final class MenuViewModel: MenuViewModelProtocol {
     public var router: Router
     private let menuRepository: MenuRepository
     private let brandRepository: BrandRepository

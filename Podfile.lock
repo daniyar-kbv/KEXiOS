@@ -1,10 +1,15 @@
 PODS:
   - Alamofire (5.4.3)
   - Cache (6.0.0)
-  - Cosmos (21.0.0)
+  - Cosmos (23.0.0)
   - DropDown (2.3.13)
   - InputMask (6.1.0)
   - IQKeyboardManagerSwift (6.5.6)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (14.0.0):
+    - Moya/Core
+    - RxSwift (~> 5.0)
   - PromiseKit (6.13.1):
     - PromiseKit/CorePromise (= 6.13.1)
     - PromiseKit/Foundation (= 6.13.1)
@@ -19,12 +24,12 @@ PODS:
     - Reusable/View (= 4.1.1)
   - Reusable/Storyboard (4.1.1)
   - Reusable/View (4.1.1)
-  - RxCocoa (6.1.0):
-    - RxRelay (= 6.1.0)
-    - RxSwift (= 6.1.0)
-  - RxRelay (6.1.0):
-    - RxSwift (= 6.1.0)
-  - RxSwift (6.1.0)
+  - RxCocoa (5.1.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.1.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.2)
   - SnapKit (5.0.1)
   - SVProgressHUD (2.2.5)
   - SwiftGen (6.4.0)
@@ -43,6 +48,7 @@ DEPENDENCIES:
   - DropDown
   - InputMask
   - IQKeyboardManagerSwift
+  - Moya/RxSwift (~> 14.0)
   - PromiseKit
   - Reusable
   - RxCocoa
@@ -62,6 +68,7 @@ SPEC REPOS:
     - DropDown
     - InputMask
     - IQKeyboardManagerSwift
+    - Moya
     - PromiseKit
     - Reusable
     - RxCocoa
@@ -78,15 +85,16 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
-  Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
+  Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   InputMask: 71d291dc54d2deaeac6512afb6ec2304228c0bb7
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
-  RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
-  RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
-  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
@@ -95,6 +103,6 @@ SPEC CHECKSUMS:
   YandexMapKitSearch: b46ddd1c80e2e35d006cdfc4ab88070a50cebeda
   YandexRuntime: 2d55244d06267106cf9b00c25a1e63f72a73b6fd
 
-PODFILE CHECKSUM: 0f764280e072ece16e6b76bf43357e2bd61c9532
+PODFILE CHECKSUM: 1f44346dd4bed85a9e6cd0edc3245399576fd79a
 
 COCOAPODS: 1.10.1

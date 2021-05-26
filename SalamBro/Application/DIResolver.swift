@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Moya
 import Swinject
 
 public final class DIResolver {
@@ -15,6 +16,7 @@ public final class DIResolver {
         StoragesAssembly(),
         ManagersAssembly(),
         RepositoriesAssembly(),
+        ServicesAssembly(),
     ])
 
     class func resolve<Service>(_ serviceType: Service.Type) -> Service? {
@@ -61,6 +63,14 @@ private final class ManagersAssembly: Assembly {
     }
 }
 
+private final class ServicesAssembly: Assembly {
+    func assemble(container: Container) {
+        container.register(LocationService.self) { _ in
+            LocationServiceMoyaImpl(provider: MoyaProvider<LocationAPI>())
+        }.inObjectScope(.container)
+    }
+}
+
 private final class RepositoriesAssembly: Assembly {
     func assemble(container: Container) {
         container.register(MenuRepository.self) { r in
@@ -79,6 +89,10 @@ private final class RepositoriesAssembly: Assembly {
 
         container.register(MenuDetailRepository.self) { r in
             MenuDetailRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!)
+        }
+
+        container.register(LocationRepository.self) { r in
+            LocationRepositoryImpl(storage: r.resolve(Storage.self)!)
         }
     }
 }

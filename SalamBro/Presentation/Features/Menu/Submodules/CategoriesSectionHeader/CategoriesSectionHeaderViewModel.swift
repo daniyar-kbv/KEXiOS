@@ -7,15 +7,15 @@
 
 import Foundation
 
-public protocol CategoriesSectionHeaderViewModelProtocol: ViewModel {
+protocol CategoriesSectionHeaderViewModelProtocol: ViewModel {
     var cellViewModels: [CategoryCellViewModelProtocol] { get }
 }
 
-public final class CategoriesSectionHeaderViewModel: CategoriesSectionHeaderViewModelProtocol {
-    public var router: Router
-    public var cellViewModels: [CategoryCellViewModelProtocol]
-    public init(router: Router,
-                categories: [FoodTypeUI])
+final class CategoriesSectionHeaderViewModel: CategoriesSectionHeaderViewModelProtocol {
+    var router: Router
+    var cellViewModels: [CategoryCellViewModelProtocol]
+    init(router: Router,
+         categories: [FoodTypeUI])
     {
         self.router = router
         cellViewModels = categories.map { CategoryCellViewModel(router: router,
