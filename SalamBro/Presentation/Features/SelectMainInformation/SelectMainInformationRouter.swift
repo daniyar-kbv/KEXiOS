@@ -32,7 +32,7 @@ public final class SelectMainInformationRouter: Router {
         baseViewController = baseVC
 
         switch context {
-        case let .present(didSave):
+        case let .present(didSave): break
             let viewModel = SelectMainInformationViewModel(router: self,
                                                            geoRepository: DIResolver.resolve(GeoRepository.self)!,
                                                            brandRepository: DIResolver.resolve(BrandRepository.self)!,

@@ -9,9 +9,9 @@ import Foundation
 
 protocol GeoStorage: AnyObject {
     var currentCountry: Country? { get set }
-    var currentCity: String? { get set }
+    var currentCity: City? { get set }
     var countries: [Country]? { get set }
-    var cities: [String]? { get set }
+    var cities: [City]? { get set }
     var addresses: [AddressDTO]? { get set }
     var currentAddress: AddressDTO? { get set }
 }
@@ -31,7 +31,7 @@ extension Storage: GeoStorage {
         set { save(key: Keys.currentCountry.rawValue, object: newValue) }
     }
 
-    var currentCity: String? {
+    var currentCity: City? {
         get { get(key: Keys.currentCity.rawValue) }
         set { save(key: Keys.currentCity.rawValue, object: newValue) }
     }
@@ -41,7 +41,7 @@ extension Storage: GeoStorage {
         set { save(key: Keys.countries.rawValue, object: newValue) }
     }
 
-    var cities: [String]? {
+    var cities: [City]? {
         get { get(key: Keys.cities.rawValue) }
         set { save(key: Keys.cities.rawValue, object: newValue) }
     }

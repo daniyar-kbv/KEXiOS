@@ -24,7 +24,7 @@ final class GeoRepositoryImplementation: GeoRepository {
         set { storage.currentCountry = newValue }
     }
 
-    var currentCity: String? {
+    var currentCity: City? {
         get { storage.currentCity }
         set { storage.currentCity = newValue }
     }
@@ -40,17 +40,5 @@ final class GeoRepositoryImplementation: GeoRepository {
     }
 
     var countries: [Country] { storage.countries ?? [] }
-    var cities: [String] { storage.cities ?? [] }
-
-//    public func downloadCountries() -> Promise<[Country]> {
-//        provider.downloadCountries().get {
-//            self.storage.countries = $0.countries
-//        }.map { $0.countries.map { $0.toDomain() } }
-//    }
-
-    public func downloadCities(country id: Int) -> Promise<[String]> {
-        provider.downloadCities(country: id).map { $0.cities }.get {
-            self.storage.cities = $0
-        }
-    }
+    var cities: [City] { storage.cities ?? [] }
 }

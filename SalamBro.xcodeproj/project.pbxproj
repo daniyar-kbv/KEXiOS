@@ -91,6 +91,8 @@
 		B19672E96C8149F312FD01ED7224045B /* CitiesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25165BC9C032E5EB5B8F281DB57E61 /* CitiesListController.swift */; };
 		EF9C4850CAD8AB9AB2FA41B21BB28FB1 /* CitiesListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0496FA447BBC85A945DD8C42806DEE7D /* CitiesListRouter.swift */; };
 		99F4A299BE0748BF7799C7D14705F46E /* CitiesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C4535D2136E4D06E0D57D74B2B1904 /* CitiesListViewModel.swift */; };
+		420B0084E84444DC515B9649613CDE40 /* CitiesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6995F00BC4A3BB7B5D91ADBF3B1F1B59 /* CitiesResponse.swift */; };
+		D786D7AAE746E2456D0107C5F1F13575 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612F0D8D22565EE6F4CBDB825983840C /* City.swift */; };
 		203FEAE5A71D4288431F6FE079723817 /* CommentarySheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1F706E554BF92C0C9FBC8B08CDF5 /* CommentarySheetController.swift */; };
 		7AF8512BF8FCD22EB59FC289865E33A4 /* CommentarySheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 964B1BD97295E975C80FD3370E95B8DB /* CommentarySheetController.xib */; };
 		56EF0190AA0C382AE88C80A7550E9C1F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */; };
@@ -308,6 +310,8 @@
 		7B25165BC9C032E5EB5B8F281DB57E61 /* CitiesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListController.swift; sourceTree = "<group>"; };
 		0496FA447BBC85A945DD8C42806DEE7D /* CitiesListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListRouter.swift; sourceTree = "<group>"; };
 		01C4535D2136E4D06E0D57D74B2B1904 /* CitiesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListViewModel.swift; sourceTree = "<group>"; };
+		6995F00BC4A3BB7B5D91ADBF3B1F1B59 /* CitiesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesResponse.swift; sourceTree = "<group>"; };
+		612F0D8D22565EE6F4CBDB825983840C /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		E8CD1F706E554BF92C0C9FBC8B08CDF5 /* CommentarySheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentarySheetController.swift; sourceTree = "<group>"; };
 		964B1BD97295E975C80FD3370E95B8DB /* CommentarySheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentarySheetController.xib; sourceTree = "<group>"; };
 		76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -682,6 +686,7 @@
 				BF0F0AC62CAA558710F76120E512D518 /* Cart.swift */,
 				94E2DD1A2C5A27E4C8DEFAE54FF54B1E /* CartAdditionalProduct.swift */,
 				94594D56E9E69921057F03CFD7B1E960 /* CartProduct.swift */,
+				612F0D8D22565EE6F4CBDB825983840C /* City.swift */,
 				10604C73072B1F2221AD2169F187A578 /* Country.swift */,
 				637DF3DFF8D4BDA978EE891BE0369F5F /* Food.swift */,
 				9EA59939BDF55C304ED761AE99CA16A5 /* FoodType.swift */,
@@ -1251,6 +1256,7 @@
 		D6108DED1E47690C3D872D7EA28A241D /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				6995F00BC4A3BB7B5D91ADBF3B1F1B59 /* CitiesResponse.swift */,
 				DEC1F0863C3CF15A586800BFA2AC3838 /* CountriesResponse.swift */,
 			);
 			path = Responses;
@@ -1742,6 +1748,8 @@
 				B19672E96C8149F312FD01ED7224045B /* CitiesListController.swift in Sources */,
 				EF9C4850CAD8AB9AB2FA41B21BB28FB1 /* CitiesListRouter.swift in Sources */,
 				99F4A299BE0748BF7799C7D14705F46E /* CitiesListViewModel.swift in Sources */,
+				420B0084E84444DC515B9649613CDE40 /* CitiesResponse.swift in Sources */,
+				D786D7AAE746E2456D0107C5F1F13575 /* City.swift in Sources */,
 				203FEAE5A71D4288431F6FE079723817 /* CommentarySheetController.swift in Sources */,
 				56EF0190AA0C382AE88C80A7550E9C1F /* Constants.swift in Sources */,
 				66B870D68955101F2655ABB0AB6AB36A /* Coordinator.swift in Sources */,

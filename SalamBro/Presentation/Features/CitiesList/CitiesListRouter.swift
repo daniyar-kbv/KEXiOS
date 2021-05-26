@@ -7,20 +7,20 @@
 
 import UIKit
 
-public final class CitiesListRouter: Router {
-    public enum PresentationContext {
-        case change(countryID: Int, didSelectCity: ((String) -> Void)?)
+final class CitiesListRouter: Router {
+    enum PresentationContext {
+        case change(countryID: Int, didSelectCity: ((City) -> Void)?)
         case select(countryID: Int)
     }
 
-    public enum RouteType {
+    enum RouteType {
         case brands
     }
 
-    public var baseViewController: UIViewController?
+    var baseViewController: UIViewController?
     private var context: PresentationContext?
 
-    public func present(on baseVC: UIViewController, animated: Bool, context: Any?, completion: (() -> Void)?) {
+    func present(on baseVC: UIViewController, animated: Bool, context: Any?, completion: (() -> Void)?) {
         guard let context = context as? PresentationContext else {
             assertionFailure("The context type mismatch")
             return
@@ -30,27 +30,29 @@ public final class CitiesListRouter: Router {
         self.context = context
 
         switch context {
-        case let .change(id, didSelectBrand):
+        case let .change(countryId, didSelectCity):
             let viewModel = CitiesListViewModel(router: self,
-                                                country: id,
-                                                repository: DIResolver.resolve(GeoRepository.self)!,
                                                 type: .change,
-                                                didSelectCity: didSelectBrand)
+                                                countryId: countryId,
+                                                service: DIResolver.resolve(LocationService.self)!,
+                                                repository: DIResolver.resolve(LocationRepository.self)!,
+                                                didSelectCity: didSelectCity)
             let vc = CitiesListController(viewModel: viewModel)
             let navVC = UINavigationController(rootViewController: vc)
             baseVC.present(navVC, animated: animated, completion: completion)
-        case let .select(id):
+        case let .select(countryId):
             let viewModel = CitiesListViewModel(router: self,
-                                                country: id,
-                                                repository: DIResolver.resolve(GeoRepository.self)!,
                                                 type: .select,
+                                                countryId: countryId,
+                                                service: DIResolver.resolve(LocationService.self)!,
+                                                repository: DIResolver.resolve(LocationRepository.self)!,
                                                 didSelectCity: nil)
             let vc = CitiesListController(viewModel: viewModel)
             baseVC.navigationController?.pushViewController(vc, animated: animated)
         }
     }
 
-    public func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {
+    func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {
         guard let routeType = context as? RouteType else {
             assertionFailure("The route type mismatch")
             return
@@ -69,7 +71,7 @@ public final class CitiesListRouter: Router {
         }
     }
 
-    public func dismiss(animated: Bool, completion: (() -> Void)?) {
+    func dismiss(animated: Bool, completion: (() -> Void)?) {
         switch context {
         case .change:
             baseViewController?.dismiss(animated: animated, completion: completion)

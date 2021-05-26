@@ -9,13 +9,13 @@ import DropDown
 import SnapKit
 import UIKit
 
-public protocol DropDownTextFieldDelegate: AnyObject {
+protocol DropDownTextFieldDelegate: AnyObject {
     func didSelect(dropDown: DropDownTextField, option: String, index: Int)
 }
 
-public final class DropDownTextField: UIView {
-    public weak var delegate: DropDownTextFieldDelegate?
-    private let dataSource: [String]?
+final class DropDownTextField: UIView {
+    weak var delegate: DropDownTextFieldDelegate?
+    private var dataSource: [String]?
 
     override public var intrinsicContentSize: CGSize {
         let width = super.intrinsicContentSize.width

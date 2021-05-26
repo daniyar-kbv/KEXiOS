@@ -22,7 +22,7 @@ final class SelectMainInformationViewController: ViewController {
     }()
 
     private lazy var citiesTextField: DropDownTextField = {
-        let view = DropDownTextField(options: viewModel.cities)
+        let view = DropDownTextField(options: viewModel.cities.map { $0.name })
         view.delegate = self
         view.placeholderText = L10n.SelectMainInfo.city
         return view
@@ -149,7 +149,7 @@ extension SelectMainInformationViewController: DropDownTextFieldDelegate {
         case countryTextField:
             viewModel.didChange(country: index)
         case citiesTextField:
-            viewModel.didChange(city: option)
+            viewModel.didChange(cityname: option)
         default:
             break
         }

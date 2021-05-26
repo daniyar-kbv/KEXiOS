@@ -49,10 +49,6 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
         updateTableView = .init(value: nil)
     }
 
-    func refresh() {
-        makeCountriesRequest()
-    }
-
     func getCountries() {
         if
             let cachedCountries = repository.getCountries(),
@@ -62,6 +58,10 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
             updateTableView.accept(())
         }
 
+        makeCountriesRequest()
+    }
+
+    func refresh() {
         makeCountriesRequest()
     }
 

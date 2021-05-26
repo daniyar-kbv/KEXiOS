@@ -22,7 +22,7 @@ final class ChangeAddressRouter: Router {
 
     var selectedBrand: ((BrandUI) -> Void)?
     var selectedCountry: ((Country) -> Void)?
-    var selectedCity: ((String) -> Void)?
+    var selectedCity: ((City) -> Void)?
     var selectedAddress: ((String) -> Void)?
 
     func present(on baseVC: UIViewController, animated _: Bool, context _: Any?, completion _: (() -> Void)?) {
