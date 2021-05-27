@@ -52,4 +52,10 @@ final class LocationServiceMoyaImpl: LocationService {
                 return citiesResponse.data.cities
             }
     }
+
+    func getBrands(for cityId: Int) {
+        provider.rx.request(.getCityBrands(cityId: cityId))
+            .map { _ in
+            }
+    }
 }

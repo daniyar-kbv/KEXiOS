@@ -17,7 +17,7 @@ final class BrandsController: ViewController {
 
     private lazy var refreshControl: UIRefreshControl = {
         let action = UIRefreshControl()
-        action.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        action.addTarget(self, action: #selector(handleRefreshControlAction(_:)), for: .valueChanged)
         return action
     }()
 
@@ -88,8 +88,8 @@ final class BrandsController: ViewController {
         }
     }
 
-    @objc func refresh(_: AnyObject) {
-        viewModel.refresh()
+    @objc func handleRefreshControlAction(_: UIRefreshControl) {
+        viewModel.refreshBrands()
     }
 }
 

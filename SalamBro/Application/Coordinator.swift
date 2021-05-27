@@ -11,9 +11,7 @@ final class Coordinator {
     private let geoRepository: GeoRepository
     private let brandRepository: BrandRepository
 
-    init(geoRepository: GeoRepository,
-         brandRepository: BrandRepository)
-    {
+    init(geoRepository: GeoRepository, brandRepository: BrandRepository) {
         self.geoRepository = geoRepository
         self.brandRepository = brandRepository
     }
@@ -21,7 +19,7 @@ final class Coordinator {
     public func start() {
         if geoRepository.currentCity != nil,
            geoRepository.currentCountry != nil,
-           brandRepository.brand != nil
+           brandRepository.getCurrentBrand() != nil
         {
             startMenu()
         } else {

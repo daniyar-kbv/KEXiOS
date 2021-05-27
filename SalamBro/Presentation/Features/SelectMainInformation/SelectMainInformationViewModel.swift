@@ -16,10 +16,10 @@ protocol SelectMainInformationViewModelProtocol: ViewModel {
     var address: BehaviorRelay<String?> { get }
     var countries: [String] { get }
     var cities: [City] { get }
-    var brands: [String] { get }
+    var brands: [Brand] { get }
     func didChange(cityname: String)
     func didChange(country index: Int)
-    func didChange(brand: BrandUI)
+    func didChange(brand: Brand)
     func didChange(address: Address)
     func selectBrand()
     func selectAddress()
@@ -37,7 +37,7 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     public var address: BehaviorRelay<String?>
     public var countries: [String]
     public var cities: [City]
-    public var brands: [String]
+    public var brands: [Brand]
     private let didSave: (() -> Void)?
 
     func didChange(cityname: String) {
@@ -53,8 +53,8 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
         countryName.accept(country.name)
     }
 
-    func didChange(brand: BrandUI) {
-        brandRepository.brand = brand.toDomain()
+    func didChange(brand: Brand) {
+        brandRepository.changeCurrent(brand: brand)
         brandName.accept(brand.name)
     }
 
@@ -93,10 +93,10 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
         self.didSave = didSave
         countryName = .init(value: geoRepository.currentCountry?.name)
         cityName = .init(value: geoRepository.currentCity?.name)
-        brandName = .init(value: brandRepository.brand?.name)
+        brandName = .init(value: brandRepository.getCurrentBrand()?.name)
         countries = geoRepository.countries.map { $0.name }
         cities = geoRepository.cities
-        brands = brandRepository.brands.map { $0.name }
+        brands = brandRepository.getBrands() ?? [] // brandRepository.brands.map { $0.name }
         address = .init(value: geoRepository.currentAddress?.name)
     }
 }

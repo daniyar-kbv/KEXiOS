@@ -24,7 +24,7 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
     private(set) var outputs = Output()
     private var city: City?
     private var country: Country?
-    private var brand: BrandUI?
+    private var brand: Brand?
     private var address: String?
 
     private(set) var cellModels: [ChangeAddressDTO] = [

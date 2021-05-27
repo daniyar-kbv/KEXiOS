@@ -14,7 +14,7 @@ protocol BrandViewModelProtocol: ViewModel {
     var cellViewModels: [BrandCellViewModelProtocol] { get }
     var ratios: [(Float, Float)] { get }
     var updateCollectionView: BehaviorRelay<Void?> { get }
-    func refresh()
+    func refreshBrands()
     func didSelect(index: Int)
 }
 
@@ -24,38 +24,37 @@ final class BrandViewModel: BrandViewModelProtocol {
         case select
     }
 
-    var router: Router
+    let router: Router
     private let repository: BrandRepository
+    private let service: LocationService
     private let type: FlowType
-    public var cellViewModels: [BrandCellViewModelProtocol]
-    public var ratios: [(Float, Float)]
-    public var updateCollectionView: BehaviorRelay<Void?>
-    private var brands: [BrandUI]
-    private let didSelectBrand: ((BrandUI) -> Void)?
+    var cellViewModels: [BrandCellViewModelProtocol] = []
+    var ratios: [(Float, Float)] = []
+    var updateCollectionView: BehaviorRelay<Void?>
+    private var brands: [Brand] = []
+    private let didSelectBrand: ((Brand) -> Void)?
 
-    public init(router: Router,
-                repository: BrandRepository,
-                type: FlowType,
-                didSelectBrand: ((BrandUI) -> Void)?)
+    init(router: Router,
+         repository: BrandRepository,
+         service: LocationService,
+         type: FlowType,
+         didSelectBrand: ((Brand) -> Void)?)
     {
         self.router = router
         self.repository = repository
+        self.service = service
         self.type = type
         self.didSelectBrand = didSelectBrand
-        cellViewModels = []
-        ratios = []
-        brands = []
         updateCollectionView = .init(value: nil)
+    }
+
+    func refreshBrands() {
         download()
     }
 
-    public func refresh() {
-        download()
-    }
-
-    public func didSelect(index: Int) {
+    func didSelect(index: Int) {
         let brand = brands[index]
-        repository.brand = brand.toDomain()
+        repository.changeCurrent(brand: brand)
         didSelectBrand?(brand)
         switch type {
         case .change:
@@ -68,20 +67,20 @@ final class BrandViewModel: BrandViewModelProtocol {
 
     private func download() {
         startAnimation()
-        firstly {
-            repository.downloadBrands()
-        }.done {
-            self.cellViewModels = $0.0
-                .map { BrandUI(from: $0) }
-                .map { BrandCellViewModel(router: self.router,
-                                          brand: $0) }
-            self.ratios = $0.1
-            self.brands = $0.0.map { BrandUI(from: $0) }
-        }.catch {
-            self.router.alert(error: $0)
-        }.finally {
-            self.stopAnimation()
-            self.updateCollectionView.accept(())
-        }
+//        firstly {
+//            repository.downloadBrands()
+//        }.done {
+//            self.cellViewModels = $0.0
+//                .map { BrandUI(from: $0) }
+//                .map { BrandCellViewModel(router: self.router,
+//                                          brand: $0) }
+//            self.ratios = $0.1
+//            self.brands = $0.0.map { BrandUI(from: $0) }
+//        }.catch {
+//            self.router.alert(error: $0)
+//        }.finally {
+//            self.stopAnimation()
+//            self.updateCollectionView.accept(())
+//        }
     }
 }

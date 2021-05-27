@@ -7,22 +7,22 @@
 
 import UIKit
 
-public final class SelectMainInformationRouter: Router {
-    public enum PresentationContext {
+final class SelectMainInformationRouter: Router {
+    enum PresentationContext {
         case present(didSave: (() -> Void)?)
     }
 
-    public enum RouteType {
-        case selectBrand(didSelectBrand: (BrandUI) -> Void)
+    enum RouteType {
+        case selectBrand(didSelectBrand: (Brand) -> Void)
         case selectAddress(didSelectAddress: ((Address) -> Void)?)
     }
 
-    public var baseViewController: UIViewController?
+    var baseViewController: UIViewController?
 
-    public func present(on baseVC: UIViewController,
-                        animated: Bool,
-                        context: Any?,
-                        completion: (() -> Void)?)
+    func present(on baseVC: UIViewController,
+                 animated: Bool,
+                 context: Any?,
+                 completion: (() -> Void)?)
     {
         guard let context = context as? PresentationContext else {
             assertionFailure("The context type mismatch")
@@ -44,7 +44,7 @@ public final class SelectMainInformationRouter: Router {
         }
     }
 
-    public func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {
+    func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {
         guard let routeType = context as? RouteType else {
             assertionFailure("The route type mismatch")
             return
@@ -67,7 +67,7 @@ public final class SelectMainInformationRouter: Router {
         }
     }
 
-    public func dismiss(animated: Bool, completion: (() -> Void)?) {
+    func dismiss(animated: Bool, completion: (() -> Void)?) {
         baseViewController?.navigationController?.dismiss(animated: animated, completion: completion)
     }
 }

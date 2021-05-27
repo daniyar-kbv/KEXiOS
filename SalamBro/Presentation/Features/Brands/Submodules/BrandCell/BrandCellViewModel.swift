@@ -17,9 +17,9 @@ final class BrandCellViewModel: BrandCellViewModelProtocol {
     var router: Router
     var name: BehaviorRelay<String>
     init(router: Router,
-         brand: BrandUI)
+         brand: Brand)
     {
         self.router = router
-        name = .init(value: brand.name + brand.priority.description)
+        name = .init(value: brand.name)
     }
 }
