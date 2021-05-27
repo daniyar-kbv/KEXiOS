@@ -12,6 +12,7 @@ protocol LocationRepository: AnyObject {
     func changeCurrectCountry(to country: Country)
     func set(countries: [Country])
 
+    func getCurrectCity() -> City?
     func getCities() -> [City]?
     func changeCurrentCity(to city: City)
     func set(cities: [City])
@@ -51,6 +52,10 @@ extension LocationRepositoryImpl {
 // MARK: Cities
 
 extension LocationRepositoryImpl {
+    func getCurrectCity() -> City? {
+        return storage.currentCity
+    }
+
     func getCities() -> [City]? {
         guard
             let cities = storage.cities,

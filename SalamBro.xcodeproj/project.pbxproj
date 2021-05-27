@@ -47,7 +47,6 @@
 		A915305A60D5AF64305222E245140984 /* AuthorizarionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9ECE54EF2CF5B7D9D57EAF770B55B /* AuthorizarionController.swift */; };
 		135202002E2C1E10BE430D1F0605796A /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42462CD57C52DD7E9B34B1B89C48FAEE /* Brand.swift */; };
 		71D333BEF1DFEA41A8AB924C24B58EBE /* BrandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DE629519C362DB82ABA57E2B063C2E /* BrandCell.swift */; };
-		DEED4A454AEFC2ED051B2469A2D108A2 /* BrandCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0E7BEE47465FCE319E056A1E4182BD /* BrandCellViewModel.swift */; };
 		BCB2E69C53602A1853D33100052CD620 /* BrandRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E67FC3EFB7B8C495F08CE05C78897F /* BrandRepository.swift */; };
 		AE5B2C2949EC57DF5F90C0A0390D93AD /* BrandResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B071C262E7546026DF742C9333C5BA /* BrandResponse.swift */; };
 		29E4821595144564D771AFD98194F74E /* BrandStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14065DB27BD126CA11873A25301E93B9 /* BrandStorage.swift */; };
@@ -262,7 +261,6 @@
 		DAD9ECE54EF2CF5B7D9D57EAF770B55B /* AuthorizarionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizarionController.swift; sourceTree = "<group>"; };
 		42462CD57C52DD7E9B34B1B89C48FAEE /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		21DE629519C362DB82ABA57E2B063C2E /* BrandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandCell.swift; sourceTree = "<group>"; };
-		8F0E7BEE47465FCE319E056A1E4182BD /* BrandCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandCellViewModel.swift; sourceTree = "<group>"; };
 		26E67FC3EFB7B8C495F08CE05C78897F /* BrandRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandRepository.swift; sourceTree = "<group>"; };
 		B7B071C262E7546026DF742C9333C5BA /* BrandResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandResponse.swift; sourceTree = "<group>"; };
 		14065DB27BD126CA11873A25301E93B9 /* BrandStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandStorage.swift; sourceTree = "<group>"; };
@@ -506,7 +504,6 @@
 			isa = PBXGroup;
 			children = (
 				21DE629519C362DB82ABA57E2B063C2E /* BrandCell.swift */,
-				8F0E7BEE47465FCE319E056A1E4182BD /* BrandCellViewModel.swift */,
 			);
 			path = BrandCell;
 			sourceTree = "<group>";
@@ -1695,7 +1692,6 @@
 				A915305A60D5AF64305222E245140984 /* AuthorizarionController.swift in Sources */,
 				135202002E2C1E10BE430D1F0605796A /* Brand.swift in Sources */,
 				71D333BEF1DFEA41A8AB924C24B58EBE /* BrandCell.swift in Sources */,
-				DEED4A454AEFC2ED051B2469A2D108A2 /* BrandCellViewModel.swift in Sources */,
 				BCB2E69C53602A1853D33100052CD620 /* BrandRepository.swift in Sources */,
 				AE5B2C2949EC57DF5F90C0A0390D93AD /* BrandResponse.swift in Sources */,
 				29E4821595144564D771AFD98194F74E /* BrandStorage.swift in Sources */,

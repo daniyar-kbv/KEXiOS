@@ -48,6 +48,7 @@ final class BrandsController: ViewController {
         super.viewDidLoad()
         setup()
         bind()
+        viewModel.getBrands()
     }
 
     private func bind() {
@@ -90,6 +91,7 @@ final class BrandsController: ViewController {
 
     @objc func handleRefreshControlAction(_: UIRefreshControl) {
         viewModel.refreshBrands()
+        refreshControl.endRefreshing()
     }
 }
 
@@ -99,12 +101,13 @@ extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        viewModel.cellViewModels.count
+        viewModel.brands.count
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: BrandCell.self)
-        cell.set(viewModel.cellViewModels[indexPath.row])
+        let brand = viewModel.brands[indexPath.row]
+        cell.configure(brand: brand)
         return cell
     }
 

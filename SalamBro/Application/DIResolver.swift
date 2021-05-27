@@ -86,6 +86,10 @@ private final class RepositoriesAssembly: Assembly {
             MenuDetailRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!)
         }
 
+        container.register(BrandRepository.self) { r in
+            BrandRepositoryImpl(storage: r.resolve(Storage.self)!)
+        }
+
         container.register(LocationRepository.self) { r in
             LocationRepositoryImpl(storage: r.resolve(Storage.self)!)
         }

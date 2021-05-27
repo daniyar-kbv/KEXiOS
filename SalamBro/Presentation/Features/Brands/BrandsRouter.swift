@@ -33,6 +33,7 @@ final class BrandsRouter: Router {
         case let .change(didSelectBrand):
             let viewModel = BrandViewModel(router: self,
                                            repository: DIResolver.resolve(BrandRepository.self)!,
+                                           locationRepository: DIResolver.resolve(LocationRepository.self)!,
                                            service: DIResolver.resolve(LocationService.self)!,
                                            type: .change,
                                            didSelectBrand: didSelectBrand)
@@ -42,6 +43,7 @@ final class BrandsRouter: Router {
         case .select:
             let viewModel = BrandViewModel(router: self,
                                            repository: DIResolver.resolve(BrandRepository.self)!,
+                                           locationRepository: DIResolver.resolve(LocationRepository.self)!,
                                            service: DIResolver.resolve(LocationService.self)!,
                                            type: .select,
                                            didSelectBrand: nil)

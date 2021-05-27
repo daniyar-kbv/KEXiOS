@@ -5,19 +5,11 @@
 //  Created by Arystan on 4/7/21.
 //
 
+import Imaginary
 import Reusable
-import RxCocoa
-import RxSwift
-import SnapKit
 import UIKit
 
 final class BrandCell: UICollectionViewCell, Reusable {
-    private var viewModel: BrandCellViewModelProtocol! {
-        didSet { bind() }
-    }
-
-    private var disposeBag = DisposeBag()
-
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleToFill
@@ -36,18 +28,12 @@ final class BrandCell: UICollectionViewCell, Reusable {
 
     override public func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
     }
 
-    public func set(_ viewModel: BrandCellViewModelProtocol?) {
-        self.viewModel = viewModel
-    }
-
-    private func bind() {
-        viewModel.name
-            .map { UIImage(named: $0) }
-            .bind(to: imageView.rx.image)
-            .disposed(by: disposeBag)
+    func configure(brand: Brand) {
+        guard let imageUrl = URL(string: brand.images.imageSquare) else { return }
+        imageView.setImage(url: imageUrl)
+        isUserInteractionEnabled = brand.isAvailable
     }
 
     override public func layoutSubviews() {

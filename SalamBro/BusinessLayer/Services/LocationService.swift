@@ -13,6 +13,7 @@ import RxSwift
 protocol LocationService: AnyObject {
     func getAllCountries() -> Single<[Country]>
     func getCities(for countryId: Int) -> Single<[City]>
+    func getBrands(for cityId: Int) -> Single<[Brand]>
 }
 
 final class LocationServiceMoyaImpl: LocationService {
@@ -53,9 +54,18 @@ final class LocationServiceMoyaImpl: LocationService {
             }
     }
 
-    func getBrands(for cityId: Int) {
+    func getBrands(for cityId: Int) -> Single<[Brand]> {
         provider.rx.request(.getCityBrands(cityId: cityId))
-            .map { _ in
+            .map { response in
+                guard let brandsResponse = try? response.map(BrandResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = brandsResponse.error {
+                    throw NetworkError.error(error)
+                }
+
+                return brandsResponse.data.results
             }
     }
 }

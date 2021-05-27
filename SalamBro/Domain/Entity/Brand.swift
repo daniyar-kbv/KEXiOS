@@ -26,6 +26,13 @@ struct Brand: Codable {
             case imageLong = "image_long"
         }
     }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case images
+        case isAvailable = "is_available"
+    }
 }
 
 extension Brand: Equatable {

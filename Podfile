@@ -12,12 +12,14 @@ target 'SalamBro' do
   pod 'Swinject'
   pod 'SnapKit'
   pod 'Reusable'
-  pod 'Cache'
   pod 'DropDown'
   pod 'SVProgressHUD'
   pod 'IQKeyboardManagerSwift'
   pod 'Moya/RxSwift', '~> 14.0'
-
+  
+  # Pods for Cache
+  pod 'Cache'
+  pod 'Imaginary'
 
   # Pods for SalamBro
   pod 'InputMask'
