@@ -48,6 +48,12 @@ final class DropDownTextField: UIView {
         set { descriptionLabel.text = newValue }
     }
 
+    public var chevronRight: Bool? {
+        didSet {
+            chevronImageView.transform = CGAffineTransform(rotationAngle: .pi * 1.5)
+        }
+    }
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12, weight: .regular)

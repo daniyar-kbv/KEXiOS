@@ -42,6 +42,7 @@ class AddressDetailController: ViewController {
     lazy var commentaryLabel: UILabel = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 14)
+        view.numberOfLines = 0
         return view
     }()
 
