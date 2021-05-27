@@ -34,6 +34,7 @@ public final class SelectMainInformationViewController: ViewController {
             self?.viewModel.selectBrand()
         }
         view.delegate = self
+        view.chevronRight = true
         view.placeholderColor = .darkGray
         view.placeholderText = L10n.SelectMainInfo.brand
         view.descriptionText = L10n.SelectMainInfo.description
@@ -46,6 +47,7 @@ public final class SelectMainInformationViewController: ViewController {
             self?.viewModel.selectAddress()
         }
         view.delegate = self
+        view.chevronRight = true
         view.placeholderText = L10n.SelectMainInfo.address
         return view
     }()
