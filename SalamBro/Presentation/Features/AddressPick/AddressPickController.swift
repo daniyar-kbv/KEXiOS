@@ -16,7 +16,7 @@ final class AddressPickController: ViewController {
     private let viewModel: AddressPickerViewModelProtocol
     private let disposeBag: DisposeBag
 
-    let tapGesture = UITapGestureRecognizer()
+    private let tapGesture = UITapGestureRecognizer()
 
     private lazy var addLabel: UILabel = {
         let label = UILabel()

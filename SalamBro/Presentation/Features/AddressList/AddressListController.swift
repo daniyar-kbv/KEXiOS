@@ -69,14 +69,10 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
         let cellChevronButton = UIButton(type: .custom)
         cellChevronButton.frame = CGRect(x: 0, y: 0, width: 25, height: 30)
         cellChevronButton.isUserInteractionEnabled = false
-        if #available(iOS 13.0, *) {
-            cellChevronButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-            cellChevronButton.tintColor = .mildBlue
-        } else {
-            // Fallback on earlier versions
-        }
+        cellChevronButton.setImage(UIImage(named: "chevron.right"), for: .normal)
+        cellChevronButton.tintColor = .mildBlue
         cellChevronButton.contentMode = .scaleAspectFit
-        cell.accessoryView = cellChevronButton as UIView
+        cell.accessoryView = cellChevronButton
 
         cell.selectionStyle = .none
         return cell
