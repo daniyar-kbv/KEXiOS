@@ -9,20 +9,20 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-public protocol MenuCellViewModelProtocol: ViewModel {
+protocol MenuCellViewModelProtocol: ViewModel {
     var itemTitle: BehaviorRelay<String?> { get }
     var itemDescription: BehaviorRelay<String?> { get }
     var itemPrice: BehaviorRelay<String?> { get }
 }
 
-public final class MenuCellViewModel: MenuCellViewModelProtocol {
-    public var router: Router
-    public var itemTitle: BehaviorRelay<String?>
-    public var itemDescription: BehaviorRelay<String?>
-    public var itemPrice: BehaviorRelay<String?>
+final class MenuCellViewModel: MenuCellViewModelProtocol {
+    var router: Router
+    var itemTitle: BehaviorRelay<String?>
+    var itemDescription: BehaviorRelay<String?>
+    var itemPrice: BehaviorRelay<String?>
 
-    public init(router: Router,
-                food: FoodUI)
+    init(router: Router,
+         food: FoodUI)
     {
         self.router = router
         itemTitle = .init(value: food.title)

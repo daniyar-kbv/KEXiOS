@@ -9,25 +9,25 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-public protocol CountryCodeCellViewModelProtocol: ViewModel {
+protocol CountryCodeCellViewModelProtocol: ViewModel {
     var title: BehaviorRelay<String?> { get }
     var code: BehaviorRelay<String?> { get }
     var isSelected: BehaviorRelay<Bool> { get }
 }
 
-public final class CountryCodeCellViewModel: CountryCodeCellViewModelProtocol {
-    public var router: Router
-    public var title: BehaviorRelay<String?>
-    public var code: BehaviorRelay<String?>
-    public var isSelected: BehaviorRelay<Bool>
+final class CountryCodeCellViewModel: CountryCodeCellViewModelProtocol {
+    let router: Router
+    var title: BehaviorRelay<String?>
+    var code: BehaviorRelay<String?>
+    var isSelected: BehaviorRelay<Bool>
 
-    public init(router: Router,
-                country: CountryUI,
-                isSelected: Bool)
+    init(router: Router,
+         country: Country,
+         isSelected: Bool)
     {
         self.router = router
         title = .init(value: country.name)
-        code = .init(value: country.callingCode)
+        code = .init(value: country.countryCode)
         self.isSelected = .init(value: isSelected)
     }
 }

@@ -10,33 +10,91 @@ import PromiseKit
 import RxCocoa
 import RxSwift
 
-public protocol CountriesListViewModelProtocol: ViewModel {
-    var countries: [CountryUI] { get }
+protocol CountriesListViewModelProtocol: ViewModel {
+    var countries: [Country] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
-    func update()
+    func refresh()
     func didSelect(index: Int)
+    func getCountries()
 }
 
-public final class CountriesListViewModel: CountriesListViewModelProtocol {
-    public enum FlowType {
+final class CountriesListViewModel: CountriesListViewModelProtocol {
+    enum FlowType {
         case change
         case select
     }
 
-    public var router: Router
-    private let repository: GeoRepository
-    private let type: FlowType
-    public var countries: [CountryUI]
-    public var updateTableView: BehaviorRelay<Void?>
-    private let didSelectCountry: ((CountryUI) -> Void)?
+    private let disposeBag = DisposeBag()
 
-    public func update() {
-        download()
+    public var router: Router
+    private let type: FlowType
+    private(set) var countries: [Country] = []
+    private(set) var updateTableView: BehaviorRelay<Void?>
+    private let didSelectCountry: ((Country) -> Void)?
+
+    private let service: LocationService
+    private let repository: LocationRepository
+
+    init(router: Router,
+         service: LocationService,
+         repository: LocationRepository,
+         type: FlowType,
+         didSelectCountry: ((Country) -> Void)?)
+    {
+        self.router = router
+        self.service = service
+        self.repository = repository
+        self.type = type
+        self.didSelectCountry = didSelectCountry
+        updateTableView = .init(value: nil)
     }
 
-    public func didSelect(index: Int) {
+    func getCountries() {
+        if
+            let cachedCountries = repository.getCountries(),
+            cachedCountries != []
+        {
+            countries = cachedCountries
+            updateTableView.accept(())
+        }
+
+        makeCountriesRequest()
+    }
+
+    func refresh() {
+        makeCountriesRequest()
+    }
+
+    private func makeCountriesRequest() {
+        startAnimation()
+        service.getAllCountries()
+            .subscribe { [weak self] countriesResponse in
+                self?.stopAnimation()
+                self?.process(receivedCountries: countriesResponse)
+            } onError: { [weak self] error in
+                self?.stopAnimation()
+                self?.router.alert(error: error)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func process(receivedCountries: [Country]) {
+        guard let cachedCountries = repository.getCountries() else {
+            repository.set(countries: receivedCountries)
+            countries = receivedCountries
+            updateTableView.accept(())
+            return
+        }
+
+        if receivedCountries == cachedCountries { return }
+        repository.set(countries: receivedCountries)
+        countries = receivedCountries
+        updateTableView.accept(())
+    }
+
+    func didSelect(index: Int) {
         let country = countries[index]
-        repository.currentCountry = country.toDomain()
+        repository.changeCurrectCountry(to: country)
         didSelectCountry?(country)
         switch type {
         case .change:
@@ -45,33 +103,5 @@ public final class CountriesListViewModel: CountriesListViewModelProtocol {
             let context = CountriesListRouter.RouteType.cities(countryId: countries[index].id)
             router.enqueueRoute(with: context)
         }
-    }
-
-    private func download() {
-        startAnimation()
-        firstly {
-            repository.downloadCountries()
-        }.done {
-            self.countries = $0.map { CountryUI(from: $0) }
-        }.catch {
-            self.router.alert(error: $0)
-        }.finally {
-            self.updateTableView.accept(())
-            self.stopAnimation()
-        }
-    }
-
-    public init(router: Router,
-                repository: GeoRepository,
-                type: FlowType,
-                didSelectCountry: ((CountryUI) -> Void)?)
-    {
-        self.router = router
-        self.repository = repository
-        self.type = type
-        self.didSelectCountry = didSelectCountry
-        countries = []
-        updateTableView = .init(value: nil)
-        download()
     }
 }

@@ -12,7 +12,7 @@ import UIKit
 
 // MARK: Tech debt, нужно переписать.
 
-public final class AddressPickController: ViewController {
+final class AddressPickController: ViewController {
     private let viewModel: AddressPickerViewModelProtocol
     private let disposeBag: DisposeBag
 
@@ -44,7 +44,7 @@ public final class AddressPickController: ViewController {
         return view
     }()
 
-    public init(viewModel: AddressPickerViewModelProtocol) {
+    init(viewModel: AddressPickerViewModelProtocol) {
         self.viewModel = viewModel
         disposeBag = DisposeBag()
         super.init(nibName: nil, bundle: nil)

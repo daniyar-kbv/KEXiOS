@@ -8,9 +8,9 @@
 import Cache
 import Foundation
 
-public protocol BrandStorage: AnyObject {
-    var brand: BrandDTO? { get set }
-    var brands: [BrandDTO]? { get set }
+protocol BrandStorage: AnyObject {
+    var brand: Brand? { get set }
+    var brands: [Brand]? { get set }
 }
 
 extension Storage: BrandStorage {
@@ -19,12 +19,12 @@ extension Storage: BrandStorage {
         case brands
     }
 
-    public var brand: BrandDTO? {
+    var brand: Brand? {
         get { get(key: Key.brand.rawValue) }
         set { save(key: Key.brand.rawValue, object: newValue) }
     }
 
-    public var brands: [BrandDTO]? {
+    var brands: [Brand]? {
         get { get(key: Key.brands.rawValue) }
         set { save(key: Key.brands.rawValue, object: newValue) }
     }

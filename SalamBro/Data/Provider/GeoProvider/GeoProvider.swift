@@ -8,8 +8,8 @@
 import Foundation
 import PromiseKit
 
-public protocol GeoProvider: AnyObject {
-    func downloadCountries() -> Promise<DownloadCountriesReponse>
+protocol GeoProvider: AnyObject {
+//    func downloadCountries() -> Promise<DownloadCountriesReponse>
     func downloadCities(country id: Int) -> Promise<DownloadCitiesResponse>
 }
 
@@ -18,7 +18,7 @@ extension NetworkProvider: GeoProvider {
         pseudoRequest(valueToReturn: .mockResponse)
     }
 
-    public func downloadCountries() -> Promise<DownloadCountriesReponse> {
-        pseudoRequest(valueToReturn: .mockResponse)
-    }
+//    public func downloadCountries() -> Promise<DownloadCountriesReponse> {
+//        pseudoRequest(valueToReturn: .mockResponse)
+//    }
 }

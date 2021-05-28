@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class SelectMainInformationViewController: ViewController {
+final class SelectMainInformationViewController: ViewController {
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
 
@@ -22,7 +22,7 @@ public final class SelectMainInformationViewController: ViewController {
     }()
 
     private lazy var citiesTextField: DropDownTextField = {
-        let view = DropDownTextField(options: viewModel.cities)
+        let view = DropDownTextField(options: viewModel.cities.map { $0.name })
         view.delegate = self
         view.placeholderText = L10n.SelectMainInfo.city
         return view
@@ -75,7 +75,7 @@ public final class SelectMainInformationViewController: ViewController {
         return button
     }()
 
-    public init(viewModel: SelectMainInformationViewModelProtocol) {
+    init(viewModel: SelectMainInformationViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         setup()
@@ -151,7 +151,7 @@ extension SelectMainInformationViewController: DropDownTextFieldDelegate {
         case countryTextField:
             viewModel.didChange(country: index)
         case citiesTextField:
-            viewModel.didChange(city: option)
+            viewModel.didChange(cityname: option)
         default:
             break
         }

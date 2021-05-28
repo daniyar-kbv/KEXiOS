@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class CountryCodePickerViewController: ViewController {
+final class CountryCodePickerViewController: ViewController {
     private let viewModel: CountryCodePickerViewModelProtocol
     private let disposeBag: DisposeBag
 
@@ -35,7 +35,7 @@ public final class CountryCodePickerViewController: ViewController {
         return view
     }()
 
-    public init(viewModel: CountryCodePickerViewModelProtocol) {
+    init(viewModel: CountryCodePickerViewModelProtocol) {
         self.viewModel = viewModel
         disposeBag = DisposeBag()
         super.init(nibName: nil, bundle: nil)

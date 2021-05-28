@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import SVProgressHUD
 
-public protocol MenuViewModelProtocol: ViewModel {
+protocol MenuViewModelProtocol: ViewModel {
     var headerViewModels: [ViewModel?] { get }
     var cellViewModels: [[ViewModel]] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
@@ -21,9 +21,10 @@ public protocol MenuViewModelProtocol: ViewModel {
     func selectAddress()
 }
 
-public final class MenuViewModel: MenuViewModelProtocol {
+final class MenuViewModel: MenuViewModelProtocol {
     public var router: Router
     private let menuRepository: MenuRepository
+    private let locationRepository: LocationRepository
     private let brandRepository: BrandRepository
     private let geoRepository: GeoRepository
     public var headerViewModels: [ViewModel?]
@@ -33,6 +34,7 @@ public final class MenuViewModel: MenuViewModelProtocol {
 
     init(router: Router,
          menuRepository: MenuRepository,
+         locationRepository: LocationRepository,
          brandRepository: BrandRepository,
          geoRepository: GeoRepository)
     {
@@ -41,15 +43,16 @@ public final class MenuViewModel: MenuViewModelProtocol {
         headerViewModels = []
         updateTableView = .init(value: nil)
         self.menuRepository = menuRepository
+        self.locationRepository = locationRepository
         self.brandRepository = brandRepository
         self.geoRepository = geoRepository
-        brandName = .init(value: brandRepository.brand?.name)
+        brandName = .init(value: brandRepository.getCurrentBrand()?.name)
         download()
     }
 
     public func update() {
         download()
-        brandName.accept(brandRepository.brand?.name)
+        brandName.accept(brandRepository.getCurrentBrand()?.name)
     }
 
     public func selectMainInfo() {

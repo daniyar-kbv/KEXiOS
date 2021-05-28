@@ -8,14 +8,14 @@
 import Foundation
 import SVProgressHUD
 
-public protocol ViewModel: AnyObject {
+protocol ViewModel: AnyObject {
     var router: Router { get }
     func close()
     func startAnimation()
     func stopAnimation()
 }
 
-public extension ViewModel {
+extension ViewModel {
     func close() {
         router.dismiss()
     }

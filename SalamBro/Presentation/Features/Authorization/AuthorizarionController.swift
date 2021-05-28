@@ -61,7 +61,7 @@ class AuthorizationController: ViewController, MaskedTextFieldDelegateListener {
 
     lazy var countryCodeButton: UIButton = {
         let button = UIButton()
-        button.setTitle(geoRepository.currentCountry?.callingCode, for: .normal)
+        button.setTitle(geoRepository.currentCountry?.countryCode, for: .normal)
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 26)
         button.titleLabel?.textAlignment = .center
@@ -115,7 +115,7 @@ extension AuthorizationController {
     @objc func chooseCountryCode() {
         let router = CountryCodePickerRouter()
         let context = CountryCodePickerRouter.PresentationContext.present { [unowned self] in
-            self.countryCodeButton.setTitle($0.callingCode, for: .normal)
+            self.countryCodeButton.setTitle($0.countryCode, for: .normal)
         }
         router.present(on: self, context: context)
     }

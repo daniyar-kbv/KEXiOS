@@ -20,6 +20,7 @@ class MainTabController: UITabBarController {
         let router = MenuRouter()
         let viewModel = MenuViewModel(router: router,
                                       menuRepository: DIResolver.resolve(MenuRepository.self)!,
+                                      locationRepository: DIResolver.resolve(LocationRepository.self)!,
                                       brandRepository: DIResolver.resolve(BrandRepository.self)!,
                                       geoRepository: DIResolver.resolve(GeoRepository.self)!)
         let vc = MenuController(viewModel: viewModel)

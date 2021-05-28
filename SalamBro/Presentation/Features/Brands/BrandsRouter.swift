@@ -7,20 +7,20 @@
 
 import UIKit
 
-public final class BrandsRouter: Router {
-    public enum PresentationContext {
-        case change(didSelectBrand: ((BrandUI) -> Void)?)
+final class BrandsRouter: Router {
+    enum PresentationContext {
+        case change(didSelectBrand: ((Brand) -> Void)?)
         case select
     }
 
-    public enum RouteType {
+    enum RouteType {
         case map
     }
 
-    public var baseViewController: UIViewController?
+    var baseViewController: UIViewController?
     private var context: PresentationContext?
 
-    public func present(on baseVC: UIViewController, animated: Bool, context: Any?, completion: (() -> Void)?) {
+    func present(on baseVC: UIViewController, animated: Bool, context: Any?, completion: (() -> Void)?) {
         guard let context = context as? PresentationContext else {
             assertionFailure("The context type mismatch")
             return
@@ -33,6 +33,8 @@ public final class BrandsRouter: Router {
         case let .change(didSelectBrand):
             let viewModel = BrandViewModel(router: self,
                                            repository: DIResolver.resolve(BrandRepository.self)!,
+                                           locationRepository: DIResolver.resolve(LocationRepository.self)!,
+                                           service: DIResolver.resolve(LocationService.self)!,
                                            type: .change,
                                            didSelectBrand: didSelectBrand)
             let vc = BrandsController(viewModel: viewModel)
@@ -41,6 +43,8 @@ public final class BrandsRouter: Router {
         case .select:
             let viewModel = BrandViewModel(router: self,
                                            repository: DIResolver.resolve(BrandRepository.self)!,
+                                           locationRepository: DIResolver.resolve(LocationRepository.self)!,
+                                           service: DIResolver.resolve(LocationService.self)!,
                                            type: .select,
                                            didSelectBrand: nil)
             let vc = BrandsController(viewModel: viewModel)
@@ -48,7 +52,7 @@ public final class BrandsRouter: Router {
         }
     }
 
-    public func enqueueRoute(with context: Any?, animated: Bool, completion _: (() -> Void)?) {
+    func enqueueRoute(with context: Any?, animated: Bool, completion _: (() -> Void)?) {
         guard let routeType = context as? RouteType else {
             assertionFailure("The route type mismatch")
             return
@@ -66,7 +70,7 @@ public final class BrandsRouter: Router {
         }
     }
 
-    public func dismiss(animated: Bool, completion: (() -> Void)?) {
+    func dismiss(animated: Bool, completion: (() -> Void)?) {
         switch context {
         case .change:
             baseViewController?.dismiss(animated: animated, completion: completion)

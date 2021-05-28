@@ -7,16 +7,16 @@
 
 import UIKit
 
-public final class CountryCodePickerRouter: Router {
-    public enum PresentationContext {
-        case present(didSelectCountry: ((CountryUI) -> Void)?)
+final class CountryCodePickerRouter: Router {
+    enum PresentationContext {
+        case present(didSelectCountry: ((Country) -> Void)?)
     }
 
-    public enum RouteType {}
+    enum RouteType {}
 
-    public var baseViewController: UIViewController?
+    var baseViewController: UIViewController?
 
-    public func present(on baseVC: UIViewController, animated: Bool, context: Any?, completion: (() -> Void)?) {
+    func present(on baseVC: UIViewController, animated: Bool, context: Any?, completion: (() -> Void)?) {
         guard let context = context as? PresentationContext else {
             assertionFailure("The context type mismatch")
             return
@@ -36,7 +36,7 @@ public final class CountryCodePickerRouter: Router {
         }
     }
 
-    public func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {
+    func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {
         guard let routeType = context as? RouteType else {
             assertionFailure("The route type mismatch")
             return

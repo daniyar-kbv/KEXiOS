@@ -5,12 +5,16 @@
 //  Created by Arystan on 3/13/21.
 //
 
-import Foundation
-
-public struct Country {
+struct Country: Codable {
     let id: Int
     let name: String
-    let callingCode: String
+    let countryCode: String
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case countryCode = "country_code"
+    }
 }
 
 extension Country: Equatable {
