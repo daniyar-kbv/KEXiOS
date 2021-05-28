@@ -16,11 +16,14 @@ final class AddressPickController: ViewController {
     private let viewModel: AddressPickerViewModelProtocol
     private let disposeBag: DisposeBag
 
+    let tapGesture = UIGestureRecognizer()
+
     private lazy var addLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .darkGray
         label.text = L10n.AddressPicker.add
+        label.isUserInteractionEnabled = true
         return label
     }()
 
@@ -62,6 +65,11 @@ final class AddressPickController: ViewController {
                 self?.viewModel.changeAddress()
             }
             .disposed(by: disposeBag)
+
+        tapGesture.rx.event
+            .bind(onNext: { _ in
+                self.viewModel.changeAddress()
+            }).disposed(by: disposeBag)
     }
 
     override func setupNavigationBar() {
@@ -76,6 +84,7 @@ final class AddressPickController: ViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
+        addLabel.addGestureRecognizer(tapGesture)
         [addLabel, plusButton, tableView].forEach { view.addSubview($0) }
     }
 
@@ -83,6 +92,7 @@ final class AddressPickController: ViewController {
         addLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             $0.left.equalToSuperview().offset(24)
+            $0.width.equalTo(360)
         }
 
         plusButton.snp.makeConstraints {
