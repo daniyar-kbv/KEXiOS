@@ -9,15 +9,15 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-public protocol AddressPickCellViewModelProtocol: ViewModel {
+protocol AddressPickCellViewModelProtocol: ViewModel {
     var address: BehaviorRelay<String?> { get }
 }
 
-public final class AddressPickCellViewModel: AddressPickCellViewModelProtocol {
-    public var router: Router
-    public var address: BehaviorRelay<String?>
-    public init(router: Router,
-                address: Address?)
+final class AddressPickCellViewModel: AddressPickCellViewModelProtocol {
+    var router: Router
+    var address: BehaviorRelay<String?>
+    init(router: Router,
+         address: Address?)
     {
         self.router = router
         self.address = .init(value: address?.name)

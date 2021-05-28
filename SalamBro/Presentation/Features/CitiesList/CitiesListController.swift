@@ -10,9 +10,8 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class CitiesListController: ViewController {
-    private let viewModel: CitiesListViewModelProtocol
-    private let disposeBag: DisposeBag
+final class CitiesListController: ViewController {
+    private let disposeBag = DisposeBag()
 
     private lazy var tableView: UITableView = {
         let view = UITableView()
@@ -30,13 +29,14 @@ public final class CitiesListController: ViewController {
 
     private lazy var refreshControl: UIRefreshControl = {
         let view = UIRefreshControl()
-        view.addTarget(self, action: #selector(update), for: .valueChanged)
+        view.addTarget(self, action: #selector(handleRefreshControlAction), for: .valueChanged)
         return view
     }()
 
-    public init(viewModel: CitiesListViewModelProtocol) {
+    private let viewModel: CitiesListViewModelProtocol
+
+    init(viewModel: CitiesListViewModelProtocol) {
         self.viewModel = viewModel
-        disposeBag = DisposeBag()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -44,14 +44,9 @@ public final class CitiesListController: ViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.getCities()
         setup()
         bind()
-    }
-
-    private func bind() {
-        viewModel.updateTableView
-            .bind(to: tableView.rx.reload)
-            .disposed(by: disposeBag)
     }
 
     override func setupNavigationBar() {
@@ -60,6 +55,18 @@ public final class CitiesListController: ViewController {
         navigationController?.navigationBar.titleTextAttributes = [
             .font: UIFont.systemFont(ofSize: 26, weight: .regular),
         ]
+    }
+
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+extension CitiesListController {
+    private func bind() {
+        viewModel.updateTableView
+            .bind(to: tableView.rx.reload)
+            .disposed(by: disposeBag)
     }
 
     private func setup() {
@@ -79,12 +86,9 @@ public final class CitiesListController: ViewController {
         }
     }
 
-    @objc private func update() {
-        viewModel.update()
-    }
-
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+    @objc private func handleRefreshControlAction() {
+        viewModel.refreshCities()
+        refreshControl.endRefreshing()
     }
 }
 
@@ -99,7 +103,7 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = viewModel.cities[indexPath.row]
+        cell.textLabel?.text = viewModel.cities[indexPath.row].name
         cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         cell.textLabel?.textColor = .darkGray
         cell.backgroundColor = .white

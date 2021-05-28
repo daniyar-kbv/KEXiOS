@@ -9,16 +9,16 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-public protocol CategoryCellViewModelProtocol: ViewModel {
+protocol CategoryCellViewModelProtocol: ViewModel {
     var categoryTitle: BehaviorRelay<String?> { get }
 }
 
-public final class CategoryCellViewModel: CategoryCellViewModelProtocol {
-    public var router: Router
-    public var categoryTitle: BehaviorRelay<String?>
+final class CategoryCellViewModel: CategoryCellViewModelProtocol {
+    var router: Router
+    var categoryTitle: BehaviorRelay<String?>
 
-    public init(router: Router,
-                category: FoodTypeUI)
+    init(router: Router,
+         category: FoodTypeUI)
     {
         self.router = router
         categoryTitle = .init(value: category.title)

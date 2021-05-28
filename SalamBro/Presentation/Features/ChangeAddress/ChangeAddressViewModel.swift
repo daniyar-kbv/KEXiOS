@@ -22,9 +22,9 @@ protocol ChangeAddressViewModel: AnyObject {
 final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
     private let router: Router
     private(set) var outputs = Output()
-    private var city: String?
-    private var country: CountryUI?
-    private var brand: BrandUI?
+    private var city: City?
+    private var country: Country?
+    private var brand: Brand?
     private var address: String?
 
     private(set) var cellModels: [ChangeAddressDTO] = [
@@ -94,7 +94,7 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
 
             changeAddressRouter.enqueueRoute(with: ChangeAddressRouter.RouteType.city(countryId: countryId))
             changeAddressRouter.selectedCity = { [weak self] city in
-                cellModel.description = city
+                cellModel.description = city.name
                 self?.city = city
                 self?.cellModels[indexPath.row] = cellModel
                 self?.outputs.reloadCellAt.accept(indexPath)

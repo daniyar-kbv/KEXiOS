@@ -10,34 +10,95 @@ import PromiseKit
 import RxCocoa
 import RxSwift
 
-public protocol CitiesListViewModelProtocol: ViewModel {
-    var cities: [String] { get }
+protocol CitiesListViewModelProtocol: ViewModel {
+    var cities: [City] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
-    func update()
     func didSelect(index: Int)
+    func getCities()
+    func refreshCities()
 }
 
-public final class CitiesListViewModel: CitiesListViewModelProtocol {
-    public enum FlowType {
+final class CitiesListViewModel: CitiesListViewModelProtocol {
+    enum FlowType {
         case change
         case select
     }
 
-    public var router: Router
-    private let repository: GeoRepository
-    private let type: FlowType
-    public var cities: [String]
-    public var updateTableView: BehaviorRelay<Void?>
-    private let countryId: Int
-    private let didSelectCity: ((String) -> Void)?
+    private let disposeBag = DisposeBag()
 
-    public func update() {
-        download()
+    private let type: FlowType
+    private let countryId: Int
+    private(set) var router: Router
+
+    var cities: [City] = []
+    var updateTableView: BehaviorRelay<Void?>
+    let didSelectCity: ((City) -> Void)?
+
+    private let service: LocationService
+    private let repository: LocationRepository
+
+    init(router: Router,
+         type: FlowType,
+         countryId: Int,
+         service: LocationService,
+         repository: LocationRepository,
+         didSelectCity: ((City) -> Void)?)
+    {
+        self.router = router
+        self.type = type
+        self.countryId = countryId
+        self.service = service
+        self.repository = repository
+        self.didSelectCity = didSelectCity
+        updateTableView = .init(value: nil)
     }
 
-    public func didSelect(index: Int) {
+    func getCities() {
+        if
+            let cachedCities = repository.getCities(),
+            cachedCities != []
+        {
+            cities = cachedCities
+            updateTableView.accept(())
+        }
+
+        makeCitiesRequest()
+    }
+
+    func refreshCities() {
+        makeCitiesRequest()
+    }
+
+    private func makeCitiesRequest() {
+        startAnimation()
+        service.getCities(for: countryId)
+            .subscribe { [weak self] citiesResponse in
+                self?.stopAnimation()
+                self?.process(receivedCities: citiesResponse)
+            } onError: { [weak self] error in
+                self?.stopAnimation()
+                self?.router.alert(error: error)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func process(receivedCities: [City]) {
+        guard let cachedCities = repository.getCities() else {
+            repository.set(cities: receivedCities)
+            cities = receivedCities
+            updateTableView.accept(())
+            return
+        }
+
+        if cachedCities == receivedCities { return }
+        repository.set(cities: receivedCities)
+        cities = receivedCities
+        updateTableView.accept(())
+    }
+
+    func didSelect(index: Int) {
         let city = cities[index]
-        repository.currentCity = city
+        repository.changeCurrentCity(to: city)
         didSelectCity?(city)
         switch type {
         case .select:
@@ -46,35 +107,5 @@ public final class CitiesListViewModel: CitiesListViewModelProtocol {
         case .change:
             close()
         }
-    }
-
-    private func download() {
-        startAnimation()
-        firstly {
-            repository.downloadCities(country: self.countryId)
-        }.done {
-            self.cities = $0
-        }.catch {
-            self.router.alert(error: $0)
-        }.finally {
-            self.stopAnimation()
-            self.updateTableView.accept(())
-        }
-    }
-
-    public init(router: Router,
-                country id: Int,
-                repository: GeoRepository,
-                type: FlowType,
-                didSelectCity: ((String) -> Void)?)
-    {
-        self.router = router
-        self.repository = repository
-        self.type = type
-        self.didSelectCity = didSelectCity
-        countryId = id
-        cities = []
-        updateTableView = .init(value: nil)
-        download()
     }
 }

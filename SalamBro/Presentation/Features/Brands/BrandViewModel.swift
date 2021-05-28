@@ -10,52 +10,121 @@ import PromiseKit
 import RxCocoa
 import RxSwift
 
-public protocol BrandViewModelProtocol: ViewModel {
-    var cellViewModels: [BrandCellViewModelProtocol] { get }
+protocol BrandViewModelProtocol: ViewModel {
+    var brands: [Brand] { get }
     var ratios: [(Float, Float)] { get }
     var updateCollectionView: BehaviorRelay<Void?> { get }
-    func refresh()
+    func refreshBrands()
     func didSelect(index: Int)
+    func getBrands()
 }
 
-public final class BrandViewModel: BrandViewModelProtocol {
+final class BrandViewModel: BrandViewModelProtocol {
+    private let disposeBag = DisposeBag()
+
     public enum FlowType {
         case change
         case select
     }
 
-    public var router: Router
+    let router: Router
     private let repository: BrandRepository
+    private let service: LocationService
     private let type: FlowType
-    public var cellViewModels: [BrandCellViewModelProtocol]
-    public var ratios: [(Float, Float)]
-    public var updateCollectionView: BehaviorRelay<Void?>
-    private var brands: [BrandUI]
-    private let didSelectBrand: ((BrandUI) -> Void)?
+    private let locationRepository: LocationRepository
+    private(set) var brands: [Brand] = [] {
+        didSet {
+            updateRatio()
+        }
+    }
 
-    public init(router: Router,
-                repository: BrandRepository,
-                type: FlowType,
-                didSelectBrand: ((BrandUI) -> Void)?)
+    var ratios: [(Float, Float)] = []
+    var updateCollectionView: BehaviorRelay<Void?>
+    private let didSelectBrand: ((Brand) -> Void)?
+
+    init(router: Router,
+         repository: BrandRepository,
+         locationRepository: LocationRepository,
+         service: LocationService,
+         type: FlowType,
+         didSelectBrand: ((Brand) -> Void)?)
     {
         self.router = router
         self.repository = repository
+        self.locationRepository = locationRepository
+        self.service = service
         self.type = type
         self.didSelectBrand = didSelectBrand
-        cellViewModels = []
-        ratios = []
-        brands = []
         updateCollectionView = .init(value: nil)
-        download()
+        makeBrandsRequest()
     }
 
-    public func refresh() {
-        download()
+    func getBrands() {
+        if
+            let cachedBrands = repository.getBrands(),
+            cachedBrands != []
+        {
+            brands = cachedBrands
+            updateCollectionView.accept(())
+        }
+
+        makeBrandsRequest()
     }
 
-    public func didSelect(index: Int) {
+    private func updateRatio() {
+        for (index, _) in brands.enumerated() {
+            switch (index + 1) % 4 {
+            case 1:
+                ratios.append((1.0, 0.42))
+            case 2:
+                ratios.append((0.58, 0.88))
+            case 3:
+                ratios.append((0.58, 0.42))
+            case 4:
+                ratios.append((0.42, 0.42))
+            default:
+                ratios.append((0.0, 0.0))
+            }
+        }
+
+        updateCollectionView.accept(())
+    }
+
+    private func makeBrandsRequest() {
+        guard let city = locationRepository.getCurrectCity() else { return }
+        startAnimation()
+        service.getBrands(for: city.id)
+            .subscribe(onSuccess: { [weak self] brandsResponse in
+                self?.stopAnimation()
+                self?.process(receivedBrands: brandsResponse)
+            }, onError: { [weak self] error in
+                self?.stopAnimation()
+                self?.router.alert(error: error)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func process(receivedBrands: [Brand]) {
+        guard let cachedBrands = repository.getBrands() else {
+            repository.set(brands: receivedBrands)
+            brands = receivedBrands
+            updateCollectionView.accept(())
+            return
+        }
+
+        if cachedBrands == receivedBrands { return }
+        repository.set(brands: receivedBrands)
+        brands = receivedBrands
+        updateCollectionView.accept(())
+    }
+
+    func refreshBrands() {
+        makeBrandsRequest()
+    }
+
+    func didSelect(index: Int) {
         let brand = brands[index]
-        repository.brand = brand.toDomain()
+        repository.changeCurrent(brand: brand)
         didSelectBrand?(brand)
         switch type {
         case .change:
@@ -63,25 +132,6 @@ public final class BrandViewModel: BrandViewModelProtocol {
         case .select:
             let context = BrandsRouter.RouteType.map
             router.enqueueRoute(with: context)
-        }
-    }
-
-    private func download() {
-        startAnimation()
-        firstly {
-            repository.downloadBrands()
-        }.done {
-            self.cellViewModels = $0.0
-                .map { BrandUI(from: $0) }
-                .map { BrandCellViewModel(router: self.router,
-                                          brand: $0) }
-            self.ratios = $0.1
-            self.brands = $0.0.map { BrandUI(from: $0) }
-        }.catch {
-            self.router.alert(error: $0)
-        }.finally {
-            self.stopAnimation()
-            self.updateCollectionView.accept(())
         }
     }
 }

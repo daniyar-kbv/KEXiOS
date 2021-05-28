@@ -11,13 +11,13 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class BrandsController: ViewController {
+final class BrandsController: ViewController {
     private let viewModel: BrandViewModelProtocol
     private let disposeBag: DisposeBag
 
     private lazy var refreshControl: UIRefreshControl = {
         let action = UIRefreshControl()
-        action.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        action.addTarget(self, action: #selector(handleRefreshControlAction(_:)), for: .valueChanged)
         return action
     }()
 
@@ -49,6 +49,7 @@ public final class BrandsController: ViewController {
         super.viewDidLoad()
         setup()
         bind()
+        viewModel.getBrands()
     }
 
     private func bind() {
@@ -89,8 +90,9 @@ public final class BrandsController: ViewController {
         }
     }
 
-    @objc func refresh(_: AnyObject) {
-        viewModel.refresh()
+    @objc func handleRefreshControlAction(_: UIRefreshControl) {
+        viewModel.refreshBrands()
+        refreshControl.endRefreshing()
     }
 }
 
@@ -100,12 +102,13 @@ extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        viewModel.cellViewModels.count
+        viewModel.brands.count
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: BrandCell.self)
-        cell.set(viewModel.cellViewModels[indexPath.row])
+        let brand = viewModel.brands[indexPath.row]
+        cell.configure(brand: brand)
         return cell
     }
 

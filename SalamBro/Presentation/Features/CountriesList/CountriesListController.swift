@@ -10,9 +10,9 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class CountriesListController: ViewController {
+final class CountriesListController: ViewController {
     private let viewModel: CountriesListViewModelProtocol
-    private let disposeBag: DisposeBag
+    private let disposeBag = DisposeBag()
 
     private lazy var countriesTableView: UITableView = {
         let view = UITableView()
@@ -30,21 +30,20 @@ public final class CountriesListController: ViewController {
 
     private lazy var refreshControl: UIRefreshControl = {
         let view = UIRefreshControl()
-        view.addTarget(self, action: #selector(update), for: .valueChanged)
-
+        view.addTarget(self, action: #selector(handleRefreshControlAction), for: .valueChanged)
         return view
     }()
 
-    public init(viewModel: CountriesListViewModelProtocol) {
+    init(viewModel: CountriesListViewModelProtocol) {
         self.viewModel = viewModel
-        disposeBag = DisposeBag()
         super.init(nibName: nil, bundle: nil)
     }
 
-    public required init?(coder _: NSCoder) { nil }
+    required init?(coder _: NSCoder) { nil }
 
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.getCountries()
         setup()
         bind()
     }
@@ -84,21 +83,22 @@ public final class CountriesListController: ViewController {
     }
 
     @objc
-    private func update() {
-        viewModel.update()
+    private func handleRefreshControlAction() {
+        viewModel.refresh()
+        refreshControl.endRefreshing()
     }
 }
 
 extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
-    public func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 50
     }
 
-    public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         viewModel.countries.count
     }
 
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = viewModel.countries[indexPath.row].name
         cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
@@ -109,7 +109,7 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 
-    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelect(index: indexPath.row)
     }
 }

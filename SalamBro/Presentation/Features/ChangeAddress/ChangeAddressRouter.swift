@@ -20,9 +20,9 @@ final class ChangeAddressRouter: Router {
     var baseViewController: UIViewController?
     private var context: PresentationContext?
 
-    var selectedBrand: ((BrandUI) -> Void)?
-    var selectedCountry: ((CountryUI) -> Void)?
-    var selectedCity: ((String) -> Void)?
+    var selectedBrand: ((Brand) -> Void)?
+    var selectedCountry: ((Country) -> Void)?
+    var selectedCity: ((City) -> Void)?
     var selectedAddress: ((String) -> Void)?
 
     func present(on baseVC: UIViewController, animated _: Bool, context _: Any?, completion _: (() -> Void)?) {
@@ -77,7 +77,7 @@ final class ChangeAddressRouter: Router {
         }
     }
 
-    public func dismiss(animated: Bool, completion: (() -> Void)?) {
+    func dismiss(animated: Bool, completion: (() -> Void)?) {
         baseViewController?.dismiss(animated: animated, completion: completion)
     }
 }

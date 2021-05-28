@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class MenuController: ViewController {
+final class MenuController: ViewController {
     private let viewModel: MenuViewModelProtocol
     private let disposeBag: DisposeBag
 

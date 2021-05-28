@@ -5,11 +5,9 @@
 //  Created by Abzal Toremuratuly on 10.05.2021.
 //
 
-import Foundation
-
 import UIKit
 
-public protocol Router: AnyObject {
+protocol Router: AnyObject {
     var baseViewController: UIViewController? { get set }
 
     func present(on baseVC: UIViewController, animated: Bool, context: Any?, completion: (() -> Void)?)
@@ -17,7 +15,7 @@ public protocol Router: AnyObject {
     func dismiss(animated: Bool, completion: (() -> Void)?)
 }
 
-public extension Router {
+extension Router {
     func present(on baseVC: UIViewController, context: Any?) {
         present(on: baseVC, animated: true, context: context, completion: nil)
     }
