@@ -47,13 +47,14 @@ class CartProductCell: UITableViewCell {
 
         if product!.available {
             deleteButton.isHidden = true
-            unavailableLabel.text = ""
+            unavailableLabel.isHidden = true
         } else {
             deleteButton.isHidden = false
             unavailableLabel.text = L10n.CartProductCell.Availability.title
             productTitle.alpha = 0.5
             productDescription.alpha = 0.5
-            productPrice.alpha = 0.5
+//            productPrice.alpha = 0.5
+            productPrice.isHidden = true
             productLogo.alpha = 0.5
         }
         counter = product!.count

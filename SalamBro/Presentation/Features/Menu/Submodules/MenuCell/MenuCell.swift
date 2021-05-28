@@ -43,6 +43,7 @@ public final class MenuCell: UITableViewCell, Reusable {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.kexRed.cgColor
         button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 11)
+        button.isUserInteractionEnabled = false
         return button
     }()
 

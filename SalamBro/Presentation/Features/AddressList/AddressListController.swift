@@ -65,8 +65,19 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         cell.textLabel?.textColor = .darkGray
         cell.backgroundColor = .white
-//        cell.accessoryType = .disclosureIndicator
-        cell.accessoryView = UIImageView(image: UIImage(named: "chevron.right"))
+
+        let cellChevronButton = UIButton(type: .custom)
+        cellChevronButton.frame = CGRect(x: 0, y: 0, width: 25, height: 30)
+        cellChevronButton.isUserInteractionEnabled = false
+        if #available(iOS 13.0, *) {
+            cellChevronButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+            cellChevronButton.tintColor = .mildBlue
+        } else {
+            // Fallback on earlier versions
+        }
+        cellChevronButton.contentMode = .scaleAspectFit
+        cell.accessoryView = cellChevronButton as UIView
+
         cell.selectionStyle = .none
         return cell
     }
