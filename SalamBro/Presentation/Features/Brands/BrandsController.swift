@@ -27,6 +27,7 @@ final class BrandsController: ViewController {
             collectionViewLayout: .init()
         )
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         collectionView.backgroundColor = .clear
         collectionView.register(cellType: BrandCell.self)
         collectionView.translatesAutoresizingMaskIntoConstraints = false

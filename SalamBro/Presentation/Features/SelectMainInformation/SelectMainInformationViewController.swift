@@ -57,7 +57,7 @@ final class SelectMainInformationViewController: ViewController {
             countryTextField,
             citiesTextField,
             addressTextField,
-            brandsTextField,
+//            brandsTextField,
         ])
         view.axis = .vertical
         view.spacing = 16
@@ -116,12 +116,18 @@ final class SelectMainInformationViewController: ViewController {
 
     private func setupViews() {
         view.backgroundColor = .white
-        [stackView, saveButton].forEach { view.addSubview($0) }
+        [stackView, brandsTextField, saveButton].forEach { view.addSubview($0) }
     }
 
     private func setupConstraints() {
         stackView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(24)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+        }
+
+        brandsTextField.snp.makeConstraints {
+            $0.top.equalTo(stackView.snp.bottomMargin).offset(40)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
         }
