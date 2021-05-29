@@ -66,13 +66,12 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.textColor = .darkGray
         cell.backgroundColor = .white
 
-        let cellChevronButton = UIButton(type: .custom)
-        cellChevronButton.frame = CGRect(x: 0, y: 0, width: 25, height: 30)
-        cellChevronButton.isUserInteractionEnabled = false
-        cellChevronButton.setImage(UIImage(named: "chevron.right"), for: .normal)
-        cellChevronButton.tintColor = .mildBlue
-        cellChevronButton.contentMode = .scaleAspectFit
-        cell.accessoryView = cellChevronButton
+        let view = UIImageView()
+        view.image = Asset.chevronBottom.image.withRenderingMode(.alwaysTemplate)
+        view.tintColor = .mildBlue
+        view.frame = CGRect(x: 0, y: 0, width: 25, height: 30)
+        view.transform = CGAffineTransform(rotationAngle: .pi * 1.5)
+        cell.accessoryView = view
 
         cell.selectionStyle = .none
         return cell
