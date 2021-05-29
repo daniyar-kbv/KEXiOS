@@ -28,6 +28,7 @@ public class ViewController: UIViewController, UIGestureRecognizerDelegate {
     @objc private func popCurrentViewController() {
         if navigationController?.presentingViewController != nil {
             dismiss(animated: true, completion: nil)
+            return
         }
 
         navigationController?.popViewController(animated: true)
