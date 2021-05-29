@@ -8,28 +8,28 @@
 import SnapKit
 import UIKit
 
-class AddressListController: ViewController {
-    var addresses = ["Алматы, мкр. Орбита 1, 41", "проспект Абылай Хана, 131"]
+final class AddressListController: ViewController {
+    private var addresses = ["Алматы, мкр. Орбита 1, 41", "проспект Абылай Хана, 131"]
 
-    lazy var citiesTableView: UITableView = {
-        let view = UITableView()
-        view.tableFooterView = UIView()
-        view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        view.showsVerticalScrollIndicator = false
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.separatorColor = .mildBlue
-        view.delegate = self
-        view.dataSource = self
-        view.allowsMultipleSelection = false
-        view.addTableHeaderViewLine()
-        view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
-        return view
+    private lazy var citiesTableView: UITableView = {
+        let tv = UITableView()
+        tv.tableFooterView = UIView()
+        tv.register(AddressListTableViewCell.self, forCellReuseIdentifier: AddressListTableViewCell.reuseIdentifier)
+        tv.showsVerticalScrollIndicator = false
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.separatorColor = .mildBlue
+        tv.delegate = self
+        tv.dataSource = self
+        tv.allowsMultipleSelection = false
+        tv.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        tv.separatorInsetReference = .fromCellEdges
+        tv.separatorStyle = .singleLine
+        return tv
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setupConstraints()
+        layoutUI()
     }
 
     override func setupNavigationBar() {
@@ -37,20 +37,15 @@ class AddressListController: ViewController {
         navigationItem.title = L10n.AddressPicker.titleMany
     }
 
-    func setupViews() {
+    private func layoutUI() {
         view.backgroundColor = .white
-        [citiesTableView].forEach { view.addSubview($0) }
-    }
-
-    func setupConstraints() {
+        view.addSubview(citiesTableView)
         citiesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(24)
-            $0.left.right.bottom.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(24)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
-    }
-
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -60,15 +55,9 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = addresses[indexPath.row]
-        cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        cell.textLabel?.textColor = .darkGray
-        cell.backgroundColor = .white
-//        cell.accessoryType = .disclosureIndicator
-        cell.accessoryView = UIImageView(image: UIImage(named: "chevron.right"))
-        cell.selectionStyle = .none
-        return cell
+        guard let addressCell = tableView.dequeueReusableCell(withIdentifier: AddressListTableViewCell.reuseIdentifier, for: indexPath) as? AddressListTableViewCell else { fatalError() }
+        addressCell.configure(address: addresses[indexPath.row])
+        return addressCell
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -82,32 +71,4 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 50
     }
-
-//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-//        print(indexPath.row)
-//        let vc = AddressDetailController()
-//        vc.addressLabel.text = addresses[indexPath.row]
-//        vc.commentaryLabel.text = "Квартира, подъезд, домофон, этаж, и очень длинный комментарий примерно в две"
-//        navigationController?.pushViewController(vc, animated: true)
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 50
-//    }
-//
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return addresses.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        cell.textLabel?.text = addresses[indexPath.row]
-//        cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-//        cell.textLabel?.textColor = .darkGray
-//        cell.backgroundColor = .white
-    ////        cell.accessoryType = .disclosureIndicator
-//        cell.accessoryView = UIImageView(image: UIImage(named: "chevron.right"))
-//        cell.selectionStyle = .none
-//        return cell
-//    }
 }

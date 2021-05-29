@@ -7,28 +7,31 @@
 
 import UIKit
 
-public class ViewController: UIViewController {
+public class ViewController: UIViewController, UIGestureRecognizerDelegate {
     override public func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: Asset.chevronLeft.image, style: .plain, target: self, action: #selector(popCurrentViewController))
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
 
-        guard navigationController?.presentingViewController != nil,
-              navigationController?.viewControllers.count == 1
-        else {
-            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        if let viewControllers = navigationController?.viewControllers,
+           viewControllers.count == 1
+        {
             navigationItem.leftBarButtonItem = nil
-            return
         }
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: Asset.chevronLeft.image, style: .plain, target: self, action: #selector(popCurrentViewController))
     }
 
     @objc private func popCurrentViewController() {
-        dismiss(animated: true, completion: nil)
+        if navigationController?.presentingViewController != nil {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+
+        navigationController?.popViewController(animated: true)
     }
 
     internal func setupNavigationBar() {
