@@ -50,7 +50,7 @@ class SuggestController: ViewController {
     func setupViews() {
         searchBar.attributedPlaceholder = NSAttributedString(
             string: L10n.Suggest.AddressField.title,
-            attributes: [.font: UIFont.systemFont(ofSize: 14, weight: .medium)]
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         )
         cancelButton.setTitle(L10n.Suggest.Button.title, for: .normal)
         contentView.clipsToBounds = true
