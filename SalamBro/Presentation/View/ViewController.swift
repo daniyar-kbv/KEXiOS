@@ -7,8 +7,6 @@
 
 import UIKit
 
-import UIKit
-
 public class ViewController: UIViewController, UIGestureRecognizerDelegate {
     override public func viewDidLoad() {
         super.viewDidLoad()
