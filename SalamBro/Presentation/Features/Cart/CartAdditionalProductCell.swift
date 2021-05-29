@@ -19,7 +19,6 @@ class CartAdditionalProductCell: UITableViewCell {
     @IBOutlet var productCountLabel: UILabel!
     @IBOutlet var inscreaseButton: UIButton!
     @IBOutlet var availabilityLabel: UILabel!
-    @IBOutlet var deleteButton: UIButton!
     @IBOutlet var productLogo: UIImageView!
 
     var product: CartAdditionalProduct!
@@ -28,7 +27,6 @@ class CartAdditionalProductCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureUI()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -43,10 +41,8 @@ class CartAdditionalProductCell: UITableViewCell {
         counter = product.count
 
         if product!.available {
-            deleteButton.isHidden = true
             availabilityLabel.text = ""
         } else {
-            deleteButton.isHidden = false
             availabilityLabel.text = L10n.CartAdditionalProductCell.Availability.title
             productTitle.alpha = 0.5
             productPrice.alpha = 0.5
@@ -56,19 +52,13 @@ class CartAdditionalProductCell: UITableViewCell {
         productCountLabel.text = "\(counter)"
     }
 
-    func configureUI() {
-        deleteButton.setTitle(L10n.CartAdditionalProductCell.DeleteButton.title, for: .normal)
-    }
-
-    @IBAction func decreaseItemCount(_ sender: UIButton) {
+    @IBAction func decreaseItemCount(_: UIButton) {
         if counter > 0 {
             counter -= 1
             delegate.changeItemCount(id: product.id, isIncrease: false, isAdditional: true)
             productPrice.text = "\(counter * product!.price) T"
             productCountLabel.text = "\(counter)"
-        } else {
-            deleteAction(sender)
-        }
+        } else {}
     }
 
     @IBAction func increaseItemButton(_: UIButton) {
@@ -78,9 +68,5 @@ class CartAdditionalProductCell: UITableViewCell {
             productPrice.text = "\(counter * product!.price) T"
             productCountLabel.text = "\(counter)"
         }
-    }
-
-    @IBAction func deleteAction(_: UIButton) {
-        delegate.deleteProduct(id: product.id, isAdditional: true)
     }
 }

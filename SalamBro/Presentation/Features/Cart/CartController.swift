@@ -197,13 +197,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
 
 extension CartController: CellDelegate {
     func deleteProduct(id: Int, isAdditional: Bool) {
-        if isAdditional {
-            if let index = cartViewModel.cart.productsAdditional.firstIndex(where: { $0.id == id }) {
-                cartViewModel.cart.productsAdditional.remove(at: index)
-                let path = IndexPath(row: index, section: 1)
-                itemsTableView.deleteRows(at: [path], with: .automatic)
-            }
-        } else {
+        if !isAdditional {
             if let index = cartViewModel.cart.products.firstIndex(where: { $0.id == id }) {
                 cartViewModel.cart.products.remove(at: index)
                 let path = IndexPath(row: index, section: 0)
@@ -279,7 +273,10 @@ extension CartController: MapDelegate {
         addChild(commentarySheetVC)
         view.addSubview(commentarySheetVC.view)
         commentarySheetVC.proceedButton.setTitle(L10n.Promocode.button, for: .normal)
-        commentarySheetVC.commentaryField.placeholder = L10n.Promocode.field
+        commentarySheetVC.commentaryField.attributedPlaceholder = NSAttributedString(
+            string: L10n.Promocode.field,
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+        )
         commentarySheetVC.delegate = self
         commentarySheetVC.didMove(toParent: self)
         commentarySheetVC.modalPresentationStyle = .overCurrentContext

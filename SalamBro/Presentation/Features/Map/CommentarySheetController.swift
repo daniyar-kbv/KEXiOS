@@ -43,7 +43,10 @@ class CommentarySheetController: ViewController {
     }
 
     func setupViews() {
-        commentaryField.placeholder = L10n.Commentary.AddressField.title
+        commentaryField.attributedPlaceholder = NSAttributedString(
+            string: L10n.Commentary.AddressField.title,
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+        )
         proceedButton.setTitle(L10n.Commentary.Button.title, for: .normal)
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 18

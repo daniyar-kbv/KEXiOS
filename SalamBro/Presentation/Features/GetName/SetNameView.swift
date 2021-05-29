@@ -35,7 +35,10 @@ class SetNameView: UIView {
     lazy var nameField: UITextField = {
         let field = UITextField()
         field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        field.placeholder = L10n.GetName.Field.title
+        field.attributedPlaceholder = NSAttributedString(
+            string: L10n.GetName.Field.title,
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+        )
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
