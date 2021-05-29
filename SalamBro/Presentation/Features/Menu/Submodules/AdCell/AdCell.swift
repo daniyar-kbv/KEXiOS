@@ -17,9 +17,11 @@ final class AdCell: UICollectionViewCell, NibReusable {
 
     private var disposeBag = DisposeBag()
 
+    @IBOutlet var adImageView: UIImageView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        adImageView.cornerRadius = 9
     }
 
     override func prepareForReuse() {

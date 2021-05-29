@@ -20,7 +20,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EEe-KR-n49">
                         <rect key="frame" x="0.0" y="0.0" width="324" height="116"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ad" translatesAutoresizingMaskIntoConstraints="NO" id="IIr-vh-dxv">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ad" translatesAutoresizingMaskIntoConstraints="NO" id="IIr-vh-dxv">
                                 <rect key="frame" x="0.0" y="0.0" width="324" height="116"/>
                             </imageView>
                         </subviews>
@@ -42,10 +42,13 @@
                 <constraint firstItem="EEe-KR-n49" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="k8W-9h-ULx"/>
             </constraints>
             <size key="customSize" width="324" height="116"/>
+            <connections>
+                <outlet property="adImageView" destination="IIr-vh-dxv" id="YVY-BL-s73"/>
+            </connections>
             <point key="canvasLocation" x="275.36231884057975" y="116.51785714285714"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="ad" width="312" height="112"/>
+        <image name="ad" width="1248" height="448"/>
     </resources>
 </document>
