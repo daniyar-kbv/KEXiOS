@@ -10,19 +10,28 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AdCell: UICollectionViewCell, NibReusable {
+final class AdCell: UICollectionViewCell, Reusable {
     private var viewModel: AdCellViewModelProtocol! {
         didSet { bind() }
     }
 
     private var disposeBag = DisposeBag()
 
-    @IBOutlet var adImageView: UIImageView!
+    let adImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "ad")
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 9
+        return view
+    }()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        adImageView.cornerRadius = 9
+    override init(frame _: CGRect) {
+        super.init(frame: .zero)
+        setup()
     }
+
+    required init?(coder _: NSCoder) { nil }
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -34,4 +43,19 @@ final class AdCell: UICollectionViewCell, NibReusable {
     }
 
     private func bind() {}
+
+    private func setup() {
+        setupViews()
+        setupConstraints()
+    }
+
+    private func setupViews() {
+        contentView.addSubview(adImageView)
+    }
+
+    private func setupConstraints() {
+        adImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
 }

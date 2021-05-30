@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		CE240ADCFFE270372CAD60F4D49D5595 /* Ad.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F873822E00C92295C696070403AACD /* Ad.swift */; };
 		2E01C372E9B781F366A65471F70F70AC /* AdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A0165637908430EA1908F731B19C35 /* AdCell.swift */; };
-		28B8D9B67589D06594DB830A634B3D58 /* AdCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DE7B9B856B16AA50018D655E3B9386D /* AdCell.xib */; };
 		8B32FF85AB2EDCEA5B3E486ACC2CB251 /* AdCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD274B4B1EDE511F612D4A72A58E0B0 /* AdCellViewModel.swift */; };
 		C100A8D96DD59578E15D12E2506202A2 /* AdCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94F65857AF8E60C5AC7FB8895F6AAA0 /* AdCollectionCell.swift */; };
 		226FE8AD81B3EDEC8E52D4D43393041E /* AdCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 656930E5E4F233D41F83DAC82B513368 /* AdCollectionCell.xib */; };
@@ -223,7 +222,6 @@
 /* Begin PBXFileReference section */
 		D5F873822E00C92295C696070403AACD /* Ad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ad.swift; sourceTree = "<group>"; };
 		98A0165637908430EA1908F731B19C35 /* AdCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCell.swift; sourceTree = "<group>"; };
-		4DE7B9B856B16AA50018D655E3B9386D /* AdCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdCell.xib; sourceTree = "<group>"; };
 		0BD274B4B1EDE511F612D4A72A58E0B0 /* AdCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCellViewModel.swift; sourceTree = "<group>"; };
 		D94F65857AF8E60C5AC7FB8895F6AAA0 /* AdCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCollectionCell.swift; sourceTree = "<group>"; };
 		656930E5E4F233D41F83DAC82B513368 /* AdCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdCollectionCell.xib; sourceTree = "<group>"; };
@@ -708,7 +706,6 @@
 			isa = PBXGroup;
 			children = (
 				98A0165637908430EA1908F731B19C35 /* AdCell.swift */,
-				4DE7B9B856B16AA50018D655E3B9386D /* AdCell.xib */,
 				0BD274B4B1EDE511F612D4A72A58E0B0 /* AdCellViewModel.swift */,
 			);
 			path = AdCell;
@@ -1453,7 +1450,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28B8D9B67589D06594DB830A634B3D58 /* AdCell.xib in Resources */,
 				226FE8AD81B3EDEC8E52D4D43393041E /* AdCollectionCell.xib in Resources */,
 				CCB2F351AF28727E7426B539A3D57F00 /* AddressPickCell.xib in Resources */,
 				A9999B2C8EB50DE5CFBF201C504DA28E /* AddressSheetController.xib in Resources */,

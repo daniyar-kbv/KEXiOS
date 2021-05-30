@@ -91,16 +91,8 @@ class CommentarySheetController: ViewController {
         let bounds = UIScreen.main.bounds
         let height = bounds.size.height
 
-        var indent: CGFloat?
+        let indent: CGFloat = height <= 736 ? 0 : 40
 
-        switch height {
-        case 568.0, 667.0, 736.0:
-            indent = 0
-        case 780.0, 812.0, 844.0, 896.0, 926.0:
-            indent = 40
-        default:
-            print("Not listed in function")
-        }
-        return indent ?? 0
+        return indent
     }
 }
