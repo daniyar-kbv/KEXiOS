@@ -43,7 +43,10 @@ class CommentarySheetController: ViewController {
     }
 
     func setupViews() {
-        commentaryField.placeholder = L10n.Commentary.AddressField.title
+        commentaryField.attributedPlaceholder = NSAttributedString(
+            string: L10n.Commentary.AddressField.title,
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+        )
         proceedButton.setTitle(L10n.Commentary.Button.title, for: .normal)
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 18
@@ -52,7 +55,11 @@ class CommentarySheetController: ViewController {
 
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            view.frame.origin.y -= keyboardSize.height
+            if getScreenSize() == 40 {
+                view.frame.origin.y -= keyboardSize.height / getScreenSize()
+            } else {
+                view.frame.origin.y -= keyboardSize.height
+            }
         }
     }
 
@@ -78,5 +85,14 @@ class CommentarySheetController: ViewController {
 
     @objc func beginEdit() {
         commentaryField.becomeFirstResponder()
+    }
+
+    private func getScreenSize() -> CGFloat {
+        let bounds = UIScreen.main.bounds
+        let height = bounds.size.height
+
+        let indent: CGFloat = height <= 736 ? 0 : 40
+
+        return indent
     }
 }

@@ -82,7 +82,10 @@ class MenuDetailController: ViewController {
 
     lazy var commentaryField: UITextField = {
         let view = UITextField()
-        view.placeholder = L10n.MenuDetail.commentaryField
+        view.attributedPlaceholder = NSAttributedString(
+            string: L10n.MenuDetail.commentaryField,
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+        )
         view.isEnabled = false
         return view
     }()
@@ -277,7 +280,10 @@ extension MenuDetailController: MapDelegate {
 
         addChild(commentarySheetVC)
         view.addSubview(commentarySheetVC.view)
-        commentarySheetVC.commentaryField.placeholder = L10n.MenuDetail.commentaryField
+        commentarySheetVC.commentaryField.attributedPlaceholder = NSAttributedString(
+            string: L10n.MenuDetail.commentaryField,
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+        )
         commentarySheetVC.delegate = self
         commentarySheetVC.didMove(toParent: self)
         commentarySheetVC.modalPresentationStyle = .overCurrentContext
