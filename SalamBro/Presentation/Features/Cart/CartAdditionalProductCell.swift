@@ -58,7 +58,7 @@ class CartAdditionalProductCell: UITableViewCell {
             delegate.changeItemCount(id: product.id, isIncrease: false, isAdditional: true)
             productPrice.text = "\(counter * product!.price) T"
             productCountLabel.text = "\(counter)"
-        } else {}
+        }
     }
 
     @IBAction func increaseItemButton(_: UIButton) {

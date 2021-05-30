@@ -290,14 +290,7 @@ extension CartController: MapDelegate {
         let bounds = UIScreen.main.bounds
         let height = bounds.size.height
 
-        switch height {
-        case 568.0, 667.0, 736.0:
-            commentarySheetVC.view.frame = CGRect(x: 0, y: view.bounds.height - heightOfSheet, width: width, height: heightOfSheet)
-        case 780.0, 812.0, 844.0, 896.0, 926.0:
-            commentarySheetVC.view.frame = CGRect(x: 0, y: view.bounds.height - 30 - heightOfSheet, width: width, height: heightOfSheet)
-        default:
-            print("Not listed in function")
-        }
+        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 30 - heightOfSheet, width: width, height: heightOfSheet)
     }
 
     func passCommentary(text _: String) {

@@ -17,7 +17,7 @@ final class AdCell: UICollectionViewCell, Reusable {
 
     private var disposeBag = DisposeBag()
 
-    let adImageView: UIImageView = {
+    private let adImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "ad")
         view.contentMode = .scaleAspectFill
