@@ -8,6 +8,7 @@
 import Foundation
 
 protocol LocationRepository: AnyObject {
+    func getCurrentCountry() -> Country?
     func getCountries() -> [Country]?
     func changeCurrectCountry(to country: Country)
     func set(countries: [Country])
@@ -29,6 +30,10 @@ final class LocationRepositoryImpl: LocationRepository {
 // MARK: Countries
 
 extension LocationRepositoryImpl {
+    func getCurrentCountry() -> Country? {
+        return storage.currentCountry
+    }
+
     func getCountries() -> [Country]? {
         guard
             let countries = storage.countries,

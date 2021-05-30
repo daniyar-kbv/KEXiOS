@@ -13,7 +13,7 @@ protocol MainTabDelegate {
     func changeController(id: Int)
 }
 
-class MainTabController: UITabBarController {
+final class MainTabController: UITabBarController {
     var itemCount: Int = 0
 
     lazy var menu: MenuController = {

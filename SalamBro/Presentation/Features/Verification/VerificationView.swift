@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol VerificationViewDelegate {
-    func passCode()
-    func back()
+protocol VerificationViewDelegate: AnyObject {
+    func verificationViewDelegate(_ view: VerificationView, enteredCode: String)
+    func resendOTPTapped(_ view: VerificationView)
 }
 
-class VerificationView: UIView {
+final class VerificationView: UIView {
     var timer: Timer!
     var expirationDate = Date()
     var numSeconds: TimeInterval = 91.0
@@ -117,7 +117,6 @@ extension VerificationView {
         expirationDate = Date(timeIntervalSinceNow: numSeconds)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateUI), userInfo: nil, repeats: true)
         RunLoop.current.add(timer, forMode: RunLoop.Mode.common)
-        print("START TIMER CALLED")
     }
 
     func currentTimeString() -> String? {
@@ -125,7 +124,6 @@ extension VerificationView {
         let countdown: DateComponents = Calendar.current.dateComponents(unitFlags, from: Date(), to: expirationDate)
 
         var timeRemaining: String
-        print("minute: \(countdown.minute!), second: \(countdown.second!)")
         if countdown.second! > 0 || countdown.minute! > 0 {
             timeRemaining = String(format: "%02d:%02d", countdown.minute!, countdown.second!)
             return timeRemaining
@@ -152,11 +150,11 @@ extension VerificationView {
         startTimer()
     }
 
-    func passCode() {
-        delegate?.passCode()
-    }
-
-    @objc func backButtonTapped() {
-        delegate?.back()
+    private func passCode() {
+        guard
+            let code = otpField.text,
+            code.count == 4
+        else { return }
+        delegate?.verificationViewDelegate(self, enteredCode: code)
     }
 }

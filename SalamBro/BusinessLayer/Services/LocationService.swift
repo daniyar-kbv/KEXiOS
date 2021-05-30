@@ -32,10 +32,12 @@ final class LocationServiceMoyaImpl: LocationService {
                 }
 
                 if let error = countryResponse.error {
-                    throw NetworkError.error(error)
+                    throw error
                 }
 
-                return countryResponse.data.results
+                guard let data = countryResponse.data else { throw NetworkError.error("Нет данных") }
+
+                return data.results
             }
     }
 
@@ -47,10 +49,12 @@ final class LocationServiceMoyaImpl: LocationService {
                 }
 
                 if let error = citiesResponse.error {
-                    throw NetworkError.error(error)
+                    throw error
                 }
 
-                return citiesResponse.data.cities
+                guard let data = citiesResponse.data else { throw NetworkError.error("Нет данных") }
+
+                return data.cities
             }
     }
 

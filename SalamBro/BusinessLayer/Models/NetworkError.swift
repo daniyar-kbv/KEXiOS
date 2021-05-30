@@ -22,3 +22,12 @@ enum NetworkError: ErrorPresentable {
         }
     }
 }
+
+struct ErrorResponse: Codable, ErrorPresentable {
+    let code: String
+    let message: String
+
+    var presentationDescription: String {
+        return message
+    }
+}

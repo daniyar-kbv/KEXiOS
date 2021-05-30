@@ -7,12 +7,11 @@
 
 import UIKit
 
-protocol GetNameViewDelegate {
-    func submit()
-    func back()
+protocol GetNameViewDelegate: AnyObject {
+    func submit(name: String)
 }
 
-class SetNameView: UIView {
+final class SetNameView: UIView {
     public var delegate: GetNameViewDelegate?
 
     lazy var titleLabel: UILabel = {
@@ -39,21 +38,6 @@ class SetNameView: UIView {
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
-
-//    lazy var nameField: UITextField = {
-//        let field = UITextField()
-//        field.clearButtonMode = .whileEditing
-//        field.layer.borderColor = UIColor.gray.cgColor
-//        field.layer.backgroundColor = UIColor.white.cgColor
-//        field.layer.borderWidth = 0.0
-//        field.layer.shadowOffset = CGSize(width: 0, height: 0.5)
-//        field.layer.shadowOpacity = 0.5
-//        field.layer.shadowRadius = 0.0
-//        field.keyboardType = .alphabet
-//        field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-//        field.translatesAutoresizingMaskIntoConstraints = false
-//        return field
-//    }()
 
     lazy var nextButton: UIButton = {
         let button = UIButton()
@@ -122,10 +106,7 @@ extension SetNameView {
     }
 
     @objc func submitAction() {
-        delegate?.submit()
-    }
-
-    @objc func backButtonTapped() {
-        delegate?.back()
+        guard let name = nameField.text else { return }
+        delegate?.submit(name: name)
     }
 }
