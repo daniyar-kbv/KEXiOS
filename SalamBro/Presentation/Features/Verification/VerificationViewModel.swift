@@ -15,10 +15,12 @@ final class VerificationViewModel {
     let outputs = Output()
 
     private let service: AuthService
+    private let tokenStorage: AuthTokenStorage
     private(set) var phoneNumber: String
 
-    init(service: AuthService, phoneNumber: String) {
+    init(service: AuthService, tokenStorage: AuthTokenStorage, phoneNumber: String) {
         self.service = service
+        self.tokenStorage = tokenStorage
         self.phoneNumber = phoneNumber
     }
 
@@ -55,7 +57,8 @@ final class VerificationViewModel {
 
     private func handleTokenResponse(accessToken: AccessToken) {
         outputs.didEndRequest.accept(())
-        outputs.didVerifyOTP.accept(accessToken)
+        tokenStorage.persist(token: accessToken.access, refreshToken: accessToken.refresh)
+        outputs.didVerifyOTP.accept(())
     }
 }
 
@@ -64,7 +67,7 @@ extension VerificationViewModel {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didFail = PublishRelay<ErrorPresentable>()
-        let didVerifyOTP = PublishRelay<AccessToken>()
+        let didVerifyOTP = PublishRelay<Void>()
         let didResendOTP = PublishRelay<Void>()
     }
 }

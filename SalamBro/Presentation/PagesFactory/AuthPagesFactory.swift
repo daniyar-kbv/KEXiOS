@@ -22,7 +22,9 @@ final class AuthPagesFactory: DependencyFactory {
     }
 
     private func makeVerificationViewModel(phoneNumber: String) -> VerificationViewModel {
-        return scoped(.init(service: getAuthService(), phoneNumber: phoneNumber))
+        return scoped(.init(service: getAuthService(),
+                            tokenStorage: AuthTokenStorageImpl.sharedStorage,
+                            phoneNumber: phoneNumber))
     }
 
     func makeNameEnteringPage() -> SetNameController {

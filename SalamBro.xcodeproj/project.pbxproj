@@ -49,8 +49,10 @@
 		54469D87B0A76CFAD12F5837100C5999 /* AuthDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246956A66E668C97E9E7337CD50C8A95 /* AuthDTO.swift */; };
 		407E0E9A1B577B1000EF2B71E957090F /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A41980E29CC44B56F2C61F30220F35 /* AuthHeaderView.swift */; };
 		9BC7E46E7B18459BE0C63BCA58B39653 /* AuthPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EFAC1330160D066BBDBC7CA1C6F19D /* AuthPagesFactory.swift */; };
+		32CEEDEAA9A3D44C5E0856F40147B6E3 /* AuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B932081E904EA553B7866A42A818DD /* AuthPlugin.swift */; };
 		1C29DBDE19D94E00107B21EB2AAE6699 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3944E5F419E988E84D289F8FE75A2963 /* AuthResponse.swift */; };
 		5BF45351837A48E28B99A53117B5899E /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8234D90C809AE755270490D63E408B9C /* AuthService.swift */; };
+		FAAB53B26F95520AD582C1E7BC8442CF /* AuthTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8288B1705985A580DC636B83529194CD /* AuthTokenStorage.swift */; };
 		A915305A60D5AF64305222E245140984 /* AuthorizarionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9ECE54EF2CF5B7D9D57EAF770B55B /* AuthorizarionController.swift */; };
 		17332137B91E38CE6A16FFCD5A3C1517 /* AuthorizationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C8B2E50F36B96534EBCA5A6E44AA2 /* AuthorizationViewModel.swift */; };
 		135202002E2C1E10BE430D1F0605796A /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42462CD57C52DD7E9B34B1B89C48FAEE /* Brand.swift */; };
@@ -183,6 +185,7 @@
 		164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */; };
 		6382A29270DC95FE20964786BA382045 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */; };
 		825FC113C253F87745C6F961C47C9DAF /* SalamBroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B2A30C6F7592F9FD9C8743F0474722 /* SalamBroUITests.swift */; };
+		8E4A70AB75790B6CE43F5044E3EC60D2 /* SecureStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4780C2DEDC49FB31AF45E9F373880 /* SecureStorageProvider.swift */; };
 		13C35E332B133B1AC2CF1B0090215AC0 /* SelectMainInformationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9827947B088C8CBD45A172758877ABB0 /* SelectMainInformationRouter.swift */; };
 		A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */; };
 		5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */; };
@@ -274,8 +277,10 @@
 		246956A66E668C97E9E7337CD50C8A95 /* AuthDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDTO.swift; sourceTree = "<group>"; };
 		97A41980E29CC44B56F2C61F30220F35 /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
 		E0EFAC1330160D066BBDBC7CA1C6F19D /* AuthPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPagesFactory.swift; sourceTree = "<group>"; };
+		53B932081E904EA553B7866A42A818DD /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
 		3944E5F419E988E84D289F8FE75A2963 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		8234D90C809AE755270490D63E408B9C /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		8288B1705985A580DC636B83529194CD /* AuthTokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenStorage.swift; sourceTree = "<group>"; };
 		DAD9ECE54EF2CF5B7D9D57EAF770B55B /* AuthorizarionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizarionController.swift; sourceTree = "<group>"; };
 		164C8B2E50F36B96534EBCA5A6E44AA2 /* AuthorizationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationViewModel.swift; sourceTree = "<group>"; };
 		42462CD57C52DD7E9B34B1B89C48FAEE /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
@@ -419,6 +424,7 @@
 		8BFF09AAA95688451AD0A7F94154E2B1 /* SalamBroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalamBroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42B2A30C6F7592F9FD9C8743F0474722 /* SalamBroUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalamBroUITests.swift; sourceTree = "<group>"; };
 		37E5A59F4E859046E802C46121F892EE /* SalamBroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalamBroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CB4780C2DEDC49FB31AF45E9F373880 /* SecureStorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageProvider.swift; sourceTree = "<group>"; };
 		9827947B088C8CBD45A172758877ABB0 /* SelectMainInformationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationRouter.swift; sourceTree = "<group>"; };
 		D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationViewController.swift; sourceTree = "<group>"; };
 		E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationViewModel.swift; sourceTree = "<group>"; };
@@ -480,6 +486,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02477AD1FD52182E9AC5EDA333C5BD9A /* PagesFactory */ = {
+			isa = PBXGroup;
+			children = (
+				E0EFAC1330160D066BBDBC7CA1C6F19D /* AuthPagesFactory.swift */,
+			);
+			path = PagesFactory;
+			sourceTree = "<group>";
+		};
 		08D6A8241F62B88573896C6DBBC3219A /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -616,6 +630,7 @@
 		2E14EB83A15F8D470F0076E286CB6BDF /* BusinessLayer */ = {
 			isa = PBXGroup;
 			children = (
+				E8868C796A078386055BBC1C7671C1F5 /* KeyValueStorage */,
 				DB68AE98DF401CDC7C551CDA355C599D /* Models */,
 				90D26D8C3FA6247B6261E9F02331ACB6 /* Network */,
 				6D5B15D00E9EDEA7D90A5387D020416C /* Services */,
@@ -854,36 +869,12 @@
 			path = AddressDetail;
 			sourceTree = "<group>";
 		};
-		EAD3BAB8BB34C3B631E8EB4074E593BE /* FlowCoordinators */ = {
+		E8868C796A078386055BBC1C7671C1F5 /* KeyValueStorage */ = {
 			isa = PBXGroup;
 			children = (
-				9CE900EFB624E30BE368D665C9C08EEB /* AuthCoordinator.swift */,
+				4CB4780C2DEDC49FB31AF45E9F373880 /* SecureStorageProvider.swift */,
 			);
-			path = FlowCoordinators;
-			sourceTree = "<group>";
-		};
-		02477AD1FD52182E9AC5EDA333C5BD9A /* PagesFactory */ = {
-			isa = PBXGroup;
-			children = (
-				E0EFAC1330160D066BBDBC7CA1C6F19D /* AuthPagesFactory.swift */,
-			);
-			path = PagesFactory;
-			sourceTree = "<group>";
-		};
-		7564B24B1424982FFE49B8B5FC98D8F3 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				97A41980E29CC44B56F2C61F30220F35 /* AuthHeaderView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		9A21698958E6902B7128ABB5B8BC5640 /* DTO */ = {
-			isa = PBXGroup;
-			children = (
-				246956A66E668C97E9E7337CD50C8A95 /* AuthDTO.swift */,
-			);
-			path = DTO;
+			path = KeyValueStorage;
 			sourceTree = "<group>";
 		};
 		634DF0542321FBAF896E12DD7808EC82 /* Provider */ = {
@@ -949,6 +940,14 @@
 				1DC34A4FC2735077252463374B68033E /* MenuCell */,
 			);
 			path = Submodules;
+			sourceTree = "<group>";
+		};
+		7564B24B1424982FFE49B8B5FC98D8F3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				97A41980E29CC44B56F2C61F30220F35 /* AuthHeaderView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		7590876295E5D12A9F57BF50B149708D /* Protocols */ = {
@@ -1103,6 +1102,8 @@
 			isa = PBXGroup;
 			children = (
 				E04E0DCF69FC2C5A5543AE974273278B /* AuthAPI.swift */,
+				53B932081E904EA553B7866A42A818DD /* AuthPlugin.swift */,
+				8288B1705985A580DC636B83529194CD /* AuthTokenStorage.swift */,
 				CEED03B221B71F9A10CA3920C4D290B1 /* LocationAPI.swift */,
 			);
 			path = Network;
@@ -1135,6 +1136,14 @@
 				B5DE82B29B7B60BB4A244123C1D07B77 /* CategoriesSectionHeaderViewModel.swift */,
 			);
 			path = CategoriesSectionHeader;
+			sourceTree = "<group>";
+		};
+		9A21698958E6902B7128ABB5B8BC5640 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				246956A66E668C97E9E7337CD50C8A95 /* AuthDTO.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 		9A608294C650580BCE2854BE21BDDEF7 /* AdCollectionCell */ = {
@@ -1351,6 +1360,14 @@
 				9AFF148FFDBDA9582757463337B3048C /* AddressPickerViewModel.swift */,
 			);
 			path = AddressPick;
+			sourceTree = "<group>";
+		};
+		EAD3BAB8BB34C3B631E8EB4074E593BE /* FlowCoordinators */ = {
+			isa = PBXGroup;
+			children = (
+				9CE900EFB624E30BE368D665C9C08EEB /* AuthCoordinator.swift */,
+			);
+			path = FlowCoordinators;
 			sourceTree = "<group>";
 		};
 		EC500F7424886F86E75759D4C36759B9 /* Brands */ = {
@@ -1759,8 +1776,10 @@
 				54469D87B0A76CFAD12F5837100C5999 /* AuthDTO.swift in Sources */,
 				407E0E9A1B577B1000EF2B71E957090F /* AuthHeaderView.swift in Sources */,
 				9BC7E46E7B18459BE0C63BCA58B39653 /* AuthPagesFactory.swift in Sources */,
+				32CEEDEAA9A3D44C5E0856F40147B6E3 /* AuthPlugin.swift in Sources */,
 				1C29DBDE19D94E00107B21EB2AAE6699 /* AuthResponse.swift in Sources */,
 				5BF45351837A48E28B99A53117B5899E /* AuthService.swift in Sources */,
+				FAAB53B26F95520AD582C1E7BC8442CF /* AuthTokenStorage.swift in Sources */,
 				A915305A60D5AF64305222E245140984 /* AuthorizarionController.swift in Sources */,
 				17332137B91E38CE6A16FFCD5A3C1517 /* AuthorizationViewModel.swift in Sources */,
 				135202002E2C1E10BE430D1F0605796A /* Brand.swift in Sources */,
@@ -1879,6 +1898,7 @@
 				14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */,
 				413312877FB0B9D7C0A39FF594D2BA03 /* Router.swift in Sources */,
 				249E54E5058664B559F40AB97FE33AA6 /* SMPickerView.swift in Sources */,
+				8E4A70AB75790B6CE43F5044E3EC60D2 /* SecureStorageProvider.swift in Sources */,
 				13C35E332B133B1AC2CF1B0090215AC0 /* SelectMainInformationRouter.swift in Sources */,
 				A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */,
 				5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */,

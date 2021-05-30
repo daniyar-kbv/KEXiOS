@@ -93,6 +93,6 @@ extension VerificationController: VerificationViewDelegate {
 
 extension VerificationController {
     struct Output {
-        let didGetToken = PublishRelay<AccessToken>()
+        let didGetToken = PublishRelay<Void>()
     }
 }
