@@ -37,7 +37,7 @@ final class MenuController: ViewController {
     private lazy var brandSelectView: UIView = {
         let view = UIView()
         let gestureRecognizer = UITapGestureRecognizer(target: self,
-                                                       action: #selector(changeBrands))
+                                                       action: #selector(handleChangeBrandButtonAction))
         view.addGestureRecognizer(gestureRecognizer)
         return view
     }()
@@ -62,7 +62,7 @@ final class MenuController: ViewController {
 
     private lazy var refreshControl: UIRefreshControl = {
         let view = UIRefreshControl()
-        view.addTarget(self, action: #selector(update), for: .valueChanged)
+        view.addTarget(self, action: #selector(handleRefreshControlerAction), for: .valueChanged)
         return view
     }()
 
@@ -141,13 +141,12 @@ final class MenuController: ViewController {
         }
     }
 
-    @objc
-    private func update() {
+    @objc private func handleRefreshControlerAction(_: UIRefreshControl) {
+        refreshControl.endRefreshing()
         viewModel.update()
     }
 
-    @objc
-    private func changeBrands() {
+    @objc private func handleChangeBrandButtonAction(_: UIButton) {
         viewModel.selectMainInfo()
     }
 }
