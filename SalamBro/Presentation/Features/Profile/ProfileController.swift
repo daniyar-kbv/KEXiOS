@@ -19,7 +19,7 @@ class ProfileController: ViewController {
 
     lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Alibek"
+        label.text = DefaultStorageImpl.sharedStorage.userName
         label.font = .systemFont(ofSize: 32, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

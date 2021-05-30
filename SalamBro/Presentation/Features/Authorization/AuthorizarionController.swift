@@ -88,6 +88,10 @@ final class AuthorizationController: ViewController, MaskedTextFieldDelegateList
         super.init(nibName: nil, bundle: nil)
     }
 
+    deinit {
+        outputs.didCloseAuthFlow.accept(())
+    }
+
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -221,5 +225,6 @@ extension AuthorizationController {
 extension AuthorizationController {
     struct Output {
         let didSendOTP = PublishRelay<String>()
+        let didCloseAuthFlow = PublishRelay<Void>()
     }
 }

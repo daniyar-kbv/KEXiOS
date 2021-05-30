@@ -137,7 +137,7 @@ extension CartController {
     }
 
     @objc func buttonAction() {
-        authCoordinator = AuthCoordinator(navigationController: navigationController, pagesFactory: AuthPagesFactory())
+        authCoordinator = AuthCoordinator(navigationController: navigationController, pagesFactory: AuthPagesFactoryImpl())
 
         authCoordinator?.didFinish = { [weak self] in
             self?.authCoordinator = nil

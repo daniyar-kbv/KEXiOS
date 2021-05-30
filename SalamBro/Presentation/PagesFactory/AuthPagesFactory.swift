@@ -7,7 +7,13 @@
 
 import Foundation
 
-final class AuthPagesFactory: DependencyFactory {
+protocol AuthPagesFactory: AnyObject {
+    func makeAuthorizationPage() -> AuthorizationController
+    func makeVerificationPage(phoneNumber: String) -> VerificationController
+    func makeNameEnteringPage() -> SetNameController
+}
+
+final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     func makeAuthorizationPage() -> AuthorizationController {
         return scoped(.init(viewModel: makeAuthPageViewModel()))
     }
@@ -36,7 +42,7 @@ final class AuthPagesFactory: DependencyFactory {
     }
 }
 
-extension AuthPagesFactory {
+extension AuthPagesFactoryImpl {
     private func getAuthService() -> AuthService {
         return DIResolver.resolve(AuthService.self)!
     }

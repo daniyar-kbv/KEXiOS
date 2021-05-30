@@ -31,6 +31,12 @@ final class AuthCoordinator {
             })
             .disposed(by: disposeBag)
 
+        authPage.outputs.didCloseAuthFlow
+            .subscribe(onNext: { [weak self] in
+                self?.handleAuthTermination()
+            })
+            .disposed(by: disposeBag)
+
         navigationController?.pushViewController(authPage, animated: true)
     }
 
