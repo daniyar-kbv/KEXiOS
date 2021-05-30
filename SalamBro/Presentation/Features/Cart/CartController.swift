@@ -138,6 +138,11 @@ extension CartController {
 
     @objc func buttonAction() {
         authCoordinator = AuthCoordinator(navigationController: navigationController, pagesFactory: AuthPagesFactory())
+
+        authCoordinator?.didFinish = { [weak self] in
+            self?.authCoordinator = nil
+        }
+
         authCoordinator?.startAuthFlow()
     }
 }
