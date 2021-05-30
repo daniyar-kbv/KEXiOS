@@ -27,7 +27,10 @@ final class AuthorizationController: ViewController, MaskedTextFieldDelegateList
         let field = UITextField()
         field.keyboardType = .numberPad
         field.font = .systemFont(ofSize: 26)
-        field.placeholder = L10n.Authorization.NumberField.Placeholder.title
+        field.attributedPlaceholder = NSAttributedString(
+            string: L10n.Authorization.NumberField.Placeholder.title,
+            attributes: [.font: UIFont.systemFont(ofSize: 26, weight: .medium)]
+        )
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()

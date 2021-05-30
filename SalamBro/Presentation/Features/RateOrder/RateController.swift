@@ -40,8 +40,10 @@ class RateController: ViewController {
         titleLabel.text = L10n.RateOrder.title
         subtitleSecondLabel.text = L10n.RateOrder.description
         button.setTitle(L10n.RateOrder.SubmitButton.title, for: .normal)
-        commentaryField.placeholder = L10n.RateOrder.CommentaryField.placeholder
-
+        commentaryField.attributedPlaceholder = NSAttributedString(
+            string: L10n.RateOrder.CommentaryField.placeholder,
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+        )
         ratingView.didFinishTouchingCosmos = didFinishTouchRating
 
         let layout = UICollectionViewCenterLayout()

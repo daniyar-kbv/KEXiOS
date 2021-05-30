@@ -44,7 +44,10 @@ class AddressSheetController: ViewController {
     }
 
     func setupViews() {
-        addressField.placeholder = L10n.MapView.AddressField.title
+        addressField.attributedPlaceholder = NSAttributedString(
+            string: L10n.MapView.AddressField.title,
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+        )
         commentaryLabel.text = L10n.MapView.CommentaryLabel.title
         proceedButton.setTitle(L10n.MapView.ProceedButton.title, for: .normal)
         view.layer.cornerRadius = 18

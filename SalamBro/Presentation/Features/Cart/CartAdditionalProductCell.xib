@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -99,41 +99,15 @@
                                     <constraint firstAttribute="bottom" secondItem="KwI-Vs-DhZ" secondAttribute="bottom" constant="3" id="saO-Yz-n5B"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ot-t7-5Tl">
-                                <rect key="frame" x="0.0" y="0.0" width="90" height="30"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="Delete">
-                                    <color key="titleColor" red="0.81960784310000001" green="0.2156862745" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.81960784310000001" green="0.2156862745" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="deleteAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fOL-gt-v4X"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Ahq-MH-DG7" secondAttribute="bottom" id="42o-vv-B0Q"/>
                             <constraint firstAttribute="height" constant="30" id="Nej-JD-qJt"/>
-                            <constraint firstItem="4ot-t7-5Tl" firstAttribute="top" secondItem="aDO-AP-mZ6" secondAttribute="top" id="OPr-cq-DuD"/>
                             <constraint firstAttribute="trailing" secondItem="Ahq-MH-DG7" secondAttribute="trailing" id="VKJ-a0-PSc"/>
                             <constraint firstAttribute="width" constant="90" id="bSu-RF-z1K"/>
-                            <constraint firstAttribute="bottom" secondItem="4ot-t7-5Tl" secondAttribute="bottom" id="d10-Xw-1Oo"/>
                             <constraint firstItem="Ahq-MH-DG7" firstAttribute="leading" secondItem="aDO-AP-mZ6" secondAttribute="leading" id="gCP-5U-b53"/>
-                            <constraint firstAttribute="trailing" secondItem="4ot-t7-5Tl" secondAttribute="trailing" id="ncV-xO-Jip"/>
                             <constraint firstItem="Ahq-MH-DG7" firstAttribute="top" secondItem="aDO-AP-mZ6" secondAttribute="top" id="oHe-UG-6ik"/>
-                            <constraint firstItem="4ot-t7-5Tl" firstAttribute="leading" secondItem="aDO-AP-mZ6" secondAttribute="leading" id="w3J-tg-WV8"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product unavailable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTv-hb-obn">
@@ -161,7 +135,6 @@
             <connections>
                 <outlet property="availabilityLabel" destination="JTv-hb-obn" id="DXf-pt-f61"/>
                 <outlet property="decreaseButton" destination="ZyB-kP-98W" id="wxC-UA-pM0"/>
-                <outlet property="deleteButton" destination="4ot-t7-5Tl" id="m2k-vV-fG1"/>
                 <outlet property="inscreaseButton" destination="Hjh-Cg-o0F" id="6me-Kd-dXY"/>
                 <outlet property="productCountLabel" destination="KwI-Vs-DhZ" id="e3X-Zo-RiU"/>
                 <outlet property="productLogo" destination="14P-ov-hTS" id="2ON-m5-F7Q"/>

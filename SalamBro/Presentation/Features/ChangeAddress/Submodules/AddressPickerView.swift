@@ -32,7 +32,7 @@ final class AddressPickerView: UIView {
 
     init(placeholder: String, title: String?, values: [String]) {
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                             attributes: [.foregroundColor: UIColor.mildBlue])
+                                                             attributes: [.foregroundColor: UIColor.mildBlue, .font: UIFont.systemFont(ofSize: 16, weight: .medium)])
         titleLabel.text = title
         pickerView = SMPickerView(values: values)
         super.init(frame: .zero)
