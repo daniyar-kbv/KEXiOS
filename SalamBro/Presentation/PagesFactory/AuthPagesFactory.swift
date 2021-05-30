@@ -28,7 +28,11 @@ final class AuthPagesFactory: DependencyFactory {
     }
 
     func makeNameEnteringPage() -> SetNameController {
-        return scoped(.init(nibName: nil, bundle: nil))
+        return scoped(.init(viewModel: makeSetNameViewModel()))
+    }
+
+    private func makeSetNameViewModel() -> SetNameViewModel {
+        return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 }
 

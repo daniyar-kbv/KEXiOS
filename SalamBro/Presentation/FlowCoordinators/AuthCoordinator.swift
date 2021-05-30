@@ -38,8 +38,12 @@ final class AuthCoordinator {
         let verificationPage = pagesFactory.makeVerificationPage(phoneNumber: phoneNumber)
 
         verificationPage.outputs.didGetToken
-            .subscribe(onNext: { [weak self] token in
-                debugPrint(token)
+            .subscribe(onNext: { [weak self] in
+                if let _ = DefaultStorageImpl.sharedStorage.userName {
+                    self?.handleAuthTermination()
+                    return
+                }
+
                 self?.showNameEnteringPage()
             })
             .disposed(by: disposeBag)
@@ -50,12 +54,17 @@ final class AuthCoordinator {
     private func showNameEnteringPage() {
         let nameEnteringPage = pagesFactory.makeNameEnteringPage()
 
-        nameEnteringPage.didGetEnteredName = { [weak self] enteredName in
-            debugPrint(enteredName)
-            self?.navigationController?.popToRootViewController(animated: true)
-            self?.didFinish?()
+        nameEnteringPage.didGetEnteredName = { [weak self] _ in
+            self?.handleAuthTermination()
         }
 
         navigationController?.pushViewController(nameEnteringPage, animated: true)
+    }
+}
+
+extension AuthCoordinator {
+    private func handleAuthTermination() {
+        navigationController?.popToRootViewController(animated: true)
+        didFinish?()
     }
 }

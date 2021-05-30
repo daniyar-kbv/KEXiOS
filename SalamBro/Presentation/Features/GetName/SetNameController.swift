@@ -10,7 +10,18 @@ import UIKit
 final class SetNameController: ViewController {
     var didGetEnteredName: ((String) -> Void)?
 
-    fileprivate lazy var rootView = SetNameView(delegate: self)
+    private lazy var rootView = SetNameView(delegate: self)
+    private let viewModel: SetNameViewModel
+
+    init(viewModel: SetNameViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func loadView() {
         view = rootView
@@ -19,6 +30,7 @@ final class SetNameController: ViewController {
 
 extension SetNameController: GetNameViewDelegate {
     func submit(name: String) {
+        viewModel.persist(name: name)
         didGetEnteredName?(name)
     }
 }
