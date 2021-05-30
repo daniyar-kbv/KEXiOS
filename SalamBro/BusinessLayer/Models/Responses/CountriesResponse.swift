@@ -8,8 +8,8 @@
 import Foundation
 
 struct CountriesResponse: Decodable {
-    let data: ResponseData
-    let error: String?
+    let data: ResponseData?
+    let error: ErrorResponse?
 
     struct ResponseData: Decodable {
         let count: Int

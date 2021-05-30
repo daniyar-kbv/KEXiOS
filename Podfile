@@ -20,6 +20,7 @@ target 'SalamBro' do
   # Pods for Cache
   pod 'Cache'
   pod 'Imaginary'
+  pod 'KeychainAccess'
 
   # Pods for SalamBro
   pod 'InputMask'

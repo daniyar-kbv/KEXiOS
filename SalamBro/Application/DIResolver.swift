@@ -68,6 +68,11 @@ private final class ServicesAssembly: Assembly {
         container.register(LocationService.self) { _ in
             LocationServiceMoyaImpl(provider: MoyaProvider<LocationAPI>())
         }.inObjectScope(.container)
+
+        container.register(AuthService.self) { _ in
+            let networkPlugin = NetworkLoggerPlugin(configuration: NetworkLoggerPlugin.Configuration(logOptions: .verbose))
+            return AuthServiceImpl(provider: MoyaProvider<AuthAPI>(plugins: [networkPlugin]))
+        }.inObjectScope(.container)
     }
 }
 

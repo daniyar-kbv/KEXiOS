@@ -15,6 +15,8 @@ class CartController: ViewController {
     var mainTabDelegate: MainTabDelegate?
     var cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
 
+    private var authCoordinator: AuthCoordinator?
+
     lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title, image: UIImage(named: "emptyCart")!)
     lazy var commentarySheetVC = CommentarySheetController()
 
@@ -135,7 +137,13 @@ extension CartController {
     }
 
     @objc func buttonAction() {
-        navigationController?.pushViewController(AuthorizationController(), animated: true)
+        authCoordinator = AuthCoordinator(navigationController: navigationController, pagesFactory: AuthPagesFactoryImpl())
+
+        authCoordinator?.didFinish = { [weak self] in
+            self?.authCoordinator = nil
+        }
+
+        authCoordinator?.startAuthFlow()
     }
 }
 

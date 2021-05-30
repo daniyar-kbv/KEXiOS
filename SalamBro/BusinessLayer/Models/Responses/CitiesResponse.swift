@@ -8,8 +8,8 @@
 import Foundation
 
 struct CitiesResponse: Decodable {
-    let data: ResponseData
-    let error: String?
+    let data: ResponseData?
+    let error: ErrorResponse?
 
     struct ResponseData: Decodable {
         let name: String
