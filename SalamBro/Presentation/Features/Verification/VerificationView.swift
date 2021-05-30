@@ -31,7 +31,6 @@ final class VerificationView: UIView {
 
     lazy var subtitle: UILabel = {
         let label = UILabel()
-        label.text = L10n.Verification.subtitle(" " + number!)
         label.font = .systemFont(ofSize: 12)
         label.textColor = .mildBlue
         label.numberOfLines = 0
@@ -70,6 +69,7 @@ final class VerificationView: UIView {
         super.init(frame: .zero)
         self.number = number
         self.delegate = delegate
+        subtitle.text = L10n.Verification.subtitle(" " + number)
         setupViews()
         setupConstraints()
     }

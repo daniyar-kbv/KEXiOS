@@ -7,7 +7,7 @@
 
 import KeychainAccess
 
-protocol AuthTokenStorage {
+protocol AuthTokenStorage: AnyObject {
     var token: String? { get }
     var refreshToken: String? { get }
 
@@ -35,17 +35,11 @@ final class AuthTokenStorageImpl: AuthTokenStorage {
         return secureStorageProvider.getString(for: AuthTokenStorageKey.authRefreshToken)
     }
 
-    // MARK: - Private Variables
-
     private let secureStorageProvider: SecureStorageProvider
-
-    // MARK: - Init
 
     init(secureStorageProvider: SecureStorageProvider) {
         self.secureStorageProvider = secureStorageProvider
     }
-
-    // MARK: - HalykAuthTokenStorage
 
     func persist(token: String, refreshToken: String) {
         secureStorageProvider.set(token, for: AuthTokenStorageKey.authToken)

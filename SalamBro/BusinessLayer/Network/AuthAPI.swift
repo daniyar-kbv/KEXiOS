@@ -43,8 +43,7 @@ extension AuthAPI: TargetType {
 
     var task: Task {
         switch self {
-        case let .sendOTP(dto):
-            return .requestCustomJSONEncodable(dto, encoder: JSONEncoder())
+        case let .sendOTP(dto): return .requestJSONEncodable(dto)
         case let .verifyOTP(dto): return .requestJSONEncodable(dto)
         case let .resendOTP(dto): return .requestJSONEncodable(dto)
         case let .refreshToken(dto): return .requestJSONEncodable(dto)
