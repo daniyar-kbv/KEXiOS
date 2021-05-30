@@ -280,9 +280,24 @@ extension CartController: MapDelegate {
         commentarySheetVC.delegate = self
         commentarySheetVC.didMove(toParent: self)
         commentarySheetVC.modalPresentationStyle = .overCurrentContext
-        let height: CGFloat = 149.0
+        let height: CGFloat = 155.0
         let width = view.frame.width
-        commentarySheetVC.view.frame = CGRect(x: 0, y: view.frame.height - height, width: width, height: height)
+
+        getScreenSize(heightOfSheet: height, width: width)
+    }
+
+    private func getScreenSize(heightOfSheet: CGFloat, width: CGFloat) {
+        let bounds = UIScreen.main.bounds
+        let height = bounds.size.height
+
+        switch height {
+        case 568.0, 667.0, 736.0:
+            commentarySheetVC.view.frame = CGRect(x: 0, y: view.bounds.height - heightOfSheet, width: width, height: heightOfSheet)
+        case 780.0, 812.0, 844.0, 896.0, 926.0:
+            commentarySheetVC.view.frame = CGRect(x: 0, y: view.bounds.height - 30 - heightOfSheet, width: width, height: heightOfSheet)
+        default:
+            print("Not listed in function")
+        }
     }
 
     func passCommentary(text _: String) {

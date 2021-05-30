@@ -55,7 +55,11 @@ class CommentarySheetController: ViewController {
 
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            view.frame.origin.y -= keyboardSize.height
+            if getScreenSize() == 40 {
+                view.frame.origin.y -= keyboardSize.height / getScreenSize()
+            } else {
+                view.frame.origin.y -= keyboardSize.height
+            }
         }
     }
 
@@ -81,5 +85,22 @@ class CommentarySheetController: ViewController {
 
     @objc func beginEdit() {
         commentaryField.becomeFirstResponder()
+    }
+
+    private func getScreenSize() -> CGFloat {
+        let bounds = UIScreen.main.bounds
+        let height = bounds.size.height
+
+        var indent: CGFloat?
+
+        switch height {
+        case 568.0, 667.0, 736.0:
+            indent = 0
+        case 780.0, 812.0, 844.0, 896.0, 926.0:
+            indent = 40
+        default:
+            print("Not listed in function")
+        }
+        return indent ?? 0
     }
 }
