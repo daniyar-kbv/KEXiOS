@@ -47,6 +47,12 @@ final class CountriesListController: ViewController {
         setup()
         bind()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        viewModel.coordinator.didFinish()
+    }
 
     private func bind() {
         viewModel.updateTableView
@@ -110,6 +116,11 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelect(index: indexPath.row)
+        viewModel.didSelect(index: indexPath.row) { type in
+            guard let type = type as? CountriesListViewModel.FlowType else { return }
+            if type == .change {
+                self.dismiss(animated: true)
+            }
+        }
     }
 }

@@ -13,8 +13,8 @@ import UIKit
 // MARK: Tech debt, нужно переписать.
 
 final class AddressPickController: ViewController {
+    private let disposeBag = DisposeBag()
     private let viewModel: AddressPickerViewModelProtocol
-    private let disposeBag: DisposeBag
 
     private let tapGesture = UITapGestureRecognizer()
 
@@ -49,14 +49,25 @@ final class AddressPickController: ViewController {
 
     init(viewModel: AddressPickerViewModelProtocol) {
         self.viewModel = viewModel
-        disposeBag = DisposeBag()
+        
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         setup()
         bind()
     }
-
-    public required init?(coder _: NSCoder) {
-        nil
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        viewModel.onFinish()
     }
 
     private func bind() {
@@ -67,8 +78,8 @@ final class AddressPickController: ViewController {
             .disposed(by: disposeBag)
 
         tapGesture.rx.event
-            .bind(onNext: { _ in
-                self.viewModel.changeAddress()
+            .bind(onNext: { [weak self] _ in
+                self?.viewModel.changeAddress()
             }).disposed(by: disposeBag)
     }
 
@@ -110,7 +121,9 @@ final class AddressPickController: ViewController {
 
 extension AddressPickController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelect(index: indexPath.row)
+        viewModel.didSelect(index: indexPath.row) { [weak self] in
+            self?.dismiss(animated: true)
+        }
     }
 
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {

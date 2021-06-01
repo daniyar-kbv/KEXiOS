@@ -16,7 +16,7 @@ class MapViewController: ViewController {
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
     var searchSession: YMKSearchSession?
     private let geoRepository = DIResolver.resolve(GeoRepository.self)! // TODO:
-    private let coordinator = DIResolver.resolve(Coordinator.self)! // TODO:
+    private let coordinator = DIResolver.resolve(AppCoordinator.self)! // TODO:
 
     var selectedAddress: ((String) -> Void)?
     var isAddressChangeFlow: Bool = false

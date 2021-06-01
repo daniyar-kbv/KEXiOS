@@ -105,7 +105,9 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
             let context = CitiesListRouter.RouteType.brands
             router.enqueueRoute(with: context)
         case .change:
-            close()
+            break
+            // TODO change to coordinators
+//            close()
         }
     }
 }

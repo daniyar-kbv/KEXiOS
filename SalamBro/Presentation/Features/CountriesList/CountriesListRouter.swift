@@ -26,17 +26,17 @@ final class CountriesListRouter: Router {
 
         baseViewController = baseVC
 
-        switch context {
-        case let .present(didSelectCountry):
-            let viewModel = CountriesListViewModel(router: self,
-                                                   service: DIResolver.resolve(LocationService.self)!,
-                                                   repository: DIResolver.resolve(LocationRepository.self)!,
-                                                   type: .change,
-                                                   didSelectCountry: didSelectCountry)
-            let vc = CountriesListController(viewModel: viewModel)
-            let navVC = UINavigationController(rootViewController: vc)
-            baseVC.present(navVC, animated: animated, completion: completion)
-        }
+//        switch context {
+//        case let .present(didSelectCountry):
+//            let viewModel = CountriesListViewModel(router: self,
+//                                                   service: DIResolver.resolve(LocationService.self)!,
+//                                                   repository: DIResolver.resolve(LocationRepository.self)!,
+//                                                   type: .change,
+//                                                   didSelectCountry: didSelectCountry)
+//            let vc = CountriesListController(viewModel: viewModel)
+//            let navVC = UINavigationController(rootViewController: vc)
+//            baseVC.present(navVC, animated: animated, completion: completion)
+//        }
     }
 
     func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {

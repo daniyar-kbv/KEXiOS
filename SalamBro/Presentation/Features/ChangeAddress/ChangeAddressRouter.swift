@@ -28,12 +28,12 @@ final class ChangeAddressRouter: Router {
     func present(on baseVC: UIViewController, animated _: Bool, context _: Any?, completion _: (() -> Void)?) {
         baseViewController = baseVC
 
-        let viewModel = ChangeAddressViewModelImpl(router: self)
-
-        let changeAddressController = ChangeAddressController(viewModel: viewModel)
-        let navVC = UINavigationController(rootViewController: changeAddressController)
-        baseVC.present(navVC, animated: true, completion: nil)
-        baseViewController = changeAddressController
+//        let viewModel = ChangeAddressViewModelImpl(router: self)
+//
+//        let changeAddressController = ChangeAddressController(viewModel: viewModel)
+//        let navVC = UINavigationController(rootViewController: changeAddressController)
+//        baseVC.present(navVC, animated: true, completion: nil)
+//        baseViewController = changeAddressController
     }
 
     public func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {
@@ -63,11 +63,16 @@ final class ChangeAddressRouter: Router {
             }
             baseVC.present(mapController, animated: true, completion: nil)
         case .country:
-            let router = CountriesListRouter()
-            let context = CountriesListRouter.PresentationContext.present { [weak self] selectedCountry in
+            guard let nav = baseVC.navigationController else { return }
+            let child = CountriesListCoordinator(navigationController: nav, type: .change) {[weak self] selectedCountry in
                 self?.selectedCountry?(selectedCountry)
             }
-            router.present(on: baseVC, context: context)
+            child.start()
+//            let router = CountriesListRouter()
+//            let context = CountriesListRouter.PresentationContext.present { [weak self] selectedCountry in
+//                self?.selectedCountry?(selectedCountry)
+//            }
+//            router.present(on: baseVC, context: context)
         case let .city(countryId):
             let router = CitiesListRouter()
             let context = CitiesListRouter.PresentationContext.change(countryID: countryId) { [weak self] selectedCity in

@@ -41,6 +41,8 @@ final class BrandsRouter: Router {
             let navVC = UINavigationController(rootViewController: vc)
             baseVC.present(navVC, animated: animated, completion: completion)
         case .select:
+            // TODO: change to coordinators
+            guard let baseVC = baseVC as? UINavigationController else { return }
             let viewModel = BrandViewModel(router: self,
                                            repository: DIResolver.resolve(BrandRepository.self)!,
                                            locationRepository: DIResolver.resolve(LocationRepository.self)!,
@@ -48,7 +50,7 @@ final class BrandsRouter: Router {
                                            type: .select,
                                            didSelectBrand: nil)
             let vc = BrandsController(viewModel: viewModel)
-            baseVC.navigationController?.pushViewController(vc, animated: animated)
+            baseVC.pushViewController(vc, animated: animated)
         }
     }
 
@@ -65,8 +67,9 @@ final class BrandsRouter: Router {
 
         switch routeType {
         case .map:
+            guard let baseVC = baseVC as? UINavigationController else { return }
             let vc = MapViewController()
-            baseVC.navigationController?.pushViewController(vc, animated: animated)
+            baseVC.pushViewController(vc, animated: animated)
         }
     }
 

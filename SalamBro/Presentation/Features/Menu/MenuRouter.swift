@@ -46,9 +46,12 @@ public final class MenuRouter: Router {
 
             router.present(on: baseVC, context: context)
         case let .selectAddress(didSelectAddress):
-            let router = AddressPickerRouter()
-            let context = AddressPickerRouter.PresentationContext.select(didSelectAddress: didSelectAddress)
-            router.present(on: baseVC, context: context)
+//            let router = AddressPickerRouter()
+//            let context = AddressPickerRouter.PresentationContext.select(didSelectAddress: didSelectAddress)
+//            router.present(on: baseVC, context: context)
+            guard let nav = baseVC.navigationController else { return }
+            let child = AddressPickerCoordinator(navigationController: nav, didSelectAddress: didSelectAddress)
+            child.start()
         }
     }
 

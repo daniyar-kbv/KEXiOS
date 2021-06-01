@@ -7,52 +7,32 @@
 
 import UIKit
 
-final class Coordinator {
-    private let geoRepository: GeoRepository
-    private let brandRepository: BrandRepository
+protocol Coordinator: class {
+    var childCoordinators: [Coordinator] { get set }
+    var navigationController: UINavigationController { get set }
 
-    init(geoRepository: GeoRepository, brandRepository: BrandRepository) {
-        self.geoRepository = geoRepository
-        self.brandRepository = brandRepository
-    }
+    func start()
+}
 
-    public func start() {
-        if geoRepository.currentCity != nil,
-           geoRepository.currentCountry != nil,
-           brandRepository.getCurrentBrand() != nil
-        {
-            startMenu()
-        } else {
-            startFirstFlow()
+extension Coordinator {
+    func childDidFinish(_ child: Coordinator?) {
+        for (index, coordinator) in childCoordinators.enumerated() {
+            if coordinator === child {
+                childCoordinators.remove(at: index)
+                break
+            }
         }
     }
-
-    private func startFirstFlow() {
-        let router = CountriesListRouter()
-        let viewModel = CountriesListViewModel(router: router,
-                                               service: DIResolver.resolve(LocationService.self)!,
-                                               repository: DIResolver.resolve(LocationRepository.self)!,
-                                               type: .select,
-                                               didSelectCountry: nil)
-        let vc = CountriesListController(viewModel: viewModel)
-        router.baseViewController = vc
-        let navVC = UINavigationController(rootViewController: vc)
-        setRootView(navVC)
+    
+    func alert(error: Error, closeHandler: (() -> Void)? = nil) {
+        let router = AlertRouter()
+        let context = AlertRouter.PresentationContext.error(message: error.localizedDescription, closeHandler: closeHandler)
+        router.present(on: navigationController, animated: true, context: context, completion: nil)
     }
 
-    private func startMenu() {
-        let vc = MainTabController()
-        setRootView(vc)
-    }
-
-    private func setRootView(_ vc: UIViewController, completion: (() -> Void)? = nil) {
-        guard let window = UIApplication.shared.keyWindow else { return }
-        window.rootViewController = vc
-        UIView.transition(with: window,
-                          duration: 0.3,
-                          options: .transitionCrossDissolve,
-                          animations: nil) { _ in
-            completion?()
-        }
+    func alert(title: String, message: String, closeHandler: (() -> Void)? = nil) {
+        let router = AlertRouter()
+        let context = AlertRouter.PresentationContext.default(title: title, message: message, closeHandler: closeHandler)
+        router.present(on: navigationController, animated: true, context: context, completion: nil)
     }
 }

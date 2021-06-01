@@ -26,17 +26,17 @@ public final class AddressPickerRouter: Router {
 
         baseViewController = baseVC
 
-        switch context {
-        case let .select(didSelectAddress):
-            let viewModel = AddressPickerViewModel(router: self,
-                                                   repository: DIResolver.resolve(GeoRepository.self)!,
-                                                   didSelectAddress: didSelectAddress)
-            let vc = AddressPickController(viewModel: viewModel)
-
-            let navVC = UINavigationController(rootViewController: vc)
-            baseViewController = vc
-            baseVC.present(navVC, animated: animated, completion: completion)
-        }
+//        switch context {
+//        case let .select(didSelectAddress):
+//            let viewModel = AddressPickerViewModel(router: self,
+//                                                   repository: DIResolver.resolve(GeoRepository.self)!,
+//                                                   didSelectAddress: didSelectAddress)
+//            let vc = AddressPickController(viewModel: viewModel)
+//
+//            let navVC = UINavigationController(rootViewController: vc)
+//            baseViewController = vc
+//            baseVC.present(navVC, animated: animated, completion: completion)
+//        }
     }
 
     public func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {

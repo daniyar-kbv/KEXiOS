@@ -41,6 +41,8 @@ final class CitiesListRouter: Router {
             let navVC = UINavigationController(rootViewController: vc)
             baseVC.present(navVC, animated: animated, completion: completion)
         case let .select(countryId):
+            // TODO: change to coordinators
+            guard let baseVC = baseVC as? UINavigationController else { return }
             let viewModel = CitiesListViewModel(router: self,
                                                 type: .select,
                                                 countryId: countryId,
@@ -48,7 +50,7 @@ final class CitiesListRouter: Router {
                                                 repository: DIResolver.resolve(LocationRepository.self)!,
                                                 didSelectCity: nil)
             let vc = CitiesListController(viewModel: viewModel)
-            baseVC.navigationController?.pushViewController(vc, animated: animated)
+            baseVC.pushViewController(vc, animated: animated)
         }
     }
 

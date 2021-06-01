@@ -11,14 +11,16 @@ import RxCocoa
 import RxSwift
 
 protocol CountriesListViewModelProtocol: ViewModel {
+    var coordinator: CountriesListCoordinator { get }
     var countries: [Country] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
     func refresh()
-    func didSelect(index: Int)
+    func didSelect(index: Int, completion: (_ type: Any) -> Void)
     func getCountries()
 }
 
 final class CountriesListViewModel: CountriesListViewModelProtocol {
+    
     enum FlowType {
         case change
         case select
@@ -26,7 +28,7 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
 
     private let disposeBag = DisposeBag()
 
-    public var router: Router
+    public var coordinator: CountriesListCoordinator
     private let type: FlowType
     private(set) var countries: [Country] = []
     private(set) var updateTableView: BehaviorRelay<Void?>
@@ -35,13 +37,13 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
     private let service: LocationService
     private let repository: LocationRepository
 
-    init(router: Router,
+    init(coordinator: CountriesListCoordinator,
          service: LocationService,
          repository: LocationRepository,
          type: FlowType,
          didSelectCountry: ((Country) -> Void)?)
     {
-        self.router = router
+        self.coordinator = coordinator
         self.service = service
         self.repository = repository
         self.type = type
@@ -73,7 +75,7 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
                 self?.process(receivedCountries: countriesResponse)
             } onError: { [weak self] error in
                 self?.stopAnimation()
-                self?.router.alert(error: error)
+                self?.coordinator.alert(error: error)
             }
             .disposed(by: disposeBag)
     }
@@ -92,16 +94,16 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
         updateTableView.accept(())
     }
 
-    func didSelect(index: Int) {
+    func didSelect(index: Int, completion: (_ type: Any) -> Void) {
         let country = countries[index]
         repository.changeCurrectCountry(to: country)
         didSelectCountry?(country)
         switch type {
-        case .change:
-            close()
         case .select:
-            let context = CountriesListRouter.RouteType.cities(countryId: countries[index].id)
-            router.enqueueRoute(with: context)
+            coordinator.openCities(countryId: countries[index].id)
+        default:
+            break
         }
+        completion(type)
     }
 }

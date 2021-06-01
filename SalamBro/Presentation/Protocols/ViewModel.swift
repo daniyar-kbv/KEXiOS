@@ -9,16 +9,16 @@ import Foundation
 import SVProgressHUD
 
 protocol ViewModel: AnyObject {
-    var router: Router { get }
-    func close()
+//    var router: Router { get }
+//    func close()
     func startAnimation()
     func stopAnimation()
 }
 
 extension ViewModel {
-    func close() {
-        router.dismiss()
-    }
+//    func close() {
+//        router.dismiss()
+//    }
 
     func startAnimation() {
         SVProgressHUD.show()

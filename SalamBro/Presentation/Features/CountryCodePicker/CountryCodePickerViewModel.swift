@@ -33,7 +33,8 @@ final class CountryCodePickerViewModel: CountryCodePickerViewModelProtocol {
         let country = countries[index]
         repository.currentCountry = country
         didSelectCountry?(country)
-        close()
+        // TODO: chango to coordinators
+//        close()
     }
 
     private func download() {
