@@ -11,26 +11,22 @@ import RxCocoa
 import RxSwift
 
 protocol BrandViewModelProtocol: ViewModel {
+    var coordinator: AddressCoordinator { get }
     var brands: [Brand] { get }
     var ratios: [(Float, Float)] { get }
     var updateCollectionView: BehaviorRelay<Void?> { get }
     func refreshBrands()
-    func didSelect(index: Int)
+    func didSelect(index: Int, completion: (_ type: Any) -> Void)
     func getBrands()
 }
 
 final class BrandViewModel: BrandViewModelProtocol {
     private let disposeBag = DisposeBag()
 
-    public enum FlowType {
-        case change
-        case select
-    }
-
-    let router: Router
+    var coordinator: AddressCoordinator
     private let repository: BrandRepository
     private let service: LocationService
-    private let type: FlowType
+    private let type: AddressCoordinator.FlowType
     private let locationRepository: LocationRepository
     private(set) var brands: [Brand] = [] {
         didSet {
@@ -42,14 +38,14 @@ final class BrandViewModel: BrandViewModelProtocol {
     var updateCollectionView: BehaviorRelay<Void?>
     private let didSelectBrand: ((Brand) -> Void)?
 
-    init(router: Router,
+    init(coordinator: AddressCoordinator,
          repository: BrandRepository,
          locationRepository: LocationRepository,
          service: LocationService,
-         type: FlowType,
+         type: AddressCoordinator.FlowType,
          didSelectBrand: ((Brand) -> Void)?)
     {
-        self.router = router
+        self.coordinator = coordinator
         self.repository = repository
         self.locationRepository = locationRepository
         self.service = service
@@ -99,7 +95,7 @@ final class BrandViewModel: BrandViewModelProtocol {
                 self?.process(receivedBrands: brandsResponse)
             }, onError: { [weak self] error in
                 self?.stopAnimation()
-                self?.router.alert(error: error)
+                self?.coordinator.alert(error: error)
             })
             .disposed(by: disposeBag)
     }
@@ -122,16 +118,16 @@ final class BrandViewModel: BrandViewModelProtocol {
         makeBrandsRequest()
     }
 
-    func didSelect(index: Int) {
+    func didSelect(index: Int, completion: (_ type: Any) -> Void) {
         let brand = brands[index]
         repository.changeCurrent(brand: brand)
         didSelectBrand?(brand)
         switch type {
-        case .change:
-            router.dismiss()
-        case .select:
-            let context = BrandsRouter.RouteType.map
-            router.enqueueRoute(with: context)
+        case .firstFlow:
+            coordinator.openMap()
+        case .changeAddress, .changeMainInfo:
+            break
         }
+        completion(type)
     }
 }

@@ -16,16 +16,11 @@ protocol CountryCodeCellViewModelProtocol: ViewModel {
 }
 
 final class CountryCodeCellViewModel: CountryCodeCellViewModelProtocol {
-    let router: Router
     var title: BehaviorRelay<String?>
     var code: BehaviorRelay<String?>
     var isSelected: BehaviorRelay<Bool>
 
-    init(router: Router,
-         country: Country,
-         isSelected: Bool)
-    {
-        self.router = router
+    init(country: Country, isSelected: Bool) {
         title = .init(value: country.name)
         code = .init(value: country.countryCode)
         self.isSelected = .init(value: isSelected)

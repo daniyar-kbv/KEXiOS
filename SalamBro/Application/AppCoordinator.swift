@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 final class AppCoordinator: Coordinator {
+    var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     
@@ -33,17 +34,7 @@ final class AppCoordinator: Coordinator {
     }
 
     private func startFirstFlow() {
-//        let router = CountriesListRouter()
-//        let viewModel = CountriesListViewModel(router: router,
-//                                               service: DIResolver.resolve(LocationService.self)!,
-//                                               repository: DIResolver.resolve(LocationRepository.self)!,
-//                                               type: .select,
-//                                               didSelectCountry: nil)
-//        let vc = CountriesListController(viewModel: viewModel)
-//        router.baseViewController = vc
-//        let navVC = UINavigationController(rootViewController: vc)
-//        setRootView(navVC)
-        let child = CountriesListCoordinator(type: .select)
+        let child = AddressCoordinator(navigationController: navigationController, flowType: .firstFlow)
         child.start()
     }
 
@@ -51,4 +42,6 @@ final class AppCoordinator: Coordinator {
         let vc = MainTabController()
         UIApplication.shared.setRootView(vc)
     }
+    
+    func didFinish() { }
 }

@@ -11,16 +11,15 @@ import RxSwift
 
 protocol CategoryCellViewModelProtocol: ViewModel {
     var categoryTitle: BehaviorRelay<String?> { get }
+    var categoryPosition: Int { get }
 }
 
 final class CategoryCellViewModel: CategoryCellViewModelProtocol {
-    var router: Router
     var categoryTitle: BehaviorRelay<String?>
+    var categoryPosition: Int
 
-    init(router: Router,
-         category: FoodTypeUI)
-    {
-        self.router = router
+    init(category: FoodTypeUI){
+        categoryPosition = .init(category.position)
         categoryTitle = .init(value: category.title)
     }
 }

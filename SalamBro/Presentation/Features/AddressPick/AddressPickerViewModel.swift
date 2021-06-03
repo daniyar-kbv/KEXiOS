@@ -8,7 +8,7 @@
 import Foundation
 
 protocol AddressPickerViewModelProtocol: ViewModel {
-    var coordinator: AddressPickerCoordinator { get }
+    var coordinator: AddressCoordinator { get }
     var cellViewModels: [AddressPickerCellViewModelProtocol] { get }
     func didSelect(index: Int, completion: () -> Void)
     func changeAddress()
@@ -16,7 +16,7 @@ protocol AddressPickerViewModelProtocol: ViewModel {
 }
 
 final class AddressPickerViewModel: AddressPickerViewModelProtocol {
-    public var coordinator: AddressPickerCoordinator
+    public var coordinator: AddressCoordinator
     private let repository: GeoRepository
     public var cellViewModels: [AddressPickerCellViewModelProtocol]
     private let addresses: [Address]
@@ -30,10 +30,10 @@ final class AddressPickerViewModel: AddressPickerViewModelProtocol {
     }
 
     public func changeAddress() {
-        coordinator.openChangeAddress()
+        coordinator.openSelectMainInfo(didSave: nil)
     }
 
-    init(coordinator: AddressPickerCoordinator,
+    init(coordinator: AddressCoordinator,
          repository: GeoRepository,
          didSelectAddress: ((Address) -> Void)?)
     {
@@ -45,6 +45,6 @@ final class AddressPickerViewModel: AddressPickerViewModelProtocol {
     }
     
     func onFinish() {
-        coordinator.onFinish()
+        coordinator.didFinish()
     }
 }

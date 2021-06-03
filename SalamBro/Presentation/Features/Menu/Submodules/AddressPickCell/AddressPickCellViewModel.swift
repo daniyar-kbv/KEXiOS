@@ -14,12 +14,9 @@ protocol AddressPickCellViewModelProtocol: ViewModel {
 }
 
 final class AddressPickCellViewModel: AddressPickCellViewModelProtocol {
-    var router: Router
     var address: BehaviorRelay<String?>
-    init(router: Router,
-         address: Address?)
-    {
-        self.router = router
+    
+    init(address: Address?) {
         self.address = .init(value: address?.name)
     }
 }

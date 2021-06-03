@@ -10,13 +10,15 @@ import RxCocoa
 import RxSwift
 
 final class AuthorizationViewModel {
+    let coordinator: AuthCoordinator
     let outputs = Output()
     private let disposeBag = DisposeBag()
     private let locationRepository: LocationRepository
     private let authService: AuthService
     private var phoneNumber: String = ""
 
-    init(locationRepository: LocationRepository, authService: AuthService) {
+    init(coordinator: AuthCoordinator, locationRepository: LocationRepository, authService: AuthService) {
+        self.coordinator = coordinator
         self.locationRepository = locationRepository
         self.authService = authService
     }

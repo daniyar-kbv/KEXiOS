@@ -41,12 +41,6 @@ final class ChangeAddressController: ViewController {
         ]
         viewModel.checkInputs()
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        viewModel.didFinish()
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

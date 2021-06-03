@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 
 protocol ChangeAddressViewModel: AnyObject {
-    var coordinator: ChangeAddressCoordinator { get }
+    var coordinator: AddressCoordinator { get }
     
     func getCellModel(for indexPath: IndexPath) -> ChangeAddressDTO
     func checkInputs()
@@ -23,7 +23,7 @@ protocol ChangeAddressViewModel: AnyObject {
 }
 
 final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
-    internal let coordinator: ChangeAddressCoordinator
+    internal let coordinator: AddressCoordinator
     private(set) var outputs = Output()
     private var city: City?
     private var country: Country?
@@ -38,7 +38,7 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
         ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .disclosureIndicator, inputType: .brand),
     ]
 
-    init(coordinator: ChangeAddressCoordinator) {
+    init(coordinator: AddressCoordinator) {
         self.coordinator = coordinator
         checkInputs()
     }
@@ -75,16 +75,14 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
         
         switch cellModel.inputType {
         case .address:
-            coordinator.openMap()
-            coordinator.selectedAddress = { [weak self] address in
+            coordinator.openMap() { [weak self] address in
                 cellModel.description = address
                 self?.address = address
                 self?.cellModels[indexPath.row] = cellModel
                 self?.outputs.reloadCellAt.accept(indexPath)
             }
         case .brand:
-            coordinator.openBrand()
-            coordinator.selectedBrand = { [weak self] brand in
+            coordinator.openBrands() { [weak self] brand in
                 cellModel.description = brand.name
                 self?.brand = brand
                 self?.cellModels[indexPath.row] = cellModel
@@ -95,17 +93,15 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
                 coordinator.alert(title: "Ошибка", message: "Пожалуйста, выберите сначала страну")
                 return
             }
-
-            coordinator.openCities(countryId: countryId)
-            coordinator.selectedCity = { [weak self] city in
+            
+            coordinator.openCitiesList(countryId: countryId) { [weak self] city in
                 cellModel.description = city.name
                 self?.city = city
                 self?.cellModels[indexPath.row] = cellModel
                 self?.outputs.reloadCellAt.accept(indexPath)
             }
         case .country:
-            coordinator.openCountries()
-            coordinator.selectedCountry = { [weak self] country in
+            coordinator.openCountriesList() { [weak self] country in
                 cellModel.description = country.name
                 self?.country = country
                 self?.cellModels[indexPath.row] = cellModel
@@ -118,7 +114,7 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
     }
     
     func didFinish() {
-        coordinator.onFinish()
+        coordinator.didFinish()
     }
 
     struct Output {

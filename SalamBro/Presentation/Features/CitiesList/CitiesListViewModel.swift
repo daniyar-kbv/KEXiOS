@@ -11,24 +11,19 @@ import RxCocoa
 import RxSwift
 
 protocol CitiesListViewModelProtocol: ViewModel {
+    var coordinator: AddressCoordinator { get set }
     var cities: [City] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
-    func didSelect(index: Int)
+    func didSelect(index: Int, completion: (_ type: Any) -> Void)
     func getCities()
     func refreshCities()
 }
 
 final class CitiesListViewModel: CitiesListViewModelProtocol {
-    enum FlowType {
-        case change
-        case select
-    }
-
     private let disposeBag = DisposeBag()
-
-    private let type: FlowType
+    var coordinator: AddressCoordinator
+    private let type: AddressCoordinator.FlowType
     private let countryId: Int
-    private(set) var router: Router
 
     var cities: [City] = []
     var updateTableView: BehaviorRelay<Void?>
@@ -37,14 +32,14 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
     private let service: LocationService
     private let repository: LocationRepository
 
-    init(router: Router,
-         type: FlowType,
+    init(coordinator: AddressCoordinator,
+         type: AddressCoordinator.FlowType,
          countryId: Int,
          service: LocationService,
          repository: LocationRepository,
          didSelectCity: ((City) -> Void)?)
     {
-        self.router = router
+        self.coordinator = coordinator
         self.type = type
         self.countryId = countryId
         self.service = service
@@ -77,7 +72,7 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
                 self?.process(receivedCities: citiesResponse)
             } onError: { [weak self] error in
                 self?.stopAnimation()
-                self?.router.alert(error: error)
+                self?.coordinator.alert(error: error)
             }
             .disposed(by: disposeBag)
     }
@@ -96,18 +91,16 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
         updateTableView.accept(())
     }
 
-    func didSelect(index: Int) {
+    func didSelect(index: Int, completion: (_ type: Any) -> Void) {
         let city = cities[index]
         repository.changeCurrentCity(to: city)
         didSelectCity?(city)
         switch type {
-        case .select:
-            let context = CitiesListRouter.RouteType.brands
-            router.enqueueRoute(with: context)
-        case .change:
+        case .firstFlow:
+            coordinator.openBrands()
+        case .changeAddress, .changeMainInfo:
             break
-            // TODO change to coordinators
-//            close()
         }
+        completion(type)
     }
 }

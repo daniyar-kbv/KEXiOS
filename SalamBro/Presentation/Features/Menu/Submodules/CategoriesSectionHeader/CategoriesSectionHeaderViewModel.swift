@@ -6,19 +6,17 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
 protocol CategoriesSectionHeaderViewModelProtocol: ViewModel {
     var cellViewModels: [CategoryCellViewModelProtocol] { get }
 }
 
 final class CategoriesSectionHeaderViewModel: CategoriesSectionHeaderViewModelProtocol {
-    var router: Router
     var cellViewModels: [CategoryCellViewModelProtocol]
-    init(router: Router,
-         categories: [FoodTypeUI])
-    {
-        self.router = router
-        cellViewModels = categories.map { CategoryCellViewModel(router: router,
-                                                                category: $0) }
+    
+    init(categories: [FoodTypeUI]){
+        cellViewModels = categories.map { CategoryCellViewModel(category: $0) }
     }
 }
