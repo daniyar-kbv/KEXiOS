@@ -27,23 +27,29 @@ final class ChangeAddressBrandCell: UITableViewCell {
         return lbl
     }()
 
-    private let infoLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = .mildBlue
-        lbl.font = UIFont.systemFont(ofSize: 10, weight: .regular)
-        lbl.backgroundColor = .white
-        lbl.text = "Наличие или отсутствие того или иного бренда - зависит от Вашего адреса доставки"
-        lbl.numberOfLines = 0
-        lbl.lineBreakMode = .byWordWrapping
-        return lbl
-    }()
-
     private let separatorView = UIView()
+
+    private var chevronImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "right")
+        view.frame = CGRect(x: 0, y: 0, width: 28, height: 28)
+        return view
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         layoutUI()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        switch accessoryType {
+        case .none:
+            accessoryView?.frame.origin.x += 15
+            accessoryView?.frame.origin.y += 8
+        default: break
+        }
     }
 
     @available(*, unavailable)
@@ -67,24 +73,31 @@ extension ChangeAddressBrandCell: ChangeAddressCellPresentable {
         }
 
         switch dto.accessoryType {
-        case .none: accessoryView = UIImageView(image: Asset.chevronBottom.image)
-        default: accessoryType = dto.accessoryType
+        case .none, .disclosureIndicator:
+            accessoryView?.frame.origin.x += 15
+            accessoryView = chevronImageView
+        default: break
+        }
+
+        switch dto.isEnabled {
+        case true: isUserInteractionEnabled = true
+        case false: isUserInteractionEnabled = false
         }
     }
 
     private func layoutUI() {
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(4)
-            $0.leading.equalToSuperview().offset(24)
+            $0.top.equalToSuperview().offset(6)
+            $0.leading.equalToSuperview().offset(22)
             $0.trailing.equalToSuperview().offset(-16)
             $0.height.equalTo(14)
         }
 
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
-            $0.leading.equalToSuperview().offset(24)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(22)
             $0.trailing.equalToSuperview().offset(-16)
             $0.height.equalTo(20)
         }
@@ -92,18 +105,10 @@ extension ChangeAddressBrandCell: ChangeAddressCellPresentable {
         separatorView.backgroundColor = .calmGray
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-6)
             $0.height.equalTo(1)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(16)
-        }
-
-        contentView.addSubview(infoLabel)
-        infoLabel.snp.makeConstraints {
-            $0.top.equalTo(separatorView.snp.bottom).offset(4)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
-            $0.height.equalTo(24)
+            $0.leading.equalToSuperview().offset(22)
+            $0.trailing.equalToSuperview().offset(36)
         }
     }
 }

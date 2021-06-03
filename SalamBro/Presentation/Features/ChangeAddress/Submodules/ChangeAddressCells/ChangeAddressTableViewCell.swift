@@ -31,6 +31,13 @@ final class ChangeAddressTableViewCell: UITableViewCell {
 
     private let separatorView = UIView()
 
+    private var chevronImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "right")
+        view.frame = CGRect(x: 0, y: 0, width: 28, height: 28)
+        return view
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -45,8 +52,9 @@ final class ChangeAddressTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         switch accessoryType {
-        case .none: accessoryView?.frame.origin.x += 8
-        case .detailDisclosureButton: accessoryView?.frame.origin.x -= 12
+        case .none:
+            accessoryView?.frame.origin.x += 15
+            accessoryView?.frame.origin.y += 8
         default: break
         }
     }
@@ -67,24 +75,34 @@ extension ChangeAddressTableViewCell: ChangeAddressCellPresentable {
         }
 
         switch dto.accessoryType {
-        case .none: accessoryView = UIImageView(image: Asset.chevronBottom.image)
-        default: accessoryType = dto.accessoryType
+        case .none:
+            accessoryView?.frame.origin.x += 15
+            accessoryView = UIImageView(image: Asset.chevronBottom.image)
+        case .disclosureIndicator:
+            accessoryView?.frame.origin.x += 15
+            accessoryView = chevronImageView
+        default: break
+        }
+
+        switch dto.isEnabled {
+        case true: isUserInteractionEnabled = true
+        case false: isUserInteractionEnabled = false
         }
     }
 
     private func layoutUI() {
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(2)
-            $0.leading.equalToSuperview().offset(24)
+            $0.top.equalToSuperview().offset(6)
+            $0.leading.equalToSuperview().offset(22)
             $0.trailing.equalToSuperview().offset(-16)
             $0.height.equalTo(14)
         }
 
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
-            $0.leading.equalToSuperview().offset(24)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(22)
             $0.trailing.equalToSuperview().offset(-16)
             $0.height.equalTo(20)
         }
@@ -92,10 +110,10 @@ extension ChangeAddressTableViewCell: ChangeAddressCellPresentable {
         separatorView.backgroundColor = .calmGray
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-6)
             $0.height.equalTo(1)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(16)
+            $0.leading.equalToSuperview().offset(22)
+            $0.trailing.equalToSuperview().offset(36)
         }
     }
 }
@@ -105,6 +123,7 @@ struct ChangeAddressDTO {
     var description: String?
     let accessoryType: UITableViewCell.AccessoryType
     let inputType: InputType
+    var isEnabled = false
 
     enum InputType {
         case country

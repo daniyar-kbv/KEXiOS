@@ -32,11 +32,11 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
     private var address: String?
 
     private(set) var cellModels: [ChangeAddressDTO] = [
-        ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .none, inputType: .country),
-        ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .none, inputType: .city),
-        ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .disclosureIndicator, inputType: .address),
+        ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .none, inputType: .country, isEnabled: true),
+        ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .none, inputType: .city, isEnabled: false),
+        ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .disclosureIndicator, inputType: .address, isEnabled: false),
         ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .none, inputType: .empty),
-        ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .disclosureIndicator, inputType: .brand),
+        ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .disclosureIndicator, inputType: .brand, isEnabled: false),
     ]
 
     init(coordinator: AddressCoordinator) {
@@ -103,6 +103,7 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
             coordinator.openMap { [weak self] address in
                 cellModel.description = address
                 self?.address = address
+                self?.changeState(indexPath: indexPath, description: address)
                 self?.cellModels[indexPath.row] = cellModel
                 self?.outputs.reloadCellAt.accept(indexPath)
             }
@@ -122,6 +123,7 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
             coordinator.openCitiesList(countryId: countryId) { [weak self] city in
                 cellModel.description = city.name
                 self?.city = city
+                self?.changeState(indexPath: indexPath, description: city.name)
                 self?.cellModels[indexPath.row] = cellModel
                 self?.outputs.reloadCellAt.accept(indexPath)
             }
@@ -129,6 +131,7 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
             coordinator.openCountriesList { [weak self] country in
                 cellModel.description = country.name
                 self?.country = country
+                self?.changeState(indexPath: indexPath, description: country.name)
                 self?.cellModels[indexPath.row] = cellModel
                 self?.outputs.reloadCellAt.accept(indexPath)
             }
@@ -136,6 +139,22 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
         }
 
         checkInputs()
+    }
+
+    func changeState(indexPath: IndexPath, description: String) {
+        let cellModel = cellModels[indexPath.row]
+
+        switch cellModel.inputType {
+        case .address:
+            if !description.isEmpty { cellModels[4].isEnabled = true }
+        case .brand:
+            break
+        case .city:
+            if !description.isEmpty { cellModels[2].isEnabled = true }
+        case .country:
+            if !description.isEmpty { cellModels[1].isEnabled = true }
+        case .empty: break
+        }
     }
 
     func didFinish() {
