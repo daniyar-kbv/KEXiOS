@@ -36,9 +36,5 @@ class OrderHistoryCoordinator: Coordinator {
     func didFinish() {
         parentCoordinator?.childDidFinish(self)
     }
-    
-    deinit {
-        print("OrderHistoryCoordinator deinit")
-    }
 }
 
