@@ -11,15 +11,22 @@ import YandexMapKit
 import YandexMapKitSearch
 
 class MapViewController: ViewController {
+    var coordinator: AddressCoordinator
     var targetLocation = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
     let locationManager = CLLocationManager()
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
     var searchSession: YMKSearchSession?
     private let geoRepository = DIResolver.resolve(GeoRepository.self)! // TODO:
-    private let coordinator = DIResolver.resolve(Coordinator.self)! // TODO:
+//    private let coordinator = DIResolver.resolve(AppCoordinator.self)! // TODO:
 
     var selectedAddress: ((String) -> Void)?
-    var isAddressChangeFlow: Bool = false
+
+    var flowType: AddressCoordinator.FlowType
+
+    enum FlowType {
+        case change
+        case select
+    }
 
     var mapView: YMKMapView = {
         let view = YMKMapView()
@@ -65,6 +72,18 @@ class MapViewController: ViewController {
     let addressSheetVC = AddressSheetController()
     let suggestVC = SuggestController()
     let commentarySheetVC = CommentarySheetController()
+
+    init(coordinator: AddressCoordinator, flowType: AddressCoordinator.FlowType) {
+        self.coordinator = coordinator
+        self.flowType = flowType
+
+        super.init(nibName: .none, bundle: .none)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,8 +172,11 @@ class MapViewController: ViewController {
     }
 
     @objc func backButtonTapped(_: UIButton!) {
-        if isAddressChangeFlow {
-            dismiss(animated: true, completion: nil)
+        switch flowType {
+        case .changeAddress, .changeMainInfo:
+            dismiss(animated: true)
+        default:
+            break
         }
 
         navigationController?.popViewController(animated: true)
@@ -244,15 +266,17 @@ extension MapViewController {
 
 extension MapViewController: MapDelegate {
     func dissmissView() {
-        if isAddressChangeFlow,
-           let address = geoRepository.currentAddress?.name
-        {
-            selectedAddress?(address)
-            dismiss(animated: true, completion: nil)
-            return
+        coordinator.finishFlow {
+            switch flowType {
+            case .changeAddress, .changeMainInfo:
+                guard let address = geoRepository.currentAddress?.name else { return }
+                selectedAddress?(address)
+                print("dismiss")
+                dismiss(animated: true)
+            default:
+                break
+            }
         }
-
-        coordinator.start()
     }
 
     func hideCommentarySheet() {

@@ -104,6 +104,12 @@ final class SelectMainInformationViewController: ViewController {
         }.disposed(by: disposeBag)
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        viewModel.coordinator.didFinish()
+    }
+
     override func setupNavigationBar() {
         super.setupNavigationBar()
         navigationItem.title = L10n.SelectMainInfo.title
@@ -147,7 +153,9 @@ final class SelectMainInformationViewController: ViewController {
 
     @objc
     private func save() {
-        viewModel.save()
+        viewModel.save { [weak self] in
+            self?.dismiss(animated: true)
+        }
     }
 }
 

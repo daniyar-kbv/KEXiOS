@@ -13,7 +13,8 @@ import UIKit
 
 final class MenuController: ViewController {
     private let viewModel: MenuViewModelProtocol
-    private let disposeBag: DisposeBag
+    private let disposeBag = DisposeBag()
+    var scrollService: MenuScrollService
 
     private lazy var logoView: UIImageView = {
         let view = UIImageView()
@@ -66,10 +67,13 @@ final class MenuController: ViewController {
         return view
     }()
 
-    public init(viewModel: MenuViewModelProtocol) {
+    public init(viewModel: MenuViewModelProtocol, scrollService: MenuScrollService) {
         self.viewModel = viewModel
-        disposeBag = DisposeBag()
+        self.scrollService = scrollService
+
         super.init(nibName: nil, bundle: nil)
+
+        bindScrollService()
     }
 
     required init?(coder _: NSCoder) { nil }
@@ -92,6 +96,15 @@ final class MenuController: ViewController {
 
         viewModel.brandName
             .bind(to: brandLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+
+    func bindScrollService() {
+        scrollService.didSelectCategory
+            .subscribe(onNext: { [weak self] in
+                guard $0 == .header else { return }
+                self?.scrollToItem(at: $1)
+            })
             .disposed(by: disposeBag)
     }
 
@@ -152,17 +165,15 @@ final class MenuController: ViewController {
 }
 
 extension MenuController: UITableViewDelegate, UITableViewDataSource {
+//    TODO: change to coordinators
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
         case _ as MenuCellViewModel:
-            let viewModel = MenuDetailViewModel(menuDetailRepository: DIResolver.resolve(MenuDetailRepository.self)!)
-            let vc = MenuDetailController(viewModel: viewModel)
-            vc.modalPresentationStyle = .pageSheet
-            present(vc, animated: true, completion: nil)
+            viewModel.coordinator.openDetail()
         case _ as AddressPickCellViewModel:
             viewModel.selectAddress()
         case _ as AdCollectionCellViewModel:
-            navigationController?.pushViewController(RatingController(), animated: true)
+            goToRating()
         default:
             print("other")
         }
@@ -186,6 +197,7 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
         case let viewModel as CategoriesSectionHeaderViewModelProtocol:
             let header = tableView.dequeueReusableHeaderFooterView(CategoriesSectionHeader.self)
             header?.set(viewModel)
+            header?.scrollService = scrollService
             return header
         default:
             return nil
@@ -218,10 +230,38 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
             return .init()
         }
     }
+
+    func tableView(_: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
+        didScrollToItem(at: indexPath.row)
+    }
+}
+
+extension MenuController {
+    func scrollToItem(at position: Int) {
+        guard let row = viewModel.cellViewModels[itemTableView.numberOfSections - 1].enumerated().first(where: {
+            guard let viewModel = $1 as? MenuCellViewModelProtocol else { return false }
+            return viewModel.categoryPosition == position
+        })?.0 else { return }
+        itemTableView.scrollToRow(at: IndexPath(row: row, section: itemTableView.numberOfSections - 1), at: .top, animated: true)
+    }
+
+    func didScrollToItem(at position: Int) {
+        guard let cellViewModel = viewModel.cellViewModels[itemTableView.numberOfSections - 1][position] as? MenuCellViewModelProtocol,
+              !scrollService.isHeaderScrolling,
+              scrollService.currentCategoryPosition != cellViewModel.categoryPosition else { return }
+        scrollService.didSelectCategory.accept((source: .table, position: cellViewModel.categoryPosition))
+    }
+}
+
+extension MenuController: UIScrollViewDelegate {
+    func scrollViewDidEndScrollingAnimation(_: UIScrollView) {
+        scrollService.finishedScrolling()
+    }
 }
 
 extension MenuController: AddCollectionCellDelegate {
+//    TODO: change to coordinator
     public func goToRating() {
-        navigationController?.pushViewController(RatingController(), animated: true)
+        viewModel.coordinator.openRating()
     }
 }

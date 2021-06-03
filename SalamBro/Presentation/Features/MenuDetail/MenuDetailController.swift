@@ -146,6 +146,12 @@ class MenuDetailController: ViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        viewModel.coordinator.didFinish()
+    }
+
 //    private func bind() {
 //        viewModel.itemTitle
 //            .bind(to: itemTitleLabel.rx.text)
@@ -250,10 +256,7 @@ class MenuDetailController: ViewController {
     }
 
     @objc func additionalItemChangeButtonTapped() {
-        print("additionalItemChangeButtonTapped")
-        let vc = AdditionalItemChooseController()
-        vc.modalPresentationStyle = .pageSheet
-        present(vc, animated: true, completion: nil)
+        viewModel.coordinator.openModificator()
     }
 
     @objc func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
@@ -261,7 +264,6 @@ class MenuDetailController: ViewController {
     }
 
     @objc func backButtonTapped() {
-        print("go back")
         dismiss(animated: true, completion: nil)
     }
 }

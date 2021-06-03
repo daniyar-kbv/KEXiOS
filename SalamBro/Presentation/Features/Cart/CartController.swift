@@ -13,7 +13,7 @@ protocol CartViewDelegate {
 
 class CartController: ViewController {
     var mainTabDelegate: MainTabDelegate?
-    var cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
+    var cartViewModel: CartViewModel
 
     private var authCoordinator: AuthCoordinator?
 
@@ -78,6 +78,17 @@ class CartController: ViewController {
         return view
     }()
 
+    init(viewModel: CartViewModel) {
+        cartViewModel = viewModel
+
+        super.init(nibName: .none, bundle: .none)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 //        cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
@@ -137,13 +148,7 @@ extension CartController {
     }
 
     @objc func buttonAction() {
-        authCoordinator = AuthCoordinator(navigationController: navigationController, pagesFactory: AuthPagesFactoryImpl())
-
-        authCoordinator?.didFinish = { [weak self] in
-            self?.authCoordinator = nil
-        }
-
-        authCoordinator?.startAuthFlow()
+        cartViewModel.coordinator.openAuth()
     }
 }
 

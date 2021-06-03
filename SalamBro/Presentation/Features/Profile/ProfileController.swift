@@ -8,6 +8,8 @@
 import UIKit
 
 class ProfileController: ViewController {
+    var coordinator: ProfileCoordinator
+
     lazy var phoneTitle: UILabel = {
         let label = UILabel()
         label.text = "+7 (702) 000 00 00"
@@ -73,6 +75,17 @@ class ProfileController: ViewController {
         return button
     }()
 
+    init(coordinator: ProfileCoordinator) {
+        self.coordinator = coordinator
+
+        super.init(nibName: .none, bundle: .none)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -126,9 +139,7 @@ extension ProfileController {
     }
 
     @objc func changeName(sender _: UITapGestureRecognizer) {
-        let vc = ChangeNameController()
-        vc.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(vc, animated: true)
+        coordinator.openChangeName()
     }
 }
 
@@ -162,17 +173,11 @@ extension ProfileController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let vc = OrderHistoryController()
-            vc.hidesBottomBarWhenPushed = false
-            navigationController?.pushViewController(vc, animated: true)
+            coordinator.openOrderHistory()
         } else if indexPath.row == 1 {
-            let vc = ChangeLanguageController()
-            vc.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(vc, animated: true)
+            coordinator.openChangeLanguage()
         } else {
-            let vc = AddressListController()
-            vc.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(vc, animated: true)
+            coordinator.openAddressList()
         }
     }
 }

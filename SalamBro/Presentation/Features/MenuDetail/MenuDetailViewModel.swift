@@ -11,6 +11,7 @@ import RxCocoa
 import RxSwift
 
 public protocol MenuDetailViewModelProtocol: AnyObject {
+    var coordinator: MenuDetailCoordinator { get }
     var itemTitle: BehaviorRelay<String?> { get }
     var itemDescription: BehaviorRelay<String?> { get }
     var itemPrice: BehaviorRelay<String?> { get }
@@ -19,6 +20,7 @@ public protocol MenuDetailViewModelProtocol: AnyObject {
 
 public final class MenuDetailViewModel: MenuDetailViewModelProtocol {
     private let menuDetailRepository: MenuDetailRepository
+    public var coordinator: MenuDetailCoordinator
     public var itemTitle: BehaviorRelay<String?>
     public var itemDescription: BehaviorRelay<String?>
     public var itemPrice: BehaviorRelay<String?>
@@ -40,7 +42,8 @@ public final class MenuDetailViewModel: MenuDetailViewModelProtocol {
         }.finally {}
     }
 
-    init(menuDetailRepository: MenuDetailRepository) {
+    init(coordinator: MenuDetailCoordinator, menuDetailRepository: MenuDetailRepository) {
+        self.coordinator = coordinator
         itemTitle = .init(value: nil)
         itemDescription = .init(value: nil)
         itemPrice = .init(value: nil)

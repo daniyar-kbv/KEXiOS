@@ -14,6 +14,8 @@ final class CountryCodePickerViewController: ViewController {
     private let viewModel: CountryCodePickerViewModelProtocol
     private let disposeBag: DisposeBag
 
+    let outputs = Output()
+
     private lazy var citiesTableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
@@ -102,6 +104,13 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
     }
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelect(index: indexPath.row)
+        let country = viewModel.didSelect(index: indexPath.row)
+        outputs.didSelectCountryCode.accept(country)
+    }
+}
+
+extension CountryCodePickerViewController {
+    struct Output {
+        let didSelectCountryCode = PublishRelay<Country>()
     }
 }

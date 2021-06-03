@@ -8,6 +8,8 @@
 import UIKit
 
 class RatingController: ViewController {
+    var coordinator: RatingCoordinator
+
     lazy var segmentedControlView: CustomSegmentedControl = {
         let view = CustomSegmentedControl(buttonTitle: [L10n.Rating.overall, L10n.Rating.weekly])
         view.selectorViewColor = .kexRed
@@ -109,10 +111,27 @@ class RatingController: ViewController {
         return view
     }()
 
+    init(coordinator: RatingCoordinator) {
+        self.coordinator = coordinator
+
+        super.init(nibName: .none, bundle: .none)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        coordinator.didFinish()
     }
 
     override func setupNavigationBar() {
@@ -175,8 +194,7 @@ extension RatingController {
     }
 
     @objc func infoButtonTapped() {
-        let vc = AgreementController()
-        navigationController?.pushViewController(vc, animated: true)
+        coordinator.openAgreement()
     }
 }
 

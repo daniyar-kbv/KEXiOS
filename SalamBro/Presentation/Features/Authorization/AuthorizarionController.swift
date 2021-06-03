@@ -49,7 +49,7 @@ final class AuthorizationController: ViewController, MaskedTextFieldDelegateList
         return label
     }()
 
-    private let countryCodeButton: UIButton = {
+    let countryCodeButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 26)
@@ -139,11 +139,9 @@ extension AuthorizationController {
     }
 
     @objc func handlecCountryCodeButtonAction() {
-        let router = CountryCodePickerRouter()
-        let context = CountryCodePickerRouter.PresentationContext.present { [unowned self] in
-            self.countryCodeButton.setTitle($0.countryCode, for: .normal)
+        viewModel.coordinator.showCountryCodePicker { [weak self] in
+            self?.countryCodeButton.setTitle($0.countryCode, for: .normal)
         }
-        router.present(on: self, context: context)
     }
 }
 

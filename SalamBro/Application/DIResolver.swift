@@ -34,9 +34,12 @@ public final class DIResolver {
 
 private final class ApplicationAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(Coordinator.self) { r in
-            Coordinator(geoRepository: r.resolve(GeoRepository.self)!,
-                        brandRepository: r.resolve(BrandRepository.self)!)
+        container.register(AppCoordinator.self) { r in
+            AppCoordinator(
+                navigationController: UINavigationController(),
+                geoRepository: r.resolve(GeoRepository.self)!,
+                brandRepository: r.resolve(BrandRepository.self)!
+            )
         }
     }
 }

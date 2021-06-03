@@ -8,37 +8,43 @@
 import Foundation
 
 protocol AddressPickerViewModelProtocol: ViewModel {
+    var coordinator: AddressCoordinator { get }
     var cellViewModels: [AddressPickerCellViewModelProtocol] { get }
-    func didSelect(index: Int)
+    func didSelect(index: Int, completion: () -> Void)
     func changeAddress()
+    func onFinish()
 }
 
 final class AddressPickerViewModel: AddressPickerViewModelProtocol {
-    public var router: Router
+    public var coordinator: AddressCoordinator
     private let repository: GeoRepository
     public var cellViewModels: [AddressPickerCellViewModelProtocol]
     private let addresses: [Address]
     private let didSelectAddress: ((Address) -> Void)?
 
-    public func didSelect(index: Int) {
+    public func didSelect(index: Int, completion: () -> Void) {
         let address = addresses[index]
         repository.currentAddress = address
         didSelectAddress?(addresses[index])
-        close()
+        completion()
     }
 
     public func changeAddress() {
-        router.enqueueRoute(with: AddressPickerRouter.RouteType.changeAddress, animated: true, completion: nil)
+        coordinator.openSelectMainInfo(didSave: nil)
     }
 
-    init(router: Router,
+    init(coordinator: AddressCoordinator,
          repository: GeoRepository,
          didSelectAddress: ((Address) -> Void)?)
     {
-        self.router = router
+        self.coordinator = coordinator
         self.repository = repository
         self.didSelectAddress = didSelectAddress
         addresses = repository.addresses ?? []
         cellViewModels = repository.addresses?.map { AddressPickerCellViewModel(address: $0, isSelected: $0 == repository.currentAddress) } ?? []
+    }
+
+    func onFinish() {
+        coordinator.didFinish()
     }
 }
