@@ -39,6 +39,7 @@ final class ChangeAddressController: ViewController {
         navigationController?.navigationBar.titleTextAttributes = [
             .font: UIFont.systemFont(ofSize: 26, weight: .regular),
         ]
+        print("HERE")
         viewModel.checkInputs()
     }
 
@@ -81,7 +82,7 @@ final class ChangeAddressController: ViewController {
             self?.dismiss(animated: true, completion: nil)
         }
         let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
-            self?.viewModel.changeAddress() {
+            self?.viewModel.changeAddress {
                 self?.dismiss(animated: true)
             }
         }
@@ -134,30 +135,7 @@ extension ChangeAddressController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = viewModel.getCellModel(for: indexPath)
-
-        // MARK: Tech debt, перенесу во viewModel
-
-        switch cellModel.inputType {
-        case .brand:
-            guard let brandCell = tableView.dequeueReusableCell(withIdentifier: ChangeAddressBrandCell.reuseIdentifier, for: indexPath) as? ChangeAddressBrandCell else {
-                fatalError()
-            }
-
-            brandCell.configure(dto: cellModel)
-            return brandCell
-        case .empty:
-            guard let emptyCell = tableView.dequeueReusableCell(withIdentifier: ChangeAddressEmptyCell.reuseIdentifier, for: indexPath) as? ChangeAddressEmptyCell else {
-                fatalError()
-            }
-
-            return emptyCell
-        default:
-            guard let changeAddressCell = tableView.dequeueReusableCell(withIdentifier: ChangeAddressTableViewCell.reuseIdentifier, for: indexPath) as? ChangeAddressTableViewCell else {
-                fatalError()
-            }
-            changeAddressCell.configure(dto: cellModel)
-            return changeAddressCell
-        }
+        return viewModel.getCell(with: cellModel, for: indexPath, in: tableView)
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
