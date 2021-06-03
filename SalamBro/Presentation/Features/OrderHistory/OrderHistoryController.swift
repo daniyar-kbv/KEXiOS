@@ -14,6 +14,8 @@ protocol OrderHistoryDelegate {
 }
 
 class OrderHistoryController: ViewController {
+    var coordinator: OrderHistoryCoordinator
+    
     lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
@@ -29,7 +31,17 @@ class OrderHistoryController: ViewController {
         return view
 
     }()
-
+    
+    init(coordinator: OrderHistoryCoordinator) {
+        self.coordinator = coordinator
+        
+        super.init(nibName: .none, bundle: .none)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -39,6 +51,12 @@ class OrderHistoryController: ViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        coordinator.didFinish()
     }
 
     override internal func setupNavigationBar() {
@@ -80,12 +98,10 @@ extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
 
 extension OrderHistoryController: OrderHistoryDelegate {
     func share() {
-        navigationController?.pushViewController(ShareOrderController(), animated: true)
+        coordinator.openShareOrder()
     }
 
     func rate() {
-        let vc = RateController()
-        vc.modalPresentationStyle = .pageSheet
-        present(vc, animated: true, completion: nil)
+        coordinator.openRateOrder()
     }
 }

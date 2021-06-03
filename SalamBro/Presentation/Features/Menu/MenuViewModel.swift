@@ -12,6 +12,7 @@ import RxSwift
 import SVProgressHUD
 
 protocol MenuViewModelProtocol: ViewModel {
+    var coordinator: MenuCoordinator { get }
     var headerViewModels: [ViewModel?] { get }
     var cellViewModels: [[ViewModel]] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
@@ -22,7 +23,7 @@ protocol MenuViewModelProtocol: ViewModel {
 }
 
 final class MenuViewModel: MenuViewModelProtocol {
-    public var router: Router
+    public var coordinator: MenuCoordinator
     private let menuRepository: MenuRepository
     private let locationRepository: LocationRepository
     private let brandRepository: BrandRepository
@@ -32,13 +33,13 @@ final class MenuViewModel: MenuViewModelProtocol {
     public var updateTableView: BehaviorRelay<Void?>
     public var brandName: BehaviorRelay<String?>
 
-    init(router: Router,
+    init(coordinator: MenuCoordinator,
          menuRepository: MenuRepository,
          locationRepository: LocationRepository,
          brandRepository: BrandRepository,
          geoRepository: GeoRepository)
     {
-        self.router = router
+        self.coordinator = coordinator
         cellViewModels = []
         headerViewModels = []
         updateTableView = .init(value: nil)
@@ -56,17 +57,15 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     public func selectMainInfo() {
-        let context = MenuRouter.RouteType.selectMainInfo { [unowned self] in
+        coordinator.openSelectMainInfo() { [unowned self] in
             self.update()
         }
-        router.enqueueRoute(with: context)
     }
 
     public func selectAddress() {
-        let context = MenuRouter.RouteType.selectAddress { [unowned self] _ in
+        coordinator.openChangeAddress() { [unowned self] _ in
             self.update()
         }
-        router.enqueueRoute(with: context)
     }
 
     private func download() {
@@ -75,31 +74,32 @@ final class MenuViewModel: MenuViewModelProtocol {
         headerViewModels = []
         updateTableView.accept(())
         firstly {
+            self.menuRepository.downloadMenuAds()
+        } .done {
+            self.cellViewModels.append([
+                AddressPickCellViewModel(address: self.geoRepository.currentAddress),
+                AdCollectionCellViewModel(ads: $0.map { AdUI(from: $0) }),
+            ])
+        } .then {
             self.menuRepository.downloadMenuCategories()
-        }.done {
+        } .done {
             self.headerViewModels = [
                 nil,
-                CategoriesSectionHeaderViewModel(router: self.router,
-                                                 categories: $0.map { FoodTypeUI(from: $0) }),
+                CategoriesSectionHeaderViewModel(categories: $0.map { FoodTypeUI(from: $0) }),
             ]
-        }.then {
-            self.menuRepository.downloadMenuAds()
-        }.done {
-            self.cellViewModels.append([
-                AddressPickCellViewModel(router: self.router,
-                                         address: self.geoRepository.currentAddress),
-                AdCollectionCellViewModel(router: self.router,
-                                          ads: $0.map { AdUI(from: $0) }),
-            ])
-        }.then {
-            self.menuRepository.downloadMenuItems()
-        }.done {
-            self.cellViewModels.append($0.map { FoodUI(from: $0) }
-                .map { MenuCellViewModel(router: self.router,
-                                         food: $0) })
-        }.catch {
-            self.router.alert(error: $0)
-        }.finally {
+            self.cellViewModels.append(
+                $0.map({ category in
+                    category.foods.map({ MenuCellViewModel(categoryPosition: category.position, food: FoodUI(from: $0)) })
+                }).flatMap({ $0 })
+            )
+//        }.then {
+//            self.menuRepository.downloadMenuItems()
+//        }.done {
+//            self.cellViewModels.append($0.map { FoodUI(from: $0) }
+//                .map { MenuCellViewModel(food: $0) })
+        } .catch {
+            self.coordinator.alert(error: $0)
+        } .finally {
             self.updateTableView.accept(())
             self.stopAnimation()
         }

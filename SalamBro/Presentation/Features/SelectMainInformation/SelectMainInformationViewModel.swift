@@ -10,6 +10,7 @@ import RxCocoa
 import RxSwift
 
 protocol SelectMainInformationViewModelProtocol: ViewModel {
+    var coordinator: AddressCoordinator { get }
     var countryName: BehaviorRelay<String?> { get }
     var cityName: BehaviorRelay<String?> { get }
     var brandName: BehaviorRelay<String?> { get }
@@ -23,11 +24,11 @@ protocol SelectMainInformationViewModelProtocol: ViewModel {
     func didChange(address: Address)
     func selectBrand()
     func selectAddress()
-    func save()
+    func save(completion: () -> Void)
 }
 
 final class SelectMainInformationViewModel: SelectMainInformationViewModelProtocol {
-    var router: Router
+    var coordinator: AddressCoordinator
     private let geoRepository: GeoRepository
     private let brandRepository: BrandRepository
 
@@ -64,30 +65,28 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     }
 
     func selectBrand() {
-        let context = SelectMainInformationRouter.RouteType.selectBrand { [unowned self] in
+        coordinator.openBrands() { [unowned self] in
             self.didChange(brand: $0)
         }
-        router.enqueueRoute(with: context)
     }
 
     func selectAddress() {
-        let context = SelectMainInformationRouter.RouteType.selectAddress { [unowned self] in
+        coordinator.openAddressPicker() { [unowned self] in
             self.didChange(address: $0)
         }
-        router.enqueueRoute(with: context)
     }
 
-    func save() {
+    func save(completion: () -> Void) {
         didSave?()
-        router.dismiss()
+        completion()
     }
 
-    init(router: Router,
+    init(coordinator: AddressCoordinator,
          geoRepository: GeoRepository,
          brandRepository: BrandRepository,
          didSave: (() -> Void)?)
     {
-        self.router = router
+        self.coordinator = coordinator
         self.geoRepository = geoRepository
         self.brandRepository = brandRepository
         self.didSave = didSave

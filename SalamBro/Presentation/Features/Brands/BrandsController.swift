@@ -98,7 +98,15 @@ final class BrandsController: ViewController {
 
 extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate {
     public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.didSelect(index: indexPath.row)
+        viewModel.didSelect(index: indexPath.row) { [weak self] type in
+            guard let type = type as? AddressCoordinator.FlowType else { return }
+            switch type {
+            case .changeAddress, .changeMainInfo:
+                self?.dismiss(animated: true)
+            default:
+                break
+            }
+        }
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {

@@ -9,6 +9,7 @@ import SnapKit
 import UIKit
 
 final class AddressListController: ViewController {
+    var coordinator: AddressListCoordinator
     private var addresses = ["Алматы, мкр. Орбита 1, 41", "проспект Абылай Хана, 131"]
 
     private lazy var citiesTableView: UITableView = {
@@ -26,10 +27,26 @@ final class AddressListController: ViewController {
         tv.separatorStyle = .singleLine
         return tv
     }()
-
+    
+    init(coordinator: AddressListCoordinator) {
+        self.coordinator = coordinator
+        
+        super.init(nibName: .none, bundle: .none)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutUI()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        coordinator.didFinish()
     }
 
     override func setupNavigationBar() {
@@ -62,10 +79,7 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
-        let vc = AddressDetailController()
-        vc.addressLabel.text = addresses[indexPath.row]
-        vc.commentaryLabel.text = "Квартира, подъезд, домофон, этаж, и очень длинный комментарий примерно в две"
-        navigationController?.pushViewController(vc, animated: true)
+        coordinator.openDetail(address: addresses[indexPath.row])
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {

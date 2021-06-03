@@ -10,17 +10,20 @@ import RxCocoa
 import RxSwift
 
 protocol ChangeAddressViewModel: AnyObject {
+    var coordinator: AddressCoordinator { get }
+    
     func getCellModel(for indexPath: IndexPath) -> ChangeAddressDTO
     func checkInputs()
     func getCellsCount() -> Int
     func changeRoute(indexPath: IndexPath)
-    func changeAddress()
+    func changeAddress(completion: @escaping () -> Void)
+    func didFinish()
 
     var outputs: ChangeAddressViewModelImpl.Output { get }
 }
 
 final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
-    private let router: Router
+    internal let coordinator: AddressCoordinator
     private(set) var outputs = Output()
     private var city: City?
     private var country: Country?
@@ -35,13 +38,15 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
         ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .disclosureIndicator, inputType: .brand),
     ]
 
-    init(router: Router) {
-        self.router = router
+    init(coordinator: AddressCoordinator) {
+        self.coordinator = coordinator
         checkInputs()
     }
 
-    func changeAddress() {
-        router.alert(title: "Успешно", message: "Адрес изменен")
+    func changeAddress(completion: @escaping () -> Void) {
+        coordinator.alert(title: "Успешно", message: "Адрес изменен") {
+            completion()
+        }
     }
 
     func checkInputs() {
@@ -67,20 +72,17 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
 
     func changeRoute(indexPath: IndexPath) {
         var cellModel = cellModels[indexPath.row]
-        guard let changeAddressRouter = router as? ChangeAddressRouter else { return }
-
+        
         switch cellModel.inputType {
         case .address:
-            router.enqueueRoute(with: ChangeAddressRouter.RouteType.map)
-            changeAddressRouter.selectedAddress = { [weak self] address in
+            coordinator.openMap() { [weak self] address in
                 cellModel.description = address
                 self?.address = address
                 self?.cellModels[indexPath.row] = cellModel
                 self?.outputs.reloadCellAt.accept(indexPath)
             }
         case .brand:
-            changeAddressRouter.enqueueRoute(with: ChangeAddressRouter.RouteType.brand)
-            changeAddressRouter.selectedBrand = { [weak self] brand in
+            coordinator.openBrands() { [weak self] brand in
                 cellModel.description = brand.name
                 self?.brand = brand
                 self?.cellModels[indexPath.row] = cellModel
@@ -88,20 +90,18 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
             }
         case .city:
             guard let countryId = country?.id else {
-                changeAddressRouter.alert(title: "Ошибка", message: "Пожалуйста, выберите сначала страну")
+                coordinator.alert(title: "Ошибка", message: "Пожалуйста, выберите сначала страну")
                 return
             }
-
-            changeAddressRouter.enqueueRoute(with: ChangeAddressRouter.RouteType.city(countryId: countryId))
-            changeAddressRouter.selectedCity = { [weak self] city in
+            
+            coordinator.openCitiesList(countryId: countryId) { [weak self] city in
                 cellModel.description = city.name
                 self?.city = city
                 self?.cellModels[indexPath.row] = cellModel
                 self?.outputs.reloadCellAt.accept(indexPath)
             }
         case .country:
-            router.enqueueRoute(with: ChangeAddressRouter.RouteType.country)
-            changeAddressRouter.selectedCountry = { [weak self] country in
+            coordinator.openCountriesList() { [weak self] country in
                 cellModel.description = country.name
                 self?.country = country
                 self?.cellModels[indexPath.row] = cellModel
@@ -111,6 +111,10 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
         }
 
         checkInputs()
+    }
+    
+    func didFinish() {
+        coordinator.didFinish()
     }
 
     struct Output {

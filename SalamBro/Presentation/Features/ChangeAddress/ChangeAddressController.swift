@@ -81,7 +81,9 @@ final class ChangeAddressController: ViewController {
             self?.dismiss(animated: true, completion: nil)
         }
         let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
-            self?.viewModel.changeAddress()
+            self?.viewModel.changeAddress() {
+                self?.dismiss(animated: true)
+            }
         }
 
         [cancelAction, yesAction].forEach { alert.addAction($0) }

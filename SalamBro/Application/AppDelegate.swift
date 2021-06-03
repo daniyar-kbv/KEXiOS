@@ -14,7 +14,7 @@ import YandexMapKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
-    private let coordinator = DIResolver.resolve(Coordinator.self)!
+    private let coordinator = DIResolver.resolve(AppCoordinator.self)!
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // if you don't have TMDB-Info.plist, just set your key in setApiKey()

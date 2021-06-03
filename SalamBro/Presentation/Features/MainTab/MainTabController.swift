@@ -14,47 +14,14 @@ protocol MainTabDelegate {
 }
 
 final class MainTabController: UITabBarController {
+    let coordinator = TabBarCoordinator(navigationController: UINavigationController())
     var itemCount: Int = 0
-
-    lazy var menu: MenuController = {
-        let router = MenuRouter()
-        let viewModel = MenuViewModel(router: router,
-                                      menuRepository: DIResolver.resolve(MenuRepository.self)!,
-                                      locationRepository: DIResolver.resolve(LocationRepository.self)!,
-                                      brandRepository: DIResolver.resolve(BrandRepository.self)!,
-                                      geoRepository: DIResolver.resolve(GeoRepository.self)!)
-        let vc = MenuController(viewModel: viewModel)
-        router.baseViewController = vc
-        vc.tabBarItem.title = L10n.MainTab.Menu.title
-        vc.tabBarItem.image = Asset.menu.image
-        return vc
-    }()
-
-    lazy var profile: ProfileController = {
-        let vc = ProfileController()
-        vc.tabBarItem.title = L10n.MainTab.Profile.title
-        vc.tabBarItem.image = Asset.profile.image
-        return vc
-    }()
-
-    lazy var support: SupportController = {
-        let vc = SupportController()
-        vc.tabBarItem.title = L10n.MainTab.Support.title
-        vc.tabBarItem.image = Asset.support.image
-        return vc
-    }()
-
-    lazy var cart: CartController = {
-        let vc = CartController()
-        vc.mainTabDelegate = self
-        vc.tabBarItem.title = L10n.MainTab.Cart.title
-        vc.tabBarItem.image = Asset.cart.image
-        vc.tabBarItem.badgeColor = .kexRed
-        return vc
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        coordinator.start()
+        
         configureUI()
         configureViewControllers()
     }
@@ -70,38 +37,22 @@ extension MainTabController {
     }
 
     func configureViewControllers() {
-        let controllers = [templateNavigationController(title: L10n.MainTab.Menu.title,
-                                                        image: Asset.menu.image,
-                                                        rootViewController: menu),
-                           templateNavigationController(title: L10n.MainTab.Profile.title,
-                                                        image: Asset.profile.image,
-                                                        rootViewController: profile),
-                           templateNavigationController(title: L10n.MainTab.Support.title,
-                                                        image: Asset.support.image,
-                                                        rootViewController: support),
-                           templateNavigationController(title: L10n.MainTab.Cart.title,
-                                                        image: Asset.cart.image,
-                                                        rootViewController: cart)]
-        viewControllers = controllers
-    }
-
-    func templateNavigationController(title: String, image: UIImage?, rootViewController: UIViewController) -> UINavigationController {
-        let nav = UINavigationController(rootViewController: rootViewController)
-        nav.tabBarItem.title = title
-        nav.tabBarItem.image = image
-        nav.navigationBar.tintColor = .white
-        return nav
+        viewControllers = coordinator.getChildNavigationControllers()
     }
 }
 
 extension MainTabController: MainTabDelegate {
+    func getCart() -> CartController? {
+        return coordinator.getCoordinators().first(where: { $0.tabType == .cart })?.childNavigationController.viewControllers.first as? CartController
+    }
+    
     func changeController(id: Int) {
         selectedIndex = id
     }
 
     func setCount(count: Int) {
         itemCount = count
-        cart.tabBarItem.badgeValue = "\(itemCount)"
+        getCart()?.tabBarItem.badgeValue = "\(itemCount)"
     }
 
     func updateCounter(isIncrease: Bool) {
@@ -111,9 +62,9 @@ extension MainTabController: MainTabDelegate {
             itemCount -= 1
         }
         if itemCount != 0 {
-            cart.tabBarItem.badgeValue = "\(itemCount)"
+            getCart()?.tabBarItem.badgeValue = "\(itemCount)"
         } else {
-            cart.tabBarItem.badgeValue = nil
+            getCart()?.tabBarItem.badgeValue = nil
         }
     }
 }

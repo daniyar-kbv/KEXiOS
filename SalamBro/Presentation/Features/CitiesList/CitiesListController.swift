@@ -113,6 +113,14 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
     }
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelect(index: indexPath.row)
+        viewModel.didSelect(index: indexPath.row) { [weak self] type in
+            guard let type = type as? AddressCoordinator.FlowType else { return }
+            switch type {
+            case .changeAddress:
+                self?.dismiss(animated: true)
+            default:
+                break
+            }
+        }
     }
 }

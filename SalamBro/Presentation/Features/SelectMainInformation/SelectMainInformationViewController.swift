@@ -103,6 +103,12 @@ final class SelectMainInformationViewController: ViewController {
             self.addressTextField.currentValue = $0
         }.disposed(by: disposeBag)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        viewModel.coordinator.didFinish()
+    }
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
@@ -147,7 +153,9 @@ final class SelectMainInformationViewController: ViewController {
 
     @objc
     private func save() {
-        viewModel.save()
+        viewModel.save() { [weak self] in
+            self?.dismiss(animated: true)
+        }
     }
 }
 
