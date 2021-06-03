@@ -568,7 +568,6 @@
 			isa = PBXGroup;
 			children = (
 				E7614CF30AE2C9C14A22E9C4B8FEC3B6 /* SupportController.swift */,
-				14B419052667B8680098BF1C /* SupportCoordinator.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -986,7 +985,6 @@
 			children = (
 				64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */,
 				22D7CBF5AAA6491FB72FECC42FABB91B /* OrderTestCell.swift */,
-				145D673B2669024200FF7F7C /* OrderHistoryCoordinator.swift */,
 			);
 			path = OrderHistory;
 			sourceTree = "<group>";
@@ -1058,7 +1056,6 @@
 				A50214DE7792FC479E7CD89C5326AB66 /* CartProductCell.swift */,
 				BBBA8BFA8F269A2808DE9FFAFAF5F7F0 /* CartProductCell.xib */,
 				889994BF499E6C628B97B3075AAD5455 /* CartViewModel.swift */,
-				14B4190A2667B8E60098BF1C /* CartCoordinator.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -1194,7 +1191,6 @@
 			children = (
 				B3B432D20EEDD2E0AD9E70AB79CAB6A6 /* ProfileController.swift */,
 				D8A56E17FF10703C24CC4172E0F01609 /* ProfileView.swift */,
-				14B419002667B18E0098BF1C /* ProfileCoordinator.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1222,7 +1218,6 @@
 			children = (
 				757805B8AE99AE51BB41F1F0DAE7F1CC /* AddressCell.swift */,
 				8CE579AAB62F7285D13D8932137024BD /* AddressListController.swift */,
-				145D67402669040400FF7F7C /* AddressListCoordinator.swift */,
 			);
 			path = AddressList;
 			sourceTree = "<group>";
@@ -1278,7 +1273,6 @@
 				963541475F483ED939FA8CD9C71E8855 /* CustomSegment.swift */,
 				81D907407B02F778FF81888E372DE8D8 /* RatingCell.swift */,
 				E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */,
-				145D67312668FCCA00FF7F7C /* RatingCoordinator.swift */,
 			);
 			path = Rating;
 			sourceTree = "<group>";
@@ -1289,7 +1283,6 @@
 				71ABCCF50A3B4102B911CE7EF8C8ED25 /* Submodules */,
 				6CBC22771588BAF24202F1C7E9CA5E65 /* MenuController.swift */,
 				6F994AFCF9BB2D3C734FACBD8CB50974 /* MenuViewModel.swift */,
-				14B418F3266793E20098BF1C /* MenuCoordinator.swift */,
 				145D674826690F2900FF7F7C /* MenuScrollService.swift */,
 			);
 			path = Menu;
@@ -1367,9 +1360,17 @@
 			isa = PBXGroup;
 			children = (
 				DBFD287A9DA50230ACE28CA1D282AB4B /* Coordinator.swift */,
-				9CE900EFB624E30BE368D665C9C08EEB /* AuthCoordinator.swift */,
-				14B418D02667762B0098BF1C /* AddressCoordinator.swift */,
 				14B418F82667AE620098BF1C /* TabBarCoordinator.swift */,
+				14B418F3266793E20098BF1C /* MenuCoordinator.swift */,
+				14B419002667B18E0098BF1C /* ProfileCoordinator.swift */,
+				14B419052667B8680098BF1C /* SupportCoordinator.swift */,
+				14B4190A2667B8E60098BF1C /* CartCoordinator.swift */,
+				9CE900EFB624E30BE368D665C9C08EEB /* AuthCoordinator.swift */,
+				145D67362668FFB600FF7F7C /* MenuDetailCoordinator.swift */,
+				145D67402669040400FF7F7C /* AddressListCoordinator.swift */,
+				145D673B2669024200FF7F7C /* OrderHistoryCoordinator.swift */,
+				145D67312668FCCA00FF7F7C /* RatingCoordinator.swift */,
+				14B418D02667762B0098BF1C /* AddressCoordinator.swift */,
 			);
 			path = FlowCoordinators;
 			sourceTree = "<group>";
@@ -1389,7 +1390,6 @@
 			children = (
 				51703115257AFC924D7046E0AD614190 /* MenuDetailController.swift */,
 				A149A08B6C3B89EB477BB7C1D8D66FA4 /* MenuDetailViewModel.swift */,
-				145D67362668FFB600FF7F7C /* MenuDetailCoordinator.swift */,
 			);
 			path = MenuDetail;
 			sourceTree = "<group>";
