@@ -77,17 +77,18 @@ class CartController: ViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     init(viewModel: CartViewModel) {
-        self.cartViewModel = viewModel
-        
+        cartViewModel = viewModel
+
         super.init(nibName: .none, bundle: .none)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 //        cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
@@ -302,7 +303,7 @@ extension CartController: MapDelegate {
         let bounds = UIScreen.main.bounds
         let height = bounds.size.height
 
-        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 30 - heightOfSheet, width: width, height: heightOfSheet)
+        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 49 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 64 - heightOfSheet, width: width, height: heightOfSheet)
     }
 
     func passCommentary(text _: String) {
