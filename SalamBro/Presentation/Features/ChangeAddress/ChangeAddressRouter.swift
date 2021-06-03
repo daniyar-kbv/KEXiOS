@@ -55,13 +55,12 @@ final class ChangeAddressRouter: Router {
             }
             router.present(on: baseVC, context: context)
         case .map:
-            let mapController = MapViewController()
-            mapController.modalPresentationStyle = .fullScreen
-            mapController.isAddressChangeFlow = true
-            mapController.selectedAddress = { [weak self] address in
-                self?.selectedAddress?(address)
+            let mapPage = MapPage(viewModel: MapViewModel(flow: .change))
+            mapPage.modalPresentationStyle = .fullScreen
+            mapPage.selectedAddress = { [weak self] address in
+                self?.selectedAddress?(address.name)
             }
-            baseVC.present(mapController, animated: true, completion: nil)
+            baseVC.present(mapPage, animated: true, completion: nil)
         case .country:
             let router = CountriesListRouter()
             let context = CountriesListRouter.PresentationContext.present { [weak self] selectedCountry in

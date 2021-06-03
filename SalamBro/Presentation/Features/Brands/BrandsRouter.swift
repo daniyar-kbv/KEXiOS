@@ -52,7 +52,7 @@ final class BrandsRouter: Router {
         }
     }
 
-    func enqueueRoute(with context: Any?, animated: Bool, completion _: (() -> Void)?) {
+    func enqueueRoute(with context: Any?, animated _: Bool, completion _: (() -> Void)?) {
         guard let routeType = context as? RouteType else {
             assertionFailure("The route type mismatch")
             return
@@ -65,8 +65,8 @@ final class BrandsRouter: Router {
 
         switch routeType {
         case .map:
-            let vc = MapViewController()
-            baseVC.navigationController?.pushViewController(vc, animated: animated)
+            let mapPage = MapPage(viewModel: MapViewModel(flow: .creation))
+            baseVC.navigationController?.pushViewController(mapPage, animated: true)
         }
     }
 
