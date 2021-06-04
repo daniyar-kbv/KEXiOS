@@ -2181,7 +2181,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.25;
-				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
+				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.test.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -2250,7 +2250,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.25;
-				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
+				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.test.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

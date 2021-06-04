@@ -100,8 +100,8 @@ class AddressCoordinator: Coordinator {
             present(vc: mapPage)
         case .firstFlow:
             mapPage = MapPage(viewModel: MapViewModel(flow: .creation))
-            mapPage.selectedAddress = { address in
-                didSelectAddress?(address.name)
+            mapPage.selectedAddress = { [weak self] _ in
+                self?.finishFlow(completion: {})
             }
             push(vc: mapPage)
         }

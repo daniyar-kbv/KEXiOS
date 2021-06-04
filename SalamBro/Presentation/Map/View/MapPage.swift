@@ -42,7 +42,6 @@ final class MapPage: UIViewController, AlertDisplayable {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         locationManager.delegate = self
-        navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     @available(*, unavailable)
@@ -56,6 +55,11 @@ final class MapPage: UIViewController, AlertDisplayable {
         bindViews()
         bindViewModel()
         configureMap()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
 }
 
