@@ -88,14 +88,22 @@ class AddressCoordinator: Coordinator {
     }
 
     func openMap(didSelectAddress: ((String) -> Void)? = nil) {
-        let vc = MapViewController(coordinator: self, flowType: flowType)
-        vc.selectedAddress = didSelectAddress
+        var mapPage: MapPage
+
         switch flowType {
         case .changeAddress, .changeMainInfo:
-            vc.modalPresentationStyle = .fullScreen
-            present(vc: vc)
+            mapPage = MapPage(viewModel: MapViewModel(flow: .change))
+            mapPage.modalPresentationStyle = .fullScreen
+            mapPage.selectedAddress = { address in
+                didSelectAddress?(address.name)
+            }
+            present(vc: mapPage)
         case .firstFlow:
-            push(vc: vc)
+            mapPage = MapPage(viewModel: MapViewModel(flow: .creation))
+            mapPage.selectedAddress = { address in
+                didSelectAddress?(address.name)
+            }
+            push(vc: mapPage)
         }
     }
 

@@ -881,50 +881,20 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
-		60141896C391F19C1F6D4735ECDD030E /* AddressDetail */ = {
-			isa = PBXGroup;
-			children = (
-				A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */,
-			);
-			path = AddressDetail;
-			sourceTree = "<group>";
-		};
-		D801D8A3451A1AC25CEAB496D77A796E /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				5FBA6107E5DED0A34698164B4F6F7DCD /* Model */,
-				9048E42ACCD1C31E993C81B6386CD71D /* View */,
-				79F1E801C8EBFD3EFAE634104ED20F2A /* ViewModel */,
-				EC0963EEC46A05CF51D36214F955EE25 /* LocationManager.swift */,
-			);
-			path = Map;
-			sourceTree = "<group>";
-		};
-		9048E42ACCD1C31E993C81B6386CD71D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				8976A01735B88F1B4C48647940EE933F /* MapAddressView.swift */,
-				1D3DBDCBFAF603A9E01A1DBC8E3A5393 /* MapCommentaryPage.swift */,
-				4E01192C13A80BC791372209B05A4443 /* MapPage.swift */,
-				B84C7B199E8DF26568BC2FBC52C00C10 /* MapTextField.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		79F1E801C8EBFD3EFAE634104ED20F2A /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				C27D6C1189256ECA7BCA3FB64A2151C5 /* MapViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		5FBA6107E5DED0A34698164B4F6F7DCD /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				0BD372BAE21802BD6AC088434D5DC338 /* MapAddress.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		60141896C391F19C1F6D4735ECDD030E /* AddressDetail */ = {
+			isa = PBXGroup;
+			children = (
+				A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */,
+			);
+			path = AddressDetail;
 			sourceTree = "<group>";
 		};
 		634DF0542321FBAF896E12DD7808EC82 /* Provider */ = {
@@ -1033,6 +1003,14 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
+		79F1E801C8EBFD3EFAE634104ED20F2A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C27D6C1189256ECA7BCA3FB64A2151C5 /* MapViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		7FFF4378B5DD89D3B1B951BEF401C379 /* OrderHistory */ = {
 			isa = PBXGroup;
 			children = (
@@ -1137,6 +1115,17 @@
 				B19742C64B17125D06E84C7CD6F76F4C /* DownloadMenuDetailItemResponse.swift */,
 			);
 			path = Responses;
+			sourceTree = "<group>";
+		};
+		9048E42ACCD1C31E993C81B6386CD71D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8976A01735B88F1B4C48647940EE933F /* MapAddressView.swift */,
+				1D3DBDCBFAF603A9E01A1DBC8E3A5393 /* MapCommentaryPage.swift */,
+				4E01192C13A80BC791372209B05A4443 /* MapPage.swift */,
+				B84C7B199E8DF26568BC2FBC52C00C10 /* MapTextField.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		90D26D8C3FA6247B6261E9F02331ACB6 /* Network */ = {
@@ -1358,6 +1347,17 @@
 				DEC1F0863C3CF15A586800BFA2AC3838 /* CountriesResponse.swift */,
 			);
 			path = Responses;
+			sourceTree = "<group>";
+		};
+		D801D8A3451A1AC25CEAB496D77A796E /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				5FBA6107E5DED0A34698164B4F6F7DCD /* Model */,
+				9048E42ACCD1C31E993C81B6386CD71D /* View */,
+				79F1E801C8EBFD3EFAE634104ED20F2A /* ViewModel */,
+				EC0963EEC46A05CF51D36214F955EE25 /* LocationManager.swift */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		DB68AE98DF401CDC7C551CDA355C599D /* Models */ = {
@@ -2173,7 +2173,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = ULVD64ZNV2;
+				DEVELOPMENT_TEAM = S4325F4YCU;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2242,7 +2242,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = ULVD64ZNV2;
+				DEVELOPMENT_TEAM = S4325F4YCU;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
