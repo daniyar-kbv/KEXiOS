@@ -37,8 +37,9 @@ final class ChangeAddressController: ViewController {
         super.viewWillAppear(animated)
         navigationItem.title = L10n.AddressPicker.titleMany
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+            .font: UIFont.systemFont(ofSize: 18, weight: .medium),
         ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
         viewModel.checkInputs()
     }
 
@@ -53,6 +54,7 @@ final class ChangeAddressController: ViewController {
         viewModel.outputs.reloadCellAt
             .bind { [weak self] indexPath in
                 self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+                self?.tableView.reloadData()
             }
             .disposed(by: disposeBag)
 
@@ -81,7 +83,7 @@ final class ChangeAddressController: ViewController {
             self?.dismiss(animated: true, completion: nil)
         }
         let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
-            self?.viewModel.changeAddress() {
+            self?.viewModel.changeAddress {
                 self?.dismiss(animated: true)
             }
         }
@@ -89,6 +91,10 @@ final class ChangeAddressController: ViewController {
         [cancelAction, yesAction].forEach { alert.addAction($0) }
 
         present(alert, animated: true, completion: nil)
+    }
+
+    @objc func goBack() {
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -100,7 +106,7 @@ extension ChangeAddressController {
         tableView.dataSource = self
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
-        tableView.rowHeight = 56
+        tableView.rowHeight = 64
         tableView.separatorColor = .white
         tableView.register(ChangeAddressBrandCell.self, forCellReuseIdentifier: ChangeAddressBrandCell.reuseIdentifier)
         tableView.register(ChangeAddressEmptyCell.self, forCellReuseIdentifier: ChangeAddressEmptyCell.reuseIdentifier)
@@ -134,33 +140,24 @@ extension ChangeAddressController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = viewModel.getCellModel(for: indexPath)
-
-        // MARK: Tech debt, перенесу во viewModel
-
-        switch cellModel.inputType {
-        case .brand:
-            guard let brandCell = tableView.dequeueReusableCell(withIdentifier: ChangeAddressBrandCell.reuseIdentifier, for: indexPath) as? ChangeAddressBrandCell else {
-                fatalError()
-            }
-
-            brandCell.configure(dto: cellModel)
-            return brandCell
-        case .empty:
-            guard let emptyCell = tableView.dequeueReusableCell(withIdentifier: ChangeAddressEmptyCell.reuseIdentifier, for: indexPath) as? ChangeAddressEmptyCell else {
-                fatalError()
-            }
-
-            return emptyCell
-        default:
-            guard let changeAddressCell = tableView.dequeueReusableCell(withIdentifier: ChangeAddressTableViewCell.reuseIdentifier, for: indexPath) as? ChangeAddressTableViewCell else {
-                fatalError()
-            }
-            changeAddressCell.configure(dto: cellModel)
-            return changeAddressCell
-        }
+        return viewModel.getCell(with: cellModel, for: indexPath, in: tableView)
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.changeRoute(indexPath: indexPath)
+        tableView.reloadData()
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection _: Int) -> UIView? {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width - 40, height: 40))
+        let lbl = UILabel(frame: CGRect(x: 25, y: 0, width: footerView.frame.size.width, height: 35))
+        lbl.textColor = .mildBlue
+        lbl.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        lbl.backgroundColor = .white
+        lbl.text = "Наличие или отсутствие того или иного бренда - зависит от Вашего адреса доставки"
+        lbl.numberOfLines = 0
+        lbl.lineBreakMode = .byWordWrapping
+        footerView.addSubview(lbl)
+        return footerView
     }
 }
