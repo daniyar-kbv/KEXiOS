@@ -91,6 +91,7 @@ internal enum Asset {
     internal static let marker = ImageAsset(name: "marker")
     internal static let menu = ImageAsset(name: "menu")
     internal static let profile = ImageAsset(name: "profile")
+    internal static let right = ImageAsset(name: "right")
     internal static let search = ImageAsset(name: "search")
     internal static let secondPlace = ImageAsset(name: "secondPlace")
     internal static let shareToInstagram = ImageAsset(name: "shareToInstagram")

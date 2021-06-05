@@ -57,7 +57,6 @@ final class SelectMainInformationViewController: ViewController {
             countryTextField,
             citiesTextField,
             addressTextField,
-//            brandsTextField,
         ])
         view.axis = .vertical
         view.spacing = 16
@@ -104,15 +103,16 @@ final class SelectMainInformationViewController: ViewController {
         }.disposed(by: disposeBag)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = L10n.SelectMainInfo.title
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(back))
+    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
         viewModel.coordinator.didFinish()
-    }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.title = L10n.SelectMainInfo.title
     }
 
     private func setup() {

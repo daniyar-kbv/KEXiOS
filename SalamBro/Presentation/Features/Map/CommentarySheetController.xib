@@ -18,11 +18,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="502" height="149"/>
+            <rect key="frame" x="0.0" y="0.0" width="502" height="163"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r2J-fj-sGo" userLabel="contentView">
-                    <rect key="frame" x="0.0" y="0.0" width="502" height="149"/>
+                    <rect key="frame" x="0.0" y="0.0" width="502" height="177"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Eu-gc-kRX" userLabel="commentaryView">
                             <rect key="frame" x="24" y="24" width="454" height="50"/>
@@ -73,7 +73,6 @@
                         <constraint firstItem="1Eu-gc-kRX" firstAttribute="leading" secondItem="r2J-fj-sGo" secondAttribute="leading" constant="24" id="Hte-Xn-MhL"/>
                         <constraint firstAttribute="trailing" secondItem="dTU-Kb-59h" secondAttribute="trailing" constant="24" id="O2F-6G-zDO"/>
                         <constraint firstItem="dTU-Kb-59h" firstAttribute="leading" secondItem="r2J-fj-sGo" secondAttribute="leading" constant="24" id="Ym1-rF-hGf"/>
-                        <constraint firstAttribute="bottom" secondItem="dTU-Kb-59h" secondAttribute="bottom" constant="16" id="icr-dm-OW0"/>
                         <constraint firstItem="1Eu-gc-kRX" firstAttribute="top" secondItem="r2J-fj-sGo" secondAttribute="top" constant="24" id="mHg-px-I57"/>
                         <constraint firstAttribute="trailing" secondItem="1Eu-gc-kRX" secondAttribute="trailing" constant="24" id="pDW-eY-crE"/>
                     </constraints>
@@ -84,10 +83,10 @@
                 <constraint firstItem="r2J-fj-sGo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="cwF-dO-nnc"/>
                 <constraint firstItem="r2J-fj-sGo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fac-im-k5V"/>
                 <constraint firstAttribute="trailing" secondItem="r2J-fj-sGo" secondAttribute="trailing" id="vIz-ln-3aF"/>
-                <constraint firstAttribute="bottom" secondItem="r2J-fj-sGo" secondAttribute="bottom" id="vTV-3L-Q42"/>
+                <constraint firstAttribute="bottom" secondItem="r2J-fj-sGo" secondAttribute="bottom" constant="-14" id="vTV-3L-Q42"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-117.39130434782609" y="-172.43303571428569"/>
+            <point key="canvasLocation" x="-117.39130434782609" y="-167.74553571428569"/>
         </view>
     </objects>
     <resources>

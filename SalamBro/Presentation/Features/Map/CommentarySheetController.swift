@@ -26,7 +26,7 @@ class CommentarySheetController: ViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        yCoordinate = view.frame.origin.y - 49
+        yCoordinate = view.frame.origin.y
         beginEdit()
         delegate?.mapShadow(toggle: true)
     }
@@ -56,15 +56,15 @@ class CommentarySheetController: ViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if getScreenSize() == 40 {
-                view.frame.origin.y -= keyboardSize.height / getScreenSize()
+                view.frame.origin.y -= keyboardSize.height - 63
             } else {
-                view.frame.origin.y -= keyboardSize.height
+                view.frame.origin.y -= keyboardSize.height - 49
             }
         }
     }
 
     @objc func keyboardWillHide(notification _: NSNotification) {
-        view.frame.origin.y = yCoordinate!
+        view.frame.origin.y = getScreenSize() == 40 ? yCoordinate! - 5 : yCoordinate!
     }
 
     @IBAction func buttonAction(_: UIButton) {
