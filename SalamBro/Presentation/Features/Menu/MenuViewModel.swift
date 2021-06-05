@@ -57,13 +57,13 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     public func selectMainInfo() {
-        coordinator.openSelectMainInfo() { [unowned self] in
+        coordinator.openSelectMainInfo { [unowned self] in
             self.update()
         }
     }
 
     public func selectAddress() {
-        coordinator.openChangeAddress() { [unowned self] _ in
+        coordinator.openChangeAddress { [unowned self] _ in
             self.update()
         }
     }
@@ -75,31 +75,31 @@ final class MenuViewModel: MenuViewModelProtocol {
         updateTableView.accept(())
         firstly {
             self.menuRepository.downloadMenuAds()
-        } .done {
+        }.done {
             self.cellViewModels.append([
                 AddressPickCellViewModel(address: self.geoRepository.currentAddress),
                 AdCollectionCellViewModel(ads: $0.map { AdUI(from: $0) }),
             ])
-        } .then {
+        }.then {
             self.menuRepository.downloadMenuCategories()
-        } .done {
+        }.done {
             self.headerViewModels = [
                 nil,
                 CategoriesSectionHeaderViewModel(categories: $0.map { FoodTypeUI(from: $0) }),
             ]
             self.cellViewModels.append(
-                $0.map({ category in
-                    category.foods.map({ MenuCellViewModel(categoryPosition: category.position, food: FoodUI(from: $0)) })
-                }).flatMap({ $0 })
+                $0.map { category in
+                    category.foods.map { MenuCellViewModel(categoryPosition: category.position, food: FoodUI(from: $0)) }
+                }.flatMap { $0 }
             )
 //        }.then {
 //            self.menuRepository.downloadMenuItems()
 //        }.done {
 //            self.cellViewModels.append($0.map { FoodUI(from: $0) }
 //                .map { MenuCellViewModel(food: $0) })
-        } .catch {
+        }.catch {
             self.coordinator.alert(error: $0)
-        } .finally {
+        }.finally {
             self.updateTableView.accept(())
             self.stopAnimation()
         }

@@ -12,7 +12,7 @@ final class AppCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
-    
+
     private let geoRepository: GeoRepository
     private let brandRepository: BrandRepository
 
@@ -42,6 +42,6 @@ final class AppCoordinator: Coordinator {
         let vc = MainTabController()
         UIApplication.shared.setRootView(vc)
     }
-    
-    func didFinish() { }
+
+    func didFinish() {}
 }

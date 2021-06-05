@@ -65,13 +65,13 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     }
 
     func selectBrand() {
-        coordinator.openBrands() { [unowned self] in
+        coordinator.openBrands { [unowned self] in
             self.didChange(brand: $0)
         }
     }
 
     func selectAddress() {
-        coordinator.openAddressPicker() { [unowned self] in
+        coordinator.openAddressPicker { [unowned self] in
             self.didChange(address: $0)
         }
     }

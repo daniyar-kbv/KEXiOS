@@ -10,7 +10,7 @@ import UIKit
 
 class SupportController: ViewController {
     var coordinator: SupportCoordinator
-    
+
     lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
@@ -86,17 +86,18 @@ class SupportController: ViewController {
         button.layer.masksToBounds = true
         return button
     }()
-    
+
     init(coordinator: SupportCoordinator) {
         self.coordinator = coordinator
-        
+
         super.init(nibName: .none, bundle: .none)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white

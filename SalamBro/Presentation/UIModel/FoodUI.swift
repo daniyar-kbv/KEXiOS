@@ -12,7 +12,6 @@ public struct FoodUI {
     let title: String
     let price: Int
     let description: String
-    
 }
 
 public extension FoodUI {

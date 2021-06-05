@@ -13,17 +13,17 @@ final class AuthCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    
+
     private let disposeBag = DisposeBag()
     private let pagesFactory: AuthPagesFactory
-    
+
     init(navigationController: UINavigationController, pagesFactory: AuthPagesFactory) {
         self.navigationController = navigationController
         self.pagesFactory = pagesFactory
-        
+
         self.pagesFactory.coordinator = self
     }
-    
+
     func start() {
         let authPage = pagesFactory.makeAuthorizationPage()
 
@@ -68,20 +68,20 @@ final class AuthCoordinator: Coordinator {
 
         navigationController.pushViewController(nameEnteringPage, animated: true)
     }
-    
+
     func showCountryCodePicker(onSelectCountry: @escaping ((Country) -> Void)) {
         let countryCodePickerPage = pagesFactory.makeCountryCodePickerPage()
-        
+
         countryCodePickerPage.outputs.didSelectCountryCode
             .subscribe(onNext: { [weak self] country in
                 onSelectCountry(country)
                 self?.navigationController.presentingViewController?.dismiss(animated: true)
             }).disposed(by: disposeBag)
-        
+
         let nav = UINavigationController(rootViewController: countryCodePickerPage)
         navigationController.present(nav, animated: true)
     }
-    
+
     func didFinish() {
         parentCoordinator?.childDidFinish(self)
     }

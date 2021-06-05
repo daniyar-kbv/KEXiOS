@@ -9,6 +9,10 @@ import CoreLocation
 import UIKit
 import YandexMapKitSearch
 
+protocol SuggestControllerDelegate: AnyObject {
+    func reverseGeocoding(searchQuery: String, title: String)
+}
+
 class SuggestController: ViewController {
     @IBOutlet var contentView: UIView!
     @IBOutlet var tableView: UITableView!
@@ -23,7 +27,10 @@ class SuggestController: ViewController {
     var targetLocation = YMKPoint()
 
     var fullQuery: String = ""
-    weak var delegate: MapDelegate?
+
+    weak var delegate: MapDelegate? // MARK: Legacy
+
+    weak var suggestDelegate: SuggestControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +46,7 @@ class SuggestController: ViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // legacy
         delegate?.mapShadow(toggle: true)
     }
 
@@ -96,9 +104,11 @@ class SuggestController: ViewController {
     }
 
     @IBAction func cancelAction(_: UIButton) {
-        dismiss(animated: true) {
-            self.delegate?.mapShadow(toggle: false)
-        }
+        dismiss(animated: true, completion: nil)
+
+        // MARK: Tech debt, legacy
+
+        delegate?.mapShadow(toggle: false)
     }
 }
 
@@ -128,9 +138,15 @@ extension SuggestController: UITableViewDataSource, UITableViewDelegate {
             fullQuery = cell.addressTitle.text!
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        dismiss(animated: true) {
-            self.delegate?.reverseGeocoding(searchQuery: self.fullQuery, title: self.searchBar.text!)
-            self.delegate?.mapShadow(toggle: false)
-        }
+        dismiss(animated: true, completion: nil)
+
+        guard let title = searchBar.text else { return }
+
+        suggestDelegate?.reverseGeocoding(searchQuery: fullQuery, title: title)
+
+        // MARK: Tech debt, legacy
+
+        delegate?.reverseGeocoding(searchQuery: fullQuery, title: title)
+        delegate?.mapShadow(toggle: false)
     }
 }

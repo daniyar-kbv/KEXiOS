@@ -20,9 +20,9 @@ class MapViewController: ViewController {
 //    private let coordinator = DIResolver.resolve(AppCoordinator.self)! // TODO:
 
     var selectedAddress: ((String) -> Void)?
-    
+
     var flowType: AddressCoordinator.FlowType
-    
+
     enum FlowType {
         case change
         case select
@@ -72,18 +72,19 @@ class MapViewController: ViewController {
     let addressSheetVC = AddressSheetController()
     let suggestVC = SuggestController()
     let commentarySheetVC = CommentarySheetController()
-    
+
     init(coordinator: AddressCoordinator, flowType: AddressCoordinator.FlowType) {
         self.coordinator = coordinator
         self.flowType = flowType
-        
+
         super.init(nibName: .none, bundle: .none)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()

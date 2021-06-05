@@ -13,20 +13,20 @@ class AddressCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     weak var childNavigationController: UINavigationController!
-    
+
     var flowType: FlowType
-    
+
     enum FlowType {
         case changeAddress(didSelectAddress: ((Address) -> Void)?)
         case changeMainInfo(didSave: (() -> Void)?)
         case firstFlow
     }
-    
+
     init(navigationController: UINavigationController, flowType: FlowType) {
         self.navigationController = navigationController
         self.flowType = flowType
     }
-    
+
     func openAddressPicker(didSelectAddress: ((Address) -> Void)?) {
         let viewModel = AddressPickerViewModel(coordinator: self,
                                                repository: DIResolver.resolve(GeoRepository.self)!,
@@ -35,7 +35,7 @@ class AddressCoordinator: Coordinator {
         let nav = UINavigationController(rootViewController: vc)
         present(vc: nav)
     }
-    
+
     // Old realization with presents
     func openChangeAddress() {
         let viewModel = ChangeAddressViewModelImpl(coordinator: self)
@@ -43,7 +43,7 @@ class AddressCoordinator: Coordinator {
         let nav = UINavigationController(rootViewController: changeAddressController)
         present(vc: nav)
     }
-    
+
     func openCountriesList(didSelectCountry: ((Country) -> Void)? = nil) {
         let viewModel = CountriesListViewModel(
             coordinator: self,
@@ -57,7 +57,7 @@ class AddressCoordinator: Coordinator {
         navigationController = nav
         UIApplication.shared.setRootView(nav)
     }
-    
+
     func openCitiesList(countryId: Int, didSelectCity: ((City) -> Void)? = nil) {
         let viewModel = CitiesListViewModel(coordinator: self,
                                             type: flowType,
@@ -68,7 +68,7 @@ class AddressCoordinator: Coordinator {
         let vc = CitiesListController(viewModel: viewModel)
         push(vc: vc)
     }
-    
+
     func openBrands(didSelectBrand: ((Brand) -> Void)? = nil) {
         let viewModel = BrandViewModel(coordinator: self,
                                        repository: DIResolver.resolve(BrandRepository.self)!,
@@ -86,19 +86,27 @@ class AddressCoordinator: Coordinator {
             push(vc: vc)
         }
     }
-    
+
     func openMap(didSelectAddress: ((String) -> Void)? = nil) {
-        let vc = MapViewController(coordinator: self, flowType: flowType)
-        vc.selectedAddress = didSelectAddress
+        var mapPage: MapPage
+
         switch flowType {
         case .changeAddress, .changeMainInfo:
-            vc.modalPresentationStyle = .fullScreen
-            present(vc: vc)
+            mapPage = MapPage(viewModel: MapViewModel(flow: .change))
+            mapPage.modalPresentationStyle = .fullScreen
+            mapPage.selectedAddress = { address in
+                didSelectAddress?(address.name)
+            }
+            present(vc: mapPage)
         case .firstFlow:
-            push(vc: vc)
+            mapPage = MapPage(viewModel: MapViewModel(flow: .creation))
+            mapPage.selectedAddress = { [weak self] _ in
+                self?.finishFlow(completion: {})
+            }
+            push(vc: mapPage)
         }
     }
-    
+
     func openSelectMainInfo(didSave: (() -> Void)? = nil) {
         let viewModel = SelectMainInformationViewModel(coordinator: self,
                                                        geoRepository: DIResolver.resolve(GeoRepository.self)!,
@@ -108,7 +116,7 @@ class AddressCoordinator: Coordinator {
         let nav = UINavigationController(rootViewController: vc)
         present(vc: nav)
     }
-    
+
     func finishFlow(completion: () -> Void) {
         switch flowType {
         case .firstFlow:
@@ -120,14 +128,14 @@ class AddressCoordinator: Coordinator {
         }
         completion()
     }
-    
+
     func start() {
         switch flowType {
         case .firstFlow:
             openCountriesList()
-        case .changeAddress(let didSelectAddress):
+        case let .changeAddress(didSelectAddress):
             openAddressPicker(didSelectAddress: didSelectAddress)
-        case .changeMainInfo(let didSave):
+        case let .changeMainInfo(didSave):
             openSelectMainInfo(didSave: didSave)
         }
     }
@@ -137,11 +145,11 @@ extension AddressCoordinator {
     func present(vc: UIViewController) {
         getLastPresentedViewController().present(vc, animated: true)
     }
-    
+
     func push(vc: UIViewController) {
         navigationController.pushViewController(vc, animated: true)
     }
-    
+
     func didFinish() {
         parentCoordinator?.childDidFinish(self)
     }

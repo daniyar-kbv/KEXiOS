@@ -86,7 +86,7 @@ public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusabl
 }
 
 extension CategoriesSectionHeader: UICollectionViewDelegate, UICollectionViewDataSource {
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         scrollService?.didSelectCategory.accept((source: .header, position: indexPath.item))
     }
 
@@ -106,7 +106,7 @@ extension CategoriesSectionHeader {
         guard scrollService?.isHeaderScrolling == false else { return }
         collectionView.selectItem(at: IndexPath(item: position, section: 0), animated: true, scrollPosition: .centeredHorizontally)
     }
-    
+
     func scrollToItem(at position: Int) {
         scrollService?.startedScrolling()
         collectionView.scrollToItem(at: IndexPath(item: position, section: 0), at: .centeredHorizontally, animated: true)
@@ -114,7 +114,7 @@ extension CategoriesSectionHeader {
 }
 
 extension CategoriesSectionHeader: UIScrollViewDelegate {
-    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndScrollingAnimation(_: UIScrollView) {
         scrollService?.finishedScrolling()
     }
 }

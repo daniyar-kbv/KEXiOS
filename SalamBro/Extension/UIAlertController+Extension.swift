@@ -8,15 +8,15 @@
 import Foundation
 import UIKit
 
-extension UIAlertController {
-    public convenience init(attributedTitle: NSAttributedString?, attributedMessage: NSAttributedString?, preferredStyle: UIAlertController.Style, actions: [UIAlertAction] = []) {
+public extension UIAlertController {
+    convenience init(attributedTitle: NSAttributedString?, attributedMessage: NSAttributedString?, preferredStyle: UIAlertController.Style, actions: [UIAlertAction] = []) {
         self.init(title: nil, message: nil, preferredStyle: preferredStyle)
 
-        self.setValue(attributedTitle, forKey: "attributedTitle")
-        self.setValue(attributedMessage, forKey: "attributedMessage")
-        self.view.tintColor = .kexRed
+        setValue(attributedTitle, forKey: "attributedTitle")
+        setValue(attributedMessage, forKey: "attributedMessage")
+        view.tintColor = .kexRed
         for action in actions {
-            self.addAction(action)
+            addAction(action)
         }
     }
 }

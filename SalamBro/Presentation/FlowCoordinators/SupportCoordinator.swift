@@ -14,23 +14,23 @@ class SupportCoordinator: TabCoordinator {
     var navigationController: UINavigationController
     weak var childNavigationController: UINavigationController!
     var tabType: TabBarCoordinator.TabType
-    
+
     init(navigationController: UINavigationController, tabType: TabBarCoordinator.TabType) {
         self.navigationController = navigationController
         self.tabType = tabType
     }
-    
+
     func openAgreement() {
         let vc = AgreementController()
         childNavigationController.pushViewController(vc, animated: true)
     }
-    
+
     func start() {
         let vc = SupportController(coordinator: self)
         childNavigationController = templateNavigationController(title: tabType.title,
-                                                      image: tabType.image,
-                                                      rootViewController: vc)
+                                                                 image: tabType.image,
+                                                                 rootViewController: vc)
     }
-    
-    func didFinish() { }
+
+    func didFinish() {}
 }

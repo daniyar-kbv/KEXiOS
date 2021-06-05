@@ -19,9 +19,9 @@ final class MainTabController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         coordinator.start()
-        
+
         configureUI()
         configureViewControllers()
     }
@@ -45,7 +45,7 @@ extension MainTabController: MainTabDelegate {
     func getCart() -> CartController? {
         return coordinator.getCoordinators().first(where: { $0.tabType == .cart })?.childNavigationController.viewControllers.first as? CartController
     }
-    
+
     func changeController(id: Int) {
         selectedIndex = id
     }

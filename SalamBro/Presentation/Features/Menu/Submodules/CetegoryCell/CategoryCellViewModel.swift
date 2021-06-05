@@ -18,7 +18,7 @@ final class CategoryCellViewModel: CategoryCellViewModelProtocol {
     var categoryTitle: BehaviorRelay<String?>
     var categoryPosition: Int
 
-    init(category: FoodTypeUI){
+    init(category: FoodTypeUI) {
         categoryPosition = .init(category.position)
         categoryTitle = .init(value: category.title)
     }

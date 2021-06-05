@@ -43,7 +43,7 @@ final class AddressPickerViewModel: AddressPickerViewModelProtocol {
         addresses = repository.addresses ?? []
         cellViewModels = repository.addresses?.map { AddressPickerCellViewModel(address: $0, isSelected: $0 == repository.currentAddress) } ?? []
     }
-    
+
     func onFinish() {
         coordinator.didFinish()
     }

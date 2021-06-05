@@ -26,7 +26,7 @@ extension Coordinator {
         child.parentCoordinator = self
         childCoordinators.append(child)
     }
-    
+
     func childDidFinish(_ child: Coordinator) {
         for (index, coordinator) in childCoordinators.enumerated() {
             if coordinator === child {
@@ -35,7 +35,7 @@ extension Coordinator {
             }
         }
     }
-    
+
     func alert(error: Error, closeHandler: (() -> Void)? = nil) {
 //        TODO: add DI
         let alertHandler = AlertHandler()
@@ -49,7 +49,7 @@ extension Coordinator {
         let context = AlertHandler.AlertType.default(title: title, message: message, closeHandler: closeHandler)
         alertHandler.present(on: getLastPresentedViewController(), animated: true, alertType: context, completion: nil)
     }
-    
+
     func getLastPresentedViewController() -> UIViewController {
         var parentVc: UIViewController = navigationController
         var childVc: UIViewController? = navigationController.presentedViewController
@@ -60,7 +60,7 @@ extension Coordinator {
         return parentVc
     }
 }
- 
+
 extension TabCoordinator {
     func templateNavigationController(title: String, image: UIImage?, rootViewController: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: rootViewController)

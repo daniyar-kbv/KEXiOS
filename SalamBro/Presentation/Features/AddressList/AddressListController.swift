@@ -27,25 +27,26 @@ final class AddressListController: ViewController {
         tv.separatorStyle = .singleLine
         return tv
     }()
-    
+
     init(coordinator: AddressListCoordinator) {
         self.coordinator = coordinator
-        
+
         super.init(nibName: .none, bundle: .none)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutUI()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         coordinator.didFinish()
     }
 

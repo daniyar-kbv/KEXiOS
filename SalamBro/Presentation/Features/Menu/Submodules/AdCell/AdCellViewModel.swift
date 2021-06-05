@@ -15,7 +15,7 @@ protocol AdCellViewModelProtocol: ViewModel {
 
 final class AdCellViewModel: AdCellViewModelProtocol {
     var adName: BehaviorRelay<String?>
-    
+
     init(ad: AdUI) {
         adName = .init(value: ad.name)
     }

@@ -11,10 +11,10 @@ public final class AlertHandler {
     public enum AlertType {
         case `default`(title: String, message: String?, closeHandler: (() -> Void)?)
         case error(message: String?, closeHandler: (() -> Void)?)
-        
+
         var attributedTitle: NSAttributedString {
             switch self {
-            case .default(let title, _, _):
+            case let .default(title, _, _):
                 return NSAttributedString(string: title,
                                           attributes: Constant.Attributes.title)
             case .error:
@@ -22,23 +22,23 @@ public final class AlertHandler {
                                           attributes: Constant.Attributes.title)
             }
         }
-        
+
         var attributedMessage: NSAttributedString? {
             switch self {
-            case .default( _, let message, _):
+            case let .default(_, message, _):
                 guard let message = message else { return nil }
                 return NSAttributedString(string: message, attributes: Constant.Attributes.message)
-            case .error(let message, _):
+            case let .error(message, _):
                 guard let message = message else { return nil }
                 return NSAttributedString(string: message, attributes: Constant.Attributes.message)
             }
         }
-        
+
         var closeHandler: (() -> Void)? {
             switch self {
-            case .default( _, _, let closeHandler):
+            case let .default(_, _, closeHandler):
                 return closeHandler
-            case .error( _, let closeHandler):
+            case let .error(_, closeHandler):
                 return closeHandler
             }
         }
@@ -63,21 +63,20 @@ public final class AlertHandler {
     }
 
     public func present(on baseVC: UIViewController, animated: Bool, alertType: AlertType, completion _: (() -> Void)?) {
-        
         let alert = constructAttributedAlert(alertType: alertType)
 
         baseVC.present(alert, animated: animated)
     }
-    
+
     private func constructAttributedAlert(alertType: AlertType) -> UIAlertController {
         let actions: [UIAlertAction] = [
             UIAlertAction(title: Constant.Title.close, style: .default) { _ in
                 DispatchQueue.main.async {
                     alertType.closeHandler?()
                 }
-            }
+            },
         ]
-        
+
         let alert = UIAlertController(
             attributedTitle: alertType.attributedTitle,
             attributedMessage: alertType.attributedMessage,
@@ -86,7 +85,7 @@ public final class AlertHandler {
         )
 
         alert.view.tintColor = .kexRed
-        
+
         return alert
     }
 }

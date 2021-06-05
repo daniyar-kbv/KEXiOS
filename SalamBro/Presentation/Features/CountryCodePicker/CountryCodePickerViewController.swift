@@ -13,7 +13,7 @@ import UIKit
 final class CountryCodePickerViewController: ViewController {
     private let viewModel: CountryCodePickerViewModelProtocol
     private let disposeBag: DisposeBag
-    
+
     let outputs = Output()
 
     private lazy var citiesTableView: UITableView = {

@@ -9,7 +9,7 @@ import UIKit
 
 class RatingController: ViewController {
     var coordinator: RatingCoordinator
-    
+
     lazy var segmentedControlView: CustomSegmentedControl = {
         let view = CustomSegmentedControl(buttonTitle: [L10n.Rating.overall, L10n.Rating.weekly])
         view.selectorViewColor = .kexRed
@@ -110,26 +110,27 @@ class RatingController: ViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     init(coordinator: RatingCoordinator) {
         self.coordinator = coordinator
-        
+
         super.init(nibName: .none, bundle: .none)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         coordinator.didFinish()
     }
 

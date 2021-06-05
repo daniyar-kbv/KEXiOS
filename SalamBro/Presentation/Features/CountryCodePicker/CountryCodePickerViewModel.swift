@@ -34,7 +34,7 @@ final class CountryCodePickerViewModel: CountryCodePickerViewModelProtocol {
     }
 
     private func download() {
-//        TODO: finish 
+//        TODO: finish
 //        startAnimation()
 //        firstly {
 //            repository.downloadCountries()
@@ -52,8 +52,7 @@ final class CountryCodePickerViewModel: CountryCodePickerViewModelProtocol {
 //        }
     }
 
-    init(repository: GeoRepository)
-    {
+    init(repository: GeoRepository) {
         self.repository = repository
         cellViewModels = []
         updateTableView = .init(value: nil)

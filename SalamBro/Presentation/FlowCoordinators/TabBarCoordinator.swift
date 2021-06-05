@@ -13,35 +13,35 @@ class TabBarCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var tabTypes = TabType.allCases
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    
+
     func start() {
-        childCoordinators = tabTypes.map({ $0.coordinator })
+        childCoordinators = tabTypes.map { $0.coordinator }
         for coordinator in childCoordinators {
             coordinator.start()
         }
     }
-    
+
     func getCoordinators() -> [TabCoordinator] {
         guard let childCoordinators = childCoordinators as? [TabCoordinator] else { return [] }
         return childCoordinators
     }
-    
+
     func getChildNavigationControllers() -> [UINavigationController] {
-        return getCoordinators().map({ $0.childNavigationController })
+        return getCoordinators().map { $0.childNavigationController }
     }
-    
-    func didFinish() { }
-    
+
+    func didFinish() {}
+
     enum TabType: CaseIterable {
         case menu
         case profile
         case support
         case cart
-        
+
         var title: String {
             switch self {
             case .menu:
@@ -54,7 +54,7 @@ class TabBarCoordinator: Coordinator {
                 return L10n.MainTab.Cart.title
             }
         }
-        
+
         var image: UIImage {
             switch self {
             case .menu:
@@ -67,7 +67,7 @@ class TabBarCoordinator: Coordinator {
                 return Asset.cart.image
             }
         }
-        
+
         var coordinator: TabCoordinator {
             switch self {
             case .menu:

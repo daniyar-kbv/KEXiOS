@@ -47,10 +47,10 @@ final class CountriesListController: ViewController {
         setup()
         bind()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         viewModel.coordinator.didFinish()
     }
 

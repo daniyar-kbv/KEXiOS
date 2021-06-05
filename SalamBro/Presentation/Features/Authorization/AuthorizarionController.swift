@@ -139,7 +139,7 @@ extension AuthorizationController {
     }
 
     @objc func handlecCountryCodeButtonAction() {
-        viewModel.coordinator.showCountryCodePicker() { [weak self] in
+        viewModel.coordinator.showCountryCodePicker { [weak self] in
             self?.countryCodeButton.setTitle($0.countryCode, for: .normal)
         }
     }

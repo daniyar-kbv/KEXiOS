@@ -15,7 +15,7 @@ protocol AddressPickCellViewModelProtocol: ViewModel {
 
 final class AddressPickCellViewModel: AddressPickCellViewModelProtocol {
     var address: BehaviorRelay<String?>
-    
+
     init(address: Address?) {
         self.address = .init(value: address?.name)
     }

@@ -87,6 +87,7 @@ internal enum Asset {
 
     internal static let location = ImageAsset(name: "location")
     internal static let logo = ImageAsset(name: "logo")
+    internal static let mapRightIcon = ImageAsset(name: "map_right_icon")
     internal static let marker = ImageAsset(name: "marker")
     internal static let menu = ImageAsset(name: "menu")
     internal static let profile = ImageAsset(name: "profile")

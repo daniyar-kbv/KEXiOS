@@ -13,7 +13,7 @@ import UIKit
 
 final class MenuController: ViewController {
     private let viewModel: MenuViewModelProtocol
-    private let disposeBag: DisposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     var scrollService: MenuScrollService
 
     private lazy var logoView: UIImageView = {
@@ -70,9 +70,9 @@ final class MenuController: ViewController {
     public init(viewModel: MenuViewModelProtocol, scrollService: MenuScrollService) {
         self.viewModel = viewModel
         self.scrollService = scrollService
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         bindScrollService()
     }
 
@@ -107,7 +107,7 @@ final class MenuController: ViewController {
             })
             .disposed(by: disposeBag)
     }
-    
+
     override func setupNavigationBar() {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
@@ -230,8 +230,8 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
             return .init()
         }
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
+    func tableView(_: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
         didScrollToItem(at: indexPath.row)
     }
 }
@@ -244,7 +244,7 @@ extension MenuController {
         })?.0 else { return }
         itemTableView.scrollToRow(at: IndexPath(row: row, section: itemTableView.numberOfSections - 1), at: .top, animated: true)
     }
-    
+
     func didScrollToItem(at position: Int) {
         guard let cellViewModel = viewModel.cellViewModels[itemTableView.numberOfSections - 1][position] as? MenuCellViewModelProtocol,
               !scrollService.isHeaderScrolling,
@@ -254,7 +254,7 @@ extension MenuController {
 }
 
 extension MenuController: UIScrollViewDelegate {
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    func scrollViewDidEndScrollingAnimation(_: UIScrollView) {
         scrollService.finishedScrolling()
     }
 }

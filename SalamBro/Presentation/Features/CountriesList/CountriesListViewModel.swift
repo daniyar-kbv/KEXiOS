@@ -20,7 +20,6 @@ protocol CountriesListViewModelProtocol: ViewModel {
 }
 
 final class CountriesListViewModel: CountriesListViewModelProtocol {
-    
 //    enum FlowType {
 //        case change
 //        case select

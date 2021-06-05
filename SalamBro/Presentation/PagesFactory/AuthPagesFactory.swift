@@ -9,7 +9,7 @@ import Foundation
 
 protocol AuthPagesFactory: AnyObject {
     var coordinator: AuthCoordinator! { get set }
-    
+
     func makeAuthorizationPage() -> AuthorizationController
     func makeVerificationPage(phoneNumber: String) -> VerificationController
     func makeNameEnteringPage() -> SetNameController
@@ -18,7 +18,7 @@ protocol AuthPagesFactory: AnyObject {
 
 final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     weak var coordinator: AuthCoordinator!
-    
+
     func makeAuthorizationPage() -> AuthorizationController {
         return scoped(.init(viewModel: makeAuthPageViewModel()))
     }
@@ -46,7 +46,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     private func makeSetNameViewModel() -> SetNameViewModel {
         return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage))
     }
-    
+
     func makeCountryCodePickerPage() -> CountryCodePickerViewController {
         return scoped(.init(viewModel: makeCountryCodePickerViewModel()))
     }
@@ -60,7 +60,7 @@ extension AuthPagesFactoryImpl {
     private func getAuthService() -> AuthService {
         return DIResolver.resolve(AuthService.self)!
     }
-    
+
     private func getGeoRepository() -> GeoRepository {
         return DIResolver.resolve(GeoRepository.self)!
     }

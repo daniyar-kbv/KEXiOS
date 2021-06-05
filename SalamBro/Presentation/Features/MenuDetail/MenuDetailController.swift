@@ -145,10 +145,10 @@ class MenuDetailController: ViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         viewModel.coordinator.didFinish()
     }
 
