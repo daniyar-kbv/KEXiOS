@@ -196,6 +196,7 @@
 		A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */; };
 		5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */; };
 		B02D897C5EDE03C822AEE074C3564A42 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */; };
+		E5A69E3D05407199D5577B4890A202F4 /* ServiceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B85CD93601FBD3B6385EE29192A493 /* ServiceComponents.swift */; };
 		B72F7123BDD1D7AC1835C471FEE08F0A /* SetNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3890F026983E929EADCF3E74819ADC4C /* SetNameController.swift */; };
 		127A96DA3032469852F3DE835FC5C47C /* SetNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B4882B846EE55133F2EA0DC79C96E2 /* SetNameView.swift */; };
 		A187BA477718285B905045FD4DBBF59F /* SetNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F298A9287002556E415935543464A7 /* SetNameViewModel.swift */; };
@@ -371,8 +372,8 @@
 		9C95E2D3745187D0D8FF3E96462920A6 /* GeoRepositoryImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoRepositoryImplementation.swift; sourceTree = "<group>"; };
 		9BFEB3CF7DD3F89352073E78D5CA4237 /* GeoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoStorage.swift; sourceTree = "<group>"; };
 		3C6169FACF56887087B2E3B796665DC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		82DF8DD4A94962F1A97777FAD3747A32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		612E966ED830C106DB3057E02A36C798 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82DF8DD4A94962F1A97777FAD3747A32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54B1DD3359C1EF5D60E6A24C6244E9F6 /* LoaderDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderDisplayable.swift; sourceTree = "<group>"; };
 		F03CEB3646262E2848B1FB78A29E5EC2 /* Localizable+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Localizable+Generated.swift"; sourceTree = "<group>"; };
@@ -446,6 +447,7 @@
 		D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationViewController.swift; sourceTree = "<group>"; };
 		E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationViewModel.swift; sourceTree = "<group>"; };
 		CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
+		B6B85CD93601FBD3B6385EE29192A493 /* ServiceComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceComponents.swift; sourceTree = "<group>"; };
 		3890F026983E929EADCF3E74819ADC4C /* SetNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetNameController.swift; sourceTree = "<group>"; };
 		47B4882B846EE55133F2EA0DC79C96E2 /* SetNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetNameView.swift; sourceTree = "<group>"; };
 		A0F298A9287002556E415935543464A7 /* SetNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetNameViewModel.swift; sourceTree = "<group>"; };
@@ -945,6 +947,7 @@
 			children = (
 				8234D90C809AE755270490D63E408B9C /* AuthService.swift */,
 				F7F254AE6752CFEF94722885B2637746 /* LocationService.swift */,
+				B6B85CD93601FBD3B6385EE29192A493 /* ServiceComponents.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1966,6 +1969,7 @@
 				A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */,
 				5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */,
 				B02D897C5EDE03C822AEE074C3564A42 /* SeparatorView.swift in Sources */,
+				E5A69E3D05407199D5577B4890A202F4 /* ServiceComponents.swift in Sources */,
 				B72F7123BDD1D7AC1835C471FEE08F0A /* SetNameController.swift in Sources */,
 				127A96DA3032469852F3DE835FC5C47C /* SetNameView.swift in Sources */,
 				A187BA477718285B905045FD4DBBF59F /* SetNameViewModel.swift in Sources */,

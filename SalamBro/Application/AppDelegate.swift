@@ -14,7 +14,7 @@ import YandexMapKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
-    private let coordinator = DIResolver.resolve(AppCoordinator.self)!
+    private var appCoordinator: AppCoordinator?
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // if you don't have TMDB-Info.plist, just set your key in setApiKey()
@@ -23,8 +23,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureKeyboardManager()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        coordinator.start()
+        configureAppCoordinator()
+        appCoordinator?.start()
         return true
+    }
+
+    private func configureAppCoordinator() {
+        appCoordinator = AppCoordinator(serviceComponents: ServiceComponentsAssembly(),
+                                        navigationController: UINavigationController(),
+                                        geoRepository: DIResolver.resolve(GeoRepository.self)!,
+                                        brandRepository: DIResolver.resolve(BrandRepository.self)!)
     }
 
     private func configureProgressHUD() {
