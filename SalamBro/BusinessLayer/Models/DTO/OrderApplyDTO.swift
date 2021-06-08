@@ -14,8 +14,8 @@ struct OrderApplyDTO: Encodable {
     let address: Address
 
     struct Address: Encodable {
-        let longitude: Double
-        let latitude: Double
+        let longitude: String
+        let latitude: String
     }
 
     enum CodingKeys: String, CodingKey {
