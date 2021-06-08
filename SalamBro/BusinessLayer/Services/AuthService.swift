@@ -17,8 +17,7 @@ protocol AuthService: AnyObject {
     func refreshToken(with dto: RefreshDTO) -> Single<RefreshTokenResponse>
 }
 
-final class AuthServiceImpl: AuthService {
-    private let disposeBag = DisposeBag()
+final class AuthServiceMoyaImpl: AuthService {
     private let provider: MoyaProvider<AuthAPI>
 
     init(provider: MoyaProvider<AuthAPI>) {

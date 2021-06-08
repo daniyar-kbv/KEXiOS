@@ -7,12 +7,10 @@
 
 import RxCocoa
 import RxSwift
-import SnapKit
 import UIKit
 
-final class CountryCodePickerViewController: ViewController {
-    private let viewModel: CountryCodePickerViewModelProtocol
-    private let disposeBag: DisposeBag
+final class CountryCodePickerViewController: UIViewController, AlertDisplayable, LoaderDisplayable {
+    private let disposeBag = DisposeBag()
 
     let outputs = Output()
 
@@ -20,7 +18,7 @@ final class CountryCodePickerViewController: ViewController {
         let view = UITableView()
         view.separatorColor = .mildBlue
         view.addTableHeaderViewLine()
-        view.register(cellType: CountryCodeCell.self)
+        view.register(CountryCodeCell.self, forCellReuseIdentifier: CountryCodeCell.reuseIdentifier)
         view.tableFooterView = UIView()
         view.allowsMultipleSelection = false
         view.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -33,34 +31,51 @@ final class CountryCodePickerViewController: ViewController {
 
     private lazy var refreshControl: UIRefreshControl = {
         let view = UIRefreshControl()
-        view.addTarget(self, action: #selector(update), for: .valueChanged)
+        view.addTarget(self, action: #selector(refresh), for: .valueChanged)
         return view
     }()
 
-    init(viewModel: CountryCodePickerViewModelProtocol) {
+    private let viewModel: CountryCodePickerViewModel
+
+    init(viewModel: CountryCodePickerViewModel) {
         self.viewModel = viewModel
-        disposeBag = DisposeBag()
         super.init(nibName: nil, bundle: nil)
     }
 
-    public required init?(coder _: NSCoder) { nil }
+    required init?(coder _: NSCoder) { nil }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
 
         setup()
-        bind()
+        viewModel.getCountries()
+        bindViewModel()
     }
 
-    private func bind() {
-        viewModel.updateTableView
-            .bind(to: citiesTableView.rx.reload)
+    private func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            })
             .disposed(by: disposeBag)
-    }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.title = L10n.CountryCodePicker.Navigation.title
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didFail
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetCountries
+            .subscribe(onNext: { [weak self] in
+                self?.citiesTableView.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setup() {
@@ -69,6 +84,7 @@ final class CountryCodePickerViewController: ViewController {
     }
 
     private func setupViews() {
+        navigationItem.title = L10n.CountryCodePicker.Navigation.title
         view.backgroundColor = .white
         [citiesTableView].forEach { view.addSubview($0) }
     }
@@ -82,9 +98,9 @@ final class CountryCodePickerViewController: ViewController {
         }
     }
 
-    @objc
-    private func update() {
-        viewModel.update()
+    @objc private func refresh() {
+        viewModel.refresh()
+        refreshControl.endRefreshing()
     }
 }
 
@@ -94,18 +110,20 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
     }
 
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        viewModel.cellViewModels.count
+        viewModel.countries.count
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CountryCodeCell.self)
-        cell.set(viewModel.cellViewModels[indexPath.row])
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCodeCell.reuseIdentifier, for: indexPath) as? CountryCodeCell else {
+            fatalError()
+        }
+        cell.configure(model: viewModel.countries[indexPath.row])
         return cell
     }
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let country = viewModel.didSelect(index: indexPath.row)
-        outputs.didSelectCountryCode.accept(country)
+        let codeCountry = viewModel.selectCodeCountry(at: indexPath)
+        outputs.didSelectCountryCode.accept(codeCountry.country)
     }
 }
 

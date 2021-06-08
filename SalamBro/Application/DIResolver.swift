@@ -36,6 +36,7 @@ private final class ApplicationAssembly: Assembly {
     func assemble(container: Container) {
         container.register(AppCoordinator.self) { r in
             AppCoordinator(
+                serviceComponents: ServiceComponentsAssembly(),
                 navigationController: UINavigationController(),
                 geoRepository: r.resolve(GeoRepository.self)!,
                 brandRepository: r.resolve(BrandRepository.self)!
@@ -74,7 +75,7 @@ private final class ServicesAssembly: Assembly {
 
         container.register(AuthService.self) { _ in
             let networkPlugin = NetworkLoggerPlugin(configuration: NetworkLoggerPlugin.Configuration(logOptions: .verbose))
-            return AuthServiceImpl(provider: MoyaProvider<AuthAPI>(plugins: [networkPlugin]))
+            return AuthServiceMoyaImpl(provider: MoyaProvider<AuthAPI>(plugins: [networkPlugin]))
         }.inObjectScope(.container)
     }
 }
