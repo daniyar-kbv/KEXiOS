@@ -18,7 +18,6 @@ struct OrderApplyDTO: Encodable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case uuid
         case brandId = "brand_id"
         case cityId = "city_id"
         case address
