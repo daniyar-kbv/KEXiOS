@@ -8,7 +8,6 @@
 import Foundation
 
 struct OrderApplyDTO: Encodable {
-    let uuid = UUID().uuidString
     let brandId: Int
     let cityId: Int
     let address: Address
