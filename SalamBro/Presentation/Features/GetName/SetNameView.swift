@@ -12,7 +12,7 @@ protocol GetNameViewDelegate: AnyObject {
 }
 
 final class SetNameView: UIView {
-    public var delegate: GetNameViewDelegate?
+    weak var delegate: GetNameViewDelegate?
 
     lazy var titleLabel: UILabel = {
         let label = UILabel()

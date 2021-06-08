@@ -10,53 +10,85 @@ import PromiseKit
 import RxCocoa
 import RxSwift
 
-protocol CountryCodePickerViewModelProtocol: ViewModel {
-    var cellViewModels: [CountryCodeCellViewModelProtocol] { get }
-    var updateTableView: BehaviorRelay<Void?> { get }
-    func update()
-    func didSelect(index: Int) -> Country
+protocol CountryCodePickerViewModel: AnyObject {
+    var countries: [CountryCodeModel] { get }
+    var outputs: CountryCodePickerViewModelImpl.Output { get }
+    func refresh()
+    func getCountries()
+    func selectCodeCountry(at indexPath: IndexPath) -> CountryCodeModel
 }
 
-final class CountryCodePickerViewModel: CountryCodePickerViewModelProtocol {
-    private let repository: GeoRepository
-    public var cellViewModels: [CountryCodeCellViewModelProtocol]
-    public var updateTableView: BehaviorRelay<Void?>
-    private var countries: [Country]
+final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
+    private let disposeBag = DisposeBag()
 
-    public func update() {
-        download()
-    }
+    private(set) var outputs = Output()
 
-    public func didSelect(index: Int) -> Country {
-        let country = countries[index]
-        repository.currentCountry = country
-        return country
-    }
+    private(set) var countries: [CountryCodeModel] = []
 
-    private func download() {
-//        TODO: finish
-//        startAnimation()
-//        firstly {
-//            repository.downloadCountries()
-//        }.done {
-//            self.cellViewModels = $0.map {
-//                CountryCodeCellViewModel(country: $0,
-//                                         isSelected: self.repository.currentCountry == $0)
-//            }
-//            self.countries = $0
-//        }.catch {
-//            self.coordinator.alert(error: $0)
-//        }.finally {
-//            self.stopAnimation()
-//            self.updateTableView.accept(())
-//        }
-    }
+    private let repository: LocationRepository
+    private let service: LocationService
 
-    init(repository: GeoRepository) {
+    init(repository: LocationRepository, service: LocationService) {
         self.repository = repository
-        cellViewModels = []
-        updateTableView = .init(value: nil)
-        countries = []
-        download()
+        self.service = service
+    }
+
+    func selectCodeCountry(at indexPath: IndexPath) -> CountryCodeModel {
+        countries[indexPath.row].isSelected.toggle()
+        repository.changeCurrectCountry(to: countries[indexPath.row].country)
+        return countries[indexPath.row]
+    }
+
+    func getCountries() {
+        if let cachedCountries = repository.getCountries() {
+            convert(cachedCountries: cachedCountries)
+            return
+        }
+
+        makeRequest()
+    }
+
+    func refresh() {
+        makeRequest()
+    }
+
+    private func convert(cachedCountries: [Country]) {
+        var codeCountries: [CountryCodeModel] = []
+        for country in cachedCountries {
+            if country == repository.getCurrentCountry() {
+                codeCountries.append(CountryCodeModel(country: country, isSelected: true))
+                break
+            }
+            codeCountries.append(CountryCodeModel(country: country, isSelected: false))
+        }
+        countries = codeCountries
+        outputs.didGetCountries.accept(())
+    }
+
+    private func makeRequest() {
+        outputs.didStartRequest.accept(())
+        service.getAllCountries()
+            .subscribe(onSuccess: { [weak self] countries in
+                self?.outputs.didEndRequest.accept(())
+                self?.repository.set(countries: countries)
+                self?.convert(cachedCountries: countries)
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                if let error = error as? ErrorPresentable {
+                    self?.outputs.didFail.accept(error)
+                    return
+                }
+                self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension CountryCodePickerViewModelImpl {
+    struct Output {
+        let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
+        let didGetCountries = PublishRelay<Void>()
+        let didFail = PublishRelay<ErrorPresentable>()
     }
 }

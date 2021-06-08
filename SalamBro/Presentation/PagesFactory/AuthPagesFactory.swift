@@ -8,25 +8,21 @@
 import Foundation
 
 protocol AuthPagesFactory: AnyObject {
-    var coordinator: AuthCoordinator! { get set }
-
     func makeAuthorizationPage() -> AuthorizationController
     func makeVerificationPage(phoneNumber: String) -> VerificationController
     func makeNameEnteringPage() -> SetNameController
     func makeCountryCodePickerPage() -> CountryCodePickerViewController
+    func makeAgreementPage() -> AgreementController
 }
 
 final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
-    weak var coordinator: AuthCoordinator!
-
     func makeAuthorizationPage() -> AuthorizationController {
         return scoped(.init(viewModel: makeAuthPageViewModel()))
     }
 
     private func makeAuthPageViewModel() -> AuthorizationViewModel {
-        return scoped(.init(coordinator: coordinator,
-                            locationRepository: DIResolver.resolve(LocationRepository.self)!,
-                            authService: getAuthService()))
+        return scoped(AuthorizationViewModelImpl(locationRepository: DIResolver.resolve(LocationRepository.self)!,
+                                                 authService: getAuthService()))
     }
 
     func makeVerificationPage(phoneNumber: String) -> VerificationController {
@@ -52,9 +48,16 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeCountryCodePickerViewModel() -> CountryCodePickerViewModel {
-        return scoped(.init(repository: getGeoRepository()))
+        return scoped(CountryCodePickerViewModelImpl(repository: getLocationRepository(),
+                                                     service: getLocationService()))
+    }
+
+    func makeAgreementPage() -> AgreementController {
+        return scoped(.init(nibName: nil, bundle: nil))
     }
 }
+
+// MARK: Tech debt, удалить, нужно чтобы сетилось через init, serviceComponents.
 
 extension AuthPagesFactoryImpl {
     private func getAuthService() -> AuthService {
@@ -63,5 +66,13 @@ extension AuthPagesFactoryImpl {
 
     private func getGeoRepository() -> GeoRepository {
         return DIResolver.resolve(GeoRepository.self)!
+    }
+
+    private func getLocationService() -> LocationService {
+        return DIResolver.resolve(LocationService.self)!
+    }
+
+    private func getLocationRepository() -> LocationRepository {
+        return DIResolver.resolve(LocationRepository.self)!
     }
 }

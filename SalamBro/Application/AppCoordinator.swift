@@ -16,7 +16,14 @@ final class AppCoordinator: Coordinator {
     private let geoRepository: GeoRepository
     private let brandRepository: BrandRepository
 
-    init(navigationController: UINavigationController, geoRepository: GeoRepository, brandRepository: BrandRepository) {
+    private let serviceComponents: ServiceComponents
+
+    init(serviceComponents: ServiceComponents,
+         navigationController: UINavigationController,
+         geoRepository: GeoRepository,
+         brandRepository: BrandRepository)
+    {
+        self.serviceComponents = serviceComponents
         self.navigationController = navigationController
         self.geoRepository = geoRepository
         self.brandRepository = brandRepository
