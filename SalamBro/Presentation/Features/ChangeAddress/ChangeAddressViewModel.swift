@@ -98,45 +98,45 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
     func changeRoute(indexPath: IndexPath) {
         var cellModel = cellModels[indexPath.row]
 
-        switch cellModel.inputType {
-        case .address:
-            coordinator.openMap { [weak self] address in
-                cellModel.description = address
-                self?.address = address
-                self?.changeState(indexPath: indexPath, description: address)
-                self?.cellModels[indexPath.row] = cellModel
-                self?.outputs.reloadCellAt.accept(indexPath)
-            }
-        case .brand:
-            coordinator.openBrands { [weak self] brand in
-                cellModel.description = brand.name
-                self?.brand = brand
-                self?.cellModels[indexPath.row] = cellModel
-                self?.outputs.reloadCellAt.accept(indexPath)
-            }
-        case .city:
-            guard let countryId = country?.id else {
-                coordinator.alert(title: "Ошибка", message: "Пожалуйста, выберите сначала страну")
-                return
-            }
-
-            coordinator.openCitiesList(countryId: countryId) { [weak self] city in
-                cellModel.description = city.name
-                self?.city = city
-                self?.changeState(indexPath: indexPath, description: city.name)
-                self?.cellModels[indexPath.row] = cellModel
-                self?.outputs.reloadCellAt.accept(indexPath)
-            }
-        case .country:
-            coordinator.openCountriesList { [weak self] country in
-                cellModel.description = country.name
-                self?.country = country
-                self?.changeState(indexPath: indexPath, description: country.name)
-                self?.cellModels[indexPath.row] = cellModel
-                self?.outputs.reloadCellAt.accept(indexPath)
-            }
-        case .empty: break
-        }
+//        switch cellModel.inputType {
+//        case .address:
+//            coordinator.openMap { [weak self] address in
+//                cellModel.description = address
+//                self?.address = address
+//                self?.changeState(indexPath: indexPath, description: address)
+//                self?.cellModels[indexPath.row] = cellModel
+//                self?.outputs.reloadCellAt.accept(indexPath)
+//            }
+//        case .brand:
+//            coordinator.openBrands { [weak self] brand in
+//                cellModel.description = brand.name
+//                self?.brand = brand
+//                self?.cellModels[indexPath.row] = cellModel
+//                self?.outputs.reloadCellAt.accept(indexPath)
+//            }
+//        case .city:
+//            guard let countryId = country?.id else {
+//                coordinator.alert(title: "Ошибка", message: "Пожалуйста, выберите сначала страну")
+//                return
+//            }
+//
+//            coordinator.openCitiesList(countryId: countryId) { [weak self] city in
+//                cellModel.description = city.name
+//                self?.city = city
+//                self?.changeState(indexPath: indexPath, description: city.name)
+//                self?.cellModels[indexPath.row] = cellModel
+//                self?.outputs.reloadCellAt.accept(indexPath)
+//            }
+//        case .country:
+//            coordinator.openCountriesList { [weak self] country in
+//                cellModel.description = country.name
+//                self?.country = country
+//                self?.changeState(indexPath: indexPath, description: country.name)
+//                self?.cellModels[indexPath.row] = cellModel
+//                self?.outputs.reloadCellAt.accept(indexPath)
+//            }
+//        case .empty: break
+//        }
 
         checkInputs()
     }

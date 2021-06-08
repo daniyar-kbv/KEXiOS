@@ -62,8 +62,8 @@ DEPENDENCIES:
   - SVProgressHUD
   - SwiftGen
   - Swinject
-  - YandexMapKit
-  - YandexMapKitSearch
+  - YandexMapKit (~> 3.4)
+  - YandexMapKitSearch (~> 3.4)
 
 SPEC REPOS:
   trunk:
@@ -112,6 +112,6 @@ SPEC CHECKSUMS:
   YandexMapKitSearch: b46ddd1c80e2e35d006cdfc4ab88070a50cebeda
   YandexRuntime: 2d55244d06267106cf9b00c25a1e63f72a73b6fd
 
-PODFILE CHECKSUM: c6e7f0ddc56d7e9f2527d191288413f6ae4e0230
+PODFILE CHECKSUM: ca63f205514930091004c675bdd8e074ad9c323a
 
 COCOAPODS: 1.10.1

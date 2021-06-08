@@ -11,51 +11,31 @@ import RxCocoa
 import RxSwift
 
 protocol CountriesListViewModelProtocol: ViewModel {
-    var coordinator: AddressCoordinator { get }
+    var coordinator: FirstFlowCoordinator { get }
     var countries: [Country] { get }
     var updateTableView: BehaviorRelay<Void?> { get }
     func refresh()
-    func didSelect(index: Int, completion: (_ type: Any) -> Void)
+    func didSelect(index: Int)
     func getCountries()
 }
 
 final class CountriesListViewModel: CountriesListViewModelProtocol {
-//    enum FlowType {
-//        case change
-//        case select
-//
-//        var citiesFlowType: CitiesListViewModel.FlowType {
-//            switch self {
-//            case .change:
-//                return .change
-//            case .firstFlow
-//                return .select
-//            }
-//        }
-//    }
-
     private let disposeBag = DisposeBag()
 
-    public var coordinator: AddressCoordinator
-    private let type: AddressCoordinator.FlowType
+    public var coordinator: FirstFlowCoordinator
     private(set) var countries: [Country] = []
     private(set) var updateTableView: BehaviorRelay<Void?>
-    private let didSelectCountry: ((Country) -> Void)?
 
     private let service: LocationService
     private let repository: LocationRepository
 
-    init(coordinator: AddressCoordinator,
+    init(coordinator: FirstFlowCoordinator,
          service: LocationService,
-         repository: LocationRepository,
-         type: AddressCoordinator.FlowType,
-         didSelectCountry: ((Country) -> Void)?)
+         repository: LocationRepository)
     {
         self.coordinator = coordinator
         self.service = service
         self.repository = repository
-        self.type = type
-        self.didSelectCountry = didSelectCountry
         updateTableView = .init(value: nil)
     }
 
@@ -102,16 +82,9 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
         updateTableView.accept(())
     }
 
-    func didSelect(index: Int, completion: (_ type: Any) -> Void) {
+    func didSelect(index: Int) {
         let country = countries[index]
         repository.changeCurrectCountry(to: country)
-        didSelectCountry?(country)
-        switch type {
-        case .firstFlow:
-            coordinator.openCitiesList(countryId: countries[index].id)
-        default:
-            break
-        }
-        completion(type)
+        coordinator.openCitiesList(countryId: countries[index].id)
     }
 }

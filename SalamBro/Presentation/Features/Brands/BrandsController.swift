@@ -101,7 +101,7 @@ extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate
         viewModel.didSelect(index: indexPath.row) { [weak self] type in
             guard let type = type as? AddressCoordinator.FlowType else { return }
             switch type {
-            case .changeAddress, .changeMainInfo:
+            case .changeAddress, .changeBrand:
                 self?.dismiss(animated: true)
             default:
                 break

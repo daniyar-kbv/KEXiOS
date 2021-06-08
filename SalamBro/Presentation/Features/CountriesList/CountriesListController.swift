@@ -116,14 +116,6 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelect(index: indexPath.row) { type in
-            guard let type = type as? AddressCoordinator.FlowType else { return }
-            switch type {
-            case .changeAddress, .changeMainInfo:
-                self.dismiss(animated: true)
-            default:
-                break
-            }
-        }
+        viewModel.didSelect(index: indexPath.row)
     }
 }

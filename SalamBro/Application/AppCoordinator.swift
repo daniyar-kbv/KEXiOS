@@ -34,7 +34,7 @@ final class AppCoordinator: Coordinator {
     }
 
     private func startFirstFlow() {
-        let child = AddressCoordinator(navigationController: navigationController, flowType: .firstFlow)
+        let child = FirstFlowCoordinator(navigationController: UINavigationController())
         child.start()
     }
 

@@ -173,7 +173,7 @@ class MapViewController: ViewController {
 
     @objc func backButtonTapped(_: UIButton!) {
         switch flowType {
-        case .changeAddress, .changeMainInfo:
+        case .changeAddress, .changeBrand:
             dismiss(animated: true)
         default:
             break
@@ -268,7 +268,7 @@ extension MapViewController: MapDelegate {
     func dissmissView() {
         coordinator.finishFlow {
             switch flowType {
-            case .changeAddress, .changeMainInfo:
+            case .changeAddress, .changeBrand:
                 guard let address = geoRepository.currentAddress?.name else { return }
                 selectedAddress?(address)
                 print("dismiss")

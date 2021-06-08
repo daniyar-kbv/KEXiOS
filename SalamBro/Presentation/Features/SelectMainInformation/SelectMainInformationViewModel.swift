@@ -71,8 +71,8 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     }
 
     func selectAddress() {
-        coordinator.openAddressPicker { [unowned self] in
-            self.didChange(address: $0)
+        coordinator.openMap { [weak self] address in
+            self?.didChange(address: address)
         }
     }
 

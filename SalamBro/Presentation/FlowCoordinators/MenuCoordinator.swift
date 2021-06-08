@@ -33,7 +33,7 @@ class MenuCoordinator: TabCoordinator {
     }
 
     func openSelectMainInfo(didSave: (() -> Void)? = nil) {
-        let child = AddressCoordinator(navigationController: childNavigationController, flowType: .changeMainInfo(didSave: didSave))
+        let child = AddressCoordinator(navigationController: childNavigationController, flowType: .changeBrand(didSave: didSave))
         addChild(child)
         child.start()
     }

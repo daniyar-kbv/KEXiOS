@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol BrandViewModelProtocol: ViewModel {
-    var coordinator: AddressCoordinator { get }
+    var coordinator: BrandsCooridnator { get }
     var brands: [Brand] { get }
     var ratios: [(Float, Float)] { get }
     var updateCollectionView: BehaviorRelay<Void?> { get }
@@ -23,10 +23,10 @@ protocol BrandViewModelProtocol: ViewModel {
 final class BrandViewModel: BrandViewModelProtocol {
     private let disposeBag = DisposeBag()
 
-    var coordinator: AddressCoordinator
+    var coordinator: BrandsCooridnator
     private let repository: BrandRepository
     private let service: LocationService
-    private let type: AddressCoordinator.FlowType
+    private let type: FlowType
     private let locationRepository: LocationRepository
     private(set) var brands: [Brand] = [] {
         didSet {
@@ -38,11 +38,11 @@ final class BrandViewModel: BrandViewModelProtocol {
     var updateCollectionView: BehaviorRelay<Void?>
     private let didSelectBrand: ((Brand) -> Void)?
 
-    init(coordinator: AddressCoordinator,
+    init(coordinator: BrandsCooridnator,
          repository: BrandRepository,
          locationRepository: LocationRepository,
          service: LocationService,
-         type: AddressCoordinator.FlowType,
+         type: FlowType,
          didSelectBrand: ((Brand) -> Void)?)
     {
         self.coordinator = coordinator
@@ -124,10 +124,16 @@ final class BrandViewModel: BrandViewModelProtocol {
         didSelectBrand?(brand)
         switch type {
         case .firstFlow:
-            coordinator.openMap()
-        case .changeAddress, .changeMainInfo:
+            coordinator.openMap(didSelectAddress: nil)
+        case .changeAddress, .changeBrand:
             break
         }
         completion(type)
+    }
+    
+    enum FlowType {
+        case firstFlow
+        case changeAddress(didSelectAddress: ((Address) -> Void)?)
+        case changeBrand(didSave: (() -> Void)?)
     }
 }

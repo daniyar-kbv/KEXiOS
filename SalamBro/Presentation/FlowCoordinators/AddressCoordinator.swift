@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AddressCoordinator: Coordinator {
+class AddressCoordinator: Coordinator, BrandsCooridnator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
@@ -18,8 +18,16 @@ class AddressCoordinator: Coordinator {
 
     enum FlowType {
         case changeAddress(didSelectAddress: ((Address) -> Void)?)
-        case changeMainInfo(didSave: (() -> Void)?)
-        case firstFlow
+        case changeBrand(didSave: (() -> Void)?)
+        
+        var brandsFlowType: BrandViewModel.FlowType {
+            switch self {
+            case .changeAddress(let didSelectAddress):
+                return .changeAddress(didSelectAddress: didSelectAddress)
+            case .changeBrand(let didSave):
+                return .changeBrand(didSave: didSave)
+            }
+        }
     }
 
     init(navigationController: UINavigationController, flowType: FlowType) {
@@ -36,75 +44,26 @@ class AddressCoordinator: Coordinator {
         present(vc: nav)
     }
 
-    // Old realization with presents
-    func openChangeAddress() {
-        let viewModel = ChangeAddressViewModelImpl(coordinator: self)
-        let changeAddressController = ChangeAddressController(viewModel: viewModel)
-        let nav = UINavigationController(rootViewController: changeAddressController)
-        present(vc: nav)
-    }
-
-    func openCountriesList(didSelectCountry: ((Country) -> Void)? = nil) {
-        let viewModel = CountriesListViewModel(
-            coordinator: self,
-            service: DIResolver.resolve(LocationService.self)!,
-            repository: DIResolver.resolve(LocationRepository.self)!,
-            type: flowType,
-            didSelectCountry: didSelectCountry
-        )
-        let vc = CountriesListController(viewModel: viewModel)
-        let nav = UINavigationController(rootViewController: vc)
-        navigationController = nav
-        UIApplication.shared.setRootView(nav)
-    }
-
-    func openCitiesList(countryId: Int, didSelectCity: ((City) -> Void)? = nil) {
-        let viewModel = CitiesListViewModel(coordinator: self,
-                                            type: flowType,
-                                            countryId: countryId,
-                                            service: DIResolver.resolve(LocationService.self)!,
-                                            repository: DIResolver.resolve(LocationRepository.self)!,
-                                            didSelectCity: didSelectCity)
-        let vc = CitiesListController(viewModel: viewModel)
-        push(vc: vc)
-    }
-
     func openBrands(didSelectBrand: ((Brand) -> Void)? = nil) {
         let viewModel = BrandViewModel(coordinator: self,
                                        repository: DIResolver.resolve(BrandRepository.self)!,
                                        locationRepository: DIResolver.resolve(LocationRepository.self)!,
                                        service: DIResolver.resolve(LocationService.self)!,
-                                       type: flowType,
+                                       type: flowType.brandsFlowType,
                                        didSelectBrand: didSelectBrand)
         let vc = BrandsController(viewModel: viewModel)
-        switch flowType {
-        case .changeAddress, .changeMainInfo:
-            let nav = UINavigationController(rootViewController: vc)
-            childNavigationController = nav
-            present(vc: nav)
-        case .firstFlow:
-            push(vc: vc)
-        }
+        let nav = UINavigationController(rootViewController: vc)
+        childNavigationController = nav
+        present(vc: nav)
     }
 
-    func openMap(didSelectAddress: ((String) -> Void)? = nil) {
-        var mapPage: MapPage
-
-        switch flowType {
-        case .changeAddress, .changeMainInfo:
-            mapPage = MapPage(viewModel: MapViewModel(flow: .change))
-            mapPage.modalPresentationStyle = .fullScreen
-            mapPage.selectedAddress = { address in
-                didSelectAddress?(address.name)
-            }
-            present(vc: mapPage)
-        case .firstFlow:
-            mapPage = MapPage(viewModel: MapViewModel(flow: .creation))
-            mapPage.selectedAddress = { [weak self] _ in
-                self?.finishFlow(completion: {})
-            }
-            push(vc: mapPage)
+    func openMap(didSelectAddress: ((Address) -> Void)? = nil) {
+        let mapPage = MapPage(viewModel: MapViewModel(flow: .change))
+        mapPage.modalPresentationStyle = .fullScreen
+        mapPage.selectedAddress = { address in
+            didSelectAddress?(Address(name: address.name, longitude: address.longitude, latitude: address.latitude))
         }
+        present(vc: mapPage)
     }
 
     func openSelectMainInfo(didSave: (() -> Void)? = nil) {
@@ -118,24 +77,14 @@ class AddressCoordinator: Coordinator {
     }
 
     func finishFlow(completion: () -> Void) {
-        switch flowType {
-        case .firstFlow:
-            // TODO: Change to new DI
-            let appCoordinator = DIResolver.resolve(AppCoordinator.self)!
-            appCoordinator.start()
-        default:
-            break
-        }
         completion()
     }
 
     func start() {
         switch flowType {
-        case .firstFlow:
-            openCountriesList()
         case let .changeAddress(didSelectAddress):
             openAddressPicker(didSelectAddress: didSelectAddress)
-        case let .changeMainInfo(didSave):
+        case let .changeBrand(didSave):
             openSelectMainInfo(didSave: didSave)
         }
     }
