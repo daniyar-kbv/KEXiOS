@@ -15,15 +15,20 @@ class CartCoordinator: TabCoordinator {
     weak var childNavigationController: UINavigationController!
     var tabType: TabBarCoordinator.TabType
 
+    private var authCoordinator: AuthCoordinator?
+
     init(navigationController: UINavigationController, tabType: TabBarCoordinator.TabType) {
         self.navigationController = navigationController
         self.tabType = tabType
     }
 
     func openAuth() {
-        let child = AuthCoordinator(navigationController: childNavigationController, pagesFactory: AuthPagesFactoryImpl())
-        addChild(child)
-        child.start()
+        authCoordinator = AuthCoordinator(navigationController: childNavigationController, pagesFactory: AuthPagesFactoryImpl())
+        authCoordinator?.start()
+
+        authCoordinator?.didFinish = { [weak self] in
+            self?.authCoordinator = nil
+        }
     }
 
     func start() {

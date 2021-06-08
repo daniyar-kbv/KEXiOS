@@ -16,7 +16,7 @@ final class VerificationView: UIView {
     var timer: Timer!
     var expirationDate = Date()
     var numSeconds: TimeInterval = 91.0
-    var delegate: VerificationViewDelegate?
+    weak var delegate: VerificationViewDelegate?
     var number: String?
 
     lazy var maintitle: UILabel = {

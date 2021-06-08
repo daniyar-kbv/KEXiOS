@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol Coordinator: class {
+protocol Coordinator: AnyObject {
     var parentCoordinator: Coordinator? { get set }
     var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController { get set }
@@ -36,6 +36,7 @@ extension Coordinator {
         }
     }
 
+    /// Tech debt, don't use
     func alert(error: Error, closeHandler: (() -> Void)? = nil) {
 //        TODO: add DI
         let alertHandler = AlertHandler()
@@ -43,6 +44,7 @@ extension Coordinator {
         alertHandler.present(on: getLastPresentedViewController(), animated: true, alertType: context, completion: nil)
     }
 
+    /// Tech debt, don't use
     func alert(title: String, message: String, closeHandler: (() -> Void)? = nil) {
 //        TODO: add DI
         let alertHandler = AlertHandler()
@@ -50,6 +52,7 @@ extension Coordinator {
         alertHandler.present(on: getLastPresentedViewController(), animated: true, alertType: context, completion: nil)
     }
 
+    /// Tech debt, don't use
     func getLastPresentedViewController() -> UIViewController {
         var parentVc: UIViewController = navigationController
         var childVc: UIViewController? = navigationController.presentedViewController
@@ -62,6 +65,7 @@ extension Coordinator {
 }
 
 extension TabCoordinator {
+    /// Tech debt, don't use
     func templateNavigationController(title: String, image: UIImage?, rootViewController: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: rootViewController)
         nav.tabBarItem.title = title
