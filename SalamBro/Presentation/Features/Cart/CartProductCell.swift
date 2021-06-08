@@ -36,6 +36,12 @@ class CartProductCell: UITableViewCell {
 
     func configureUI() {
         deleteButton.setTitle(L10n.CartProductCell.DeleteButton.title, for: .normal)
+
+        increaseCountButton.setImage(UIImage(named: "plus"), for: .normal)
+        increaseCountButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+
+        decreaseCountButton.setBackgroundImage(UIImage(named: "minus"), for: .normal)
+        decreaseCountButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
 
     func bindData(with item: CartProduct) {

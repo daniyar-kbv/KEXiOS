@@ -27,10 +27,19 @@ class CartAdditionalProductCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureUI()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+
+    func configureUI() {
+        inscreaseButton.setImage(UIImage(named: "plus"), for: .normal)
+        inscreaseButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+
+        decreaseButton.setBackgroundImage(UIImage(named: "minus"), for: .normal)
+        decreaseButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
 
     func bindData(item: CartAdditionalProduct) {

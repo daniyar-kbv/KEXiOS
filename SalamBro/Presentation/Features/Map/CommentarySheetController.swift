@@ -15,6 +15,9 @@ class CommentarySheetController: ViewController {
     weak var delegate: MapDelegate?
     private var yCoordinate: CGFloat!
 
+    public var isPromocode = false
+    public var isCommentary = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -55,16 +58,33 @@ class CommentarySheetController: ViewController {
 
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if getScreenSize() == 40 {
-                view.frame.origin.y -= keyboardSize.height - 63
-            } else {
-                view.frame.origin.y -= keyboardSize.height - 49
+            if isPromocode {
+                if getScreenSize() == 40 {
+                    view.frame.origin.y -= keyboardSize.height - 63
+                } else {
+                    view.frame.origin.y -= keyboardSize.height - 49
+                }
+            }
+
+            if isCommentary {
+                view.frame.origin.y = yCoordinate + 20
+                if getScreenSize() == 40 {
+                    view.frame.origin.y -= keyboardSize.height - 65
+                } else {
+                    view.frame.origin.y -= keyboardSize.height - 55
+                }
             }
         }
     }
 
     @objc func keyboardWillHide(notification _: NSNotification) {
-        view.frame.origin.y = getScreenSize() == 40 ? yCoordinate! - 5 : yCoordinate!
+        if isPromocode {
+            view.frame.origin.y = getScreenSize() == 40 ? yCoordinate! - 5 : yCoordinate!
+        }
+
+        if isCommentary {
+            view.frame.origin.y = getScreenSize() == 40 ? yCoordinate! + 75 : yCoordinate! + 55
+        }
     }
 
     @IBAction func buttonAction(_: UIButton) {
@@ -77,6 +97,8 @@ class CommentarySheetController: ViewController {
             delegate?.hideCommentarySheet()
 //            }
         }
+        isPromocode = false
+        isCommentary = false
     }
 
     @objc func hideTextField() {

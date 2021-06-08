@@ -117,7 +117,7 @@ class SupportController: ViewController {
 
     func setupConstraints() {
         tableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(34)
+            $0.top.equalTo(view.snp.topMargin).offset(24)
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
             $0.bottom.equalTo(logoStack.snp.top).offset(-16)

@@ -131,7 +131,7 @@ extension CartFooter {
         separator.topAnchor.constraint(equalTo: topAnchor).isActive = true
         separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 24).isActive = true
         separator.rightAnchor.constraint(equalTo: rightAnchor, constant: -24).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: 0.25).isActive = true
 
         promocodeButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
         promocodeButton.topAnchor.constraint(equalTo: topAnchor, constant: 24).isActive = true

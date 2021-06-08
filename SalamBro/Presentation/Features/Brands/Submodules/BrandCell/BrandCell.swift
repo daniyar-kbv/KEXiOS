@@ -31,7 +31,7 @@ final class BrandCell: UICollectionViewCell, Reusable {
     }
 
     func configure(brand: Brand) {
-        guard let imageUrl = URL(string: brand.images.imageSquare) else { return }
+        guard let imageUrl = URL(string: brand.image) else { return }
         imageView.setImage(url: imageUrl)
         isUserInteractionEnabled = brand.isAvailable
     }

@@ -34,6 +34,9 @@ target 'SalamBro' do
   #rateView
   pod 'Cosmos'
 
+  #Animation pod
+  pod 'lottie-ios'
+
   target 'SalamBroTests' do
     inherit! :search_paths
     # Pods for testing

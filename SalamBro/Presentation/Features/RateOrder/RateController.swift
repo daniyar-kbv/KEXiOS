@@ -15,6 +15,8 @@ class RateController: ViewController {
     var arrayStar4: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text, L10n.RateOrder.Cell.FoodIsCold.text]
     var arrayStar5: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text]
 
+    var selectedItems: [String] = []
+
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var ratingView: CosmosView!
     @IBOutlet var infoStack: UIStackView!
@@ -26,17 +28,24 @@ class RateController: ViewController {
     @IBOutlet var button: UIButton!
     @IBOutlet var collectionViewHeightConstraint: NSLayoutConstraint!
 
+    lazy var commentarySheetVC = CommentarySheetController()
+
+    lazy var shadow: UIView = {
+        let view = UIView()
+        view.backgroundColor = .darkGray
+        view.layer.opacity = 0.7
+        view.isHidden = true
+        return view
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        collectionViewHeightConstraint.constant = collectionView.collectionViewLayout.collectionViewContentSize.height
+        setupConstraints()
     }
 
     private func setupViews() {
+        view.addSubview(shadow)
         titleLabel.text = L10n.RateOrder.title
         subtitleSecondLabel.text = L10n.RateOrder.description
         button.setTitle(L10n.RateOrder.SubmitButton.title, for: .normal)
@@ -58,9 +67,14 @@ class RateController: ViewController {
         collectionView.dataSource = self
         collectionView.allowsMultipleSelection = true
 
-        // future commentary functional
-//        let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(didTapCommentaryView))
-//        commentaryView.addGestureRecognizer(tapCommentary)
+        let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(commentaryViewTapped))
+        commentaryView.addGestureRecognizer(tapCommentary)
+    }
+
+    func setupConstraints() {
+        shadow.snp.makeConstraints {
+            $0.top.left.right.bottom.equalToSuperview()
+        }
     }
 
     private func didFinishTouchRating(_ rating: Double) {
@@ -98,6 +112,10 @@ class RateController: ViewController {
     @IBAction func backButtonTapped(_: UIButton) {
         dismiss(animated: true)
     }
+
+    @objc func commentaryViewTapped() {
+        showCommentarySheet()
+    }
 }
 
 extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -108,16 +126,77 @@ extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlow
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: RateItemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "RateItemCell", for: indexPath) as! RateItemCell
         cell.titleLabel.text = data[indexPath.row]
+        if selectedItems.firstIndex(of: data[indexPath.row]) != nil {
+            cell.setSelectedUI()
+        } else {
+            cell.setDeselectedUI()
+        }
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! RateItemCell
-        cell.toggleSelected()
+        if let index = selectedItems.firstIndex(of: data[indexPath.row]) {
+            selectedItems.remove(at: index)
+            cell.setDeselectedUI()
+        } else {
+            cell.setSelectedUI()
+            selectedItems.append(data[indexPath.row])
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! RateItemCell
-        cell.toggleSelected()
+        if let index = selectedItems.firstIndex(of: data[indexPath.row]) {
+            selectedItems.remove(at: index)
+        }
+        cell.setDeselectedUI()
+    }
+}
+
+extension RateController: MapDelegate {
+    func dissmissView() {}
+
+    func hideCommentarySheet() {}
+
+    func showCommentarySheet() {
+        addChild(commentarySheetVC)
+        view.addSubview(commentarySheetVC.view)
+        commentarySheetVC.commentaryField.attributedPlaceholder = NSAttributedString(
+            string: L10n.RateOrder.CommentaryField.placeholder,
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+        )
+        commentarySheetVC.delegate = self
+        commentarySheetVC.didMove(toParent: self)
+        commentarySheetVC.modalPresentationStyle = .overCurrentContext
+
+        let height: CGFloat = 185.0
+        let width = view.frame.width
+
+        getScreenSize(heightOfSheet: height, width: width)
+    }
+
+    private func getScreenSize(heightOfSheet: CGFloat, width: CGFloat) {
+        let bounds = UIScreen.main.bounds
+        let height = bounds.size.height
+
+        commentarySheetVC.isCommentary = true
+        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 49 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 64 - heightOfSheet, width: width, height: heightOfSheet)
+    }
+
+    func passCommentary(text: String) {
+        commentaryField.text = text
+    }
+
+    func reverseGeocoding(searchQuery _: String, title _: String) {
+        print("rateController shoud have mapdelegate...")
+    }
+
+    func mapShadow(toggle: Bool) {
+        if toggle {
+            shadow.isHidden = false
+        } else {
+            shadow.isHidden = true
+        }
     }
 }

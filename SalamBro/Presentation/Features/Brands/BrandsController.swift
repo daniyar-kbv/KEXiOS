@@ -52,6 +52,15 @@ final class BrandsController: ViewController {
         viewModel.getBrands()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = L10n.Brands.Navigation.title
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+        ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
+    }
+
     private func bind() {
         viewModel.updateCollectionView
             .do { [unowned self] _ in
@@ -61,14 +70,6 @@ final class BrandsController: ViewController {
                                                                       itemSpacing: 16)
             }.bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
-    }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.title = L10n.Brands.Navigation.title
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
-        ]
     }
 
     private func setup() {
@@ -85,7 +86,7 @@ final class BrandsController: ViewController {
         collectionView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(view.snp.topMargin).offset(8)
+            $0.top.equalTo(view.snp.topMargin).offset(6)
             $0.bottom.equalTo(view.snp.bottom)
         }
     }
@@ -93,6 +94,11 @@ final class BrandsController: ViewController {
     @objc func handleRefreshControlAction(_: UIRefreshControl) {
         viewModel.refreshBrands()
         refreshControl.endRefreshing()
+    }
+
+    @objc func goBack() {
+        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 }
 

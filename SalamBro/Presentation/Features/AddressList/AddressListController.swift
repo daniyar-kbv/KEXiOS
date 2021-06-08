@@ -59,7 +59,7 @@ final class AddressListController: ViewController {
         view.backgroundColor = .white
         view.addSubview(citiesTableView)
         citiesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(24)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
