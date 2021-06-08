@@ -18,7 +18,6 @@ protocol AuthService: AnyObject {
 }
 
 final class AuthServiceMoyaImpl: AuthService {
-    private let disposeBag = DisposeBag()
     private let provider: MoyaProvider<AuthAPI>
 
     init(provider: MoyaProvider<AuthAPI>) {

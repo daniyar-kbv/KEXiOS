@@ -170,9 +170,13 @@
 		6632F1A3E40EC8C580007678F6538D31 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC38CD54AA71E4C20246F3181F40C8D9 /* NetworkError.swift */; };
 		ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */; };
 		52E54610F9597E5FB759023469158B05 /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38E1406896D56B0D3EB30561C58641D /* OTPView.swift */; };
+		82C195AB0F7E605944BDB1F5C4AE71E2 /* OrderApplyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802118FBF4A24829BFBCE852CB9865A8 /* OrderApplyDTO.swift */; };
 		836766507334DCE6B1273433E608713C /* OrderHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */; };
 		6C730195BDB59E2756DFB8F6D49A8998 /* OrderHistoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BF512A38D9560A778C79CD159C3CF9 /* OrderHistoryCoordinator.swift */; };
 		7B1C03CF0090494FD9F085DC483E94DF /* OrderTestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D7CBF5AAA6491FB72FECC42FABB91B /* OrderTestCell.swift */; };
+		AD3EAD20E803C5804D4844DFB108010C /* OrdersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279FC54A126D15C7954B92E3DF29F784 /* OrdersAPI.swift */; };
+		59B4E4974B53638E8FBDD30D108FBE62 /* OrdersResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC804CDCE3CDB8E5E4A4C51CAFF47962 /* OrdersResponses.swift */; };
+		ED925A5EE40C372AC5A4774329D4C02A /* OrdersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EF3B2B1F6813FFA7E77104569E2780 /* OrdersService.swift */; };
 		1814F54CFAC26967B8C664F02E4AA121 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C9392BFA56499DD56ECB2AF1FC231E8 /* Pods_SalamBro.framework */; };
 		A540ED01AEA76072046DBFB6ABC5F74D /* Pods_SalamBroTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A13733093DD55DBE42A20FB059CFAB /* Pods_SalamBroTests.framework */; };
 		772A73F421F49431296C00EDC5197B97 /* Pods_SalamBro_SalamBroUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AF4E2B9C5CAC0C1D126B547533E2FB0 /* Pods_SalamBro_SalamBroUITests.framework */; };
@@ -412,9 +416,13 @@
 		BC38CD54AA71E4C20246F3181F40C8D9 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		19655D975D1467D47693F18FCD1A5F2E /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		C38E1406896D56B0D3EB30561C58641D /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
+		802118FBF4A24829BFBCE852CB9865A8 /* OrderApplyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderApplyDTO.swift; sourceTree = "<group>"; };
 		64AD5C1E66EABD5C32850E67D5A469D3 /* OrderHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryController.swift; sourceTree = "<group>"; };
 		09BF512A38D9560A778C79CD159C3CF9 /* OrderHistoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryCoordinator.swift; sourceTree = "<group>"; };
 		22D7CBF5AAA6491FB72FECC42FABB91B /* OrderTestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTestCell.swift; sourceTree = "<group>"; };
+		279FC54A126D15C7954B92E3DF29F784 /* OrdersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersAPI.swift; sourceTree = "<group>"; };
+		EC804CDCE3CDB8E5E4A4C51CAFF47962 /* OrdersResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersResponses.swift; sourceTree = "<group>"; };
+		32EF3B2B1F6813FFA7E77104569E2780 /* OrdersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersService.swift; sourceTree = "<group>"; };
 		8C4C164B21125043DA7278DDEE6014FD /* Pods-SalamBro-SalamBroUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro-SalamBroUITests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9964D7655C30E2886649BA0DDE519E34 /* Pods-SalamBro-SalamBroUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro-SalamBroUITests.release.xcconfig"; path = "Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests.release.xcconfig"; sourceTree = "<group>"; };
 		963B0E7BC68E8ECCBDEC34EB4ABDAAED /* Pods-SalamBro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.debug.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.debug.xcconfig"; sourceTree = "<group>"; };
@@ -947,6 +955,7 @@
 			children = (
 				8234D90C809AE755270490D63E408B9C /* AuthService.swift */,
 				F7F254AE6752CFEF94722885B2637746 /* LocationService.swift */,
+				32EF3B2B1F6813FFA7E77104569E2780 /* OrdersService.swift */,
 				B6B85CD93601FBD3B6385EE29192A493 /* ServiceComponents.swift */,
 			);
 			path = Services;
@@ -1137,6 +1146,7 @@
 				E04E0DCF69FC2C5A5543AE974273278B /* AuthAPI.swift */,
 				53B932081E904EA553B7866A42A818DD /* AuthPlugin.swift */,
 				CEED03B221B71F9A10CA3920C4D290B1 /* LocationAPI.swift */,
+				279FC54A126D15C7954B92E3DF29F784 /* OrdersAPI.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1174,6 +1184,7 @@
 			isa = PBXGroup;
 			children = (
 				246956A66E668C97E9E7337CD50C8A95 /* AuthDTO.swift */,
+				802118FBF4A24829BFBCE852CB9865A8 /* OrderApplyDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -1348,6 +1359,7 @@
 				3944E5F419E988E84D289F8FE75A2963 /* AuthResponse.swift */,
 				6995F00BC4A3BB7B5D91ADBF3B1F1B59 /* CitiesResponse.swift */,
 				DEC1F0863C3CF15A586800BFA2AC3838 /* CountriesResponse.swift */,
+				EC804CDCE3CDB8E5E4A4C51CAFF47962 /* OrdersResponses.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -1951,9 +1963,13 @@
 				6632F1A3E40EC8C580007678F6538D31 /* NetworkError.swift in Sources */,
 				ACD78147638AFF87CEEFC8D477652BD6 /* NetworkProvider.swift in Sources */,
 				52E54610F9597E5FB759023469158B05 /* OTPView.swift in Sources */,
+				82C195AB0F7E605944BDB1F5C4AE71E2 /* OrderApplyDTO.swift in Sources */,
 				836766507334DCE6B1273433E608713C /* OrderHistoryController.swift in Sources */,
 				6C730195BDB59E2756DFB8F6D49A8998 /* OrderHistoryCoordinator.swift in Sources */,
 				7B1C03CF0090494FD9F085DC483E94DF /* OrderTestCell.swift in Sources */,
+				AD3EAD20E803C5804D4844DFB108010C /* OrdersAPI.swift in Sources */,
+				59B4E4974B53638E8FBDD30D108FBE62 /* OrdersResponses.swift in Sources */,
+				ED925A5EE40C372AC5A4774329D4C02A /* OrdersService.swift in Sources */,
 				DDDA6D913F65119481671703D67E0D78 /* ProfileController.swift in Sources */,
 				974AE9BE8ACDD9A2039C9F9A06FBFF0E /* ProfileCoordinator.swift in Sources */,
 				DDB97E999180D5DF89B4C40E50D70EA3 /* ProfileView.swift in Sources */,
