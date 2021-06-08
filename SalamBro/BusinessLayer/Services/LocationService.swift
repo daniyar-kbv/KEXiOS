@@ -17,7 +17,6 @@ protocol LocationService: AnyObject {
 }
 
 final class LocationServiceMoyaImpl: LocationService {
-    private let disposeBag = DisposeBag()
     private let provider: MoyaProvider<LocationAPI>
 
     init(provider: MoyaProvider<LocationAPI>) {
