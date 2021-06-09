@@ -15,6 +15,8 @@ class RateController: ViewController {
     var arrayStar4: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text, L10n.RateOrder.Cell.FoodIsCold.text]
     var arrayStar5: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text]
 
+    // MARK: Tech Debt - Create in a viewModel
+
     var selectedItems: [String] = []
 
     @IBOutlet var titleLabel: UILabel!
@@ -157,6 +159,8 @@ extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlow
         cell.setDeselectedUI()
     }
 }
+
+// MARK: Tech Debt - Change from MapDelegate logic
 
 extension RateController: MapDelegate {
     func dissmissView() {}

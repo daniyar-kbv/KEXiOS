@@ -52,14 +52,16 @@ final class BrandsController: ViewController {
         viewModel.getBrands()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationItem.title = L10n.Brands.Navigation.title
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
-        ]
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
-    }
+    // MARK: Tech Debt - Need to implement swipe in iOS versions <= 12.0
+
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationItem.title = L10n.Brands.Navigation.title
+//        navigationController?.navigationBar.titleTextAttributes = [
+//            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+//        ]
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
+//    }
 
     private func bind() {
         viewModel.updateCollectionView
@@ -70,6 +72,14 @@ final class BrandsController: ViewController {
                                                                       itemSpacing: 16)
             }.bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
+    }
+
+    override func setupNavigationBar() {
+        super.setupNavigationBar()
+        navigationItem.title = L10n.Brands.Navigation.title
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+        ]
     }
 
     private func setup() {
@@ -96,10 +106,10 @@ final class BrandsController: ViewController {
         refreshControl.endRefreshing()
     }
 
-    @objc func goBack() {
-        dismiss(animated: true, completion: nil)
-        navigationController?.popViewController(animated: true)
-    }
+//    @objc func goBack() {
+//        dismiss(animated: true, completion: nil)
+//        navigationController?.popViewController(animated: true)
+//    }
 }
 
 extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate {

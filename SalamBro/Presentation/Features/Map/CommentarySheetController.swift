@@ -15,6 +15,8 @@ class CommentarySheetController: ViewController {
     weak var delegate: MapDelegate?
     private var yCoordinate: CGFloat!
 
+    // MARK: Tech Debt - Change logic by creating a new class for view presentation
+
     public var isPromocode = false
     public var isCommentary = false
 

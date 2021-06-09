@@ -24,6 +24,8 @@ class ChangeLanguageController: ViewController {
 
     fileprivate lazy var selectionIndexPath: IndexPath? = nil
 
+    // MARK: Tech Debt - Create in a viewModel
+
     private var marked: IndexPath?
 
     override func viewDidLoad() {
@@ -62,6 +64,8 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // MARK: Tech Debt - Create in a new class
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = languages[indexPath.row]
         cell.backgroundColor = .white
@@ -83,6 +87,8 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // MARK: Tech Debt - Create in a new class
+
         if selectionIndexPath != nil {
             if selectionIndexPath == indexPath {
 //                selectionIndexPath = nil

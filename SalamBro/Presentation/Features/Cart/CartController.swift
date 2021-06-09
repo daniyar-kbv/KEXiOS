@@ -190,6 +190,8 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        // MARK: Tech Debt - Create in a new class
+
         let footerView = UIView()
         let footerChildView = UIView(frame: CGRect(x: 24, y: 0, width: tableView.frame.width - 48, height: 0.5))
         if section == 0 {
