@@ -63,6 +63,7 @@ class OnBoardingCoordinator {
             geoRepository?.addresses?.append(address)
             self?.didFinish?()
             self?.navigationController.viewControllers.removeAll()
+//            Tech debt: add order apply api
         }
         navigationController.pushViewController(mapPage, animated: true)
     }
