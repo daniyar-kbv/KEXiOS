@@ -39,6 +39,7 @@
 		5397C0B0398219322EB7AB2C3B1A8AF0 /* AgreementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3B5393FD540E00FAACC28FCE38C64 /* AgreementController.swift */; };
 		AEDEEEBFD34151D388831E2E2E585082 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4A77B806DDA4999ABB9C121744A219 /* Alert.swift */; };
 		7834AC7CB75692417AC7D27058EF60F0 /* AlertDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13301C6EF44E7A847CEA8B66C012193 /* AlertDisplayable.swift */; };
+		089227D067784D450954BB8F29BED1BC /* AnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC2B8C4BF07CC691411A8848707A1AC /* AnimationViewController.swift */; };
 		FB6E4957AEB5E8B6384377430949FB5A /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42832D3CC40BF252715540E4A3B3D75A /* AppCoordinator.swift */; };
 		9917C9CA8C142731664889CA05B15F12 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EEE5D86DC6A55586D8809FABE54E7A /* AppDelegate.swift */; };
 		403496A52D4F3B4A1577C9E218633E48 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124DBD746EE1979C264DE83DC21C0306 /* ArrayExtension.swift */; };
@@ -292,6 +293,7 @@
 		EFB3B5393FD540E00FAACC28FCE38C64 /* AgreementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementController.swift; sourceTree = "<group>"; };
 		CD4A77B806DDA4999ABB9C121744A219 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		B13301C6EF44E7A847CEA8B66C012193 /* AlertDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDisplayable.swift; sourceTree = "<group>"; };
+		BBC2B8C4BF07CC691411A8848707A1AC /* AnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationViewController.swift; sourceTree = "<group>"; };
 		42832D3CC40BF252715540E4A3B3D75A /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		32EEE5D86DC6A55586D8809FABE54E7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		124DBD746EE1979C264DE83DC21C0306 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 			isa = PBXGroup;
 			children = (
 				2C237F005FB77CB66813D0BB00914887 /* AdditionalView.swift */,
+				BBC2B8C4BF07CC691411A8848707A1AC /* AnimationViewController.swift */,
 				C38E1406896D56B0D3EB30561C58641D /* OTPView.swift */,
 				CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */,
 				D4C46A5FE1F7384154BA389C1AE87F1A /* ViewController.swift */,
@@ -612,22 +615,6 @@
 				E7614CF30AE2C9C14A22E9C4B8FEC3B6 /* SupportController.swift */,
 			);
 			path = Support;
-			sourceTree = "<group>";
-		};
-		6B284371F6D8E6D5FED1A50F1639E3C2 /* AnimationJSONs */ = {
-			isa = PBXGroup;
-			children = (
-				2422599545953E10B42F40CFAAAA87E0 /* emptyCart.json */,
-				A8257D76C0AE71DE4A0C9240CF07EF7D /* emptyHistory.json */,
-				691C6E32FCA05605A863D5494A553468 /* emptyProfile(grey background).json */,
-				9CFAFCCFE1EABF483A68C3C3EE3634F4 /* emptyProfile(red background).json */,
-				F02A11A9860E35B7327152E4B623389B /* emptyProfile(white background red avatar).json */,
-				F1F12FE97539149E737858FFEEB748F7 /* forcedUpdate.json */,
-				C9DC1D55330FF8BDAA23265EB3D4792A /* noConnection.json */,
-				5D4CFAD050F48B759D37C030BF0B20DC /* overload.json */,
-				CEFDAAE388F6C38878BDC233C66C2D2F /* paymentProcess.json */,
-			);
-			path = AnimationJSONs;
 			sourceTree = "<group>";
 		};
 		13DFB53126CF6F9A2C9C90BC9DC533EA /* Update */ = {
@@ -974,6 +961,22 @@
 				08D6A8241F62B88573896C6DBBC3219A /* View */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		6B284371F6D8E6D5FED1A50F1639E3C2 /* AnimationJSONs */ = {
+			isa = PBXGroup;
+			children = (
+				2422599545953E10B42F40CFAAAA87E0 /* emptyCart.json */,
+				A8257D76C0AE71DE4A0C9240CF07EF7D /* emptyHistory.json */,
+				691C6E32FCA05605A863D5494A553468 /* emptyProfile(grey background).json */,
+				9CFAFCCFE1EABF483A68C3C3EE3634F4 /* emptyProfile(red background).json */,
+				F02A11A9860E35B7327152E4B623389B /* emptyProfile(white background red avatar).json */,
+				F1F12FE97539149E737858FFEEB748F7 /* forcedUpdate.json */,
+				C9DC1D55330FF8BDAA23265EB3D4792A /* noConnection.json */,
+				5D4CFAD050F48B759D37C030BF0B20DC /* overload.json */,
+				CEFDAAE388F6C38878BDC233C66C2D2F /* paymentProcess.json */,
+			);
+			path = AnimationJSONs;
 			sourceTree = "<group>";
 		};
 		6C4B4D6C9C3A1E331D075EA7CD43E6BF /* CitiesList */ = {
@@ -1883,6 +1886,7 @@
 				5397C0B0398219322EB7AB2C3B1A8AF0 /* AgreementController.swift in Sources */,
 				AEDEEEBFD34151D388831E2E2E585082 /* Alert.swift in Sources */,
 				7834AC7CB75692417AC7D27058EF60F0 /* AlertDisplayable.swift in Sources */,
+				089227D067784D450954BB8F29BED1BC /* AnimationViewController.swift in Sources */,
 				FB6E4957AEB5E8B6384377430949FB5A /* AppCoordinator.swift in Sources */,
 				9917C9CA8C142731664889CA05B15F12 /* AppDelegate.swift in Sources */,
 				403496A52D4F3B4A1577C9E218633E48 /* ArrayExtension.swift in Sources */,
