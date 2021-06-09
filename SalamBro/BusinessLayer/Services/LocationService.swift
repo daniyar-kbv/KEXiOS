@@ -60,12 +60,6 @@ final class LocationServiceMoyaImpl: LocationService {
     func getBrands(for cityId: Int) -> Single<[Brand]> {
         provider.rx.request(.getCityBrands(cityId: cityId))
             .map { response in
-                do {
-                    let jsonData = try JSONSerialization.jsonObject(with: response.data, options: .mutableContainers)
-                print(jsonData)
-                } catch {
-                    
-                }
                 guard let brandsResponse = try? response.map(BrandResponse.self) else {
                     throw NetworkError.badMapping
                 }
