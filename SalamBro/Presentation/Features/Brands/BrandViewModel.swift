@@ -11,22 +11,20 @@ import RxCocoa
 import RxSwift
 
 protocol BrandViewModelProtocol: ViewModel {
-    var coordinator: BrandsCooridnator { get }
+    var outputs: BrandViewModel.Outputs { get }
     var brands: [Brand] { get }
     var ratios: [(Float, Float)] { get }
-    var updateCollectionView: BehaviorRelay<Void?> { get }
     func refreshBrands()
-    func didSelect(index: Int, completion: (_ type: Any) -> Void)
+    func didSelect(index: Int)
     func getBrands()
 }
 
 final class BrandViewModel: BrandViewModelProtocol {
+    let outputs = Outputs()
     private let disposeBag = DisposeBag()
 
-    var coordinator: BrandsCooridnator
     private let repository: BrandRepository
     private let service: LocationService
-    private let type: FlowType
     private let locationRepository: LocationRepository
     private(set) var brands: [Brand] = [] {
         didSet {
@@ -35,23 +33,13 @@ final class BrandViewModel: BrandViewModelProtocol {
     }
 
     var ratios: [(Float, Float)] = []
-    var updateCollectionView: BehaviorRelay<Void?>
-    private let didSelectBrand: ((Brand) -> Void)?
 
-    init(coordinator: BrandsCooridnator,
-         repository: BrandRepository,
+    init(repository: BrandRepository,
          locationRepository: LocationRepository,
-         service: LocationService,
-         type: FlowType,
-         didSelectBrand: ((Brand) -> Void)?)
-    {
-        self.coordinator = coordinator
+         service: LocationService) {
         self.repository = repository
         self.locationRepository = locationRepository
         self.service = service
-        self.type = type
-        self.didSelectBrand = didSelectBrand
-        updateCollectionView = .init(value: nil)
         makeBrandsRequest()
     }
 
@@ -61,7 +49,7 @@ final class BrandViewModel: BrandViewModelProtocol {
             cachedBrands != []
         {
             brands = cachedBrands
-            updateCollectionView.accept(())
+            outputs.didGetBrands.accept(())
         }
 
         makeBrandsRequest()
@@ -83,7 +71,7 @@ final class BrandViewModel: BrandViewModelProtocol {
             }
         }
 
-        updateCollectionView.accept(())
+        outputs.didGetBrands.accept(())
     }
 
     private func makeBrandsRequest() {
@@ -95,7 +83,7 @@ final class BrandViewModel: BrandViewModelProtocol {
                 self?.process(receivedBrands: brandsResponse)
             }, onError: { [weak self] error in
                 self?.stopAnimation()
-                self?.coordinator.alert(error: error)
+                self?.outputs.didGetError.accept(error)
             })
             .disposed(by: disposeBag)
     }
@@ -104,36 +92,37 @@ final class BrandViewModel: BrandViewModelProtocol {
         guard let cachedBrands = repository.getBrands() else {
             repository.set(brands: receivedBrands)
             brands = receivedBrands
-            updateCollectionView.accept(())
+            outputs.didGetBrands.accept(())
             return
         }
 
         if cachedBrands == receivedBrands { return }
         repository.set(brands: receivedBrands)
         brands = receivedBrands
-        updateCollectionView.accept(())
+        outputs.didGetBrands.accept(())
     }
 
     func refreshBrands() {
         makeBrandsRequest()
     }
 
-    func didSelect(index: Int, completion: (_ type: Any) -> Void) {
+    func didSelect(index: Int) {
         let brand = brands[index]
         repository.changeCurrent(brand: brand)
-        didSelectBrand?(brand)
-        switch type {
-        case .firstFlow:
-            coordinator.openMap(didSelectAddress: nil)
-        case .changeAddress, .changeBrand:
-            break
-        }
-        completion(type)
+        outputs.didSelectBrand.accept(brand)
     }
     
     enum FlowType {
         case firstFlow
         case changeAddress(didSelectAddress: ((Address) -> Void)?)
         case changeBrand(didSave: (() -> Void)?)
+    }
+}
+
+extension BrandViewModel {
+    struct Outputs {
+        let didGetBrands = BehaviorRelay<Void>(value: ())
+        let didGetError = PublishRelay<Error>()
+        let didSelectBrand = PublishRelay<Brand>()
     }
 }

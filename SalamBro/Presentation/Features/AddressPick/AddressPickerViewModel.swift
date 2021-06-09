@@ -6,45 +6,45 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 protocol AddressPickerViewModelProtocol: ViewModel {
-    var coordinator: AddressCoordinator { get }
     var cellViewModels: [AddressPickerCellViewModelProtocol] { get }
-    func didSelect(index: Int, completion: () -> Void)
-    func changeAddress()
-    func onFinish()
+    var outputs: AddressPickerViewModel.Output { get }
+    func didSelect(index: Int)
+    func reload()
 }
 
 final class AddressPickerViewModel: AddressPickerViewModelProtocol {
-    public var coordinator: AddressCoordinator
     private let repository: GeoRepository
-    public var cellViewModels: [AddressPickerCellViewModelProtocol]
-    private let addresses: [Address]
-    private let didSelectAddress: ((Address) -> Void)?
+    public var cellViewModels: [AddressPickerCellViewModelProtocol] = []
+    private var addresses: [Address] = []
+    
+    let outputs = Output()
 
-    public func didSelect(index: Int, completion: () -> Void) {
+    public func didSelect(index: Int) {
         let address = addresses[index]
         repository.currentAddress = address
-        didSelectAddress?(addresses[index])
-        completion()
+        outputs.didSelectAddress.accept(addresses[index])
     }
 
-    public func changeAddress() {
-        coordinator.openSelectMainInfo(didSave: nil)
-    }
-
-    init(coordinator: AddressCoordinator,
-         repository: GeoRepository,
-         didSelectAddress: ((Address) -> Void)?)
-    {
-        self.coordinator = coordinator
+    init(repository: GeoRepository) {
         self.repository = repository
-        self.didSelectAddress = didSelectAddress
+        
+        reload()
+    }
+    
+    func reload() {
         addresses = repository.addresses ?? []
         cellViewModels = repository.addresses?.map { AddressPickerCellViewModel(address: $0, isSelected: $0 == repository.currentAddress) } ?? []
+        outputs.onReload.accept(())
     }
+}
 
-    func onFinish() {
-        coordinator.didFinish()
+extension AddressPickerViewModel {
+    struct Output {
+        let didSelectAddress = PublishRelay<Address>()
+        let onReload = PublishRelay<Void>()
     }
 }

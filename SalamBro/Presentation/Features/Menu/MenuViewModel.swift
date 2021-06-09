@@ -63,7 +63,7 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     public func selectAddress() {
-        coordinator.openChangeAddress { [unowned self] _ in
+        coordinator.openChangeAddress { [unowned self] in
             self.update()
         }
     }

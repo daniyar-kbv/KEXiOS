@@ -15,8 +15,9 @@ import UIKit
 final class AddressPickController: ViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: AddressPickerViewModelProtocol
-
     private let tapGesture = UITapGestureRecognizer()
+    
+    let outputs = Output()
 
     private lazy var addLabel: UILabel = {
         let label = UILabel()
@@ -57,31 +58,51 @@ final class AddressPickController: ViewController {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    deinit {
+        outputs.didTerminate.accept(())
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setup()
         bind()
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-
-        viewModel.onFinish()
+        bindViewModel()
     }
 
     private func bind() {
         plusButton.rx.tap
             .bind { [weak self] in
-                self?.viewModel.changeAddress()
+                self?.addTapped()
             }
             .disposed(by: disposeBag)
 
         tapGesture.rx.event
             .bind(onNext: { [weak self] _ in
-                self?.viewModel.changeAddress()
+                self?.addTapped()
             }).disposed(by: disposeBag)
+    }
+    
+    func bindViewModel() {
+        viewModel.outputs.didSelectAddress.subscribe(onNext: { [weak self] address in
+            self?.outputs.didSelectAddress.accept((
+                address,
+                { [weak self] in
+                    self?.viewModel.reload()
+                }
+            ))
+        }).disposed(by: disposeBag)
+        
+        viewModel.outputs.onReload.subscribe(onNext: { [weak self] in
+            self?.tableView.reloadData()
+        }).disposed(by: disposeBag)
+    }
+    
+    func addTapped() {
+        outputs.didAddTapped.accept({ [weak self] in
+            self?.viewModel.reload()
+        })
     }
 
     override func setupNavigationBar() {
@@ -122,9 +143,7 @@ final class AddressPickController: ViewController {
 
 extension AddressPickController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelect(index: indexPath.row) { [weak self] in
-            self?.dismiss(animated: true)
-        }
+        viewModel.didSelect(index: indexPath.row)
     }
 
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
@@ -135,5 +154,13 @@ extension AddressPickController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AddressPickerCell.self)
         cell.set(viewModel: viewModel.cellViewModels[indexPath.row])
         return cell
+    }
+}
+
+extension AddressPickController {
+    struct Output {
+        let didSelectAddress = PublishRelay<(Address, () -> Void)>()
+        let didAddTapped = PublishRelay<() -> Void>()
+        let didTerminate = PublishRelay<Void>()
     }
 }

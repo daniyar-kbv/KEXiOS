@@ -10,7 +10,8 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class CountriesListController: ViewController {
+final class CountriesListController: ViewController, AlertDisplayable {
+    let outputs = Output()
     private let viewModel: CountriesListViewModelProtocol
     private let disposeBag = DisposeBag()
 
@@ -36,6 +37,7 @@ final class CountriesListController: ViewController {
 
     init(viewModel: CountriesListViewModelProtocol) {
         self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -47,21 +49,24 @@ final class CountriesListController: ViewController {
         setup()
         bind()
     }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-
-        viewModel.coordinator.didFinish()
-    }
-
+    
     private func bind() {
-        viewModel.updateTableView
+        viewModel.outputs.didGetCoutries
             .bind(to: countriesTableView.rx.reload)
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
+            self?.showAlert(title: error.localizedDescription, message: nil)
+        }).disposed(by: disposeBag)
+        
+        viewModel.outputs.didSelectCountry.subscribe(onNext: { [weak self] countryId in
+            self?.outputs.didSelectCountry.accept(countryId)
+        }).disposed(by: disposeBag)
     }
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
+        
         navigationItem.title = L10n.CountriesList.Navigation.title
         navigationController?.navigationBar.layoutIfNeeded()
         navigationController?.navigationBar.titleTextAttributes =
@@ -117,5 +122,11 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelect(index: indexPath.row)
+    }
+}
+
+extension CountriesListController {
+    struct Output {
+        let didSelectCountry = PublishRelay<Int>()
     }
 }

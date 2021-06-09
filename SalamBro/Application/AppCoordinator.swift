@@ -12,6 +12,8 @@ final class AppCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    
+    var onBoardingCoordinator: OnBoardingCoordinator?
 
     private let geoRepository: GeoRepository
     private let brandRepository: BrandRepository
@@ -41,8 +43,14 @@ final class AppCoordinator: Coordinator {
     }
 
     private func startFirstFlow() {
-        let child = FirstFlowCoordinator(navigationController: UINavigationController())
-        child.start()
+        onBoardingCoordinator = OnBoardingCoordinator(navigationController: UINavigationController(),
+                                          pagesFactory: OnBoardingPagesFactoryImpl())
+        onBoardingCoordinator?.didFinish = { [weak self] in
+            self?.onBoardingCoordinator = nil
+            self?.start()
+        }
+        
+        onBoardingCoordinator?.start()
     }
 
     private func startMenu() {

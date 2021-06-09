@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Address {
+public struct Address: Codable {
     public var name: String
     public var longitude: Double
     public var latitude: Double

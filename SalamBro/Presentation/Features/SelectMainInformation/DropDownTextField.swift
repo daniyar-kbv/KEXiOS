@@ -16,6 +16,13 @@ protocol DropDownTextFieldDelegate: AnyObject {
 final class DropDownTextField: UIView {
     weak var delegate: DropDownTextFieldDelegate?
     private var dataSource: [String]?
+    
+    var isActive: Bool = true {
+        didSet {
+            self.isUserInteractionEnabled = isActive
+            self.alpha = isActive ? 1 : 0.5
+        }
+    }
 
     override public var intrinsicContentSize: CGSize {
         let width = super.intrinsicContentSize.width

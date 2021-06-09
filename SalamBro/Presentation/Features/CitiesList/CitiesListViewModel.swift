@@ -11,35 +11,30 @@ import RxCocoa
 import RxSwift
 
 protocol CitiesListViewModelProtocol: ViewModel {
-    var coordinator: FirstFlowCoordinator { get set }
     var cities: [City] { get }
-    var updateTableView: BehaviorRelay<Void?> { get }
     func didSelect(index: Int)
     func getCities()
     func refreshCities()
+    
+    var outputs: CitiesListViewModel.Outputs { get }
 }
 
 final class CitiesListViewModel: CitiesListViewModelProtocol {
+    internal let outputs = Outputs()
     private let disposeBag = DisposeBag()
-    var coordinator: FirstFlowCoordinator
     private let countryId: Int
 
     var cities: [City] = []
-    var updateTableView: BehaviorRelay<Void?>
 
     private let service: LocationService
     private let repository: LocationRepository
 
-    init(coordinator: FirstFlowCoordinator,
-         countryId: Int,
+    init(countryId: Int,
          service: LocationService,
-         repository: LocationRepository)
-    {
-        self.coordinator = coordinator
+         repository: LocationRepository) {
         self.countryId = countryId
         self.service = service
         self.repository = repository
-        updateTableView = .init(value: nil)
     }
 
     func getCities() {
@@ -48,7 +43,7 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
             cachedCities != []
         {
             cities = cachedCities
-            updateTableView.accept(())
+            outputs.didGetCities.accept(())
         }
 
         makeCitiesRequest()
@@ -66,7 +61,7 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
                 self?.process(receivedCities: citiesResponse)
             } onError: { [weak self] error in
                 self?.stopAnimation()
-                self?.coordinator.alert(error: error)
+                self?.outputs.didGetError.accept(error)
             }
             .disposed(by: disposeBag)
     }
@@ -75,19 +70,27 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
         guard let cachedCities = repository.getCities() else {
             repository.set(cities: receivedCities)
             cities = receivedCities
-            updateTableView.accept(())
+            outputs.didGetCities.accept(())
             return
         }
 
         if cachedCities == receivedCities { return }
         repository.set(cities: receivedCities)
         cities = receivedCities
-        updateTableView.accept(())
+        outputs.didGetCities.accept(())
     }
 
     func didSelect(index: Int) {
         let city = cities[index]
         repository.changeCurrentCity(to: city)
-        coordinator.openBrands()
+        outputs.didSelectCity.accept(())
+    }
+}
+
+extension CitiesListViewModel {
+    struct Outputs {
+        let didGetCities = BehaviorRelay<Void>(value: ())
+        let didSelectCity = PublishRelay<Void>()
+        let didGetError = PublishRelay<Error>()
     }
 }
