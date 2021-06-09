@@ -40,6 +40,7 @@ class AdditionalItemChooseController: ViewController {
         collectionView.delegate = self
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.collectionViewLayout = StagLayout(widthHeightRatios: [(0.5, 0.6), (0.5, 0.6)], itemSpacing: 8)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         return collectionView
     }()
 
@@ -63,14 +64,14 @@ class AdditionalItemChooseController: ViewController {
 
         backButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
         backButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22).isActive = true
+        backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 14).isActive = true
         backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
 
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(backButton.snp.bottom).offset(16)
+            $0.top.equalTo(backButton.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
-            $0.bottom.equalToSuperview().offset(-16)
+            $0.bottom.equalToSuperview()
         }
     }
 

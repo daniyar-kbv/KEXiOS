@@ -65,6 +65,12 @@ final class AddressPickController: ViewController {
         bind()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = L10n.AddressPicker.titleMany
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
+    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
@@ -82,11 +88,6 @@ final class AddressPickController: ViewController {
             .bind(onNext: { [weak self] _ in
                 self?.viewModel.changeAddress()
             }).disposed(by: disposeBag)
-    }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.title = L10n.AddressPicker.titleMany
     }
 
     private func setup() {
@@ -117,6 +118,10 @@ final class AddressPickController: ViewController {
             $0.top.equalTo(addLabel.snp.bottom).offset(16)
             $0.left.right.bottom.equalToSuperview()
         }
+    }
+
+    @objc func goBack() {
+        dismiss(animated: true, completion: nil)
     }
 }
 

@@ -52,6 +52,17 @@ final class BrandsController: ViewController {
         viewModel.getBrands()
     }
 
+    // MARK: Tech Debt - Need to implement swipe in iOS versions <= 12.0
+
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationItem.title = L10n.Brands.Navigation.title
+//        navigationController?.navigationBar.titleTextAttributes = [
+//            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+//        ]
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
+//    }
+
     private func bind() {
         viewModel.updateCollectionView
             .do { [unowned self] _ in
@@ -85,7 +96,7 @@ final class BrandsController: ViewController {
         collectionView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(view.snp.topMargin).offset(8)
+            $0.top.equalTo(view.snp.topMargin).offset(6)
             $0.bottom.equalTo(view.snp.bottom)
         }
     }
@@ -94,6 +105,11 @@ final class BrandsController: ViewController {
         viewModel.refreshBrands()
         refreshControl.endRefreshing()
     }
+
+//    @objc func goBack() {
+//        dismiss(animated: true, completion: nil)
+//        navigationController?.popViewController(animated: true)
+//    }
 }
 
 extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate {

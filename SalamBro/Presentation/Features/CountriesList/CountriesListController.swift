@@ -81,7 +81,7 @@ final class CountriesListController: ViewController {
 
     private func setupConstraints() {
         countriesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
             $0.bottom.equalToSuperview()
