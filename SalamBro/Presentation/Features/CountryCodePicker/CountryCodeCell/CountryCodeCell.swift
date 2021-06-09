@@ -5,18 +5,15 @@
 //  Created by Abzal Toremuratuly on 02.05.2021.
 //
 
-import Reusable
-import RxCocoa
-import RxSwift
-import SnapKit
 import UIKit
 
-final class CountryCodeCell: UITableViewCell, Reusable {
-    private var viewModel: CountryCodeCellViewModelProtocol! {
-        didSet { bind() }
-    }
+struct CountryCodeModel {
+    let country: Country
+    var isSelected: Bool
+}
 
-    private var disposeBag = DisposeBag()
+final class CountryCodeCell: UITableViewCell {
+    static let reuseIdentifier: String = "CountryCodeCell"
 
     private lazy var codeLabel: UILabel = {
         let view = UILabel()
@@ -41,25 +38,26 @@ final class CountryCodeCell: UITableViewCell, Reusable {
 
     override public func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
     }
 
-    func set(_ viewModel: CountryCodeCellViewModelProtocol?) {
-        self.viewModel = viewModel
+    func configure(model: CountryCodeModel) {
+        countryLabel.text = model.country.name
+        codeLabel.text = model.country.countryCode
+        accessoryType = model.isSelected ? .checkmark : .none
     }
 
     private func bind() {
-        viewModel.title.bind { [unowned self] in
-            self.countryLabel.text = $0
-        }.disposed(by: disposeBag)
-
-        viewModel.code.bind { [unowned self] in
-            self.codeLabel.text = $0
-        }.disposed(by: disposeBag)
-
-        viewModel.isSelected.bind { [unowned self] in
-            self.accessoryView = $0 ? checkmark : .none
-        }.disposed(by: disposeBag)
+//        viewModel.title.bind { [unowned self] in
+//            self.countryLabel.text = $0
+//        }.disposed(by: disposeBag)
+//
+//        viewModel.code.bind { [unowned self] in
+//            self.codeLabel.text = $0
+//        }.disposed(by: disposeBag)
+//
+//        viewModel.isSelected.bind { [unowned self] in
+//            self.accessoryView = $0 ? checkmark : .none
+//        }.disposed(by: disposeBag)
     }
 
     private func setup() {

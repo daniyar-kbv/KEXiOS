@@ -9,20 +9,39 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-final class AuthorizationViewModel {
-    let coordinator: AuthCoordinator
-    let outputs = Output()
+protocol AuthorizationViewModel: AnyObject {
+    func setPhoneNumber(_ value: String)
+    func sendOTP()
+    func getCountryCode() -> String
+
+    var outputs: AuthorizationViewModelImpl.Output { get }
+}
+
+final class AuthorizationViewModelImpl {
+    private(set) var outputs = Output()
     private let disposeBag = DisposeBag()
     private let locationRepository: LocationRepository
     private let authService: AuthService
     private var phoneNumber: String = ""
 
-    init(coordinator: AuthCoordinator, locationRepository: LocationRepository, authService: AuthService) {
-        self.coordinator = coordinator
+    init(locationRepository: LocationRepository, authService: AuthService) {
         self.locationRepository = locationRepository
         self.authService = authService
     }
 
+    private func handleResponse(error: Error?) {
+        outputs.didEndRequest.accept(())
+
+        if let error = error as? ErrorPresentable {
+            outputs.didFail.accept(error)
+            return
+        }
+
+        outputs.didSendOTP.accept(phoneNumber)
+    }
+}
+
+extension AuthorizationViewModelImpl: AuthorizationViewModel {
     func setPhoneNumber(_ value: String) {
         phoneNumber = getCountryCode() + value
     }
@@ -38,17 +57,6 @@ final class AuthorizationViewModel {
             .disposed(by: disposeBag)
     }
 
-    private func handleResponse(error: Error?) {
-        outputs.didEndRequest.accept(())
-
-        if let error = error as? ErrorPresentable {
-            outputs.didFail.accept(error)
-            return
-        }
-
-        outputs.didSendOTP.accept(phoneNumber)
-    }
-
     func getCountryCode() -> String {
         guard let country = locationRepository.getCurrentCountry() else {
             return "+7" // by default Kazakhstan
@@ -58,7 +66,7 @@ final class AuthorizationViewModel {
     }
 }
 
-extension AuthorizationViewModel {
+extension AuthorizationViewModelImpl {
     struct Output {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()

@@ -23,18 +23,6 @@ final class AuthorizationController: ViewController, MaskedTextFieldDelegateList
 
     private let authHeaderView = AuthHeaderView()
 
-    private let numberField: UITextField = {
-        let field = UITextField()
-        field.keyboardType = .numberPad
-        field.font = .systemFont(ofSize: 26)
-        field.attributedPlaceholder = NSAttributedString(
-            string: L10n.Authorization.NumberField.Placeholder.title,
-            attributes: [.font: UIFont.systemFont(ofSize: 26, weight: .medium)]
-        )
-        field.translatesAutoresizingMaskIntoConstraints = false
-        return field
-    }()
-
     private let aggreementLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.Authorization.Agreement.Inactive.title + L10n.Authorization.Agreement.Active.title
@@ -44,19 +32,18 @@ final class AuthorizationController: ViewController, MaskedTextFieldDelegateList
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
         label.isUserInteractionEnabled = true
-        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel)))
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
-    let countryCodeButton: UIButton = {
+    // MARK: Tech debt, нужно перенести в отдельный класс countryCodeButton, chevronView и numberField
+
+    private let countryCodeButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 26)
         button.titleLabel?.textAlignment = .center
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(handlecCountryCodeButtonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -64,8 +51,19 @@ final class AuthorizationController: ViewController, MaskedTextFieldDelegateList
         let view = UIImageView()
         view.image = UIImage(named: "chevron.bottom")
         view.contentMode = .scaleAspectFit
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = true
         return view
+    }()
+
+    private let numberField: UITextField = {
+        let field = UITextField()
+        field.keyboardType = .numberPad
+        field.font = .systemFont(ofSize: 26)
+        field.attributedPlaceholder = NSAttributedString(
+            string: L10n.Authorization.NumberField.Placeholder.title,
+            attributes: [.font: UIFont.systemFont(ofSize: 26, weight: .medium)]
+        )
+        return field
     }()
 
     private let getButton: UIButton = {
@@ -77,7 +75,6 @@ final class AuthorizationController: ViewController, MaskedTextFieldDelegateList
         button.isEnabled = false
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -133,25 +130,22 @@ final class AuthorizationController: ViewController, MaskedTextFieldDelegateList
 }
 
 extension AuthorizationController {
-    @objc func proceedToAgreementView() {
-        let vc = AgreementController()
-        navigationController?.pushViewController(vc, animated: true)
+    @objc private func handleTapOnLabel() {
+        outputs.handleAgreementTextAction.accept(())
     }
 
-    @objc func handlecCountryCodeButtonAction() {
-        viewModel.coordinator.showCountryCodePicker { [weak self] in
-            self?.countryCodeButton.setTitle($0.countryCode, for: .normal)
-        }
+    @objc private func handlecCountryCodeButtonAction() {
+        outputs.handleChangeCountryCode.accept(())
+    }
+
+    func changeCountryCode(title: String) {
+        countryCodeButton.setTitle(title, for: .normal)
     }
 }
 
 extension AuthorizationController {
     @objc func handleGetButtonAction() {
         viewModel.sendOTP()
-    }
-
-    @objc func handleTapOnLabel() {
-        proceedToAgreementView()
     }
 
     func textField(_: UITextField, didFillMandatoryCharacters complete: Bool, didExtractValue value: String) {
@@ -174,6 +168,8 @@ extension AuthorizationController {
         numberField.delegate = maskedDelegate
         view.backgroundColor = .white
         countryCodeButton.setTitle(viewModel.getCountryCode(), for: .normal)
+        aggreementLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel)))
+        chevronView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlecCountryCodeButtonAction)))
     }
 
     func layoutUI() {
@@ -208,15 +204,20 @@ extension AuthorizationController {
         }
 
         view.addSubview(aggreementLabel)
-        aggreementLabel.topAnchor.constraint(equalTo: countryCodeButton.bottomAnchor, constant: 72).isActive = true
-        aggreementLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
-        aggreementLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
+        aggreementLabel.snp.makeConstraints {
+            $0.top.equalTo(countryCodeButton.snp.bottom).offset(72)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.height.equalTo(32)
+        }
 
         view.addSubview(getButton)
-        getButton.topAnchor.constraint(equalTo: aggreementLabel.bottomAnchor, constant: 16).isActive = true
-        getButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
-        getButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
-        getButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
+        getButton.snp.makeConstraints {
+            $0.top.equalTo(aggreementLabel.snp.bottom).offset(24)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.height.equalTo(43)
+        }
     }
 }
 
@@ -224,5 +225,7 @@ extension AuthorizationController {
     struct Output {
         let didSendOTP = PublishRelay<String>()
         let didCloseAuthFlow = PublishRelay<Void>()
+        let handleChangeCountryCode = PublishRelay<Void>()
+        let handleAgreementTextAction = PublishRelay<Void>()
     }
 }

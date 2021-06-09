@@ -15,8 +15,6 @@ class CartController: ViewController {
     var mainTabDelegate: MainTabDelegate?
     var cartViewModel: CartViewModel
 
-    private var authCoordinator: AuthCoordinator?
-
     lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title, image: UIImage(named: "emptyCart")!)
     lazy var commentarySheetVC = CommentarySheetController()
 
