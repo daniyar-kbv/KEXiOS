@@ -290,10 +290,18 @@ extension MenuDetailController: MapDelegate {
         commentarySheetVC.didMove(toParent: self)
         commentarySheetVC.modalPresentationStyle = .overCurrentContext
 
-        let height: CGFloat = 149.0
+        let height: CGFloat = 185.0
         let width = view.frame.width
-        commentarySheetVC.view.frame = CGRect(x: 0, y: view.frame.height - height, width: width, height: height)
-        print("view frame height: \(view.frame.height)")
+
+        getScreenSize(heightOfSheet: height, width: width)
+    }
+
+    private func getScreenSize(heightOfSheet: CGFloat, width: CGFloat) {
+        let bounds = UIScreen.main.bounds
+        let height = bounds.size.height
+
+        commentarySheetVC.isCommentary = true
+        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 49 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 64 - heightOfSheet, width: width, height: heightOfSheet)
     }
 
     func passCommentary(text: String) {

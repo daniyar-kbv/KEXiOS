@@ -90,7 +90,7 @@ extension CitiesListController {
 
     private func setupConstraints() {
         tableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(16)
+            $0.top.equalTo(view.snp.topMargin).offset(14)
             $0.left.right.bottom.equalToSuperview()
         }
     }

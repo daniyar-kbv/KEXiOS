@@ -19,13 +19,13 @@ class RateItemCell: UICollectionViewCell {
         titleLabel.text = text
     }
 
-    func toggleSelected() {
-        if isSelected {
-            cellView.backgroundColor = .kexRed
-            titleLabel.textColor = .arcticWhite
-        } else {
-            cellView.backgroundColor = .arcticWhite
-            titleLabel.textColor = .kexRed
-        }
+    public func setSelectedUI() {
+        cellView.backgroundColor = .kexRed
+        titleLabel.textColor = .arcticWhite
+    }
+
+    public func setDeselectedUI() {
+        cellView.backgroundColor = .arcticWhite
+        titleLabel.textColor = .kexRed
     }
 }

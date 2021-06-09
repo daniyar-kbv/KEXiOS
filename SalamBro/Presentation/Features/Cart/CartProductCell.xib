@@ -42,13 +42,13 @@
                         <attributedString key="attributedText">
                             <fragment content="subitems">
                                 <attributes>
-                                    <color key="NSColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <font key="NSFont" metaFont="cellTitle"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="3" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
-                        <color key="highlightedColor" systemColor="labelColor"/>
+                        <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="752" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d5K-DY-dKe">
                         <rect key="frame" x="91" y="52" width="207" height="19"/>
@@ -80,7 +80,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="-">
+                                        <state key="normal">
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -109,7 +109,8 @@
                                         <rect key="frame" x="60" y="0.5" width="30" height="29"/>
                                         <color key="backgroundColor" red="0.81960784310000001" green="0.2156862745" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <state key="normal" title="+">
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -128,7 +129,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JKX-6i-NyH">
-                                <rect key="frame" x="0.0" y="-0.5" width="90" height="30"/>
+                                <rect key="frame" x="0.0" y="-0.5" width="90" height="32"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="Delete">
@@ -156,7 +157,7 @@
                             <constraint firstItem="JKX-6i-NyH" firstAttribute="top" secondItem="1gA-lq-5Sj" secondAttribute="top" constant="-0.5" id="Gdg-Yc-lLb"/>
                             <constraint firstAttribute="height" constant="30" id="IqN-lq-Tpn"/>
                             <constraint firstAttribute="trailing" secondItem="JKX-6i-NyH" secondAttribute="trailing" id="PUj-vW-qtv"/>
-                            <constraint firstAttribute="bottom" secondItem="JKX-6i-NyH" secondAttribute="bottom" constant="0.5" id="TtC-9k-clm"/>
+                            <constraint firstAttribute="bottom" secondItem="JKX-6i-NyH" secondAttribute="bottom" constant="-1.5" id="TtC-9k-clm"/>
                             <constraint firstAttribute="width" constant="90" id="eNU-U6-FVH"/>
                             <constraint firstAttribute="trailing" secondItem="pI3-Vv-2LJ" secondAttribute="trailing" id="fnZ-Ug-kJG"/>
                             <constraint firstItem="pI3-Vv-2LJ" firstAttribute="leading" secondItem="1gA-lq-5Sj" secondAttribute="leading" id="hGM-RD-e6N"/>
@@ -212,9 +213,6 @@
     </objects>
     <resources>
         <image name="fastFood" width="1192" height="869"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

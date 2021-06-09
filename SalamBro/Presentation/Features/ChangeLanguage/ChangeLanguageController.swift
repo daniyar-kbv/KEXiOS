@@ -24,6 +24,10 @@ class ChangeLanguageController: ViewController {
 
     fileprivate lazy var selectionIndexPath: IndexPath? = nil
 
+    // MARK: Tech Debt - Create in a viewModel
+
+    private var marked: IndexPath?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -42,7 +46,7 @@ class ChangeLanguageController: ViewController {
 
     fileprivate func setupConstraints() {
         countriesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(24)
             $0.left.right.bottom.equalToSuperview()
         }
     }
@@ -60,6 +64,8 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // MARK: Tech Debt - Create in a new class
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = languages[indexPath.row]
         cell.backgroundColor = .white
@@ -70,6 +76,8 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
             cell.imageView?.image = UIImage(named: "kazakh")
         case 1:
             cell.imageView?.image = UIImage(named: "russian")
+            cell.accessoryView = checkmark
+            marked = indexPath
         case 2:
             cell.imageView?.image = UIImage(named: "english")
         default:
@@ -79,10 +87,11 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // MARK: Tech Debt - Create in a new class
+
         if selectionIndexPath != nil {
             if selectionIndexPath == indexPath {
 //                selectionIndexPath = nil
-                navigationController?.popViewController(animated: true)
             } else {
                 selectionIndexPath = indexPath
                 let cell = tableView.cellForRow(at: selectionIndexPath!)
@@ -91,8 +100,11 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
         } else {
             selectionIndexPath = indexPath
             let cell = tableView.cellForRow(at: selectionIndexPath!)
+            tableView.cellForRow(at: marked!)?.accessoryView = .none
             cell?.accessoryView = checkmark
+            marked = indexPath
         }
+        navigationController?.popViewController(animated: true)
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

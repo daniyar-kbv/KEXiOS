@@ -189,6 +189,30 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        // MARK: Tech Debt - Create in a new class
+
+        let footerView = UIView()
+        let footerChildView = UIView(frame: CGRect(x: 24, y: 0, width: tableView.frame.width - 48, height: 0.5))
+        if section == 0 {
+            footerChildView.backgroundColor = .gray
+            footerView.addSubview(footerChildView)
+            return footerView
+        } else {
+            footerChildView.backgroundColor = .lightGray
+            footerView.addSubview(footerChildView)
+            return footerView
+        }
+    }
+
+    func tableView(_: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0.25
+        } else {
+            return 0.5
+        }
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CartProductCell", for: indexPath) as! CartProductCell
@@ -301,6 +325,7 @@ extension CartController: MapDelegate {
         let bounds = UIScreen.main.bounds
         let height = bounds.size.height
 
+        commentarySheetVC.isPromocode = true
         commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 49 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 64 - heightOfSheet, width: width, height: heightOfSheet)
     }
 
