@@ -19,7 +19,6 @@ class RateController: ViewController {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var ratingView: CosmosView!
-    @IBOutlet var infoStack: UIStackView!
     @IBOutlet var subtitleFirstLabel: UILabel!
     @IBOutlet var subtitleSecondLabel: UILabel!
     @IBOutlet var collectionView: UICollectionView!
@@ -42,6 +41,11 @@ class RateController: ViewController {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionViewHeightConstraint.constant = collectionView.collectionViewLayout.collectionViewContentSize.height
     }
 
     private func setupViews() {
