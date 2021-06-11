@@ -116,9 +116,8 @@ class SupportController: ViewController {
     }
 
     func setupConstraints() {
-        tableView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
         tableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
+            $0.top.equalTo(view.snp.topMargin).offset(24)
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
             $0.bottom.equalTo(logoStack.snp.top).offset(-16)

@@ -80,9 +80,8 @@ final class CountriesListController: ViewController {
     }
 
     private func setupConstraints() {
-        countriesTableView.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 0, right: 0)
         countriesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
             $0.bottom.equalToSuperview()
