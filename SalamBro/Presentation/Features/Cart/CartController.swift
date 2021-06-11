@@ -15,7 +15,8 @@ class CartController: ViewController {
     var mainTabDelegate: MainTabDelegate?
     var cartViewModel: CartViewModel
 
-    lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title, image: UIImage(named: "emptyCart")!)
+    private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
+
     lazy var commentarySheetVC = CommentarySheetController()
 
     lazy var tableViewFooter: CartFooter = {
@@ -283,10 +284,8 @@ extension CartController: CellDelegate {
     }
 }
 
-extension CartController: AdditionalViewDelegate {
-    func action() {
-        mainTabDelegate?.changeController(id: 0)
-    }
+extension CartController: AnimationContainerViewDelegate {
+    func performAction() {}
 }
 
 extension CartController: CartFooterDelegate {

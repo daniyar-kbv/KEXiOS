@@ -8,6 +8,7 @@ PODS:
   - InputMask (6.1.0)
   - IQKeyboardManagerSwift (6.5.6)
   - KeychainAccess (4.2.2)
+  - lottie-ios (3.2.3)
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (14.0.0):
@@ -53,6 +54,7 @@ DEPENDENCIES:
   - InputMask
   - IQKeyboardManagerSwift
   - KeychainAccess
+  - lottie-ios
   - Moya/RxSwift (~> 14.0)
   - PromiseKit
   - Reusable
@@ -75,6 +77,7 @@ SPEC REPOS:
     - InputMask
     - IQKeyboardManagerSwift
     - KeychainAccess
+    - lottie-ios
     - Moya
     - PromiseKit
     - Reusable
@@ -98,6 +101,7 @@ SPEC CHECKSUMS:
   InputMask: 71d291dc54d2deaeac6512afb6ec2304228c0bb7
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
+  lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
@@ -112,6 +116,6 @@ SPEC CHECKSUMS:
   YandexMapKitSearch: b46ddd1c80e2e35d006cdfc4ab88070a50cebeda
   YandexRuntime: 2d55244d06267106cf9b00c25a1e63f72a73b6fd
 
-PODFILE CHECKSUM: c6e7f0ddc56d7e9f2527d191288413f6ae4e0230
+PODFILE CHECKSUM: e2c539a738e6be18dc5482049fc456f1b6a290c1
 
 COCOAPODS: 1.10.1
