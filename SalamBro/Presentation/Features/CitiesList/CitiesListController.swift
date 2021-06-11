@@ -80,8 +80,9 @@ extension CitiesListController {
     }
 
     private func setupConstraints() {
+        tableView.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 24, right: 0)
         tableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(14)
+            $0.top.equalTo(view.snp.topMargin)
             $0.left.right.bottom.equalToSuperview()
         }
     }

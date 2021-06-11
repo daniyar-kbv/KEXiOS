@@ -58,8 +58,9 @@ final class AddressListController: ViewController {
     private func layoutUI() {
         view.backgroundColor = .white
         view.addSubview(citiesTableView)
+        citiesTableView.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 24, right: 0)
         citiesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()

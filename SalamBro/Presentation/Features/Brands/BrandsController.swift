@@ -27,7 +27,6 @@ final class BrandsController: ViewController {
             collectionViewLayout: .init()
         )
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         collectionView.backgroundColor = .clear
         collectionView.register(cellType: BrandCell.self)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -54,14 +53,14 @@ final class BrandsController: ViewController {
 
     // MARK: Tech Debt - Need to implement swipe in iOS versions <= 12.0
 
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        navigationItem.title = L10n.Brands.Navigation.title
-//        navigationController?.navigationBar.titleTextAttributes = [
-//            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
-//        ]
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = L10n.Brands.Navigation.title
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+        ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
+    }
 
     private func bind() {
         viewModel.updateCollectionView
@@ -72,14 +71,6 @@ final class BrandsController: ViewController {
                                                                       itemSpacing: 16)
             }.bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
-    }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.title = L10n.Brands.Navigation.title
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
-        ]
     }
 
     private func setup() {
@@ -93,10 +84,11 @@ final class BrandsController: ViewController {
     }
 
     private func setupConstraints() {
+        collectionView.contentInset = UIEdgeInsets(top: 6, left: 0, bottom: 24, right: 0)
         collectionView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(view.snp.topMargin).offset(6)
+            $0.top.equalTo(view.snp.topMargin)
             $0.bottom.equalTo(view.snp.bottom)
         }
     }
@@ -106,10 +98,14 @@ final class BrandsController: ViewController {
         refreshControl.endRefreshing()
     }
 
-//    @objc func goBack() {
-//        dismiss(animated: true, completion: nil)
-//        navigationController?.popViewController(animated: true)
-//    }
+    @objc func goBack() {
+        if navigationController?.presentingViewController != nil {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate {
