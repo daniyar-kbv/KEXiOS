@@ -58,7 +58,7 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
                 self?.process(receivedCountries: countriesResponse)
             } onError: { [weak self] error in
                 self?.stopAnimation()
-                self?.outputs.didGetError.accept(error)
+                self?.outputs.didGetError.accept(error as? ErrorPresentable)
             }
             .disposed(by: disposeBag)
     }
@@ -79,7 +79,7 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
 
     func didSelect(index: Int) {
         let country = countries[index]
-        repository.changeCurrectCountry(to: country)
+        repository.changeCurrentCountry(to: country)
         outputs.didSelectCountry.accept(countries[index].id)
     }
 }
@@ -88,6 +88,6 @@ extension CountriesListViewModel {
     struct Output {
         let didGetCoutries = BehaviorRelay<Void>(value: ())
         let didSelectCountry = PublishRelay<Int>()
-        let didGetError = PublishRelay<Error>()
+        let didGetError = PublishRelay<ErrorPresentable?>()
     }
 }

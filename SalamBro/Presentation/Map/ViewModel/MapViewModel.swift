@@ -20,13 +20,23 @@ final class MapViewModel {
     let outputs = Output()
 
     var currentLocation: YMKPoint?
-    var targetLocation = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
+    var targetLocation: YMKPoint
+    var commentary: String?
     private let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
     private var searchSession: YMKSearchSession?
     private(set) var flow: MapFlow
 
-    init(flow: MapFlow) {
+    init(flow: MapFlow,
+         address: Address? = nil) {
         self.flow = flow
+        self.targetLocation = YMKPoint(latitude: address?.latitude ?? ALA_LAT,
+                                       longitude: address?.longitude ?? ALA_LON)
+        self.outputs.selectedAddress
+            .onNext(MapAddress(name: address?.name ?? "",
+                               formattedAddress: address?.name ?? "",
+                               longitude: address?.longitude ?? 0,
+                               latitude: address?.latitude ?? 0))
+        self.commentary = address?.commentary
     }
 
     func onActionButtonTapped() {

@@ -17,34 +17,37 @@ protocol AddressPickerViewModelProtocol: ViewModel {
 }
 
 final class AddressPickerViewModel: AddressPickerViewModelProtocol {
-    private let repository: GeoRepository
+    private let locationRepository: LocationRepository
     public var cellViewModels: [AddressPickerCellViewModelProtocol] = []
-    private var addresses: [Address] = []
+    private var addresses: [DeliveryAddress] = []
     
     let outputs = Output()
 
     public func didSelect(index: Int) {
         let address = addresses[index]
-        repository.currentAddress = address
+        locationRepository.setCurrentDeliveryAddress(deliveryAddress: address)
         outputs.didSelectAddress.accept(addresses[index])
     }
 
-    init(repository: GeoRepository) {
-        self.repository = repository
+    init(locationRepository: LocationRepository) {
+        self.locationRepository = locationRepository
         
         reload()
     }
     
     func reload() {
-        addresses = repository.addresses ?? []
-        cellViewModels = repository.addresses?.map { AddressPickerCellViewModel(address: $0, isSelected: $0 == repository.currentAddress) } ?? []
+        addresses = locationRepository.getDeliveryAddresses() ?? []
+        cellViewModels = addresses.map {
+            AddressPickerCellViewModel(deliveryAddress: $0,
+                                       isSelected: $0 == locationRepository.getCurrentDeliveryAddress())
+        }
         outputs.onReload.accept(())
     }
 }
 
 extension AddressPickerViewModel {
     struct Output {
-        let didSelectAddress = PublishRelay<Address>()
+        let didSelectAddress = PublishRelay<DeliveryAddress>()
         let onReload = PublishRelay<Void>()
     }
 }

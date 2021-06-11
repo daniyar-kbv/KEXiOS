@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class RatingCoordinator: Coordinator {
+final class RatingCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController

@@ -27,7 +27,6 @@ final class MenuViewModel: MenuViewModelProtocol {
     private let menuRepository: MenuRepository
     private let locationRepository: LocationRepository
     private let brandRepository: BrandRepository
-    private let geoRepository: GeoRepository
     public var headerViewModels: [ViewModel?]
     public var cellViewModels: [[ViewModel]]
     public var updateTableView: BehaviorRelay<Void?>
@@ -36,8 +35,7 @@ final class MenuViewModel: MenuViewModelProtocol {
     init(coordinator: MenuCoordinator,
          menuRepository: MenuRepository,
          locationRepository: LocationRepository,
-         brandRepository: BrandRepository,
-         geoRepository: GeoRepository)
+         brandRepository: BrandRepository)
     {
         self.coordinator = coordinator
         cellViewModels = []
@@ -46,7 +44,6 @@ final class MenuViewModel: MenuViewModelProtocol {
         self.menuRepository = menuRepository
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
-        self.geoRepository = geoRepository
         brandName = .init(value: brandRepository.getCurrentBrand()?.name)
         download()
     }
@@ -77,7 +74,7 @@ final class MenuViewModel: MenuViewModelProtocol {
             self.menuRepository.downloadMenuAds()
         }.done {
             self.cellViewModels.append([
-                AddressPickCellViewModel(address: self.geoRepository.currentAddress),
+                AddressPickCellViewModel(address: self.locationRepository.getCurrentDeliveryAddress()?.address),
                 AdCollectionCellViewModel(ads: $0.map { AdUI(from: $0) }),
             ])
         }.then {

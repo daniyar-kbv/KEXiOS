@@ -38,7 +38,7 @@ private final class ApplicationAssembly: Assembly {
             AppCoordinator(
                 serviceComponents: ServiceComponentsAssembly(),
                 navigationController: UINavigationController(),
-                geoRepository: r.resolve(GeoRepository.self)!,
+                locationRepository: r.resolve(LocationRepository.self)!,
                 brandRepository: r.resolve(BrandRepository.self)!
             )
         }
@@ -84,11 +84,6 @@ private final class RepositoriesAssembly: Assembly {
     func assemble(container: Container) {
         container.register(MenuRepository.self) { r in
             MenuRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!)
-        }
-
-        container.register(GeoRepository.self) { r in
-            GeoRepositoryImplementation(provider: r.resolve(NetworkProvider.self)!,
-                                        storage: r.resolve(Storage.self)!)
         }
 
         container.register(MenuDetailRepository.self) { r in

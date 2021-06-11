@@ -164,7 +164,7 @@ extension AddressPickController: UITableViewDelegate, UITableViewDataSource {
 
 extension AddressPickController {
     struct Output {
-        let didSelectAddress = PublishRelay<(Address, () -> Void)>()
+        let didSelectAddress = PublishRelay<(DeliveryAddress, () -> Void)>()
         let didAddTapped = PublishRelay<() -> Void>()
         let didTerminate = PublishRelay<Void>()
     }

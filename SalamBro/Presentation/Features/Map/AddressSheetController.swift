@@ -7,6 +7,8 @@
 
 import UIKit
 
+// Tech debt: remove class
+
 class AddressSheetController: ViewController {
     @IBOutlet var addressView: UIView!
     @IBOutlet var addressField: UITextField!
@@ -18,7 +20,7 @@ class AddressSheetController: ViewController {
     var yCoordinate: CGFloat?
     weak var delegate: MapDelegate?
     private var address: Address?
-    private let geoRepository = DIResolver.resolve(GeoRepository.self)!
+//    private let geoRepository = DIResolver.resolve(GeoRepository.self)!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,8 +73,8 @@ class AddressSheetController: ViewController {
 
     @IBAction func proceedAction(_: UIButton) {
         if let address = address {
-            geoRepository.addresses?.append(address)
-            geoRepository.currentAddress = address
+//            geoRepository.addresses?.append(address)
+//            geoRepository.currentAddress = address
         }
         delegate?.dissmissView()
     }

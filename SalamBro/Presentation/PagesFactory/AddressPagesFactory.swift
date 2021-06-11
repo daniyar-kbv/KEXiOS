@@ -10,46 +10,61 @@ import Foundation
 protocol AddressPagesFactory {
     func makeAddressPickPage() -> AddressPickController
     func makeSelectMainInfoPage(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewController
-    func makeMapPage() -> MapPage
-    func makeBrandsPage() -> BrandsController
+    func makeMapPage(address: Address?) -> MapPage
+    func makeBrandsPage(cityId: Int) -> BrandsController
 }
 
-class AddressPagesFactoryImpl: AddressPagesFactory {
+final class AddressPagesFactoryImpl: AddressPagesFactory {
     func makeAddressPickPage() -> AddressPickController {
         return .init(viewModel: makeAddressPickViewModel())
     }
     
     private func makeAddressPickViewModel() -> AddressPickerViewModel {
-        return .init(repository: DIResolver.resolve(GeoRepository.self)!)
+        return .init(locationRepository: getLocationRepository())
     }
     
     func makeSelectMainInfoPage(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewController {
-        return .init(viewModel: makeSelectMainInfoViewModel(flowType: flowType),
-                     flowType: flowType)
+        return .init(viewModel: makeSelectMainInfoViewModel(flowType: flowType))
     }
     
     private func makeSelectMainInfoViewModel(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewModel {
-        return .init(geoRepository: DIResolver.resolve(GeoRepository.self)!,
-                     brandRepository: DIResolver.resolve(BrandRepository.self)!,
+        return .init(locationService: getLocationService(),
+                     locationRepository: getLocationRepository(),
+                     brandRepository: getBrandRepository(),
                      flowType: flowType)
     }
     
-    func makeMapPage() -> MapPage {
-        return .init(viewModel: makeMapViewModel())
+    func makeMapPage(address: Address?) -> MapPage {
+        return .init(viewModel: makeMapViewModel(address: address))
     }
     
-    private func makeMapViewModel() -> MapViewModel {
-        return .init(flow: .creation)
+    private func makeMapViewModel(address: Address?) -> MapViewModel {
+        return .init(flow: .change, address: address)
     }
     
-    func makeBrandsPage() -> BrandsController {
-        return .init(viewModel: makeBrandsViewModel(),
+    func makeBrandsPage(cityId: Int) -> BrandsController {
+        return .init(viewModel: makeBrandsViewModel(cityId: cityId),
                      flowType: .change)
     }
     
-    private func makeBrandsViewModel() -> BrandViewModel {
-        return .init(repository: DIResolver.resolve(BrandRepository.self)!,
-                     locationRepository: DIResolver.resolve(LocationRepository.self)!,
-                     service: DIResolver.resolve(LocationService.self)!)
+    private func makeBrandsViewModel(cityId: Int) -> BrandViewModel {
+        return .init(repository: getBrandRepository(),
+                     locationRepository: getLocationRepository(),
+                     service: getLocationService(),
+                     cityId: cityId)
+    }
+}
+
+extension AddressPagesFactoryImpl {
+    private func getLocationRepository() -> LocationRepository {
+        return DIResolver.resolve(LocationRepository.self)!
+    }
+    
+    private func getLocationService() -> LocationService {
+        return DIResolver.resolve(LocationService.self)!
+    }
+    
+    private func getBrandRepository() -> BrandRepository {
+        return DIResolver.resolve(BrandRepository.self)!
     }
 }

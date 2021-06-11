@@ -78,7 +78,8 @@ final class BrandsController: ViewController, AlertDisplayable {
             .disposed(by: disposeBag)
         
         viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
-            self?.showAlert(title: error.localizedDescription, message: nil)
+            guard let error = error else { return }
+            self?.showError(error)
         }).disposed(by: disposeBag)
         
         viewModel.outputs.didSelectBrand.subscribe(onNext: { [weak self] brand in

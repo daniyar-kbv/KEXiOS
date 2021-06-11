@@ -14,6 +14,7 @@ protocol BrandViewModelProtocol: ViewModel {
     var outputs: BrandViewModel.Outputs { get }
     var brands: [Brand] { get }
     var ratios: [(Float, Float)] { get }
+    
     func refreshBrands()
     func didSelect(index: Int)
     func getBrands()
@@ -21,6 +22,8 @@ protocol BrandViewModelProtocol: ViewModel {
 
 final class BrandViewModel: BrandViewModelProtocol {
     let outputs = Outputs()
+    
+    private let cityId: Int
     private let disposeBag = DisposeBag()
 
     private let repository: BrandRepository
@@ -36,10 +39,13 @@ final class BrandViewModel: BrandViewModelProtocol {
 
     init(repository: BrandRepository,
          locationRepository: LocationRepository,
-         service: LocationService) {
+         service: LocationService,
+         cityId: Int) {
+        self.cityId = cityId
         self.repository = repository
         self.locationRepository = locationRepository
         self.service = service
+        
         makeBrandsRequest()
     }
 
@@ -75,15 +81,14 @@ final class BrandViewModel: BrandViewModelProtocol {
     }
 
     private func makeBrandsRequest() {
-        guard let city = locationRepository.getCurrectCity() else { return }
         startAnimation()
-        service.getBrands(for: city.id)
+        service.getBrands(for: cityId)
             .subscribe(onSuccess: { [weak self] brandsResponse in
                 self?.stopAnimation()
                 self?.process(receivedBrands: brandsResponse)
             }, onError: { [weak self] error in
                 self?.stopAnimation()
-                self?.outputs.didGetError.accept(error)
+                self?.outputs.didGetError.accept(error as? ErrorPresentable)
             })
             .disposed(by: disposeBag)
     }
@@ -122,7 +127,7 @@ final class BrandViewModel: BrandViewModelProtocol {
 extension BrandViewModel {
     struct Outputs {
         let didGetBrands = BehaviorRelay<Void>(value: ())
-        let didGetError = PublishRelay<Error>()
+        let didGetError = PublishRelay<ErrorPresentable?>()
         let didSelectBrand = PublishRelay<Brand>()
     }
 }

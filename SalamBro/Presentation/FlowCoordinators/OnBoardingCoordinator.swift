@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class OnBoardingCoordinator {
+final class OnBoardingCoordinator {
     private let navigationController: UINavigationController
     private let pagesFactory: OnBoadingPagesFactory
     private let disposeBag = DisposeBag()
@@ -37,30 +37,35 @@ class OnBoardingCoordinator {
     private func openCities(countryId: Int) {
         let citiesPage = pagesFactory.makeCitiesPage(countryId: countryId)
         
-        citiesPage.outputs.didSelectCity.subscribe(onNext: { [weak self] in
-            self?.openBrands()
+        citiesPage.outputs.didSelectCity.subscribe(onNext: { [weak self] cityId in
+            self?.openBrands(cityId: cityId)
         }).disposed(by: disposeBag)
         
         navigationController.pushViewController(citiesPage, animated: true)
     }
     
-    private func openBrands() {
-        let brandsPage = pagesFactory.makeBrandsPage()
+    private func openBrands(cityId: Int) {
+//        let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
+//
+//        brandsPage.outputs.didSelectBrand.subscribe(onNext: { [weak self] _ in
+//            self?.openMap()
+//        }).disposed(by: disposeBag)
+//
+//        navigationController.pushViewController(brandsPage, animated: true)
         
-        brandsPage.outputs.didSelectBrand.subscribe(onNext: { [weak self] _ in
-            self?.openMap()
-        }).disposed(by: disposeBag)
+//        TODO: remove
         
-        navigationController.pushViewController(brandsPage, animated: true)
+        DIResolver.resolve(BrandRepository.self)?.changeCurrent(brand: Brand(id: 1, name: "Салам бро", image: "", isAvailable: true))
+        
+        openMap()
     }
     
     private func openMap() {
         let mapPage = MapPage(viewModel: MapViewModel(flow: .creation))
         mapPage.selectedAddress = { [weak self] address in
-            let geoRepository = DIResolver.resolve(GeoRepository.self)
+            let locationRepository = DIResolver.resolve(LocationRepository.self)
             let address = Address(name: address.name, longitude: address.longitude, latitude: address.latitude)
-            geoRepository?.currentAddress = address
-            geoRepository?.addresses?.append(address)
+            locationRepository?.changeCurrentAddress(to: address)
             self?.didFinish?()
             self?.navigationController.viewControllers.removeAll()
 //            Tech debt: add order apply api

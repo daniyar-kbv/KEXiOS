@@ -43,7 +43,7 @@ public final class AddressPickerCell: UITableViewCell, Reusable {
         }.disposed(by: disposeBag)
 
         viewModel.isSelected.bind { [unowned self] in
-            self.accessoryView = $0 ? checkmark : UIImageView(image: UIImage(named: "chevron.right"))
+            self.accessoryView = $0 ? UIImageView(image: UIImage(named: "checkmark")) : UIImageView(image: UIImage(named: "chevron.right"))
         }.disposed(by: disposeBag)
     }
 

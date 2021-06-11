@@ -70,11 +70,12 @@ extension CitiesListController {
             .disposed(by: disposeBag)
         
         viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
-            self?.showAlert(title: error.localizedDescription, message: nil)
+            guard let error = error else { return }
+            self?.showError(error)
         }).disposed(by: disposeBag)
         
-        viewModel.outputs.didSelectCity.subscribe(onNext: { [weak self] _ in
-            self?.outputs.didSelectCity.accept(())
+        viewModel.outputs.didSelectCity.subscribe(onNext: { [weak self] cityId in
+            self?.outputs.didSelectCity.accept(cityId)
         }).disposed(by: disposeBag)
     }
 
@@ -128,6 +129,6 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
 
 extension CitiesListController {
     struct Output {
-        let didSelectCity = PublishRelay<Void>()
+        let didSelectCity = PublishRelay<Int>()
     }
 }

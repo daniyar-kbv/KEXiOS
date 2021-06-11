@@ -13,152 +13,199 @@ import RxSwift
 
 protocol SelectMainInformationViewModelProtocol: ViewModel {
     var flowType: SelectMainInformationViewModel.FlowType { get }
-    var countries: [String] { get }
+    var countries: [Country] { get }
     var cities: [City] { get }
     var brands: [Brand] { get }
+    var brand: Brand? { get set }
+    var deliveryAddress: DeliveryAddress? { get }
     var outputs: SelectMainInformationViewModel.Output { get set }
     
-    func didChange(cityname: String)
+    func getCountries()
     func didChange(country index: Int)
-    func didChange(brand: Brand)
-    func didChange(address: Address)
+    func didChange(city index: Int?)
+    func didChange(address: Address?)
+    func didChange(brand: Brand?)
     func didSave()
     func checkValues()
-    //    Tech debt: remove after addresses storage change
-    func sendCurrentValues()
-    func sendAddressValues()
 }
 
 final class SelectMainInformationViewModel: SelectMainInformationViewModelProtocol {
     internal var flowType: FlowType
-    private let geoRepository: GeoRepository
+    
+    private let locationService: LocationService
+    private let locationRepository: LocationRepository
     private let brandRepository: BrandRepository
 
-    public var countries: [String]
-    public var cities: [City]
-    public var brands: [Brand]
+    public lazy var countries: [Country] = locationRepository.getCountries() ?? []
+    public lazy var cities: [City] = locationRepository.getCities() ?? []
+    public lazy var brands: [Brand] = brandRepository.getBrands() ?? []
     
-    private var country: Country?
-    private var city: City?
-    private var address: Address?
-    private var brand: Brand?
+    lazy var brand: Brand? = brandRepository.getCurrentBrand()
+    var deliveryAddress: DeliveryAddress?
     
     var outputs = Output()
+    private let disposeBag = DisposeBag()
     
-    init(geoRepository: GeoRepository,
+    init(locationService: LocationService,
+         locationRepository: LocationRepository,
          brandRepository: BrandRepository,
          flowType: FlowType) {
-        self.geoRepository = geoRepository
+        self.locationService = locationService
+        self.locationRepository = locationRepository
         self.brandRepository = brandRepository
         self.flowType = flowType
         
-        countries = geoRepository.countries.map { $0.name }
-        cities = geoRepository.cities
-        brands = brandRepository.getBrands() ?? [] // brandRepository.brands.map { $0.name }
-        
-        setupValues()
-    }
-
-    func didChange(country index: Int) {
-        country = geoRepository.countries[index]
-        outputs.didSelectCountry.accept(country?.name)
-        checkValues()
-    }
-    
-    func didChange(cityname: String) {
-        let city = cities.first(where: { $0.name == cityname })
-        self.city = city
-        outputs.didSelectCity.accept(city?.name)
-        checkValues()
-    }
-    
-    func didChange(address: Address) {
-        self.address = address
-        outputs.didSelectAddress.accept(address.name)
-        checkValues()
-    }
-
-    func didChange(brand: Brand) {
-        self.brand = brand
-        outputs.didSelectBrand.accept(brand.name)
-        checkValues()
-    }
-    
-    func checkValues() {
-        outputs.checkResult.accept(
-            country != nil && city != nil && address != nil && brand != nil
-        )
-    }
-    
-    func setupValues() {
         switch flowType {
-        case let .changeAddress(address):
-            self.country = geoRepository.currentCountry
-            self.city = geoRepository.currentCity
-            self.address = address
-            self.brand = brandRepository.getCurrentBrand()
+        case let .changeAddress(deliveryAddress):
+            self.deliveryAddress = deliveryAddress
         case .changeBrand:
-            self.country = geoRepository.currentCountry
-            self.city = geoRepository.currentCity
-            self.address = geoRepository.currentAddress
-            self.brand = brandRepository.getCurrentBrand()
+            self.deliveryAddress = locationRepository.getCurrentDeliveryAddress()
         case .create:
-            break
+            self.deliveryAddress = DeliveryAddress()
         }
+    }
+}
+
+extension SelectMainInformationViewModel {
+    func didChange(country index: Int) {
+        guard deliveryAddress?.country != countries[index] else { return }
+        deliveryAddress?.country = countries[index]
+        outputs.didSelectCountry.accept(deliveryAddress?.country?.name)
+        checkValues()
+        getCities()
+        
+        didChange(city: nil)
+        didChange(address: nil)
+        didChange(brand: nil)
+    }
+    
+    func didChange(city index: Int?) {
+        guard let index = index else {
+            deliveryAddress?.city = nil
+            outputs.didSelectCity.accept(deliveryAddress?.city?.name)
+            checkValues()
+            return
+        }
+        guard deliveryAddress?.city != cities[index] else { return }
+        let city = cities[index]
+        deliveryAddress?.city = city
+        outputs.didSelectCity.accept(deliveryAddress?.city?.name)
+        checkValues()
+        
+        didChange(address: nil)
+        didChange(brand: nil)
+    }
+    
+    func didChange(address: Address?) {
+        deliveryAddress?.address = address
+        outputs.didSelectAddress.accept(address?.name)
+        checkValues()
+    }
+
+    func didChange(brand: Brand?) {
+        self.brand = brand
+        outputs.didSelectBrand.accept(brand?.name)
+        checkValues()
     }
     
     func didSave() {
+        if let brand = brand {
+            brandRepository.changeCurrent(brand: brand)
+        }
         switch flowType {
-        case let .changeAddress(address):
-            if let addressIndex = geoRepository.addresses?.firstIndex(where: { $0 == address }), let changedAddress = self.address {
-                geoRepository.addresses?[addressIndex] = changedAddress
-                geoRepository.currentAddress = changedAddress
-            }
         case .create:
-            geoRepository.currentCountry = country
-            geoRepository.currentCity = city
-            if let address = address {
-                geoRepository.addresses?.append(address)
-                geoRepository.currentAddress = address
+            if let deliveryAddress = deliveryAddress {
+                locationRepository.addDeliveryAddress(deliveryAddress: deliveryAddress)
             }
-            if let brand = brand {
-                brandRepository.changeCurrent(brand: brand)
-            }
-        case .changeBrand:
-            if let brand = brand {
-                brandRepository.changeCurrent(brand: brand)
-            }
+        default:
+            break
         }
         outputs.didSave.accept(())
     }
     
-//    Tech debt: remove after addresses storage change
-    func sendCurrentValues() {
-        outputs.didSelectCountry.accept(country?.name)
-        outputs.didSelectCity.accept(city?.name)
-        outputs.didSelectAddress.accept(address?.name)
-        outputs.didSelectBrand.accept(brand?.name)
+    func checkValues() {
+        outputs.checkResult.accept(deliveryAddress?.isComplete() ?? false)
+    }
+}
+
+extension SelectMainInformationViewModel {
+    func getCountries() {
+        if let cachedCountries = locationRepository.getCountries(),
+            cachedCountries != [] {
+            countries = cachedCountries
+            outputs.didGetCountries.accept(())
+        }
+
+        makeCountriesRequest()
+    }
+
+    private func makeCountriesRequest() {
+        startAnimation()
+        locationService.getAllCountries()
+            .subscribe { [weak self] countriesResponse in
+                self?.stopAnimation()
+                self?.process(received: countriesResponse)
+            } onError: { [weak self] error in
+                self?.stopAnimation()
+                self?.outputs.didGetError.accept(error as? ErrorPresentable)
+            }
+            .disposed(by: disposeBag)
     }
     
-    func sendAddressValues() {
-        outputs.didSelectAddress.accept(address?.name)
-        outputs.didSelectBrand.accept(brand?.name)
+    private func process(received countries: [Country]) {
+        guard let cachedCountries = locationRepository.getCountries() else {
+            locationRepository.set(countries: countries)
+            self.countries = countries
+            outputs.didGetCountries.accept(())
+            return
+        }
+
+        if countries == cachedCountries { return }
+        locationRepository.set(countries: countries)
+        self.countries = countries
+        outputs.didGetCountries.accept(())
+    }
+}
+
+extension SelectMainInformationViewModel {
+    private func getCities() {
+        guard let countryId = deliveryAddress?.country?.id else { return }
+        startAnimation()
+        locationService.getCities(for: countryId)
+            .subscribe { [weak self] citiesResponse in
+                self?.stopAnimation()
+                self?.process(received: citiesResponse)
+            } onError: { [weak self] error in
+                self?.stopAnimation()
+                self?.outputs.didGetError.accept(error as? ErrorPresentable)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func process(received cities: [City]) {
+        self.cities = cities
+        outputs.didGetCities.accept(())
     }
 }
 
 extension SelectMainInformationViewModel {
     enum FlowType: Equatable {
         case create
-        case changeAddress(_ address: Address)
+        case changeAddress(_ address: DeliveryAddress)
         case changeBrand
     }
     
     struct Output {
-        let checkResult = PublishRelay<Bool>()
+        let didGetCountries = PublishRelay<Void>()
+        let didGetCities = PublishRelay<Void>()
+        let didGetError = PublishRelay<ErrorPresentable?>()
+        
         let didSelectCountry = PublishRelay<String?>()
         let didSelectCity = PublishRelay<String?>()
         let didSelectAddress = PublishRelay<String?>()
         let didSelectBrand = PublishRelay<String?>()
+        
+        let checkResult = PublishRelay<Bool>()
         let didSave = PublishRelay<Void>()
     }
 }

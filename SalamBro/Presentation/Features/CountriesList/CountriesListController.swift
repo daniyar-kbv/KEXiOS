@@ -56,7 +56,8 @@ final class CountriesListController: ViewController, AlertDisplayable {
             .disposed(by: disposeBag)
         
         viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
-            self?.showAlert(title: error.localizedDescription, message: nil)
+            guard let error = error else { return }
+            self?.showError(error)
         }).disposed(by: disposeBag)
         
         viewModel.outputs.didSelectCountry.subscribe(onNext: { [weak self] countryId in

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MenuCoordinator: TabCoordinator {
+final class MenuCoordinator: TabCoordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
@@ -26,8 +26,7 @@ class MenuCoordinator: TabCoordinator {
         let viewModel = MenuViewModel(coordinator: self,
                                       menuRepository: DIResolver.resolve(MenuRepository.self)!,
                                       locationRepository: DIResolver.resolve(LocationRepository.self)!,
-                                      brandRepository: DIResolver.resolve(BrandRepository.self)!,
-                                      geoRepository: DIResolver.resolve(GeoRepository.self)!)
+                                      brandRepository: DIResolver.resolve(BrandRepository.self)!)
         let vc = MenuController(viewModel: viewModel, scrollService: MenuScrollService())
         childNavigationController = templateNavigationController(title: tabType.title,
                                                                  image: tabType.image,

@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class AddressCoordinator {
+final class AddressCoordinator {
     private let disposeBag = DisposeBag()
     private let pagesFactory: AddressPagesFactory
     
@@ -68,12 +68,12 @@ class AddressCoordinator {
             self?.didFinish?()
         }).disposed(by: disposeBag)
         
-        selectMainInfoPage.outputs.toMap.subscribe(onNext: { [weak self] onSelectAddress in
-            self?.openMap(onSelectAddress)
+        selectMainInfoPage.outputs.toMap.subscribe(onNext: { [weak self] params in
+            self?.openMap(address: params.0, params.1)
         }).disposed(by: disposeBag)
         
-        selectMainInfoPage.outputs.toBrands.subscribe(onNext: { [weak self] onSelectBrand in
-            self?.openBrands(onSelectBrand)
+        selectMainInfoPage.outputs.toBrands.subscribe(onNext: { [weak self] cityId, onSelectBrand in
+            self?.openBrands(cityId: cityId, onSelectBrand)
         }).disposed(by: disposeBag)
         
         selectMainInfoPage.outputs.didSave.subscribe(onNext: { [weak self] in
@@ -85,11 +85,11 @@ class AddressCoordinator {
         present(vc: nav)
     }
     
-    private func openMap(_ onSelectAddress: @escaping (Address) -> Void) {
-        let mapPage = pagesFactory.makeMapPage()
+    private func openMap(address: Address?, _ onSelectAddress: @escaping (Address) -> Void) {
+        let mapPage = pagesFactory.makeMapPage(address: address)
         
         mapPage.selectedAddress = { [weak self] address in
-            onSelectAddress(Address(name: address.name, longitude: address.longitude, latitude: address.latitude))
+            onSelectAddress(address)
             mapPage.dismiss(animated: true)
         }
         
@@ -97,8 +97,8 @@ class AddressCoordinator {
         present(vc: mapPage)
     }
     
-    private func openBrands(_ onSelectBrand: @escaping (Brand) -> Void) {
-        let brandsPage = pagesFactory.makeBrandsPage()
+    private func openBrands(cityId: Int, _ onSelectBrand: @escaping (Brand) -> Void) {
+        let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
         
         brandsPage.outputs.didSelectBrand.subscribe(onNext: { [weak self] brand in
             onSelectBrand(brand)

@@ -11,7 +11,7 @@ import UIKit
 import YandexMapKit
 
 final class MapPage: UIViewController, AlertDisplayable {
-    var selectedAddress: ((MapAddress) -> Void)?
+    var selectedAddress: ((Address) -> Void)?
 
     private let disposeBag = DisposeBag()
 
@@ -55,6 +55,7 @@ final class MapPage: UIViewController, AlertDisplayable {
         bindViews()
         bindViewModel()
         configureMap()
+        configureView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -120,7 +121,10 @@ extension MapPage {
 
         viewModel.outputs.lastSelectedAddress
             .subscribe(onNext: { [weak self] address in
-                self?.selectedAddress?(address)
+                self?.selectedAddress?(Address(name: address.name,
+                                               longitude: address.longitude,
+                                               latitude: address.latitude,
+                                               commentary: self?.mapAddressView.commentaryTextField.text))
             })
             .disposed(by: disposeBag)
     }
@@ -244,5 +248,13 @@ extension MapPage {
             $0.leading.equalToSuperview().offset(24)
             $0.bottom.equalTo(mapAddressView.snp.top).offset(-24)
         }
+    }
+}
+
+//  MARK: Configure view
+
+extension MapPage {
+    func configureView() {
+        mapAddressView.commentaryTextField.text = viewModel.commentary
     }
 }

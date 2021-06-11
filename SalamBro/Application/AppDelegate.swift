@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func configureAppCoordinator() {
         appCoordinator = AppCoordinator(serviceComponents: ServiceComponentsAssembly(),
                                         navigationController: UINavigationController(),
-                                        geoRepository: DIResolver.resolve(GeoRepository.self)!,
+                                        locationRepository: DIResolver.resolve(LocationRepository.self)!,
                                         brandRepository: DIResolver.resolve(BrandRepository.self)!)
     }
 

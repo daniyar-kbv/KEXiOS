@@ -11,56 +11,53 @@ import SnapKit
 import UIKit
 
 final class SelectMainInformationViewController: ViewController {
-    private var flowType: SelectMainInformationViewModel.FlowType
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
     
     let outputs = Output()
 
     private lazy var countryTextField: DropDownTextField = {
-        let view = DropDownTextField(options: viewModel.countries)
+        let view = DropDownTextField(type: .country)
         view.delegate = self
-        view.placeholderText = L10n.SelectMainInfo.country
-        view.currentValue = L10n.CountriesList.Navigation.title
+        view.currentValue = viewModel.deliveryAddress?.country?.name
         return view
     }()
 
     private lazy var citiesTextField: DropDownTextField = {
-        let view = DropDownTextField(options: viewModel.cities.map { $0.name })
+        let view = DropDownTextField(type: .city)
         view.delegate = self
-        view.placeholderText = L10n.SelectMainInfo.city
-        view.currentValue = L10n.CitiesList.Navigation.title
+        view.currentValue = viewModel.deliveryAddress?.city?.name
         return view
     }()
 
     private lazy var addressTextField: DropDownTextField = {
-        let view = DropDownTextField(options: nil)
+        let view = DropDownTextField(type: .address)
         view.selectionAction = { [weak self] in
-            self?.outputs.toMap.accept({ [weak self] address in
-                self?.viewModel.didChange(address: address)
-            })
+            self?.outputs.toMap.accept((self?.viewModel.deliveryAddress?.address,
+                                        { [weak self] address in
+                                            self?.viewModel.didChange(address: address)
+                                        }))
         }
         view.delegate = self
         view.chevronRight = true
-        view.placeholderText = L10n.SelectMainInfo.address
-//        Tech debt: change currentValue to appropriate text
-        view.currentValue = L10n.SelectMainInfo.address
+        view.currentValue = viewModel.deliveryAddress?.address?.name
         return view
     }()
     
     private lazy var brandsTextField: DropDownTextField = {
-        let view = DropDownTextField(options: nil)
+        let view = DropDownTextField(type: .brand)
         view.selectionAction = { [weak self] in
-            self?.outputs.toBrands.accept({ [weak self] brand in
-                self?.viewModel.didChange(brand: brand)
-            })
+            guard let cityid = self?.viewModel.deliveryAddress?.city?.id else { return }
+            self?.outputs.toBrands.accept((cityid,
+                                           { [weak self] brand in
+                                            self?.viewModel.didChange(brand: brand)
+                                           }))
         }
         view.delegate = self
         view.chevronRight = true
-        view.placeholderColor = .darkGray
-        view.placeholderText = L10n.SelectMainInfo.brand
+        view.titleColor = .darkGray
         view.descriptionText = L10n.SelectMainInfo.description
-        view.currentValue = L10n.Brands.Navigation.title
+        view.currentValue = viewModel.flowType == .create ? nil : viewModel.brand?.name
         return view
     }()
 
@@ -86,24 +83,16 @@ final class SelectMainInformationViewController: ViewController {
         return button
     }()
 
-    init(viewModel: SelectMainInformationViewModelProtocol,
-         flowType: SelectMainInformationViewModel.FlowType) {
+    init(viewModel: SelectMainInformationViewModelProtocol) {
         self.viewModel = viewModel
-        self.flowType = flowType
         
         super.init(nibName: nil, bundle: nil)
         
         setup()
         bind()
-        
-        //    Tech debt: remove after addresses storage change
-        switch flowType {
-        case .changeBrand:
-            viewModel.sendCurrentValues()
-        case .changeAddress:
-            viewModel.sendAddressValues()
-        default:
-            break
+
+        if viewModel.flowType == .create {
+            viewModel.getCountries()
         }
     }
 
@@ -112,19 +101,28 @@ final class SelectMainInformationViewController: ViewController {
     }
 
     private func bind() {
+        viewModel.outputs.didGetCountries.subscribe(onNext: { [weak self] in
+            self?.countryTextField.dataSource = self?.viewModel.countries.map({ $0.name }) ?? []
+        }).disposed(by: disposeBag)
+        
+        viewModel.outputs.didGetCities.subscribe(onNext: { [weak self] in
+            self?.citiesTextField.dataSource = self?.viewModel.cities.map({ $0.name }) ?? []
+        }).disposed(by: disposeBag)
+        
         viewModel.outputs.didSelectCountry.bind { [unowned self] cityName in
             self.countryTextField.currentValue = cityName
-            if self.flowType == .create {
-                self.citiesTextField.isActive = true
-            }
+            self.citiesTextField.currentValue = nil
+            self.addressTextField.currentValue = nil
+            self.brandsTextField.currentValue = nil
+            
+            self.citiesTextField.isActive = true
         }.disposed(by: disposeBag)
 
         viewModel.outputs.didSelectCity.bind { [unowned self] cityName in
             self.citiesTextField.currentValue = cityName
-            if self.flowType == .create {
-                self.addressTextField.isActive = true
-                self.brandsTextField.isActive = true
-            }
+            
+            self.addressTextField.isActive = cityName != nil
+            self.brandsTextField.isActive = cityName != nil
         }.disposed(by: disposeBag)
 
         viewModel.outputs.didSelectAddress.bind { [unowned self] addressName in
@@ -143,7 +141,7 @@ final class SelectMainInformationViewController: ViewController {
             self?.changeSaveButtonState(isActive: isComplete)
         }).disposed(by: disposeBag)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -154,7 +152,7 @@ final class SelectMainInformationViewController: ViewController {
     }
 
     deinit {
-        if flowType == .changeBrand {
+        if viewModel.flowType == .changeBrand {
             outputs.didTerminate.accept(())
         }
     }
@@ -192,15 +190,12 @@ final class SelectMainInformationViewController: ViewController {
     }
     
     func setupFlow() {
-        switch self.flowType {
+        switch viewModel.flowType {
         case .create:
             citiesTextField.isActive = false
             addressTextField.isActive = false
             brandsTextField.isActive = false
-        case .changeAddress:
-            countryTextField.isActive = false
-            citiesTextField.isActive = false
-        case .changeBrand:
+        case .changeAddress, .changeBrand:
             countryTextField.isActive = false
             citiesTextField.isActive = false
             addressTextField.isActive = false
@@ -230,7 +225,7 @@ extension SelectMainInformationViewController: DropDownTextFieldDelegate {
         case countryTextField:
             viewModel.didChange(country: index)
         case citiesTextField:
-            viewModel.didChange(cityname: option)
+            viewModel.didChange(city: index)
         default:
             break
         }
@@ -240,8 +235,8 @@ extension SelectMainInformationViewController: DropDownTextFieldDelegate {
 extension SelectMainInformationViewController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
-        let toMap = PublishRelay<(_ address: Address) -> Void>()
-        let toBrands = PublishRelay<(_ brand: Brand) -> Void>()
+        let toMap = PublishRelay<(Address?, (_ address: Address) -> Void)>()
+        let toBrands = PublishRelay<(Int, (_ brand: Brand) -> Void)>()
         let didSave = PublishRelay<Void>()
     }
 }

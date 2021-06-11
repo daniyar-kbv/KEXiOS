@@ -61,7 +61,7 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
                 self?.process(receivedCities: citiesResponse)
             } onError: { [weak self] error in
                 self?.stopAnimation()
-                self?.outputs.didGetError.accept(error)
+                self?.outputs.didGetError.accept(error as? ErrorPresentable)
             }
             .disposed(by: disposeBag)
     }
@@ -83,14 +83,14 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
     func didSelect(index: Int) {
         let city = cities[index]
         repository.changeCurrentCity(to: city)
-        outputs.didSelectCity.accept(())
+        outputs.didSelectCity.accept(city.id)
     }
 }
 
 extension CitiesListViewModel {
     struct Outputs {
         let didGetCities = BehaviorRelay<Void>(value: ())
-        let didSelectCity = PublishRelay<Void>()
-        let didGetError = PublishRelay<Error>()
+        let didSelectCity = PublishRelay<Int>()
+        let didGetError = PublishRelay<ErrorPresentable?>()
     }
 }
