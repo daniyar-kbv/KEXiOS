@@ -170,9 +170,12 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
         } else {
             let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 56))
             let label = UILabel(frame: CGRect(x: 16, y: 24, width: tableView.frame.size.width, height: 21))
+            let separator = UIView(frame: CGRect(x: 24, y: 0, width: tableView.frame.width - 48, height: 0.5))
+            separator.backgroundColor = .mildBlue
             label.font = .boldSystemFont(ofSize: 16)
             label.text = L10n.Cart.Section1.title
             view.addSubview(label)
+            view.addSubview(separator)
             view.backgroundColor = .arcticWhite
             return view
         }
@@ -187,30 +190,6 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
             return cartViewModel.cart.products.count
         } else {
             return cartViewModel.cart.productsAdditional.count
-        }
-    }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        // MARK: Tech Debt - Create in a new class
-
-        let footerView = UIView()
-        let footerChildView = UIView(frame: CGRect(x: 24, y: 0, width: tableView.frame.width - 48, height: 0.5))
-        if section == 0 {
-            footerChildView.backgroundColor = .gray
-            footerView.addSubview(footerChildView)
-            return footerView
-        } else {
-            footerChildView.backgroundColor = .lightGray
-            footerView.addSubview(footerChildView)
-            return footerView
-        }
-    }
-
-    func tableView(_: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 0.25
-        } else {
-            return 0.5
         }
     }
 
