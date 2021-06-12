@@ -77,7 +77,7 @@ class RateController: ViewController {
         let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(commentaryViewTapped))
         commentaryView.addGestureRecognizer(tapCommentary)
 
-        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -230, right: 0)
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.safeAreaInsets.bottom - 230, right: 0)
     }
 
     func setupConstraints() {

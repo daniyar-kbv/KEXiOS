@@ -143,6 +143,7 @@
 		7DB747E8C8C81CB99983C76BE787D310 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0963EEC46A05CF51D36214F955EE25 /* LocationManager.swift */; };
 		B2A04A8D01CBDFB6D197C40E7490726F /* LocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3703B6283B75BE08799884AD20A710 /* LocationRepository.swift */; };
 		E4F547CBF6744C5EF2E8591ACA2B0F32 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F254AE6752CFEF94722885B2637746 /* LocationService.swift */; };
+		6F9728C6CC2735256A521E85A312F123 /* LottieAnimationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F39DBF6FCFE26F276AA730C9E75305A /* LottieAnimationModel.swift */; };
 		374F938CC0F72905CF6FFFC093C49330 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80138187206C51166E0AAAA7510BD0A6 /* MainTabController.swift */; };
 		85B006654D7FDA2A1B7182D622754078 /* MapActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD223078A8DA8448126C04F410D86618 /* MapActionButton.swift */; };
 		1A652AFF0284F61D990F6BB1B6E021F9 /* MapAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD372BAE21802BD6AC088434D5DC338 /* MapAddress.swift */; };
@@ -402,6 +403,7 @@
 		EC0963EEC46A05CF51D36214F955EE25 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		CA3703B6283B75BE08799884AD20A710 /* LocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepository.swift; sourceTree = "<group>"; };
 		F7F254AE6752CFEF94722885B2637746 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		6F39DBF6FCFE26F276AA730C9E75305A /* LottieAnimationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationModel.swift; sourceTree = "<group>"; };
 		80138187206C51166E0AAAA7510BD0A6 /* MainTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		FD223078A8DA8448126C04F410D86618 /* MapActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapActionButton.swift; sourceTree = "<group>"; };
 		0BD372BAE21802BD6AC088434D5DC338 /* MapAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAddress.swift; sourceTree = "<group>"; };
@@ -603,20 +605,6 @@
 				21DE629519C362DB82ABA57E2B063C2E /* BrandCell.swift */,
 			);
 			path = BrandCell;
-			sourceTree = "<group>";
-		};
-		B18F499CA55B40414AFC03FEA03D7E31 /* Animations */ = {
-			isa = PBXGroup;
-			children = (
-				152E0B4CE8AF22894D63204432A36E24 /* emptyBasket.json */,
-				EF9C1FF18C8E321A84DEE7D3443789AC /* noInternet.json */,
-				BC5AB56A17481ED5A69EAA3D5FAAA62B /* orderHistory.json */,
-				6C6885B2573DEDF8A77F034C3C45EC7D /* overload.json */,
-				8A940AE47640539DC4609500407E228B /* payment.json */,
-				929D0FEE425AAEC63BCEEA89D7C401BD /* profile.json */,
-				CC3FD6837D8EED154A27E94EAD7B8B6A /* upgrade.json */,
-			);
-			path = Animations;
 			sourceTree = "<group>";
 		};
 		13778F5B21BBFEA487BE9B55AB68F1A4 /* Pods */ = {
@@ -1254,6 +1242,7 @@
 				F89F41E8896BF6C6BEF78FE574B2F1D6 /* CartUI.swift */,
 				8E03B60A765AD6A232733C9E7A5DBAF2 /* FoodTypeUI.swift */,
 				30B273E03737E54790AD7775DD048037 /* FoodUI.swift */,
+				6F39DBF6FCFE26F276AA730C9E75305A /* LottieAnimationModel.swift */,
 				40C389CCC2D1DC71D82F424A7F9CA434 /* MenuUI.swift */,
 			);
 			path = UIModel;
@@ -1305,6 +1294,20 @@
 				118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		B18F499CA55B40414AFC03FEA03D7E31 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				152E0B4CE8AF22894D63204432A36E24 /* emptyBasket.json */,
+				EF9C1FF18C8E321A84DEE7D3443789AC /* noInternet.json */,
+				BC5AB56A17481ED5A69EAA3D5FAAA62B /* orderHistory.json */,
+				6C6885B2573DEDF8A77F034C3C45EC7D /* overload.json */,
+				8A940AE47640539DC4609500407E228B /* payment.json */,
+				929D0FEE425AAEC63BCEEA89D7C401BD /* profile.json */,
+				CC3FD6837D8EED154A27E94EAD7B8B6A /* upgrade.json */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 		B8257F60CE23B95DE88D5CE91D650F80 /* Response */ = {
@@ -1990,6 +1993,7 @@
 				7DB747E8C8C81CB99983C76BE787D310 /* LocationManager.swift in Sources */,
 				B2A04A8D01CBDFB6D197C40E7490726F /* LocationRepository.swift in Sources */,
 				E4F547CBF6744C5EF2E8591ACA2B0F32 /* LocationService.swift in Sources */,
+				6F9728C6CC2735256A521E85A312F123 /* LottieAnimationModel.swift in Sources */,
 				374F938CC0F72905CF6FFFC093C49330 /* MainTabController.swift in Sources */,
 				85B006654D7FDA2A1B7182D622754078 /* MapActionButton.swift in Sources */,
 				1A652AFF0284F61D990F6BB1B6E021F9 /* MapAddress.swift in Sources */,
