@@ -60,7 +60,7 @@
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u80-mE-Dsu" customClass="CosmosView" customModule="Cosmos">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u80-mE-Dsu" customClass="CosmosView" customModule="Cosmos">
                                     <rect key="frame" x="100" y="34" width="214" height="30"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
@@ -217,6 +217,11 @@
             <point key="canvasLocation" x="140.57971014492756" y="80.357142857142847"/>
         </view>
     </objects>
+    <designables>
+        <designable name="u80-mE-Dsu">
+            <size key="intrinsicContentSize" width="214" height="30"/>
+        </designable>
+    </designables>
     <resources>
         <image name="chevron.left" width="24" height="24"/>
         <image name="star.empty" width="30" height="30"/>

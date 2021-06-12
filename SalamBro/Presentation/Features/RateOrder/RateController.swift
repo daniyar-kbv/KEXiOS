@@ -28,7 +28,7 @@ class RateController: ViewController {
     @IBOutlet var commentaryView: UIView!
     @IBOutlet var button: UIButton!
     @IBOutlet var collectionViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet private var scrollView: UIScrollView!
 
     lazy var commentarySheetVC = CommentarySheetController()
 
