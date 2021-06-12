@@ -8,55 +8,84 @@
 import Foundation
 import UIKit
 
-final class AppCoordinator: Coordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators = [Coordinator]()
-    var navigationController: UINavigationController
-    
-    private var onBoardingCoordinator: OnBoardingCoordinator?
+final class AppCoordinator: BaseCoordinator {
+    private var preparedViewControllers: [UIViewController] = []
+    private var navigationControllers = [UINavigationController]()
+    private var restartAuthCoordinator: (() -> Void)?
 
-    private let locationRepository: LocationRepository
-    private let brandRepository: BrandRepository
+    private(set) var tabBarController: SBTabBarController!
 
     private let serviceComponents: ServiceComponents
+    private let appCoordinatorsFactory: ApplicationCoordinatorFactory
+
+    private let locationRepository: LocationRepository // FIXME: Tech debt
+    private let brandRepository: BrandRepository // FIXME: Tech debt
 
     init(serviceComponents: ServiceComponents,
-         navigationController: UINavigationController,
+         appCoordinatorsFactory: ApplicationCoordinatorFactory,
          locationRepository: LocationRepository,
          brandRepository: BrandRepository)
     {
         self.serviceComponents = serviceComponents
-        self.navigationController = navigationController
+        self.appCoordinatorsFactory = appCoordinatorsFactory
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
     }
 
-    public func start() {
+    override func start() {
+        tabBarController = SBTabBarController()
+
+        restartAuthCoordinator = { [weak self] in
+            self?.startAuthCoordinator()
+        }
+
+        configureProfileCoordinator()
+
         if locationRepository.isAddressComplete(),
            brandRepository.getCurrentBrand() != nil
         {
-            startMenu()
+            showTabBarController()
         } else {
-            startFirstFlow()
+            startOnboardingFlow()
         }
     }
 
-    private func startFirstFlow() {
-        onBoardingCoordinator = OnBoardingCoordinator(navigationController: UINavigationController(),
-                                          pagesFactory: OnBoardingPagesFactoryImpl())
-        
-        onBoardingCoordinator?.didFinish = { [weak self] in
-            self?.onBoardingCoordinator = nil
-            self?.start()
+    private func configureProfileCoordinator() {
+        let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents)
+        profileCoordinator.start()
+        profileCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: L10n.MainTab.Profile.title,
+                                                                                      image: Asset.profile.image,
+                                                                                      selectedImage: Asset.profile.image)
+        preparedViewControllers.append(profileCoordinator.router.getNavigationController())
+        add(profileCoordinator)
+        navigationControllers.append(profileCoordinator.router.getNavigationController())
+    }
+
+    private func startAuthCoordinator() {
+        let authCoordinator = appCoordinatorsFactory.makeAuthCoordinator()
+
+        add(authCoordinator)
+        authCoordinator.didFinish = { [weak self] in
+            self?.remove(authCoordinator)
         }
-        
-        onBoardingCoordinator?.start()
+
+        authCoordinator.start()
     }
 
-    private func startMenu() {
-        let vc = MainTabController()
-        UIApplication.shared.setRootView(vc)
+    private func startOnboardingFlow() {
+        let onboardingCoordinator = appCoordinatorsFactory.makeOnboardingCoordinator()
+
+        add(onboardingCoordinator)
+        onboardingCoordinator.didFinish = { [weak self] in
+            self?.remove(onboardingCoordinator)
+            self?.showTabBarController()
+        }
+
+        onboardingCoordinator.start()
     }
 
-    func didFinish() {}
+    private func showTabBarController() {
+        tabBarController.viewControllers = preparedViewControllers
+        UIApplication.shared.setRootView(tabBarController)
+    }
 }

@@ -9,12 +9,13 @@ import Foundation
 import UIKit
 
 final class MenuCoordinator: TabCoordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators: [Coordinator] = []
+    var parentCoordinator: LegacyCoordinator?
+
+    var childCoordinators: [LegacyCoordinator] = []
     var navigationController: UINavigationController
     weak var childNavigationController: UINavigationController!
     var tabType: TabBarCoordinator.TabType
-    
+
     var addressCoordinator: AddressCoordinator?
 
     init(navigationController: UINavigationController, tabType: TabBarCoordinator.TabType) {
@@ -35,25 +36,25 @@ final class MenuCoordinator: TabCoordinator {
 
     func openSelectMainInfo(didSave: (() -> Void)? = nil) {
         addressCoordinator = AddressCoordinator(navigationController: childNavigationController,
-                                       pagesFactory: AddressPagesFactoryImpl(),
-                                       flowType: .changeBrand(didSave: didSave))
-        
+                                                pagesFactory: AddressPagesFactoryImpl(),
+                                                flowType: .changeBrand(didSave: didSave))
+
         addressCoordinator?.didFinish = { [weak self] in
             self?.addressCoordinator = nil
         }
-        
+
         addressCoordinator?.start()
     }
 
     func openChangeAddress(didSelectAddress: (() -> Void)? = nil) {
         addressCoordinator = AddressCoordinator(navigationController: childNavigationController,
-                                       pagesFactory: AddressPagesFactoryImpl(),
-                                       flowType: .changeAddress(didSelectAddress: didSelectAddress))
-        
+                                                pagesFactory: AddressPagesFactoryImpl(),
+                                                flowType: .changeAddress(didSelectAddress: didSelectAddress))
+
         addressCoordinator?.didFinish = { [weak self] in
             self?.addressCoordinator = nil
         }
-        
+
         addressCoordinator?.start()
     }
 

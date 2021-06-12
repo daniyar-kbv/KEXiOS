@@ -6,45 +6,46 @@
 //
 
 import Foundation
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
-final class OnBoardingCoordinator {
-    private let navigationController: UINavigationController
+final class OnBoardingCoordinator: BaseCoordinator {
+    private(set) var router: Router
     private let pagesFactory: OnBoadingPagesFactory
     private let disposeBag = DisposeBag()
-    
+
     var didFinish: (() -> Void)?
-    
-    init(navigationController: UINavigationController,
-         pagesFactory: OnBoadingPagesFactory) {
-        self.navigationController = navigationController
+
+    init(router: Router,
+         pagesFactory: OnBoadingPagesFactory)
+    {
+        self.router = router
         self.pagesFactory = pagesFactory
     }
-    
-    func start() {
+
+    override func start() {
         let countriesPage = pagesFactory.makeCountriesPage()
-        
+
         countriesPage.outputs.didSelectCountry.subscribe(onNext: { [weak self] countryId in
             self?.openCities(countryId: countryId)
         }).disposed(by: disposeBag)
-        
-        navigationController.pushViewController(countriesPage, animated: false)
-        UIApplication.shared.setRootView(navigationController)
+
+        router.push(viewController: countriesPage, animated: false)
+        UIApplication.shared.setRootView(router.getNavigationController())
     }
-    
+
     private func openCities(countryId: Int) {
         let citiesPage = pagesFactory.makeCitiesPage(countryId: countryId)
-        
+
         citiesPage.outputs.didSelectCity.subscribe(onNext: { [weak self] cityId in
             self?.openBrands(cityId: cityId)
         }).disposed(by: disposeBag)
-        
-        navigationController.pushViewController(citiesPage, animated: true)
+
+        router.push(viewController: citiesPage, animated: true)
     }
-    
-    private func openBrands(cityId: Int) {
+
+    private func openBrands(cityId _: Int) {
 //        let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
 //
 //        brandsPage.outputs.didSelectBrand.subscribe(onNext: { [weak self] _ in
@@ -52,14 +53,14 @@ final class OnBoardingCoordinator {
 //        }).disposed(by: disposeBag)
 //
 //        navigationController.pushViewController(brandsPage, animated: true)
-        
+
 //        TODO: remove
-        
+
         DIResolver.resolve(BrandRepository.self)?.changeCurrent(brand: Brand(id: 1, name: "Салам бро", image: "", isAvailable: true))
-        
+
         openMap()
     }
-    
+
     private func openMap() {
         let mapPage = MapPage(viewModel: MapViewModel(flow: .creation))
         mapPage.selectedAddress = { [weak self] address in
@@ -67,9 +68,9 @@ final class OnBoardingCoordinator {
             let address = Address(name: address.name, longitude: address.longitude, latitude: address.latitude)
             locationRepository?.changeCurrentAddress(to: address)
             self?.didFinish?()
-            self?.navigationController.viewControllers.removeAll()
+            self?.router.getNavigationController().viewControllers.removeAll()
 //            Tech debt: add order apply api
         }
-        navigationController.pushViewController(mapPage, animated: true)
+        router.push(viewController: mapPage, animated: true)
     }
 }

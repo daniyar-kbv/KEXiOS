@@ -33,15 +33,15 @@ public final class DIResolver {
 }
 
 private final class ApplicationAssembly: Assembly {
-    func assemble(container: Container) {
-        container.register(AppCoordinator.self) { r in
-            AppCoordinator(
-                serviceComponents: ServiceComponentsAssembly(),
-                navigationController: UINavigationController(),
-                locationRepository: r.resolve(LocationRepository.self)!,
-                brandRepository: r.resolve(BrandRepository.self)!
-            )
-        }
+    func assemble(container _: Container) {
+//        container.register(AppCoordinator.self) { r in
+//            AppCoordinator(
+//                serviceComponents: ServiceComponentsAssembly(),
+//                navigationController: UINavigationController(),
+//                locationRepository: r.resolve(LocationRepository.self)!,
+//                brandRepository: r.resolve(BrandRepository.self)!
+//            )
+//        }
     }
 }
 

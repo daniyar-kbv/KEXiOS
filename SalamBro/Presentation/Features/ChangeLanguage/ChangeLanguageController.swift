@@ -52,6 +52,12 @@ class ChangeLanguageController: ViewController {
     }
 }
 
+public let languages: [String] = [
+    "Kazakh",
+    "Russian",
+    "English",
+]
+
 // MARK: - UITableView
 
 extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {

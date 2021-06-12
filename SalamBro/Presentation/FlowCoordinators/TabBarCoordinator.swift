@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-final class TabBarCoordinator: Coordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators: [Coordinator] = []
+final class TabBarCoordinator: LegacyCoordinator {
+    var parentCoordinator: LegacyCoordinator?
+    var childCoordinators: [LegacyCoordinator] = []
     var navigationController: UINavigationController
     var tabTypes = TabType.allCases
 
@@ -73,7 +73,7 @@ final class TabBarCoordinator: Coordinator {
             case .menu:
                 return MenuCoordinator(navigationController: UINavigationController(), tabType: self)
             case .profile:
-                return ProfileCoordinator(navigationController: UINavigationController(), tabType: self)
+                return MenuCoordinator(navigationController: UINavigationController(), tabType: self)
             case .support:
                 return SupportCoordinator(navigationController: UINavigationController(), tabType: self)
             case .cart:

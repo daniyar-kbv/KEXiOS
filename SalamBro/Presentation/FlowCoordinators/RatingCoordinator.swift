@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-final class RatingCoordinator: Coordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators: [Coordinator] = []
+final class RatingCoordinator: LegacyCoordinator {
+    var parentCoordinator: LegacyCoordinator?
+    var childCoordinators: [LegacyCoordinator] = []
     var navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {

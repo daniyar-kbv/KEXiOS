@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 final class SupportCoordinator: TabCoordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators: [Coordinator] = []
+    var parentCoordinator: LegacyCoordinator?
+    var childCoordinators: [LegacyCoordinator] = []
     var navigationController: UINavigationController
     weak var childNavigationController: UINavigationController!
     var tabType: TabBarCoordinator.TabType

@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AuthCoordinator {
+final class AuthCoordinator: BaseCoordinator {
     private let disposeBag = DisposeBag()
 
     var didFinish: (() -> Void)?
@@ -22,7 +22,7 @@ final class AuthCoordinator {
         self.pagesFactory = pagesFactory
     }
 
-    func start() {
+    override func start() {
         let authPage = pagesFactory.makeAuthorizationPage()
 
         authPage.outputs.didSendOTP

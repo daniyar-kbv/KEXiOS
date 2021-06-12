@@ -6,17 +6,13 @@
 //
 
 import UIKit
-import WebKit
 
-protocol OrderHistoryDelegate {
-    func share()
-    func rate()
-}
+final class OrderHistoryController: ViewController {
+    var onRateTapped: (() -> Void)?
+    var onShareTapped: (() -> Void)?
+    var onTerminate: (() -> Void)?
 
-class OrderHistoryController: ViewController {
-    var coordinator: OrderHistoryCoordinator
-
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
         view.register(OrderTestCell.self, forCellReuseIdentifier: "Cell")
@@ -32,15 +28,20 @@ class OrderHistoryController: ViewController {
 
     }()
 
-    init(coordinator: OrderHistoryCoordinator) {
-        self.coordinator = coordinator
+    private let viewModel: OrderHistoryViewModel
 
+    init(viewModel: OrderHistoryViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: .none, bundle: .none)
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        onTerminate?()
     }
 
     override func viewDidLoad() {
@@ -54,13 +55,7 @@ class OrderHistoryController: ViewController {
         setupNavigationBar()
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-
-        coordinator.didFinish()
-    }
-
-    override internal func setupNavigationBar() {
+    override func setupNavigationBar() {
         super.setupNavigationBar()
         navigationItem.title = L10n.OrderHistory.title
     }
@@ -78,10 +73,6 @@ class OrderHistoryController: ViewController {
             $0.bottom.equalTo(view.snp.bottomMargin)
         }
     }
-
-    @objc func backButtonTapped(_: UIButton!) {
-        navigationController?.popViewController(animated: true)
-    }
 }
 
 extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
@@ -97,12 +88,12 @@ extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension OrderHistoryController: OrderHistoryDelegate {
+extension OrderHistoryController: OrderTestCellDelegate {
     func share() {
-        coordinator.openShareOrder()
+        onShareTapped?()
     }
 
     func rate() {
-        coordinator.openRateOrder()
+        onRateTapped?()
     }
 }
