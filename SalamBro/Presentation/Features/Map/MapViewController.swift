@@ -10,13 +10,15 @@ import UIKit
 import YandexMapKit
 import YandexMapKitSearch
 
+// Tech debt: remove class
+
 class MapViewController: ViewController {
     var coordinator: AddressCoordinator
     var targetLocation = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
     let locationManager = CLLocationManager()
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
     var searchSession: YMKSearchSession?
-    private let geoRepository = DIResolver.resolve(GeoRepository.self)! // TODO:
+//    private let geoRepository = DIResolver.resolve(GeoRepository.self)! // TODO:
 //    private let coordinator = DIResolver.resolve(AppCoordinator.self)! // TODO:
 
     var selectedAddress: ((String) -> Void)?
@@ -173,7 +175,7 @@ class MapViewController: ViewController {
 
     @objc func backButtonTapped(_: UIButton!) {
         switch flowType {
-        case .changeAddress, .changeMainInfo:
+        case .changeAddress, .changeBrand:
             dismiss(animated: true)
         default:
             break
@@ -268,11 +270,12 @@ extension MapViewController: MapDelegate {
     func dissmissView() {
         coordinator.finishFlow {
             switch flowType {
-            case .changeAddress, .changeMainInfo:
-                guard let address = geoRepository.currentAddress?.name else { return }
-                selectedAddress?(address)
-                print("dismiss")
-                dismiss(animated: true)
+            case .changeAddress, .changeBrand:
+                break
+//                guard let address = geoRepository.currentAddress?.name else { return }
+//                selectedAddress?(address)
+//                print("dismiss")
+//                dismiss(animated: true)
             default:
                 break
             }

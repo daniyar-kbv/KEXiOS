@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class TabBarCoordinator: Coordinator {
+final class TabBarCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController

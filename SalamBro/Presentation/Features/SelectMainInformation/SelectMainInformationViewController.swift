@@ -14,41 +14,50 @@ final class SelectMainInformationViewController: ViewController {
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
 
+    let outputs = Output()
+
     private lazy var countryTextField: DropDownTextField = {
-        let view = DropDownTextField(options: viewModel.countries)
+        let view = DropDownTextField(type: .country)
         view.delegate = self
-        view.placeholderText = L10n.SelectMainInfo.country
+        view.currentValue = viewModel.deliveryAddress?.country?.name
         return view
     }()
 
     private lazy var citiesTextField: DropDownTextField = {
-        let view = DropDownTextField(options: viewModel.cities.map { $0.name })
+        let view = DropDownTextField(type: .city)
         view.delegate = self
-        view.placeholderText = L10n.SelectMainInfo.city
-        return view
-    }()
-
-    private lazy var brandsTextField: DropDownTextField = {
-        let view = DropDownTextField(options: nil)
-        view.selectionAction = { [weak self] in
-            self?.viewModel.selectBrand()
-        }
-        view.delegate = self
-        view.chevronRight = true
-        view.placeholderColor = .darkGray
-        view.placeholderText = L10n.SelectMainInfo.brand
-        view.descriptionText = L10n.SelectMainInfo.description
+        view.currentValue = viewModel.deliveryAddress?.city?.name
         return view
     }()
 
     private lazy var addressTextField: DropDownTextField = {
-        let view = DropDownTextField(options: nil)
+        let view = DropDownTextField(type: .address)
         view.selectionAction = { [weak self] in
-            self?.viewModel.selectAddress()
+            self?.outputs.toMap.accept((self?.viewModel.deliveryAddress?.address,
+                                        { [weak self] address in
+                                            self?.viewModel.didChange(address: address)
+                                        }))
         }
         view.delegate = self
         view.chevronRight = true
-        view.placeholderText = L10n.SelectMainInfo.address
+        view.currentValue = viewModel.deliveryAddress?.address?.name
+        return view
+    }()
+
+    private lazy var brandsTextField: DropDownTextField = {
+        let view = DropDownTextField(type: .brand)
+        view.selectionAction = { [weak self] in
+            guard let cityid = self?.viewModel.deliveryAddress?.city?.id else { return }
+            self?.outputs.toBrands.accept((cityid,
+                                           { [weak self] brand in
+                                               self?.viewModel.didChange(brand: brand)
+                                           }))
+        }
+        view.delegate = self
+        view.chevronRight = true
+        view.titleColor = .darkGray
+        view.descriptionText = L10n.SelectMainInfo.description
+        view.currentValue = viewModel.flowType == .create ? nil : viewModel.brand?.name
         return view
     }()
 
@@ -76,9 +85,15 @@ final class SelectMainInformationViewController: ViewController {
 
     init(viewModel: SelectMainInformationViewModelProtocol) {
         self.viewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
+
         setup()
         bind()
+
+        if viewModel.flowType == .create {
+            viewModel.getCountries()
+        }
     }
 
     public required init?(coder _: NSCoder) {
@@ -86,38 +101,66 @@ final class SelectMainInformationViewController: ViewController {
     }
 
     private func bind() {
-        viewModel.cityName.bind { [unowned self] in
-            self.citiesTextField.currentValue = $0
+        viewModel.outputs.didGetCountries.subscribe(onNext: { [weak self] in
+            self?.countryTextField.dataSource = self?.viewModel.countries.map { $0.name } ?? []
+        }).disposed(by: disposeBag)
+
+        viewModel.outputs.didGetCities.subscribe(onNext: { [weak self] in
+            self?.citiesTextField.dataSource = self?.viewModel.cities.map { $0.name } ?? []
+        }).disposed(by: disposeBag)
+
+        viewModel.outputs.didSelectCountry.bind { [unowned self] cityName in
+            self.countryTextField.currentValue = cityName
+            self.citiesTextField.currentValue = nil
+            self.addressTextField.currentValue = nil
+            self.brandsTextField.currentValue = nil
+
+            self.citiesTextField.isActive = true
         }.disposed(by: disposeBag)
 
-        viewModel.countryName.bind { [unowned self] in
-            self.countryTextField.currentValue = $0
+        viewModel.outputs.didSelectCity.bind { [unowned self] cityName in
+            self.citiesTextField.currentValue = cityName
+
+            self.addressTextField.isActive = cityName != nil
+            self.brandsTextField.isActive = cityName != nil
         }.disposed(by: disposeBag)
 
-        viewModel.brandName.bind { [unowned self] in
-            self.brandsTextField.currentValue = $0
+        viewModel.outputs.didSelectAddress.bind { [unowned self] addressName in
+            self.addressTextField.currentValue = addressName
         }.disposed(by: disposeBag)
 
-        viewModel.address.bind { [unowned self] in
-            self.addressTextField.currentValue = $0
+        viewModel.outputs.didSelectBrand.bind { [unowned self] brandName in
+            self.brandsTextField.currentValue = brandName
         }.disposed(by: disposeBag)
+
+        viewModel.outputs.didSave.subscribe(onNext: { [weak self] in
+            self?.outputs.didSave.accept(())
+        }).disposed(by: disposeBag)
+
+        viewModel.outputs.checkResult.subscribe(onNext: { [weak self] isComplete in
+            self?.changeSaveButtonState(isActive: isComplete)
+        }).disposed(by: disposeBag)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         navigationItem.title = L10n.SelectMainInfo.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(back))
+
+        viewModel.checkValues()
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-
-        viewModel.coordinator.didFinish()
+    deinit {
+        if viewModel.flowType == .changeBrand {
+            outputs.didTerminate.accept(())
+        }
     }
 
     private func setup() {
         setupViews()
         setupConstraints()
+        setupFlow()
     }
 
     private func setupViews() {
@@ -146,6 +189,19 @@ final class SelectMainInformationViewController: ViewController {
         }
     }
 
+    func setupFlow() {
+        switch viewModel.flowType {
+        case .create:
+            citiesTextField.isActive = false
+            addressTextField.isActive = false
+            brandsTextField.isActive = false
+        case .changeAddress, .changeBrand:
+            countryTextField.isActive = false
+            citiesTextField.isActive = false
+            addressTextField.isActive = false
+        }
+    }
+
     @objc
     private func back() {
         dismiss(animated: true)
@@ -153,21 +209,34 @@ final class SelectMainInformationViewController: ViewController {
 
     @objc
     private func save() {
-        viewModel.save { [weak self] in
-            self?.dismiss(animated: true)
-        }
+        viewModel.didSave()
+    }
+
+//    Tech debt: create button class with states
+    func changeSaveButtonState(isActive: Bool) {
+        saveButton.isUserInteractionEnabled = isActive
+        saveButton.backgroundColor = isActive ? .kexRed : .calmGray
     }
 }
 
 extension SelectMainInformationViewController: DropDownTextFieldDelegate {
-    public func didSelect(dropDown: DropDownTextField, option: String, index: Int) {
+    public func didSelect(dropDown: DropDownTextField, option _: String, index: Int) {
         switch dropDown {
         case countryTextField:
             viewModel.didChange(country: index)
         case citiesTextField:
-            viewModel.didChange(cityname: option)
+            viewModel.didChange(city: index)
         default:
             break
         }
+    }
+}
+
+extension SelectMainInformationViewController {
+    struct Output {
+        let didTerminate = PublishRelay<Void>()
+        let toMap = PublishRelay<(Address?, (_ address: Address) -> Void)>()
+        let toBrands = PublishRelay<(Int, (_ brand: Brand) -> Void)>()
+        let didSave = PublishRelay<Void>()
     }
 }

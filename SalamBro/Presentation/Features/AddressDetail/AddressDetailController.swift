@@ -5,9 +5,17 @@
 //  Created by Arystan on 5/7/21.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
-class AddressDetailController: ViewController {
+//  Tech debt: add navigationcontroller's nav bar
+
+final class AddressDetailController: ViewController {
+    let outputs = Output()
+    private let locationRepository: LocationRepository
+    private let deliveryAddress: DeliveryAddress
+
     lazy var deleteButton: UIButton = {
         let view = UIButton()
         view.tintColor = .kexRed
@@ -27,6 +35,7 @@ class AddressDetailController: ViewController {
     lazy var addressLabel: UILabel = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 14)
+        view.text = deliveryAddress.address?.name
         return view
     }()
 
@@ -43,8 +52,23 @@ class AddressDetailController: ViewController {
         let view = UILabel()
         view.font = .systemFont(ofSize: 14)
         view.numberOfLines = 0
+        view.text = deliveryAddress.address?.commentary
         return view
     }()
+
+    init(deliveryAddress: DeliveryAddress,
+         locationRepository: LocationRepository)
+    {
+        self.deliveryAddress = deliveryAddress
+        self.locationRepository = locationRepository
+
+        super.init(nibName: .none, bundle: .none)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,33 +122,21 @@ class AddressDetailController: ViewController {
     }
 
     @objc func deleteAction() {
+//        Tech debt add localization
         let alert = UIAlertController(title: "Вы уверены?", message: "Вы уверены что хотите удалить адрес доставки?", preferredStyle: .alert)
         alert.view.tintColor = .kexRed
-        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { action in
-            switch action.style {
-            case .default:
-                print("default")
-
-            case .cancel:
-                print("cancel")
-
-            case .destructive:
-                print("destructive")
-            }
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] _ in
+            guard let deliveryAddress = self?.deliveryAddress else { return }
+            self?.locationRepository.deleteDeliveryAddress(deliveryAddress: deliveryAddress)
+            self?.outputs.didDeleteAddress.accept(())
         }))
-
-        alert.addAction(UIAlertAction(title: "Нет", style: .default, handler: { action in
-            switch action.style {
-            case .default:
-                print("default")
-
-            case .cancel:
-                print("cancel")
-
-            case .destructive:
-                print("destructive")
-            }
-        }))
+        alert.addAction(UIAlertAction(title: "Нет", style: .default))
         present(alert, animated: true, completion: nil)
+    }
+}
+
+extension AddressDetailController {
+    struct Output {
+        let didDeleteAddress = PublishRelay<Void>()
     }
 }

@@ -5,12 +5,16 @@
 //  Created by Arystan on 5/7/21.
 //
 
+import RxCocoa
+import RxSwift
 import SnapKit
 import UIKit
 
 final class AddressListController: ViewController {
-    var coordinator: AddressListCoordinator
-    private var addresses = ["Алматы, мкр. Орбита 1, 41", "проспект Абылай Хана, 131"]
+    let outputs = Output()
+
+    private var locationRepository: LocationRepository
+    private lazy var deliveryAddresses = locationRepository.getDeliveryAddresses()
 
     private lazy var citiesTableView: UITableView = {
         let tv = UITableView()
@@ -28,8 +32,8 @@ final class AddressListController: ViewController {
         return tv
     }()
 
-    init(coordinator: AddressListCoordinator) {
-        self.coordinator = coordinator
+    init(locationRepository: LocationRepository) {
+        self.locationRepository = locationRepository
 
         super.init(nibName: .none, bundle: .none)
     }
@@ -41,13 +45,8 @@ final class AddressListController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         layoutUI()
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-
-        coordinator.didFinish()
     }
 
     override func setupNavigationBar() {
@@ -66,25 +65,41 @@ final class AddressListController: ViewController {
             $0.bottom.equalToSuperview()
         }
     }
+
+    func reload() {
+        deliveryAddresses = locationRepository.getDeliveryAddresses()
+        citiesTableView.reloadData()
+    }
+
+    deinit {
+        outputs.didTerminate.accept(())
+    }
 }
 
 extension AddressListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return addresses.count
+        return deliveryAddresses?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let addressCell = tableView.dequeueReusableCell(withIdentifier: AddressListTableViewCell.reuseIdentifier, for: indexPath) as? AddressListTableViewCell else { fatalError() }
-        addressCell.configure(address: addresses[indexPath.row])
+        addressCell.configure(address: deliveryAddresses?[indexPath.row].address?.name ?? "")
         return addressCell
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-        coordinator.openDetail(address: addresses[indexPath.row])
+        guard let address = deliveryAddresses?[indexPath.row] else { return }
+        outputs.didSelectAddress.accept((address, reload))
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 50
+    }
+}
+
+extension AddressListController {
+    struct Output {
+        let didTerminate = PublishRelay<Void>()
+        let didSelectAddress = PublishRelay<(DeliveryAddress, () -> Void)>()
     }
 }

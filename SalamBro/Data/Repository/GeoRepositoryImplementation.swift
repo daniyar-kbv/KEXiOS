@@ -8,7 +8,11 @@
 import Foundation
 import PromiseKit
 
-final class GeoRepositoryImplementation: GeoRepository {
+// Tech debt: remove
+
+final class GeoRepositoryImplementation
+//    :GeoRepository
+{
     private let provider: GeoProvider
     private let storage: GeoStorage
 
@@ -19,25 +23,25 @@ final class GeoRepositoryImplementation: GeoRepository {
         self.storage = storage
     }
 
-    var currentCountry: Country? {
-        get { storage.currentCountry }
-        set { storage.currentCountry = newValue }
-    }
-
-    var currentCity: City? {
-        get { storage.currentCity }
-        set { storage.currentCity = newValue }
-    }
-
-    var addresses: [Address]? {
-        get { storage.addresses?.map { $0.toDomain() } ?? [] }
-        set { storage.addresses = newValue?.compactMap { AddressDTO(from: $0) }.uniqued() }
-    }
-
-    var currentAddress: Address? {
-        get { storage.currentAddress?.toDomain() }
-        set { storage.currentAddress = AddressDTO(from: newValue) }
-    }
+//    var currentCountry: Country? {
+//        get { storage.currentCountry }
+//        set { storage.currentCountry = newValue }
+//    }
+//
+//    var currentCity: City? {
+//        get { storage.currentCity }
+//        set { storage.currentCity = newValue }
+//    }
+//
+//    var addresses: [Address]? {
+//        get { storage.addresses?.map { $0.toDomain() } ?? [] }
+//        set { storage.addresses = newValue?.compactMap { AddressDTO(from: $0) }.uniqued() }
+//    }
+//
+//    var currentAddress: Address? {
+//        get { storage.currentAddress?.toDomain() }
+//        set { storage.currentAddress = AddressDTO(from: newValue) }
+//    }
 
     var countries: [Country] { storage.countries ?? [] }
     var cities: [City] { storage.cities ?? [] }

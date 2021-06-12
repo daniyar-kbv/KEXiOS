@@ -9,6 +9,8 @@ import RxCocoa
 import RxSwift
 import UIKit
 
+// Tech debt: remove controller
+
 final class ChangeAddressController: ViewController {
     private let disposeBag: DisposeBag = .init()
     private let viewModel: ChangeAddressViewModel

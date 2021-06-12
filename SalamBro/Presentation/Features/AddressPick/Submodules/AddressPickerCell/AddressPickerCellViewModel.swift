@@ -18,10 +18,10 @@ public final class AddressPickerCellViewModel: AddressPickerCellViewModelProtoco
     public var name: BehaviorRelay<String?>
     public var isSelected: BehaviorRelay<Bool>
 
-    public init(address: Address,
+    public init(deliveryAddress: DeliveryAddress,
                 isSelected: Bool)
     {
-        name = .init(value: address.name)
+        name = .init(value: deliveryAddress.address?.name)
         self.isSelected = .init(value: isSelected)
     }
 }

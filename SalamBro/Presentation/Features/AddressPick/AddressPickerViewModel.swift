@@ -6,45 +6,48 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
 protocol AddressPickerViewModelProtocol: ViewModel {
-    var coordinator: AddressCoordinator { get }
     var cellViewModels: [AddressPickerCellViewModelProtocol] { get }
-    func didSelect(index: Int, completion: () -> Void)
-    func changeAddress()
-    func onFinish()
+    var outputs: AddressPickerViewModel.Output { get }
+    func didSelect(index: Int)
+    func reload()
 }
 
 final class AddressPickerViewModel: AddressPickerViewModelProtocol {
-    public var coordinator: AddressCoordinator
-    private let repository: GeoRepository
-    public var cellViewModels: [AddressPickerCellViewModelProtocol]
-    private let addresses: [Address]
-    private let didSelectAddress: ((Address) -> Void)?
+    private let locationRepository: LocationRepository
+    public var cellViewModels: [AddressPickerCellViewModelProtocol] = []
+    private var addresses: [DeliveryAddress] = []
 
-    public func didSelect(index: Int, completion: () -> Void) {
+    let outputs = Output()
+
+    public func didSelect(index: Int) {
         let address = addresses[index]
-        repository.currentAddress = address
-        didSelectAddress?(addresses[index])
-        completion()
+        locationRepository.setCurrentDeliveryAddress(deliveryAddress: address)
+        outputs.didSelectAddress.accept(addresses[index])
     }
 
-    public func changeAddress() {
-        coordinator.openSelectMainInfo(didSave: nil)
+    init(locationRepository: LocationRepository) {
+        self.locationRepository = locationRepository
+
+        reload()
     }
 
-    init(coordinator: AddressCoordinator,
-         repository: GeoRepository,
-         didSelectAddress: ((Address) -> Void)?)
-    {
-        self.coordinator = coordinator
-        self.repository = repository
-        self.didSelectAddress = didSelectAddress
-        addresses = repository.addresses ?? []
-        cellViewModels = repository.addresses?.map { AddressPickerCellViewModel(address: $0, isSelected: $0 == repository.currentAddress) } ?? []
+    func reload() {
+        addresses = locationRepository.getDeliveryAddresses() ?? []
+        cellViewModels = addresses.map {
+            AddressPickerCellViewModel(deliveryAddress: $0,
+                                       isSelected: $0 == locationRepository.getCurrentDeliveryAddress())
+        }
+        outputs.onReload.accept(())
     }
+}
 
-    func onFinish() {
-        coordinator.didFinish()
+extension AddressPickerViewModel {
+    struct Output {
+        let didSelectAddress = PublishRelay<DeliveryAddress>()
+        let onReload = PublishRelay<Void>()
     }
 }

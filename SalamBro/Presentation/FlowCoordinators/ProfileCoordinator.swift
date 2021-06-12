@@ -8,12 +8,14 @@
 import Foundation
 import UIKit
 
-class ProfileCoordinator: TabCoordinator {
+final class ProfileCoordinator: TabCoordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     weak var childNavigationController: UINavigationController!
     var tabType: TabBarCoordinator.TabType
+
+    private var addressListCoordinator: AddressListCoordinator?
 
     init(navigationController: UINavigationController, tabType: TabBarCoordinator.TabType) {
         self.navigationController = navigationController
@@ -40,9 +42,14 @@ class ProfileCoordinator: TabCoordinator {
     }
 
     func openAddressList() {
-        let child = AddressListCoordinator(navigationController: childNavigationController)
-        addChild(child)
-        child.start()
+        addressListCoordinator = AddressListCoordinator(navigationController: childNavigationController,
+                                                        pagesFactory: AddressListPagesFactoryImpl())
+
+        addressListCoordinator?.didFinish = { [weak self] in
+            self?.addressListCoordinator = nil
+        }
+
+        addressListCoordinator?.start()
     }
 
     func openChangeName() {
