@@ -60,21 +60,11 @@ class CommentarySheetController: ViewController {
 
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if isPromocode {
-                if getScreenSize() == 40 {
-                    view.frame.origin.y -= keyboardSize.height - 63
-                } else {
-                    view.frame.origin.y -= keyboardSize.height - 49
-                }
-            }
-
-            if isCommentary {
-                view.frame.origin.y = yCoordinate + 20
-                if getScreenSize() == 40 {
-                    view.frame.origin.y -= keyboardSize.height - 65
-                } else {
-                    view.frame.origin.y -= keyboardSize.height - 55
-                }
+            view.frame.origin.y = yCoordinate + 20
+            if getScreenSize() == 40 {
+                view.frame.origin.y -= keyboardSize.height - 65
+            } else {
+                view.frame.origin.y -= keyboardSize.height - 55
             }
         }
     }
@@ -84,11 +74,11 @@ class CommentarySheetController: ViewController {
     }
 
     @IBAction func buttonAction(_: UIButton) {
-        if commentaryField.text != nil {
+        if let commentary = commentaryField?.text {
             // FIXME: - self.dissmiss not working in ios 11, need further investigation
 //            self.dismiss(animated: true) {
             dismissSheet()
-            delegate?.passCommentary(text: commentaryField.text!)
+            delegate?.passCommentary(text: commentary)
 //            }
         }
         isPromocode = false
@@ -96,7 +86,6 @@ class CommentarySheetController: ViewController {
     }
 
     private func dismissSheet() {
-        removeFromParent()
         view.removeFromSuperview()
         delegate?.hideCommentarySheet()
     }

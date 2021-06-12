@@ -304,7 +304,7 @@ extension CartController: MapDelegate {
         let height = bounds.size.height
 
         commentarySheetVC.isPromocode = true
-        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 49 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 64 - heightOfSheet, width: width, height: heightOfSheet)
+        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 79 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 94 - heightOfSheet, width: width, height: heightOfSheet)
     }
 
     func passCommentary(text _: String) {
