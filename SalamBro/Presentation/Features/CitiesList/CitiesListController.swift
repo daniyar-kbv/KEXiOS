@@ -10,7 +10,8 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class CitiesListController: ViewController {
+final class CitiesListController: ViewController, AlertDisplayable {
+    let outputs = Output()
     private let disposeBag = DisposeBag()
 
     private lazy var tableView: UITableView = {
@@ -64,9 +65,18 @@ final class CitiesListController: ViewController {
 
 extension CitiesListController {
     private func bind() {
-        viewModel.updateTableView
+        viewModel.outputs.didGetCities
             .bind(to: tableView.rx.reload)
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
+            guard let error = error else { return }
+            self?.showError(error)
+        }).disposed(by: disposeBag)
+        
+        viewModel.outputs.didSelectCity.subscribe(onNext: { [weak self] cityId in
+            self?.outputs.didSelectCity.accept(cityId)
+        }).disposed(by: disposeBag)
     }
 
     private func setup() {
@@ -113,14 +123,12 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
     }
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelect(index: indexPath.row) { [weak self] type in
-            guard let type = type as? AddressCoordinator.FlowType else { return }
-            switch type {
-            case .changeAddress:
-                self?.dismiss(animated: true)
-            default:
-                break
-            }
-        }
+        viewModel.didSelect(index: indexPath.row)
+    }
+}
+
+extension CitiesListController {
+    struct Output {
+        let didSelectCity = PublishRelay<Int>()
     }
 }

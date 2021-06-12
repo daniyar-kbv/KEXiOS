@@ -8,6 +8,8 @@
 import Foundation
 import PromiseKit
 
+//  Tech debt: remove
+
 protocol GeoRepository: AnyObject {
     var currentCountry: Country? { get set }
     var currentCity: City? { get set }

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class OrderHistoryCoordinator: Coordinator {
+final class OrderHistoryCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController

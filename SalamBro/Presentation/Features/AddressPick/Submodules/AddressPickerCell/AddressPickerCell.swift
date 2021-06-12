@@ -20,7 +20,9 @@ public final class AddressPickerCell: UITableViewCell, Reusable {
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         disposeBag = DisposeBag()
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         setup()
     }
 
@@ -41,7 +43,7 @@ public final class AddressPickerCell: UITableViewCell, Reusable {
         }.disposed(by: disposeBag)
 
         viewModel.isSelected.bind { [unowned self] in
-            self.accessoryView = $0 ? checkmark : UIImageView(image: UIImage(named: "chevron.right"))
+            self.accessoryView = $0 ? UIImageView(image: UIImage(named: "checkmark")) : UIImageView(image: UIImage(named: "chevron.right"))
         }.disposed(by: disposeBag)
     }
 
@@ -51,6 +53,7 @@ public final class AddressPickerCell: UITableViewCell, Reusable {
     }
 
     private func setupViews() {
+        selectionStyle = .none
         tintColor = .kexRed
         textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         textLabel?.textColor = .darkGray

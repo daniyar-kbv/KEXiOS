@@ -15,7 +15,20 @@ protocol DropDownTextFieldDelegate: AnyObject {
 
 final class DropDownTextField: UIView {
     weak var delegate: DropDownTextFieldDelegate?
-    private var dataSource: [String]?
+    private var type: Type
+    
+    var dataSource: [String] = [] {
+        didSet {
+            dropDown.dataSource = dataSource
+        }
+    }
+    
+    var isActive: Bool = true {
+        didSet {
+            self.isUserInteractionEnabled = isActive
+            self.alpha = isActive ? 1 : 0.5
+        }
+    }
 
     override public var intrinsicContentSize: CGSize {
         let width = super.intrinsicContentSize.width
@@ -28,19 +41,25 @@ final class DropDownTextField: UIView {
 
     public var selectionAction: (() -> Void)?
 
-    public var placeholderText: String? {
+    public var title: String? {
         get { titleLabel.text }
         set { titleLabel.text = newValue }
     }
 
-    public var placeholderColor: UIColor? {
+    public var titleColor: UIColor? {
         get { contentLabel.textColor }
         set { contentLabel.textColor = newValue }
     }
 
     public var currentValue: String? {
         get { contentLabel.text }
-        set { contentLabel.text = newValue }
+        set {
+            guard let newValue = newValue else {
+                contentLabel.text = type.placeholder
+                return
+            }
+            contentLabel.text = newValue
+        }
     }
 
     public var descriptionText: String? {
@@ -58,6 +77,7 @@ final class DropDownTextField: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .mildBlue
+        label.text = type.title
         return label
     }()
 
@@ -65,6 +85,7 @@ final class DropDownTextField: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .mildBlue
+        label.text = type.placeholder
         return label
     }()
 
@@ -95,7 +116,7 @@ final class DropDownTextField: UIView {
             self.currentValue = item
             self.delegate?.didSelect(dropDown: self, option: item, index: index)
         }
-        dropDown.dataSource = self.dataSource ?? []
+        dropDown.dataSource = dataSource
         dropDown.textFont = .systemFont(ofSize: 16, weight: .medium)
         dropDown.textColor = .darkGray
         dropDown.backgroundColor = .white
@@ -105,9 +126,11 @@ final class DropDownTextField: UIView {
         return dropDown
     }()
 
-    public init(options: [String]?) {
-        dataSource = options
+    public init(type: Type) {
+        self.type = type
+        
         super.init(frame: .zero)
+        
         setup()
     }
 
@@ -161,6 +184,42 @@ final class DropDownTextField: UIView {
             action()
         } else {
             dropDown.show()
+        }
+    }
+}
+
+extension DropDownTextField {
+    enum `Type` {
+        case country
+        case city
+        case address
+        case brand
+        
+        var title: String {
+            switch self {
+            case .country:
+                return L10n.SelectMainInfo.country
+            case .city:
+                return L10n.SelectMainInfo.city
+            case .address:
+                return L10n.SelectMainInfo.address
+            case .brand:
+                return L10n.SelectMainInfo.brand
+            }
+        }
+        
+        var placeholder: String {
+            switch self {
+            case .country:
+                return L10n.CountriesList.Navigation.title
+            case .city:
+                return L10n.CitiesList.Navigation.title
+            case .address:
+//        Tech debt: change currentValue to appropriate localized text
+                return L10n.SelectMainInfo.address
+            case .brand:
+                return L10n.Brands.Navigation.title
+            }
         }
     }
 }

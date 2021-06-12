@@ -12,26 +12,27 @@ final class AppCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    
+    private var onBoardingCoordinator: OnBoardingCoordinator?
 
-    private let geoRepository: GeoRepository
+    private let locationRepository: LocationRepository
     private let brandRepository: BrandRepository
 
     private let serviceComponents: ServiceComponents
 
     init(serviceComponents: ServiceComponents,
          navigationController: UINavigationController,
-         geoRepository: GeoRepository,
+         locationRepository: LocationRepository,
          brandRepository: BrandRepository)
     {
         self.serviceComponents = serviceComponents
         self.navigationController = navigationController
-        self.geoRepository = geoRepository
+        self.locationRepository = locationRepository
         self.brandRepository = brandRepository
     }
 
     public func start() {
-        if geoRepository.currentCity != nil,
-           geoRepository.currentCountry != nil,
+        if locationRepository.isAddressComplete(),
            brandRepository.getCurrentBrand() != nil
         {
             startMenu()
@@ -41,8 +42,15 @@ final class AppCoordinator: Coordinator {
     }
 
     private func startFirstFlow() {
-        let child = AddressCoordinator(navigationController: navigationController, flowType: .firstFlow)
-        child.start()
+        onBoardingCoordinator = OnBoardingCoordinator(navigationController: UINavigationController(),
+                                          pagesFactory: OnBoardingPagesFactoryImpl())
+        
+        onBoardingCoordinator?.didFinish = { [weak self] in
+            self?.onBoardingCoordinator = nil
+            self?.start()
+        }
+        
+        onBoardingCoordinator?.start()
     }
 
     private func startMenu() {

@@ -35,7 +35,7 @@ final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
 
     func selectCodeCountry(at indexPath: IndexPath) -> CountryCodeModel {
         countries[indexPath.row].isSelected.toggle()
-        repository.changeCurrectCountry(to: countries[indexPath.row].country)
+        repository.changeCurrentCountry(to: countries[indexPath.row].country)
         return countries[indexPath.row]
     }
 

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class CartCoordinator: TabCoordinator {
+final class CartCoordinator: TabCoordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController

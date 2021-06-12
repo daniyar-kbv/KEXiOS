@@ -8,12 +8,14 @@
 import Foundation
 import UIKit
 
-class MenuCoordinator: TabCoordinator {
+final class MenuCoordinator: TabCoordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     weak var childNavigationController: UINavigationController!
     var tabType: TabBarCoordinator.TabType
+    
+    var addressCoordinator: AddressCoordinator?
 
     init(navigationController: UINavigationController, tabType: TabBarCoordinator.TabType) {
         self.navigationController = navigationController
@@ -24,8 +26,7 @@ class MenuCoordinator: TabCoordinator {
         let viewModel = MenuViewModel(coordinator: self,
                                       menuRepository: DIResolver.resolve(MenuRepository.self)!,
                                       locationRepository: DIResolver.resolve(LocationRepository.self)!,
-                                      brandRepository: DIResolver.resolve(BrandRepository.self)!,
-                                      geoRepository: DIResolver.resolve(GeoRepository.self)!)
+                                      brandRepository: DIResolver.resolve(BrandRepository.self)!)
         let vc = MenuController(viewModel: viewModel, scrollService: MenuScrollService())
         childNavigationController = templateNavigationController(title: tabType.title,
                                                                  image: tabType.image,
@@ -33,15 +34,27 @@ class MenuCoordinator: TabCoordinator {
     }
 
     func openSelectMainInfo(didSave: (() -> Void)? = nil) {
-        let child = AddressCoordinator(navigationController: childNavigationController, flowType: .changeMainInfo(didSave: didSave))
-        addChild(child)
-        child.start()
+        addressCoordinator = AddressCoordinator(navigationController: childNavigationController,
+                                       pagesFactory: AddressPagesFactoryImpl(),
+                                       flowType: .changeBrand(didSave: didSave))
+        
+        addressCoordinator?.didFinish = { [weak self] in
+            self?.addressCoordinator = nil
+        }
+        
+        addressCoordinator?.start()
     }
 
-    func openChangeAddress(didSelectAddress: ((Address) -> Void)? = nil) {
-        let child = AddressCoordinator(navigationController: childNavigationController, flowType: .changeAddress(didSelectAddress: didSelectAddress))
-        addChild(child)
-        child.start()
+    func openChangeAddress(didSelectAddress: (() -> Void)? = nil) {
+        addressCoordinator = AddressCoordinator(navigationController: childNavigationController,
+                                       pagesFactory: AddressPagesFactoryImpl(),
+                                       flowType: .changeAddress(didSelectAddress: didSelectAddress))
+        
+        addressCoordinator?.didFinish = { [weak self] in
+            self?.addressCoordinator = nil
+        }
+        
+        addressCoordinator?.start()
     }
 
     func openRating() {

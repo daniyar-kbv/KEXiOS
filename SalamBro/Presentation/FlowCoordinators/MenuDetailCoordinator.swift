@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-public class MenuDetailCoordinator: Coordinator {
+final public class MenuDetailCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController

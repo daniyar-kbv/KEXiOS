@@ -7,14 +7,17 @@
 
 import Foundation
 
-public struct Address {
+//  Tech debt: leave only Address or MapAddress
+
+public struct Address: Codable {
     public var name: String
     public var longitude: Double
     public var latitude: Double
+    public var commentary: String?
 }
 
 extension Address: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.name == rhs.name
+        lhs.longitude == rhs.longitude && lhs.latitude == rhs.latitude
     }
 }

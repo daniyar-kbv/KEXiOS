@@ -8,32 +8,20 @@
 import Foundation
 
 protocol GeoStorage: AnyObject {
-    var currentCountry: Country? { get set }
-    var currentCity: City? { get set }
     var countries: [Country]? { get set }
     var cities: [City]? { get set }
-    var addresses: [AddressDTO]? { get set }
-    var currentAddress: AddressDTO? { get set }
+    
+    var deliveryAddresses: [DeliveryAddress]? { get set }
+    var currentDeliveryAddressIndex: Int? { get set }
 }
 
 extension Storage: GeoStorage {
     private enum Keys: String {
-        case currentCountry
-        case currentCity
         case countries
         case cities
-        case addresses
-        case currentAddress
-    }
-
-    var currentCountry: Country? {
-        get { get(key: Keys.currentCountry.rawValue) }
-        set { save(key: Keys.currentCountry.rawValue, object: newValue) }
-    }
-
-    var currentCity: City? {
-        get { get(key: Keys.currentCity.rawValue) }
-        set { save(key: Keys.currentCity.rawValue, object: newValue) }
+        
+        case deliveryAddresses
+        case currentDeliveryAddressIndex
     }
 
     var countries: [Country]? {
@@ -45,14 +33,14 @@ extension Storage: GeoStorage {
         get { get(key: Keys.cities.rawValue) }
         set { save(key: Keys.cities.rawValue, object: newValue) }
     }
-
-    var addresses: [AddressDTO]? {
-        get { get(key: Keys.addresses.rawValue) }
-        set { save(key: Keys.addresses.rawValue, object: newValue) }
+    
+    var deliveryAddresses: [DeliveryAddress]? {
+        get { get(key: Keys.deliveryAddresses.rawValue) }
+        set { save(key: Keys.deliveryAddresses.rawValue, object: newValue) }
     }
-
-    var currentAddress: AddressDTO? {
-        get { get(key: Keys.currentAddress.rawValue) }
-        set { save(key: Keys.currentAddress.rawValue, object: newValue) }
+    
+    var currentDeliveryAddressIndex: Int? {
+        get { get(key: Keys.currentDeliveryAddressIndex.rawValue) }
+        set { save(key: Keys.currentDeliveryAddressIndex.rawValue, object: newValue) }
     }
 }

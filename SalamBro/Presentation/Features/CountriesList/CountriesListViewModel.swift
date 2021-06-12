@@ -11,52 +11,27 @@ import RxCocoa
 import RxSwift
 
 protocol CountriesListViewModelProtocol: ViewModel {
-    var coordinator: AddressCoordinator { get }
     var countries: [Country] { get }
-    var updateTableView: BehaviorRelay<Void?> { get }
     func refresh()
-    func didSelect(index: Int, completion: (_ type: Any) -> Void)
+    func didSelect(index: Int)
     func getCountries()
+    
+    var outputs: CountriesListViewModel.Output { get }
 }
 
 final class CountriesListViewModel: CountriesListViewModelProtocol {
-//    enum FlowType {
-//        case change
-//        case select
-//
-//        var citiesFlowType: CitiesListViewModel.FlowType {
-//            switch self {
-//            case .change:
-//                return .change
-//            case .firstFlow
-//                return .select
-//            }
-//        }
-//    }
-
+    private(set) var outputs = Output()
     private let disposeBag = DisposeBag()
 
-    public var coordinator: AddressCoordinator
-    private let type: AddressCoordinator.FlowType
     private(set) var countries: [Country] = []
-    private(set) var updateTableView: BehaviorRelay<Void?>
-    private let didSelectCountry: ((Country) -> Void)?
 
     private let service: LocationService
     private let repository: LocationRepository
 
-    init(coordinator: AddressCoordinator,
-         service: LocationService,
-         repository: LocationRepository,
-         type: AddressCoordinator.FlowType,
-         didSelectCountry: ((Country) -> Void)?)
-    {
-        self.coordinator = coordinator
+    init(service: LocationService,
+         repository: LocationRepository) {
         self.service = service
         self.repository = repository
-        self.type = type
-        self.didSelectCountry = didSelectCountry
-        updateTableView = .init(value: nil)
     }
 
     func getCountries() {
@@ -65,7 +40,7 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
             cachedCountries != []
         {
             countries = cachedCountries
-            updateTableView.accept(())
+            outputs.didGetCoutries.accept(())
         }
 
         makeCountriesRequest()
@@ -83,7 +58,7 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
                 self?.process(receivedCountries: countriesResponse)
             } onError: { [weak self] error in
                 self?.stopAnimation()
-                self?.coordinator.alert(error: error)
+                self?.outputs.didGetError.accept(error as? ErrorPresentable)
             }
             .disposed(by: disposeBag)
     }
@@ -92,26 +67,27 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
         guard let cachedCountries = repository.getCountries() else {
             repository.set(countries: receivedCountries)
             countries = receivedCountries
-            updateTableView.accept(())
+            outputs.didGetCoutries.accept(())
             return
         }
 
         if receivedCountries == cachedCountries { return }
         repository.set(countries: receivedCountries)
         countries = receivedCountries
-        updateTableView.accept(())
+        outputs.didGetCoutries.accept(())
     }
 
-    func didSelect(index: Int, completion: (_ type: Any) -> Void) {
+    func didSelect(index: Int) {
         let country = countries[index]
-        repository.changeCurrectCountry(to: country)
-        didSelectCountry?(country)
-        switch type {
-        case .firstFlow:
-            coordinator.openCitiesList(countryId: countries[index].id)
-        default:
-            break
-        }
-        completion(type)
+        repository.changeCurrentCountry(to: country)
+        outputs.didSelectCountry.accept(countries[index].id)
+    }
+}
+
+extension CountriesListViewModel {
+    struct Output {
+        let didGetCoutries = BehaviorRelay<Void>(value: ())
+        let didSelectCountry = PublishRelay<Int>()
+        let didGetError = PublishRelay<ErrorPresentable?>()
     }
 }
