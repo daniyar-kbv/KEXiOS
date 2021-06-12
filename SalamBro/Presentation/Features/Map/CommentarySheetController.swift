@@ -80,27 +80,25 @@ class CommentarySheetController: ViewController {
     }
 
     @objc func keyboardWillHide(notification _: NSNotification) {
-        if isPromocode {
-            view.frame.origin.y = getScreenSize() == 40 ? yCoordinate! - 5 : yCoordinate!
-        }
-
-        if isCommentary {
-            view.frame.origin.y = getScreenSize() == 40 ? yCoordinate! + 75 : yCoordinate! + 55
-        }
+        dismissSheet()
     }
 
     @IBAction func buttonAction(_: UIButton) {
         if commentaryField.text != nil {
             // FIXME: - self.dissmiss not working in ios 11, need further investigation
 //            self.dismiss(animated: true) {
-            removeFromParent()
-            view.removeFromSuperview()
+            dismissSheet()
             delegate?.passCommentary(text: commentaryField.text!)
-            delegate?.hideCommentarySheet()
 //            }
         }
         isPromocode = false
         isCommentary = false
+    }
+
+    private func dismissSheet() {
+        removeFromParent()
+        view.removeFromSuperview()
+        delegate?.hideCommentarySheet()
     }
 
     @objc func hideTextField() {
