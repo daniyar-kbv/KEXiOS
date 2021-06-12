@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-final class AgreementController: ViewController {
+final class AgreementController: UIViewController {
     private lazy var webView: WKWebView = {
         let webConfiguration = WKWebViewConfiguration()
         let webView = WKWebView(frame: .zero, configuration: webConfiguration)
@@ -22,18 +22,14 @@ final class AgreementController: ViewController {
         configureWebView()
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.title = L10n.Rating.information
-    }
-
     private func layoutUI() {
+        navigationItem.title = L10n.Rating.information
+        navigationController?.navigationBar.topItem?.title = ""
         view.backgroundColor = .arcticWhite
         view.addSubview(webView)
         webView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
-            $0.left.right.equalToSuperview()
-            $0.bottom.equalTo(view.snp.bottomMargin)
+            $0.left.right.bottom.equalToSuperview()
         }
     }
 

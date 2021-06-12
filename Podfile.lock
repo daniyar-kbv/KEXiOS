@@ -14,14 +14,14 @@ PODS:
   - Moya/RxSwift (14.0.0):
     - Moya/Core
     - RxSwift (~> 5.0)
-  - PromiseKit (6.13.1):
-    - PromiseKit/CorePromise (= 6.13.1)
-    - PromiseKit/Foundation (= 6.13.1)
-    - PromiseKit/UIKit (= 6.13.1)
-  - PromiseKit/CorePromise (6.13.1)
-  - PromiseKit/Foundation (6.13.1):
+  - PromiseKit (6.15.0):
+    - PromiseKit/CorePromise (= 6.15.0)
+    - PromiseKit/Foundation (= 6.15.0)
+    - PromiseKit/UIKit (= 6.15.0)
+  - PromiseKit/CorePromise (6.15.0)
+  - PromiseKit/Foundation (6.15.0):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.13.1):
+  - PromiseKit/UIKit (6.15.0):
     - PromiseKit/CorePromise
   - Reusable (4.1.1):
     - Reusable/Storyboard (= 4.1.1)
@@ -38,12 +38,12 @@ PODS:
   - SVProgressHUD (2.2.5)
   - SwiftGen (6.4.0)
   - Swinject (2.7.1)
-  - YandexMapKit (3.4):
-    - YandexRuntime (= 3.4)
-  - YandexMapKitSearch (3.4):
-    - YandexMapKit (= 3.4)
-    - YandexRuntime (= 3.4)
-  - YandexRuntime (3.4)
+  - YandexMapKit (3.5.0):
+    - YandexRuntime (= 3.5.0)
+  - YandexMapKitSearch (3.5.0):
+    - YandexMapKit (= 3.5.0)
+    - YandexRuntime (= 3.5.0)
+  - YandexRuntime (3.5.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -103,7 +103,7 @@ SPEC CHECKSUMS:
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
-  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
+  PromiseKit: 5d5ea54ef16215b8aa1c1cc35dc5d18f3053dec9
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
@@ -112,14 +112,10 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
-  YandexMapKit: f222923561fe159dd8480d927f61950fc5ff3b8d
-  YandexMapKitSearch: 9d658009a11ce4973e5b1c59aacb72c3f63c808a
-  YandexRuntime: 2547d72a3ce4757f16ad188cfbe8a124ae13d806
+  YandexMapKit: ecd4b78de34a35df63d066ac299e6fd0fe46d1ba
+  YandexMapKitSearch: b46ddd1c80e2e35d006cdfc4ab88070a50cebeda
+  YandexRuntime: 2d55244d06267106cf9b00c25a1e63f72a73b6fd
 
-<<<<<<< HEAD
-PODFILE CHECKSUM: e2c539a738e6be18dc5482049fc456f1b6a290c1
-=======
-PODFILE CHECKSUM: ca63f205514930091004c675bdd8e074ad9c323a
->>>>>>> develop
+PODFILE CHECKSUM: eedb5ccf90bf6d87756037d486bf7eee0cc4fce7
 
 COCOAPODS: 1.10.1
