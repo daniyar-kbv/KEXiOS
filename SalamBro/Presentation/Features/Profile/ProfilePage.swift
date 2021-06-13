@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class ProfilePage: UIViewController {
+final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
     let outputs = Output()
 
     private let disposeBag = DisposeBag()
@@ -103,6 +103,8 @@ final class ProfilePage: UIViewController {
         layoutUI()
         bindViews()
         bindViewModel()
+
+//        viewModel.getUserInfo()
     }
 
     private func bindViews() {
@@ -111,7 +113,8 @@ final class ProfilePage: UIViewController {
 
         changeNameButton.rx.tap
             .bind { [weak self] in
-                self?.outputs.onChangeUserInfo.accept(())
+                self?.viewModel.getUserInfo()
+//                self?.outputs.onChangeUserInfo.accept(())
             }
             .disposed(by: disposeBag)
 
@@ -122,7 +125,25 @@ final class ProfilePage: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func bindViewModel() {}
+    private func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didFail
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            })
+            .disposed(by: disposeBag)
+    }
 
     private func layoutUI() {
         view.backgroundColor = .arcticWhite

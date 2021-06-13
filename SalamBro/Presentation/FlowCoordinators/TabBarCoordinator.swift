@@ -19,7 +19,6 @@ final class TabBarCoordinator: LegacyCoordinator {
     }
 
     func start() {
-        childCoordinators = tabTypes.map { $0.coordinator }
         for coordinator in childCoordinators {
             coordinator.start()
         }
@@ -65,19 +64,6 @@ final class TabBarCoordinator: LegacyCoordinator {
                 return Asset.support.image
             case .cart:
                 return Asset.cart.image
-            }
-        }
-
-        var coordinator: TabCoordinator {
-            switch self {
-            case .menu:
-                return MenuCoordinator(navigationController: UINavigationController(), tabType: self)
-            case .profile:
-                return MenuCoordinator(navigationController: UINavigationController(), tabType: self)
-            case .support:
-                return SupportCoordinator(navigationController: UINavigationController(), tabType: self)
-            case .cart:
-                return CartCoordinator(navigationController: UINavigationController(), tabType: self)
             }
         }
     }

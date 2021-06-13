@@ -11,7 +11,7 @@ protocol ApplicationCoordinatorFactory: AnyObject {
     func makeMenuCoordinator() -> MenuCoordinator
     func makeOnboardingCoordinator() -> OnBoardingCoordinator
     func makeAuthCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthCoordinator
-    func makeCartCoordinator() -> CartCoordinator
+    func makeCartCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartCoordinator
     func makeProfileCoordinator(serviceComponents: ServiceComponents) -> ProfileCoordinator
 }
 
@@ -46,9 +46,22 @@ final class ApplicationCoordinatorFactoryImpl: DependencyFactory, ApplicationCoo
         return shared(ProfileChildCoordinatorsFactoryImpl(serviceComponents: serviceComponents, router: router))
     }
 
-    func makeCartCoordinator() -> CartCoordinator {
-        return scoped(.init(navigationController: UINavigationController(),
-                            tabType: .cart))
+    func makeCartCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartCoordinator {
+        let router = MainRouter()
+        return shared(.init(router: router,
+                            pagesFactory: makeCartPagesFactory(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents),
+                            coordinatorsFactory: makeCartCoordinatorsFactory(router: router, serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)))
+    }
+
+    private func makeCartPagesFactory(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartPagesFactory {
+        return shared(CartPagesFactoryImpl(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
+    }
+
+    private func makeCartCoordinatorsFactory(router: Router,
+                                             serviceComponents: ServiceComponents,
+                                             repositoryComponents: RepositoryComponents) -> CartCoordinatorsFactory
+    {
+        return shared(CartCoordinatorsFactoryImpl(router: router, serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
     }
 
     func makeAuthCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthCoordinator {

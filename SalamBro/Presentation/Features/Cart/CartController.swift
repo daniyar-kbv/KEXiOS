@@ -11,9 +11,11 @@ protocol CartViewDelegate {
     func proceed()
 }
 
+// FIXME: Refactor
 class CartController: ViewController {
+    var openAuth: (() -> Void)?
+
     var mainTabDelegate: MainTabDelegate?
-    var cartViewModel: CartViewModel
 
     lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title, image: UIImage(named: "emptyCart")!)
     lazy var commentarySheetVC = CommentarySheetController()
@@ -76,6 +78,7 @@ class CartController: ViewController {
         return view
     }()
 
+    private let cartViewModel: CartViewModel
     init(viewModel: CartViewModel) {
         cartViewModel = viewModel
 
@@ -89,7 +92,6 @@ class CartController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
         setupViews()
         setupConstraints()
 
@@ -146,7 +148,7 @@ extension CartController {
     }
 
     @objc func buttonAction() {
-        cartViewModel.coordinator.openAuth()
+        openAuth?()
     }
 }
 

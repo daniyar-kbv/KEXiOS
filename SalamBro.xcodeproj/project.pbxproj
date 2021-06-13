@@ -73,8 +73,10 @@
 		0D13C459B1472FF2CA0426E2334F23C8 /* CartAdditionalProductUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB40194A8C1EC2915B93AF7514E3B2C /* CartAdditionalProductUI.swift */; };
 		1AB4EEAB75922F58452FE3D97C636852 /* CartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00505F4E7FBC76F2B7D55371D789551D /* CartController.swift */; };
 		1ABB261538A5C904CB912CB77DDAB299 /* CartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEB4219F9160682C1C91AEE83897E29 /* CartCoordinator.swift */; };
+		CDC876A7C1C49DD4850189F9DE014230 /* CartCoordinatorsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40DE6B930704616B491520C703D1E5C /* CartCoordinatorsFactory.swift */; };
 		8B963C197B31DE0DB676E8C489FE22DF /* CartDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF307719DB134F2822AFF83618DF7A9 /* CartDTO.swift */; };
 		ACBCAA6836EE9F59FB7354C93B3DCE82 /* CartFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2944587CBB41B7CEA2ABA40C671DB31 /* CartFooter.swift */; };
+		5F6778CC8880C09316610CA4A8BE6364 /* CartPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF8BDD4840BAEFD8D2DB39AE1890375 /* CartPagesFactory.swift */; };
 		75D565E11FE6C425E1703008D3BE736D /* CartProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94594D56E9E69921057F03CFD7B1E960 /* CartProduct.swift */; };
 		7A6D09781E8D7C00B674862C4121CBDA /* CartProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50214DE7792FC479E7CD89C5326AB66 /* CartProductCell.swift */; };
 		38FD146B5661D0882BE4DCED49C12D86 /* CartProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8BFA8F269A2808DE9FFAFAF5F7F0 /* CartProductCell.xib */; };
@@ -333,8 +335,10 @@
 		DCB40194A8C1EC2915B93AF7514E3B2C /* CartAdditionalProductUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartAdditionalProductUI.swift; sourceTree = "<group>"; };
 		00505F4E7FBC76F2B7D55371D789551D /* CartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartController.swift; sourceTree = "<group>"; };
 		DFEB4219F9160682C1C91AEE83897E29 /* CartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCoordinator.swift; sourceTree = "<group>"; };
+		E40DE6B930704616B491520C703D1E5C /* CartCoordinatorsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCoordinatorsFactory.swift; sourceTree = "<group>"; };
 		FCF307719DB134F2822AFF83618DF7A9 /* CartDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartDTO.swift; sourceTree = "<group>"; };
 		B2944587CBB41B7CEA2ABA40C671DB31 /* CartFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartFooter.swift; sourceTree = "<group>"; };
+		3EF8BDD4840BAEFD8D2DB39AE1890375 /* CartPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPagesFactory.swift; sourceTree = "<group>"; };
 		94594D56E9E69921057F03CFD7B1E960 /* CartProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProduct.swift; sourceTree = "<group>"; };
 		A50214DE7792FC479E7CD89C5326AB66 /* CartProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductCell.swift; sourceTree = "<group>"; };
 		BBBA8BFA8F269A2808DE9FFAFAF5F7F0 /* CartProductCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartProductCell.xib; sourceTree = "<group>"; };
@@ -557,6 +561,8 @@
 				B6A824EA35E881E612E9ABFB6DB0DBBF /* AddressPagesFactory.swift */,
 				AF604E8968102D104BF0500B65644E4B /* ApplicationCoordinatorFactory.swift */,
 				E0EFAC1330160D066BBDBC7CA1C6F19D /* AuthPagesFactory.swift */,
+				E40DE6B930704616B491520C703D1E5C /* CartCoordinatorsFactory.swift */,
+				3EF8BDD4840BAEFD8D2DB39AE1890375 /* CartPagesFactory.swift */,
 				A4DB861C5BCBEFCE67700BEE0D60BCF0 /* OnBoardingPagesFactory.swift */,
 				E724507D46F7D1DC68E60379AC2C0FE1 /* OrderHistoryPagesFactory.swift */,
 				346C8557EE2664DF8110DA85A12F4C3C /* ProfileChildCoordinatorsFactory.swift */,
@@ -1927,8 +1933,10 @@
 				0D13C459B1472FF2CA0426E2334F23C8 /* CartAdditionalProductUI.swift in Sources */,
 				1AB4EEAB75922F58452FE3D97C636852 /* CartController.swift in Sources */,
 				1ABB261538A5C904CB912CB77DDAB299 /* CartCoordinator.swift in Sources */,
+				CDC876A7C1C49DD4850189F9DE014230 /* CartCoordinatorsFactory.swift in Sources */,
 				8B963C197B31DE0DB676E8C489FE22DF /* CartDTO.swift in Sources */,
 				ACBCAA6836EE9F59FB7354C93B3DCE82 /* CartFooter.swift in Sources */,
+				5F6778CC8880C09316610CA4A8BE6364 /* CartPagesFactory.swift in Sources */,
 				75D565E11FE6C425E1703008D3BE736D /* CartProduct.swift in Sources */,
 				7A6D09781E8D7C00B674862C4121CBDA /* CartProductCell.swift in Sources */,
 				BAF071F9AE134BB18DB5B1782882F272 /* CartProductDTO.swift in Sources */,

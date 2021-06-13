@@ -27,7 +27,6 @@ final class ProfileServiceMoyaImpl: ProfileService {
     func getUserInfo() -> Single<UserInfoResponse> {
         return provider.rx
             .request(.getUserInfo)
-            .debug()
             .map { response in
                 guard
                     let userInfoContainerResponse = try? response.map(UserInfoResponseContainer.self),
@@ -43,7 +42,6 @@ final class ProfileServiceMoyaImpl: ProfileService {
     func updateUserInfo(with dto: UserInfoDTO) -> Single<UserInfoResponse> {
         return provider.rx
             .request(.editUserInfo(dto: dto))
-            .debug()
             .map { response in
                 guard let userInfoResponse = try? response.map(UserInfoResponse.self) else {
                     throw NetworkError.badMapping

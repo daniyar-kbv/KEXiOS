@@ -36,6 +36,7 @@ final class AppCoordinator: BaseCoordinator {
         }
 
         configureProfileCoordinator()
+        configureCartCoordinator()
 
         // MARK: Нужно тут прописать конфиги для Меню, Помощи и Корзины
 
@@ -68,13 +69,26 @@ final class AppCoordinator: BaseCoordinator {
         navigationControllers.append(profileCoordinator.router.getNavigationController())
     }
 
+    private func configureCartCoordinator() {
+        let cartCoordinator = appCoordinatorsFactory.makeCartCoordinator(serviceComponents: serviceComponents,
+                                                                         repositoryComponents: repositoryComponents)
+        cartCoordinator.start()
+        cartCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: L10n.MainTab.Cart.title,
+                                                                                   image: Asset.cart.image,
+                                                                                   selectedImage: Asset.cart.image)
+        preparedViewControllers.append(cartCoordinator.router.getNavigationController())
+        add(cartCoordinator)
+        navigationControllers.append(cartCoordinator.router.getNavigationController())
+    }
+
     private func startAuthCoordinator() {
         let authCoordinator = appCoordinatorsFactory.makeAuthCoordinator(serviceComponents: serviceComponents,
                                                                          repositoryComponents: repositoryComponents)
 
         add(authCoordinator)
-        authCoordinator.didFinish = { [weak self] in
+        authCoordinator.didFinish = { [weak self, weak authCoordinator] in
             self?.remove(authCoordinator)
+            authCoordinator = nil
         }
 
         authCoordinator.start()
@@ -84,8 +98,9 @@ final class AppCoordinator: BaseCoordinator {
         let onboardingCoordinator = appCoordinatorsFactory.makeOnboardingCoordinator()
 
         add(onboardingCoordinator)
-        onboardingCoordinator.didFinish = { [weak self] in
+        onboardingCoordinator.didFinish = { [weak self, weak onboardingCoordinator] in
             self?.remove(onboardingCoordinator)
+            onboardingCoordinator = nil
             self?.showTabBarController()
         }
 
