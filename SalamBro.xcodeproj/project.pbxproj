@@ -202,6 +202,7 @@
 		40F8F88F5CF17244D1D5782886426333 /* RatingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8FB252B3EF143910D24999EDA5CE50 /* RatingCoordinator.swift */; };
 		C7D144869475F0B1D989BA3BE88943F7 /* RatioDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B14A0696DDBA1767A46E3E9946E03A3 /* RatioDTO.swift */; };
 		14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */; };
+		53F582C31D3C53CDF8B56F146E7BBE8B /* RepositoryComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF82D0A9964BEA60C7D9DEE5233BB05 /* RepositoryComponents.swift */; };
 		A272888D22BF6D95BA2FA56607BB36AD /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A53C8C5BE3A25DCC4D92C99A0D3434 /* Router.swift */; };
 		249E54E5058664B559F40AB97FE33AA6 /* SMPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FA0391E18BA13EE5B28ABA0384078 /* SMPickerView.swift */; };
 		164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */; };
@@ -465,6 +466,7 @@
 		EA8FB252B3EF143910D24999EDA5CE50 /* RatingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingCoordinator.swift; sourceTree = "<group>"; };
 		4B14A0696DDBA1767A46E3E9946E03A3 /* RatioDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatioDTO.swift; sourceTree = "<group>"; };
 		D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtension.swift; sourceTree = "<group>"; };
+		7FF82D0A9964BEA60C7D9DEE5233BB05 /* RepositoryComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryComponents.swift; sourceTree = "<group>"; };
 		18A53C8C5BE3A25DCC4D92C99A0D3434 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		0B6FA0391E18BA13EE5B28ABA0384078 /* SMPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMPickerView.swift; sourceTree = "<group>"; };
 		A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
@@ -936,14 +938,6 @@
 			path = AddressDetail;
 			sourceTree = "<group>";
 		};
-		DD85E3CE55F24B34E1C8C15A23E46932 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				C71CFA4326A7D4F3ECB060CD21758333 /* Coordinator.swift */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
 		634DF0542321FBAF896E12DD7808EC82 /* Provider */ = {
 			isa = PBXGroup;
 			children = (
@@ -993,6 +987,7 @@
 				8234D90C809AE755270490D63E408B9C /* AuthService.swift */,
 				F7F254AE6752CFEF94722885B2637746 /* LocationService.swift */,
 				32EF3B2B1F6813FFA7E77104569E2780 /* OrdersService.swift */,
+				7FF82D0A9964BEA60C7D9DEE5233BB05 /* RepositoryComponents.swift */,
 				B6B85CD93601FBD3B6385EE29192A493 /* ServiceComponents.swift */,
 			);
 			path = Services;
@@ -1422,6 +1417,14 @@
 				BC38CD54AA71E4C20246F3181F40C8D9 /* NetworkError.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		DD85E3CE55F24B34E1C8C15A23E46932 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				C71CFA4326A7D4F3ECB060CD21758333 /* Coordinator.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		E10130B54A9EC2E434FD8501CA35EC13 /* SelectMainInformation */ = {
@@ -2031,6 +2034,7 @@
 				40F8F88F5CF17244D1D5782886426333 /* RatingCoordinator.swift in Sources */,
 				C7D144869475F0B1D989BA3BE88943F7 /* RatioDTO.swift in Sources */,
 				14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */,
+				53F582C31D3C53CDF8B56F146E7BBE8B /* RepositoryComponents.swift in Sources */,
 				A272888D22BF6D95BA2FA56607BB36AD /* Router.swift in Sources */,
 				249E54E5058664B559F40AB97FE33AA6 /* SMPickerView.swift in Sources */,
 				8E4A70AB75790B6CE43F5044E3EC60D2 /* SecureStorageProvider.swift in Sources */,

@@ -209,6 +209,7 @@ extension MapPage: MapCommentaryPageDelegate, SuggestControllerDelegate {
 
 extension MapPage {
     private func layoutUI() {
+        view.backgroundColor = .arcticWhite
         view.addSubview(yandexMapView)
         yandexMapView.snp.makeConstraints {
             $0.edges.equalToSuperview()

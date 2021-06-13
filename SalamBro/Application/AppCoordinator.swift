@@ -16,20 +16,16 @@ final class AppCoordinator: BaseCoordinator {
     private(set) var tabBarController: SBTabBarController!
 
     private let serviceComponents: ServiceComponents
+    private let repositoryComponents: RepositoryComponents
     private let appCoordinatorsFactory: ApplicationCoordinatorFactory
 
-    private let locationRepository: LocationRepository // FIXME: Tech debt
-    private let brandRepository: BrandRepository // FIXME: Tech debt
-
     init(serviceComponents: ServiceComponents,
-         appCoordinatorsFactory: ApplicationCoordinatorFactory,
-         locationRepository: LocationRepository,
-         brandRepository: BrandRepository)
+         repositoryComponents: RepositoryComponents,
+         appCoordinatorsFactory: ApplicationCoordinatorFactory)
     {
         self.serviceComponents = serviceComponents
+        self.repositoryComponents = repositoryComponents
         self.appCoordinatorsFactory = appCoordinatorsFactory
-        self.locationRepository = locationRepository
-        self.brandRepository = brandRepository
     }
 
     override func start() {
@@ -41,13 +37,24 @@ final class AppCoordinator: BaseCoordinator {
 
         configureProfileCoordinator()
 
-        if locationRepository.isAddressComplete(),
-           brandRepository.getCurrentBrand() != nil
-        {
-            showTabBarController()
-        } else {
+        // MARK: Нужно тут прописать конфиги для Меню, Помощи и Корзины
+
+        switchFlows()
+    }
+
+    private func switchFlows() {
+        let locationRepository = repositoryComponents.makeLocationRepository()
+        let brandRepository = repositoryComponents.makeBrandRepository()
+
+        guard
+            locationRepository.isAddressComplete(),
+            brandRepository.getCurrentBrand() != nil
+        else {
             startOnboardingFlow()
+            return
         }
+
+        showTabBarController()
     }
 
     private func configureProfileCoordinator() {
@@ -86,6 +93,7 @@ final class AppCoordinator: BaseCoordinator {
 
     private func showTabBarController() {
         tabBarController.viewControllers = preparedViewControllers
-        UIApplication.shared.setRootView(tabBarController)
+
+        UIApplication.shared.setRootView(tabBarController) // MARK: Tech debt
     }
 }
