@@ -17,9 +17,6 @@ class CommentarySheetController: ViewController {
 
     // MARK: Tech Debt - Change logic by creating a new class for view presentation
 
-    public var isPromocode = false
-    public var isCommentary = false
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -81,8 +78,6 @@ class CommentarySheetController: ViewController {
             delegate?.passCommentary(text: commentary)
 //            }
         }
-        isPromocode = false
-        isCommentary = false
     }
 
     private func dismissSheet() {

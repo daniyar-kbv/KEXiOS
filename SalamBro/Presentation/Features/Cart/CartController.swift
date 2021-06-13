@@ -303,7 +303,6 @@ extension CartController: MapDelegate {
         let bounds = UIScreen.main.bounds
         let height = bounds.size.height
 
-        commentarySheetVC.isPromocode = true
         commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 79 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 94 - heightOfSheet, width: width, height: heightOfSheet)
     }
 

@@ -191,7 +191,6 @@ extension RateController: MapDelegate {
         let bounds = UIScreen.main.bounds
         let height = bounds.size.height
 
-        commentarySheetVC.isCommentary = true
         commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 49 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 64 - heightOfSheet, width: width, height: heightOfSheet)
     }
 

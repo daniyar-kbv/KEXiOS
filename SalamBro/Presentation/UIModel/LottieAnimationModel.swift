@@ -5,7 +5,8 @@
 //  Created by Meruyert Tastandiyeva on 6/13/21.
 //
 
-import Foundation
+import Lottie
+import UIKit
 
 enum LottieAnimationModel {
     case orderHistory
@@ -35,20 +36,45 @@ enum LottieAnimationModel {
         }
     }
 
-    var buttonTitle: String {
+    func getButtonTitle() -> String {
+        var title = ""
         switch self {
         case .orderHistory, .emptyBasket:
-            return "Перейти в меню"
+            title = "Перейти в меню"
         case .noInternet, .overload:
-            return "Попробовать еще раз"
+            title = "Попробовать еще раз"
         case .upgrade:
-            return "Обновить приложение"
+            title = "Обновить приложение"
         case .payment:
-            return "Отменить заказ"
+            title = "Отменить заказ"
         case .profile:
-            return "Войти"
+            title = "Войти"
         }
+        return title
     }
+
+    func getAnimationView() -> AnimationView {
+        let animationView = AnimationView()
+        switch self {
+        case .orderHistory:
+            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+        case .emptyBasket:
+            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+        case .noInternet:
+            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+        case .upgrade:
+            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+        case .overload:
+            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+        case .payment:
+            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+        case .profile:
+            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+        }
+        return animationView
+    }
+
+    // MARK: Change when actions are implemented, should send action types
 
     var isActive: Bool {
         switch self {

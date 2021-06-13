@@ -61,11 +61,10 @@ final class AnimationContainerView: UIView {
 
         infoLabel.text = type.infoText
 
-        actionButton.setTitle(type.buttonTitle, for: .normal)
+        actionButton.setTitle(type.getButtonTitle(), for: .normal)
         actionButton.addTarget(self, action: #selector(performAction), for: .touchUpInside)
 
-        let animation = Animation.named("\(type)")
-        lottieAnimationView.animation = animation
+        lottieAnimationView = type.getAnimationView()
     }
 
     private func setState(with style: LottieAnimationModel) {

@@ -101,7 +101,7 @@ final class BrandsController: ViewController, AlertDisplayable {
     }
 
     private func setupConstraints() {
-        collectionView.contentInset = UIEdgeInsets(top: 6, left: 0, bottom: 24, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         collectionView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
