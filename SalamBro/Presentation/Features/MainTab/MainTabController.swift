@@ -28,12 +28,14 @@ final class SBTabBarController: UITabBarController {
     }
 }
 
+// FIXME: Tech debt, legacy
 protocol MainTabDelegate {
     func updateCounter(isIncrease: Bool)
     func setCount(count: Int)
     func changeController(id: Int)
 }
 
+// FIXME: Tech debt, legacy
 final class MainTabController: UITabBarController {
     let coordinator = TabBarCoordinator(navigationController: UINavigationController())
     var itemCount: Int = 0
@@ -48,6 +50,7 @@ final class MainTabController: UITabBarController {
     }
 }
 
+// FIXME: Tech debt, legacy
 extension MainTabController {
     func configureUI() {
         tabBar.barTintColor = .white
@@ -61,6 +64,7 @@ extension MainTabController {
     }
 }
 
+// FIXME: Tech debt, legacy
 extension MainTabController: MainTabDelegate {
     func getCart() -> CartController? {
         return coordinator.getCoordinators().first(where: { $0.tabType == .cart })?.childNavigationController.viewControllers.first as? CartController
