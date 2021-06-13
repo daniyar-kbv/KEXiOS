@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// MARK: Refactor
+
 final class CartCoordinator: TabCoordinator {
     var parentCoordinator: LegacyCoordinator?
     var childCoordinators: [LegacyCoordinator] = []
@@ -23,7 +25,10 @@ final class CartCoordinator: TabCoordinator {
     }
 
     func openAuth() {
-        authCoordinator = AuthCoordinator(navigationController: childNavigationController, pagesFactory: AuthPagesFactoryImpl())
+        // FIXME: Refactor
+        authCoordinator = AuthCoordinator(router: MainRouter(),
+                                          pagesFactory: AuthPagesFactoryImpl(serviceComponents: ServiceComponentsAssembly(),
+                                                                             repositoryComponents: RepositoryComponentsAssembly()))
         authCoordinator?.start()
 
         authCoordinator?.didFinish = { [weak self] in

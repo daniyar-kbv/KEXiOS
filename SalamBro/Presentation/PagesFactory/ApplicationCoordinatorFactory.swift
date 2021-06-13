@@ -10,7 +10,7 @@ import UIKit
 protocol ApplicationCoordinatorFactory: AnyObject {
     func makeMenuCoordinator() -> MenuCoordinator
     func makeOnboardingCoordinator() -> OnBoardingCoordinator
-    func makeAuthCoordinator() -> AuthCoordinator
+    func makeAuthCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthCoordinator
     func makeCartCoordinator() -> CartCoordinator
     func makeProfileCoordinator(serviceComponents: ServiceComponents) -> ProfileCoordinator
 }
@@ -44,12 +44,14 @@ final class ApplicationCoordinatorFactoryImpl: DependencyFactory, ApplicationCoo
                             tabType: .cart))
     }
 
-    func makeAuthCoordinator() -> AuthCoordinator {
-        return scoped(.init(navigationController: UINavigationController(),
-                            pagesFactory: makeAuthPagesFactory()))
+    func makeAuthCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthCoordinator {
+        return scoped(.init(router: MainRouter(),
+                            pagesFactory: makeAuthPagesFactory(serviceComponents: serviceComponents,
+                                                               repositoryComponents: repositoryComponents)))
     }
 
-    private func makeAuthPagesFactory() -> AuthPagesFactory {
-        return scoped(AuthPagesFactoryImpl())
+    private func makeAuthPagesFactory(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthPagesFactory {
+        return scoped(AuthPagesFactoryImpl(serviceComponents: serviceComponents,
+                                           repositoryComponents: repositoryComponents))
     }
 }

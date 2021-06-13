@@ -69,7 +69,8 @@ final class AppCoordinator: BaseCoordinator {
     }
 
     private func startAuthCoordinator() {
-        let authCoordinator = appCoordinatorsFactory.makeAuthCoordinator()
+        let authCoordinator = appCoordinatorsFactory.makeAuthCoordinator(serviceComponents: serviceComponents,
+                                                                         repositoryComponents: repositoryComponents)
 
         add(authCoordinator)
         authCoordinator.didFinish = { [weak self] in
