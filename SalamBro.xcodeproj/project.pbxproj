@@ -188,9 +188,12 @@
 		1814F54CFAC26967B8C664F02E4AA121 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C9392BFA56499DD56ECB2AF1FC231E8 /* Pods_SalamBro.framework */; };
 		A540ED01AEA76072046DBFB6ABC5F74D /* Pods_SalamBroTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A13733093DD55DBE42A20FB059CFAB /* Pods_SalamBroTests.framework */; };
 		772A73F421F49431296C00EDC5197B97 /* Pods_SalamBro_SalamBroUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AF4E2B9C5CAC0C1D126B547533E2FB0 /* Pods_SalamBro_SalamBroUITests.framework */; };
+		0879609D3CDEA3CEE12D9D931FCC67E4 /* ProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7E7FBAE98858C24FB42C2E4C456E1A /* ProfileAPI.swift */; };
+		0023E58F63C6BB362CCBDA45E29D096C /* ProfileChildCoordinatorsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346C8557EE2664DF8110DA85A12F4C3C /* ProfileChildCoordinatorsFactory.swift */; };
 		974AE9BE8ACDD9A2039C9F9A06FBFF0E /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACF86860C7711087633FA7491110757 /* ProfileCoordinator.swift */; };
 		76E6A231C962E12B0989804E3B33B490 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D07064F2C35C75CDFBA5B39B221275 /* ProfilePage.swift */; };
 		1B9FF087AA2FF5E267FB605E0CB8F243 /* ProfilePagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8801A8C6297BF5F8678DB2E6090404 /* ProfilePagesFactory.swift */; };
+		E8313910EBBD31D7EDDD0C4108C33256 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607A9C883241211935E1461949E3CEC /* ProfileService.swift */; };
 		653D149B28F0F3BCDF06EAE8973AA426 /* ProfileTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0DDCC9AD11C0C483BBE3C815382E5A /* ProfileTableItem.swift */; };
 		2E6334869826621EAA9CE260BD3D6CE3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0F774DE519294C5F347CC964CA5D73 /* ProfileViewModel.swift */; };
 		A26DAD8BD3AE115B3711AFA885725699 /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */; };
@@ -238,6 +241,7 @@
 		B8E8F18212F6159EAB6B844CE37B070E /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CEDB14AEF3AEBD246905B8FBE76ED /* UIView+Extension.swift */; };
 		C7EA573E1B7947AC6844F19B0447B2D9 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AD8559B1194198F403317A8B1FDB88 /* UIViewController+Extension.swift */; };
 		F758B6D9AC73394B5515B206040856CD /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C7E8CE52D9B2EDAD2AE0C3C1FD8C6E /* UpdateController.swift */; };
+		AAC3A9E5D1EBD7740FFEA17E30234578 /* UserInfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E011575C45F2BF62A8862D1A220AB0 /* UserInfoDTO.swift */; };
 		1A64DBDA3FDE3A5BA964DAE39D5AEE75 /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E02A86B7D30F86B51AD0216C52C36C5 /* VerificationController.swift */; };
 		12EC0118BE1AB33AB9362A27A9FEEEB0 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4C910FC72C2E0F539A9D10BAFA4CAE /* VerificationView.swift */; };
 		443E6F9C914F8AF9000B8D7AFF8F5427 /* VerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA31B97420560319140BB7B898F93730 /* VerificationViewModel.swift */; };
@@ -452,9 +456,12 @@
 		9C9392BFA56499DD56ECB2AF1FC231E8 /* Pods_SalamBro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SalamBro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A13733093DD55DBE42A20FB059CFAB /* Pods_SalamBroTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SalamBroTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF4E2B9C5CAC0C1D126B547533E2FB0 /* Pods_SalamBro_SalamBroUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SalamBro_SalamBroUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC7E7FBAE98858C24FB42C2E4C456E1A /* ProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAPI.swift; sourceTree = "<group>"; };
+		346C8557EE2664DF8110DA85A12F4C3C /* ProfileChildCoordinatorsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileChildCoordinatorsFactory.swift; sourceTree = "<group>"; };
 		4ACF86860C7711087633FA7491110757 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		15D07064F2C35C75CDFBA5B39B221275 /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		8B8801A8C6297BF5F8678DB2E6090404 /* ProfilePagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePagesFactory.swift; sourceTree = "<group>"; };
+		E607A9C883241211935E1461949E3CEC /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		AB0DDCC9AD11C0C483BBE3C815382E5A /* ProfileTableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableItem.swift; sourceTree = "<group>"; };
 		6D0F774DE519294C5F347CC964CA5D73 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
@@ -505,6 +512,7 @@
 		CF8CEDB14AEF3AEBD246905B8FBE76ED /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		81AD8559B1194198F403317A8B1FDB88 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		49C7E8CE52D9B2EDAD2AE0C3C1FD8C6E /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
+		25E011575C45F2BF62A8862D1A220AB0 /* UserInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoDTO.swift; sourceTree = "<group>"; };
 		8E02A86B7D30F86B51AD0216C52C36C5 /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
 		0F4C910FC72C2E0F539A9D10BAFA4CAE /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
 		CA31B97420560319140BB7B898F93730 /* VerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewModel.swift; sourceTree = "<group>"; };
@@ -551,6 +559,7 @@
 				E0EFAC1330160D066BBDBC7CA1C6F19D /* AuthPagesFactory.swift */,
 				A4DB861C5BCBEFCE67700BEE0D60BCF0 /* OnBoardingPagesFactory.swift */,
 				E724507D46F7D1DC68E60379AC2C0FE1 /* OrderHistoryPagesFactory.swift */,
+				346C8557EE2664DF8110DA85A12F4C3C /* ProfileChildCoordinatorsFactory.swift */,
 				8B8801A8C6297BF5F8678DB2E6090404 /* ProfilePagesFactory.swift */,
 			);
 			path = PagesFactory;
@@ -987,6 +996,7 @@
 				8234D90C809AE755270490D63E408B9C /* AuthService.swift */,
 				F7F254AE6752CFEF94722885B2637746 /* LocationService.swift */,
 				32EF3B2B1F6813FFA7E77104569E2780 /* OrdersService.swift */,
+				E607A9C883241211935E1461949E3CEC /* ProfileService.swift */,
 				7FF82D0A9964BEA60C7D9DEE5233BB05 /* RepositoryComponents.swift */,
 				B6B85CD93601FBD3B6385EE29192A493 /* ServiceComponents.swift */,
 			);
@@ -1180,6 +1190,7 @@
 				53B932081E904EA553B7866A42A818DD /* AuthPlugin.swift */,
 				CEED03B221B71F9A10CA3920C4D290B1 /* LocationAPI.swift */,
 				279FC54A126D15C7954B92E3DF29F784 /* OrdersAPI.swift */,
+				BC7E7FBAE98858C24FB42C2E4C456E1A /* ProfileAPI.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1218,6 +1229,7 @@
 			children = (
 				246956A66E668C97E9E7337CD50C8A95 /* AuthDTO.swift */,
 				802118FBF4A24829BFBCE852CB9865A8 /* OrderApplyDTO.swift */,
+				25E011575C45F2BF62A8862D1A220AB0 /* UserInfoDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -2022,9 +2034,12 @@
 				AD3EAD20E803C5804D4844DFB108010C /* OrdersAPI.swift in Sources */,
 				59B4E4974B53638E8FBDD30D108FBE62 /* OrdersResponses.swift in Sources */,
 				ED925A5EE40C372AC5A4774329D4C02A /* OrdersService.swift in Sources */,
+				0879609D3CDEA3CEE12D9D931FCC67E4 /* ProfileAPI.swift in Sources */,
+				0023E58F63C6BB362CCBDA45E29D096C /* ProfileChildCoordinatorsFactory.swift in Sources */,
 				974AE9BE8ACDD9A2039C9F9A06FBFF0E /* ProfileCoordinator.swift in Sources */,
 				76E6A231C962E12B0989804E3B33B490 /* ProfilePage.swift in Sources */,
 				1B9FF087AA2FF5E267FB605E0CB8F243 /* ProfilePagesFactory.swift in Sources */,
+				E8313910EBBD31D7EDDD0C4108C33256 /* ProfileService.swift in Sources */,
 				653D149B28F0F3BCDF06EAE8973AA426 /* ProfileTableItem.swift in Sources */,
 				2E6334869826621EAA9CE260BD3D6CE3 /* ProfileViewModel.swift in Sources */,
 				A26DAD8BD3AE115B3711AFA885725699 /* RateController.swift in Sources */,
@@ -2065,6 +2080,7 @@
 				B8E8F18212F6159EAB6B844CE37B070E /* UIView+Extension.swift in Sources */,
 				C7EA573E1B7947AC6844F19B0447B2D9 /* UIViewController+Extension.swift in Sources */,
 				F758B6D9AC73394B5515B206040856CD /* UpdateController.swift in Sources */,
+				AAC3A9E5D1EBD7740FFEA17E30234578 /* UserInfoDTO.swift in Sources */,
 				1A64DBDA3FDE3A5BA964DAE39D5AEE75 /* VerificationController.swift in Sources */,
 				12EC0118BE1AB33AB9362A27A9FEEEB0 /* VerificationView.swift in Sources */,
 				443E6F9C914F8AF9000B8D7AFF8F5427 /* VerificationViewModel.swift in Sources */,

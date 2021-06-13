@@ -12,16 +12,14 @@ import UIKit
 final class ProfileCoordinator: BaseCoordinator {
     private let disposeBag = DisposeBag()
 
-    private let pagesFactory: ProfilePagesFactory
-
-    private var addressListCoordinator: AddressListCoordinator?
-    private var orderCoordinator: OrderHistoryCoordinator?
-
     private(set) var router: Router
+    private let pagesFactory: ProfilePagesFactory
+    private let coordinatorsFactory: ProfileChildCoordinatorsFactory
 
-    init(router: Router, pagesFactory: ProfilePagesFactory) {
+    init(router: Router, pagesFactory: ProfilePagesFactory, coordinatorsFactory: ProfileChildCoordinatorsFactory) {
         self.router = router
         self.pagesFactory = pagesFactory
+        self.coordinatorsFactory = coordinatorsFactory
         router.set(navigationController: router.getNavigationController())
     }
 
@@ -60,24 +58,23 @@ final class ProfileCoordinator: BaseCoordinator {
     }
 
     private func showDeliveryAddressPage() {
-        addressListCoordinator = AddressListCoordinator(navigationController: router.getNavigationController(),
-                                                        pagesFactory: AddressListPagesFactoryImpl())
+        let addressListCoordinator = coordinatorsFactory.makeAddressListCoordinator()
+        add(addressListCoordinator)
 
-        addressListCoordinator?.didFinish = { [weak self] in
-            self?.addressListCoordinator = nil
+        addressListCoordinator.didFinish = { [weak self] in
+            self?.remove(addressListCoordinator)
         }
 
-        addressListCoordinator?.start()
+        addressListCoordinator.start()
     }
 
     private func showOrderHistoryPage() {
-        orderCoordinator = OrderHistoryCoordinator(navigationController: router.getNavigationController(),
-                                                   pagesFactory: OrderHistoryPagesFactoryImpl())
-
-        orderCoordinator?.didFinish = { [weak self] in
-            self?.orderCoordinator = nil
+        let orderHistoryCoordinator = coordinatorsFactory.makeOrderCoordinator()
+        add(orderHistoryCoordinator)
+        orderHistoryCoordinator.didFinish = { [weak self] in
+            self?.remove(orderHistoryCoordinator)
         }
 
-        orderCoordinator?.start()
+        orderHistoryCoordinator.start()
     }
 }

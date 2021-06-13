@@ -18,5 +18,11 @@ final class ProfileViewModelImpl: ProfileViewModel {
         .deliveryAddress,
     ]
 
-    init() {}
+    private let profileService: ProfileService
+    private let authService: AuthService
+
+    init(profileService: ProfileService, authService: AuthService) {
+        self.profileService = profileService
+        self.authService = authService
+    }
 }

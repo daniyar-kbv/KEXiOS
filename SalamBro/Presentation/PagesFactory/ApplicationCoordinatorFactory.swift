@@ -17,7 +17,7 @@ protocol ApplicationCoordinatorFactory: AnyObject {
 
 final class ApplicationCoordinatorFactoryImpl: DependencyFactory, ApplicationCoordinatorFactory {
     func makeMenuCoordinator() -> MenuCoordinator {
-        return scoped(.init(navigationController: UINavigationController(),
+        return shared(.init(navigationController: UINavigationController(),
                             tabType: .menu))
     }
 
@@ -31,12 +31,19 @@ final class ApplicationCoordinatorFactoryImpl: DependencyFactory, ApplicationCoo
     }
 
     func makeProfileCoordinator(serviceComponents: ServiceComponents) -> ProfileCoordinator {
-        return scoped(.init(router: MainRouter(),
-                            pagesFactory: makeProfilePagesFactory(serviceComponents: serviceComponents)))
+        let router = MainRouter()
+        return shared(.init(router: router,
+                            pagesFactory: makeProfilePagesFactory(serviceComponents: serviceComponents),
+                            coordinatorsFactory: makeProfileChildCoordinatorsFactory(serviceComponents: serviceComponents,
+                                                                                     router: router)))
     }
 
     private func makeProfilePagesFactory(serviceComponents: ServiceComponents) -> ProfilePagesFactory {
-        return scoped(ProfilePagesFactoryImpl(serviceComponents: serviceComponents))
+        return shared(ProfilePagesFactoryImpl(serviceComponents: serviceComponents))
+    }
+
+    private func makeProfileChildCoordinatorsFactory(serviceComponents: ServiceComponents, router: Router) -> ProfileChildCoordinatorsFactory {
+        return shared(ProfileChildCoordinatorsFactoryImpl(serviceComponents: serviceComponents, router: router))
     }
 
     func makeCartCoordinator() -> CartCoordinator {

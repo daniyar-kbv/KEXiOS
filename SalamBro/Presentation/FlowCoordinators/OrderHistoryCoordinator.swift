@@ -7,18 +7,18 @@
 
 import UIKit
 
-final class OrderHistoryCoordinator {
+final class OrderHistoryCoordinator: BaseCoordinator {
     var didFinish: (() -> Void)?
 
-    private let navigationController: UINavigationController
+    private let router: Router
     private let pagesFactory: OrderHistoryPagesFactory
 
-    init(navigationController: UINavigationController, pagesFactory: OrderHistoryPagesFactory) {
-        self.navigationController = navigationController
+    init(router: Router, pagesFactory: OrderHistoryPagesFactory) {
+        self.router = router
         self.pagesFactory = pagesFactory
     }
 
-    func start() {
+    override func start() {
         let orderHistoryPage = pagesFactory.makeOrderHistoryPage()
 
         orderHistoryPage.onRateTapped = { [weak self] in
@@ -34,16 +34,16 @@ final class OrderHistoryCoordinator {
         }
 
         orderHistoryPage.hidesBottomBarWhenPushed = true
-        navigationController.pushViewController(orderHistoryPage, animated: true)
+        router.push(viewController: orderHistoryPage, animated: true)
     }
 
     private func showRateOrderPage() {
         let rateOrderPage = pagesFactory.makeRateOrderPage()
-        navigationController.present(rateOrderPage, animated: true, completion: nil)
+        router.present(rateOrderPage, animated: true, completion: nil)
     }
 
     private func showShareOrderPage() {
         let shareOrderPage = pagesFactory.makeShareOrderPage()
-        navigationController.pushViewController(shareOrderPage, animated: true)
+        router.push(viewController: shareOrderPage, animated: true)
     }
 }
