@@ -8,7 +8,7 @@
 import Lottie
 import UIKit
 
-enum LottieAnimationModel {
+enum LottieAnimationModel: CaseIterable {
     case orderHistory
     case emptyBasket
     case noInternet
@@ -53,25 +53,31 @@ enum LottieAnimationModel {
         return title
     }
 
-    func getAnimationView() -> AnimationView {
-        let animationView = AnimationView()
+    func getAnimation() -> Animation {
+        var animation: Animation?
+
         switch self {
         case .orderHistory:
-            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+            animation = Animation.named("\(LottieAnimationModel.orderHistory)")
         case .emptyBasket:
-            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+            animation = Animation.named("\(LottieAnimationModel.emptyBasket)")
         case .noInternet:
-            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+            animation = Animation.named("\(LottieAnimationModel.noInternet)")
         case .upgrade:
-            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+            animation = Animation.named("\(LottieAnimationModel.upgrade)")
         case .overload:
-            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+            animation = Animation.named("\(LottieAnimationModel.overload)")
         case .payment:
-            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+            animation = Animation.named("\(LottieAnimationModel.payment)")
         case .profile:
-            animationView.animation = Animation.named("\(LottieAnimationModel.orderHistory)")
+            animation = Animation.named("\(LottieAnimationModel.profile)")
         }
-        return animationView
+
+        if let selectedAnimation = animation {
+            return selectedAnimation
+        } else {
+            return Animation.named("")!
+        }
     }
 
     // MARK: Change when actions are implemented, should send action types

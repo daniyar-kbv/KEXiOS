@@ -64,7 +64,7 @@ final class AnimationContainerView: UIView {
         actionButton.setTitle(type.getButtonTitle(), for: .normal)
         actionButton.addTarget(self, action: #selector(performAction), for: .touchUpInside)
 
-        lottieAnimationView = type.getAnimationView()
+        lottieAnimationView.animation = type.getAnimation()
     }
 
     private func setState(with style: LottieAnimationModel) {
@@ -105,11 +105,10 @@ final class AnimationContainerView: UIView {
     }
 
     @objc func performAction() {
-        switch currentAnimationType {
-        case .orderHistory, .emptyBasket, .noInternet, .upgrade, .overload, .payment, .profile:
-            delegate?.performAction()
-        default:
-            print("Selection Error")
+        for animation in LottieAnimationModel.allCases {
+            if currentAnimationType == animation {
+                delegate?.performAction()
+            }
         }
     }
 }
