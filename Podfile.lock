@@ -38,12 +38,12 @@ PODS:
   - SVProgressHUD (2.2.5)
   - SwiftGen (6.4.0)
   - Swinject (2.7.1)
-  - YandexMapKit (3.4):
-    - YandexRuntime (= 3.4)
-  - YandexMapKitSearch (3.4):
-    - YandexMapKit (= 3.4)
-    - YandexRuntime (= 3.4)
-  - YandexRuntime (3.4)
+  - YandexMapKit (3.5.0):
+    - YandexRuntime (= 3.5.0)
+  - YandexMapKitSearch (3.5.0):
+    - YandexMapKit (= 3.5.0)
+    - YandexRuntime (= 3.5.0)
+  - YandexRuntime (3.5.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -112,9 +112,9 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
-  YandexMapKit: f222923561fe159dd8480d927f61950fc5ff3b8d
-  YandexMapKitSearch: 9d658009a11ce4973e5b1c59aacb72c3f63c808a
-  YandexRuntime: 2547d72a3ce4757f16ad188cfbe8a124ae13d806
+  YandexMapKit: ecd4b78de34a35df63d066ac299e6fd0fe46d1ba
+  YandexMapKitSearch: b46ddd1c80e2e35d006cdfc4ab88070a50cebeda
+  YandexRuntime: 2d55244d06267106cf9b00c25a1e63f72a73b6fd
 
 PODFILE CHECKSUM: eedb5ccf90bf6d87756037d486bf7eee0cc4fce7
 
