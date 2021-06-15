@@ -17,7 +17,7 @@ class CartController: ViewController {
     var mainTabDelegate: MainTabDelegate?
     var cartViewModel: CartViewModel
 
-    private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
+    // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
 
     lazy var commentarySheetVC = CommentarySheetController()
 
@@ -257,7 +257,7 @@ extension CartController: CellDelegate {
             }
         }
         if cartViewModel.cart.totalProducts <= 0 {
-            view = emptyCartView
+            // view = emptyCartView
         }
         updateTableViewFooterUI(cart: cartViewModel.cart)
         orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
@@ -265,9 +265,9 @@ extension CartController: CellDelegate {
     }
 }
 
-extension CartController: AnimationContainerViewDelegate {
-    func performAction() {}
-}
+// extension CartController: AnimationContainerViewDelegate {
+//    func performAction() {}
+// }
 
 extension CartController: CartFooterDelegate {
     func openPromocode() {
