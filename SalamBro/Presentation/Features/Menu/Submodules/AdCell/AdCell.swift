@@ -6,6 +6,7 @@
 //
 
 import Reusable
+import Imaginary
 import RxCocoa
 import RxSwift
 import UIKit
@@ -19,7 +20,6 @@ final class AdCell: UICollectionViewCell, Reusable {
 
     private let adImageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "ad")
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 9
@@ -42,7 +42,12 @@ final class AdCell: UICollectionViewCell, Reusable {
         self.viewModel = viewModel
     }
 
-    private func bind() {}
+    private func bind() {
+        viewModel.promotionImageURL.bind(onNext: { [weak self] urlString in
+            guard let url = URL(string: urlString ?? "") else { return }
+            self?.adImageView.setImage(url: url)
+        }).disposed(by: disposeBag)
+    }
 
     private func setup() {
         setupViews()

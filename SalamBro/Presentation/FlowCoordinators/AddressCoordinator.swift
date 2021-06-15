@@ -107,10 +107,6 @@ final class AddressCoordinator {
         let nav = UINavigationController(rootViewController: brandsPage)
         present(vc: nav)
     }
-    
-    func finishFlow(completion: () -> Void) {
-        completion()
-    }
 }
 
 extension AddressCoordinator {

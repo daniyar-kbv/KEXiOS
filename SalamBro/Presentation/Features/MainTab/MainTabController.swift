@@ -13,10 +13,22 @@ protocol MainTabDelegate {
     func changeController(id: Int)
 }
 
-final class MainTabController: UITabBarController {
-    let coordinator = TabBarCoordinator(navigationController: UINavigationController())
+final class MainTabController: UITabBarController, LoaderDisplayable {
+    var serviceComponents: ServiceComponents
+    lazy var coordinator = TabBarCoordinator(serviceComponents: serviceComponents,
+                                             navigationController: UINavigationController())
     var itemCount: Int = 0
-
+    
+    init(serviceComponents: ServiceComponents) {
+        self.serviceComponents = serviceComponents
+        
+        super.init(nibName: .none, bundle: .none)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

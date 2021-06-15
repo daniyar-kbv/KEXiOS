@@ -43,7 +43,7 @@ final class AppCoordinator: Coordinator {
 
     private func startFirstFlow() {
         onBoardingCoordinator = OnBoardingCoordinator(navigationController: UINavigationController(),
-                                          pagesFactory: OnBoardingPagesFactoryImpl())
+                                          pagesFactory: OnBoardingPagesFactoryImpl(serviceComponents: serviceComponents))
         
         onBoardingCoordinator?.didFinish = { [weak self] in
             self?.onBoardingCoordinator = nil
@@ -54,7 +54,7 @@ final class AppCoordinator: Coordinator {
     }
 
     private func startMenu() {
-        let vc = MainTabController()
+        let vc = MainTabController(serviceComponents: serviceComponents)
         UIApplication.shared.setRootView(vc)
     }
 

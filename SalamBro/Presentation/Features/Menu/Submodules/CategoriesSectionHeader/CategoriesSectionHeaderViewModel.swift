@@ -16,7 +16,7 @@ protocol CategoriesSectionHeaderViewModelProtocol: ViewModel {
 final class CategoriesSectionHeaderViewModel: CategoriesSectionHeaderViewModelProtocol {
     var cellViewModels: [CategoryCellViewModelProtocol]
 
-    init(categories: [FoodTypeUI]) {
+    init(categories: [OrderProductResponse.Category]) {
         cellViewModels = categories.map { CategoryCellViewModel(category: $0) }
     }
 }

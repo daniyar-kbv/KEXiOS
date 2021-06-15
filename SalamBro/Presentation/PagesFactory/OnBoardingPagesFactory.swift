@@ -15,6 +15,12 @@ protocol OnBoadingPagesFactory: AnyObject {
 }
 
 final class OnBoardingPagesFactoryImpl: OnBoadingPagesFactory {
+    private var serviceComponents: ServiceComponents
+    
+    init(serviceComponents: ServiceComponents) {
+        self.serviceComponents = serviceComponents
+    }
+    
     func makeCountriesPage() -> CountriesListController {
         return .init(viewModel: makeCountriesViewModel())
     }
@@ -51,11 +57,20 @@ final class OnBoardingPagesFactoryImpl: OnBoadingPagesFactory {
     }
     
     private func makeMapViewModel() -> MapViewModel {
-        return .init(flow: .creation)
+        return .init(ordersService: getOrdersService(),
+                     locationRepository: getLocationRepository(),
+                     brandRepository: getBrandRepository(),
+                     flow: .creation)
     }
 }
 
+//  Tech debt: change to compoenents
+
 extension OnBoardingPagesFactoryImpl {
+    func getOrdersService() -> OrdersService {
+        return serviceComponents.ordersService()
+    }
+    
     func getLocationService() -> LocationService {
         return DIResolver.resolve(LocationService.self)!
     }

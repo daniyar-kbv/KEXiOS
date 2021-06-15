@@ -11,7 +11,9 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class MenuController: ViewController {
+final class MenuController: ViewController, AlertDisplayable {
+    let outputs = Output()
+    
     private let viewModel: MenuViewModelProtocol
     private let disposeBag = DisposeBag()
     var scrollService: MenuScrollService
@@ -97,6 +99,12 @@ final class MenuController: ViewController {
         viewModel.brandName
             .bind(to: brandLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                guard let error = error else { return}
+                self?.showError(error)
+        }).disposed(by: disposeBag)
     }
 
     func bindScrollService() {
@@ -160,7 +168,9 @@ final class MenuController: ViewController {
     }
 
     @objc private func handleChangeBrandButtonAction(_: UIButton) {
-        viewModel.selectMainInfo()
+        outputs.toChangeBrand.accept() { [weak self] in
+            self?.viewModel.update()
+        }
     }
 }
 
@@ -169,11 +179,15 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
         case _ as MenuCellViewModel:
-            viewModel.coordinator.openDetail()
+//            TODO: change to real id
+            outputs.toPositionDetail.accept("test")
         case _ as AddressPickCellViewModel:
-            viewModel.selectAddress()
+            outputs.toAddressess.accept { [weak self] in
+                self?.viewModel.update()
+            }
         case _ as AdCollectionCellViewModel:
-            goToRating()
+//            TODO: change to real id
+            outputs.toPromotion.accept("test")
         default:
             print("other")
         }
@@ -262,6 +276,15 @@ extension MenuController: UIScrollViewDelegate {
 extension MenuController: AddCollectionCellDelegate {
 //    TODO: change to coordinator
     public func goToRating() {
-        viewModel.coordinator.openRating()
+//        outputs.toPromotion.accept(view)
+    }
+}
+
+extension MenuController {
+    struct Output {
+        let toPromotion = PublishRelay<String>()
+        let toChangeBrand = PublishRelay<() -> Void>()
+        let toAddressess = PublishRelay<() -> Void>()
+        let toPositionDetail = PublishRelay<String>()
     }
 }

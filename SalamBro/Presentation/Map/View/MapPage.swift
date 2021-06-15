@@ -127,6 +127,11 @@ extension MapPage {
                                                commentary: self?.mapAddressView.commentaryTextField.text))
             })
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            }).disposed(by: disposeBag)
     }
 
     private func bindViews() {

@@ -23,6 +23,8 @@ final class AddressListPagesFactoryImpl: AddressListPagesFactory {
     }
 }
 
+//  Tech debt: change to components
+
 extension AddressListPagesFactoryImpl {
     private func getLoactionRepository() -> LocationRepository {
         return DIResolver.resolve(LocationRepository.self)!

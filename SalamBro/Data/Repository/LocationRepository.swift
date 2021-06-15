@@ -26,7 +26,7 @@ protocol LocationRepository: AnyObject {
     func getDeliveryAddresses() -> [DeliveryAddress]?
     func setDeliveryAddressses(deliveryAddresses: [DeliveryAddress])
     func getCurrentDeliveryAddress() -> DeliveryAddress?
-    func setCurrentDeliveryAddress(deliveryAddress: DeliveryAddress)
+    func setCurrentDeliveryAddress(deliveryAddress: DeliveryAddress?)
     func deleteDeliveryAddress(deliveryAddress: DeliveryAddress)
     func addDeliveryAddress(deliveryAddress: DeliveryAddress)
 }
@@ -139,16 +139,19 @@ extension LocationRepositoryImpl {
         return storage.deliveryAddresses?[index]
     }
     
-    func setCurrentDeliveryAddress(deliveryAddress: DeliveryAddress) {
+    func setCurrentDeliveryAddress(deliveryAddress: DeliveryAddress?) {
         storage.currentDeliveryAddressIndex = storage.deliveryAddresses?.firstIndex(where: { $0 == deliveryAddress })
     }
     
     func deleteDeliveryAddress(deliveryAddress: DeliveryAddress) {
-        storage.deliveryAddresses?.removeAll(where: { $0 == deliveryAddress })
+        var wasCurrent = false
         if let index = storage.currentDeliveryAddressIndex,
-           let first = storage.deliveryAddresses?.first,
            storage.deliveryAddresses?[index] == deliveryAddress {
-            setCurrentDeliveryAddress(deliveryAddress: first)
+            wasCurrent = true
+        }
+        storage.deliveryAddresses?.removeAll(where: { $0 == deliveryAddress })
+        if wasCurrent {
+            setCurrentDeliveryAddress(deliveryAddress: storage.deliveryAddresses?.first)
         }
     }
         

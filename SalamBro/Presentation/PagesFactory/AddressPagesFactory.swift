@@ -15,6 +15,12 @@ protocol AddressPagesFactory {
 }
 
 final class AddressPagesFactoryImpl: AddressPagesFactory {
+    private var serviceComponents: ServiceComponents
+    
+    init(serviceComponents: ServiceComponents) {
+        self.serviceComponents = serviceComponents
+    }
+    
     func makeAddressPickPage() -> AddressPickController {
         return .init(viewModel: makeAddressPickViewModel())
     }
@@ -39,7 +45,11 @@ final class AddressPagesFactoryImpl: AddressPagesFactory {
     }
     
     private func makeMapViewModel(address: Address?) -> MapViewModel {
-        return .init(flow: .change, address: address)
+        return .init(ordersService: serviceComponents.ordersService(),
+                     locationRepository: getLocationRepository(),
+                     brandRepository: getBrandRepository(),
+                     flow: .change,
+                     address: address)
     }
     
     func makeBrandsPage(cityId: Int) -> BrandsController {
@@ -54,6 +64,8 @@ final class AddressPagesFactoryImpl: AddressPagesFactory {
                      cityId: cityId)
     }
 }
+
+//  Tech debt: change to components
 
 extension AddressPagesFactoryImpl {
     private func getLocationRepository() -> LocationRepository {

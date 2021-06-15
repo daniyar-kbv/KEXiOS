@@ -15,27 +15,36 @@ final class MenuCoordinator: TabCoordinator {
     weak var childNavigationController: UINavigationController!
     var tabType: TabBarCoordinator.TabType
     
-    var addressCoordinator: AddressCoordinator?
+    private var serviceComponents: ServiceComponents
+    private var pagesFactory: MenuPagesFactory
+    
+    private var addressCoordinator: AddressCoordinator?
+    private var promotionsCoordinator: PromotionsCoordinator?
 
-    init(navigationController: UINavigationController, tabType: TabBarCoordinator.TabType) {
+    init(serviceComponents: ServiceComponents,
+         pagesFactory: MenuPagesFactory,
+         navigationController: UINavigationController,
+         tabType: TabBarCoordinator.TabType) {
+        self.serviceComponents = serviceComponents
+        self.pagesFactory = pagesFactory
+        
         self.navigationController = navigationController
         self.tabType = tabType
     }
 
     func start() {
-        let viewModel = MenuViewModel(coordinator: self,
-                                      menuRepository: DIResolver.resolve(MenuRepository.self)!,
-                                      locationRepository: DIResolver.resolve(LocationRepository.self)!,
-                                      brandRepository: DIResolver.resolve(BrandRepository.self)!)
-        let vc = MenuController(viewModel: viewModel, scrollService: MenuScrollService())
+        let menuPage = pagesFactory.makeManuPage()
+        
         childNavigationController = templateNavigationController(title: tabType.title,
                                                                  image: tabType.image,
-                                                                 rootViewController: vc)
+                                                                 rootViewController: menuPage)
     }
 
+//    Tech debt: move to pages factory
+    
     func openSelectMainInfo(didSave: (() -> Void)? = nil) {
         addressCoordinator = AddressCoordinator(navigationController: childNavigationController,
-                                       pagesFactory: AddressPagesFactoryImpl(),
+                                       pagesFactory: AddressPagesFactoryImpl(serviceComponents: serviceComponents),
                                        flowType: .changeBrand(didSave: didSave))
         
         addressCoordinator?.didFinish = { [weak self] in
@@ -44,10 +53,12 @@ final class MenuCoordinator: TabCoordinator {
         
         addressCoordinator?.start()
     }
+    
+//    Tech debt: move to pages factory
 
     func openChangeAddress(didSelectAddress: (() -> Void)? = nil) {
         addressCoordinator = AddressCoordinator(navigationController: childNavigationController,
-                                       pagesFactory: AddressPagesFactoryImpl(),
+                                       pagesFactory: AddressPagesFactoryImpl(serviceComponents: serviceComponents),
                                        flowType: .changeAddress(didSelectAddress: didSelectAddress))
         
         addressCoordinator?.didFinish = { [weak self] in
@@ -57,10 +68,15 @@ final class MenuCoordinator: TabCoordinator {
         addressCoordinator?.start()
     }
 
-    func openRating() {
-        let child = RatingCoordinator(navigationController: childNavigationController)
-        addChild(child)
-        child.start()
+    private func openPromotion(promotionURL: URL, infoURL: URL) {
+        let child = PromotionsCoordinator(navigationController: childNavigationController,
+                                          pagesFactory: PromotionsPagesFactoryImpl())
+        
+        child.didFinish = { [weak self] in
+            self?.promotionsCoordinator = nil
+        }
+
+        child.start(promotionURL: promotionURL, infoURL: infoURL)
     }
 
     func openDetail() {

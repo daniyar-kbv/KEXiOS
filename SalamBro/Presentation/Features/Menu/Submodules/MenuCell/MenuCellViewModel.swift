@@ -10,22 +10,24 @@ import RxCocoa
 import RxSwift
 
 protocol MenuCellViewModelProtocol: ViewModel {
-    var categoryPosition: Int { get }
+    var position: OrderProductResponse.Position { get }
     var itemTitle: BehaviorRelay<String?> { get }
     var itemDescription: BehaviorRelay<String?> { get }
     var itemPrice: BehaviorRelay<String?> { get }
 }
 
 final class MenuCellViewModel: MenuCellViewModelProtocol {
-    var categoryPosition: Int
-    var itemTitle: BehaviorRelay<String?>
-    var itemDescription: BehaviorRelay<String?>
-    var itemPrice: BehaviorRelay<String?>
+    let position: OrderProductResponse.Position
+    
+    let itemTitle: BehaviorRelay<String?>
+    let itemDescription: BehaviorRelay<String?>
+    let itemPrice: BehaviorRelay<String?>
 
-    init(categoryPosition: Int, food: FoodUI) {
-        self.categoryPosition = categoryPosition
-        itemTitle = .init(value: food.title)
-        itemDescription = .init(value: food.description)
-        itemPrice = .init(value: "\(food.price) ₸") // здесь надо юзать локализацию
+    init(position: OrderProductResponse.Position) {
+        self.position = position
+        
+        itemTitle = .init(value: position.name)
+        itemDescription = .init(value: position.description)
+        itemPrice = .init(value: "\(position.price) ₸") // здесь надо юзать локализацию
     }
 }

@@ -10,16 +10,18 @@ import RxCocoa
 import RxSwift
 
 protocol CategoryCellViewModelProtocol: ViewModel {
+    var category: OrderProductResponse.Category { get }
     var categoryTitle: BehaviorRelay<String?> { get }
-    var categoryPosition: Int { get }
 }
 
 final class CategoryCellViewModel: CategoryCellViewModelProtocol {
+    let category: OrderProductResponse.Category
+    
     var categoryTitle: BehaviorRelay<String?>
-    var categoryPosition: Int
 
-    init(category: FoodTypeUI) {
-        categoryPosition = .init(category.position)
-        categoryTitle = .init(value: category.title)
+    init(category: OrderProductResponse.Category) {
+        self.category = category
+        
+        categoryTitle = .init(value: category.name)
     }
 }

@@ -136,6 +136,7 @@ class RatingController: ViewController {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
+        
         navigationItem.title = L10n.Rating.title
         navigationItem.rightBarButtonItem = .init(customView: infoButton)
     }

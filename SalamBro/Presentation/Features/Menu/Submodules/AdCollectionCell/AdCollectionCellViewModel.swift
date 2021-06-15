@@ -16,7 +16,7 @@ protocol AdCollectionCellViewModelProtocol: ViewModel {
 final class AdCollectionCellViewModel: AdCollectionCellViewModelProtocol {
     var cellViewModels: [AdCellViewModelProtocol]
 
-    init(ads: [AdUI]) {
+    init(ads: [PromotionsResponse.ResponseData.Promotion]) {
         cellViewModels = ads.map { AdCellViewModel(ad: $0) }
     }
 }

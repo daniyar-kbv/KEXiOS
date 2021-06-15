@@ -11,10 +11,12 @@ import UIKit
 final class TabBarCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
+    private var serviceComponents: ServiceComponents
     var navigationController: UINavigationController
-    var tabTypes = TabType.allCases
+    lazy var tabTypes: [TabType] = [.menu(serviceComponents: serviceComponents), .profile, .support, .cart]
 
-    init(navigationController: UINavigationController) {
+    init(serviceComponents: ServiceComponents, navigationController: UINavigationController) {
+        self.serviceComponents = serviceComponents
         self.navigationController = navigationController
     }
 
@@ -36,8 +38,8 @@ final class TabBarCoordinator: Coordinator {
 
     func didFinish() {}
 
-    enum TabType: CaseIterable {
-        case menu
+    enum TabType: Equatable {
+        case menu(serviceComponents: ServiceComponents)
         case profile
         case support
         case cart
@@ -70,8 +72,10 @@ final class TabBarCoordinator: Coordinator {
 
         var coordinator: TabCoordinator {
             switch self {
-            case .menu:
-                return MenuCoordinator(navigationController: UINavigationController(), tabType: self)
+            case let .menu(serviceComponents):
+                return MenuCoordinator(serviceComponents: serviceComponents,
+                                       navigationController: UINavigationController(),
+                                       tabType: self)
             case .profile:
                 return ProfileCoordinator(navigationController: UINavigationController(), tabType: self)
             case .support:
@@ -79,6 +83,10 @@ final class TabBarCoordinator: Coordinator {
             case .cart:
                 return CartCoordinator(navigationController: UINavigationController(), tabType: self)
             }
+        }
+        
+        static func == (lhs: TabBarCoordinator.TabType, rhs: TabBarCoordinator.TabType) -> Bool {
+            return lhs.title == rhs.title
         }
     }
 }
