@@ -44,9 +44,9 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
         checkInputs()
     }
 
-    func changeAddress(completion: @escaping () -> Void) {
+    func changeAddress(completion _: @escaping () -> Void) {
 //        Tech debt: fix or remove this class
-        
+
 //        coordinator.alert(title: "Успешно", message: "Адрес изменен") {
 //            completion()
 //        }
@@ -161,7 +161,7 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
 
     func didFinish() {
 //        Texh debt: fix or remove class
-        
+
 //        coordinator.didFinish()
     }
 

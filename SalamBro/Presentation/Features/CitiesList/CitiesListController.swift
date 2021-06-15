@@ -25,6 +25,7 @@ final class CitiesListController: ViewController, AlertDisplayable {
         view.delegate = self
         view.dataSource = self
         view.refreshControl = refreshControl
+        view.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 24, right: 0)
         return view
     }()
 
@@ -68,12 +69,12 @@ extension CitiesListController {
         viewModel.outputs.didGetCities
             .bind(to: tableView.rx.reload)
             .disposed(by: disposeBag)
-        
+
         viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
             guard let error = error else { return }
             self?.showError(error)
         }).disposed(by: disposeBag)
-        
+
         viewModel.outputs.didSelectCity.subscribe(onNext: { [weak self] cityId in
             self?.outputs.didSelectCity.accept(cityId)
         }).disposed(by: disposeBag)
@@ -91,7 +92,7 @@ extension CitiesListController {
 
     private func setupConstraints() {
         tableView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(14)
+            $0.top.equalTo(view.snp.topMargin)
             $0.left.right.bottom.equalToSuperview()
         }
     }

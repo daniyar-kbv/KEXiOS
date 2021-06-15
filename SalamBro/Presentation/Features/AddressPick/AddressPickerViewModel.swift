@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 protocol AddressPickerViewModelProtocol: ViewModel {
     var cellViewModels: [AddressPickerCellViewModelProtocol] { get }
@@ -20,7 +20,7 @@ final class AddressPickerViewModel: AddressPickerViewModelProtocol {
     private let locationRepository: LocationRepository
     public var cellViewModels: [AddressPickerCellViewModelProtocol] = []
     private var addresses: [DeliveryAddress] = []
-    
+
     let outputs = Output()
 
     public func didSelect(index: Int) {
@@ -31,10 +31,10 @@ final class AddressPickerViewModel: AddressPickerViewModelProtocol {
 
     init(locationRepository: LocationRepository) {
         self.locationRepository = locationRepository
-        
+
         reload()
     }
-    
+
     func reload() {
         addresses = locationRepository.getDeliveryAddresses() ?? []
         cellViewModels = addresses.map {

@@ -20,9 +20,9 @@ public final class AddressPickerCell: UITableViewCell, Reusable {
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         disposeBag = DisposeBag()
-        
+
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         setup()
     }
 

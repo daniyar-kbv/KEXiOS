@@ -16,7 +16,7 @@ final class AddressListPagesFactoryImpl: AddressListPagesFactory {
     func makeAddressListPage() -> AddressListController {
         return .init(locationRepository: getLoactionRepository())
     }
-    
+
     func makeAddressDetailPage(deliveryAddress: DeliveryAddress) -> AddressDetailController {
         return .init(deliveryAddress: deliveryAddress,
                      locationRepository: getLoactionRepository())

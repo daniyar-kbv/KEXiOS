@@ -14,7 +14,7 @@ final class ProfileCoordinator: TabCoordinator {
     var navigationController: UINavigationController
     weak var childNavigationController: UINavigationController!
     var tabType: TabBarCoordinator.TabType
-    
+
     private var addressListCoordinator: AddressListCoordinator?
 
     init(navigationController: UINavigationController, tabType: TabBarCoordinator.TabType) {
@@ -43,12 +43,12 @@ final class ProfileCoordinator: TabCoordinator {
 
     func openAddressList() {
         addressListCoordinator = AddressListCoordinator(navigationController: childNavigationController,
-                                           pagesFactory: AddressListPagesFactoryImpl())
-        
+                                                        pagesFactory: AddressListPagesFactoryImpl())
+
         addressListCoordinator?.didFinish = { [weak self] in
             self?.addressListCoordinator = nil
         }
-        
+
         addressListCoordinator?.start()
     }
 
