@@ -26,6 +26,7 @@ final class CountriesListController: ViewController, AlertDisplayable {
         view.dataSource = self
         view.refreshControl = refreshControl
         view.addTableHeaderViewLine()
+        view.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 24, right: 0)
         return view
     }()
 
@@ -86,7 +87,6 @@ final class CountriesListController: ViewController, AlertDisplayable {
     }
 
     private func setupConstraints() {
-        countriesTableView.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 24, right: 0)
         countriesTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.left.equalToSuperview()

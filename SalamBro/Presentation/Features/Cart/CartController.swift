@@ -11,6 +11,8 @@ protocol CartViewDelegate {
     func proceed()
 }
 
+// MARK: Tech Debt - rewrite ui implementation
+
 class CartController: ViewController {
     var mainTabDelegate: MainTabDelegate?
     var cartViewModel: CartViewModel

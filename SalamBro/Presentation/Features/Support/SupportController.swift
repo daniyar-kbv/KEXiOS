@@ -23,6 +23,7 @@ class SupportController: ViewController {
         view.delegate = self
         view.dataSource = self
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        view.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
         return view
     }()
 
@@ -116,7 +117,6 @@ class SupportController: ViewController {
     }
 
     func setupConstraints() {
-        tableView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
         tableView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
             $0.left.equalToSuperview()

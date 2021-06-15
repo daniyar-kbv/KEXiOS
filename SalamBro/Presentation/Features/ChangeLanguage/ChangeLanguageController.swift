@@ -19,6 +19,7 @@ class ChangeLanguageController: ViewController {
         table.dataSource = self
         table.delegate = self
         table.addTableHeaderViewLine()
+        table.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
         return table
     }()
 
@@ -45,7 +46,6 @@ class ChangeLanguageController: ViewController {
     }
 
     fileprivate func setupConstraints() {
-        countriesTableView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
         countriesTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.left.right.bottom.equalToSuperview()

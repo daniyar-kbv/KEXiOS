@@ -27,6 +27,7 @@ final class AddressListController: ViewController {
         tv.dataSource = self
         tv.allowsMultipleSelection = false
         tv.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        tv.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 24, right: 0)
         tv.separatorInsetReference = .fromCellEdges
         tv.separatorStyle = .singleLine
         return tv
@@ -57,7 +58,6 @@ final class AddressListController: ViewController {
     private func layoutUI() {
         view.backgroundColor = .white
         view.addSubview(citiesTableView)
-        citiesTableView.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 24, right: 0)
         citiesTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.equalToSuperview()

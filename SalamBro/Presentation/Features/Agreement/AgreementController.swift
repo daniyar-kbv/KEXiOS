@@ -22,6 +22,8 @@ final class AgreementController: UIViewController {
         configureWebView()
     }
 
+    // MARK: - Tech Debt: change
+
     private func layoutUI() {
         navigationItem.title = L10n.Rating.information
         navigationController?.navigationBar.topItem?.title = ""

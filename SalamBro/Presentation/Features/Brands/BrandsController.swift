@@ -35,6 +35,7 @@ final class BrandsController: ViewController, AlertDisplayable {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.refreshControl = refreshControl
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         return collectionView
     }()
 
@@ -56,7 +57,7 @@ final class BrandsController: ViewController, AlertDisplayable {
         viewModel.getBrands()
     }
 
-    // MARK: Tech Debt - Need to implement swipe in iOS versions <= 12.0
+    // MARK: Tech Debt - Need to configure separate navbar implementation
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -101,7 +102,6 @@ final class BrandsController: ViewController, AlertDisplayable {
     }
 
     private func setupConstraints() {
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         collectionView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
@@ -114,6 +114,8 @@ final class BrandsController: ViewController, AlertDisplayable {
         viewModel.refreshBrands()
         refreshControl.endRefreshing()
     }
+
+    // MARK: Tech Debt - When Router is configured, send event of closing to Outputs
 
     @objc func goBack() {
         if navigationController?.presentingViewController != nil {
