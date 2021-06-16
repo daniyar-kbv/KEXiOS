@@ -22,8 +22,8 @@ extension AuthAPI: TargetType {
     var path: String {
         switch self {
         case .sendOTP: return "auth/register/"
-        case .verifyOTP: return "auth/otp_verify/"
-        case .resendOTP: return "auth/otp_resend/"
+        case .verifyOTP: return "auth/otp-verify/"
+        case .resendOTP: return "auth/otp-resend/"
         case .refreshToken: return "auth/refresh/"
         }
     }

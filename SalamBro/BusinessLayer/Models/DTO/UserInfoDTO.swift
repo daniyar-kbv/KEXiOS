@@ -8,9 +8,9 @@
 import Foundation
 
 struct UserInfoDTO: Encodable {
-    var name: String
-    var email: String
-    var mobilePhone: String
+    var name: String?
+    var email: String?
+    var mobilePhone: String?
 
     enum CodingKeys: String, CodingKey {
         case name, email
@@ -19,17 +19,14 @@ struct UserInfoDTO: Encodable {
 }
 
 struct UserInfoResponseContainer: Codable {
-    let count: Int?
-    let next: String?
-    let previous: String?
-
-    let results: [UserInfoResponse]
+    let data: UserInfoResponse
+    let error: ErrorResponse?
 }
 
 struct UserInfoResponse: Codable {
-    let name: String
-    let email: String
-    let mobilePhone: String
+    let name: String?
+    let email: String?
+    let mobilePhone: String?
 
     enum CodingKeys: String, CodingKey {
         case name, email

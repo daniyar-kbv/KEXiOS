@@ -27,8 +27,10 @@ final class ProfileCoordinator: BaseCoordinator {
         let profilePage = pagesFactory.makeProfilePage()
 
         profilePage.outputs.onChangeUserInfo
-            .subscribe(onNext: { [weak self] in
-                self?.showChangeUserInfoPage()
+            .subscribe(onNext: { [weak self] userInfo in
+                self?.showChangeUserInfoPage(userInfo: userInfo, completion: { newUserInfo in
+                    profilePage.updateViews(with: newUserInfo)
+                })
             })
             .disposed(by: disposeBag)
 
@@ -45,9 +47,16 @@ final class ProfileCoordinator: BaseCoordinator {
         router.push(viewController: profilePage, animated: true)
     }
 
-    private func showChangeUserInfoPage() {
-        let changeUserInfoPage = pagesFactory.makeChangeUserInfoPage()
+    private func showChangeUserInfoPage(userInfo: UserInfoResponse, completion: ((UserInfoResponse) -> Void)?) {
+        let changeUserInfoPage = pagesFactory.makeChangeUserInfoPage(userInfo: userInfo)
         changeUserInfoPage.hidesBottomBarWhenPushed = true
+
+        changeUserInfoPage.outputs.didGetUserInfo
+            .subscribe(onNext: { newUserInfo in
+                completion?(newUserInfo)
+            })
+            .disposed(by: disposeBag)
+
         router.push(viewController: changeUserInfoPage, animated: true)
     }
 

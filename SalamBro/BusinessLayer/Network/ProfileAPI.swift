@@ -20,7 +20,7 @@ extension ProfileAPI: TargetType {
     var path: String {
         switch self {
         case .getUserInfo: return "users/account-info/"
-        case .editUserInfo: return "users/account-update"
+        case .editUserInfo: return "users/account-update/"
         }
     }
 

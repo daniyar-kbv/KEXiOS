@@ -13,6 +13,7 @@ protocol ProfileViewModel: AnyObject {
     var tableItems: [ProfileTableItem] { get }
     var outputs: ProfileViewModelImpl.Output { get }
     func getUserInfo()
+    var userInfo: UserInfoResponse? { get }
 }
 
 final class ProfileViewModelImpl: ProfileViewModel {
@@ -24,6 +25,7 @@ final class ProfileViewModelImpl: ProfileViewModel {
     ]
 
     private(set) var outputs: Output = .init()
+    private(set) var userInfo: UserInfoResponse?
 
     private let profileService: ProfileService
     private let authService: AuthService
@@ -38,6 +40,7 @@ final class ProfileViewModelImpl: ProfileViewModel {
         profileService.getUserInfo()
             .subscribe(onSuccess: { [weak self] userResponse in
                 self?.outputs.didEndRequest.accept(())
+                self?.userInfo = userResponse
                 self?.outputs.didGetUserInfo.accept(userResponse)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())

@@ -29,13 +29,16 @@ final class ProfileServiceMoyaImpl: ProfileService {
             .request(.getUserInfo)
             .map { response in
                 guard
-                    let userInfoContainerResponse = try? response.map(UserInfoResponseContainer.self),
-                    let userInfo = userInfoContainerResponse.results.first
+                    let userInfoContainerResponse = try? response.map(UserInfoResponseContainer.self)
                 else {
                     throw NetworkError.badMapping
                 }
 
-                return userInfo
+                if let error = userInfoContainerResponse.error {
+                    throw error
+                }
+
+                return userInfoContainerResponse.data
             }
     }
 
@@ -43,11 +46,15 @@ final class ProfileServiceMoyaImpl: ProfileService {
         return provider.rx
             .request(.editUserInfo(dto: dto))
             .map { response in
-                guard let userInfoResponse = try? response.map(UserInfoResponse.self) else {
+                guard let userInfoResponse = try? response.map(UserInfoResponseContainer.self) else {
                     throw NetworkError.badMapping
                 }
 
-                return userInfoResponse
+                if let error = userInfoResponse.error {
+                    throw error
+                }
+
+                return userInfoResponse.data
             }
     }
 }

@@ -16,7 +16,6 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
     private let phoneTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "+7 (702) 000 00 00"
         label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.textColor = .mildBlue
         return label
@@ -24,7 +23,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = DefaultStorageImpl.sharedStorage.userName ?? "Test"
+        label.text = DefaultStorageImpl.sharedStorage.userName ?? ""
         label.font = .systemFont(ofSize: 32, weight: .semibold)
         label.textAlignment = .left
         return label
@@ -32,7 +31,6 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
     private let emailLabel: UILabel = {
         let label = UILabel()
-        label.text = "alibek_777@gmail.com"
         label.font = .systemFont(ofSize: 12)
         label.textAlignment = .left
         return label
@@ -104,7 +102,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         bindViews()
         bindViewModel()
 
-//        viewModel.getUserInfo()
+        viewModel.getUserInfo()
     }
 
     private func bindViews() {
@@ -113,8 +111,8 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
         changeNameButton.rx.tap
             .bind { [weak self] in
-                self?.viewModel.getUserInfo()
-//                self?.outputs.onChangeUserInfo.accept(())
+                guard let userInfo = self?.viewModel.userInfo else { return }
+                self?.outputs.onChangeUserInfo.accept(userInfo)
             }
             .disposed(by: disposeBag)
 
@@ -143,6 +141,18 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
                 self?.showError(error)
             })
             .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetUserInfo
+            .subscribe(onNext: { [weak self] userInfo in
+                self?.updateViews(with: userInfo)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    func updateViews(with model: UserInfoResponse) {
+        phoneTitleLabel.text = model.mobilePhone
+        nameLabel.text = model.name
+        emailLabel.text = model.email
     }
 
     private func layoutUI() {
@@ -218,7 +228,7 @@ extension ProfilePage: UITableViewDelegate, UITableViewDataSource {
 
 extension ProfilePage {
     struct Output {
-        let onChangeUserInfo = PublishRelay<Void>()
+        let onChangeUserInfo = PublishRelay<UserInfoResponse>()
         let onTableItemPressed = PublishRelay<ProfileTableItem>()
         let onLogout = PublishRelay<Void>()
     }
