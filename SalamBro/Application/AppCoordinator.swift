@@ -12,7 +12,7 @@ final class AppCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
-    
+
     private var onBoardingCoordinator: OnBoardingCoordinator?
 
     private let locationRepository: LocationRepository
@@ -49,7 +49,7 @@ final class AppCoordinator: Coordinator {
             self?.onBoardingCoordinator = nil
             self?.start()
         }
-        
+
         onBoardingCoordinator?.start()
     }
 

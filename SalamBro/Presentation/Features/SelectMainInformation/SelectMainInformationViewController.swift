@@ -13,7 +13,7 @@ import UIKit
 final class SelectMainInformationViewController: ViewController {
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
-    
+
     let outputs = Output()
 
     private lazy var countryTextField: DropDownTextField = {
@@ -43,14 +43,14 @@ final class SelectMainInformationViewController: ViewController {
         view.currentValue = viewModel.deliveryAddress?.address?.name
         return view
     }()
-    
+
     private lazy var brandsTextField: DropDownTextField = {
         let view = DropDownTextField(type: .brand)
         view.selectionAction = { [weak self] in
             guard let cityid = self?.viewModel.deliveryAddress?.city?.id else { return }
             self?.outputs.toBrands.accept((cityid,
                                            { [weak self] brand in
-                                            self?.viewModel.didChange(brand: brand)
+                                               self?.viewModel.didChange(brand: brand)
                                            }))
         }
         view.delegate = self
@@ -85,9 +85,9 @@ final class SelectMainInformationViewController: ViewController {
 
     init(viewModel: SelectMainInformationViewModelProtocol) {
         self.viewModel = viewModel
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         setup()
         bind()
 
@@ -102,25 +102,25 @@ final class SelectMainInformationViewController: ViewController {
 
     private func bind() {
         viewModel.outputs.didGetCountries.subscribe(onNext: { [weak self] in
-            self?.countryTextField.dataSource = self?.viewModel.countries.map({ $0.name }) ?? []
+            self?.countryTextField.dataSource = self?.viewModel.countries.map { $0.name } ?? []
         }).disposed(by: disposeBag)
-        
+
         viewModel.outputs.didGetCities.subscribe(onNext: { [weak self] in
-            self?.citiesTextField.dataSource = self?.viewModel.cities.map({ $0.name }) ?? []
+            self?.citiesTextField.dataSource = self?.viewModel.cities.map { $0.name } ?? []
         }).disposed(by: disposeBag)
-        
+
         viewModel.outputs.didSelectCountry.bind { [unowned self] cityName in
             self.countryTextField.currentValue = cityName
             self.citiesTextField.currentValue = nil
             self.addressTextField.currentValue = nil
             self.brandsTextField.currentValue = nil
-            
+
             self.citiesTextField.isActive = true
         }.disposed(by: disposeBag)
 
         viewModel.outputs.didSelectCity.bind { [unowned self] cityName in
             self.citiesTextField.currentValue = cityName
-            
+
             self.addressTextField.isActive = cityName != nil
             self.brandsTextField.isActive = cityName != nil
         }.disposed(by: disposeBag)
@@ -136,18 +136,18 @@ final class SelectMainInformationViewController: ViewController {
         viewModel.outputs.didSave.subscribe(onNext: { [weak self] in
             self?.outputs.didSave.accept(())
         }).disposed(by: disposeBag)
-        
+
         viewModel.outputs.checkResult.subscribe(onNext: { [weak self] isComplete in
             self?.changeSaveButtonState(isActive: isComplete)
         }).disposed(by: disposeBag)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         navigationItem.title = L10n.SelectMainInfo.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(back))
-        
+
         viewModel.checkValues()
     }
 
@@ -188,7 +188,7 @@ final class SelectMainInformationViewController: ViewController {
             $0.height.equalTo(43)
         }
     }
-    
+
     func setupFlow() {
         switch viewModel.flowType {
         case .create:
@@ -211,7 +211,7 @@ final class SelectMainInformationViewController: ViewController {
     private func save() {
         viewModel.didSave()
     }
-    
+
 //    Tech debt: create button class with states
     func changeSaveButtonState(isActive: Bool) {
         saveButton.isUserInteractionEnabled = isActive
@@ -220,7 +220,7 @@ final class SelectMainInformationViewController: ViewController {
 }
 
 extension SelectMainInformationViewController: DropDownTextFieldDelegate {
-    public func didSelect(dropDown: DropDownTextField, option: String, index: Int) {
+    public func didSelect(dropDown: DropDownTextField, option _: String, index: Int) {
         switch dropDown {
         case countryTextField:
             viewModel.didChange(country: index)

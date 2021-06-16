@@ -16,13 +16,13 @@ protocol DropDownTextFieldDelegate: AnyObject {
 final class DropDownTextField: UIView {
     weak var delegate: DropDownTextFieldDelegate?
     private var type: Type
-    
+
     var dataSource: [String] = [] {
         didSet {
             dropDown.dataSource = dataSource
         }
     }
-    
+
     var isActive: Bool = true {
         didSet {
             self.isUserInteractionEnabled = isActive
@@ -128,9 +128,9 @@ final class DropDownTextField: UIView {
 
     public init(type: Type) {
         self.type = type
-        
+
         super.init(frame: .zero)
-        
+
         setup()
     }
 
@@ -194,7 +194,7 @@ extension DropDownTextField {
         case city
         case address
         case brand
-        
+
         var title: String {
             switch self {
             case .country:
@@ -207,7 +207,7 @@ extension DropDownTextField {
                 return L10n.SelectMainInfo.brand
             }
         }
-        
+
         var placeholder: String {
             switch self {
             case .country:

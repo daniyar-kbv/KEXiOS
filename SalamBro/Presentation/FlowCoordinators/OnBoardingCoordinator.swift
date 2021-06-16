@@ -6,41 +6,42 @@
 //
 
 import Foundation
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 final class OnBoardingCoordinator {
     private let navigationController: UINavigationController
     private let pagesFactory: OnBoadingPagesFactory
     private let disposeBag = DisposeBag()
-    
+
     var didFinish: (() -> Void)?
-    
+
     init(navigationController: UINavigationController,
-         pagesFactory: OnBoadingPagesFactory) {
+         pagesFactory: OnBoadingPagesFactory)
+    {
         self.navigationController = navigationController
         self.pagesFactory = pagesFactory
     }
-    
+
     func start() {
         let countriesPage = pagesFactory.makeCountriesPage()
-        
+
         countriesPage.outputs.didSelectCountry.subscribe(onNext: { [weak self] countryId in
             self?.openCities(countryId: countryId)
         }).disposed(by: disposeBag)
-        
+
         navigationController.pushViewController(countriesPage, animated: false)
         UIApplication.shared.setRootView(navigationController)
     }
-    
+
     private func openCities(countryId: Int) {
         let citiesPage = pagesFactory.makeCitiesPage(countryId: countryId)
-        
+
         citiesPage.outputs.didSelectCity.subscribe(onNext: { [weak self] cityId in
             self?.openBrands(cityId: cityId)
         }).disposed(by: disposeBag)
-        
+
         navigationController.pushViewController(citiesPage, animated: true)
     }
     
@@ -59,7 +60,7 @@ final class OnBoardingCoordinator {
 //
 //        openMap()
     }
-    
+
     private func openMap() {
         let mapPage = pagesFactory.makeMapPage()
         

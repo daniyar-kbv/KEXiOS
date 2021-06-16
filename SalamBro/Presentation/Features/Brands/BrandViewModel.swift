@@ -14,7 +14,7 @@ protocol BrandViewModelProtocol: ViewModel {
     var outputs: BrandViewModel.Outputs { get }
     var brands: [Brand] { get }
     var ratios: [(Float, Float)] { get }
-    
+
     func refreshBrands()
     func didSelect(index: Int)
     func getBrands()
@@ -22,7 +22,7 @@ protocol BrandViewModelProtocol: ViewModel {
 
 final class BrandViewModel: BrandViewModelProtocol {
     let outputs = Outputs()
-    
+
     private let cityId: Int
     private let disposeBag = DisposeBag()
 
@@ -40,12 +40,13 @@ final class BrandViewModel: BrandViewModelProtocol {
     init(repository: BrandRepository,
          locationRepository: LocationRepository,
          service: LocationService,
-         cityId: Int) {
+         cityId: Int)
+    {
         self.cityId = cityId
         self.repository = repository
         self.locationRepository = locationRepository
         self.service = service
-        
+
         makeBrandsRequest()
     }
 
@@ -116,7 +117,7 @@ final class BrandViewModel: BrandViewModelProtocol {
         repository.changeCurrent(brand: brand)
         outputs.didSelectBrand.accept(brand)
     }
-    
+
     enum FlowType {
         case firstFlow
         case changeAddress(didSelectAddress: ((Address) -> Void)?)

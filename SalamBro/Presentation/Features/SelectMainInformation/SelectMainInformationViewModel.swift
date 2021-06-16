@@ -19,7 +19,7 @@ protocol SelectMainInformationViewModelProtocol: ViewModel {
     var brand: Brand? { get set }
     var deliveryAddress: DeliveryAddress? { get }
     var outputs: SelectMainInformationViewModel.Output { get set }
-    
+
     func getCountries()
     func didChange(country index: Int)
     func didChange(city index: Int?)
@@ -31,7 +31,7 @@ protocol SelectMainInformationViewModelProtocol: ViewModel {
 
 final class SelectMainInformationViewModel: SelectMainInformationViewModelProtocol {
     internal var flowType: FlowType
-    
+
     private let locationService: LocationService
     private let locationRepository: LocationRepository
     private let brandRepository: BrandRepository
@@ -39,29 +39,30 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     public lazy var countries: [Country] = locationRepository.getCountries() ?? []
     public lazy var cities: [City] = locationRepository.getCities() ?? []
     public lazy var brands: [Brand] = brandRepository.getBrands() ?? []
-    
+
     lazy var brand: Brand? = brandRepository.getCurrentBrand()
     var deliveryAddress: DeliveryAddress?
-    
+
     var outputs = Output()
     private let disposeBag = DisposeBag()
-    
+
     init(locationService: LocationService,
          locationRepository: LocationRepository,
          brandRepository: BrandRepository,
-         flowType: FlowType) {
+         flowType: FlowType)
+    {
         self.locationService = locationService
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
         self.flowType = flowType
-        
+
         switch flowType {
         case let .changeAddress(deliveryAddress):
             self.deliveryAddress = deliveryAddress
         case .changeBrand:
-            self.deliveryAddress = locationRepository.getCurrentDeliveryAddress()
+            deliveryAddress = locationRepository.getCurrentDeliveryAddress()
         case .create:
-            self.deliveryAddress = DeliveryAddress()
+            deliveryAddress = DeliveryAddress()
         }
     }
 }
@@ -73,12 +74,12 @@ extension SelectMainInformationViewModel {
         outputs.didSelectCountry.accept(deliveryAddress?.country?.name)
         checkValues()
         getCities()
-        
+
         didChange(city: nil)
         didChange(address: nil)
         didChange(brand: nil)
     }
-    
+
     func didChange(city index: Int?) {
         guard let index = index else {
             deliveryAddress?.city = nil
@@ -91,11 +92,11 @@ extension SelectMainInformationViewModel {
         deliveryAddress?.city = city
         outputs.didSelectCity.accept(deliveryAddress?.city?.name)
         checkValues()
-        
+
         didChange(address: nil)
         didChange(brand: nil)
     }
-    
+
     func didChange(address: Address?) {
         deliveryAddress?.address = address
         outputs.didSelectAddress.accept(address?.name)
@@ -107,7 +108,7 @@ extension SelectMainInformationViewModel {
         outputs.didSelectBrand.accept(brand?.name)
         checkValues()
     }
-    
+
     func didSave() {
         if let brand = brand {
             brandRepository.changeCurrent(brand: brand)
@@ -122,7 +123,7 @@ extension SelectMainInformationViewModel {
         }
         outputs.didSave.accept(())
     }
-    
+
     func checkValues() {
         outputs.checkResult.accept(deliveryAddress?.isComplete() ?? false)
     }
@@ -131,7 +132,8 @@ extension SelectMainInformationViewModel {
 extension SelectMainInformationViewModel {
     func getCountries() {
         if let cachedCountries = locationRepository.getCountries(),
-            cachedCountries != [] {
+           cachedCountries != []
+        {
             countries = cachedCountries
             outputs.didGetCountries.accept(())
         }
@@ -151,7 +153,7 @@ extension SelectMainInformationViewModel {
             }
             .disposed(by: disposeBag)
     }
-    
+
     private func process(received countries: [Country]) {
         guard let cachedCountries = locationRepository.getCountries() else {
             locationRepository.set(countries: countries)
@@ -181,7 +183,7 @@ extension SelectMainInformationViewModel {
             }
             .disposed(by: disposeBag)
     }
-    
+
     private func process(received cities: [City]) {
         self.cities = cities
         outputs.didGetCities.accept(())
@@ -194,17 +196,17 @@ extension SelectMainInformationViewModel {
         case changeAddress(_ address: DeliveryAddress)
         case changeBrand
     }
-    
+
     struct Output {
         let didGetCountries = PublishRelay<Void>()
         let didGetCities = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
-        
+
         let didSelectCountry = PublishRelay<String?>()
         let didSelectCity = PublishRelay<String?>()
         let didSelectAddress = PublishRelay<String?>()
         let didSelectBrand = PublishRelay<String?>()
-        
+
         let checkResult = PublishRelay<Bool>()
         let didSave = PublishRelay<Void>()
     }

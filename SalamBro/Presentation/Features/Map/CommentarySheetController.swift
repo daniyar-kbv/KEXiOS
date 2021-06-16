@@ -17,9 +17,6 @@ class CommentarySheetController: ViewController {
 
     // MARK: Tech Debt - Change logic by creating a new class for view presentation
 
-    public var isPromocode = false
-    public var isCommentary = false
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -60,47 +57,32 @@ class CommentarySheetController: ViewController {
 
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if isPromocode {
-                if getScreenSize() == 40 {
-                    view.frame.origin.y -= keyboardSize.height - 63
-                } else {
-                    view.frame.origin.y -= keyboardSize.height - 49
-                }
-            }
-
-            if isCommentary {
-                view.frame.origin.y = yCoordinate + 20
-                if getScreenSize() == 40 {
-                    view.frame.origin.y -= keyboardSize.height - 65
-                } else {
-                    view.frame.origin.y -= keyboardSize.height - 55
-                }
+            view.frame.origin.y = yCoordinate + 20
+            if getScreenSize() == 40 {
+                view.frame.origin.y -= keyboardSize.height - 65
+            } else {
+                view.frame.origin.y -= keyboardSize.height - 55
             }
         }
     }
 
     @objc func keyboardWillHide(notification _: NSNotification) {
-        if isPromocode {
-            view.frame.origin.y = getScreenSize() == 40 ? yCoordinate! - 5 : yCoordinate!
-        }
-
-        if isCommentary {
-            view.frame.origin.y = getScreenSize() == 40 ? yCoordinate! + 75 : yCoordinate! + 55
-        }
+        dismissSheet()
     }
 
     @IBAction func buttonAction(_: UIButton) {
-        if commentaryField.text != nil {
+        if let commentary = commentaryField?.text {
             // FIXME: - self.dissmiss not working in ios 11, need further investigation
 //            self.dismiss(animated: true) {
-            removeFromParent()
-            view.removeFromSuperview()
-            delegate?.passCommentary(text: commentaryField.text!)
-            delegate?.hideCommentarySheet()
+            dismissSheet()
+            delegate?.passCommentary(text: commentary)
 //            }
         }
-        isPromocode = false
-        isCommentary = false
+    }
+
+    private func dismissSheet() {
+        view.removeFromSuperview()
+        delegate?.hideCommentarySheet()
     }
 
     @objc func hideTextField() {

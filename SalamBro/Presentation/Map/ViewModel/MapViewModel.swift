@@ -41,14 +41,14 @@ final class MapViewModel: ViewModel {
         self.brandRepository = brandRepository
         
         self.flow = flow
-        self.targetLocation = YMKPoint(latitude: address?.latitude ?? ALA_LAT,
-                                       longitude: address?.longitude ?? ALA_LON)
-        self.outputs.selectedAddress
+        targetLocation = YMKPoint(latitude: address?.latitude ?? ALA_LAT,
+                                  longitude: address?.longitude ?? ALA_LON)
+        outputs.selectedAddress
             .onNext(MapAddress(name: address?.name ?? "",
                                formattedAddress: address?.name ?? "",
                                longitude: address?.longitude ?? 0,
                                latitude: address?.latitude ?? 0))
-        self.commentary = address?.commentary
+        commentary = address?.commentary
     }
 
     func onActionButtonTapped() {

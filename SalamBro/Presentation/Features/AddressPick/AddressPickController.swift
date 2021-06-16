@@ -16,7 +16,7 @@ final class AddressPickController: ViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: AddressPickerViewModelProtocol
     private let tapGesture = UITapGestureRecognizer()
-    
+
     let outputs = Output()
 
     private lazy var addLabel: UILabel = {
@@ -58,11 +58,11 @@ final class AddressPickController: ViewController {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     deinit {
         outputs.didTerminate.accept(())
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -70,7 +70,7 @@ final class AddressPickController: ViewController {
         bind()
         bindViewModel()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.title = L10n.AddressPicker.titleMany
@@ -89,7 +89,7 @@ final class AddressPickController: ViewController {
                 self?.addTapped()
             }).disposed(by: disposeBag)
     }
-    
+
     func bindViewModel() {
         viewModel.outputs.didSelectAddress.subscribe(onNext: { [weak self] address in
             self?.outputs.didSelectAddress.accept((
@@ -99,16 +99,16 @@ final class AddressPickController: ViewController {
                 }
             ))
         }).disposed(by: disposeBag)
-        
+
         viewModel.outputs.onReload.subscribe(onNext: { [weak self] in
             self?.tableView.reloadData()
         }).disposed(by: disposeBag)
     }
-    
+
     func addTapped() {
-        outputs.didAddTapped.accept({ [weak self] in
+        outputs.didAddTapped.accept { [weak self] in
             self?.viewModel.reload()
-        })
+        }
     }
 
     private func setup() {

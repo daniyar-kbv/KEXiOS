@@ -31,12 +31,16 @@ final class WebViewController: UIViewController {
         layoutUI()
     }
 
+    // MARK: - Tech Debt: change
+
     private func layoutUI() {
         navigationItem.title = L10n.Rating.information
+        navigationController?.navigationBar.topItem?.title = ""
         view.backgroundColor = .arcticWhite
         view.addSubview(webView)
         webView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(view.snp.topMargin)
+            $0.left.right.bottom.equalToSuperview()
         }
     }
 }

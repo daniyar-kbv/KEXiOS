@@ -50,7 +50,7 @@ final class MenuCoordinator: TabCoordinator {
         addressCoordinator?.didFinish = { [weak self] in
             self?.addressCoordinator = nil
         }
-        
+
         addressCoordinator?.start()
     }
     
@@ -64,7 +64,7 @@ final class MenuCoordinator: TabCoordinator {
         addressCoordinator?.didFinish = { [weak self] in
             self?.addressCoordinator = nil
         }
-        
+
         addressCoordinator?.start()
     }
 

@@ -29,18 +29,19 @@ final class BrandsController: ViewController, AlertDisplayable {
             collectionViewLayout: .init()
         )
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         collectionView.backgroundColor = .clear
         collectionView.register(cellType: BrandCell.self)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.refreshControl = refreshControl
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         return collectionView
     }()
 
     public init(viewModel: BrandViewModelProtocol,
-                flowType: FlowType) {
+                flowType: FlowType)
+    {
         self.viewModel = viewModel
         self.flowType = flowType
         disposeBag = DisposeBag()
@@ -56,16 +57,16 @@ final class BrandsController: ViewController, AlertDisplayable {
         viewModel.getBrands()
     }
 
-    // MARK: Tech Debt - Need to implement swipe in iOS versions <= 12.0
+    // MARK: Tech Debt - Need to configure separate navbar implementation
 
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        navigationItem.title = L10n.Brands.Navigation.title
-//        navigationController?.navigationBar.titleTextAttributes = [
-//            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
-//        ]
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = L10n.Brands.Navigation.title
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+        ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
+    }
 
     private func bind() {
         viewModel.outputs.didGetBrands
@@ -76,26 +77,18 @@ final class BrandsController: ViewController, AlertDisplayable {
                                                                       itemSpacing: 16)
             }.bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
-        
+
         viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
             guard let error = error else { return }
             self?.showError(error)
         }).disposed(by: disposeBag)
-        
+
         viewModel.outputs.didSelectBrand.subscribe(onNext: { [weak self] brand in
             self?.outputs.didSelectBrand.accept(brand)
             if self?.flowType == .change {
                 self?.dismiss(animated: true)
             }
         }).disposed(by: disposeBag)
-    }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.title = L10n.Brands.Navigation.title
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
-        ]
     }
 
     private func setup() {
@@ -112,7 +105,7 @@ final class BrandsController: ViewController, AlertDisplayable {
         collectionView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(view.snp.topMargin).offset(6)
+            $0.top.equalTo(view.snp.topMargin)
             $0.bottom.equalTo(view.snp.bottom)
         }
     }
@@ -122,10 +115,16 @@ final class BrandsController: ViewController, AlertDisplayable {
         refreshControl.endRefreshing()
     }
 
-//    @objc func goBack() {
-//        dismiss(animated: true, completion: nil)
-//        navigationController?.popViewController(animated: true)
-//    }
+    // MARK: Tech Debt - When Router is configured, send event of closing to Outputs
+
+    @objc func goBack() {
+        if navigationController?.presentingViewController != nil {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -158,7 +157,7 @@ extension BrandsController {
         case create
         case change
     }
-    
+
     struct Output {
         let didSelectBrand = PublishRelay<Brand>()
     }
