@@ -12,7 +12,7 @@ protocol Coordinator: AnyObject {
 }
 
 class BaseCoordinator: Coordinator {
-    var childCoordinators: [Coordinator] = []
+    private(set) var childCoordinators: [Coordinator] = []
 
     func start() {}
 
