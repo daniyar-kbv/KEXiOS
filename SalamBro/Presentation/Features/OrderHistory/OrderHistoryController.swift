@@ -70,7 +70,7 @@ final class OrderHistoryController: ViewController {
             $0.top.equalTo(view.snp.topMargin)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalTo(view.snp.bottomMargin)
+            $0.bottom.equalToSuperview()
         }
     }
 }

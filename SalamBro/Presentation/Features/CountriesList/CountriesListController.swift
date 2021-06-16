@@ -26,6 +26,7 @@ final class CountriesListController: ViewController, AlertDisplayable {
         view.dataSource = self
         view.refreshControl = refreshControl
         view.addTableHeaderViewLine()
+        view.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 24, right: 0)
         return view
     }()
 
@@ -37,7 +38,7 @@ final class CountriesListController: ViewController, AlertDisplayable {
 
     init(viewModel: CountriesListViewModelProtocol) {
         self.viewModel = viewModel
-        
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -49,17 +50,17 @@ final class CountriesListController: ViewController, AlertDisplayable {
         setup()
         bind()
     }
-    
+
     private func bind() {
         viewModel.outputs.didGetCoutries
             .bind(to: countriesTableView.rx.reload)
             .disposed(by: disposeBag)
-        
+
         viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
             guard let error = error else { return }
             self?.showError(error)
         }).disposed(by: disposeBag)
-        
+
         viewModel.outputs.didSelectCountry.subscribe(onNext: { [weak self] countryId in
             self?.outputs.didSelectCountry.accept(countryId)
         }).disposed(by: disposeBag)
@@ -67,7 +68,7 @@ final class CountriesListController: ViewController, AlertDisplayable {
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        
+
         navigationItem.title = L10n.CountriesList.Navigation.title
         navigationController?.navigationBar.layoutIfNeeded()
         navigationController?.navigationBar.titleTextAttributes =
@@ -87,7 +88,7 @@ final class CountriesListController: ViewController, AlertDisplayable {
 
     private func setupConstraints() {
         countriesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.left.equalToSuperview()
             $0.right.equalToSuperview()
             $0.bottom.equalToSuperview()

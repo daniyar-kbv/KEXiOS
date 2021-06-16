@@ -5,9 +5,9 @@
 //  Created by Arystan on 5/7/21.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 //  Tech debt: add navigationcontroller's nav bar
 
@@ -15,7 +15,7 @@ final class AddressDetailController: ViewController {
     let outputs = Output()
     private let locationRepository: LocationRepository
     private let deliveryAddress: DeliveryAddress
-    
+
     lazy var deleteButton: UIButton = {
         let view = UIButton()
         view.tintColor = .kexRed
@@ -55,19 +55,21 @@ final class AddressDetailController: ViewController {
         view.text = deliveryAddress.address?.commentary
         return view
     }()
-    
+
     init(deliveryAddress: DeliveryAddress,
-         locationRepository: LocationRepository) {
+         locationRepository: LocationRepository)
+    {
         self.deliveryAddress = deliveryAddress
         self.locationRepository = locationRepository
-        
+
         super.init(nibName: .none, bundle: .none)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()

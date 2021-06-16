@@ -15,7 +15,7 @@ protocol CountriesListViewModelProtocol: ViewModel {
     func refresh()
     func didSelect(index: Int)
     func getCountries()
-    
+
     var outputs: CountriesListViewModel.Output { get }
 }
 
@@ -29,7 +29,8 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
     private let repository: LocationRepository
 
     init(service: LocationService,
-         repository: LocationRepository) {
+         repository: LocationRepository)
+    {
         self.service = service
         self.repository = repository
     }

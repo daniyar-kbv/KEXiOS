@@ -29,6 +29,7 @@ class RateController: ViewController {
     @IBOutlet var commentaryView: UIView!
     @IBOutlet var button: UIButton!
     @IBOutlet var collectionViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var scrollView: UIScrollView!
 
     lazy var commentarySheetVC = CommentarySheetController()
 
@@ -76,6 +77,8 @@ class RateController: ViewController {
 
         let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(commentaryViewTapped))
         commentaryView.addGestureRecognizer(tapCommentary)
+
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.safeAreaInsets.bottom - 230, right: 0)
     }
 
     func setupConstraints() {
@@ -189,7 +192,6 @@ extension RateController: MapDelegate {
         let bounds = UIScreen.main.bounds
         let height = bounds.size.height
 
-        commentarySheetVC.isCommentary = true
         commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 49 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 64 - heightOfSheet, width: width, height: heightOfSheet)
     }
 

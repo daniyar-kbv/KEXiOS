@@ -17,7 +17,8 @@ class CartController: ViewController {
 
     var mainTabDelegate: MainTabDelegate?
 
-    lazy var emptyCartView = AdditionalView(delegate: self, descriptionTitle: L10n.Cart.EmptyCart.description, buttonTitle: L10n.Cart.EmptyCart.Button.title, image: UIImage(named: "emptyCart")!)
+    // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
+
     lazy var commentarySheetVC = CommentarySheetController()
 
     lazy var tableViewFooter: CartFooter = {
@@ -171,9 +172,12 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
         } else {
             let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 56))
             let label = UILabel(frame: CGRect(x: 16, y: 24, width: tableView.frame.size.width, height: 21))
+            let separator = UIView(frame: CGRect(x: 24, y: 0, width: tableView.frame.width - 48, height: 0.5))
+            separator.backgroundColor = .mildBlue
             label.font = .boldSystemFont(ofSize: 16)
             label.text = L10n.Cart.Section1.title
             view.addSubview(label)
+            view.addSubview(separator)
             view.backgroundColor = .arcticWhite
             return view
         }
@@ -188,30 +192,6 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
             return cartViewModel.cart.products.count
         } else {
             return cartViewModel.cart.productsAdditional.count
-        }
-    }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        // MARK: Tech Debt - Create in a new class
-
-        let footerView = UIView()
-        let footerChildView = UIView(frame: CGRect(x: 24, y: 0, width: tableView.frame.width - 48, height: 0.5))
-        if section == 0 {
-            footerChildView.backgroundColor = .gray
-            footerView.addSubview(footerChildView)
-            return footerView
-        } else {
-            footerChildView.backgroundColor = .lightGray
-            footerView.addSubview(footerChildView)
-            return footerView
-        }
-    }
-
-    func tableView(_: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 0.25
-        } else {
-            return 0.5
         }
     }
 
@@ -277,7 +257,7 @@ extension CartController: CellDelegate {
             }
         }
         if cartViewModel.cart.totalProducts <= 0 {
-            view = emptyCartView
+            // view = emptyCartView
         }
         updateTableViewFooterUI(cart: cartViewModel.cart)
         orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
@@ -285,11 +265,9 @@ extension CartController: CellDelegate {
     }
 }
 
-extension CartController: AdditionalViewDelegate {
-    func action() {
-        mainTabDelegate?.changeController(id: 0)
-    }
-}
+// extension CartController: AnimationContainerViewDelegate {
+//    func performAction() {}
+// }
 
 extension CartController: CartFooterDelegate {
     func openPromocode() {
@@ -327,8 +305,7 @@ extension CartController: MapDelegate {
         let bounds = UIScreen.main.bounds
         let height = bounds.size.height
 
-        commentarySheetVC.isPromocode = true
-        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 49 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 64 - heightOfSheet, width: width, height: heightOfSheet)
+        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 79 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 94 - heightOfSheet, width: width, height: heightOfSheet)
     }
 
     func passCommentary(text _: String) {
