@@ -33,7 +33,7 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
         service.updateUserInfo(with: UserInfoDTO(name: name, email: email, mobilePhone: nil))
             .subscribe(onSuccess: { [weak self] userInfo in
                 self?.outputs.didEndRequest.accept(())
-                debugPrint(userInfo)
+                self?.outputs.didGetUserInfo.accept(userInfo)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else {

@@ -150,7 +150,9 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
     }
 
     func updateViews(with model: UserInfoResponse) {
-        phoneTitleLabel.text = model.mobilePhone
+        if let phoneNumber = model.mobilePhone {
+            phoneTitleLabel.text = phoneNumber
+        }
         nameLabel.text = model.name
         emailLabel.text = model.email
     }

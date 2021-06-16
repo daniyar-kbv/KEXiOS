@@ -52,8 +52,9 @@ final class ProfileCoordinator: BaseCoordinator {
         changeUserInfoPage.hidesBottomBarWhenPushed = true
 
         changeUserInfoPage.outputs.didGetUserInfo
-            .subscribe(onNext: { newUserInfo in
+            .subscribe(onNext: { [weak self] newUserInfo in
                 completion?(newUserInfo)
+                self?.router.pop(animated: true)
             })
             .disposed(by: disposeBag)
 
