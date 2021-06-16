@@ -259,7 +259,7 @@ extension MenuController: UIScrollViewDelegate {
     }
 }
 
-extension MenuController: AddCollectionCellDelegate {
+extension MenuController: AdCollectionCellDelegate {
 //    TODO: change to coordinator
     public func goToRating() {
         viewModel.coordinator.openRating()

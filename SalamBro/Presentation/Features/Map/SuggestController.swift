@@ -1,11 +1,12 @@
 //
 //  SuggestViewController.swift
-//  yandex-map
+//  SalamBro
 //
-//  Created by Arystan on 4/6/21.
+//  Created by Meruyert Tastandiyeva on 6/16/21.
 //
 
 import CoreLocation
+import SnapKit
 import UIKit
 import YandexMapKitSearch
 
@@ -13,11 +14,55 @@ protocol SuggestControllerDelegate: AnyObject {
     func reverseGeocoding(searchQuery: String, title: String)
 }
 
-class SuggestController: ViewController {
-    @IBOutlet var contentView: UIView!
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet var searchBar: UITextField!
-    @IBOutlet var cancelButton: UIButton!
+final class SuggestController: UIViewController {
+    private let contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
+
+    private let searchItem: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "search")
+        imageView.tintColor = .mildBlue
+        return imageView
+    }()
+
+    private let searchBar: UITextField = {
+        let searchBar = UITextField()
+        searchBar.attributedPlaceholder = NSAttributedString(
+            string: L10n.Suggest.AddressField.title,
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+        )
+        searchBar.borderStyle = .none
+        searchBar.clearButtonMode = .never
+        searchBar.minimumFontSize = 17
+        searchBar.adjustsFontSizeToFitWidth = true
+        searchBar.contentHorizontalAlignment = .left
+        searchBar.contentVerticalAlignment = .center
+        searchBar.addTarget(self, action: #selector(queryChange(sender:)), for: .editingChanged)
+        return searchBar
+    }()
+
+    private let doneButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(L10n.Suggest.Button.title, for: .normal)
+        button.setTitleColor(.kexRed, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15)
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
+        button.adjustsImageWhenHighlighted = true
+        button.adjustsImageWhenDisabled = true
+        button.addTarget(self, action: #selector(cancelAction(_:)), for: .allTouchEvents)
+        return button
+    }()
+
+    private let separator: UIView = {
+        let view = UIView()
+        view.backgroundColor = .mildBlue
+        return view
+    }()
+
+    private let tableView = UITableView()
 
     let locationManager = CLLocationManager()
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
@@ -32,38 +77,26 @@ class SuggestController: ViewController {
 
     weak var suggestDelegate: SuggestControllerDelegate?
 
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        configureTableView()
+        layoutUI()
         suggestSession = searchManager.createSuggestSession()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UINib(nibName: "SuggestCell", bundle: nil), forCellReuseIdentifier: "SuggestCell")
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        tableView.tableFooterView = UIView()
-        tableView.keyboardDismissMode = .onDrag
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // legacy
         delegate?.mapShadow(toggle: true)
-    }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-
-    func setupViews() {
-        searchBar.attributedPlaceholder = NSAttributedString(
-            string: L10n.Suggest.AddressField.title,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
-        cancelButton.setTitle(L10n.Suggest.Button.title, for: .normal)
-        contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 10
-        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
 
     func onSuggestResponse(_ items: [YMKSuggestItem]) {
@@ -86,7 +119,7 @@ class SuggestController: ViewController {
         present(alert, animated: true, completion: nil)
     }
 
-    @IBAction func queryChange(_ sender: UITextField) {
+    @objc func queryChange(sender: UITextField) {
         let suggestHandler = { (response: [YMKSuggestItem]?, error: Error?) -> Void in
             if let items = response {
                 self.onSuggestResponse(items)
@@ -103,7 +136,7 @@ class SuggestController: ViewController {
         )
     }
 
-    @IBAction func cancelAction(_: UIButton) {
+    @objc func cancelAction(_: UIButton) {
         dismiss(animated: true, completion: nil)
 
         // MARK: Tech debt, legacy
@@ -112,11 +145,74 @@ class SuggestController: ViewController {
     }
 }
 
+extension SuggestController {
+    private func configureTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(cellType: SuggestCell.self)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .onDrag
+    }
+
+    private func layoutUI() {
+        view.backgroundColor = .arcticWhite
+
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 10
+        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+
+        [searchItem, searchBar, doneButton, separator, tableView].forEach {
+            contentView.addSubview($0)
+        }
+
+        view.addSubview(contentView)
+
+        searchItem.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(16)
+            $0.left.equalToSuperview().offset(24)
+            $0.width.equalTo(24)
+            $0.height.equalTo(28)
+        }
+
+        searchBar.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(19)
+            $0.left.equalTo(searchItem.snp.right).offset(8)
+            $0.centerY.equalTo(searchItem.snp.centerY)
+        }
+
+        doneButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(16)
+            $0.left.equalTo(searchBar.snp.right).offset(8)
+            $0.right.equalToSuperview().offset(-24)
+            $0.centerY.equalTo(searchBar.snp.centerY)
+        }
+
+        separator.snp.makeConstraints {
+            $0.top.equalTo(searchItem.snp.bottom).offset(12)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.height.equalTo(0.3)
+        }
+
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(separator.snp.bottom)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.bottom.equalToSuperview()
+        }
+
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+}
+
 extension SuggestController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, cellForRowAt path: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SuggestCell", for: path) as! SuggestCell
-        cell.addressTitle.text = suggestResults[path.row].title.text
-        cell.subtitleTitle.text = suggestResults[path.row].subtitle?.text
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(for: indexPath, cellType: SuggestCell.self)
+        cell.addressLabel.text = suggestResults[indexPath.row].title.text
+        cell.subtitleLabel.text = suggestResults[indexPath.row].subtitle?.text
         cell.selectionStyle = .none
         return cell
     }
@@ -131,11 +227,11 @@ extension SuggestController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! SuggestCell
-        searchBar.text = cell.addressTitle.text
-        if let subtitle = cell.subtitleTitle.text {
-            fullQuery = subtitle + cell.addressTitle.text!
+        searchBar.text = cell.addressLabel.text
+        if let subtitle = cell.subtitleLabel.text {
+            fullQuery = subtitle + cell.addressLabel.text!
         } else {
-            fullQuery = cell.addressTitle.text!
+            fullQuery = cell.addressLabel.text!
         }
         tableView.deselectRow(at: indexPath, animated: true)
         dismiss(animated: true, completion: nil)
