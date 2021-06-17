@@ -47,6 +47,7 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
                 self?.outputs.didGetError.accept(error as? ErrorPresentable)
             }).disposed(by: disposeBag)
     }
+//    Test
 }
 
 extension MenuDetailViewModelImpl {
