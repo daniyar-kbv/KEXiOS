@@ -282,7 +282,7 @@ extension MenuDetailController: MapDelegate {
 
         addChild(commentarySheetVC)
         view.addSubview(commentarySheetVC.view)
-        commentarySheetVC.commentaryField.attributedPlaceholder = NSAttributedString(
+        commentarySheetVC.commentTextField.attributedPlaceholder = NSAttributedString(
             string: L10n.MenuDetail.commentaryField,
             attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         )

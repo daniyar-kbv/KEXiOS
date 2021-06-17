@@ -69,7 +69,7 @@ class RateController: ViewController {
         layout.scrollDirection = .vertical
 
         collectionView.collectionViewLayout = layout
-        collectionView.register(UINib(nibName: "RateItemCell", bundle: nil), forCellWithReuseIdentifier: "RateItemCell")
+        collectionView.register(cellType: RateItemCell.self)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.allowsMultipleSelection = true
@@ -133,7 +133,7 @@ extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlow
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: RateItemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "RateItemCell", for: indexPath) as! RateItemCell
+        let cell: RateItemCell = collectionView.dequeueReusableCell(for: indexPath, cellType: RateItemCell.self)
         cell.titleLabel.text = data[indexPath.row]
         if selectedItems.firstIndex(of: data[indexPath.row]) != nil {
             cell.setSelectedUI()
@@ -173,7 +173,7 @@ extension RateController: MapDelegate {
     func showCommentarySheet() {
         addChild(commentarySheetVC)
         view.addSubview(commentarySheetVC.view)
-        commentarySheetVC.commentaryField.attributedPlaceholder = NSAttributedString(
+        commentarySheetVC.commentTextField.attributedPlaceholder = NSAttributedString(
             string: L10n.RateOrder.CommentaryField.placeholder,
             attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         )

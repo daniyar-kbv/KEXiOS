@@ -31,8 +31,8 @@ class CartController: ViewController {
         let table = UITableView()
         table.allowsSelection = false
         table.separatorColor = .mildBlue
-        table.register(UINib(nibName: "CartProductCell", bundle: nil), forCellReuseIdentifier: "CartProductCell")
-        table.register(UINib(nibName: "CartAdditionalProductCell", bundle: nil), forCellReuseIdentifier: "CartAdditionalProductCell")
+        table.register(cellType: CartProductCell.self)
+        table.register(cellType: CartAdditionalProductCell.self)
         table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         table.dataSource = self
         table.delegate = self
@@ -197,12 +197,12 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CartProductCell", for: indexPath) as! CartProductCell
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CartProductCell.self)
             cell.delegate = self
             cell.bindData(with: cartViewModel.cart.products[indexPath.row])
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CartAdditionalProductCell", for: indexPath) as! CartAdditionalProductCell
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CartAdditionalProductCell.self)
             cell.delegate = self
             cell.bindData(item: cartViewModel.cart.productsAdditional[indexPath.row])
             return cell
@@ -287,8 +287,8 @@ extension CartController: MapDelegate {
     func showCommentarySheet() {
         addChild(commentarySheetVC)
         view.addSubview(commentarySheetVC.view)
-        commentarySheetVC.proceedButton.setTitle(L10n.Promocode.button, for: .normal)
-        commentarySheetVC.commentaryField.attributedPlaceholder = NSAttributedString(
+        commentarySheetVC.sendButton.setTitle(L10n.Promocode.button, for: .normal)
+        commentarySheetVC.commentTextField.attributedPlaceholder = NSAttributedString(
             string: L10n.Promocode.field,
             attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         )
