@@ -35,10 +35,11 @@ final class AppCoordinator: BaseCoordinator {
             self?.startAuthCoordinator()
         }
 
-        configureProfileCoordinator()
-        configureCartCoordinator()
+        // MARK: Нужно тут прописать конфиги для Меню
 
-        // MARK: Нужно тут прописать конфиги для Меню, Помощи и Корзины
+        configureProfileCoordinator()
+        configureSupportCoordinator()
+        configureCartCoordinator()
 
         switchFlows()
     }
@@ -67,6 +68,17 @@ final class AppCoordinator: BaseCoordinator {
         preparedViewControllers.append(profileCoordinator.router.getNavigationController())
         add(profileCoordinator)
         navigationControllers.append(profileCoordinator.router.getNavigationController())
+    }
+
+    private func configureSupportCoordinator() {
+        let supportCoordinator = appCoordinatorsFactory.makeSupportCoordinator(serviceComponents: serviceComponents)
+        supportCoordinator.start()
+        supportCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: L10n.MainTab.Support.title,
+                                                                                      image: Asset.support.image,
+                                                                                      selectedImage: Asset.support.image)
+        preparedViewControllers.append(supportCoordinator.router.getNavigationController())
+        add(supportCoordinator)
+        navigationControllers.append(supportCoordinator.router.getNavigationController())
     }
 
     private func configureCartCoordinator() {
