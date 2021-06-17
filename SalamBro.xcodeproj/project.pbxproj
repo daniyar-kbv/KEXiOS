@@ -185,8 +185,6 @@
 		974AE9BE8ACDD9A2039C9F9A06FBFF0E /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACF86860C7711087633FA7491110757 /* ProfileCoordinator.swift */; };
 		DDB97E999180D5DF89B4C40E50D70EA3 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A56E17FF10703C24CC4172E0F01609 /* ProfileView.swift */; };
 		A26DAD8BD3AE115B3711AFA885725699 /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */; };
-		C53C4DDB0C305025A6F252C490347231 /* RateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B024823DA276215DE019CC233F211E2C /* RateController.xib */; };
-		4180ABC8F91047DFA2FFB4094FF842DF /* RateController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BF53C77C371040CEC6DFBA1BA4881C /* RateController2.swift */; };
 		F5BD4046B597F112547C5320F4898774 /* RateItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */; };
 		60B654CFA78535C5C47844F489215806 /* RatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D907407B02F778FF81888E372DE8D8 /* RatingCell.swift */; };
 		63DF66EFC9CE86EA55106CC54910C009 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */; };
@@ -443,8 +441,6 @@
 		4ACF86860C7711087633FA7491110757 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		D8A56E17FF10703C24CC4172E0F01609 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
-		B024823DA276215DE019CC233F211E2C /* RateController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RateController.xib; sourceTree = "<group>"; };
-		13BF53C77C371040CEC6DFBA1BA4881C /* RateController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController2.swift; sourceTree = "<group>"; };
 		EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateItemCell.swift; sourceTree = "<group>"; };
 		81D907407B02F778FF81888E372DE8D8 /* RatingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingCell.swift; sourceTree = "<group>"; };
 		E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingController.swift; sourceTree = "<group>"; };
@@ -770,8 +766,6 @@
 			isa = PBXGroup;
 			children = (
 				EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */,
-				B024823DA276215DE019CC233F211E2C /* RateController.xib */,
-				13BF53C77C371040CEC6DFBA1BA4881C /* RateController2.swift */,
 				EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */,
 				774846F1F181F3043DE14327D51E4080 /* UICollectionViewCenterLayout.swift */,
 			);
@@ -1637,7 +1631,6 @@
 				9617C33EE7EC0B11879A840A0FCEDD8D /* Assets.xcassets in Resources */,
 				05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */,
 				49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */,
-				C53C4DDB0C305025A6F252C490347231 /* RateController.xib in Resources */,
 				164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */,
 				F694560D11CB08F2FE1D2F7E86B4167B /* emptyBasket.json in Resources */,
 				4B9B1575E958577624E23D440A6EE8FE /* noInternet.json in Resources */,
@@ -2005,7 +1998,6 @@
 				974AE9BE8ACDD9A2039C9F9A06FBFF0E /* ProfileCoordinator.swift in Sources */,
 				DDB97E999180D5DF89B4C40E50D70EA3 /* ProfileView.swift in Sources */,
 				A26DAD8BD3AE115B3711AFA885725699 /* RateController.swift in Sources */,
-				4180ABC8F91047DFA2FFB4094FF842DF /* RateController2.swift in Sources */,
 				F5BD4046B597F112547C5320F4898774 /* RateItemCell.swift in Sources */,
 				60B654CFA78535C5C47844F489215806 /* RatingCell.swift in Sources */,
 				63DF66EFC9CE86EA55106CC54910C009 /* RatingController.swift in Sources */,
