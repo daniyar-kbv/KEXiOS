@@ -9,13 +9,13 @@ import Reusable
 import UIKit
 
 class CartProductCell: UITableViewCell {
-    private var productImageView: UIImageView = {
+    private lazy var productImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "fastFood")
         return view
     }()
 
-    private var productTitleLabel: UILabel = {
+    private lazy var productTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .regular)
         label.textColor = .black
@@ -23,7 +23,7 @@ class CartProductCell: UITableViewCell {
         return label
     }()
 
-    private var subitemLabel: UILabel = {
+    private lazy var subitemLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .black
@@ -31,7 +31,7 @@ class CartProductCell: UITableViewCell {
         return label
     }()
 
-    private var commentLabel: UILabel = {
+    private lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .mildBlue
@@ -39,7 +39,7 @@ class CartProductCell: UITableViewCell {
         return label
     }()
 
-    private var priceLabel: UILabel = {
+    private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .black
@@ -47,7 +47,7 @@ class CartProductCell: UITableViewCell {
         return label
     }()
 
-    private var unavailableLabel: UILabel = {
+    private lazy var unavailableLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .kexRed
@@ -55,12 +55,12 @@ class CartProductCell: UITableViewCell {
         return label
     }()
 
-    private var containerView: UIView = {
+    private lazy var containerView: UIView = {
         let view = UIView()
         return view
     }()
 
-    private var stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
         view.alignment = .center
@@ -69,10 +69,10 @@ class CartProductCell: UITableViewCell {
         return view
     }()
 
-    private var descreaseButton: UIButton = {
+    private lazy var descreaseButton: UIButton = {
         let button = UIButton()
         button.borderWidth = 1
-        button.borderColor = .darkGray
+        button.borderColor = .mildBlue
         button.cornerRadius = 5
         button.setBackgroundImage(UIImage(named: "minus"), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -80,17 +80,17 @@ class CartProductCell: UITableViewCell {
         return button
     }()
 
-    private var increaseButton: UIButton = {
+    private lazy var increaseButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .kexRed
         button.cornerRadius = 5
-        // button.setBackgroundImage(UIImage(named: "plus"), for: .normal)
-        // button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        button.setBackgroundImage(UIImage(named: "plus"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         button.addTarget(self, action: #selector(increaseItemButton), for: .touchUpInside)
         return button
     }()
 
-    private var countLabel: UILabel = {
+    private lazy var countLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .regular)
         label.textColor = .black
@@ -100,10 +100,10 @@ class CartProductCell: UITableViewCell {
         return label
     }()
 
-    private var deleteButton: UIButton = {
+    private lazy var deleteButton: UIButton = {
         let button = UIButton()
         button.borderWidth = 1
-        button.borderColor = .darkGray
+        button.borderColor = .mildBlue
         button.cornerRadius = 5
         button.setTitle(L10n.CartProductCell.DeleteButton.title, for: .normal)
         button.setTitleColor(.kexRed, for: .normal)
@@ -214,7 +214,9 @@ extension CartProductCell {
             $0.width.equalTo(90)
         }
     }
+}
 
+extension CartProductCell {
     func bindData(with item: CartProduct) {
         product = item
         productTitleLabel.text = product!.name
