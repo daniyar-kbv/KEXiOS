@@ -23,8 +23,8 @@ final class PromotionsCoordinator {
         self.pagesFactory = pagesFactory
     }
 
-    func start(promotionURL: URL, infoURL: URL) {
-        let promotionPage = pagesFactory.makePromotionPage(promotionURL: promotionURL, infoURL: infoURL)
+    func start(promotionURL: URL, infoURL: URL?) {
+        let promotionPage = pagesFactory.makePromotionsPage(promotionURL: promotionURL, infoURL: infoURL)
         
         promotionPage.outputs.didTerminate.subscribe(onNext: { [weak self] in
             self?.didFinish?()
@@ -39,7 +39,7 @@ final class PromotionsCoordinator {
     }
     
     private func openPromotionInfo(url: URL) {
-        let promotionInfoPage = pagesFactory.makePromotionInfoPage(url: url)
+        let promotionInfoPage = pagesFactory.makePromotionsInfoPage(url: url)
         
         navigationController.present(promotionInfoPage, animated: true)
     }

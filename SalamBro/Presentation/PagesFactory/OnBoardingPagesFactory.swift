@@ -58,6 +58,7 @@ final class OnBoardingPagesFactoryImpl: OnBoadingPagesFactory {
 
     private func makeMapViewModel() -> MapViewModel {
         return .init(ordersService: getOrdersService(),
+                     defaultStorage: DefaultStorageImpl.sharedStorage,
                      locationRepository: getLocationRepository(),
                      brandRepository: getBrandRepository(),
                      flow: .creation)

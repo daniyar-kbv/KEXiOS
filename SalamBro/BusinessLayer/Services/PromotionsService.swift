@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol PromotionsService: AnyObject {
-    func getPromotions() -> Single<PromotionsResponse>
+    func getPromotions() -> Single<[PromotionsResponse.ResponseData.Promotion]>
 }
 
 class PromotionsServiceImpl: PromotionsService {
@@ -21,7 +21,7 @@ class PromotionsServiceImpl: PromotionsService {
         self.provider = provider
     }
     
-    func getPromotions() -> Single<PromotionsResponse> {
+    func getPromotions() -> Single<[PromotionsResponse.ResponseData.Promotion]> {
         return provider.rx
             .request(.promotions)
             .map { response in
@@ -31,8 +31,12 @@ class PromotionsServiceImpl: PromotionsService {
                 guard let promotionsResponse = try? response.map(PromotionsResponse.self) else {
                     throw NetworkError.badMapping
                 }
+                
+                guard let promotions = promotionsResponse.data?.results else {
+                    throw NetworkError.error("Нет данных")
+                }
 
-                return promotionsResponse
+                return promotions
             }
     }
 }

@@ -7,8 +7,12 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class MenuCoordinator: TabCoordinator {
+    private let disposeBag = DisposeBag()
+    
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
@@ -20,6 +24,7 @@ final class MenuCoordinator: TabCoordinator {
     
     private var addressCoordinator: AddressCoordinator?
     private var promotionsCoordinator: PromotionsCoordinator?
+    private var menuDetailCoordinator: MenuDetailCoordinator?
 
     init(serviceComponents: ServiceComponents,
          pagesFactory: MenuPagesFactory,
@@ -35,6 +40,26 @@ final class MenuCoordinator: TabCoordinator {
     func start() {
         let menuPage = pagesFactory.makeManuPage()
         
+        menuPage.outputs.toChangeBrand
+            .subscribe(onNext: { [weak self] didSave in
+                self?.openChangeBrand(didSave: didSave)
+            }).disposed(by: disposeBag)
+        
+        menuPage.outputs.toAddressess
+            .subscribe(onNext: { [weak self] didSave in
+                self?.openChangeAddress(didSelectAddress: didSave)
+        }).disposed(by: disposeBag)
+        
+        menuPage.outputs.toPromotion
+            .subscribe(onNext: { [weak self] promotionURL, infoURL in
+                self?.openPromotion(promotionURL: promotionURL, infoURL: infoURL)
+        }).disposed(by: disposeBag)
+        
+        menuPage.outputs.toPositionDetail
+            .subscribe(onNext: { [weak self] positionUUID in
+                self?.openDetail(positionUUID: positionUUID)
+            }).disposed(by: disposeBag)
+        
         childNavigationController = templateNavigationController(title: tabType.title,
                                                                  image: tabType.image,
                                                                  rootViewController: menuPage)
@@ -42,7 +67,7 @@ final class MenuCoordinator: TabCoordinator {
 
 //    Tech debt: move to pages factory
     
-    func openSelectMainInfo(didSave: (() -> Void)? = nil) {
+    private func openChangeBrand(didSave: (() -> Void)? = nil) {
         addressCoordinator = AddressCoordinator(navigationController: childNavigationController,
                                        pagesFactory: AddressPagesFactoryImpl(serviceComponents: serviceComponents),
                                        flowType: .changeBrand(didSave: didSave))
@@ -68,7 +93,7 @@ final class MenuCoordinator: TabCoordinator {
         addressCoordinator?.start()
     }
 
-    private func openPromotion(promotionURL: URL, infoURL: URL) {
+    private func openPromotion(promotionURL: URL, infoURL: URL?) {
         let child = PromotionsCoordinator(navigationController: childNavigationController,
                                           pagesFactory: PromotionsPagesFactoryImpl())
         
@@ -79,10 +104,16 @@ final class MenuCoordinator: TabCoordinator {
         child.start(promotionURL: promotionURL, infoURL: infoURL)
     }
 
-    func openDetail() {
-        let child = MenuDetailCoordinator(navigationController: childNavigationController)
-        addChild(child)
-        child.start()
+    private func openDetail(positionUUID: String) {
+        let child = MenuDetailCoordinator(serviceComponents: serviceComponents,
+                                          pagesFactory: MenuDetailPagesFactoryImpl(serviceComponents: serviceComponents),
+                                          navigationController: childNavigationController)
+        
+        child.didFinish = { [weak self] in
+            self?.menuDetailCoordinator = nil
+        }
+        
+        child.start(positionUUID: positionUUID)
     }
 
     func didFinish() {}

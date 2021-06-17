@@ -21,6 +21,7 @@ protocol MenuViewModelProtocol {
 }
 
 final class MenuViewModel: MenuViewModelProtocol {
+    private let disposeBag = DisposeBag()
     let outputs = Output()
     
     private let defaultStorage: DefaultStorage
@@ -32,9 +33,10 @@ final class MenuViewModel: MenuViewModelProtocol {
     private let locationRepository: LocationRepository
     private let brandRepository: BrandRepository
     
-    public var headerViewModels: [ViewModel?]
-    public var cellViewModels: [[ViewModel]]
-    public var brandName: BehaviorRelay<String?>
+    public var headerViewModels: [ViewModel?] = []
+    public var cellViewModels: [[ViewModel]] = []
+    
+    public lazy var brandName = BehaviorRelay<String?>(value: brandRepository.getCurrentBrand()?.name)
 
     init(defaultStorage: DefaultStorage,
          promotionsService: PromotionsService,
@@ -48,20 +50,17 @@ final class MenuViewModel: MenuViewModelProtocol {
         self.menuRepository = menuRepository
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
-        
-        cellViewModels = []
-        headerViewModels = []
-        brandName = .init(value: brandRepository.getCurrentBrand()?.name)
-        download()
     }
 
     public func update() {
         download()
-        brandName.accept(brandRepository.getCurrentBrand()?.name)
+        
+        outputs.brandName.accept(brandRepository.getCurrentBrand()?.name)
     }
 
     private func download() {
         guard let leadUuid = defaultStorage.leadUUID else { return }
+        
         cellViewModels = []
         headerViewModels = []
         outputs.updateTableView.accept(())
@@ -69,54 +68,63 @@ final class MenuViewModel: MenuViewModelProtocol {
         let promotionsSequence = promotionsService.getPromotions()
         let productsSequence = ordersService.getProducts(for: leadUuid)
         
-        let finalSequesnce = Single.zip(promotionsSequence, productsSequence, resultSelector: { [weak self] (promotionsResponse, productsResponse) -> ([PromotionsResponse.ResponseData.Promotion]?, [OrderProductResponse.Category]?, [OrderProductResponse.Position]?) in
+        let finalSequesnce = Single.zip(promotionsSequence,
+                                        productsSequence,
+                                        resultSelector: {
+                                            (promotions, productsData) ->
+                                            ([PromotionsResponse.ResponseData.Promotion],
+                                             [OrderProductResponse.Data.Category],
+                                             [OrderProductResponse.Data.Position]) in
             return (
-                promotionsResponse.data?.results,
-                productsResponse.categories,
-                productsResponse.positions
+                promotions,
+                productsData.categories,
+                productsData.positions
             )
         })
         
-        finalSequesnce.subscribe(onSuccess: { [weak self] in
-            self.cellViewModels.append([
-                AddressPickCellViewModel(address: self?.locationRepository.getCurrentDeliveryAddress()?.address),
-                AdCollectionCellViewModel(ads: $0.map { AdUI(from: $0) }),
-            ])
+        outputs.didStartRequest.accept(())
+        finalSequesnce.subscribe(onSuccess: {
+            [weak self] promotions, categories, positions in
+            self?.outputs.didEndRequest.accept(())
+            
+            self?.setPromotions(promotions: promotions)
+            self?.setCategories(categories: categories)
+            self?.setPositions(positions: positions)
+            
+            self?.outputs.updateTableView.accept(())
         }, onError: { [weak self] error in
+            self?.outputs.didEndRequest.accept(())
             self?.outputs.didGetError.accept(error as? ErrorPresentable)
+        }).disposed(by: disposeBag)
+    }
+    
+    private func setPromotions(promotions: [PromotionsResponse.ResponseData.Promotion]) {
+        cellViewModels.append([
+            AddressPickCellViewModel(address: locationRepository.getCurrentDeliveryAddress()?.address),
+            AdCollectionCellViewModel(promotions: promotions),
+        ])
+    }
+    
+    private func setCategories(categories: [OrderProductResponse.Data.Category]) {
+        headerViewModels = [
+            nil,
+            CategoriesSectionHeaderViewModel(categories: categories)
+        ]
+    }
+    
+    private func setPositions(positions: [OrderProductResponse.Data.Position]) {
+        cellViewModels.append(positions.map() { position in
+            MenuCellViewModel(position: position)
         })
-        
-//        firstly {
-//            self.menuRepository.downloadMenuAds()
-//        }.done {
-//            self.cellViewModels.append([
-//                AddressPickCellViewModel(address: self.locationRepository.getCurrentDeliveryAddress()?.address),
-//                AdCollectionCellViewModel(ads: $0.map { AdUI(from: $0) }),
-//            ])
-//        }.then {
-//            self.menuRepository.downloadMenuCategories()
-//        }.done {
-//            self.headerViewModels = [
-//                nil,
-//                CategoriesSectionHeaderViewModel(categories: $0.map { FoodTypeUI(from: $0) }),
-//            ]
-//            self.cellViewModels.append(
-//                $0.map { category in
-//                    category.foods.map { MenuCellViewModel(categoryPosition: category.position, food: FoodUI(from: $0)) }
-//                }.flatMap { $0 }
-//            )
-//        }.catch {
-//            self.outputs.didGetError.accept($0 as? ErrorPresentable)
-//        }.finally {
-//            self.outputs.updateTableView.accept(())
-//            self.stopAnimation()
-//        }
     }
 }
 
 extension MenuViewModel {
     struct Output {
+        let brandName = PublishRelay<String?>()
+        
         let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
         let updateTableView = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
     }

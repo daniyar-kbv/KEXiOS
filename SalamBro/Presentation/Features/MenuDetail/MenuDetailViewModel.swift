@@ -10,50 +10,53 @@ import PromiseKit
 import RxCocoa
 import RxSwift
 
-public protocol MenuDetailViewModelProtocol: AnyObject {
-    var coordinator: MenuDetailCoordinator { get }
-    var itemTitle: BehaviorRelay<String?> { get }
-    var itemDescription: BehaviorRelay<String?> { get }
-    var itemPrice: BehaviorRelay<String?> { get }
+protocol MenuDetailViewModel: AnyObject {
+    var outputs: MenuDetailViewModelImpl.Output { get }
+    
     func update()
 }
 
-public final class MenuDetailViewModel: MenuDetailViewModelProtocol {
-    private let menuDetailRepository: MenuDetailRepository
-    public var coordinator: MenuDetailCoordinator
-    public var itemTitle: BehaviorRelay<String?>
-    public var itemDescription: BehaviorRelay<String?>
-    public var itemPrice: BehaviorRelay<String?>
+final class MenuDetailViewModelImpl: MenuDetailViewModel {
+    private let productUUID: String
+    private let defaultStorage: DefaultStorage
+    private let ordersService: OrdersService
+    
+    private let disposeBag = DisposeBag()
+    let outputs = Output()
+    
+    init(productUUID: String,
+         defaultStorage: DefaultStorage,
+         ordersService: OrdersService) {
+        self.productUUID = productUUID
+        self.defaultStorage = defaultStorage
+        self.ordersService = ordersService
+    }
 
     public func update() {
         download()
     }
 
     private func download() {
-        firstly {
-            self.menuDetailRepository.downloadMenuDetail()
-        }.done {
-            self.itemTitle.accept("\($0.title)")
-            self.itemDescription.accept("\($0.description)")
-            self.itemPrice.accept(L10n.MenuDetail.proceedButton + " \($0.price) ₸")
-        }.catch {
-            print($0)
-            // TODO: - написать обработку и презентацию ошибок
-        }.finally {}
+        guard let leadUUID = defaultStorage.leadUUID else { return }
+        ordersService.getProductDetail(for: leadUUID, by: productUUID)
+            .subscribe(onSuccess: { [weak self] response in
+                self?.outputs.didGetItemTitle.accept(response.name)
+                self?.outputs.didGetItemDescription.accept(response.description)
+                self?.outputs.didGetItemPrice.accept(String(response.price))
+            }, onError: { [weak self] error in
+                self?.outputs.didGetError.accept(error as? ErrorPresentable)
+            }).disposed(by: disposeBag)
     }
+}
 
-    init(coordinator: MenuDetailCoordinator, menuDetailRepository: MenuDetailRepository) {
-        self.coordinator = coordinator
-        itemTitle = .init(value: nil)
-        itemDescription = .init(value: nil)
-        itemPrice = .init(value: nil)
-        self.menuDetailRepository = menuDetailRepository
-        download()
-    }
-
-    public func bindData(food: FoodUI) {
-        itemTitle = .init(value: food.title)
-        itemDescription = .init(value: food.description)
-        itemPrice = .init(value: "\(food.price) T") // здесь надо юзать локализацию
+extension MenuDetailViewModelImpl {
+    struct Output {
+        let didGetError = PublishRelay<ErrorPresentable?>()
+        
+        let itemImage = PublishRelay<URL?>()
+        let itemTitle = PublishRelay<String>()
+        let itemDescription = PublishRelay<String>()
+        let itemPrice = PublishRelay<String>()
+        let itemModifiers = PublishRelay<OrderProductDetailResponse.Modifier]
     }
 }

@@ -7,30 +7,46 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 
-public final class MenuDetailCoordinator: Coordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators: [Coordinator] = []
-    var navigationController: UINavigationController
+public final class MenuDetailCoordinator {
+    private let disposeBag = DisposeBag()
+    private let serviceComponents: ServiceComponents
+    private let pagesFactory: MenuDetailPagesFactory
+    private let navigationController: UINavigationController
+    
+    var didFinish: (() -> Void)?
 
-    init(navigationController: UINavigationController) {
+    init(serviceComponents: ServiceComponents,
+         pagesFactory: MenuDetailPagesFactory,
+         navigationController: UINavigationController) {
+        self.serviceComponents = serviceComponents
+        self.pagesFactory = pagesFactory
         self.navigationController = navigationController
     }
 
-    func start() {
-        let viewModel = MenuDetailViewModel(coordinator: self, menuDetailRepository: DIResolver.resolve(MenuDetailRepository.self)!)
-        let vc = MenuDetailController(viewModel: viewModel)
-        vc.modalPresentationStyle = .pageSheet
-        getLastPresentedViewController().present(vc, animated: true, completion: nil)
+    func start(positionUUID: String) {
+        let menuDetailPage = pagesFactory.makeMenuDetailPage(positionUUID: positionUUID)
+        
+        menuDetailPage.outputs.didTerminate
+            .subscribe(onNext: { [weak self] in
+                self?.didFinish?()
+        }).disposed(by: disposeBag)
+        
+        menuDetailPage.outputs.toModificators
+            .subscribe(onNext: { [weak self] in
+                self?.openModifiers(on: menuDetailPage)
+        }).disposed(by: disposeBag)
+        
+        menuDetailPage.modalPresentationStyle = .pageSheet
+        navigationController.present(menuDetailPage, animated: true)
     }
 
-    func openModificator() {
-        let vc = AdditionalItemChooseController()
-        vc.modalPresentationStyle = .pageSheet
-        getLastPresentedViewController().present(vc, animated: true, completion: nil)
-    }
-
-    func didFinish() {
-        parentCoordinator?.childDidFinish(self)
+    private func openModifiers(on presentedController: UIViewController) {
+        let modifiersPage = pagesFactory.makeModifiersPage()
+        
+        modifiersPage.modalPresentationStyle = .pageSheet
+        presentedController.present(modifiersPage, animated: true)
     }
 }

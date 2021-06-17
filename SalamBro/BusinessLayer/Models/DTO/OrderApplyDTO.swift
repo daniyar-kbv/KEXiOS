@@ -8,19 +8,18 @@
 import Foundation
 
 struct OrderApplyDTO: Encodable {
-    let brandId: Int
-    let cityId: Int
     let address: Address
-
-    struct Address: Encodable {
-        let longitude: String
-        let latitude: String
-    }
+    let localBrand: Int
 
     enum CodingKeys: String, CodingKey {
-        case brandId = "brand_id"
-        case cityId = "city_id"
         case address
+        case localBrand = "local_brand"
+    }
+    
+    struct Address: Encodable {
+        let city: Int
+        let longitude: Double
+        let latitude: Double
     }
 }
 

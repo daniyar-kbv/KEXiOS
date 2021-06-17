@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class MenuController: ViewController, AlertDisplayable {
+final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable {
     let outputs = Output()
     
     private let viewModel: MenuViewModelProtocol
@@ -74,16 +74,18 @@ final class MenuController: ViewController, AlertDisplayable {
         self.scrollService = scrollService
 
         super.init(nibName: nil, bundle: nil)
-
-        bindScrollService()
     }
 
     required init?(coder _: NSCoder) { nil }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel.update()
+        
         setup()
-        bind()
+        bindViewModel()
+        bindScrollService()
     }
 
     override public func viewWillAppear(_ animated: Bool) {
@@ -91,14 +93,24 @@ final class MenuController: ViewController, AlertDisplayable {
         setupNavigationBar()
     }
 
-    private func bind() {
-        viewModel.updateTableView
-            .bind(to: itemTableView.rx.reload)
-            .disposed(by: disposeBag)
-
+    private func bindViewModel() {
         viewModel.brandName
             .bind(to: brandLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.updateTableView
+            .bind(to: itemTableView.rx.reload)
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+        }).disposed(by: disposeBag)
+        
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+        }).disposed(by: disposeBag)
         
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
@@ -109,9 +121,9 @@ final class MenuController: ViewController, AlertDisplayable {
 
     func bindScrollService() {
         scrollService.didSelectCategory
-            .subscribe(onNext: { [weak self] in
-                guard $0 == .header else { return }
-                self?.scrollToItem(at: $1)
+            .subscribe(onNext: { [weak self] source, category in
+                guard source == .header else { return }
+                self?.scroll(to: category)
             })
             .disposed(by: disposeBag)
     }
@@ -178,16 +190,15 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
 //    TODO: change to coordinators
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
-        case _ as MenuCellViewModel:
-//            TODO: change to real id
-            outputs.toPositionDetail.accept("test")
+        case let cellViewModel as MenuCellViewModel:
+            outputs.toPositionDetail.accept(cellViewModel.position.uuid)
         case _ as AddressPickCellViewModel:
             outputs.toAddressess.accept { [weak self] in
                 self?.viewModel.update()
             }
-        case _ as AdCollectionCellViewModel:
-//            TODO: change to real id
-            outputs.toPromotion.accept("test")
+        case let cellViewModel as AdCollectionCellViewModel:
+            guard let promotionURL = URL(string: cellViewModel.cellViewModels[indexPath.row].promotion.link) else { return}
+            outputs.toPromotion.accept((promotionURL, nil))
         default:
             print("other")
         }
@@ -251,19 +262,20 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension MenuController {
-    func scrollToItem(at position: Int) {
-        guard let row = viewModel.cellViewModels[itemTableView.numberOfSections - 1].enumerated().first(where: {
-            guard let viewModel = $1 as? MenuCellViewModelProtocol else { return false }
-            return viewModel.categoryPosition == position
-        })?.0 else { return }
+    func scroll(to category: String) {
+        guard let row = viewModel.cellViewModels[itemTableView.numberOfSections - 1]
+                .enumerated().first(where: {
+                    guard let viewModel = $1 as? MenuCellViewModelProtocol else { return false }
+                    return viewModel.position.category == category
+                })?.0 else { return }
         itemTableView.scrollToRow(at: IndexPath(row: row, section: itemTableView.numberOfSections - 1), at: .top, animated: true)
     }
 
     func didScrollToItem(at position: Int) {
         guard let cellViewModel = viewModel.cellViewModels[itemTableView.numberOfSections - 1][position] as? MenuCellViewModelProtocol,
               !scrollService.isHeaderScrolling,
-              scrollService.currentCategoryPosition != cellViewModel.categoryPosition else { return }
-        scrollService.didSelectCategory.accept((source: .table, position: cellViewModel.categoryPosition))
+              scrollService.currentCategory != cellViewModel.position.category else { return }
+        scrollService.didSelectCategory.accept((source: .table, category: cellViewModel.position.category))
     }
 }
 
@@ -274,15 +286,14 @@ extension MenuController: UIScrollViewDelegate {
 }
 
 extension MenuController: AddCollectionCellDelegate {
-//    TODO: change to coordinator
-    public func goToRating() {
-//        outputs.toPromotion.accept(view)
+    public func goToRating(promotionURL: URL, infoURL: URL?) {
+        outputs.toPromotion.accept((promotionURL, infoURL))
     }
 }
 
 extension MenuController {
     struct Output {
-        let toPromotion = PublishRelay<String>()
+        let toPromotion = PublishRelay<(URL, URL?)>()
         let toChangeBrand = PublishRelay<() -> Void>()
         let toAddressess = PublishRelay<() -> Void>()
         let toPositionDetail = PublishRelay<String>()

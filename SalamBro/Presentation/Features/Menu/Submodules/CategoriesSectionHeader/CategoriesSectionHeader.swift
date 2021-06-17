@@ -21,7 +21,7 @@ public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusabl
     private var disposeBag = DisposeBag()
     weak var scrollService: MenuScrollService? {
         didSet {
-            bind()
+            bindScrollService()
         }
     }
 
@@ -56,14 +56,14 @@ public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusabl
         self.viewModel = viewModel
     }
 
-    private func bind() {
+    private func bindScrollService() {
         scrollService?.didSelectCategory
-            .subscribe(onNext: { [weak self] in
-                switch $0 {
+            .subscribe(onNext: { [weak self] source, category in
+                switch source {
                 case .table:
-                    self?.selectItem(at: $1)
+                    self?.select(category: category)
                 case .header:
-                    self?.scrollToItem(at: $1)
+                    self?.scroll(to: category)
                 }
             })
             .disposed(by: disposeBag)
@@ -87,7 +87,7 @@ public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusabl
 
 extension CategoriesSectionHeader: UICollectionViewDelegate, UICollectionViewDataSource {
     public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        scrollService?.didSelectCategory.accept((source: .header, position: indexPath.item))
+        scrollService?.didSelectCategory.accept((source: .header, category: viewModel.getCategory(by: indexPath.item)))
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
@@ -102,14 +102,17 @@ extension CategoriesSectionHeader: UICollectionViewDelegate, UICollectionViewDat
 }
 
 extension CategoriesSectionHeader {
-    func selectItem(at position: Int) {
-        guard scrollService?.isHeaderScrolling == false else { return }
-        collectionView.selectItem(at: IndexPath(item: position, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+    func select(category: String) {
+        guard scrollService?.isHeaderScrolling == false,
+              let index = viewModel.getIndex(of: category)
+        else { return }
+        collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: true, scrollPosition: .centeredHorizontally)
     }
 
-    func scrollToItem(at position: Int) {
+    func scroll(to category: String) {
+        guard let index = viewModel.getIndex(of: category) else { return }
         scrollService?.startedScrolling()
-        collectionView.scrollToItem(at: IndexPath(item: position, section: 0), at: .centeredHorizontally, animated: true)
+        collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
     }
 }
 

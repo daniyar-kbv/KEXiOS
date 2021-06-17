@@ -7,8 +7,10 @@
 
 import UIKit
 
+//  Tech debt: remove?
+
 class RatingController: ViewController {
-    var coordinator: RatingCoordinator
+//    var coordinator: RatingCoordinator
 
     lazy var segmentedControlView: CustomSegmentedControl = {
         let view = CustomSegmentedControl(buttonTitle: [L10n.Rating.overall, L10n.Rating.weekly])
@@ -111,11 +113,11 @@ class RatingController: ViewController {
         return view
     }()
 
-    init(coordinator: RatingCoordinator) {
-        self.coordinator = coordinator
-
-        super.init(nibName: .none, bundle: .none)
-    }
+//    init(coordinator: RatingCoordinator) {
+//        self.coordinator = coordinator
+//
+//        super.init(nibName: .none, bundle: .none)
+//    }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -131,7 +133,7 @@ class RatingController: ViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
-        coordinator.didFinish()
+//        coordinator.didFinish()
     }
 
     override func setupNavigationBar() {
@@ -195,7 +197,7 @@ extension RatingController {
     }
 
     @objc func infoButtonTapped() {
-        coordinator.openAgreement()
+//        coordinator.openAgreement()
     }
 }
 

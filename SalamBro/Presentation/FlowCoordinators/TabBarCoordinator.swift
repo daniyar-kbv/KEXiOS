@@ -74,6 +74,7 @@ final class TabBarCoordinator: Coordinator {
             switch self {
             case let .menu(serviceComponents):
                 return MenuCoordinator(serviceComponents: serviceComponents,
+                                       pagesFactory: MenuPagesFactoryIml(serviceComponents: serviceComponents),
                                        navigationController: UINavigationController(),
                                        tabType: self)
             case .profile:

@@ -46,6 +46,7 @@ final class AddressPagesFactoryImpl: AddressPagesFactory {
 
     private func makeMapViewModel(address: Address?) -> MapViewModel {
         return .init(ordersService: serviceComponents.ordersService(),
+                     defaultStorage: DefaultStorageImpl.sharedStorage,
                      locationRepository: getLocationRepository(),
                      brandRepository: getBrandRepository(),
                      flow: .change,

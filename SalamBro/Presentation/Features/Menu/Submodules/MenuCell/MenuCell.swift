@@ -6,6 +6,7 @@
 //
 
 import Reusable
+import Imaginary
 import RxCocoa
 import RxSwift
 import SnapKit
@@ -14,7 +15,6 @@ import UIKit
 final class MenuCell: UITableViewCell, Reusable {
     private lazy var foodImageView: UIImageView = {
         let view = UIImageView()
-        view.image = Asset.fastFood.image
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -83,6 +83,13 @@ final class MenuCell: UITableViewCell, Reusable {
     }
 
     private func bind() {
+        viewModel.itemImageURL
+            .bind(onNext: { [weak self] imageURL in
+                guard let url = imageURL else { return }
+                self?.foodImageView.setImage(url: url)
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.itemTitle
             .bind(to: titleLabel.rx.text)
             .disposed(by: disposeBag)

@@ -53,8 +53,9 @@ final class AdCollectionCell: UITableViewCell, NibReusable {
 
 extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let promotionURL = URL(string: viewModel.cellViewModels[indexPath.item].promotion.link) else { return }
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        delegate?.goToRating()
+        delegate?.goToRating(promotionURL: promotionURL, infoURL: nil)
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
@@ -75,5 +76,5 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
 }
 
 public protocol AddCollectionCellDelegate {
-    func goToRating()
+    func goToRating(promotionURL: URL, infoURL: URL?)
 }

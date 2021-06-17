@@ -8,16 +8,24 @@
 import Foundation
 
 protocol PromotionsPagesFactory {
-    func makePromotionPage(promotionURL: URL, infoURL: URL) -> PromotionsController
-    func makePromotionInfoPage(url: URL) -> WebViewController
+    func makePromotionsPage(promotionURL: URL, infoURL: URL?) -> PromotionsController
+    func makePromotionsInfoPage(url: URL) -> AgreementController
 }
  
 class PromotionsPagesFactoryImpl: PromotionsPagesFactory {
-    func makePromotionPage(promotionURL: URL, infoURL: URL) -> PromotionsController {
-        return .init(promotionURL: promotionURL, infoURL: infoURL)
+    func makePromotionsPage(promotionURL: URL, infoURL: URL?) -> PromotionsController {
+        return .init(viewModel: makePromotionsViewModel(promotionURL: promotionURL, infoURL: infoURL))
     }
     
-    func makePromotionInfoPage(url: URL) -> WebViewController {
-        return .init(url: url)
+    private func makePromotionsViewModel(promotionURL: URL, infoURL: URL?) -> PromotionsViewModel {
+        return PromotionsViewModelImpl(promotionURL: promotionURL, infoURL: infoURL)
+    }
+    
+    func makePromotionsInfoPage(url: URL) -> AgreementController {
+        return .init(viewModel: makePromotionsInfoViewModel(url: url))
+    }
+    
+    func makePromotionsInfoViewModel(url: URL) -> AgreementViewModel {
+        return AgreementViewModelImpl(url: url)
     }
 }

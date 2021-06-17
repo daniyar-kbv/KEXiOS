@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AdditionalItemCell: UICollectionViewCell {
+class ModifiersCell: UICollectionViewCell {
     lazy var itemImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "cola")

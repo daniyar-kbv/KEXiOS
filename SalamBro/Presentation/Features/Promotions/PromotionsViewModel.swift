@@ -10,21 +10,16 @@ import RxSwift
 import RxCocoa
 
 protocol PromotionsViewModel {
-//    let promotionURL = Be
+    var promotionURL: BehaviorRelay<URL> { get }
+    var infoURL: BehaviorRelay<URL?> { get }
 }
 
 final class PromotionsViewModelImpl: PromotionsViewModel {
+    let promotionURL: BehaviorRelay<URL>
+    let infoURL: BehaviorRelay<URL?>
     
-    init(promotionURL: URL, infoURL: URL) {
-        self.promotionURL = promotionURL
-        self.infoURL = infoURL
-    }
-    
-    func getPromotionURL() -> URL {
-        return promotionURL
-    }
-    
-    func getInfoURL() -> URL {
-        return infoURL
+    init(promotionURL: URL, infoURL: URL?) {
+        self.promotionURL = BehaviorRelay<URL>(value: promotionURL)
+        self.infoURL = BehaviorRelay<URL?>(value: infoURL)
     }
 }

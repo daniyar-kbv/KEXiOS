@@ -12,14 +12,22 @@ protocol MenuPagesFactory {
 }
 
 class MenuPagesFactoryIml: MenuPagesFactory {
+    private let serviceComponents: ServiceComponents
+    
+    init(serviceComponents: ServiceComponents) {
+        self.serviceComponents = serviceComponents
+    }
+    
     func makeManuPage() -> MenuController {
         return .init(viewModel: makeMenuViewModel(),
-//                     Tech debt: move MenuScrollService() ?
                      scrollService: MenuScrollService())
     }
     
     private func makeMenuViewModel() -> MenuViewModelProtocol {
-        return MenuViewModel(menuRepository: getMenuRepository(),
+        return MenuViewModel(defaultStorage: DefaultStorageImpl.sharedStorage,
+                             promotionsService: serviceComponents.promotionsService(),
+                             ordersService: serviceComponents.ordersService(),
+                             menuRepository: getMenuRepository(),
                              locationRepository: getLocationRepository(),
                              brandRepository: getBrandRepository())
     }
@@ -28,7 +36,6 @@ class MenuPagesFactoryIml: MenuPagesFactory {
 //    Tech debt: change to components
 
 extension MenuPagesFactoryIml {
-    
     
     func getMenuRepository() -> MenuRepository {
         DIResolver.resolve(MenuRepository.self)!

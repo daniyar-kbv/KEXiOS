@@ -11,10 +11,11 @@ import RxCocoa
 import RxSwift
 
 protocol OrdersService: AnyObject {
-    func applyOrder(dto: OrderApplyDTO) -> Single<OrderApplyResponse>
+    func applyOrder(dto: OrderApplyDTO) -> Single<String>
+    func getProducts(for leadUUID: String) -> Single<OrderProductResponse.Data>
+    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<OrderProductDetailResponse>
     func decrement(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse>
     func increment(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse>
-    func getProducts(for leadUUID: String) -> Single<OrderProductResponse>
     func updateCart(for leadUUID: String) -> Single<OrderUpdateCartResponse>
 }
 
@@ -25,21 +26,65 @@ final class OrdersServiceMoyaImpl: OrdersService {
         self.provider = provider
     }
 
-    func applyOrder(dto: OrderApplyDTO) -> Single<OrderApplyResponse> {
+    func applyOrder(dto: OrderApplyDTO) -> Single<String> {
         return provider.rx
             .request(.apply(dto: dto))
             .map { response in
-
+                
                 // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
 
                 guard let applyResponse = try? response.map(OrderApplyResponse.self) else {
                     throw NetworkError.badMapping
                 }
+                
+                if let error = applyResponse.error {
+                    throw error
+                }
+                
+                guard let leadUUID = applyResponse.data?.uuid else {
+                    throw NetworkError.error("Нет данных")
+                }
 
-                return applyResponse
+                return leadUUID
             }
     }
 
+    func getProducts(for leadUUID: String) -> Single<OrderProductResponse.Data> {
+        return provider.rx
+            .request(.getProducts(leadUUID: leadUUID))
+            .map { response in
+
+                // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
+
+                guard let orderProductsResponse = try? response.map(OrderProductResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+                
+                guard let data = orderProductsResponse.data else {
+                    throw NetworkError.error("Нет данных")
+                }
+
+                return data
+            }
+    }
+    
+    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<OrderProductDetailResponse> {
+        return provider.rx
+            .request(.getProductDetail(leadUUID: leadUUID, productUUID: productUUID))
+            .map { response in
+
+                // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
+
+                guard let orderProductDetailResponse = try? response.map(OrderProductDetailResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                return orderProductDetailResponse
+            }
+    }
+    
+//    Tech debt: change to get, put, patch cart
+    
     func decrement(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse> {
         return provider.rx
             .request(.decrement(dto: dto))
@@ -54,7 +99,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 return incDecrResponse
             }
     }
-
+    
     func increment(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse> {
         return provider.rx
             .request(.increment(dto: dto))
@@ -67,21 +112,6 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 return incDecrResponse
-            }
-    }
-
-    func getProducts(for leadUUID: String) -> Single<OrderProductResponse> {
-        return provider.rx
-            .request(.getProducts(leadUUID: leadUUID))
-            .map { response in
-
-                // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
-
-                guard let orderProductsResponse = try? response.map(OrderProductResponse.self) else {
-                    throw NetworkError.badMapping
-                }
-
-                return orderProductsResponse
             }
     }
 

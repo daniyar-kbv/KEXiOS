@@ -12,9 +12,10 @@ import RxCocoa
 import WebKit
 
 final class PromotionsController: UIViewController {
-    let outputs = Output()
-    
+    private let disposeBag = DisposeBag()
     private let viewModel: PromotionsViewModel
+    
+    let outputs = Output()
     
     init(viewModel: PromotionsViewModel) {
         self.viewModel = viewModel
@@ -40,7 +41,6 @@ final class PromotionsController: UIViewController {
     
     lazy var webView: WKWebView = {
         let view = WKWebView()
-        view.load(URLRequest(url: viewModel.getPromotionURL()))
         return view
     }()
     
@@ -54,6 +54,21 @@ final class PromotionsController: UIViewController {
         super.viewDidLoad()
         
         setupNavigationBar()
+        bindViewModel()
+    }
+    
+    func bindViewModel() {
+        viewModel.promotionURL
+            .bind(onNext: { [weak self] url in
+                self?.webView.load(URLRequest(url: url))
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.infoURL
+            .bind(onNext: { [weak self] infoURL in
+                self?.infoButton.isHidden = infoURL == nil
+            })
+            .disposed(by: disposeBag)
     }
     
 //    Tech debt: change
@@ -73,10 +88,12 @@ final class PromotionsController: UIViewController {
         navigationItem.title = nil
         navigationItem.title = L10n.Rating.title
         navigationItem.rightBarButtonItem = .init(customView: infoButton)
+        navigationController?.navigationBar.isTranslucent = false
     }
     
     @objc func infoButtonTapped() {
-        outputs.toInfo.accept(viewModel.getInfoURL())
+        guard let infoURL = viewModel.infoURL.value else { return }
+        outputs.toInfo.accept(infoURL)
     }
 }
 

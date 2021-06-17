@@ -11,13 +11,14 @@ import RxSwift
 import YandexMapKit
 import YandexMapKitSearch
 
-final class MapViewModel: ViewModel {
+final class MapViewModel {
     enum MapFlow {
         case creation
         case change
     }
     
     private let ordersService: OrdersService
+    private let defaultStorage: DefaultStorage
     private let locationRepository: LocationRepository
     private let brandRepository: BrandRepository
 
@@ -32,11 +33,13 @@ final class MapViewModel: ViewModel {
     private let disposeBag = DisposeBag()
 
     init(ordersService: OrdersService,
+         defaultStorage: DefaultStorage,
          locationRepository: LocationRepository,
          brandRepository: BrandRepository,
          flow: MapFlow,
          address: Address? = nil) {
         self.ordersService = ordersService
+        self.defaultStorage = defaultStorage
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
         
@@ -56,8 +59,9 @@ final class MapViewModel: ViewModel {
         switch flow {
         case .creation:
             locationRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
-//            TODO: Change back
+//            TODO: revert
 //            applyOrders(address: lastAddress)
+            defaultStorage.persist(leadUUID: "ace65478-c4ba-4a78-84a8-26c49466244c")
             outputs.lastSelectedAddress.accept(lastAddress)
         case .change:
             outputs.lastSelectedAddress.accept(lastAddress)
@@ -112,30 +116,26 @@ extension MapViewModel {
     func applyOrders(address: MapAddress) {
         guard let brandId = brandRepository.getCurrentBrand()?.id,
               let cityId = locationRepository.getCurrectCity()?.id,
-              let longitude = locationRepository.getCurrentAddress()?.longitude,
-              let latitude = locationRepository.getCurrentAddress()?.latitude else { return }
+              let longitude = locationRepository.getCurrentAddress()?.longitude.rounded(to: 8),
+              let latitude = locationRepository.getCurrentAddress()?.latitude.rounded(to: 8) else { return }
         
-        let dto: OrderApplyDTO = .init(
-            brandId: brandId,
-            cityId: cityId,
-            address: .init(
-                longitude: String(longitude),
-                latitude: String(latitude)
-            )
-        )
+        let dto: OrderApplyDTO = .init(address: .init(city: cityId,
+                                                      longitude: longitude,
+                                                      latitude: latitude),
+                                       localBrand: brandId)
         
-        startAnimation()
+        outputs.didStartRequest.accept(())
         
         ordersService.applyOrder(dto: dto)
-            .subscribe(onSuccess: { [weak self] response in
-                self?.stopAnimation()
-                DefaultStorageImpl.sharedStorage.persist(leadUUID: response.uuid)
+            .subscribe { [weak self] leadUUID in
+                self?.outputs.didFinishRequest.accept(())
+                self?.defaultStorage.persist(leadUUID: leadUUID)
                 self?.outputs.lastSelectedAddress.accept(address)
-            }, onError: { [weak self] error in
-                self?.stopAnimation()
+            } onError: { [weak self] error in
+                self?.outputs.didFinishRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
                 self?.outputs.didGetError.accept(error)
-            }).disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
     }
 }
 
@@ -144,6 +144,9 @@ extension MapViewModel {
         let moveMapTo = PublishRelay<YMKPoint>()
         let selectedAddress = BehaviorSubject<MapAddress>(value: MapAddress(name: "", formattedAddress: "", longitude: 0, latitude: 0))
         let lastSelectedAddress = PublishRelay<MapAddress>()
+        
         let didGetError = PublishRelay<ErrorPresentable>()
+        let didStartRequest = PublishRelay<Void>()
+        let didFinishRequest = PublishRelay<Void>()
     }
 }

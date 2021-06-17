@@ -12,18 +12,18 @@ struct PromotionsResponse: Codable {
     let error: ErrorResponse?
     
     struct ResponseData: Codable {
-        let count: Int?
+        let count: Int
         let next: String?
         let previous: String?
-        let results: [Promotion]?
+        let results: [Promotion]
         
         struct Promotion: Codable {
-            let position: Int?
-            let id: Int?
-            let type: String?
-            let image: String?
-            let slug: String?
-            let link: String?
+            let position: Int
+            let id: Int
+            let type: String
+            let image: String
+            let slug: String
+            let link: String
         }
     }
 }

@@ -21,7 +21,7 @@ final class SupportCoordinator: TabCoordinator {
     }
 
     func openAgreement() {
-        let vc = AgreementController()
+        let vc = AgreementController(viewModel: AgreementViewModelImpl(url: URL(string: "google.kz")!))
         childNavigationController.pushViewController(vc, animated: true)
     }
 
