@@ -37,7 +37,8 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else {
-                    self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
+//                    Tech debt: fix
+//                    self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
                     return
                 }
                 self?.outputs.didFail.accept(error)
