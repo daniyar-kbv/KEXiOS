@@ -1,25 +1,79 @@
 //
 //  CommentarySheetController.swift
-//  yandex-map
+//  SalamBro
 //
-//  Created by Arystan on 4/10/21.
+//  Created by Meruyert Tastandiyeva on 6/17/21.
 //
 
+import SnapKit
 import UIKit
 
-class CommentarySheetController: ViewController {
-    @IBOutlet var contentView: UIView!
-    @IBOutlet var commentaryField: UITextField!
-    @IBOutlet var proceedButton: UIButton!
+class CommentarySheetController: UIViewController {
+    private var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .arcticWhite
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 18
+        view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        return view
+    }()
+
+    private var commentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.cornerRadius = 10
+        view.layer.masksToBounds = true
+        return view
+    }()
+
+    public let commentTextField: UITextField = {
+        let textfield = UITextField()
+        textfield.attributedPlaceholder = NSAttributedString(
+            string: L10n.Commentary.AddressField.title,
+            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+        )
+        textfield.borderStyle = .none
+        textfield.clearButtonMode = .never
+        textfield.minimumFontSize = 17
+        textfield.adjustsFontSizeToFitWidth = true
+        textfield.contentHorizontalAlignment = .left
+        textfield.contentVerticalAlignment = .center
+        return textfield
+    }()
+
+    public let sendButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(L10n.Commentary.Button.title, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .kexRed
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .regular)
+        button.cornerRadius = 10
+        button.layer.masksToBounds = true
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
+        button.adjustsImageWhenHighlighted = true
+        button.adjustsImageWhenDisabled = true
+        button.addTarget(self, action: #selector(sendPressed), for: .allTouchEvents)
+        return button
+    }()
 
     weak var delegate: MapDelegate?
     private var yCoordinate: CGFloat!
 
     // MARK: Tech Debt - Change logic by creating a new class for view presentation
 
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        layoutUI()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideTextField), name: UIApplication.willResignActiveNotification, object: nil)
@@ -38,23 +92,46 @@ class CommentarySheetController: ViewController {
         view.endEditing(true)
         delegate?.mapShadow(toggle: false)
     }
+}
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
+extension CommentarySheetController {
+    private func layoutUI() {
+        view.backgroundColor = .clear
         navigationController?.setNavigationBarHidden(true, animated: true)
-    }
 
-    func setupViews() {
-        commentaryField.attributedPlaceholder = NSAttributedString(
-            string: L10n.Commentary.AddressField.title,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
-        proceedButton.setTitle(L10n.Commentary.Button.title, for: .normal)
-        contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 18
-        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-    }
+        view.addSubview(contentView)
+        [commentView, sendButton].forEach {
+            contentView.addSubview($0)
+        }
+        commentView.addSubview(commentTextField)
 
+        contentView.snp.makeConstraints {
+            $0.top.left.right.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(14)
+        }
+
+        commentView.snp.makeConstraints {
+            $0.top.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.height.equalTo(50)
+        }
+
+        sendButton.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.top.equalTo(commentView.snp.bottom).offset(16)
+            $0.height.equalTo(43)
+        }
+
+        commentTextField.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(16)
+            $0.right.equalToSuperview().offset(-24)
+            $0.centerY.equalToSuperview()
+        }
+    }
+}
+
+extension CommentarySheetController {
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             view.frame.origin.y = yCoordinate + 20
@@ -70,13 +147,13 @@ class CommentarySheetController: ViewController {
         dismissSheet()
     }
 
-    @IBAction func buttonAction(_: UIButton) {
-        if let commentary = commentaryField?.text {
+    @objc func sendPressed() {
+        if let commentary = commentTextField.text {
             // FIXME: - self.dissmiss not working in ios 11, need further investigation
-//            self.dismiss(animated: true) {
+            //            self.dismiss(animated: true) {
             dismissSheet()
             delegate?.passCommentary(text: commentary)
-//            }
+            //            }
         }
     }
 
@@ -86,11 +163,11 @@ class CommentarySheetController: ViewController {
     }
 
     @objc func hideTextField() {
-        commentaryField.endEditing(true)
+        commentTextField.endEditing(true)
     }
 
     @objc func beginEdit() {
-        commentaryField.becomeFirstResponder()
+        commentTextField.becomeFirstResponder()
     }
 
     private func getScreenSize() -> CGFloat {

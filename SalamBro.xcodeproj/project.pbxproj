@@ -66,7 +66,6 @@
 		7D169FECFFDF41B27725CC4DE53FED49 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0F0AC62CAA558710F76120E512D518 /* Cart.swift */; };
 		0284EBB47BAD2563A418FFEC22C047BA /* CartAdditionalProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E2DD1A2C5A27E4C8DEFAE54FF54B1E /* CartAdditionalProduct.swift */; };
 		8B28BE6093A3384007889CA3392A34CD /* CartAdditionalProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AFDD3EFFC698527808DEFFB7074E7B /* CartAdditionalProductCell.swift */; };
-		A02952F94F6C0221691B8B4A441EEE59 /* CartAdditionalProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B454DC153D61424D0BC29D6A26ACC3C /* CartAdditionalProductCell.xib */; };
 		D24D018F93E5D98D914E638AA21A2583 /* CartAdditionalProductDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540553DFE30143D918A9C664D5FD9EBC /* CartAdditionalProductDTO.swift */; };
 		0D13C459B1472FF2CA0426E2334F23C8 /* CartAdditionalProductUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB40194A8C1EC2915B93AF7514E3B2C /* CartAdditionalProductUI.swift */; };
 		1AB4EEAB75922F58452FE3D97C636852 /* CartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00505F4E7FBC76F2B7D55371D789551D /* CartController.swift */; };
@@ -75,7 +74,6 @@
 		ACBCAA6836EE9F59FB7354C93B3DCE82 /* CartFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2944587CBB41B7CEA2ABA40C671DB31 /* CartFooter.swift */; };
 		75D565E11FE6C425E1703008D3BE736D /* CartProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94594D56E9E69921057F03CFD7B1E960 /* CartProduct.swift */; };
 		7A6D09781E8D7C00B674862C4121CBDA /* CartProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50214DE7792FC479E7CD89C5326AB66 /* CartProductCell.swift */; };
-		38FD146B5661D0882BE4DCED49C12D86 /* CartProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8BFA8F269A2808DE9FFAFAF5F7F0 /* CartProductCell.xib */; };
 		BAF071F9AE134BB18DB5B1782882F272 /* CartProductDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E291CB2A5CC5F0FBCD05C7640076A7 /* CartProductDTO.swift */; };
 		A6F170915CD82691C470D8258BE5A86C /* CartProductUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15D4DF5C9A0363EF339FA50B8DDCC1B /* CartProductUI.swift */; };
 		AF820C7DD5C9C867F3704958682AB9B9 /* CartRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DA9F94FA24703BCD52B3B8236F4F3C /* CartRepository.swift */; };
@@ -98,7 +96,6 @@
 		420B0084E84444DC515B9649613CDE40 /* CitiesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6995F00BC4A3BB7B5D91ADBF3B1F1B59 /* CitiesResponse.swift */; };
 		D786D7AAE746E2456D0107C5F1F13575 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612F0D8D22565EE6F4CBDB825983840C /* City.swift */; };
 		203FEAE5A71D4288431F6FE079723817 /* CommentarySheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1F706E554BF92C0C9FBC8B08CDF5 /* CommentarySheetController.swift */; };
-		7AF8512BF8FCD22EB59FC289865E33A4 /* CommentarySheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 964B1BD97295E975C80FD3370E95B8DB /* CommentarySheetController.xib */; };
 		56EF0190AA0C382AE88C80A7550E9C1F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */; };
 		B923EF2596AE70DF8066204D139682A8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E04769D7ACAB76FD63E866037C867A /* Coordinator.swift */; };
 		925C56EC65A2720BA77896F87D2E7129 /* CountriesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932B930707FC6465A3499C3C4E75923A /* CountriesListController.swift */; };
@@ -189,8 +186,8 @@
 		DDB97E999180D5DF89B4C40E50D70EA3 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A56E17FF10703C24CC4172E0F01609 /* ProfileView.swift */; };
 		A26DAD8BD3AE115B3711AFA885725699 /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */; };
 		C53C4DDB0C305025A6F252C490347231 /* RateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B024823DA276215DE019CC233F211E2C /* RateController.xib */; };
+		4180ABC8F91047DFA2FFB4094FF842DF /* RateController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BF53C77C371040CEC6DFBA1BA4881C /* RateController2.swift */; };
 		F5BD4046B597F112547C5320F4898774 /* RateItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */; };
-		705A3188A9E050961D6A7EB65C63278E /* RateItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E52B0649F2E590371E5C5E5A88064AE /* RateItemCell.xib */; };
 		60B654CFA78535C5C47844F489215806 /* RatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D907407B02F778FF81888E372DE8D8 /* RatingCell.swift */; };
 		63DF66EFC9CE86EA55106CC54910C009 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */; };
 		40F8F88F5CF17244D1D5782886426333 /* RatingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8FB252B3EF143910D24999EDA5CE50 /* RatingCoordinator.swift */; };
@@ -318,8 +315,7 @@
 		513C0A393A13F75FF2DE285047A8B4F0 /* BrandsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsController.swift; sourceTree = "<group>"; };
 		BF0F0AC62CAA558710F76120E512D518 /* Cart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		94E2DD1A2C5A27E4C8DEFAE54FF54B1E /* CartAdditionalProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartAdditionalProduct.swift; sourceTree = "<group>"; };
-		93AFDD3EFFC698527808DEFFB7074E7B /* CartAdditionalProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartAdditionalProductCell.swift; sourceTree = "<group>"; };
-		6B454DC153D61424D0BC29D6A26ACC3C /* CartAdditionalProductCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartAdditionalProductCell.xib; sourceTree = "<group>"; };
+		93AFDD3EFFC698527808DEFFB7074E7B /* CartAdditionalProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartAdditionalProductCell.swift; sourceTree = "<group>"; };
 		540553DFE30143D918A9C664D5FD9EBC /* CartAdditionalProductDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartAdditionalProductDTO.swift; sourceTree = "<group>"; };
 		DCB40194A8C1EC2915B93AF7514E3B2C /* CartAdditionalProductUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartAdditionalProductUI.swift; sourceTree = "<group>"; };
 		00505F4E7FBC76F2B7D55371D789551D /* CartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartController.swift; sourceTree = "<group>"; };
@@ -327,8 +323,7 @@
 		FCF307719DB134F2822AFF83618DF7A9 /* CartDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartDTO.swift; sourceTree = "<group>"; };
 		B2944587CBB41B7CEA2ABA40C671DB31 /* CartFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartFooter.swift; sourceTree = "<group>"; };
 		94594D56E9E69921057F03CFD7B1E960 /* CartProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProduct.swift; sourceTree = "<group>"; };
-		A50214DE7792FC479E7CD89C5326AB66 /* CartProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductCell.swift; sourceTree = "<group>"; };
-		BBBA8BFA8F269A2808DE9FFAFAF5F7F0 /* CartProductCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartProductCell.xib; sourceTree = "<group>"; };
+		A50214DE7792FC479E7CD89C5326AB66 /* CartProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartProductCell.swift; sourceTree = "<group>"; };
 		07E291CB2A5CC5F0FBCD05C7640076A7 /* CartProductDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductDTO.swift; sourceTree = "<group>"; };
 		F15D4DF5C9A0363EF339FA50B8DDCC1B /* CartProductUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductUI.swift; sourceTree = "<group>"; };
 		47DA9F94FA24703BCD52B3B8236F4F3C /* CartRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepository.swift; sourceTree = "<group>"; };
@@ -350,8 +345,7 @@
 		01C4535D2136E4D06E0D57D74B2B1904 /* CitiesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListViewModel.swift; sourceTree = "<group>"; };
 		6995F00BC4A3BB7B5D91ADBF3B1F1B59 /* CitiesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesResponse.swift; sourceTree = "<group>"; };
 		612F0D8D22565EE6F4CBDB825983840C /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
-		E8CD1F706E554BF92C0C9FBC8B08CDF5 /* CommentarySheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentarySheetController.swift; sourceTree = "<group>"; };
-		964B1BD97295E975C80FD3370E95B8DB /* CommentarySheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentarySheetController.xib; sourceTree = "<group>"; };
+		E8CD1F706E554BF92C0C9FBC8B08CDF5 /* CommentarySheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentarySheetController.swift; sourceTree = "<group>"; };
 		76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		51E04769D7ACAB76FD63E866037C867A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		932B930707FC6465A3499C3C4E75923A /* CountriesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListController.swift; sourceTree = "<group>"; };
@@ -450,8 +444,8 @@
 		D8A56E17FF10703C24CC4172E0F01609 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
 		B024823DA276215DE019CC233F211E2C /* RateController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RateController.xib; sourceTree = "<group>"; };
-		EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateItemCell.swift; sourceTree = "<group>"; };
-		4E52B0649F2E590371E5C5E5A88064AE /* RateItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RateItemCell.xib; sourceTree = "<group>"; };
+		13BF53C77C371040CEC6DFBA1BA4881C /* RateController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController2.swift; sourceTree = "<group>"; };
+		EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateItemCell.swift; sourceTree = "<group>"; };
 		81D907407B02F778FF81888E372DE8D8 /* RatingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingCell.swift; sourceTree = "<group>"; };
 		E3A567521085F0CC5ABFBBDEC1EEF497 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingController.swift; sourceTree = "<group>"; };
 		EA8FB252B3EF143910D24999EDA5CE50 /* RatingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingCoordinator.swift; sourceTree = "<group>"; };
@@ -709,7 +703,6 @@
 				373055F1FF6ADCC5661CF068DA7B78A3 /* AddressSheetController.swift */,
 				2CF76F8377585959F665EC6E7A08DC94 /* AddressSheetController.xib */,
 				E8CD1F706E554BF92C0C9FBC8B08CDF5 /* CommentarySheetController.swift */,
-				964B1BD97295E975C80FD3370E95B8DB /* CommentarySheetController.xib */,
 				FD223078A8DA8448126C04F410D86618 /* MapActionButton.swift */,
 				E8337AEB6392A7665CCF4C387EDD96FE /* MapDelegate.swift */,
 				1F37EC0641F7BD251AD5D13A6938B162 /* MapViewController.swift */,
@@ -778,8 +771,8 @@
 			children = (
 				EB0DB923452E0C1AED45035BCF99C5C6 /* RateController.swift */,
 				B024823DA276215DE019CC233F211E2C /* RateController.xib */,
+				13BF53C77C371040CEC6DFBA1BA4881C /* RateController2.swift */,
 				EE07A24BE426DFC07CBC08476E8967F6 /* RateItemCell.swift */,
-				4E52B0649F2E590371E5C5E5A88064AE /* RateItemCell.xib */,
 				774846F1F181F3043DE14327D51E4080 /* UICollectionViewCenterLayout.swift */,
 			);
 			path = RateOrder;
@@ -1113,11 +1106,9 @@
 			isa = PBXGroup;
 			children = (
 				93AFDD3EFFC698527808DEFFB7074E7B /* CartAdditionalProductCell.swift */,
-				6B454DC153D61424D0BC29D6A26ACC3C /* CartAdditionalProductCell.xib */,
 				00505F4E7FBC76F2B7D55371D789551D /* CartController.swift */,
 				B2944587CBB41B7CEA2ABA40C671DB31 /* CartFooter.swift */,
 				A50214DE7792FC479E7CD89C5326AB66 /* CartProductCell.swift */,
-				BBBA8BFA8F269A2808DE9FFAFAF5F7F0 /* CartProductCell.xib */,
 				889994BF499E6C628B97B3075AAD5455 /* CartViewModel.swift */,
 			);
 			path = Cart;
@@ -1644,13 +1635,9 @@
 			files = (
 				A9999B2C8EB50DE5CFBF201C504DA28E /* AddressSheetController.xib in Resources */,
 				9617C33EE7EC0B11879A840A0FCEDD8D /* Assets.xcassets in Resources */,
-				A02952F94F6C0221691B8B4A441EEE59 /* CartAdditionalProductCell.xib in Resources */,
-				38FD146B5661D0882BE4DCED49C12D86 /* CartProductCell.xib in Resources */,
-				7AF8512BF8FCD22EB59FC289865E33A4 /* CommentarySheetController.xib in Resources */,
 				05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */,
 				49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */,
 				C53C4DDB0C305025A6F252C490347231 /* RateController.xib in Resources */,
-				705A3188A9E050961D6A7EB65C63278E /* RateItemCell.xib in Resources */,
 				164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */,
 				F694560D11CB08F2FE1D2F7E86B4167B /* emptyBasket.json in Resources */,
 				4B9B1575E958577624E23D440A6EE8FE /* noInternet.json in Resources */,
@@ -2018,6 +2005,7 @@
 				974AE9BE8ACDD9A2039C9F9A06FBFF0E /* ProfileCoordinator.swift in Sources */,
 				DDB97E999180D5DF89B4C40E50D70EA3 /* ProfileView.swift in Sources */,
 				A26DAD8BD3AE115B3711AFA885725699 /* RateController.swift in Sources */,
+				4180ABC8F91047DFA2FFB4094FF842DF /* RateController2.swift in Sources */,
 				F5BD4046B597F112547C5320F4898774 /* RateItemCell.swift in Sources */,
 				60B654CFA78535C5C47844F489215806 /* RatingCell.swift in Sources */,
 				63DF66EFC9CE86EA55106CC54910C009 /* RatingController.swift in Sources */,
