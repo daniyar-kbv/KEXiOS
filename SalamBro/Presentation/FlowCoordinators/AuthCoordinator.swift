@@ -9,20 +9,20 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AuthCoordinator {
+final class AuthCoordinator: BaseCoordinator {
     private let disposeBag = DisposeBag()
 
     var didFinish: (() -> Void)?
 
-    private let navigationController: UINavigationController
+    private let router: Router
     private let pagesFactory: AuthPagesFactory
 
-    init(navigationController: UINavigationController, pagesFactory: AuthPagesFactory) {
-        self.navigationController = navigationController
+    init(router: Router, pagesFactory: AuthPagesFactory) {
+        self.router = router
         self.pagesFactory = pagesFactory
     }
 
-    func start() {
+    override func start() {
         let authPage = pagesFactory.makeAuthorizationPage()
 
         authPage.outputs.didSendOTP
@@ -51,7 +51,7 @@ final class AuthCoordinator {
             })
             .disposed(by: disposeBag)
 
-        navigationController.pushViewController(authPage, animated: true)
+        router.push(viewController: authPage, animated: true)
     }
 
     private func showOTPConfirmationPage(phoneNumber: String) {
@@ -68,7 +68,7 @@ final class AuthCoordinator {
             })
             .disposed(by: disposeBag)
 
-        navigationController.pushViewController(verificationPage, animated: true)
+        router.push(viewController: verificationPage, animated: true)
     }
 
     private func showNameEnteringPage() {
@@ -78,7 +78,7 @@ final class AuthCoordinator {
             self?.handleAuthTermination()
         }
 
-        navigationController.pushViewController(nameEnteringPage, animated: true)
+        router.push(viewController: nameEnteringPage, animated: true)
     }
 
     private func showCountryCodePicker(onSelectCountry: @escaping ((Country) -> Void)) {
@@ -87,24 +87,24 @@ final class AuthCoordinator {
         countryCodePickerPage.outputs.didSelectCountryCode
             .subscribe(onNext: { [weak self] country in
                 onSelectCountry(country)
-                self?.navigationController.dismiss(animated: true, completion: nil)
+                self?.router.dismiss(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
 
         let navController = UINavigationController(rootViewController: countryCodePickerPage)
-        navigationController.present(navController, animated: true)
+        router.present(navController, animated: true, completion: nil)
     }
 
     private func showAgreementPage() {
         let agreementPage = pagesFactory.makeAgreementPage()
 
-        navigationController.pushViewController(agreementPage, animated: true)
+        router.push(viewController: agreementPage, animated: true)
     }
 }
 
 extension AuthCoordinator {
     private func handleAuthTermination() {
-        navigationController.popToRootViewController(animated: true)
+        router.popToRootViewController(animated: true)
         didFinish?()
     }
 }

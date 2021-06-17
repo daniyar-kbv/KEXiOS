@@ -7,12 +7,35 @@
 
 import UIKit
 
+final class SBTabBarController: UITabBarController {
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        configure()
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func configure() {
+        view.backgroundColor = .white
+        tabBar.tintColor = .kexRed
+        tabBar.barTintColor = .white
+        tabBar.backgroundColor = .white
+        tabBar.isTranslucent = false
+        tabBar.itemPositioning = .centered
+    }
+}
+
+// FIXME: Tech debt, legacy
 protocol MainTabDelegate {
     func updateCounter(isIncrease: Bool)
     func setCount(count: Int)
     func changeController(id: Int)
 }
 
+// FIXME: Tech debt, legacy
 final class MainTabController: UITabBarController {
     let coordinator = TabBarCoordinator(navigationController: UINavigationController())
     var itemCount: Int = 0
@@ -27,9 +50,9 @@ final class MainTabController: UITabBarController {
     }
 }
 
+// FIXME: Tech debt, legacy
 extension MainTabController {
     func configureUI() {
-        view.tintColor = .kexRed
         tabBar.barTintColor = .white
 
         navigationItem.setHidesBackButton(true, animated: true)
@@ -41,6 +64,7 @@ extension MainTabController {
     }
 }
 
+// FIXME: Tech debt, legacy
 extension MainTabController: MainTabDelegate {
     func getCart() -> CartController? {
         return coordinator.getCoordinators().first(where: { $0.tabType == .cart })?.childNavigationController.viewControllers.first as? CartController

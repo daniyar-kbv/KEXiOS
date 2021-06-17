@@ -8,6 +8,7 @@
 import Cosmos
 import UIKit
 
+// FIX: Tech debt, нужно переписать
 class RateController: ViewController {
     var data: [String] = []
 

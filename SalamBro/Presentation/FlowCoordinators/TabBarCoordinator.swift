@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-final class TabBarCoordinator: Coordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators: [Coordinator] = []
+final class TabBarCoordinator: LegacyCoordinator {
+    var parentCoordinator: LegacyCoordinator?
+    var childCoordinators: [LegacyCoordinator] = []
     var navigationController: UINavigationController
     var tabTypes = TabType.allCases
 
@@ -19,7 +19,6 @@ final class TabBarCoordinator: Coordinator {
     }
 
     func start() {
-        childCoordinators = tabTypes.map { $0.coordinator }
         for coordinator in childCoordinators {
             coordinator.start()
         }
@@ -65,19 +64,6 @@ final class TabBarCoordinator: Coordinator {
                 return Asset.support.image
             case .cart:
                 return Asset.cart.image
-            }
-        }
-
-        var coordinator: TabCoordinator {
-            switch self {
-            case .menu:
-                return MenuCoordinator(navigationController: UINavigationController(), tabType: self)
-            case .profile:
-                return ProfileCoordinator(navigationController: UINavigationController(), tabType: self)
-            case .support:
-                return SupportCoordinator(navigationController: UINavigationController(), tabType: self)
-            case .cart:
-                return CartCoordinator(navigationController: UINavigationController(), tabType: self)
             }
         }
     }

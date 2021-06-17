@@ -10,21 +10,21 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AddressListCoordinator {
+final class AddressListCoordinator: BaseCoordinator {
     private let disposeBag = DisposeBag()
-    private var navigationController: UINavigationController
+    private let router: Router
     private var pagesFactory: AddressListPagesFactory
 
     var didFinish: (() -> Void)?
 
-    init(navigationController: UINavigationController,
+    init(router: Router,
          pagesFactory: AddressListPagesFactory)
     {
-        self.navigationController = navigationController
+        self.router = router
         self.pagesFactory = pagesFactory
     }
 
-    func start() {
+    override func start() {
         let listPage = pagesFactory.makeAddressListPage()
 
         listPage.outputs.didTerminate.subscribe(onNext: { [weak self] _ in
@@ -36,7 +36,7 @@ final class AddressListCoordinator {
         }).disposed(by: disposeBag)
 
         listPage.hidesBottomBarWhenPushed = true
-        navigationController.pushViewController(listPage, animated: true)
+        router.push(viewController: listPage, animated: true)
     }
 
     func openDetail(deliveryAddress: DeliveryAddress, onUpdate: @escaping () -> Void) {
@@ -44,9 +44,9 @@ final class AddressListCoordinator {
 
         detailPage.outputs.didDeleteAddress.subscribe(onNext: { [weak self] in
             onUpdate()
-            self?.navigationController.popViewController(animated: true)
+            self?.router.pop(animated: true)
         }).disposed(by: disposeBag)
 
-        navigationController.pushViewController(detailPage, animated: true)
+        router.push(viewController: detailPage, animated: true)
     }
 }
