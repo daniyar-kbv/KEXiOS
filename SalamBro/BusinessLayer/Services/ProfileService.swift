@@ -38,7 +38,11 @@ final class ProfileServiceMoyaImpl: ProfileService {
                     throw error
                 }
 
-                return userInfoContainerResponse.data
+                guard let userInfo = userInfoContainerResponse.data else {
+                    throw NetworkError.badMapping
+                }
+
+                return userInfo
             }
     }
 
@@ -54,7 +58,11 @@ final class ProfileServiceMoyaImpl: ProfileService {
                     throw error
                 }
 
-                return userInfoResponse.data
+                guard let userInfo = userInfoResponse.data else {
+                    throw NetworkError.badMapping
+                }
+
+                return userInfo
             }
     }
 }

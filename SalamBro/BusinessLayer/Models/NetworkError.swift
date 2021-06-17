@@ -28,6 +28,12 @@ struct ErrorResponse: Codable, ErrorPresentable {
     let message: String
 
     var presentationDescription: String {
-        return message
+        #if DEBUG
+            return code
+        #endif
+
+        // MARK: Tech debt, before upload to AppStore uncomment this 👇🏻  code and comment ⬆️ code
+
+//        return message
     }
 }

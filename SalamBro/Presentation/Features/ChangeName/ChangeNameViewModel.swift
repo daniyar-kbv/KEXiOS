@@ -21,10 +21,12 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
     private(set) var outputs: Output = .init()
 
     private let service: ProfileService
+    private let defaultStorage: DefaultStorage
     private(set) var oldUserInfo: UserInfoResponse
 
-    init(service: ProfileService, userInfo: UserInfoResponse) {
+    init(service: ProfileService, userInfo: UserInfoResponse, defaultStorage: DefaultStorage) {
         self.service = service
+        self.defaultStorage = defaultStorage
         oldUserInfo = userInfo
     }
 
@@ -34,14 +36,14 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
             .subscribe(onSuccess: { [weak self] userInfo in
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didGetUserInfo.accept(userInfo)
+                if let name = userInfo.name {
+                    self?.defaultStorage.persist(name: name)
+                }
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
-                guard let error = error as? ErrorPresentable else {
-//                    Tech debt: fix
-//                    self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
-                    return
+                if let error = error as? ErrorPresentable {
+                    self?.outputs.didFail.accept(error)
                 }
-                self?.outputs.didFail.accept(error)
             })
             .disposed(by: disposeBag)
     }

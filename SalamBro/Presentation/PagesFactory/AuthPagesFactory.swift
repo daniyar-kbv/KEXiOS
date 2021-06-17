@@ -48,7 +48,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeSetNameViewModel() -> SetNameViewModel {
-        return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage))
+        return scoped(SetNameViewModelImpl(defaultStorage: DefaultStorageImpl.sharedStorage, profileService: serviceComponents.profileService()))
     }
 
     func makeCountryCodePickerPage() -> CountryCodePickerViewController {

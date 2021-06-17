@@ -5,9 +5,13 @@
 //  Created by Arystan on 3/10/21.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
-final class SetNameController: ViewController {
+final class SetNameController: ViewController, AlertDisplayable, LoaderDisplayable {
+    private let disposeBag = DisposeBag()
+
     var didGetEnteredName: ((String) -> Void)?
 
     private lazy var rootView = SetNameView(delegate: self)
@@ -26,11 +30,42 @@ final class SetNameController: ViewController {
     override func loadView() {
         view = rootView
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        bindViewModel()
+    }
+
+    private func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .bind { [weak self] in
+                self?.showLoader()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .bind { [weak self] in
+                self?.hideLoader()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didFail
+            .bind { [weak self] error in
+                self?.showError(error)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didSaveUserName
+            .bind { [weak self] userInfo in
+                guard let name = userInfo.name else { return }
+                self?.didGetEnteredName?(name)
+            }
+            .disposed(by: disposeBag)
+    }
 }
 
 extension SetNameController: GetNameViewDelegate {
     func submit(name: String) {
         viewModel.persist(name: name)
-        didGetEnteredName?(name)
     }
 }
