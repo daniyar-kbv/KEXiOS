@@ -102,11 +102,12 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
             .bind(to: itemTableView.rx.reload)
             .disposed(by: disposeBag)
 
+        print("binding didStartRequest")
         viewModel.outputs.didStartRequest
             .subscribe(onNext: { [weak self] in
                 print("didStartRequest showLoader")
                 self?.showLoader()
-            }, onError: { [weak self] error in
+            }, onError: { error in
                 print("didStartRequest error \(error)")
             }, onCompleted: {
                 print("didStartRequest onCompleted")
@@ -114,10 +115,6 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
             onDisposed: {
                 print("didStartRequest disposed")
             }).disposed(by: disposeBag)
-
-        viewModel.outputs.didStartRequest
-            .subscribe(onNext: <#T##((()) -> Void)?##((()) -> Void)?##(()) -> Void#>,
-                       onError: <#T##((Error) -> Void)?##((Error) -> Void)?##(Error) -> Void#>, onCompleted: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>, onDisposed: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
 
         viewModel.outputs.didEndRequest
             .subscribe(onNext: { [weak self] in

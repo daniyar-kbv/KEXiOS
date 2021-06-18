@@ -65,8 +65,6 @@ final class MenuViewModel: MenuViewModelProtocol {
         cellViewModels = []
         headerViewModels = []
 
-        outputs.updateTableView.accept(())
-
         print("didStartRequest")
         outputs.didStartRequest.accept(())
 
