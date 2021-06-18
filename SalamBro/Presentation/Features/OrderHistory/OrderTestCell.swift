@@ -9,8 +9,14 @@ import Reusable
 import SnapKit
 import UIKit
 
-public final class OrderTestCell: UITableViewCell, Reusable {
-    var delegate: OrderHistoryDelegate?
+protocol OrderTestCellDelegate: AnyObject {
+    func share()
+    func rate()
+}
+
+// FIX: Это что за х?! xD нужно это дерьмо переписать ребят =)))
+final class OrderTestCell: UITableViewCell, Reusable {
+    weak var delegate: OrderTestCellDelegate?
 
     lazy var logoView: UIImageView = {
         let view = UIImageView()

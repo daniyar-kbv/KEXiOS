@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-public final class MenuDetailCoordinator: Coordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators: [Coordinator] = []
+public final class MenuDetailCoordinator: LegacyCoordinator {
+    var parentCoordinator: LegacyCoordinator?
+    var childCoordinators: [LegacyCoordinator] = []
     var navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {

@@ -13,6 +13,8 @@ final class RateController: UIViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
 
+    // FIX: Tech debt, нужно переписать
+
     private lazy var cosmosContainerView: UIView = {
         let view = UIView()
         return view

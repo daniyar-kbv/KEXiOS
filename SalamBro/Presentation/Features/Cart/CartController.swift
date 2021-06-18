@@ -11,11 +11,11 @@ protocol CartViewDelegate {
     func proceed()
 }
 
-// MARK: Tech Debt - rewrite ui implementation
-
+// FIXME: Refactor
 class CartController: ViewController {
+    var openAuth: (() -> Void)?
+
     var mainTabDelegate: MainTabDelegate?
-    var cartViewModel: CartViewModel
 
     // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
 
@@ -79,6 +79,7 @@ class CartController: ViewController {
         return view
     }()
 
+    private let cartViewModel: CartViewModel
     init(viewModel: CartViewModel) {
         cartViewModel = viewModel
 
@@ -92,7 +93,6 @@ class CartController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        cartViewModel = CartViewModel(cartRepository: CartRepositoryMockImpl())
         setupViews()
         setupConstraints()
 
@@ -149,7 +149,7 @@ extension CartController {
     }
 
     @objc func buttonAction() {
-        cartViewModel.coordinator.openAuth()
+        openAuth?()
     }
 }
 
