@@ -9,9 +9,14 @@ import Cosmos
 import SnapKit
 import UIKit
 
-class RateController: UIViewController {
-    let scrollView = UIScrollView()
-    let contentView = UIView()
+final class RateController: UIViewController {
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+
+    private lazy var cosmosContainerView: UIView = {
+        let view = UIView()
+        return view
+    }()
 
     private lazy var cosmosView: CosmosView = {
         let view = CosmosView()
@@ -31,7 +36,6 @@ class RateController: UIViewController {
     private lazy var questionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 19, weight: .medium)
-        label.text = L10n.RateOrder.title
         label.textColor = .darkGray
         label.baselineAdjustment = .alignBaselines
         label.lineBreakMode = .byWordWrapping
@@ -102,7 +106,7 @@ class RateController: UIViewController {
         return button
     }()
 
-    var collectionViewHeightConstraint: Constraint?
+    private var collectionViewHeightConstraint: Constraint?
 
     lazy var shadow: UIView = {
         let view = UIView()
@@ -135,6 +139,7 @@ class RateController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = L10n.RateOrder.title
         layoutUI()
     }
 
@@ -147,7 +152,6 @@ class RateController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.backgroundColor = .arcticWhite
         navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationItem.title = L10n.RateOrder.title
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
@@ -168,25 +172,28 @@ extension RateController {
 
         scrollView.addSubview(contentView)
         contentView.snp.makeConstraints {
-            $0.edges.equalTo(scrollView)
-            $0.width.equalTo(scrollView)
+            $0.edges.width.equalTo(scrollView)
         }
 
-        [cosmosView, questionLabel, suggestionLabel, collectionView, commentView].forEach {
+        [cosmosContainerView, questionLabel, suggestionLabel, collectionView, commentView].forEach {
             contentView.addSubview($0)
         }
 
+        cosmosContainerView.addSubview(cosmosView)
+
         cosmosView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(100)
-            $0.trailing.equalToSuperview().offset(-100)
+            $0.top.bottom.centerX.equalToSuperview()
+        }
+
+        cosmosContainerView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(34)
-            $0.centerX.equalTo(questionLabel.snp.centerX)
+            $0.left.right.equalToSuperview()
         }
 
         questionLabel.snp.makeConstraints {
             $0.left.equalToSuperview().offset(16)
             $0.right.equalToSuperview().offset(-16)
-            $0.top.equalTo(cosmosView.snp.bottom).offset(32)
+            $0.top.equalTo(cosmosContainerView.snp.bottom).offset(32)
         }
 
         suggestionLabel.snp.makeConstraints {
@@ -219,7 +226,7 @@ extension RateController {
         commentView.snp.makeConstraints {
             $0.left.equalToSuperview().offset(16)
             $0.right.equalToSuperview().offset(-16)
-            $0.top.equalTo(collectionView.snp.bottom).offset(8)
+            $0.top.equalTo(collectionView.snp.bottom).offset(20)
             $0.bottom.equalToSuperview().offset(-20)
             $0.height.equalTo(50)
         }
@@ -227,8 +234,7 @@ extension RateController {
         commentTextField.snp.makeConstraints {
             $0.left.equalToSuperview().offset(16)
             $0.right.equalToSuperview().offset(-16)
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.centerX.centerY.equalToSuperview()
         }
 
         sendButton.snp.makeConstraints {

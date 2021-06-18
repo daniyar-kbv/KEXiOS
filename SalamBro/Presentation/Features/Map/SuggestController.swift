@@ -15,19 +15,19 @@ protocol SuggestControllerDelegate: AnyObject {
 }
 
 final class SuggestController: UIViewController {
-    private let contentView: UIView = {
+    private lazy var contentView: UIView = {
         let view = UIView()
         return view
     }()
 
-    private let searchItem: UIImageView = {
+    private lazy var searchItem: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "search")
         imageView.tintColor = .mildBlue
         return imageView
     }()
 
-    private let searchBar: UITextField = {
+    private lazy var searchBar: UITextField = {
         let searchBar = UITextField()
         searchBar.attributedPlaceholder = NSAttributedString(
             string: L10n.Suggest.AddressField.title,
@@ -43,7 +43,7 @@ final class SuggestController: UIViewController {
         return searchBar
     }()
 
-    private let doneButton: UIButton = {
+    private lazy var doneButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.Suggest.Button.title, for: .normal)
         button.setTitleColor(.kexRed, for: .normal)
@@ -56,13 +56,13 @@ final class SuggestController: UIViewController {
         return button
     }()
 
-    private let separator: UIView = {
+    private lazy var separator: UIView = {
         let view = UIView()
         view.backgroundColor = .mildBlue
         return view
     }()
 
-    private let tableView = UITableView()
+    private lazy var tableView = UITableView()
 
     let locationManager = CLLocationManager()
     let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)

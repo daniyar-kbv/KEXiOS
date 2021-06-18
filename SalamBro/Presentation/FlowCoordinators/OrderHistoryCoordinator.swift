@@ -25,8 +25,9 @@ final class OrderHistoryCoordinator: Coordinator {
 
     func openRateOrder() {
         let vc = RateController()
+        let nav = UINavigationController(rootViewController: vc)
         vc.modalPresentationStyle = .pageSheet
-        getLastPresentedViewController().present(vc, animated: true, completion: nil)
+        getLastPresentedViewController().present(nav, animated: true, completion: nil)
     }
 
     func openShareOrder() {

@@ -8,7 +8,7 @@
 import Reusable
 import UIKit
 
-class CartProductCell: UITableViewCell {
+final class CartProductCell: UITableViewCell {
     private lazy var productImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "fastFood")

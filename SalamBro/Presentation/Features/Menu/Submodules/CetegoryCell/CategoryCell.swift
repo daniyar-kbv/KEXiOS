@@ -11,7 +11,7 @@ import RxSwift
 import UIKit
 
 final class CategoryCell: UICollectionViewCell {
-    private let indicatorView: UIView = {
+    private lazy var indicatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .kexRed
         view.isHidden = true
@@ -22,7 +22,7 @@ final class CategoryCell: UICollectionViewCell {
         return view
     }()
 
-    public let categoryLabel: UILabel = {
+    public lazy var categoryLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.AddressPickCell.deliverLabel
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)

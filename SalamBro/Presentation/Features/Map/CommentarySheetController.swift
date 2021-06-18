@@ -8,8 +8,8 @@
 import SnapKit
 import UIKit
 
-class CommentarySheetController: UIViewController {
-    private var contentView: UIView = {
+final class CommentarySheetController: UIViewController {
+    private lazy var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .arcticWhite
         view.clipsToBounds = true
@@ -18,7 +18,7 @@ class CommentarySheetController: UIViewController {
         return view
     }()
 
-    private var commentView: UIView = {
+    private lazy var commentView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         view.cornerRadius = 10
@@ -26,7 +26,7 @@ class CommentarySheetController: UIViewController {
         return view
     }()
 
-    public let commentTextField: UITextField = {
+    public lazy var commentTextField: UITextField = {
         let textfield = UITextField()
         textfield.attributedPlaceholder = NSAttributedString(
             string: L10n.Commentary.AddressField.title,
@@ -41,7 +41,7 @@ class CommentarySheetController: UIViewController {
         return textfield
     }()
 
-    public let sendButton: UIButton = {
+    public lazy var sendButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.Commentary.Button.title, for: .normal)
         button.setTitleColor(.white, for: .normal)

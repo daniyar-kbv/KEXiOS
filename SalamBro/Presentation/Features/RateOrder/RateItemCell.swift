@@ -9,8 +9,8 @@ import Reusable
 import SnapKit
 import UIKit
 
-class RateItemCell: UICollectionViewCell {
-    private let cellView: UIView = {
+final class RateItemCell: UICollectionViewCell {
+    private lazy var cellView: UIView = {
         let view = UIView()
         view.borderColor = .kexRed
         view.borderWidth = 1
@@ -21,7 +21,7 @@ class RateItemCell: UICollectionViewCell {
         return view
     }()
 
-    public let titleLabel: UILabel = {
+    public lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = .kexRed

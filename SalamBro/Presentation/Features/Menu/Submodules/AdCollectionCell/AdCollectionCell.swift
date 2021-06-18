@@ -17,7 +17,7 @@ public protocol AdCollectionCellDelegate {
 final class AdCollectionCell: UITableViewCell {
     public var delegate: AdCollectionCellDelegate?
 
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)

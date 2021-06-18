@@ -11,12 +11,12 @@ import RxSwift
 import UIKit
 
 final class AddressPickCell: UITableViewCell {
-    private let containerView: UIView = {
+    private lazy var containerView: UIView = {
         let view = UIView()
         return view
     }()
 
-    public let deliveryLabel: UILabel = {
+    public lazy var deliveryLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.AddressPickCell.deliverLabel
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
@@ -26,7 +26,7 @@ final class AddressPickCell: UITableViewCell {
         return label
     }()
 
-    public let addressLabel: UILabel = {
+    public lazy var addressLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.textColor = .darkGray
@@ -35,7 +35,7 @@ final class AddressPickCell: UITableViewCell {
         return label
     }()
 
-    private let changeButton: UIButton = {
+    private lazy var changeButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.AddressPickCell.changeButton, for: .normal)
         button.setTitleColor(.kexRed, for: .normal)

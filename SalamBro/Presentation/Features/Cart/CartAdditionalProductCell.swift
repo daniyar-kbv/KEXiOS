@@ -13,7 +13,7 @@ protocol CellDelegate {
     func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool)
 }
 
-class CartAdditionalProductCell: UITableViewCell {
+final class CartAdditionalProductCell: UITableViewCell {
     private lazy var productImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "ketchup")
