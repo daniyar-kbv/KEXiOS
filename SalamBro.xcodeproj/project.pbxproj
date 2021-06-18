@@ -39,10 +39,12 @@
 		84D162FC25BAB627F5989308861562C4 /* AddressSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373055F1FF6ADCC5661CF068DA7B78A3 /* AddressSheetController.swift */; };
 		A9999B2C8EB50DE5CFBF201C504DA28E /* AddressSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CF76F8377585959F665EC6E7A08DC94 /* AddressSheetController.xib */; };
 		5397C0B0398219322EB7AB2C3B1A8AF0 /* AgreementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3B5393FD540E00FAACC28FCE38C64 /* AgreementController.swift */; };
+		100B28DE2C52E0B0E19F847244266640 /* AgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2702A2B404B65D500AD6DC4E451153 /* AgreementViewModel.swift */; };
 		AEDEEEBFD34151D388831E2E2E585082 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4A77B806DDA4999ABB9C121744A219 /* Alert.swift */; };
 		7834AC7CB75692417AC7D27058EF60F0 /* AlertDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13301C6EF44E7A847CEA8B66C012193 /* AlertDisplayable.swift */; };
 		77D032D3C92A033DFF3E6A2E53EA5B0F /* AnimationContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67994B66961B199BC5EB62484BE133DF /* AnimationContainerView.swift */; };
 		FB6E4957AEB5E8B6384377430949FB5A /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42832D3CC40BF252715540E4A3B3D75A /* AppCoordinator.swift */; };
+		4C2691F0176172C3E088ACE773B9B9AB /* AppCoordinatorModulesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920A46D99E140352D3DAD5C8B6EBD02D /* AppCoordinatorModulesBuilder.swift */; };
 		9917C9CA8C142731664889CA05B15F12 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EEE5D86DC6A55586D8809FABE54E7A /* AppDelegate.swift */; };
 		269A167552CD183B0F699BB26595A97B /* ApplicationCoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF604E8968102D104BF0500B65644E4B /* ApplicationCoordinatorFactory.swift */; };
 		403496A52D4F3B4A1577C9E218633E48 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124DBD746EE1979C264DE83DC21C0306 /* ArrayExtension.swift */; };
@@ -235,6 +237,9 @@
 		03E6561668E5D06B6FBDA66F21751F25 /* SuggestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F06F58380E2F0E4D62B56D32D6FB3026 /* SuggestController.xib */; };
 		69A912218E3C57CBF42BBF75070D4DDB /* SupportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7614CF30AE2C9C14A22E9C4B8FEC3B6 /* SupportController.swift */; };
 		551364303D228FB15D82CC496BAE5D19 /* SupportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE52B854C4577D1CE6D818B6589ED1D /* SupportCoordinator.swift */; };
+		888680A2C23544CBFCE3458D4377C324 /* SupportCoordinatorsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6FB858A5C93C24546D4D089F9C9BC /* SupportCoordinatorsFactory.swift */; };
+		2915A60170187535E18F3C7EA186A09B /* SupportPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4726D19E1C728B9D8CD27CF5A2A7DDE /* SupportPagesFactory.swift */; };
+		A6D6CA87C1BD8AA37F22E086352BE9A7 /* SupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8DE8941BAE3546824575BA323DCA9B /* SupportViewModel.swift */; };
 		E609596A98035D81076132623D3D44E7 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767CE2D5A349A0C8542C8B4145CF35A5 /* TabBarCoordinator.swift */; };
 		AC48B0075457DA457FF5D8DE42ACAC27 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA30F773A971EA2FDE29848462A2C514 /* UIAlertController+Extension.swift */; };
 		9CADCD2A4842323E78F20A705B98103B /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA266493C6946E18208AAE57CA77AB /* UIApplication+Extension.swift */; };
@@ -311,10 +316,12 @@
 		373055F1FF6ADCC5661CF068DA7B78A3 /* AddressSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressSheetController.swift; sourceTree = "<group>"; };
 		2CF76F8377585959F665EC6E7A08DC94 /* AddressSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressSheetController.xib; sourceTree = "<group>"; };
 		EFB3B5393FD540E00FAACC28FCE38C64 /* AgreementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementController.swift; sourceTree = "<group>"; };
+		1D2702A2B404B65D500AD6DC4E451153 /* AgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewModel.swift; sourceTree = "<group>"; };
 		CD4A77B806DDA4999ABB9C121744A219 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		B13301C6EF44E7A847CEA8B66C012193 /* AlertDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDisplayable.swift; sourceTree = "<group>"; };
 		67994B66961B199BC5EB62484BE133DF /* AnimationContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationContainerView.swift; sourceTree = "<group>"; };
 		42832D3CC40BF252715540E4A3B3D75A /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		920A46D99E140352D3DAD5C8B6EBD02D /* AppCoordinatorModulesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorModulesBuilder.swift; sourceTree = "<group>"; };
 		32EEE5D86DC6A55586D8809FABE54E7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF604E8968102D104BF0500B65644E4B /* ApplicationCoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinatorFactory.swift; sourceTree = "<group>"; };
 		124DBD746EE1979C264DE83DC21C0306 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
@@ -518,6 +525,9 @@
 		F06F58380E2F0E4D62B56D32D6FB3026 /* SuggestController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestController.xib; sourceTree = "<group>"; };
 		E7614CF30AE2C9C14A22E9C4B8FEC3B6 /* SupportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportController.swift; sourceTree = "<group>"; };
 		3BE52B854C4577D1CE6D818B6589ED1D /* SupportCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportCoordinator.swift; sourceTree = "<group>"; };
+		5FB6FB858A5C93C24546D4D089F9C9BC /* SupportCoordinatorsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportCoordinatorsFactory.swift; sourceTree = "<group>"; };
+		F4726D19E1C728B9D8CD27CF5A2A7DDE /* SupportPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportPagesFactory.swift; sourceTree = "<group>"; };
+		6C8DE8941BAE3546824575BA323DCA9B /* SupportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewModel.swift; sourceTree = "<group>"; };
 		767CE2D5A349A0C8542C8B4145CF35A5 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		AA30F773A971EA2FDE29848462A2C514 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		44AA266493C6946E18208AAE57CA77AB /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
@@ -579,6 +589,7 @@
 			children = (
 				A7EC6415812BEFD0CFEB1E6F1BECE20D /* AddressListPagesFactory.swift */,
 				B6A824EA35E881E612E9ABFB6DB0DBBF /* AddressPagesFactory.swift */,
+				920A46D99E140352D3DAD5C8B6EBD02D /* AppCoordinatorModulesBuilder.swift */,
 				AF604E8968102D104BF0500B65644E4B /* ApplicationCoordinatorFactory.swift */,
 				E0EFAC1330160D066BBDBC7CA1C6F19D /* AuthPagesFactory.swift */,
 				E40DE6B930704616B491520C703D1E5C /* CartCoordinatorsFactory.swift */,
@@ -587,6 +598,8 @@
 				E724507D46F7D1DC68E60379AC2C0FE1 /* OrderHistoryPagesFactory.swift */,
 				346C8557EE2664DF8110DA85A12F4C3C /* ProfileChildCoordinatorsFactory.swift */,
 				8B8801A8C6297BF5F8678DB2E6090404 /* ProfilePagesFactory.swift */,
+				5FB6FB858A5C93C24546D4D089F9C9BC /* SupportCoordinatorsFactory.swift */,
+				F4726D19E1C728B9D8CD27CF5A2A7DDE /* SupportPagesFactory.swift */,
 			);
 			path = PagesFactory;
 			sourceTree = "<group>";
@@ -658,6 +671,7 @@
 			isa = PBXGroup;
 			children = (
 				E7614CF30AE2C9C14A22E9C4B8FEC3B6 /* SupportController.swift */,
+				6C8DE8941BAE3546824575BA323DCA9B /* SupportViewModel.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -992,6 +1006,7 @@
 			isa = PBXGroup;
 			children = (
 				EFB3B5393FD540E00FAACC28FCE38C64 /* AgreementController.swift */,
+				1D2702A2B404B65D500AD6DC4E451153 /* AgreementViewModel.swift */,
 			);
 			path = Agreement;
 			sourceTree = "<group>";
@@ -1946,10 +1961,12 @@
 				52AB291AB55CB5ACD40C0696B0A2FDBD /* AddressPickerViewModel.swift in Sources */,
 				84D162FC25BAB627F5989308861562C4 /* AddressSheetController.swift in Sources */,
 				5397C0B0398219322EB7AB2C3B1A8AF0 /* AgreementController.swift in Sources */,
+				100B28DE2C52E0B0E19F847244266640 /* AgreementViewModel.swift in Sources */,
 				AEDEEEBFD34151D388831E2E2E585082 /* Alert.swift in Sources */,
 				7834AC7CB75692417AC7D27058EF60F0 /* AlertDisplayable.swift in Sources */,
 				77D032D3C92A033DFF3E6A2E53EA5B0F /* AnimationContainerView.swift in Sources */,
 				FB6E4957AEB5E8B6384377430949FB5A /* AppCoordinator.swift in Sources */,
+				4C2691F0176172C3E088ACE773B9B9AB /* AppCoordinatorModulesBuilder.swift in Sources */,
 				9917C9CA8C142731664889CA05B15F12 /* AppDelegate.swift in Sources */,
 				269A167552CD183B0F699BB26595A97B /* ApplicationCoordinatorFactory.swift in Sources */,
 				403496A52D4F3B4A1577C9E218633E48 /* ArrayExtension.swift in Sources */,
@@ -2125,6 +2142,9 @@
 				6905469B3B72AA5D45630F77B7732A08 /* SuggestController.swift in Sources */,
 				69A912218E3C57CBF42BBF75070D4DDB /* SupportController.swift in Sources */,
 				551364303D228FB15D82CC496BAE5D19 /* SupportCoordinator.swift in Sources */,
+				888680A2C23544CBFCE3458D4377C324 /* SupportCoordinatorsFactory.swift in Sources */,
+				2915A60170187535E18F3C7EA186A09B /* SupportPagesFactory.swift in Sources */,
+				A6D6CA87C1BD8AA37F22E086352BE9A7 /* SupportViewModel.swift in Sources */,
 				E609596A98035D81076132623D3D44E7 /* TabBarCoordinator.swift in Sources */,
 				AC48B0075457DA457FF5D8DE42ACAC27 /* UIAlertController+Extension.swift in Sources */,
 				9CADCD2A4842323E78F20A705B98103B /* UIApplication+Extension.swift in Sources */,

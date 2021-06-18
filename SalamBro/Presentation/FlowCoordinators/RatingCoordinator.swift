@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// MARK: Tech debt
+
 final class RatingCoordinator: LegacyCoordinator {
     var parentCoordinator: LegacyCoordinator?
     var childCoordinators: [LegacyCoordinator] = []
@@ -18,7 +20,7 @@ final class RatingCoordinator: LegacyCoordinator {
     }
 
     func openAgreement() {
-        let vc = AgreementController()
+        let vc = AgreementController(viewModel: AgreementViewModelImpl())
         navigationController.pushViewController(vc, animated: true)
     }
 

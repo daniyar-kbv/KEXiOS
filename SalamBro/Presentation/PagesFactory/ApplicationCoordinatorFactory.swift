@@ -13,65 +13,37 @@ protocol ApplicationCoordinatorFactory: AnyObject {
     func makeAuthCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthCoordinator
     func makeCartCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartCoordinator
     func makeProfileCoordinator(serviceComponents: ServiceComponents) -> ProfileCoordinator
+    func makeSupportCoordinator(serviceComponents: ServiceComponents) -> SupportCoordinator
 }
 
 final class ApplicationCoordinatorFactoryImpl: DependencyFactory, ApplicationCoordinatorFactory {
+    private let builder: AppCoordinatorsModulesBuilder
+
+    init(builder: AppCoordinatorsModulesBuilder) {
+        self.builder = builder
+    }
+
     func makeMenuCoordinator() -> MenuCoordinator {
-        return shared(.init(navigationController: UINavigationController(),
-                            tabType: .menu))
+        return shared(builder.buildMenuCoordinator())
     }
 
     func makeOnboardingCoordinator() -> OnBoardingCoordinator {
-        return scoped(.init(router: MainRouter(),
-                            pagesFactory: makeOnboardingPagesFactory()))
-    }
-
-    private func makeOnboardingPagesFactory() -> OnBoadingPagesFactory {
-        return scoped(OnBoardingPagesFactoryImpl())
+        return scoped(builder.buildOnboardingCoordinator())
     }
 
     func makeProfileCoordinator(serviceComponents: ServiceComponents) -> ProfileCoordinator {
-        let router = MainRouter()
-        return shared(.init(router: router,
-                            pagesFactory: makeProfilePagesFactory(serviceComponents: serviceComponents),
-                            coordinatorsFactory: makeProfileChildCoordinatorsFactory(serviceComponents: serviceComponents,
-                                                                                     router: router)))
+        return shared(builder.buildProfileCoordinator(serviceComponents: serviceComponents))
     }
 
-    private func makeProfilePagesFactory(serviceComponents: ServiceComponents) -> ProfilePagesFactory {
-        return shared(ProfilePagesFactoryImpl(serviceComponents: serviceComponents))
-    }
-
-    private func makeProfileChildCoordinatorsFactory(serviceComponents: ServiceComponents, router: Router) -> ProfileChildCoordinatorsFactory {
-        return shared(ProfileChildCoordinatorsFactoryImpl(serviceComponents: serviceComponents, router: router))
+    func makeSupportCoordinator(serviceComponents: ServiceComponents) -> SupportCoordinator {
+        return shared(builder.makeSupportCoordinator(serviceComponents: serviceComponents))
     }
 
     func makeCartCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartCoordinator {
-        let router = MainRouter()
-        return shared(.init(router: router,
-                            pagesFactory: makeCartPagesFactory(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents),
-                            coordinatorsFactory: makeCartCoordinatorsFactory(router: router, serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)))
-    }
-
-    private func makeCartPagesFactory(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartPagesFactory {
-        return shared(CartPagesFactoryImpl(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
-    }
-
-    private func makeCartCoordinatorsFactory(router: Router,
-                                             serviceComponents: ServiceComponents,
-                                             repositoryComponents: RepositoryComponents) -> CartCoordinatorsFactory
-    {
-        return shared(CartCoordinatorsFactoryImpl(router: router, serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
+        return shared(builder.makeCartCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
     }
 
     func makeAuthCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthCoordinator {
-        return scoped(.init(router: MainRouter(),
-                            pagesFactory: makeAuthPagesFactory(serviceComponents: serviceComponents,
-                                                               repositoryComponents: repositoryComponents)))
-    }
-
-    private func makeAuthPagesFactory(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthPagesFactory {
-        return scoped(AuthPagesFactoryImpl(serviceComponents: serviceComponents,
-                                           repositoryComponents: repositoryComponents))
+        return scoped(builder.makeAuthCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
     }
 }

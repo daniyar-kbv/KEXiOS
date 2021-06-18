@@ -35,7 +35,7 @@ final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
     }
 
     private func makeChangeUserInfoViewModel(userInfo: UserInfoResponse) -> ChangeNameViewModel {
-        return scoped(ChangeNameViewModelImpl(service: serviceComponents.profileService(), userInfo: userInfo))
+        return scoped(ChangeNameViewModelImpl(service: serviceComponents.profileService(), userInfo: userInfo, defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
     /// Нужно переписать  используя viewModel, snapkit и rxswift

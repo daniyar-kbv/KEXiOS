@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func configureAppCoordinator() {
         appCoordinator = AppCoordinator(serviceComponents: ServiceComponentsAssembly(),
                                         repositoryComponents: RepositoryComponentsAssembly(),
-                                        appCoordinatorsFactory: ApplicationCoordinatorFactoryImpl())
+                                        appCoordinatorsFactory: ApplicationCoordinatorFactoryImpl(builder: AppCoordinatorsModulesBuilderImpl()))
     }
 
     private func configureProgressHUD() {
