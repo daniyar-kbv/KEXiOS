@@ -13,7 +13,7 @@ import RxSwift
 protocol OrdersService: AnyObject {
     func applyOrder(dto: OrderApplyDTO) -> Single<String>
     func getProducts(for leadUUID: String) -> Single<OrderProductResponse.Data>
-    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<OrderProductDetailResponse>
+    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<OrderProductDetailResponse.Data>
     func decrement(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse>
     func increment(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse>
     func updateCart(for leadUUID: String) -> Single<OrderUpdateCartResponse>
@@ -30,17 +30,17 @@ final class OrdersServiceMoyaImpl: OrdersService {
         return provider.rx
             .request(.apply(dto: dto))
             .map { response in
-                
+
                 // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
 
                 guard let applyResponse = try? response.map(OrderApplyResponse.self) else {
                     throw NetworkError.badMapping
                 }
-                
+
                 if let error = applyResponse.error {
                     throw error
                 }
-                
+
                 guard let leadUUID = applyResponse.data?.uuid else {
                     throw NetworkError.error("Нет данных")
                 }
@@ -59,7 +59,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 guard let orderProductsResponse = try? response.map(OrderProductResponse.self) else {
                     throw NetworkError.badMapping
                 }
-                
+
                 guard let data = orderProductsResponse.data else {
                     throw NetworkError.error("Нет данных")
                 }
@@ -67,8 +67,8 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 return data
             }
     }
-    
-    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<OrderProductDetailResponse> {
+
+    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<OrderProductDetailResponse.Data> {
         return provider.rx
             .request(.getProductDetail(leadUUID: leadUUID, productUUID: productUUID))
             .map { response in
@@ -79,12 +79,16 @@ final class OrdersServiceMoyaImpl: OrdersService {
                     throw NetworkError.badMapping
                 }
 
-                return orderProductDetailResponse
+                guard let data = orderProductDetailResponse.data else {
+                    throw NetworkError.error("Нет данных")
+                }
+
+                return data
             }
     }
-    
+
 //    Tech debt: change to get, put, patch cart
-    
+
     func decrement(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse> {
         return provider.rx
             .request(.decrement(dto: dto))
@@ -99,7 +103,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 return incDecrResponse
             }
     }
-    
+
     func increment(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse> {
         return provider.rx
             .request(.increment(dto: dto))

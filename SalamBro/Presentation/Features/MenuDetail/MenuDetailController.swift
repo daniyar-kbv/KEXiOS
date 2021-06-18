@@ -13,10 +13,10 @@ import UIKit
 
 class MenuDetailController: ViewController, AlertDisplayable {
     private var viewModel: MenuDetailViewModel
-    
+
     private let disposeBag = DisposeBag()
     let outputs = Output()
-    
+
     lazy var commentarySheetVC = CommentarySheetController()
 
     lazy var imageView: UIImageView = {
@@ -124,19 +124,19 @@ class MenuDetailController: ViewController, AlertDisplayable {
 
     public init(viewModel: MenuDetailViewModel) {
         self.viewModel = viewModel
-        
+
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder _: NSCoder) { nil }
-    
+
     deinit {
         outputs.didTerminate.accept(())
     }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setup()
         bindViewModel()
         viewModel.update()
@@ -158,16 +158,16 @@ class MenuDetailController: ViewController, AlertDisplayable {
                 guard let error = error else { return }
                 self?.showError(error)
             }).disposed(by: disposeBag)
-        
-        viewModel.outputs.didGetItemTitle
+
+        viewModel.outputs.itemTitle
             .bind(to: itemTitleLabel.rx.text)
             .disposed(by: disposeBag)
-        
-        viewModel.outputs.didGetItemDescription
+
+        viewModel.outputs.itemDescription
             .bind(to: descriptionLabel.rx.text)
             .disposed(by: disposeBag)
-        
-        viewModel.outputs.didGetItemPrice
+
+        viewModel.outputs.itemPrice
             .bind(to: proceedButton.rx.title())
             .disposed(by: disposeBag)
     }
@@ -331,7 +331,7 @@ extension MenuDetailController: MapDelegate {
 extension MenuDetailController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
-        
+
 //        TODO: finish
         let toModificators = PublishRelay<Void>()
     }
