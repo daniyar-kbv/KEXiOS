@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-class MenuDetailController: ViewController, AlertDisplayable {
+class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayable {
     private var viewModel: MenuDetailViewModel
 
     private let disposeBag = DisposeBag()
@@ -144,19 +144,37 @@ class MenuDetailController: ViewController, AlertDisplayable {
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     private func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            }).disposed(by: disposeBag)
+
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
                 guard let error = error else { return }
                 self?.showError(error)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.itemImage
+            .subscribe(onNext: { [weak self] url in
+                guard let url = url else { return }
+                self?.imageView.setImage(url: url)
             }).disposed(by: disposeBag)
 
         viewModel.outputs.itemTitle
@@ -264,7 +282,8 @@ class MenuDetailController: ViewController, AlertDisplayable {
     }
 
     @objc func additionalItemChangeButtonTapped() {
-        outputs.toModificators.accept(())
+        print("additionalItemChangeButtonTapped")
+        outputs.toModifiers.accept(())
     }
 
     @objc func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
@@ -333,6 +352,6 @@ extension MenuDetailController {
         let didTerminate = PublishRelay<Void>()
 
 //        TODO: finish
-        let toModificators = PublishRelay<Void>()
+        let toModifiers = PublishRelay<Void>()
     }
 }

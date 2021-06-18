@@ -58,10 +58,11 @@ struct OrderProductDetailResponse: Codable {
         let image: String?
         let price: Double
         let branchCategory: String
-        let modifiers: [Modifier]
+//        let modifiers: [Modifier]
 
         enum CodingKeys: String, CodingKey {
-            case uuid, name, description, image, price, modifiers
+            case uuid, name, description, image, price
+//            case modifiers
             case branchCategory = "branch_category"
         }
 

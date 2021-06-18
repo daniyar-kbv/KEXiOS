@@ -41,9 +41,11 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
         guard let leadUUID = defaultStorage.leadUUID else { return }
         ordersService.getProductDetail(for: leadUUID, by: productUUID)
             .subscribe(onSuccess: { [weak self] product in
+                self?.outputs.itemImage.accept(URL(string: product.image ?? ""))
                 self?.outputs.itemTitle.accept(product.name)
                 self?.outputs.itemDescription.accept(product.description)
-                self?.outputs.itemPrice.accept(String(product.price))
+                self?.outputs.itemPrice.accept(String(product.price.removeTrailingZeros()))
+//                self?.outputs.itemModifiers.accept(product.modifiers)
             }, onError: { [weak self] error in
                 self?.outputs.didGetError.accept(error as? ErrorPresentable)
             }).disposed(by: disposeBag)
@@ -54,12 +56,14 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
 
 extension MenuDetailViewModelImpl {
     struct Output {
+        let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
 
         let itemImage = PublishRelay<URL?>()
         let itemTitle = PublishRelay<String>()
         let itemDescription = PublishRelay<String>()
         let itemPrice = PublishRelay<String>()
-        let itemModifiers = PublishRelay<[OrderProductDetailResponse.Data.Modifier]>()
+//        let itemModifiers = PublishRelay<[OrderProductDetailResponse.Data.Modifier]>()
     }
 }

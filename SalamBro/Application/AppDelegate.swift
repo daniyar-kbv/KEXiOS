@@ -25,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         configureAppCoordinator()
         appCoordinator?.start()
+
+//        TODO: remove
+        DefaultStorageImpl.sharedStorage.persist(leadUUID: "ace65478-c4ba-4a78-84a8-26c49466244c")
+
         return true
     }
 

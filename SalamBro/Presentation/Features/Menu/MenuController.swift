@@ -13,7 +13,7 @@ import UIKit
 
 final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable {
     let outputs = Output()
-    
+
     private let viewModel: MenuViewModelProtocol
     private let disposeBag = DisposeBag()
     var scrollService: MenuScrollService
@@ -80,9 +80,9 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
+
         viewModel.update()
-        
+
         setup()
         bindViewModel()
         bindScrollService()
@@ -97,26 +97,39 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
         viewModel.brandName
             .bind(to: brandLabel.rx.text)
             .disposed(by: disposeBag)
-        
+
         viewModel.outputs.updateTableView
             .bind(to: itemTableView.rx.reload)
             .disposed(by: disposeBag)
-        
+
         viewModel.outputs.didStartRequest
             .subscribe(onNext: { [weak self] in
+                print("didStartRequest showLoader")
                 self?.showLoader()
-        }).disposed(by: disposeBag)
-        
+            }, onError: { [weak self] error in
+                print("didStartRequest error \(error)")
+            }, onCompleted: {
+                print("didStartRequest onCompleted")
+            },
+            onDisposed: {
+                print("didStartRequest disposed")
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: <#T##((()) -> Void)?##((()) -> Void)?##(()) -> Void#>,
+                       onError: <#T##((Error) -> Void)?##((Error) -> Void)?##(Error) -> Void#>, onCompleted: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>, onDisposed: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
+
         viewModel.outputs.didEndRequest
             .subscribe(onNext: { [weak self] in
+                print("hideLoader")
                 self?.hideLoader()
-        }).disposed(by: disposeBag)
-        
+            }).disposed(by: disposeBag)
+
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
-                guard let error = error else { return}
+                guard let error = error else { return }
                 self?.showError(error)
-        }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
 
     func bindScrollService() {
@@ -180,7 +193,7 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
     }
 
     @objc private func handleChangeBrandButtonAction(_: UIButton) {
-        outputs.toChangeBrand.accept() { [weak self] in
+        outputs.toChangeBrand.accept { [weak self] in
             self?.viewModel.update()
         }
     }
@@ -197,7 +210,7 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
                 self?.viewModel.update()
             }
         case let cellViewModel as AdCollectionCellViewModel:
-            guard let promotionURL = URL(string: cellViewModel.cellViewModels[indexPath.row].promotion.link) else { return}
+            guard let promotionURL = URL(string: cellViewModel.cellViewModels[indexPath.row].promotion.link) else { return }
             outputs.toPromotion.accept((promotionURL, nil))
         default:
             print("other")
@@ -264,10 +277,10 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
 extension MenuController {
     func scroll(to category: String) {
         guard let row = viewModel.cellViewModels[itemTableView.numberOfSections - 1]
-                .enumerated().first(where: {
-                    guard let viewModel = $1 as? MenuCellViewModelProtocol else { return false }
-                    return viewModel.position.category == category
-                })?.0 else { return }
+            .enumerated().first(where: {
+                guard let viewModel = $1 as? MenuCellViewModelProtocol else { return false }
+                return viewModel.position.category == category
+            })?.0 else { return }
         itemTableView.scrollToRow(at: IndexPath(row: row, section: itemTableView.numberOfSections - 1), at: .top, animated: true)
     }
 
