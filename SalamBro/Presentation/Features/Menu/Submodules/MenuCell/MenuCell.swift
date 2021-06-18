@@ -115,6 +115,10 @@ final class MenuCell: UITableViewCell, Reusable {
         setupConstraints()
     }
 
+    private func setupCell() {
+        selectionStyle = .none
+    }
+
     private func setupViews() {
         [foodImageView, stackView].forEach { contentView.addSubview($0) }
     }

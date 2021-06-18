@@ -16,7 +16,7 @@ final class MapViewModel {
         case creation
         case change
     }
-    
+
     private let ordersService: OrdersService
     private let defaultStorage: DefaultStorage
     private let locationRepository: LocationRepository
@@ -26,7 +26,7 @@ final class MapViewModel {
     var currentLocation: YMKPoint?
     var targetLocation: YMKPoint
     var commentary: String?
-    
+
     private let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
     private var searchSession: YMKSearchSession?
     private(set) var flow: MapFlow
@@ -37,12 +37,13 @@ final class MapViewModel {
          locationRepository: LocationRepository,
          brandRepository: BrandRepository,
          flow: MapFlow,
-         address: Address? = nil) {
+         address: Address? = nil)
+    {
         self.ordersService = ordersService
         self.defaultStorage = defaultStorage
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
-        
+
         self.flow = flow
         targetLocation = YMKPoint(latitude: address?.latitude ?? ALA_LAT,
                                   longitude: address?.longitude ?? ALA_LON)
@@ -59,7 +60,7 @@ final class MapViewModel {
         switch flow {
         case .creation:
             locationRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
-//            TODO: revert
+//            Tech debt: uncomment when orders applu api stabilize
 //            applyOrders(address: lastAddress)
             defaultStorage.persist(leadUUID: "ace65478-c4ba-4a78-84a8-26c49466244c")
             outputs.lastSelectedAddress.accept(lastAddress)
@@ -118,14 +119,14 @@ extension MapViewModel {
               let cityId = locationRepository.getCurrectCity()?.id,
               let longitude = locationRepository.getCurrentAddress()?.longitude.rounded(to: 8),
               let latitude = locationRepository.getCurrentAddress()?.latitude.rounded(to: 8) else { return }
-        
+
         let dto: OrderApplyDTO = .init(address: .init(city: cityId,
                                                       longitude: longitude,
                                                       latitude: latitude),
                                        localBrand: brandId)
-        
+
         outputs.didStartRequest.accept(())
-        
+
         ordersService.applyOrder(dto: dto)
             .subscribe { [weak self] leadUUID in
                 self?.outputs.didFinishRequest.accept(())
@@ -144,7 +145,7 @@ extension MapViewModel {
         let moveMapTo = PublishRelay<YMKPoint>()
         let selectedAddress = BehaviorSubject<MapAddress>(value: MapAddress(name: "", formattedAddress: "", longitude: 0, latitude: 0))
         let lastSelectedAddress = PublishRelay<MapAddress>()
-        
+
         let didGetError = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didFinishRequest = PublishRelay<Void>()

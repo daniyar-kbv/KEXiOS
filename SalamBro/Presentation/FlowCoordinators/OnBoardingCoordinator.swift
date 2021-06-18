@@ -44,7 +44,7 @@ final class OnBoardingCoordinator {
 
         navigationController.pushViewController(citiesPage, animated: true)
     }
-    
+
     private func openBrands(cityId: Int) {
         let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
 
@@ -53,22 +53,16 @@ final class OnBoardingCoordinator {
         }).disposed(by: disposeBag)
 
         navigationController.pushViewController(brandsPage, animated: true)
-        
-//        TODO: remove
-        
-//        DIResolver.resolve(BrandRepository.self)?.changeCurrent(brand: Brand(id: 1, name: "Салам бро", image: "", isAvailable: true))
-//
-//        openMap()
     }
 
     private func openMap() {
         let mapPage = pagesFactory.makeMapPage()
-        
-        mapPage.selectedAddress = { [weak self] address in
+
+        mapPage.selectedAddress = { [weak self] _ in
             self?.didFinish?()
             self?.navigationController.viewControllers.removeAll()
         }
-        
+
         navigationController.pushViewController(mapPage, animated: true)
     }
 }

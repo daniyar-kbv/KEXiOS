@@ -33,6 +33,8 @@ final class AdCollectionCell: UITableViewCell, NibReusable {
         collectionView.delegate = self
         collectionView.backgroundColor = .white
         collectionView.register(cellType: AdCell.self)
+
+        selectionStyle = .none
     }
 
     override public func setSelected(_ selected: Bool, animated: Bool) {

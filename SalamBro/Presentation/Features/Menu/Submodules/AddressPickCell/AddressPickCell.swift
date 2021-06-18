@@ -23,7 +23,8 @@ final class AddressPickCell: UITableViewCell, NibReusable {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
+        selectionStyle = .none
         changeButton.setTitle(L10n.AddressPickCell.changeButton, for: .normal)
         deliverTitleLabel.text = L10n.AddressPickCell.deliverLabel
     }

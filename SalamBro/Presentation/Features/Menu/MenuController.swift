@@ -81,11 +81,11 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        viewModel.update()
-
         setup()
         bindViewModel()
         bindScrollService()
+
+        viewModel.update()
     }
 
     override public func viewWillAppear(_ animated: Bool) {
@@ -102,23 +102,13 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
             .bind(to: itemTableView.rx.reload)
             .disposed(by: disposeBag)
 
-        print("binding didStartRequest")
         viewModel.outputs.didStartRequest
             .subscribe(onNext: { [weak self] in
-                print("didStartRequest showLoader")
                 self?.showLoader()
-            }, onError: { error in
-                print("didStartRequest error \(error)")
-            }, onCompleted: {
-                print("didStartRequest onCompleted")
-            },
-            onDisposed: {
-                print("didStartRequest disposed")
             }).disposed(by: disposeBag)
 
         viewModel.outputs.didEndRequest
             .subscribe(onNext: { [weak self] in
-                print("hideLoader")
                 self?.hideLoader()
             }).disposed(by: disposeBag)
 
@@ -197,7 +187,6 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
 }
 
 extension MenuController: UITableViewDelegate, UITableViewDataSource {
-//    TODO: change to coordinators
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
         case let cellViewModel as MenuCellViewModel:
@@ -210,7 +199,7 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
             guard let promotionURL = URL(string: cellViewModel.cellViewModels[indexPath.row].promotion.link) else { return }
             outputs.toPromotion.accept((promotionURL, nil))
         default:
-            print("other")
+            break
         }
     }
 
@@ -247,18 +236,15 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
         switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
         case let viewModel as AddressPickCellViewModelProtocol:
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AddressPickCell.self)
-            cell.selectionStyle = .none
             cell.set(viewModel)
             return cell
         case let viewModel as AdCollectionCellViewModelProtocol:
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AdCollectionCell.self)
-            cell.selectionStyle = .none
             cell.set(viewModel)
             cell.delegate = self
             return cell
         case let viewModel as MenuCellViewModelProtocol:
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: MenuCell.self)
-            cell.selectionStyle = .none
             cell.set(viewModel)
             return cell
         default:

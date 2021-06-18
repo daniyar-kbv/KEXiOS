@@ -20,11 +20,6 @@ final class CategoryCell: UICollectionViewCell, NibReusable {
 
     private var disposeBag = DisposeBag()
 
-    override public func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
     override public var isSelected: Bool {
         didSet {
             selectView.isHidden = isSelected ? false : true

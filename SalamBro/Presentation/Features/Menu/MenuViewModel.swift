@@ -65,7 +65,6 @@ final class MenuViewModel: MenuViewModelProtocol {
         cellViewModels = []
         headerViewModels = []
 
-        print("didStartRequest")
         outputs.didStartRequest.accept(())
 
         let promotionsSequence = promotionsService.getPromotions()
@@ -87,7 +86,6 @@ final class MenuViewModel: MenuViewModelProtocol {
 
         finalSequesnce.subscribe(onSuccess: {
             [weak self] promotions, categories, positions in
-            print("didEndRequest")
             self?.outputs.didEndRequest.accept(())
 
             self?.setPromotions(promotions: promotions)

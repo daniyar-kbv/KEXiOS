@@ -39,14 +39,19 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
 
     private func download() {
         guard let leadUUID = defaultStorage.leadUUID else { return }
+
+        outputs.didStartRequest.accept(())
+
         ordersService.getProductDetail(for: leadUUID, by: productUUID)
             .subscribe(onSuccess: { [weak self] product in
+                self?.outputs.didEndRequest.accept(())
                 self?.outputs.itemImage.accept(URL(string: product.image ?? ""))
                 self?.outputs.itemTitle.accept(product.name)
                 self?.outputs.itemDescription.accept(product.description)
                 self?.outputs.itemPrice.accept(String(product.price.removeTrailingZeros()))
 //                self?.outputs.itemModifiers.accept(product.modifiers)
             }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
                 self?.outputs.didGetError.accept(error as? ErrorPresentable)
             }).disposed(by: disposeBag)
     }

@@ -93,7 +93,6 @@ class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayabl
     lazy var proceedButton: UIButton = {
         let view = UIButton()
         view.backgroundColor = .kexRed
-//        view.setTitle("В корзину за 1 490 ₸", for: .normal)
         view.setTitleColor(.white, for: .normal)
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
@@ -139,6 +138,7 @@ class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayabl
 
         setup()
         bindViewModel()
+
         viewModel.update()
     }
 
@@ -282,7 +282,6 @@ class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayabl
     }
 
     @objc func additionalItemChangeButtonTapped() {
-        print("additionalItemChangeButtonTapped")
         outputs.toModifiers.accept(())
     }
 
@@ -296,17 +295,11 @@ class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayabl
 }
 
 extension MenuDetailController: MapDelegate {
-    func dissmissView() {
-//        print("x")
-    }
+    func dissmissView() {}
 
-    func hideCommentarySheet() {
-//        addressSheetVC.view.isHidden = false
-    }
+    func hideCommentarySheet() {}
 
     func showCommentarySheet() {
-//        addressSheetVC.view.isHidden = true
-
         addChild(commentarySheetVC)
         view.addSubview(commentarySheetVC.view)
         commentarySheetVC.commentaryField.attributedPlaceholder = NSAttributedString(
@@ -351,7 +344,7 @@ extension MenuDetailController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
 
-//        TODO: finish
+//        Tech debt: finish when modifiers api resolved
         let toModifiers = PublishRelay<Void>()
     }
 }

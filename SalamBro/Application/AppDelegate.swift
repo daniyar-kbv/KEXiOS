@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureAppCoordinator()
         appCoordinator?.start()
 
-//        TODO: remove
+//        Tech debt: remove when orders apply api stabilize
         DefaultStorageImpl.sharedStorage.persist(leadUUID: "ace65478-c4ba-4a78-84a8-26c49466244c")
 
         return true
