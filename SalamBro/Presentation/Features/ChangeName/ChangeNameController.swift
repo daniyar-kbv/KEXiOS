@@ -73,7 +73,6 @@ final class ChangeNameController: ViewController, AlertDisplayable, LoaderDispla
         button.setTitle(L10n.ChangeName.SaveButton.title, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.addTarget(self, action: #selector(saveName), for: .touchUpInside)
-//        button.isEnabled = false
         button.backgroundColor = .calmGray
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true

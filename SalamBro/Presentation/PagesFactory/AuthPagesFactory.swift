@@ -48,7 +48,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeSetNameViewModel() -> SetNameViewModel {
-        return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage))
+        return scoped(SetNameViewModelImpl(defaultStorage: DefaultStorageImpl.sharedStorage, profileService: serviceComponents.profileService()))
     }
 
     func makeCountryCodePickerPage() -> CountryCodePickerViewController {
@@ -61,6 +61,10 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     func makeAgreementPage() -> AgreementController {
-        return scoped(.init(nibName: nil, bundle: nil))
+        return scoped(.init(viewModel: makeAgreementViewModel()))
+    }
+
+    private func makeAgreementViewModel() -> AgreementViewModel {
+        return scoped(AgreementViewModelImpl())
     }
 }

@@ -8,10 +8,12 @@
 import SnapKit
 import UIKit
 
-class SupportController: ViewController {
-    var coordinator: SupportCoordinator
+// MARK: Tech debt, нужно переписать как будет время
 
-    lazy var tableView: UITableView = {
+final class SupportController: ViewController {
+    var onTapAgreementDocs: (() -> Void)?
+
+    private lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
         view.addTableHeaderViewLine()
@@ -27,7 +29,7 @@ class SupportController: ViewController {
         return view
     }()
 
-    lazy var instagramView: UIImageView = {
+    private lazy var instagramView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "insta")
         view.isUserInteractionEnabled = true
@@ -37,7 +39,7 @@ class SupportController: ViewController {
         return view
     }()
 
-    lazy var tiktokView: UIImageView = {
+    private lazy var tiktokView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "tiktok")
         view.isUserInteractionEnabled = true
@@ -47,7 +49,7 @@ class SupportController: ViewController {
         return view
     }()
 
-    lazy var mailView: UIImageView = {
+    private lazy var mailView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "mail")
         view.isUserInteractionEnabled = true
@@ -57,7 +59,7 @@ class SupportController: ViewController {
         return view
     }()
 
-    lazy var vkView: UIImageView = {
+    private lazy var vkView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "vk")
         view.isUserInteractionEnabled = true
@@ -67,7 +69,7 @@ class SupportController: ViewController {
         return view
     }()
 
-    lazy var logoStack: UIStackView = {
+    private lazy var logoStack: UIStackView = {
         let view = UIStackView()
         view.alignment = .fill
         view.axis = .horizontal
@@ -75,7 +77,7 @@ class SupportController: ViewController {
         return view
     }()
 
-    lazy var callButton: UIButton = {
+    private lazy var callButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.Support.callcenter, for: .normal)
         button.setTitleColor(.kexRed, for: .normal)
@@ -88,9 +90,10 @@ class SupportController: ViewController {
         return button
     }()
 
-    init(coordinator: SupportCoordinator) {
-        self.coordinator = coordinator
+    private let viewModel: SupportViewModel
 
+    init(viewModel: SupportViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: .none, bundle: .none)
     }
 
@@ -187,7 +190,7 @@ extension SupportController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0, indexPath.row == 0 {
-            coordinator.openAgreement()
+            onTapAgreementDocs?()
         }
     }
 
