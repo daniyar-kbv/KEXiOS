@@ -11,19 +11,18 @@ import RxSwift
 import SnapKit
 import UIKit
 
-class MenuDetailController: ViewController {
+class MenuDetailController: UIViewController {
     private var viewModel: MenuDetailViewModelProtocol
     private let disposeBag: DisposeBag
-    lazy var commentarySheetVC = CommentarySheetController()
 
-    lazy var imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.image = Asset.fastFood.image
         view.contentMode = .scaleAspectFit
         return view
     }()
 
-    lazy var itemTitleLabel: UILabel = {
+    private lazy var itemTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
         label.text = "Чизбургер куриный"
@@ -32,7 +31,7 @@ class MenuDetailController: ViewController {
         return label
     }()
 
-    lazy var descriptionLabel: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
         label.text = "Чизбургер куриный"
@@ -41,7 +40,7 @@ class MenuDetailController: ViewController {
         return label
     }()
 
-    lazy var commentaryView: UIView = {
+    private lazy var commentaryView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         view.layer.cornerRadius = 10
@@ -53,9 +52,9 @@ class MenuDetailController: ViewController {
         return view
     }()
 
-    lazy var chooseAdditionalItemView = UIView()
+    private lazy var chooseAdditionalItemView = UIView()
 
-    lazy var chooseAdditionalItemLabel: UILabel = {
+    private lazy var chooseAdditionalItemLabel: UILabel = {
         let view = UILabel()
         view.backgroundColor = .white
         view.text = L10n.MenuDetail.additionalItemLabel
@@ -64,14 +63,14 @@ class MenuDetailController: ViewController {
         return view
     }()
 
-    lazy var additionalItemLabel: UILabel = {
+    private lazy var additionalItemLabel: UILabel = {
         let view = UILabel()
         view.text = "Cola 0.5"
         view.font = .systemFont(ofSize: 16, weight: .medium)
         return view
     }()
 
-    lazy var chooseAdditionalItemButton: UIButton = {
+    private lazy var chooseAdditionalItemButton: UIButton = {
         let view = UIButton()
         view.setTitle(L10n.MenuDetail.chooseAdditionalItemButton, for: .normal)
         view.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -80,7 +79,7 @@ class MenuDetailController: ViewController {
         return view
     }()
 
-    lazy var commentaryField: UITextField = {
+    private lazy var commentaryField: UITextField = {
         let view = UITextField()
         view.attributedPlaceholder = NSAttributedString(
             string: L10n.MenuDetail.commentaryField,
@@ -90,7 +89,7 @@ class MenuDetailController: ViewController {
         return view
     }()
 
-    lazy var proceedButton: UIButton = {
+    private lazy var proceedButton: UIButton = {
         let view = UIButton()
         view.backgroundColor = .kexRed
         view.setTitle("В корзину за 1 490 ₸", for: .normal)
@@ -101,26 +100,7 @@ class MenuDetailController: ViewController {
         return view
     }()
 
-    lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.tintColor = .kexRed
-        button.setImage(UIImage(named: "chevron.left"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.layer.cornerRadius = 22
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    lazy var shadow: UIView = {
-        let view = UIView()
-        view.backgroundColor = .darkGray
-        view.layer.opacity = 0.7
-        view.isHidden = true
-        return view
-    }()
+    private var overlay = OverlayTransitioningDelegate()
 
     public init(viewModel: MenuDetailViewModelProtocol) {
         self.viewModel = viewModel
@@ -133,17 +113,17 @@ class MenuDetailController: ViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
 //        bind()
-        setup()
+        layoutUI()
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
-    override public func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -163,27 +143,18 @@ class MenuDetailController: ViewController {
 //            .bind(to: proceedButton.rx.title())
 //            .disposed(by: disposeBag)
 //    }
+}
 
-    private func setup() {
-        setupViews()
-        setupConstraints()
-    }
-
-    private func setupViews() {
+extension MenuDetailController {
+    private func layoutUI() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
         [chooseAdditionalItemLabel, additionalItemLabel, chooseAdditionalItemButton].forEach { chooseAdditionalItemView.addSubview($0) }
         commentaryView.addSubview(commentaryField)
-        [imageView, itemTitleLabel, descriptionLabel, chooseAdditionalItemView, commentaryView, proceedButton, backButton, shadow].forEach { view.addSubview($0) }
-    }
-
-    func setupConstraints() {
-        shadow.snp.makeConstraints {
-            $0.top.left.right.bottom.equalToSuperview()
-        }
+        [imageView, itemTitleLabel, descriptionLabel, chooseAdditionalItemView, commentaryView, proceedButton].forEach { view.addSubview($0) }
 
         imageView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(46)
+            $0.top.equalTo(view.snp.topMargin).offset(43)
             $0.left.equalToSuperview().offset(40)
             $0.right.equalToSuperview().offset(-40)
             $0.height.equalToSuperview().multipliedBy(0.33)
@@ -246,13 +217,6 @@ class MenuDetailController: ViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(43)
         }
-
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(22)
-            $0.left.equalToSuperview().offset(18)
-            $0.width.equalTo(24)
-            $0.height.equalTo(24)
-        }
     }
 
     @objc func additionalItemChangeButtonTapped() {
@@ -260,62 +224,25 @@ class MenuDetailController: ViewController {
     }
 
     @objc func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
-        showCommentarySheet()
+        let overlayVC = OverlayViewController()
+        overlayVC.transitioningDelegate = overlay
+        overlayVC.modalPresentationStyle = .custom
+        overlayVC.delegate = self
+        present(overlayVC, animated: true, completion: nil)
     }
 
-    @objc func backButtonTapped() {
-        dismiss(animated: true, completion: nil)
+    @objc func dismissVC() {
+        if navigationController?.presentingViewController != nil {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+
+        navigationController?.popViewController(animated: true)
     }
 }
 
-extension MenuDetailController: MapDelegate {
-    func dissmissView() {
-//        print("x")
-    }
-
-    func hideCommentarySheet() {
-//        addressSheetVC.view.isHidden = false
-    }
-
-    func showCommentarySheet() {
-//        addressSheetVC.view.isHidden = true
-
-        addChild(commentarySheetVC)
-        view.addSubview(commentarySheetVC.view)
-        commentarySheetVC.commentTextField.attributedPlaceholder = NSAttributedString(
-            string: L10n.MenuDetail.commentaryField,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
-        // commentarySheetVC.delegate = self
-        commentarySheetVC.didMove(toParent: self)
-        commentarySheetVC.modalPresentationStyle = .overCurrentContext
-
-        let height: CGFloat = 185.0
-        let width = view.frame.width
-
-        getScreenSize(heightOfSheet: height, width: width)
-    }
-
-    private func getScreenSize(heightOfSheet: CGFloat, width: CGFloat) {
-        let bounds = UIScreen.main.bounds
-        let height = bounds.size.height
-
-        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 49 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 64 - heightOfSheet, width: width, height: heightOfSheet)
-    }
-
+extension MenuDetailController: OverlaySheetDelegate {
     func passCommentary(text: String) {
         commentaryField.text = text
-    }
-
-    func reverseGeocoding(searchQuery _: String, title _: String) {
-        print("cartController shoud have mapdelegate...")
-    }
-
-    func mapShadow(toggle: Bool) {
-        if toggle {
-            shadow.isHidden = false
-        } else {
-            shadow.isHidden = true
-        }
     }
 }

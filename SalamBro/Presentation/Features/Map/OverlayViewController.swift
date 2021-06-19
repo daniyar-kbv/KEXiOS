@@ -72,7 +72,7 @@ class OverlayViewController: UIViewController {
 
 extension OverlayViewController {
     private func layoutUI() {
-        view.backgroundColor = .green
+        view.backgroundColor = .clear
 
         [contentView].forEach {
             view.addSubview($0)
