@@ -292,7 +292,7 @@ extension CartController: MapDelegate {
             string: L10n.Promocode.field,
             attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         )
-        commentarySheetVC.delegate = self
+        // commentarySheetVC.delegate = self
         commentarySheetVC.didMove(toParent: self)
         commentarySheetVC.modalPresentationStyle = .overCurrentContext
         let height: CGFloat = 155.0
@@ -305,7 +305,7 @@ extension CartController: MapDelegate {
         let bounds = UIScreen.main.bounds
         let height = bounds.size.height
 
-        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 79 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 94 - heightOfSheet, width: width, height: heightOfSheet)
+        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 39 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 94 - heightOfSheet, width: width, height: heightOfSheet)
     }
 
     func passCommentary(text _: String) {

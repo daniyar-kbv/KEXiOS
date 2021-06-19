@@ -8,8 +8,15 @@
 import SnapKit
 import UIKit
 
+protocol CommentarySheetDelegate: AnyObject {
+    func showCommentarySheet()
+    func passCommentary(text: String)
+    func addShadow(toggle: Bool)
+    func hideCommentarySheet()
+}
+
 final class CommentarySheetController: UIViewController {
-    private lazy var contentView: UIView = {
+    private var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .arcticWhite
         view.clipsToBounds = true
@@ -18,7 +25,7 @@ final class CommentarySheetController: UIViewController {
         return view
     }()
 
-    private lazy var commentView: UIView = {
+    private var commentView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         view.cornerRadius = 10
@@ -26,7 +33,7 @@ final class CommentarySheetController: UIViewController {
         return view
     }()
 
-    public lazy var commentTextField: UITextField = {
+    public var commentTextField: UITextField = {
         let textfield = UITextField()
         textfield.attributedPlaceholder = NSAttributedString(
             string: L10n.Commentary.AddressField.title,
@@ -41,7 +48,7 @@ final class CommentarySheetController: UIViewController {
         return textfield
     }()
 
-    public lazy var sendButton: UIButton = {
+    public var sendButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.Commentary.Button.title, for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -57,7 +64,16 @@ final class CommentarySheetController: UIViewController {
         return button
     }()
 
-    weak var delegate: MapDelegate?
+    private lazy var shadow: UIView = {
+        let view = UIView()
+        view.backgroundColor = .darkGray
+        view.layer.opacity = 0.7
+//        view.isHidden = true
+        return view
+    }()
+
+    weak var delegate: CommentarySheetDelegate?
+
     private var yCoordinate: CGFloat!
 
     // MARK: Tech Debt - Change logic by creating a new class for view presentation
@@ -84,29 +100,32 @@ final class CommentarySheetController: UIViewController {
         super.viewDidAppear(animated)
         yCoordinate = view.frame.origin.y
         beginEdit()
-        delegate?.mapShadow(toggle: true)
+        //   delegate?.addShadow(toggle: true)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         view.endEditing(true)
-        delegate?.mapShadow(toggle: false)
+        // delegate?.addShadow(toggle: false)
     }
 }
 
 extension CommentarySheetController {
     private func layoutUI() {
         view.backgroundColor = .clear
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        // navigationController?.setNavigationBarHidden(true, animated: true)
 
-        view.addSubview(contentView)
+        [contentView].forEach {
+            view.addSubview($0)
+        }
+
         [commentView, sendButton].forEach {
             contentView.addSubview($0)
         }
         commentView.addSubview(commentTextField)
 
         contentView.snp.makeConstraints {
-            $0.top.left.right.equalToSuperview()
+            $0.left.right.equalToSuperview()
             $0.bottom.equalToSuperview().offset(14)
         }
 
@@ -148,18 +167,18 @@ extension CommentarySheetController {
     }
 
     @objc func sendPressed() {
-        if let commentary = commentTextField.text {
-            // FIXME: - self.dissmiss not working in ios 11, need further investigation
-            //            self.dismiss(animated: true) {
-            dismissSheet()
-            delegate?.passCommentary(text: commentary)
-            //            }
-        }
+//        if let commentary = commentTextField.text {
+//            // FIXME: - self.dissmiss not working in ios 11, need further investigation
+//            //            self.dismiss(animated: true) {
+//            dismissSheet()
+//            delegate?.passCommentary(text: commentary)
+//            //            }
+//        }
     }
 
     private func dismissSheet() {
-        view.removeFromSuperview()
-        delegate?.hideCommentarySheet()
+//        view.removeFromSuperview()
+        // delegate?.hideCommentarySheet()
     }
 
     @objc func hideTextField() {

@@ -18,12 +18,12 @@ final class OrderHistoryCoordinator: BaseCoordinator {
         self.pagesFactory = pagesFactory
     }
 
-    func openRateOrder() {
-        let vc = RateController()
-        let nav = UINavigationController(rootViewController: vc)
-        vc.modalPresentationStyle = .pageSheet
-        // getLastPresentedViewController().present(nav, animated: true, completion: nil)
-    }
+//    func openRateOrder() {
+//        let vc = RateController()
+//        let nav = UINavigationController(rootViewController: vc)
+//        vc.modalPresentationStyle = .pageSheet
+//        getLastPresentedViewController().present(nav, animated: true, completion: nil)
+//    }
 
     override func start() {
         let orderHistoryPage = pagesFactory.makeOrderHistoryPage()

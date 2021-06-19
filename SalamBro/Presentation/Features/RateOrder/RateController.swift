@@ -6,14 +6,17 @@
 //
 
 import Cosmos
+import RxCocoa
+import RxSwift
 import SnapKit
 import UIKit
 
 final class RateController: UIViewController {
+    private let viewModel: RateViewModel
+    private let disposeBag = DisposeBag()
+
     private let scrollView = UIScrollView()
     private let contentView = UIView()
-
-    // FIX: Tech debt, нужно переписать
 
     private lazy var cosmosContainerView: UIView = {
         let view = UIView()
@@ -110,27 +113,10 @@ final class RateController: UIViewController {
 
     private var collectionViewHeightConstraint: Constraint?
 
-    lazy var shadow: UIView = {
-        let view = UIView()
-        view.backgroundColor = .darkGray
-        view.layer.opacity = 0.7
-        view.isHidden = true
-        return view
-    }()
+    private var overlay = OverlayTransitioningDelegate()
 
-    var data: [String] = []
-
-    var arrayStar13: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.CourierNotFoundClient.text, L10n.RateOrder.Cell.FoodIsMissing.text, L10n.RateOrder.Cell.FoodIsCold.text]
-    var arrayStar4: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text, L10n.RateOrder.Cell.FoodIsCold.text]
-    var arrayStar5: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text]
-
-    // MARK: Tech Debt - Create in a viewModel
-
-    var selectedItems: [String] = []
-
-    lazy var commentarySheetVC = CommentarySheetController()
-
-    init() {
+    init(viewModel: RateViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -141,7 +127,6 @@ final class RateController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = L10n.RateOrder.title
         layoutUI()
     }
 
@@ -152,11 +137,17 @@ final class RateController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.backgroundColor = .arcticWhite
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
+        navigationItem.title = L10n.RateOrder.title
     }
 }
 
@@ -252,11 +243,6 @@ extension RateController {
         commentView.addGestureRecognizer(tapCommentary)
 
         scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.safeAreaInsets.bottom + 50, right: 0)
-
-        view.addSubview(shadow)
-        shadow.snp.makeConstraints {
-            $0.top.left.right.bottom.equalToSuperview()
-        }
     }
 
     private func didFinishTouchRating(_ rating: Double) {
@@ -266,23 +252,23 @@ extension RateController {
         case 1.0 ..< 2.0:
             questionLabel.text = L10n.RateOrder.BadRate.title
             suggestionLabel.text = L10n.RateOrder.BadRate.subtitle
-            data = arrayStar13
+            viewModel.data = viewModel.arrayStar13
         case 2.0 ..< 3.0:
             questionLabel.text = L10n.RateOrder.BadRate.title
             suggestionLabel.text = L10n.RateOrder.BadRate.subtitle
-            data = arrayStar13
+            viewModel.data = viewModel.arrayStar13
         case 3.0 ..< 4.0:
             questionLabel.text = L10n.RateOrder.AverageRate.title
             suggestionLabel.text = L10n.RateOrder.AverageRate.title
-            data = arrayStar13
+            viewModel.data = viewModel.arrayStar13
         case 4.0 ..< 5.0:
             questionLabel.text = L10n.RateOrder.GoodRate.title
             suggestionLabel.text = L10n.RateOrder.GoodRate.subtitle
-            data = arrayStar4
+            viewModel.data = viewModel.arrayStar4
         case 5.0:
             questionLabel.text = L10n.RateOrder.ExcellentRate.title
             suggestionLabel.text = L10n.RateOrder.ExcellentRate.subtitle
-            data = arrayStar5
+            viewModel.data = viewModel.arrayStar5
         default:
             questionLabel.text = nil
             suggestionLabel.text = nil
@@ -292,16 +278,14 @@ extension RateController {
     }
 }
 
+extension RateController: OverlaySheetDelegate {
+    func passCommentary(text: String) {
+        commentTextField.text = text
+    }
+}
+
 extension RateController {
     @objc func dismissVC() {
-        print("dismiss")
-    }
-
-    @objc func commentaryViewTapped() {
-        showCommentarySheet()
-    }
-
-    @objc func goBack() {
         if navigationController?.presentingViewController != nil {
             dismiss(animated: true, completion: nil)
             return
@@ -309,17 +293,25 @@ extension RateController {
 
         navigationController?.popViewController(animated: true)
     }
+
+    @objc func commentaryViewTapped() {
+        let overlayVC = OverlayViewController()
+        overlayVC.transitioningDelegate = overlay
+        overlayVC.modalPresentationStyle = .custom
+        overlayVC.delegate = self
+        present(overlayVC, animated: true, completion: nil)
+    }
 }
 
 extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return data.count
+        return viewModel.data.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: RateItemCell = collectionView.dequeueReusableCell(for: indexPath, cellType: RateItemCell.self)
-        cell.titleLabel.text = data[indexPath.row]
-        if selectedItems.firstIndex(of: data[indexPath.row]) != nil {
+        cell.titleLabel.text = viewModel.data[indexPath.row]
+        if viewModel.selectedItems.firstIndex(of: viewModel.data[indexPath.row]) != nil {
             cell.setSelectedUI()
         } else {
             cell.setDeselectedUI()
@@ -329,70 +321,20 @@ extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlow
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! RateItemCell
-        if let index = selectedItems.firstIndex(of: data[indexPath.row]) {
-            selectedItems.remove(at: index)
+        if let index = viewModel.selectedItems.firstIndex(of: viewModel.data[indexPath.row]) {
+            viewModel.selectedItems.remove(at: index)
             cell.setDeselectedUI()
         } else {
             cell.setSelectedUI()
-            selectedItems.append(data[indexPath.row])
+            viewModel.selectedItems.append(viewModel.data[indexPath.row])
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! RateItemCell
-        if let index = selectedItems.firstIndex(of: data[indexPath.row]) {
-            selectedItems.remove(at: index)
+        if let index = viewModel.selectedItems.firstIndex(of: viewModel.data[indexPath.row]) {
+            viewModel.selectedItems.remove(at: index)
         }
         cell.setDeselectedUI()
-    }
-}
-
-// MARK: Tech Debt - Change from MapDelegate logic
-
-extension RateController: MapDelegate {
-    func dissmissView() {}
-
-    func hideCommentarySheet() {}
-
-    func showCommentarySheet() {
-        addChild(commentarySheetVC)
-        view.addSubview(commentarySheetVC.view)
-        commentarySheetVC.commentTextField.attributedPlaceholder = NSAttributedString(
-            string: L10n.RateOrder.CommentaryField.placeholder,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
-        commentarySheetVC.delegate = self
-        commentarySheetVC.didMove(toParent: self)
-        commentarySheetVC.modalPresentationStyle = .overCurrentContext
-
-        let height: CGFloat = 185.0
-        let width = view.frame.width
-
-        getScreenSize(heightOfSheet: height, width: width)
-    }
-
-    private func getScreenSize(heightOfSheet: CGFloat, width: CGFloat) {
-        let bounds = UIScreen.main.bounds
-        let height = bounds.size.height
-
-        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 49 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 64 - heightOfSheet, width: width, height: heightOfSheet)
-    }
-
-    func passCommentary(text: String) {
-        commentTextField.text = text
-    }
-
-    func reverseGeocoding(searchQuery _: String, title _: String) {
-        print("rateController shoud have mapdelegate...")
-    }
-
-    func mapShadow(toggle: Bool) {
-        if toggle {
-            shadow.isHidden = false
-            navigationController?.setNavigationBarHidden(true, animated: false)
-        } else {
-            shadow.isHidden = true
-            navigationController?.setNavigationBarHidden(false, animated: false)
-        }
     }
 }

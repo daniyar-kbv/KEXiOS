@@ -286,7 +286,7 @@ extension MenuDetailController: MapDelegate {
             string: L10n.MenuDetail.commentaryField,
             attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         )
-        commentarySheetVC.delegate = self
+        // commentarySheetVC.delegate = self
         commentarySheetVC.didMove(toParent: self)
         commentarySheetVC.modalPresentationStyle = .overCurrentContext
 

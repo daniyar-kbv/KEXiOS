@@ -291,7 +291,7 @@ extension MapViewController: MapDelegate {
 
         addChild(commentarySheetVC)
         view.addSubview(commentarySheetVC.view)
-        commentarySheetVC.delegate = self
+        // commentarySheetVC.delegate = self
         commentarySheetVC.didMove(toParent: self)
         commentarySheetVC.modalPresentationStyle = .overCurrentContext
 
