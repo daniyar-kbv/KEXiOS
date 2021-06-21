@@ -17,9 +17,9 @@ final class ProfileChildCoordinatorsFactoryImpl: DependencyFactory, ProfileChild
     private let repositoryComponents: RepositoryComponents
     private let router: Router
 
-    init(serviceComponents: ServiceComponents, router: Router) {
+    init(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents, router: Router) {
         self.serviceComponents = serviceComponents
-        repositoryComponents = repositoryComponents
+        self.repositoryComponents = repositoryComponents
         self.router = router
     }
 

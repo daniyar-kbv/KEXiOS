@@ -711,14 +711,6 @@
 			path = Update;
 			sourceTree = "<group>";
 		};
-		49413994E238D9BEE9FFD390032860DD /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				68D9A0638F9A4B3FC669490FE918FBD6 /* ProfileView.swift */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -919,6 +911,14 @@
 				CA31B97420560319140BB7B898F93730 /* VerificationViewModel.swift */,
 			);
 			path = Verification;
+			sourceTree = "<group>";
+		};
+		49413994E238D9BEE9FFD390032860DD /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				68D9A0638F9A4B3FC669490FE918FBD6 /* ProfileView.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		4D7E69B632383A7935F032312E57DCBB /* Submodules */ = {
@@ -2403,7 +2403,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 27;
-				DEVELOPMENT_TEAM = S4325F4YCU;
+				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2472,7 +2472,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 27;
-				DEVELOPMENT_TEAM = S4325F4YCU;
+				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
