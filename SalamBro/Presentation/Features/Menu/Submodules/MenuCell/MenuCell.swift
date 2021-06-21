@@ -5,6 +5,7 @@
 //  Created by Arystan on 4/23/21.
 //
 
+import Imaginary
 import Reusable
 import RxCocoa
 import RxSwift
@@ -14,7 +15,6 @@ import UIKit
 final class MenuCell: UITableViewCell, Reusable {
     private lazy var foodImageView: UIImageView = {
         let view = UIImageView()
-        view.image = Asset.fastFood.image
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -61,7 +61,10 @@ final class MenuCell: UITableViewCell, Reusable {
     }()
 
     private var viewModel: MenuCellViewModelProtocol! {
-        didSet { bind() }
+        didSet {
+            bind()
+            viewModel.reload()
+        }
     }
 
     private var disposeBag = DisposeBag()
@@ -75,6 +78,7 @@ final class MenuCell: UITableViewCell, Reusable {
 
     override public func prepareForReuse() {
         super.prepareForReuse()
+
         disposeBag = DisposeBag()
     }
 
@@ -83,6 +87,16 @@ final class MenuCell: UITableViewCell, Reusable {
     }
 
     private func bind() {
+        viewModel.itemImageURL
+            .bind(onNext: { [weak self] imageURL in
+                guard let url = imageURL else {
+                    self?.foodImageView.image = nil
+                    return
+                }
+                self?.foodImageView.setImage(url: url)
+            })
+            .disposed(by: disposeBag)
+
         viewModel.itemTitle
             .bind(to: titleLabel.rx.text)
             .disposed(by: disposeBag)
@@ -97,8 +111,13 @@ final class MenuCell: UITableViewCell, Reusable {
     }
 
     private func setup() {
+        setupCell()
         setupViews()
         setupConstraints()
+    }
+
+    private func setupCell() {
+        selectionStyle = .none
     }
 
     private func setupViews() {

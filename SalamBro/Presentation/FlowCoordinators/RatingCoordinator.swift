@@ -6,31 +6,48 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 import UIKit
 
-// MARK: Tech debt
+final class PromotionsCoordinator: Coordinator {
+    private let disposeBag = DisposeBag()
+    private var router: Router
+    private var pagesFactory: PromotionsPagesFactory
+    private let promotionURL: URL
+    private let infoURL: URL?
 
-final class RatingCoordinator: LegacyCoordinator {
-    var parentCoordinator: LegacyCoordinator?
-    var childCoordinators: [LegacyCoordinator] = []
-    var navigationController: UINavigationController
+    var didFinish: (() -> Void)?
 
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-
-    func openAgreement() {
-        let vc = AgreementController(viewModel: AgreementViewModelImpl())
-        navigationController.pushViewController(vc, animated: true)
+    init(router: Router,
+         pagesFactory: PromotionsPagesFactory,
+         promotionURL: URL,
+         infoURL: URL?)
+    {
+        self.router = router
+        self.pagesFactory = pagesFactory
+        self.promotionURL = promotionURL
+        self.infoURL = infoURL
     }
 
     func start() {
-        let vc = RatingController(coordinator: self)
-        vc.hidesBottomBarWhenPushed = true
-        navigationController.pushViewController(vc, animated: true)
+        let promotionPage = pagesFactory.makePromotionsPage(promotionURL: promotionURL, infoURL: infoURL)
+
+        promotionPage.outputs.didTerminate.subscribe(onNext: { [weak self] in
+            self?.didFinish?()
+        }).disposed(by: disposeBag)
+
+        promotionPage.outputs.toInfo.subscribe(onNext: { [weak self] url in
+            self?.openPromotionInfo(url: url)
+        }).disposed(by: disposeBag)
+
+        promotionPage.hidesBottomBarWhenPushed = true
+        router.push(viewController: promotionPage, animated: true)
     }
 
-    func didFinish() {
-        parentCoordinator?.childDidFinish(self)
+    private func openPromotionInfo(url: URL) {
+        let promotionInfoPage = pagesFactory.makePromotionsInfoPage(url: url)
+
+        router.present(promotionInfoPage, animated: true, completion: nil)
     }
 }

@@ -2,15 +2,21 @@
 //  AgreementViewModel.swift
 //  SalamBro
 //
-//  Created by Ilyar Mnazhdin on 18.06.2021.
+//  Created by Dan on 6/16/21.
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
-protocol AgreementViewModel: AnyObject {}
+protocol AgreementViewModel {
+    var url: BehaviorRelay<URL> { get }
+}
 
-// MARK: Tech debt, add logic
+class AgreementViewModelImpl: AgreementViewModel {
+    let url: BehaviorRelay<URL>
 
-final class AgreementViewModelImpl: AgreementViewModel {
-    init() {}
+    init(url: URL) {
+        self.url = BehaviorRelay<URL>(value: url)
+    }
 }

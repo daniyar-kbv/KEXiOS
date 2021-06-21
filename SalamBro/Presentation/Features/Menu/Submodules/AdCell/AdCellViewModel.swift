@@ -10,13 +10,18 @@ import RxCocoa
 import RxSwift
 
 protocol AdCellViewModelProtocol: ViewModel {
-    var adName: BehaviorRelay<String?> { get }
+    var promotion: PromotionsResponse.ResponseData.Promotion { get }
+    var promotionImageURL: BehaviorRelay<String?> { get }
 }
 
 final class AdCellViewModel: AdCellViewModelProtocol {
-    var adName: BehaviorRelay<String?>
+    let promotion: PromotionsResponse.ResponseData.Promotion
+    
+    let promotionImageURL: BehaviorRelay<String?>
 
-    init(ad: AdUI) {
-        adName = .init(value: ad.name)
+    init(promotion: PromotionsResponse.ResponseData.Promotion) {
+        self.promotion = promotion
+        
+        promotionImageURL = .init(value: promotion.image)
     }
 }

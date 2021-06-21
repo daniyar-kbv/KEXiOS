@@ -10,6 +10,8 @@ import Moya
 protocol ServiceComponents: AnyObject {
     func authService() -> AuthService
     func locationService() -> LocationService
+    func ordersService() -> OrdersService
+    func promotionsService() -> PromotionsService
     func profileService() -> ProfileService
 }
 
@@ -28,6 +30,14 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
 
     func locationService() -> LocationService {
         return shared(LocationServiceMoyaImpl(provider: MoyaProvider<LocationAPI>(plugins: [networkPlugin])))
+    }
+
+    func ordersService() -> OrdersService {
+        return shared(OrdersServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin])))
+    }
+
+    func promotionsService() -> PromotionsService {
+        return shared(PromotionsServiceImpl(provider: MoyaProvider<PromotionsAPI>(plugins: [networkPlugin])))
     }
 
     func profileService() -> ProfileService {

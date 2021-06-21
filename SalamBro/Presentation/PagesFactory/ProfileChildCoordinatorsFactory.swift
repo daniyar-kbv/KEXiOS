@@ -14,16 +14,18 @@ protocol ProfileChildCoordinatorsFactory: AnyObject {
 
 final class ProfileChildCoordinatorsFactoryImpl: DependencyFactory, ProfileChildCoordinatorsFactory {
     private let serviceComponents: ServiceComponents
+    private let repositoryComponents: RepositoryComponents
     private let router: Router
 
-    init(serviceComponents: ServiceComponents, router: Router) {
+    init(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents, router: Router) {
         self.serviceComponents = serviceComponents
+        self.repositoryComponents = repositoryComponents
         self.router = router
     }
 
     func makeAddressListCoordinator() -> AddressListCoordinator {
         return AddressListCoordinator(router: router,
-                                      pagesFactory: AddressListPagesFactoryImpl())
+                                      pagesFactory: AddressListPagesFactoryImpl(repositoryComponents: repositoryComponents))
     }
 
     func makeOrderCoordinator() -> OrderHistoryCoordinator {

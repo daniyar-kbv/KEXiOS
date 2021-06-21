@@ -33,6 +33,7 @@ final class SupportPagesFactoryImpl: DependencyFactory, SupportPagesFactory {
     }
 
     private func makeAgreementViewModel() -> AgreementViewModel {
-        return scoped(AgreementViewModelImpl())
+//        Tech debt: change to real url
+        return scoped(AgreementViewModelImpl(url: URL(string: "google.kz")!))
     }
 }

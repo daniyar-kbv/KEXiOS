@@ -8,6 +8,8 @@
 import Foundation
 import PromiseKit
 
+//  Tech debt: Legacy
+
 public protocol MenuRepository {
     func downloadMenuCategories() -> Promise<[FoodType]>
     func downloadMenuItems() -> Promise<[Food]>

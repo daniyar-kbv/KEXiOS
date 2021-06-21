@@ -8,11 +8,11 @@
 import UIKit
 
 protocol ApplicationCoordinatorFactory: AnyObject {
-    func makeMenuCoordinator() -> MenuCoordinator
-    func makeOnboardingCoordinator() -> OnBoardingCoordinator
+    func makeOnboardingCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoardingCoordinator
+    func makeMenuCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> MenuCoordinator
     func makeAuthCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthCoordinator
     func makeCartCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartCoordinator
-    func makeProfileCoordinator(serviceComponents: ServiceComponents) -> ProfileCoordinator
+    func makeProfileCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> ProfileCoordinator
     func makeSupportCoordinator(serviceComponents: ServiceComponents) -> SupportCoordinator
 }
 
@@ -23,16 +23,16 @@ final class ApplicationCoordinatorFactoryImpl: DependencyFactory, ApplicationCoo
         self.builder = builder
     }
 
-    func makeMenuCoordinator() -> MenuCoordinator {
-        return shared(builder.buildMenuCoordinator())
+    func makeOnboardingCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoardingCoordinator {
+        return scoped(builder.buildOnboardingCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
     }
 
-    func makeOnboardingCoordinator() -> OnBoardingCoordinator {
-        return scoped(builder.buildOnboardingCoordinator())
+    func makeMenuCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> MenuCoordinator {
+        return shared(builder.buildMenuCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
     }
 
-    func makeProfileCoordinator(serviceComponents: ServiceComponents) -> ProfileCoordinator {
-        return shared(builder.buildProfileCoordinator(serviceComponents: serviceComponents))
+    func makeProfileCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> ProfileCoordinator {
+        return shared(builder.buildProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
     }
 
     func makeSupportCoordinator(serviceComponents: ServiceComponents) -> SupportCoordinator {

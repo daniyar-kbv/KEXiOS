@@ -35,8 +35,7 @@ final class AppCoordinator: BaseCoordinator {
             self?.startAuthCoordinator()
         }
 
-        // MARK: Нужно тут прописать конфиги для Меню
-
+        configureMenuCoordinator()
         configureProfileCoordinator()
         configureSupportCoordinator()
         configureCartCoordinator()
@@ -59,8 +58,21 @@ final class AppCoordinator: BaseCoordinator {
         showTabBarController()
     }
 
+    private func configureMenuCoordinator() {
+        let menuCoordinator = appCoordinatorsFactory.makeMenuCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+        menuCoordinator.start()
+        menuCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: L10n.MainTab.Menu.title,
+                                                                                   image: Asset.menu.image,
+                                                                                   selectedImage: Asset.menu.image)
+
+        preparedViewControllers.append(menuCoordinator.router.getNavigationController())
+        add(menuCoordinator)
+        navigationControllers.append(menuCoordinator.router.getNavigationController())
+    }
+
     private func configureProfileCoordinator() {
-        let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents)
+        let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
         profileCoordinator.start()
         profileCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: L10n.MainTab.Profile.title,
                                                                                       image: Asset.profile.image,
@@ -107,7 +119,7 @@ final class AppCoordinator: BaseCoordinator {
     }
 
     private func startOnboardingFlow() {
-        let onboardingCoordinator = appCoordinatorsFactory.makeOnboardingCoordinator()
+        let onboardingCoordinator = appCoordinatorsFactory.makeOnboardingCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
         add(onboardingCoordinator)
         onboardingCoordinator.didFinish = { [weak self, weak onboardingCoordinator] in

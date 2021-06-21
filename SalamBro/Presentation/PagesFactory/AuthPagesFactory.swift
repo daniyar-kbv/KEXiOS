@@ -61,10 +61,11 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     func makeAgreementPage() -> AgreementController {
-        return scoped(.init(viewModel: makeAgreementViewModel()))
+//        Tech debt: change to url passing
+        return scoped(.init(viewModel: makeAgreementViewModel(url: URL(string: "google.kz")!)))
     }
 
-    private func makeAgreementViewModel() -> AgreementViewModel {
-        return scoped(AgreementViewModelImpl())
+    private func makeAgreementViewModel(url: URL) -> AgreementViewModel {
+        return scoped(AgreementViewModelImpl(url: url))
     }
 }

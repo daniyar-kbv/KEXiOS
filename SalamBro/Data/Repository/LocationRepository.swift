@@ -26,7 +26,7 @@ protocol LocationRepository: AnyObject {
     func getDeliveryAddresses() -> [DeliveryAddress]?
     func setDeliveryAddressses(deliveryAddresses: [DeliveryAddress])
     func getCurrentDeliveryAddress() -> DeliveryAddress?
-    func setCurrentDeliveryAddress(deliveryAddress: DeliveryAddress)
+    func setCurrentDeliveryAddress(deliveryAddress: DeliveryAddress?)
     func deleteDeliveryAddress(deliveryAddress: DeliveryAddress)
     func addDeliveryAddress(deliveryAddress: DeliveryAddress)
 }

@@ -5,22 +5,24 @@
 //  Created by Arystan on 3/10/21.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 import WebKit
 
 final class AgreementController: UIViewController {
+    private let disposeBag = DisposeBag()
+    private let viewModel: AgreementViewModel
+
     private lazy var webView: WKWebView = {
-        let webConfiguration = WKWebViewConfiguration()
-        let webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.uiDelegate = self
+        let webView = WKWebView()
         return webView
     }()
 
-    private let viewModel: AgreementViewModel
-
     init(viewModel: AgreementViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+
+        super.init(nibName: .none, bundle: .none)
     }
 
     @available(*, unavailable)
@@ -28,30 +30,29 @@ final class AgreementController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func bindViewModel() {
+        viewModel.url.bind(onNext: { [weak self] url in
+            self?.webView.load(URLRequest(url: url))
+        }).disposed(by: disposeBag)
+    }
+
+    override func loadView() {
+        super.loadView()
+
+        view = webView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        layoutUI()
-        configureWebView()
+
+        setupNavigationBar()
     }
 
     // MARK: - Tech Debt: change
 
-    private func layoutUI() {
+    private func setupNavigationBar() {
         navigationItem.title = L10n.Rating.information
         navigationController?.navigationBar.topItem?.title = ""
-        view.backgroundColor = .arcticWhite
-        view.addSubview(webView)
-        webView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
-            $0.left.right.bottom.equalToSuperview()
-        }
-    }
-
-    private func configureWebView() {
-        guard let testUrl = URL(string: "https://www.google.com") else { return }
-        let myRequest = URLRequest(url: testUrl)
-        webView.load(myRequest)
+        navigationController?.navigationBar.isTranslucent = false
     }
 }
-
-extension AgreementController: WKUIDelegate {}

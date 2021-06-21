@@ -18,7 +18,8 @@ protocol LegacyCoordinator: AnyObject {
 
 protocol TabCoordinator: LegacyCoordinator {
     var childNavigationController: UINavigationController! { get set }
-    var tabType: TabBarCoordinator.TabType { get set }
+
+//    var tabType: TabBarCoordinator.TabType { get set }
 }
 
 extension LegacyCoordinator {
@@ -38,7 +39,6 @@ extension LegacyCoordinator {
 
     /// Tech debt, don't use
     func alert(error: Error, closeHandler: (() -> Void)? = nil) {
-//        TODO: add DI
         let alertHandler = AlertHandler()
         let context = AlertHandler.AlertType.error(message: error.localizedDescription, closeHandler: closeHandler)
         alertHandler.present(on: getLastPresentedViewController(), animated: true, alertType: context, completion: nil)
@@ -46,7 +46,6 @@ extension LegacyCoordinator {
 
     /// Tech debt, don't use
     func alert(title: String, message: String, closeHandler: (() -> Void)? = nil) {
-//        TODO: add DI
         let alertHandler = AlertHandler()
         let context = AlertHandler.AlertType.default(title: title, message: message, closeHandler: closeHandler)
         alertHandler.present(on: getLastPresentedViewController(), animated: true, alertType: context, completion: nil)
