@@ -16,13 +16,21 @@ protocol AuthPagesFactory: AnyObject {
 }
 
 final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
+    private let serviceComponents: ServiceComponents
+    private let repositoryComponents: RepositoryComponents
+
+    init(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) {
+        self.serviceComponents = serviceComponents
+        self.repositoryComponents = repositoryComponents
+    }
+
     func makeAuthorizationPage() -> AuthorizationController {
         return scoped(.init(viewModel: makeAuthPageViewModel()))
     }
 
     private func makeAuthPageViewModel() -> AuthorizationViewModel {
-        return scoped(AuthorizationViewModelImpl(locationRepository: DIResolver.resolve(LocationRepository.self)!,
-                                                 authService: getAuthService()))
+        return scoped(AuthorizationViewModelImpl(locationRepository: repositoryComponents.makeLocationRepository(),
+                                                 authService: serviceComponents.authService()))
     }
 
     func makeVerificationPage(phoneNumber: String) -> VerificationController {
@@ -30,7 +38,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeVerificationViewModel(phoneNumber: String) -> VerificationViewModel {
-        return scoped(.init(service: getAuthService(),
+        return scoped(.init(service: serviceComponents.authService(),
                             tokenStorage: AuthTokenStorageImpl.sharedStorage,
                             phoneNumber: phoneNumber))
     }
@@ -40,7 +48,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeSetNameViewModel() -> SetNameViewModel {
-        return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage))
+        return scoped(SetNameViewModelImpl(defaultStorage: DefaultStorageImpl.sharedStorage, profileService: serviceComponents.profileService()))
     }
 
     func makeCountryCodePickerPage() -> CountryCodePickerViewController {
@@ -48,36 +56,16 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeCountryCodePickerViewModel() -> CountryCodePickerViewModel {
-        return scoped(CountryCodePickerViewModelImpl(repository: getLocationRepository(),
-                                                     service: getLocationService()))
+        return scoped(CountryCodePickerViewModelImpl(repository: repositoryComponents.makeLocationRepository(),
+                                                     service: serviceComponents.locationService()))
     }
 
     func makeAgreementPage() -> AgreementController {
 //        Tech debt: change to url passing
         return scoped(.init(viewModel: makeAgreementViewModel(url: URL(string: "google.kz")!)))
     }
-    
+
     private func makeAgreementViewModel(url: URL) -> AgreementViewModel {
         return scoped(AgreementViewModelImpl(url: url))
-    }
-}
-
-// MARK: Tech debt, удалить, нужно чтобы сетилось через init, serviceComponents.
-
-extension AuthPagesFactoryImpl {
-    private func getAuthService() -> AuthService {
-        return DIResolver.resolve(AuthService.self)!
-    }
-
-    private func getGeoRepository() -> GeoRepository {
-        return DIResolver.resolve(GeoRepository.self)!
-    }
-
-    private func getLocationService() -> LocationService {
-        return DIResolver.resolve(LocationService.self)!
-    }
-
-    private func getLocationRepository() -> LocationRepository {
-        return DIResolver.resolve(LocationRepository.self)!
     }
 }

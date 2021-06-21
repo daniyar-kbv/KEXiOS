@@ -128,19 +128,19 @@ extension MapPage {
                                                commentary: self?.mapAddressView.commentaryTextField.text))
             })
             .disposed(by: disposeBag)
-        
+
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
                 self?.showError(error)
             }).disposed(by: disposeBag)
-        
+
         viewModel.outputs.didStartRequest
             .subscribe(onNext: { [weak self] in
                 self?.showLoader()
             }).disposed(by: disposeBag)
-        
+
         viewModel.outputs.didFinishRequest
-            .subscribe(onNext: { [weak self]  in
+            .subscribe(onNext: { [weak self] in
                 self?.hideLoader()
             }).disposed(by: disposeBag)
     }
@@ -224,6 +224,7 @@ extension MapPage: MapCommentaryPageDelegate, SuggestControllerDelegate {
 
 extension MapPage {
     private func layoutUI() {
+        view.backgroundColor = .arcticWhite
         view.addSubview(yandexMapView)
         yandexMapView.snp.makeConstraints {
             $0.edges.equalToSuperview()

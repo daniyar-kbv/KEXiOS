@@ -10,21 +10,27 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class PromotionsCoordinator {
+final class PromotionsCoordinator: Coordinator {
     private let disposeBag = DisposeBag()
-    private var navigationController: UINavigationController
+    private var router: Router
     private var pagesFactory: PromotionsPagesFactory
+    private let promotionURL: URL
+    private let infoURL: URL?
 
     var didFinish: (() -> Void)?
 
-    init(navigationController: UINavigationController,
-         pagesFactory: PromotionsPagesFactory)
+    init(router: Router,
+         pagesFactory: PromotionsPagesFactory,
+         promotionURL: URL,
+         infoURL: URL?)
     {
-        self.navigationController = navigationController
+        self.router = router
         self.pagesFactory = pagesFactory
+        self.promotionURL = promotionURL
+        self.infoURL = infoURL
     }
 
-    func start(promotionURL: URL, infoURL: URL?) {
+    func start() {
         let promotionPage = pagesFactory.makePromotionsPage(promotionURL: promotionURL, infoURL: infoURL)
 
         promotionPage.outputs.didTerminate.subscribe(onNext: { [weak self] in
@@ -36,12 +42,12 @@ final class PromotionsCoordinator {
         }).disposed(by: disposeBag)
 
         promotionPage.hidesBottomBarWhenPushed = true
-        navigationController.pushViewController(promotionPage, animated: true)
+        router.push(viewController: promotionPage, animated: true)
     }
 
     private func openPromotionInfo(url: URL) {
         let promotionInfoPage = pagesFactory.makePromotionsInfoPage(url: url)
 
-        navigationController.present(promotionInfoPage, animated: true)
+        router.present(promotionInfoPage, animated: true, completion: nil)
     }
 }

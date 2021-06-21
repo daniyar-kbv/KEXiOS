@@ -5,12 +5,20 @@
 //  Created by Arystan on 3/25/21.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
-class ChangeNameController: ViewController {
-    var yCoordinate: CGFloat?
+// MARK: Tech debt, нужно переписать как будет время, не критично.
 
-    lazy var nameLabel: UILabel = {
+final class ChangeNameController: ViewController, AlertDisplayable, LoaderDisplayable {
+    private let disposeBag = DisposeBag()
+
+    let outputs = Output()
+
+    private var yCoordinate: CGFloat?
+
+    private lazy var nameLabel: UILabel = {
         let view = UILabel()
         view.textColor = .mildBlue
         view.font = .systemFont(ofSize: 10, weight: .medium)
@@ -19,7 +27,7 @@ class ChangeNameController: ViewController {
         return view
     }()
 
-    lazy var nameView: UIView = {
+    private lazy var nameView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         view.layer.cornerRadius = 10
@@ -28,15 +36,14 @@ class ChangeNameController: ViewController {
         return view
     }()
 
-    lazy var nameField: UITextField = {
+    private lazy var nameField: UITextField = {
         let field = UITextField()
         field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        field.text = "Alibek"
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
 
-    lazy var emailLabel: UILabel = {
+    private lazy var emailLabel: UILabel = {
         let view = UILabel()
         view.textColor = .mildBlue
         view.font = .systemFont(ofSize: 10, weight: .medium)
@@ -45,7 +52,7 @@ class ChangeNameController: ViewController {
         return view
     }()
 
-    lazy var emailView: UIView = {
+    private lazy var emailView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         view.layer.cornerRadius = 10
@@ -54,20 +61,18 @@ class ChangeNameController: ViewController {
         return view
     }()
 
-    lazy var emailField: UITextField = {
+    private lazy var emailField: UITextField = {
         let field = UITextField()
         field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        field.text = "alibek_777@gmail.com"
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
 
-    lazy var saveButton: UIButton = {
+    private lazy var saveButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.ChangeName.SaveButton.title, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.addTarget(self, action: #selector(saveName), for: .touchUpInside)
-        button.isEnabled = false
         button.backgroundColor = .calmGray
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
@@ -75,11 +80,24 @@ class ChangeNameController: ViewController {
         return button
     }()
 
+    private let viewModel: ChangeNameViewModel
+
+    init(viewModel: ChangeNameViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupViews()
         setupConstraints()
+        bindViewModel()
     }
 
     override func setupNavigationBar() {
@@ -87,13 +105,13 @@ class ChangeNameController: ViewController {
         navigationItem.title = L10n.ChangeName.NavigationBar.title
     }
 
-    func setupUI() {
+    private func setupUI() {
         yCoordinate = saveButton.frame.origin.y
     }
 }
 
 extension ChangeNameController {
-    func setupViews() {
+    private func setupViews() {
         view.backgroundColor = .white
         nameView.addSubview(nameField)
         emailView.addSubview(emailField)
@@ -102,9 +120,14 @@ extension ChangeNameController {
         view.addSubview(emailLabel)
         view.addSubview(emailView)
         view.addSubview(saveButton)
+
+        saveButton.isEnabled = !(nameField.text?.isEmpty ?? true)
+
+        nameField.text = viewModel.oldUserInfo.name
+        emailField.text = viewModel.oldUserInfo.email
     }
 
-    func setupConstraints() {
+    private func setupConstraints() {
         nameLabel.leftAnchor.constraint(equalTo: nameView.leftAnchor, constant: 16).isActive = true
         nameLabel.bottomAnchor.constraint(equalTo: nameView.topAnchor, constant: -4).isActive = true
 
@@ -135,7 +158,7 @@ extension ChangeNameController {
         saveButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
     }
 
-    @objc func editingChanged(sender: UITextField) {
+    @objc private func editingChanged(sender: UITextField) {
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
         guard let name = nameField.text, let email = emailField.text, !name.isEmpty, !email.isEmpty else {
             saveButton.isEnabled = false
@@ -146,11 +169,35 @@ extension ChangeNameController {
         saveButton.backgroundColor = .kexRed
     }
 
-    @objc func saveName() {
-        navigationController?.popViewController(animated: true)
+    @objc private func saveName() {
+        viewModel.change(name: nameField.text, email: emailField.text)
     }
 
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+    private func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .bind { [weak self] in
+                self?.showLoader()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .bind { [weak self] in
+                self?.hideLoader()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didFail
+            .bind { [weak self] error in
+                self?.showError(error)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetUserInfo
+            .bind(to: outputs.didGetUserInfo)
+            .disposed(by: disposeBag)
+    }
+
+    struct Output {
+        let didGetUserInfo = PublishRelay<UserInfoResponse>()
     }
 }

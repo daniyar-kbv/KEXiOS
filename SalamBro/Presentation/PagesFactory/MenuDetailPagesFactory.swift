@@ -12,28 +12,28 @@ protocol MenuDetailPagesFactory {
     func makeModifiersPage() -> ModifiersController
 }
 
-class MenuDetailPagesFactoryImpl: MenuDetailPagesFactory {
+class MenuDetailPagesFactoryImpl: DependencyFactory, MenuDetailPagesFactory {
     private let serviceComponents: ServiceComponents
-    
+
     init(serviceComponents: ServiceComponents) {
         self.serviceComponents = serviceComponents
     }
-    
+
     func makeMenuDetailPage(positionUUID: String) -> MenuDetailController {
-        return .init(viewModel: makeMenuDetailViewModel(positionUUID: positionUUID))
+        return scoped(.init(viewModel: makeMenuDetailViewModel(positionUUID: positionUUID)))
     }
-    
+
     private func makeMenuDetailViewModel(positionUUID: String) -> MenuDetailViewModel {
-        return  MenuDetailViewModelImpl(productUUID: positionUUID,
-                                        defaultStorage: DefaultStorageImpl.sharedStorage,
-                                        ordersService: serviceComponents.ordersService())
+        return scoped(MenuDetailViewModelImpl(productUUID: positionUUID,
+                                              defaultStorage: DefaultStorageImpl.sharedStorage,
+                                              ordersService: serviceComponents.ordersService()))
     }
-    
+
     func makeModifiersPage() -> ModifiersController {
-        return .init(viewModel: makeModifiersViewModel())
+        return scoped(.init(viewModel: makeModifiersViewModel()))
     }
-    
+
     private func makeModifiersViewModel() -> ModifiersViewModel {
-        return ModifiersViewModelImpl()
+        return scoped(ModifiersViewModelImpl())
     }
 }

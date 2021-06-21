@@ -11,45 +11,27 @@ protocol MenuPagesFactory {
     func makeManuPage() -> MenuController
 }
 
-class MenuPagesFactoryIml: MenuPagesFactory {
+class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
     private let serviceComponents: ServiceComponents
-    
-    init(serviceComponents: ServiceComponents) {
+    private let repositoryComponents: RepositoryComponents
+
+    init(serviceComponents: ServiceComponents,
+         repositoryComponents: RepositoryComponents)
+    {
         self.serviceComponents = serviceComponents
+        self.repositoryComponents = repositoryComponents
     }
-    
+
     func makeManuPage() -> MenuController {
-        return .init(viewModel: makeMenuViewModel(),
-                     scrollService: MenuScrollService())
+        return scoped(.init(viewModel: makeMenuViewModel(),
+                            scrollService: MenuScrollService()))
     }
-    
+
     private func makeMenuViewModel() -> MenuViewModelProtocol {
-        return MenuViewModel(defaultStorage: DefaultStorageImpl.sharedStorage,
-                             promotionsService: serviceComponents.promotionsService(),
-                             ordersService: serviceComponents.ordersService(),
-                             menuRepository: getMenuRepository(),
-                             locationRepository: getLocationRepository(),
-                             brandRepository: getBrandRepository())
-    }
-}
-
-//    Tech debt: change to components
-
-extension MenuPagesFactoryIml {
-    
-    func getMenuRepository() -> MenuRepository {
-        DIResolver.resolve(MenuRepository.self)!
-    }
-    
-    func getLocationService() -> LocationService {
-        return DIResolver.resolve(LocationService.self)!
-    }
-    
-    func getLocationRepository() -> LocationRepository {
-        return DIResolver.resolve(LocationRepository.self)!
-    }
-    
-    func getBrandRepository() -> BrandRepository {
-        return DIResolver.resolve(BrandRepository.self)!
+        return scoped(MenuViewModel(defaultStorage: DefaultStorageImpl.sharedStorage,
+                                    promotionsService: serviceComponents.promotionsService(),
+                                    ordersService: serviceComponents.ordersService(),
+                                    locationRepository: repositoryComponents.makeLocationRepository(),
+                                    brandRepository: repositoryComponents.makeBrandRepository()))
     }
 }

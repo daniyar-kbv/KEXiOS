@@ -14,70 +14,58 @@ protocol AddressPagesFactory {
     func makeBrandsPage(cityId: Int) -> BrandsController
 }
 
-final class AddressPagesFactoryImpl: AddressPagesFactory {
+final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
     private var serviceComponents: ServiceComponents
-    
-    init(serviceComponents: ServiceComponents) {
+    private let repositoryComponents: RepositoryComponents
+
+    init(serviceComponents: ServiceComponents,
+         repositoryComponents: RepositoryComponents)
+    {
         self.serviceComponents = serviceComponents
+        self.repositoryComponents = repositoryComponents
     }
-    
+
     func makeAddressPickPage() -> AddressPickController {
-        return .init(viewModel: makeAddressPickViewModel())
+        return scoped(.init(viewModel: makeAddressPickViewModel()))
     }
 
     private func makeAddressPickViewModel() -> AddressPickerViewModel {
-        return .init(locationRepository: getLocationRepository())
+        return scoped(.init(locationRepository: repositoryComponents.makeLocationRepository()))
     }
 
     func makeSelectMainInfoPage(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewController {
-        return .init(viewModel: makeSelectMainInfoViewModel(flowType: flowType))
+        return scoped(.init(viewModel: makeSelectMainInfoViewModel(flowType: flowType)))
     }
 
     private func makeSelectMainInfoViewModel(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewModel {
-        return .init(locationService: getLocationService(),
-                     locationRepository: getLocationRepository(),
-                     brandRepository: getBrandRepository(),
-                     flowType: flowType)
+        return scoped(.init(locationService: serviceComponents.locationService(),
+                            locationRepository: repositoryComponents.makeLocationRepository(),
+                            brandRepository: repositoryComponents.makeBrandRepository(),
+                            flowType: flowType))
     }
 
     func makeMapPage(address: Address?) -> MapPage {
-        return .init(viewModel: makeMapViewModel(address: address))
+        return scoped(.init(viewModel: makeMapViewModel(address: address)))
     }
 
     private func makeMapViewModel(address: Address?) -> MapViewModel {
-        return .init(ordersService: serviceComponents.ordersService(),
-                     defaultStorage: DefaultStorageImpl.sharedStorage,
-                     locationRepository: getLocationRepository(),
-                     brandRepository: getBrandRepository(),
-                     flow: .change,
-                     address: address)
+        return scoped(.init(ordersService: serviceComponents.ordersService(),
+                            defaultStorage: DefaultStorageImpl.sharedStorage,
+                            locationRepository: repositoryComponents.makeLocationRepository(),
+                            brandRepository: repositoryComponents.makeBrandRepository(),
+                            flow: .change,
+                            address: address))
     }
 
     func makeBrandsPage(cityId: Int) -> BrandsController {
-        return .init(viewModel: makeBrandsViewModel(cityId: cityId),
-                     flowType: .change)
+        return scoped(.init(viewModel: makeBrandsViewModel(cityId: cityId),
+                            flowType: .change))
     }
 
     private func makeBrandsViewModel(cityId: Int) -> BrandViewModel {
-        return .init(repository: getBrandRepository(),
-                     locationRepository: getLocationRepository(),
-                     service: getLocationService(),
-                     cityId: cityId)
-    }
-}
-
-//  Tech debt: change to components
-
-extension AddressPagesFactoryImpl {
-    private func getLocationRepository() -> LocationRepository {
-        return DIResolver.resolve(LocationRepository.self)!
-    }
-
-    private func getLocationService() -> LocationService {
-        return DIResolver.resolve(LocationService.self)!
-    }
-
-    private func getBrandRepository() -> BrandRepository {
-        return DIResolver.resolve(BrandRepository.self)!
+        return scoped(.init(repository: repositoryComponents.makeBrandRepository(),
+                            locationRepository: repositoryComponents.makeLocationRepository(),
+                            service: serviceComponents.locationService(),
+                            cityId: cityId))
     }
 }

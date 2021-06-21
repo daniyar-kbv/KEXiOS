@@ -111,6 +111,7 @@ final class MenuCell: UITableViewCell, Reusable {
     }
 
     private func setup() {
+        setupCell()
         setupViews()
         setupConstraints()
     }

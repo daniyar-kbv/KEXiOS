@@ -6,9 +6,8 @@
 //
 
 import Lottie
-import UIKit
 
-enum LottieAnimationModel: CaseIterable {
+enum LottieAnimationModel: String, CaseIterable {
     case orderHistory
     case emptyBasket
     case noInternet
@@ -37,47 +36,17 @@ enum LottieAnimationModel: CaseIterable {
     }
 
     func getButtonTitle() -> String {
-        var title = ""
         switch self {
-        case .orderHistory, .emptyBasket:
-            title = "Перейти в меню"
-        case .noInternet, .overload:
-            title = "Попробовать еще раз"
-        case .upgrade:
-            title = "Обновить приложение"
-        case .payment:
-            title = "Отменить заказ"
-        case .profile:
-            title = "Войти"
+        case .orderHistory, .emptyBasket: return "Перейти в меню"
+        case .noInternet, .overload: return "Попробовать еще раз"
+        case .upgrade: return "Обновить приложение"
+        case .payment: return "Отменить заказ"
+        case .profile: return "Войти"
         }
-        return title
     }
 
-    func getAnimation() -> Animation {
-        var animation: Animation?
-
-        switch self {
-        case .orderHistory:
-            animation = Animation.named("\(LottieAnimationModel.orderHistory)")
-        case .emptyBasket:
-            animation = Animation.named("\(LottieAnimationModel.emptyBasket)")
-        case .noInternet:
-            animation = Animation.named("\(LottieAnimationModel.noInternet)")
-        case .upgrade:
-            animation = Animation.named("\(LottieAnimationModel.upgrade)")
-        case .overload:
-            animation = Animation.named("\(LottieAnimationModel.overload)")
-        case .payment:
-            animation = Animation.named("\(LottieAnimationModel.payment)")
-        case .profile:
-            animation = Animation.named("\(LottieAnimationModel.profile)")
-        }
-
-        if let selectedAnimation = animation {
-            return selectedAnimation
-        } else {
-            return Animation.named("")!
-        }
+    func getAnimation() -> Animation? {
+        return Animation.named(rawValue)
     }
 
     // MARK: Change when actions are implemented, should send action types

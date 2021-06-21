@@ -5,32 +5,37 @@
 //  Created by Dan on 6/2/21.
 //
 
-import Foundation
+import RxCocoa
+import RxSwift
 import UIKit
 
-final class SupportCoordinator: TabCoordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators: [Coordinator] = []
-    var navigationController: UINavigationController
-    weak var childNavigationController: UINavigationController!
-    var tabType: TabBarCoordinator.TabType
+final class SupportCoordinator: BaseCoordinator {
+    private let disposeBag = DisposeBag()
 
-    init(navigationController: UINavigationController, tabType: TabBarCoordinator.TabType) {
-        self.navigationController = navigationController
-        self.tabType = tabType
+    private(set) var router: Router
+    private let pagesFactory: SupportPagesFactory
+    private let coordinatorsFactory: SupportCoordinatorsFactory
+
+    init(router: Router, pagesFactory: SupportPagesFactory, coordinatorsFactory: SupportCoordinatorsFactory) {
+        self.router = router
+        self.pagesFactory = pagesFactory
+        self.coordinatorsFactory = coordinatorsFactory
+        router.set(navigationController: router.getNavigationController())
     }
 
-    func openAgreement() {
-        let vc = AgreementController(viewModel: AgreementViewModelImpl(url: URL(string: "google.kz")!))
-        childNavigationController.pushViewController(vc, animated: true)
+    override func start() {
+        let supportPage = pagesFactory.makeSupportPage()
+
+        supportPage.onTapAgreementDocs = { [weak self] in
+            self?.showAgreementPage()
+        }
+
+        router.push(viewController: supportPage, animated: true)
     }
 
-    func start() {
-        let vc = SupportController(coordinator: self)
-        childNavigationController = templateNavigationController(title: tabType.title,
-                                                                 image: tabType.image,
-                                                                 rootViewController: vc)
-    }
+    private func showAgreementPage() {
+        let agreementPage = pagesFactory.makeAgreementPage()
 
-    func didFinish() {}
+        router.push(viewController: agreementPage, animated: true)
+    }
 }

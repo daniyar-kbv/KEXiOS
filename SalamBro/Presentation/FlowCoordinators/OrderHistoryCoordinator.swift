@@ -5,35 +5,45 @@
 //  Created by Dan on 6/3/21.
 //
 
-import Foundation
 import UIKit
 
-final class OrderHistoryCoordinator: Coordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators: [Coordinator] = []
-    var navigationController: UINavigationController
+final class OrderHistoryCoordinator: BaseCoordinator {
+    var didFinish: (() -> Void)?
 
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    private let router: Router
+    private let pagesFactory: OrderHistoryPagesFactory
+
+    init(router: Router, pagesFactory: OrderHistoryPagesFactory) {
+        self.router = router
+        self.pagesFactory = pagesFactory
     }
 
-    func start() {
-        let vc = OrderHistoryController(coordinator: self)
-        vc.hidesBottomBarWhenPushed = true
-        navigationController.pushViewController(vc, animated: true)
+    override func start() {
+        let orderHistoryPage = pagesFactory.makeOrderHistoryPage()
+
+        orderHistoryPage.onRateTapped = { [weak self] in
+            self?.showRateOrderPage()
+        }
+
+        orderHistoryPage.onShareTapped = { [weak self] in
+            self?.showShareOrderPage()
+        }
+
+        orderHistoryPage.onTerminate = { [weak self] in
+            self?.didFinish?()
+        }
+
+        orderHistoryPage.hidesBottomBarWhenPushed = true
+        router.push(viewController: orderHistoryPage, animated: true)
     }
 
-    func openRateOrder() {
-        let vc = RateController()
-        vc.modalPresentationStyle = .pageSheet
-        getLastPresentedViewController().present(vc, animated: true, completion: nil)
+    private func showRateOrderPage() {
+        let rateOrderPage = pagesFactory.makeRateOrderPage()
+        router.present(rateOrderPage, animated: true, completion: nil)
     }
 
-    func openShareOrder() {
-        navigationController.pushViewController(ShareOrderController(), animated: true)
-    }
-
-    func didFinish() {
-        parentCoordinator?.childDidFinish(self)
+    private func showShareOrderPage() {
+        let shareOrderPage = pagesFactory.makeShareOrderPage()
+        router.push(viewController: shareOrderPage, animated: true)
     }
 }

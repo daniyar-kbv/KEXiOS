@@ -11,21 +11,21 @@ protocol PromotionsPagesFactory {
     func makePromotionsPage(promotionURL: URL, infoURL: URL?) -> PromotionsController
     func makePromotionsInfoPage(url: URL) -> AgreementController
 }
- 
-class PromotionsPagesFactoryImpl: PromotionsPagesFactory {
+
+class PromotionsPagesFactoryImpl: DependencyFactory, PromotionsPagesFactory {
     func makePromotionsPage(promotionURL: URL, infoURL: URL?) -> PromotionsController {
-        return .init(viewModel: makePromotionsViewModel(promotionURL: promotionURL, infoURL: infoURL))
+        return scoped(.init(viewModel: makePromotionsViewModel(promotionURL: promotionURL, infoURL: infoURL)))
     }
-    
+
     private func makePromotionsViewModel(promotionURL: URL, infoURL: URL?) -> PromotionsViewModel {
-        return PromotionsViewModelImpl(promotionURL: promotionURL, infoURL: infoURL)
+        return scoped(PromotionsViewModelImpl(promotionURL: promotionURL, infoURL: infoURL))
     }
-    
+
     func makePromotionsInfoPage(url: URL) -> AgreementController {
-        return .init(viewModel: makePromotionsInfoViewModel(url: url))
+        return scoped(.init(viewModel: makePromotionsInfoViewModel(url: url)))
     }
-    
+
     func makePromotionsInfoViewModel(url: URL) -> AgreementViewModel {
-        return AgreementViewModelImpl(url: url)
+        return scoped(AgreementViewModelImpl(url: url))
     }
 }

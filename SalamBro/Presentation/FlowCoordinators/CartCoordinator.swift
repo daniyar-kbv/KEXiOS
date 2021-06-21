@@ -6,38 +6,41 @@
 //
 
 import Foundation
-import UIKit
 
-final class CartCoordinator: TabCoordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators: [Coordinator] = []
-    var navigationController: UINavigationController
-    weak var childNavigationController: UINavigationController!
-    var tabType: TabBarCoordinator.TabType
+final class CartCoordinator: BaseCoordinator {
+    private(set) var router: Router
+    private let pagesFactory: CartPagesFactory
+    private let coordinatorsFactory: CartCoordinatorsFactory
 
-    private var authCoordinator: AuthCoordinator?
-
-    init(navigationController: UINavigationController, tabType: TabBarCoordinator.TabType) {
-        self.navigationController = navigationController
-        self.tabType = tabType
+    init(router: Router,
+         pagesFactory: CartPagesFactory,
+         coordinatorsFactory: CartCoordinatorsFactory)
+    {
+        self.router = router
+        self.pagesFactory = pagesFactory
+        self.coordinatorsFactory = coordinatorsFactory
+        router.set(navigationController: router.getNavigationController())
     }
 
-    func openAuth() {
-        authCoordinator = AuthCoordinator(navigationController: childNavigationController, pagesFactory: AuthPagesFactoryImpl())
-        authCoordinator?.start()
+    override func start() {
+        let cartPage = pagesFactory.makeCartPage()
 
-        authCoordinator?.didFinish = { [weak self] in
-            self?.authCoordinator = nil
+        cartPage.openAuth = { [weak self] in
+            self?.startAuthCoordinator()
         }
+
+        router.push(viewController: cartPage, animated: true)
     }
 
-    func start() {
-        let viewModel = CartViewModel(coordinator: self, cartRepository: CartRepositoryMockImpl())
-        let vc = CartController(viewModel: viewModel)
-        childNavigationController = templateNavigationController(title: tabType.title,
-                                                                 image: tabType.image,
-                                                                 rootViewController: vc)
-    }
+    private func startAuthCoordinator() {
+        let authCoordinator = coordinatorsFactory.makeAuthCoordinator()
+        add(authCoordinator)
 
-    func didFinish() {}
+        authCoordinator.didFinish = { [weak self, weak authCoordinator] in
+            self?.remove(authCoordinator)
+            authCoordinator = nil
+        }
+
+        authCoordinator.start()
+    }
 }

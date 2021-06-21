@@ -29,7 +29,6 @@ final class MenuViewModel: MenuViewModelProtocol {
     private let promotionsService: PromotionsService
     private let ordersService: OrdersService
 
-    private let menuRepository: MenuRepository
     private let locationRepository: LocationRepository
     private let brandRepository: BrandRepository
 
@@ -41,14 +40,12 @@ final class MenuViewModel: MenuViewModelProtocol {
     init(defaultStorage: DefaultStorage,
          promotionsService: PromotionsService,
          ordersService: OrdersService,
-         menuRepository: MenuRepository,
          locationRepository: LocationRepository,
          brandRepository: BrandRepository)
     {
         self.defaultStorage = defaultStorage
         self.promotionsService = promotionsService
         self.ordersService = ordersService
-        self.menuRepository = menuRepository
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
     }

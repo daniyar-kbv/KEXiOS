@@ -7,27 +7,27 @@
 
 import UIKit
 
-protocol Coordinator: AnyObject {
-    var parentCoordinator: Coordinator? { get set }
-    var childCoordinators: [Coordinator] { get set }
+protocol LegacyCoordinator: AnyObject {
+    var parentCoordinator: LegacyCoordinator? { get set }
+    var childCoordinators: [LegacyCoordinator] { get set }
     var navigationController: UINavigationController { get set }
 
     func start()
     func didFinish()
 }
 
-protocol TabCoordinator: Coordinator {
+protocol TabCoordinator: LegacyCoordinator {
     var childNavigationController: UINavigationController! { get set }
-    var tabType: TabBarCoordinator.TabType { get set }
+//    var tabType: TabBarCoordinator.TabType { get set }
 }
 
-extension Coordinator {
-    func addChild(_ child: Coordinator) {
+extension LegacyCoordinator {
+    func addChild(_ child: LegacyCoordinator) {
         child.parentCoordinator = self
         childCoordinators.append(child)
     }
 
-    func childDidFinish(_ child: Coordinator) {
+    func childDidFinish(_ child: LegacyCoordinator) {
         for (index, coordinator) in childCoordinators.enumerated() {
             if coordinator === child {
                 childCoordinators.remove(at: index)

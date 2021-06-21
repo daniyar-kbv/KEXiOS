@@ -53,6 +53,14 @@ class ChangeLanguageController: ViewController {
     }
 }
 
+// MARK: Tech debt
+
+public let languages: [String] = [
+    "Kazakh",
+    "Russian",
+    "English",
+]
+
 // MARK: - UITableView
 
 extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {

@@ -14,7 +14,7 @@ struct AuthPlugin: PluginType {
         NSLog("preparing request...")
 
         if let accessToken = AuthTokenStorageImpl.sharedStorage.token {
-            request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+            request.addValue("JWT \(accessToken)", forHTTPHeaderField: "Authorization")
         }
 
         return request

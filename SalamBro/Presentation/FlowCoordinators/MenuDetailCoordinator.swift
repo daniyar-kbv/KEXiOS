@@ -10,24 +10,28 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-public final class MenuDetailCoordinator {
+public final class MenuDetailCoordinator: Coordinator {
     private let disposeBag = DisposeBag()
+
+    private let router: Router
     private let serviceComponents: ServiceComponents
     private let pagesFactory: MenuDetailPagesFactory
-    private let navigationController: UINavigationController
+    private let positionUUID: String
 
     var didFinish: (() -> Void)?
 
-    init(serviceComponents: ServiceComponents,
+    init(router: Router,
+         serviceComponents: ServiceComponents,
          pagesFactory: MenuDetailPagesFactory,
-         navigationController: UINavigationController)
+         positionUUID: String)
     {
+        self.router = router
         self.serviceComponents = serviceComponents
         self.pagesFactory = pagesFactory
-        self.navigationController = navigationController
+        self.positionUUID = positionUUID
     }
 
-    func start(positionUUID: String) {
+    func start() {
         let menuDetailPage = pagesFactory.makeMenuDetailPage(positionUUID: positionUUID)
 
         menuDetailPage.outputs.didTerminate
@@ -45,7 +49,7 @@ public final class MenuDetailCoordinator {
             }).disposed(by: disposeBag)
 
         menuDetailPage.modalPresentationStyle = .pageSheet
-        navigationController.present(menuDetailPage, animated: true)
+        router.present(menuDetailPage, animated: true, completion: nil)
     }
 
     private func openModifiers(on presentedController: UIViewController) {

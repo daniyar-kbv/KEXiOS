@@ -10,35 +10,30 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class MenuCoordinator: TabCoordinator {
+final class MenuCoordinator: BaseCoordinator {
     private let disposeBag = DisposeBag()
 
-    var parentCoordinator: Coordinator?
-    var childCoordinators: [Coordinator] = []
-    var navigationController: UINavigationController
-    weak var childNavigationController: UINavigationController!
-    var tabType: TabBarCoordinator.TabType
+    let router: Router
 
-    private var serviceComponents: ServiceComponents
-    private var pagesFactory: MenuPagesFactory
+    private let serviceComponents: ServiceComponents
+    private let repositoryComponents: RepositoryComponents
+    private let pagesFactory: MenuPagesFactory
+    private let coordinatorsFactory: MenuCoordinatorsFactory
 
-    private var addressCoordinator: AddressCoordinator?
-    private var promotionsCoordinator: PromotionsCoordinator?
-    private var menuDetailCoordinator: MenuDetailCoordinator?
-
-    init(serviceComponents: ServiceComponents,
+    init(router: Router,
+         serviceComponents: ServiceComponents,
+         repositoryComponents: RepositoryComponents,
          pagesFactory: MenuPagesFactory,
-         navigationController: UINavigationController,
-         tabType: TabBarCoordinator.TabType)
+         coordinatorsFactory: MenuCoordinatorsFactory)
     {
+        self.router = router
         self.serviceComponents = serviceComponents
+        self.repositoryComponents = repositoryComponents
         self.pagesFactory = pagesFactory
-
-        self.navigationController = navigationController
-        self.tabType = tabType
+        self.coordinatorsFactory = coordinatorsFactory
     }
 
-    func start() {
+    override func start() {
         let menuPage = pagesFactory.makeManuPage()
 
         menuPage.outputs.toChangeBrand
@@ -61,60 +56,51 @@ final class MenuCoordinator: TabCoordinator {
                 self?.openDetail(positionUUID: positionUUID)
             }).disposed(by: disposeBag)
 
-        childNavigationController = templateNavigationController(title: tabType.title,
-                                                                 image: tabType.image,
-                                                                 rootViewController: menuPage)
+        router.push(viewController: menuPage, animated: true)
     }
-
-//    Tech debt: move to pages factory
 
     private func openChangeBrand(didSave: (() -> Void)? = nil) {
-        addressCoordinator = AddressCoordinator(navigationController: childNavigationController,
-                                                pagesFactory: AddressPagesFactoryImpl(serviceComponents: serviceComponents),
-                                                flowType: .changeBrand(didSave: didSave))
+        let addressCoordinator = coordinatorsFactory.makeAddressCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, flowType: .changeBrand(didSave: didSave, presentOn: router.getNavigationController()))
+        add(addressCoordinator)
 
-        addressCoordinator?.didFinish = { [weak self] in
-            self?.addressCoordinator = nil
+        addressCoordinator.didFinish = { [weak self] in
+            self?.remove(addressCoordinator)
         }
 
-        addressCoordinator?.start()
+        addressCoordinator.start()
     }
 
-//    Tech debt: move to pages factory
-
     func openChangeAddress(didSelectAddress: (() -> Void)? = nil) {
-        addressCoordinator = AddressCoordinator(navigationController: childNavigationController,
-                                                pagesFactory: AddressPagesFactoryImpl(serviceComponents: serviceComponents),
-                                                flowType: .changeAddress(didSelectAddress: didSelectAddress))
+        let addressCoordinator = coordinatorsFactory.makeAddressCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, flowType: .changeAddress(didSelectAddress: didSelectAddress))
+        add(addressCoordinator)
 
-        addressCoordinator?.didFinish = { [weak self] in
-            self?.addressCoordinator = nil
+        addressCoordinator.didFinish = { [weak self] in
+            self?.remove(addressCoordinator)
         }
 
-        addressCoordinator?.start()
+        addressCoordinator.start()
     }
 
     private func openPromotion(promotionURL: URL, infoURL: URL?) {
-        promotionsCoordinator = PromotionsCoordinator(navigationController: childNavigationController,
-                                                      pagesFactory: PromotionsPagesFactoryImpl())
+        let promotionsCoordinator = coordinatorsFactory.makePromotionsCoordinator(promotionURL: promotionURL, infoURL: infoURL)
+        add(promotionsCoordinator)
 
-        promotionsCoordinator?.didFinish = { [weak self] in
-            self?.promotionsCoordinator = nil
+        promotionsCoordinator.didFinish = { [weak self] in
+            self?.remove(promotionsCoordinator)
         }
 
-        promotionsCoordinator?.start(promotionURL: promotionURL, infoURL: infoURL)
+        promotionsCoordinator.start()
     }
 
     private func openDetail(positionUUID: String) {
-        menuDetailCoordinator = MenuDetailCoordinator(serviceComponents: serviceComponents,
-                                                      pagesFactory: MenuDetailPagesFactoryImpl(serviceComponents: serviceComponents),
-                                                      navigationController: childNavigationController)
+        let menuDetailCoordinator = coordinatorsFactory.makeMenuDetailCoordinator(serviceComponents: serviceComponents, positionUUID: positionUUID)
+        add(menuDetailCoordinator)
 
-        menuDetailCoordinator?.didFinish = { [weak self] in
-            self?.menuDetailCoordinator = nil
+        menuDetailCoordinator.didFinish = { [weak self] in
+            self?.remove(menuDetailCoordinator)
         }
 
-        menuDetailCoordinator?.start(positionUUID: positionUUID)
+        menuDetailCoordinator.start()
     }
 
     func didFinish() {}

@@ -8,55 +8,132 @@
 import Foundation
 import UIKit
 
-final class AppCoordinator: Coordinator {
-    var parentCoordinator: Coordinator?
-    var childCoordinators = [Coordinator]()
-    var navigationController: UINavigationController
+final class AppCoordinator: BaseCoordinator {
+    private var preparedViewControllers: [UIViewController] = []
+    private var navigationControllers = [UINavigationController]()
+    private var restartAuthCoordinator: (() -> Void)?
 
-    private var onBoardingCoordinator: OnBoardingCoordinator?
-
-    private let locationRepository: LocationRepository
-    private let brandRepository: BrandRepository
+    private(set) var tabBarController: SBTabBarController!
 
     private let serviceComponents: ServiceComponents
+    private let repositoryComponents: RepositoryComponents
+    private let appCoordinatorsFactory: ApplicationCoordinatorFactory
 
     init(serviceComponents: ServiceComponents,
-         navigationController: UINavigationController,
-         locationRepository: LocationRepository,
-         brandRepository: BrandRepository)
+         repositoryComponents: RepositoryComponents,
+         appCoordinatorsFactory: ApplicationCoordinatorFactory)
     {
         self.serviceComponents = serviceComponents
-        self.navigationController = navigationController
-        self.locationRepository = locationRepository
-        self.brandRepository = brandRepository
+        self.repositoryComponents = repositoryComponents
+        self.appCoordinatorsFactory = appCoordinatorsFactory
     }
 
-    public func start() {
-        if locationRepository.isAddressComplete(),
-           brandRepository.getCurrentBrand() != nil
-        {
-            startMenu()
-        } else {
-            startFirstFlow()
-        }
-    }
+    override func start() {
+        tabBarController = SBTabBarController()
 
-    private func startFirstFlow() {
-        onBoardingCoordinator = OnBoardingCoordinator(navigationController: UINavigationController(),
-                                          pagesFactory: OnBoardingPagesFactoryImpl(serviceComponents: serviceComponents))
-        
-        onBoardingCoordinator?.didFinish = { [weak self] in
-            self?.onBoardingCoordinator = nil
-            self?.start()
+        restartAuthCoordinator = { [weak self] in
+            self?.startAuthCoordinator()
         }
 
-        onBoardingCoordinator?.start()
+        configureMenuCoordinator()
+        configureProfileCoordinator()
+        configureSupportCoordinator()
+        configureCartCoordinator()
+
+        switchFlows()
     }
 
-    private func startMenu() {
-        let vc = MainTabController(serviceComponents: serviceComponents)
-        UIApplication.shared.setRootView(vc)
+    private func switchFlows() {
+        let locationRepository = repositoryComponents.makeLocationRepository()
+        let brandRepository = repositoryComponents.makeBrandRepository()
+
+        guard
+            locationRepository.isAddressComplete(),
+            brandRepository.getCurrentBrand() != nil
+        else {
+            startOnboardingFlow()
+            return
+        }
+
+        showTabBarController()
     }
 
-    func didFinish() {}
+    private func configureMenuCoordinator() {
+        let menuCoordinator = appCoordinatorsFactory.makeMenuCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+        menuCoordinator.start()
+        menuCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: L10n.MainTab.Menu.title,
+                                                                                   image: Asset.menu.image,
+                                                                                   selectedImage: Asset.menu.image)
+
+        preparedViewControllers.append(menuCoordinator.router.getNavigationController())
+        add(menuCoordinator)
+        navigationControllers.append(menuCoordinator.router.getNavigationController())
+    }
+
+    private func configureProfileCoordinator() {
+        let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+        profileCoordinator.start()
+        profileCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: L10n.MainTab.Profile.title,
+                                                                                      image: Asset.profile.image,
+                                                                                      selectedImage: Asset.profile.image)
+        preparedViewControllers.append(profileCoordinator.router.getNavigationController())
+        add(profileCoordinator)
+        navigationControllers.append(profileCoordinator.router.getNavigationController())
+    }
+
+    private func configureSupportCoordinator() {
+        let supportCoordinator = appCoordinatorsFactory.makeSupportCoordinator(serviceComponents: serviceComponents)
+        supportCoordinator.start()
+        supportCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: L10n.MainTab.Support.title,
+                                                                                      image: Asset.support.image,
+                                                                                      selectedImage: Asset.support.image)
+        preparedViewControllers.append(supportCoordinator.router.getNavigationController())
+        add(supportCoordinator)
+        navigationControllers.append(supportCoordinator.router.getNavigationController())
+    }
+
+    private func configureCartCoordinator() {
+        let cartCoordinator = appCoordinatorsFactory.makeCartCoordinator(serviceComponents: serviceComponents,
+                                                                         repositoryComponents: repositoryComponents)
+        cartCoordinator.start()
+        cartCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: L10n.MainTab.Cart.title,
+                                                                                   image: Asset.cart.image,
+                                                                                   selectedImage: Asset.cart.image)
+        preparedViewControllers.append(cartCoordinator.router.getNavigationController())
+        add(cartCoordinator)
+        navigationControllers.append(cartCoordinator.router.getNavigationController())
+    }
+
+    private func startAuthCoordinator() {
+        let authCoordinator = appCoordinatorsFactory.makeAuthCoordinator(serviceComponents: serviceComponents,
+                                                                         repositoryComponents: repositoryComponents)
+
+        add(authCoordinator)
+        authCoordinator.didFinish = { [weak self, weak authCoordinator] in
+            self?.remove(authCoordinator)
+            authCoordinator = nil
+        }
+
+        authCoordinator.start()
+    }
+
+    private func startOnboardingFlow() {
+        let onboardingCoordinator = appCoordinatorsFactory.makeOnboardingCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+        add(onboardingCoordinator)
+        onboardingCoordinator.didFinish = { [weak self, weak onboardingCoordinator] in
+            self?.remove(onboardingCoordinator)
+            onboardingCoordinator = nil
+            self?.showTabBarController()
+        }
+
+        onboardingCoordinator.start()
+    }
+
+    private func showTabBarController() {
+        tabBarController.viewControllers = preparedViewControllers
+
+        UIApplication.shared.setRootView(tabBarController) // MARK: Tech debt
+    }
 }

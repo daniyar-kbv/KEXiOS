@@ -27,9 +27,9 @@ target 'SalamBro' do
   pod 'SwiftGen'
 
   # Pods for yandex-map
-  pod 'YandexMapKit', '~> 3.4'
+  pod 'YandexMapKit', '3.4'
   # Additional MapKit modules.
-  pod 'YandexMapKitSearch', '~> 3.4'
+  pod 'YandexMapKitSearch', '3.4'
 
   #rateView
   pod 'Cosmos'

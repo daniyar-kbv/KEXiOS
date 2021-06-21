@@ -10,29 +10,29 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class OnBoardingCoordinator {
-    private let navigationController: UINavigationController
+final class OnBoardingCoordinator: BaseCoordinator {
+    private(set) var router: Router
     private let pagesFactory: OnBoadingPagesFactory
     private let disposeBag = DisposeBag()
 
     var didFinish: (() -> Void)?
 
-    init(navigationController: UINavigationController,
+    init(router: Router,
          pagesFactory: OnBoadingPagesFactory)
     {
-        self.navigationController = navigationController
+        self.router = router
         self.pagesFactory = pagesFactory
     }
 
-    func start() {
+    override func start() {
         let countriesPage = pagesFactory.makeCountriesPage()
 
         countriesPage.outputs.didSelectCountry.subscribe(onNext: { [weak self] countryId in
             self?.openCities(countryId: countryId)
         }).disposed(by: disposeBag)
 
-        navigationController.pushViewController(countriesPage, animated: false)
-        UIApplication.shared.setRootView(navigationController)
+        router.push(viewController: countriesPage, animated: false)
+        UIApplication.shared.setRootView(router.getNavigationController())
     }
 
     private func openCities(countryId: Int) {
@@ -42,7 +42,7 @@ final class OnBoardingCoordinator {
             self?.openBrands(cityId: cityId)
         }).disposed(by: disposeBag)
 
-        navigationController.pushViewController(citiesPage, animated: true)
+        router.push(viewController: citiesPage, animated: true)
     }
 
     private func openBrands(cityId: Int) {
@@ -52,7 +52,7 @@ final class OnBoardingCoordinator {
             self?.openMap()
         }).disposed(by: disposeBag)
 
-        navigationController.pushViewController(brandsPage, animated: true)
+        router.push(viewController: brandsPage, animated: true)
     }
 
     private func openMap() {
@@ -60,9 +60,8 @@ final class OnBoardingCoordinator {
 
         mapPage.selectedAddress = { [weak self] _ in
             self?.didFinish?()
-            self?.navigationController.viewControllers.removeAll()
+            self?.router.getNavigationController().viewControllers.removeAll()
         }
-
-        navigationController.pushViewController(mapPage, animated: true)
+        router.push(viewController: mapPage, animated: true)
     }
 }

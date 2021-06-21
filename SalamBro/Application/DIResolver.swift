@@ -11,7 +11,6 @@ import Swinject
 
 public final class DIResolver {
     private static let assembler = Assembler([
-        ApplicationAssembly(),
         ProvidersAssembly(),
         StoragesAssembly(),
         ManagersAssembly(),
@@ -29,19 +28,6 @@ public final class DIResolver {
 
     class func resolve<Service, Arg1, Arg2>(_ serviceType: Service.Type, argument1 arg1: Arg1, argument2 arg2: Arg2) -> Service? {
         assembler.resolver.resolve(serviceType, arguments: arg1, arg2)
-    }
-}
-
-private final class ApplicationAssembly: Assembly {
-    func assemble(container: Container) {
-        container.register(AppCoordinator.self) { r in
-            AppCoordinator(
-                serviceComponents: ServiceComponentsAssembly(),
-                navigationController: UINavigationController(),
-                locationRepository: r.resolve(LocationRepository.self)!,
-                brandRepository: r.resolve(BrandRepository.self)!
-            )
-        }
     }
 }
 

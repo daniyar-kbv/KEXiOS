@@ -8,12 +8,10 @@
 import Foundation
 
 class CartViewModel {
-    var coordinator: CartCoordinator
     private let cartRepository: CartRepository
     var cart: Cart
 
-    init(coordinator: CartCoordinator, cartRepository: CartRepository) {
-        self.coordinator = coordinator
+    init(cartRepository: CartRepository) {
         self.cartRepository = cartRepository
         cart = cartRepository.getCart()
     }
