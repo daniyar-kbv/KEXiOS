@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class BrandsController: ViewController, AlertDisplayable {
+final class BrandsController: UIViewController, AlertDisplayable {
     let outputs = Output()
     private let viewModel: BrandViewModelProtocol
     private let disposeBag: DisposeBag
@@ -24,10 +24,7 @@ final class BrandsController: ViewController, AlertDisplayable {
     }()
 
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: .init()
-        )
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.register(cellType: BrandCell.self)
@@ -70,11 +67,11 @@ final class BrandsController: ViewController, AlertDisplayable {
 
     private func bind() {
         viewModel.outputs.didGetBrands
-            .do { [unowned self] _ in
-                let ratios = self.viewModel.ratios.map { (CGFloat($0.0), CGFloat($0.1)) }
-                self.collectionView.collectionViewLayout.invalidateLayout()
-                self.collectionView.collectionViewLayout = StagLayout(widthHeightRatios: ratios,
-                                                                      itemSpacing: 16)
+            .do { [weak self] _ in
+                guard let ratios = self?.viewModel.ratios else { return }
+                self?.collectionView.collectionViewLayout.invalidateLayout()
+                self?.collectionView.collectionViewLayout = StagLayout(widthHeightRatios: ratios,
+                                                                       itemSpacing: 16)
             }.bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
 
@@ -103,8 +100,7 @@ final class BrandsController: ViewController, AlertDisplayable {
 
     private func setupConstraints() {
         collectionView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.left.right.equalToSuperview().inset(24)
             $0.top.equalTo(view.snp.topMargin)
             $0.bottom.equalTo(view.snp.bottom)
         }

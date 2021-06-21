@@ -8,13 +8,12 @@
 import UIKit
 
 private extension Array {
-    subscript (safe index: Int) -> Element? {
+    subscript(safe index: Int) -> Element? {
         return Int(index) < count ? self[Int(index)] : nil
     }
 }
 
 final class StagLayoutFrameHolder {
-
     var cache = [UICollectionViewLayoutAttributes]()
 
     private let widthHeightRatios: [(CGFloat, CGFloat)]
@@ -41,7 +40,7 @@ final class StagLayoutFrameHolder {
         var previousItemFrame: CGRect?
         var ratioIndex = 0
 
-        for index in 0..<itemCount {
+        for index in 0 ..< itemCount {
             if ratioIndex >= widthHeightRatios.count { ratioIndex = 0 }
 
             let ratios = widthHeightRatios[ratioIndex]
@@ -51,27 +50,23 @@ final class StagLayoutFrameHolder {
             )
 
             let isFullWidth = ratios.0 == 1.0
-            let halfItemSpacing = itemSpacing * 0.5
-            
+
             let (width, height) = (
-                (contentWidth * ratios.0) - (isFullWidth ? 0 : halfItemSpacing),
+                contentWidth * ratios.0,
                 contentWidth * ratios.1
             )
 
             if (xOffset + width > contentWidth) || isFullWidth {
                 xOffset = 0
-                if let previousItemFrame = previousItemFrame {
+                if previousItemFrame != nil {
                     var max: CGFloat = 0
                     for i in cache {
                         if i.frame.maxY >= max { max = i.frame.maxY }
                     }
                     yOffset = max + itemSpacing
                 }
-//                if let beforePreviousItemFrame = beforePreviousItemFrame {
-//                    yOffset = max(beforePreviousItemFrame.maxY, previousItemFrame!.maxY) + itemSpacing
-//                }
             }
-            
+
             if let previousItemFrame = previousItemFrame {
                 if previousItemFrame.width + width + itemSpacing > contentWidth {
                     var max: CGFloat = 0
@@ -82,7 +77,6 @@ final class StagLayoutFrameHolder {
                 }
             }
 
-            
             var frame = CGRect(x: xOffset, y: yOffset, width: width, height: height)
 
             let indexPath = IndexPath(item: index, section: 0)
@@ -102,7 +96,7 @@ final class StagLayoutFrameHolder {
 
                 // If there's an item next to it and no space, the next item should have an xOffset of 0
                 // and height will auto correct to not include spacing so that it is perfectly aligned
-                if !isThereSpaceNextToIt && isItemNextToIt  {
+                if !isThereSpaceNextToIt, isItemNextToIt {
                     frame = CGRect(x: xOffset, y: yOffset, width: width, height: height - itemSpacing)
                     attributes.frame = frame
                     cache.removeLast()
@@ -114,14 +108,14 @@ final class StagLayoutFrameHolder {
 
             if isFullWidth || isItemNextToIt || hasReachedEnd {
                 xOffset = 0
-                
+
                 if let previousItemFrame = previousItemFrame {
                     yOffset = max(frame.maxY, previousItemFrame.maxY) + itemSpacing
                     if previousItemFrame.maxY > frame.maxY {
                         xOffset = previousItemFrame.maxX + itemSpacing
                     }
                 }
-                
+
             } else {
                 xOffset += frame.width + itemSpacing
             }
@@ -133,13 +127,12 @@ final class StagLayoutFrameHolder {
                     yOffset = min(frame.maxY, previousItemFrame.maxY) + itemSpacing
                 }
             }
-            
+
             previousItemFrame = frame
             ratioIndex += 1
         }
     }
 
-    
     public func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
         for attributes in cache where attributes.frame.intersects(rect) {
