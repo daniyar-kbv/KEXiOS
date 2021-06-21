@@ -13,8 +13,21 @@ import UIKit
 final class SelectMainInformationViewController: ViewController {
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
+    private let cellsSequence: [SelectMainInformationCell.InputType] = [.country, .city, .address, .empty, .brand]
 
     let outputs = Output()
+
+    private lazy var tableView: UITableView = {
+        let view = UITableView()
+        view.delegate = self
+        view.dataSource = self
+        view.estimatedRowHeight = UITableView.automaticDimension
+        view.tableFooterView = UIView()
+        view.rowHeight = 64
+        view.separatorColor = .white
+        view.register(SelectMainInformationCell.self, forCellReuseIdentifier: String(describing: SelectMainInformationCell.self))
+        return view
+    }()
 
     private lazy var countryTextField: DropDownTextField = {
         let view = DropDownTextField(type: .country)
@@ -55,7 +68,6 @@ final class SelectMainInformationViewController: ViewController {
         }
         view.delegate = self
         view.chevronRight = true
-        view.titleColor = .darkGray
         view.descriptionText = L10n.SelectMainInfo.description
         view.currentValue = viewModel.flowType == .create ? nil : viewModel.brand?.name
         return view
@@ -216,6 +228,65 @@ final class SelectMainInformationViewController: ViewController {
     func changeSaveButtonState(isActive: Bool) {
         saveButton.isUserInteractionEnabled = isActive
         saveButton.backgroundColor = isActive ? .kexRed : .calmGray
+    }
+
+    func didSelectItem(type: SelectMainInformationCell.InputType, with index: Int) {
+        switch type {
+        case .country:
+            viewModel.didChange(country: index)
+        case .city:
+            viewModel.didChange(city: index)
+        default:
+            break
+        }
+    }
+}
+
+extension SelectMainInformationViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        return cellsSequence.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: SelectMainInformationCell.self), for: indexPath) as! SelectMainInformationCell
+
+        cell.outputs.didSelect
+            .subscribe(onNext: { [weak self] params in
+                self?.didSelectItem(type: params.0, with: params.1)
+            }).disposed(by: disposeBag)
+        return cell
+    }
+}
+
+extension SelectMainInformationViewController {
+    func configureCellSetup(cell: SelectMainInformationCell, indexPath: IndexPath) {
+        switch cellsSequence[indexPath.row] {
+        case .country:
+            cell.setupCell(type: cellsSequence[indexPath.row], value: nil)
+        case .city:
+            cell.setupCell(type: cellsSequence[indexPath.row], value: nil)
+        case .address:
+            cell.setupCell(type: cellsSequence[indexPath.row], value: nil) { [weak self] in
+                self?.outputs.toMap
+                    .accept((self?.viewModel.deliveryAddress?.address,
+                             {
+                                 [weak self] address in
+                                 self?.viewModel.didChange(address: address)
+                             }))
+            }
+        case .brand:
+            cell.setupCell(type: cellsSequence[indexPath.row], value: nil) { [weak self] in
+                guard let cityid = self?.viewModel.deliveryAddress?.city?.id else { return }
+                self?.outputs.toBrands
+                    .accept((cityid,
+                             {
+                                 [weak self] brand in
+                                 self?.viewModel.didChange(brand: brand)
+                             }))
+            }
+        case .empty:
+            cell.setupCell(type: cellsSequence[indexPath.row], value: nil)
+        }
     }
 }
 

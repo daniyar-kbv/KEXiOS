@@ -12,9 +12,10 @@ import UIKit
 // Tech debt: remove controller
 
 final class ChangeAddressController: ViewController {
-    private let disposeBag: DisposeBag = .init()
+    private let disposeBag = DisposeBag()
     private let viewModel: ChangeAddressViewModel
     private let tableView = UITableView()
+
     private let saveButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("Сохранить", for: .normal)

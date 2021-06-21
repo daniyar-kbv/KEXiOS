@@ -215,6 +215,7 @@
 		6382A29270DC95FE20964786BA382045 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */; };
 		825FC113C253F87745C6F961C47C9DAF /* SalamBroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B2A30C6F7592F9FD9C8743F0474722 /* SalamBroUITests.swift */; };
 		8E4A70AB75790B6CE43F5044E3EC60D2 /* SecureStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4780C2DEDC49FB31AF45E9F373880 /* SecureStorageProvider.swift */; };
+		714D9CCE6F7357834BDEBC590CE204EC /* SelectMainInformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43810E7ECB819948CD4027D9DB017E0A /* SelectMainInformationCell.swift */; };
 		A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */; };
 		5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */; };
 		B02D897C5EDE03C822AEE074C3564A42 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */; };
@@ -500,6 +501,7 @@
 		42B2A30C6F7592F9FD9C8743F0474722 /* SalamBroUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalamBroUITests.swift; sourceTree = "<group>"; };
 		37E5A59F4E859046E802C46121F892EE /* SalamBroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalamBroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB4780C2DEDC49FB31AF45E9F373880 /* SecureStorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageProvider.swift; sourceTree = "<group>"; };
+		43810E7ECB819948CD4027D9DB017E0A /* SelectMainInformationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectMainInformationCell.swift; path = SalamBro/Presentation/PagesFactory/SelectMainInformationCell.swift; sourceTree = SOURCE_ROOT; };
 		D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationViewController.swift; sourceTree = "<group>"; };
 		E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainInformationViewModel.swift; sourceTree = "<group>"; };
 		CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
@@ -669,6 +671,14 @@
 				49C7E8CE52D9B2EDAD2AE0C3C1FD8C6E /* UpdateController.swift */,
 			);
 			path = Update;
+			sourceTree = "<group>";
+		};
+		10592017FF22CB46DA603DD5277F2D39 /* Submodules */ = {
+			isa = PBXGroup;
+			children = (
+				43810E7ECB819948CD4027D9DB017E0A /* SelectMainInformationCell.swift */,
+			);
+			path = Submodules;
 			sourceTree = "<group>";
 		};
 		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
@@ -1435,6 +1445,7 @@
 		E10130B54A9EC2E434FD8501CA35EC13 /* SelectMainInformation */ = {
 			isa = PBXGroup;
 			children = (
+				10592017FF22CB46DA603DD5277F2D39 /* Submodules */,
 				56BAE7C98BCB42839F474B17AD6DFE1A /* DropDownTextField.swift */,
 				D45EF95AD8AF4951A426E9DC98AF94AD /* SelectMainInformationViewController.swift */,
 				E11C7F7F79BD57BC7C3EA09C924BBC8D /* SelectMainInformationViewModel.swift */,
@@ -2056,6 +2067,7 @@
 				A272888D22BF6D95BA2FA56607BB36AD /* Router.swift in Sources */,
 				249E54E5058664B559F40AB97FE33AA6 /* SMPickerView.swift in Sources */,
 				8E4A70AB75790B6CE43F5044E3EC60D2 /* SecureStorageProvider.swift in Sources */,
+				714D9CCE6F7357834BDEBC590CE204EC /* SelectMainInformationCell.swift in Sources */,
 				A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */,
 				5778E39BFDB7F6613A65988A2D19DCCC /* SelectMainInformationViewModel.swift in Sources */,
 				B02D897C5EDE03C822AEE074C3564A42 /* SeparatorView.swift in Sources */,

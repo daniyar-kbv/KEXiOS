@@ -15,7 +15,6 @@ protocol DropDownTextFieldDelegate: AnyObject {
 
 final class DropDownTextField: UIView {
     weak var delegate: DropDownTextFieldDelegate?
-    private var type: Type
 
     var dataSource: [String] = [] {
         didSet {
@@ -46,6 +45,14 @@ final class DropDownTextField: UIView {
         set { titleLabel.text = newValue }
     }
 
+    public var placeholder: String? {
+        didSet {
+            if currentValue == nil {
+                currentValue = placeholder
+            }
+        }
+    }
+
     public var titleColor: UIColor? {
         get { contentLabel.textColor }
         set { contentLabel.textColor = newValue }
@@ -55,7 +62,7 @@ final class DropDownTextField: UIView {
         get { contentLabel.text }
         set {
             guard let newValue = newValue else {
-                contentLabel.text = type.placeholder
+                contentLabel.text = placeholder
                 return
             }
             contentLabel.text = newValue
@@ -77,7 +84,6 @@ final class DropDownTextField: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .mildBlue
-        label.text = type.title
         return label
     }()
 
@@ -85,7 +91,6 @@ final class DropDownTextField: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .mildBlue
-        label.text = type.placeholder
         return label
     }()
 
@@ -126,10 +131,8 @@ final class DropDownTextField: UIView {
         return dropDown
     }()
 
-    public init(type: Type) {
-        self.type = type
-
-        super.init(frame: .zero)
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
 
         setup()
     }
@@ -184,42 +187,6 @@ final class DropDownTextField: UIView {
             action()
         } else {
             dropDown.show()
-        }
-    }
-}
-
-extension DropDownTextField {
-    enum `Type` {
-        case country
-        case city
-        case address
-        case brand
-
-        var title: String {
-            switch self {
-            case .country:
-                return L10n.SelectMainInfo.country
-            case .city:
-                return L10n.SelectMainInfo.city
-            case .address:
-                return L10n.SelectMainInfo.address
-            case .brand:
-                return L10n.SelectMainInfo.brand
-            }
-        }
-
-        var placeholder: String {
-            switch self {
-            case .country:
-                return L10n.CountriesList.Navigation.title
-            case .city:
-                return L10n.CitiesList.Navigation.title
-            case .address:
-//        Tech debt: change currentValue to appropriate localized text
-                return L10n.SelectMainInfo.address
-            case .brand:
-                return L10n.Brands.Navigation.title
-            }
         }
     }
 }

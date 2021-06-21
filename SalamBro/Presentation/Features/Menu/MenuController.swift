@@ -91,6 +91,9 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+
+        let vm = ChangeAddressViewModelImpl()
+        navigationController?.pushViewController(ChangeAddressController(viewModel: vm), animated: true)
     }
 
     private func bindViewModel() {

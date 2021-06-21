@@ -10,8 +10,6 @@ import RxCocoa
 import RxSwift
 
 protocol ChangeAddressViewModel: AnyObject {
-    var coordinator: AddressCoordinator { get }
-
     func getCellModel(for indexPath: IndexPath) -> ChangeAddressDTO
     func getCell(with cellModel: ChangeAddressDTO, for indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell
     func checkInputs()
@@ -24,7 +22,6 @@ protocol ChangeAddressViewModel: AnyObject {
 }
 
 final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
-    internal let coordinator: AddressCoordinator
     private(set) var outputs = Output()
     private var city: City?
     private var country: Country?
@@ -39,8 +36,7 @@ final class ChangeAddressViewModelImpl: ChangeAddressViewModel {
         ChangeAddressDTO(isSelected: false, description: nil, accessoryType: .disclosureIndicator, inputType: .brand, isEnabled: false),
     ]
 
-    init(coordinator: AddressCoordinator) {
-        self.coordinator = coordinator
+    init() {
         checkInputs()
     }
 

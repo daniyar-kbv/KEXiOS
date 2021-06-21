@@ -202,6 +202,8 @@ extension SelectMainInformationViewModel {
         let didGetCities = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
 
+        let updateTableView = PublishRelay<Void>()
+
         let didSelectCountry = PublishRelay<String?>()
         let didSelectCity = PublishRelay<String?>()
         let didSelectAddress = PublishRelay<String?>()
