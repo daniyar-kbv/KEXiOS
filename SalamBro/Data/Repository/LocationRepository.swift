@@ -144,13 +144,10 @@ extension LocationRepositoryImpl {
     }
 
     func deleteDeliveryAddress(deliveryAddress: DeliveryAddress) {
+        let wasCurrent = storage.currentDeliveryAddressIndex != nil &&
+            storage.deliveryAddresses[storage.currentDeliveryAddressIndex!] == deliveryAddress
         storage.deliveryAddresses.removeAll(where: { $0 == deliveryAddress })
-        if let index = storage.currentDeliveryAddressIndex,
-           let first = storage.deliveryAddresses.first,
-           storage.deliveryAddresses[index] == deliveryAddress
-        {
-            setCurrentDeliveryAddress(deliveryAddress: first)
-        }
+        storage.currentDeliveryAddressIndex = storage.deliveryAddresses.first != nil && wasCurrent ? 0 : nil
     }
 
     func addDeliveryAddress(deliveryAddress: DeliveryAddress) {
