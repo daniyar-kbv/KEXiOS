@@ -129,22 +129,22 @@ extension BrandViewModel {
 
 //        MARK: Size rations according to design
 
-        private static let fullSize: CGFloat = 327
+        private static let fullSize: CGFloat = 343
 
         var ratio: (CGFloat, CGFloat) {
             switch self {
             case .square:
-                return (130 / Self.fullSize,
-                        130 / Self.fullSize)
+                return (146 / Self.fullSize,
+                        146 / Self.fullSize)
             case .horizontalShort:
-                return (181 / Self.fullSize,
-                        130 / Self.fullSize)
+                return (197 / Self.fullSize,
+                        146 / Self.fullSize)
             case .horizontalLong:
                 return (Self.fullSize / Self.fullSize,
-                        130 / Self.fullSize)
+                        146 / Self.fullSize)
             case .vertical:
-                return (181 / Self.fullSize,
-                        276 / Self.fullSize)
+                return (197 / Self.fullSize,
+                        292 / Self.fullSize)
             }
         }
     }
