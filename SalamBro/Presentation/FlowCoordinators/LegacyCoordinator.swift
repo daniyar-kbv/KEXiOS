@@ -18,6 +18,7 @@ protocol LegacyCoordinator: AnyObject {
 
 protocol TabCoordinator: LegacyCoordinator {
     var childNavigationController: UINavigationController! { get set }
+
 //    var tabType: TabBarCoordinator.TabType { get set }
 }
 

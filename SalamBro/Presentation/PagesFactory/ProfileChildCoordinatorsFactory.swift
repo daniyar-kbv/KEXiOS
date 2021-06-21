@@ -7,8 +7,6 @@
 
 import Foundation
 
-//  Tech debt: add coordinators factory and DI
-
 protocol ProfileChildCoordinatorsFactory: AnyObject {
     func makeAddressListCoordinator() -> AddressListCoordinator
     func makeOrderCoordinator() -> OrderHistoryCoordinator
@@ -19,12 +17,9 @@ final class ProfileChildCoordinatorsFactoryImpl: DependencyFactory, ProfileChild
     private let repositoryComponents: RepositoryComponents
     private let router: Router
 
-    init(serviceComponents: ServiceComponents,
-         repositoryComponents: RepositoryComponents,
-         router: Router)
-    {
+    init(serviceComponents: ServiceComponents, router: Router) {
         self.serviceComponents = serviceComponents
-        self.repositoryComponents = repositoryComponents
+        repositoryComponents = repositoryComponents
         self.router = router
     }
 

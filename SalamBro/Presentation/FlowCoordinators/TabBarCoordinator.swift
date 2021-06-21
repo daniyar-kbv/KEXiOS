@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// Tech debt: remove
+
 // final class TabBarCoordinator: LegacyCoordinator {
 //    var parentCoordinator: LegacyCoordinator?
 //    var childCoordinators: [LegacyCoordinator] = []

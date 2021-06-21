@@ -1,5 +1,5 @@
 //
-//  WebViewModel.swift
+//  AgreementViewModel.swift
 //  SalamBro
 //
 //  Created by Dan on 6/16/21.
