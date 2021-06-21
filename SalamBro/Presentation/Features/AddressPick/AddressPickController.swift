@@ -12,7 +12,7 @@ import UIKit
 
 // MARK: Tech debt, нужно переписать.
 
-final class AddressPickController: ViewController {
+final class AddressPickController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: AddressPickerViewModelProtocol
     private let tapGesture = UITapGestureRecognizer()
@@ -50,7 +50,6 @@ final class AddressPickController: ViewController {
 
     init(viewModel: AddressPickerViewModelProtocol) {
         self.viewModel = viewModel
-
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -65,8 +64,7 @@ final class AddressPickController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setup()
+        layoutUI()
         bind()
         bindViewModel()
     }
@@ -76,7 +74,9 @@ final class AddressPickController: ViewController {
         navigationItem.title = L10n.AddressPicker.titleMany
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
     }
+}
 
+extension AddressPickController {
     private func bind() {
         plusButton.rx.tap
             .bind { [weak self] in
@@ -90,7 +90,7 @@ final class AddressPickController: ViewController {
             }).disposed(by: disposeBag)
     }
 
-    func bindViewModel() {
+    private func bindViewModel() {
         viewModel.outputs.didSelectAddress.subscribe(onNext: { [weak self] address in
             self?.outputs.didSelectAddress.accept((
                 address,
@@ -105,24 +105,23 @@ final class AddressPickController: ViewController {
         }).disposed(by: disposeBag)
     }
 
-    func addTapped() {
+    private func addTapped() {
         outputs.didAddTapped.accept { [weak self] in
             self?.viewModel.reload()
         }
     }
 
-    private func setup() {
-        setupViews()
-        setupConstraints()
+    @objc private func goBack() {
+        dismiss(animated: true, completion: nil)
     }
+}
 
-    private func setupViews() {
+extension AddressPickController {
+    private func layoutUI() {
         view.backgroundColor = .white
         addLabel.addGestureRecognizer(tapGesture)
         [addLabel, plusButton, tableView].forEach { view.addSubview($0) }
-    }
 
-    private func setupConstraints() {
         addLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             $0.left.equalToSuperview().offset(24)
@@ -139,10 +138,6 @@ final class AddressPickController: ViewController {
             $0.top.equalTo(addLabel.snp.bottom).offset(16)
             $0.left.right.bottom.equalToSuperview()
         }
-    }
-
-    @objc func goBack() {
-        dismiss(animated: true, completion: nil)
     }
 }
 

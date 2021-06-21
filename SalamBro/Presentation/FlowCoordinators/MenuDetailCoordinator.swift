@@ -25,7 +25,7 @@ public final class MenuDetailCoordinator: LegacyCoordinator {
     }
 
     func openModificator() {
-        let vc = AdditionalItemChooseController()
+        let vc = AdditionalItemController()
         vc.modalPresentationStyle = .pageSheet
         getLastPresentedViewController().present(vc, animated: true, completion: nil)
     }

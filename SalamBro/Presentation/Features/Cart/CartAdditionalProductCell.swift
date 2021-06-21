@@ -8,7 +8,7 @@
 import Reusable
 import UIKit
 
-protocol CellDelegate {
+protocol CartAdditinalProductCellDelegate: AnyObject {
     func deleteProduct(id: Int, isAdditional: Bool)
     func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool)
 }
@@ -89,9 +89,9 @@ final class CartAdditionalProductCell: UITableViewCell {
         return label
     }()
 
-    var product: CartAdditionalProduct!
-    var counter: Int = 0
-    var delegate: CellDelegate!
+    private var product: CartAdditionalProduct?
+    private var counter: Int = 0
+    var delegate: CartAdditinalProductCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -172,39 +172,46 @@ extension CartAdditionalProductCell {
 }
 
 extension CartAdditionalProductCell {
-    func bindData(item: CartAdditionalProduct) {
+    func configure(item: CartAdditionalProduct) {
         product = item
-        productTitleLabel.text = product.name
-        priceLabel.text = "\(product.count * product.price) ₸"
-        countLabel.text = "\(product.count)"
-        counter = product.count
+        if let count = product?.count, let price = product?.price, let isAvailable = product?.available {
+            productTitleLabel.text = product?.name
 
-        if product!.available {
-            unavailableLabel.text = ""
-        } else {
-            unavailableLabel.text = L10n.CartAdditionalProductCell.Availability.title
-            productTitleLabel.alpha = 0.5
-            priceLabel.alpha = 0.5
-            productImageView.alpha = 0.5
-        }
-        counter = product!.count
-        countLabel.text = "\(counter)"
-    }
+            priceLabel.text = "\(count * price) ₸"
+            countLabel.text = "\(count)"
+            counter = count
 
-    @objc func decreaseItemCount(_: UIButton) {
-        if counter > 0 {
-            counter -= 1
-            delegate.changeItemCount(id: product.id, isIncrease: false, isAdditional: true)
-            priceLabel.text = "\(counter * product!.price) T"
+            if isAvailable {
+                unavailableLabel.text = ""
+            } else {
+                unavailableLabel.text = L10n.CartAdditionalProductCell.Availability.title
+                productTitleLabel.alpha = 0.5
+                priceLabel.alpha = 0.5
+                productImageView.alpha = 0.5
+            }
+            counter = count
             countLabel.text = "\(counter)"
         }
     }
 
-    @objc func increaseItemButton(_: UIButton) {
+    @objc private func decreaseItemCount(_: UIButton) {
+        if counter > 0 {
+            counter -= 1
+            if let id = product?.id, let price = product?.price {
+                delegate?.changeItemCount(id: id, isIncrease: false, isAdditional: true)
+                priceLabel.text = "\(counter * price) T"
+            }
+            countLabel.text = "\(counter)"
+        }
+    }
+
+    @objc private func increaseItemButton(_: UIButton) {
         if counter < 999 {
             counter += 1
-            delegate.changeItemCount(id: product.id, isIncrease: true, isAdditional: true)
-            priceLabel.text = "\(counter * product!.price) T"
+            if let id = product?.id, let price = product?.price {
+                delegate?.changeItemCount(id: id, isIncrease: true, isAdditional: true)
+                priceLabel.text = "\(counter * price) T"
+            }
             countLabel.text = "\(counter)"
         }
     }

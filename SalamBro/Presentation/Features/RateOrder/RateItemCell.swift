@@ -41,10 +41,6 @@ final class RateItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bindData(text: String) {
-        titleLabel.text = text
-    }
-
     public func setSelectedUI() {
         cellView.backgroundColor = .kexRed
         titleLabel.textColor = .arcticWhite

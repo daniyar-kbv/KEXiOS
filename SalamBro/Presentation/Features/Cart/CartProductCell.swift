@@ -113,8 +113,8 @@ final class CartProductCell: UITableViewCell {
     }()
 
     private var counter: Int = 0
-    lazy var product: CartProduct? = nil
-    var delegate: CellDelegate!
+    private var product: CartProduct?
+    var delegate: CartAdditinalProductCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -217,51 +217,64 @@ extension CartProductCell {
 }
 
 extension CartProductCell {
-    func bindData(with item: CartProduct) {
+    func configure(with item: CartProduct) {
         product = item
-        productTitleLabel.text = product!.name
-        subitemLabel.text = product!.description
-        priceLabel.text = "\(product!.price * product!.count) ₸"
-        commentLabel.text = product!.commentary
+        if let price = product?.price, let count = product?.count, let isAvailable = product?.available {
+            product = item
+            productTitleLabel.text = product?.name
+            subitemLabel.text = product?.description
 
-        if product!.available {
-            deleteButton.isHidden = true
-            unavailableLabel.isHidden = true
-        } else {
-            stackView.isHidden = true
-            deleteButton.isHidden = false
-            unavailableLabel.text = L10n.CartProductCell.Availability.title
-            productTitleLabel.alpha = 0.5
-            subitemLabel.alpha = 0.5
-            priceLabel.isHidden = true
-            productImageView.alpha = 0.5
+            priceLabel.text = "\(price * count) ₸"
+
+            commentLabel.text = product?.commentary
+
+            if isAvailable {
+                deleteButton.isHidden = true
+                unavailableLabel.isHidden = true
+            } else {
+                stackView.isHidden = true
+                deleteButton.isHidden = false
+                unavailableLabel.text = L10n.CartProductCell.Availability.title
+                productTitleLabel.alpha = 0.5
+                subitemLabel.alpha = 0.5
+                priceLabel.isHidden = true
+                productImageView.alpha = 0.5
+            }
+            counter = count
+            countLabel.text = "\(counter)"
         }
-        counter = product!.count
-        countLabel.text = "\(counter)"
     }
 
-    @objc func decreaseItemCount() {
+    @objc private func decreaseItemCount() {
         if counter > 0 {
             counter -= 1
-            delegate.changeItemCount(id: product!.id, isIncrease: false, isAdditional: false)
-            priceLabel.text = "\(counter * product!.price) ₸"
+            if let id = product?.id, let price = product?.price {
+                delegate?.changeItemCount(id: id, isIncrease: false, isAdditional: false)
+                priceLabel.text = "\(counter * price) ₸"
+            }
             countLabel.text = "\(counter)"
         } else {
-            delegate.deleteProduct(id: product!.id, isAdditional: false)
+            if let id = product?.id {
+                delegate?.deleteProduct(id: id, isAdditional: false)
+            }
         }
     }
 
-    @objc func increaseItemButton() {
+    @objc private func increaseItemButton() {
         if counter < 999 {
             counter += 1
-            delegate.changeItemCount(id: product!.id, isIncrease: true, isAdditional: false)
-            priceLabel.text = "\(counter * product!.price) ₸"
+            if let id = product?.id, let price = product?.price {
+                delegate?.changeItemCount(id: id, isIncrease: true, isAdditional: false)
+                priceLabel.text = "\(counter * price) ₸"
+            }
             countLabel.text = "\(counter)"
         }
     }
 
-    @objc func deleteItem() {
-        delegate.deleteProduct(id: product!.id, isAdditional: false)
+    @objc private func deleteItem() {
+        if let id = product?.id {
+            delegate?.deleteProduct(id: id, isAdditional: false)
+        }
     }
 }
 

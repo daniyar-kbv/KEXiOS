@@ -5,65 +5,67 @@
 //  Created by Arystan on 5/2/21.
 //
 
+import SnapKit
 import UIKit
 
-class AdditionalItemCell: UICollectionViewCell {
-    lazy var itemImageView: UIImageView = {
+final class AdditionalItemCell: UICollectionViewCell {
+    private lazy var itemImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "cola")
         view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    lazy var itemTitleLabel: UILabel = {
+    private lazy var itemTitleLabel: UILabel = {
         let view = UILabel()
         view.text = "Вода “Coca-Cola” 0,5 л"
         view.font = .systemFont(ofSize: 12)
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textColor = .darkGray
         return view
     }()
 
-    lazy var itemPriceLabel: UILabel = {
+    private lazy var itemPriceLabel: UILabel = {
         let view = UILabel()
         view.text = "0 ₸"
         view.font = .systemFont(ofSize: 12)
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textColor = .darkGray
         return view
     }()
 
     override init(frame _: CGRect) {
         super.init(frame: .zero)
-        setupViews()
-        setupConstraints()
+        layoutUI()
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
-    func setupViews() {
-        contentView.addSubview(itemImageView)
-        contentView.addSubview(itemTitleLabel)
-        contentView.addSubview(itemPriceLabel)
-    }
+extension AdditionalItemCell {
+    private func layoutUI() {
+        [itemImageView, itemTitleLabel, itemPriceLabel].forEach {
+            contentView.addSubview($0)
+        }
 
-    func setupConstraints() {
-        itemImageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        itemImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        itemImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        itemImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        itemImageView.snp.makeConstraints {
+            $0.top.right.left.equalToSuperview()
+        }
 
-        itemTitleLabel.topAnchor.constraint(equalTo: itemImageView.bottomAnchor, constant: 8).isActive = true
-        itemTitleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8).isActive = true
-        itemTitleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
+        itemTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(itemImageView.snp.bottom).offset(4)
+            $0.left.equalToSuperview().offset(8)
+            $0.right.equalToSuperview().offset(-8)
+        }
 
-        itemPriceLabel.topAnchor.constraint(equalTo: itemTitleLabel.bottomAnchor, constant: 4).isActive = true
-        itemPriceLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8).isActive = true
-        itemPriceLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
-        itemPriceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        itemPriceLabel.snp.makeConstraints {
+            $0.top.equalTo(itemTitleLabel.snp.bottom).offset(4)
+            $0.left.equalToSuperview().offset(8)
+            $0.right.equalToSuperview().offset(-8)
+            $0.bottom.equalToSuperview()
+        }
     }
 }

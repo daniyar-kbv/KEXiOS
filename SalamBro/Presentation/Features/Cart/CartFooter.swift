@@ -11,6 +11,8 @@ protocol CartFooterDelegate {
     func openPromocode()
 }
 
+// MARK: - Rewrite
+
 class CartFooter: UIView {
     public var delegate: CartFooterDelegate?
 

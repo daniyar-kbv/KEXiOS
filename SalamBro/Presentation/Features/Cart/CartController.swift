@@ -17,9 +17,9 @@ class CartController: ViewController {
 
     var mainTabDelegate: MainTabDelegate?
 
-    // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
+    private var commentaryPage: MapCommentaryPage?
 
-    lazy var commentarySheetVC = CommentarySheetController()
+    // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
 
     lazy var tableViewFooter: CartFooter = {
         let view = CartFooter()
@@ -199,12 +199,12 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CartProductCell.self)
             cell.delegate = self
-            cell.bindData(with: cartViewModel.cart.products[indexPath.row])
+            cell.configure(with: cartViewModel.cart.products[indexPath.row])
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CartAdditionalProductCell.self)
             cell.delegate = self
-            cell.bindData(item: cartViewModel.cart.productsAdditional[indexPath.row])
+            cell.configure(item: cartViewModel.cart.productsAdditional[indexPath.row])
             return cell
         }
     }
@@ -212,7 +212,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - Cell Actions
 
-extension CartController: CellDelegate {
+extension CartController: CartAdditinalProductCellDelegate {
     func deleteProduct(id: Int, isAdditional: Bool) {
         if !isAdditional {
             if let index = cartViewModel.cart.products.firstIndex(where: { $0.id == id }) {
@@ -271,56 +271,13 @@ extension CartController: CellDelegate {
 
 extension CartController: CartFooterDelegate {
     func openPromocode() {
-        showCommentarySheet()
+        commentaryPage = MapCommentaryPage()
+        guard let page = commentaryPage else { return }
+        page.delegate = self
+        present(page, animated: true, completion: nil)
     }
 }
 
-extension CartController: MapDelegate {
-    func dissmissView() {
-//        print("x")
-    }
-
-    func hideCommentarySheet() {
-//        addressSheetVC.view.isHidden = false
-    }
-
-    func showCommentarySheet() {
-        addChild(commentarySheetVC)
-        view.addSubview(commentarySheetVC.view)
-        commentarySheetVC.sendButton.setTitle(L10n.Promocode.button, for: .normal)
-        commentarySheetVC.commentTextField.attributedPlaceholder = NSAttributedString(
-            string: L10n.Promocode.field,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
-        // commentarySheetVC.delegate = self
-        commentarySheetVC.didMove(toParent: self)
-        commentarySheetVC.modalPresentationStyle = .overCurrentContext
-        let height: CGFloat = 155.0
-        let width = view.frame.width
-
-        getScreenSize(heightOfSheet: height, width: width)
-    }
-
-    private func getScreenSize(heightOfSheet: CGFloat, width: CGFloat) {
-        let bounds = UIScreen.main.bounds
-        let height = bounds.size.height
-
-        commentarySheetVC.view.frame = height <= 736 ? CGRect(x: 0, y: view.bounds.height - 39 - heightOfSheet, width: width, height: heightOfSheet) : CGRect(x: 0, y: view.bounds.height - 94 - heightOfSheet, width: width, height: heightOfSheet)
-    }
-
-    func passCommentary(text _: String) {
-//        addressSheetVC.changeComment(comment: text)
-    }
-
-    func reverseGeocoding(searchQuery _: String, title _: String) {
-        print("cartController shoud have mapdelegate...")
-    }
-
-    func mapShadow(toggle: Bool) {
-        if toggle {
-            shadow.isHidden = false
-        } else {
-            shadow.isHidden = true
-        }
-    }
+extension CartController: MapCommentaryPageDelegate {
+    func onDoneButtonTapped(commentary _: String) {}
 }

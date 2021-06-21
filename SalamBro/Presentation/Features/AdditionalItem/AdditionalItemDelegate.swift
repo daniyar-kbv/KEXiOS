@@ -1,5 +1,5 @@
 //
-//  AddditionalItemDelegate.swift
+//  AdditionalItemDelegate.swift
 //  DetailView
 //
 //  Created by Arystan on 5/2/21.

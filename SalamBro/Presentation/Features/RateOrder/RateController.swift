@@ -15,105 +15,11 @@ final class RateController: UIViewController {
     private let viewModel: RateViewModel
     private let disposeBag = DisposeBag()
 
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
+    private let rateView = RateView()
 
-    private lazy var cosmosContainerView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    private let dimmedView = UIView()
 
-    private lazy var cosmosView: CosmosView = {
-        let view = CosmosView()
-        view.settings.filledColor = .kexRed
-        view.settings.filledBorderColor = .kexRed
-        view.settings.filledBorderWidth = 0
-        view.settings.emptyBorderColor = .kexRed
-        view.settings.emptyColor = .white
-        view.settings.starSize = 30
-        view.settings.starMargin = 16
-        view.settings.emptyImage = UIImage(named: "star.empty")
-        view.settings.filledImage = UIImage(named: "star.filled")
-        view.rating = 0
-        return view
-    }()
-
-    private lazy var questionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 19, weight: .medium)
-        label.textColor = .darkGray
-        label.baselineAdjustment = .alignBaselines
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .center
-        label.contentMode = .left
-        label.numberOfLines = 0
-        return label
-    }()
-
-    private lazy var suggestionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.text = L10n.RateOrder.description
-        label.textColor = .darkGray
-        label.baselineAdjustment = .alignBaselines
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .center
-        label.contentMode = .left
-        label.numberOfLines = 0
-        return label
-    }()
-
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: .init()
-        )
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        return collectionView
-    }()
-
-    private lazy var commentView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.cornerRadius = 10
-        return view
-    }()
-
-    private lazy var commentTextField: UITextField = {
-        let textfield = UITextField()
-        textfield.attributedPlaceholder = NSAttributedString(
-            string: L10n.RateOrder.CommentaryField.placeholder,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
-        textfield.borderStyle = .none
-        textfield.clearButtonMode = .never
-        textfield.minimumFontSize = 17
-        textfield.adjustsFontSizeToFitWidth = true
-        textfield.contentHorizontalAlignment = .left
-        textfield.contentVerticalAlignment = .center
-        textfield.isUserInteractionEnabled = false
-        return textfield
-    }()
-
-    private lazy var sendButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(L10n.RateOrder.SubmitButton.title, for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .mildBlue
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.cornerRadius = 10
-        button.contentHorizontalAlignment = .center
-        button.contentVerticalAlignment = .center
-        button.adjustsImageWhenHighlighted = true
-        button.adjustsImageWhenDisabled = true
-        button.addTarget(self, action: #selector(dismissVC), for: .allTouchEvents)
-        return button
-    }()
-
-    private var collectionViewHeightConstraint: Constraint?
-
-    private var overlay = OverlayTransitioningDelegate()
+    private var commentaryPage: MapCommentaryPage?
 
     init(viewModel: RateViewModel) {
         self.viewModel = viewModel
@@ -127,12 +33,14 @@ final class RateController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureViews()
         layoutUI()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionViewHeightConstraint?.update(offset: collectionView.contentSize.height)
+        rateView.collectionViewHeightConstraint?.update(offset: rateView.collectionView.contentSize.height)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -152,154 +60,83 @@ final class RateController: UIViewController {
 }
 
 extension RateController {
+    private func configureViews() {
+        rateView.collectionView.delegate = self
+        rateView.collectionView.dataSource = self
+
+        rateView.cosmosView.didFinishTouchingCosmos = didFinishTouchRating
+
+        let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(commentaryViewTapped))
+        rateView.commentView.addGestureRecognizer(tapCommentary)
+
+        rateView.sendButton.addTarget(self, action: #selector(dismissVC), for: .allTouchEvents)
+    }
+
     private func layoutUI() {
         view.backgroundColor = .arcticWhite
 
-        [scrollView, sendButton].forEach {
-            view.addSubview($0)
+        view.addSubview(rateView)
+        rateView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
 
-        scrollView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        view.addSubview(dimmedView)
+        dimmedView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
-
-        scrollView.addSubview(contentView)
-        contentView.snp.makeConstraints {
-            $0.edges.width.equalTo(scrollView)
-        }
-
-        [cosmosContainerView, questionLabel, suggestionLabel, collectionView, commentView].forEach {
-            contentView.addSubview($0)
-        }
-
-        cosmosContainerView.addSubview(cosmosView)
-
-        cosmosView.snp.makeConstraints {
-            $0.top.bottom.centerX.equalToSuperview()
-        }
-
-        cosmosContainerView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(34)
-            $0.left.right.equalToSuperview()
-        }
-
-        questionLabel.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
-            $0.top.equalTo(cosmosContainerView.snp.bottom).offset(32)
-        }
-
-        suggestionLabel.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
-            $0.top.equalTo(questionLabel.snp.bottom).offset(8)
-        }
-
-        collectionView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
-            $0.top.equalTo(suggestionLabel.snp.bottom).offset(8)
-            collectionViewHeightConstraint = $0.height.equalTo(0).constraint
-        }
-
-        let layout = UICollectionViewCenterLayout()
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
-        layout.scrollDirection = .vertical
-
-        collectionView.collectionViewLayout = layout
-        collectionView.allowsMultipleSelection = true
-        collectionView.register(cellType: RateItemCell.self)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-
-        commentView.addSubview(commentTextField)
-
-        commentView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
-            $0.top.equalTo(collectionView.snp.bottom).offset(20)
-            $0.bottom.equalToSuperview().offset(-20)
-            $0.height.equalTo(50)
-        }
-
-        commentTextField.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
-            $0.centerX.centerY.equalToSuperview()
-        }
-
-        sendButton.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalToSuperview().offset(-16)
-            $0.height.equalTo(43)
-        }
-
-        cosmosView.didFinishTouchingCosmos = didFinishTouchRating
-
-        let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(commentaryViewTapped))
-        commentView.addGestureRecognizer(tapCommentary)
-
-        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.safeAreaInsets.bottom + 50, right: 0)
+        dimmedView.backgroundColor = .gray
+        dimmedView.alpha = 0
     }
 
     private func didFinishTouchRating(_ rating: Double) {
-        sendButton.isEnabled = true
-        sendButton.backgroundColor = .kexRed
+        rateView.sendButton.isEnabled = true
+        rateView.sendButton.backgroundColor = .kexRed
         switch rating {
         case 1.0 ..< 2.0:
-            questionLabel.text = L10n.RateOrder.BadRate.title
-            suggestionLabel.text = L10n.RateOrder.BadRate.subtitle
+            rateView.questionLabel.text = L10n.RateOrder.BadRate.title
+            rateView.suggestionLabel.text = L10n.RateOrder.BadRate.subtitle
             viewModel.data = viewModel.arrayStar13
         case 2.0 ..< 3.0:
-            questionLabel.text = L10n.RateOrder.BadRate.title
-            suggestionLabel.text = L10n.RateOrder.BadRate.subtitle
+            rateView.questionLabel.text = L10n.RateOrder.BadRate.title
+            rateView.suggestionLabel.text = L10n.RateOrder.BadRate.subtitle
             viewModel.data = viewModel.arrayStar13
         case 3.0 ..< 4.0:
-            questionLabel.text = L10n.RateOrder.AverageRate.title
-            suggestionLabel.text = L10n.RateOrder.AverageRate.title
+            rateView.questionLabel.text = L10n.RateOrder.AverageRate.title
+            rateView.suggestionLabel.text = L10n.RateOrder.AverageRate.title
             viewModel.data = viewModel.arrayStar13
         case 4.0 ..< 5.0:
-            questionLabel.text = L10n.RateOrder.GoodRate.title
-            suggestionLabel.text = L10n.RateOrder.GoodRate.subtitle
+            rateView.questionLabel.text = L10n.RateOrder.GoodRate.title
+            rateView.suggestionLabel.text = L10n.RateOrder.GoodRate.subtitle
             viewModel.data = viewModel.arrayStar4
         case 5.0:
-            questionLabel.text = L10n.RateOrder.ExcellentRate.title
-            suggestionLabel.text = L10n.RateOrder.ExcellentRate.subtitle
+            rateView.questionLabel.text = L10n.RateOrder.ExcellentRate.title
+            rateView.suggestionLabel.text = L10n.RateOrder.ExcellentRate.subtitle
             viewModel.data = viewModel.arrayStar5
         default:
-            questionLabel.text = nil
-            suggestionLabel.text = nil
+            rateView.questionLabel.text = nil
+            rateView.suggestionLabel.text = nil
         }
-        collectionView.reloadData()
-        collectionView.layoutIfNeeded()
-    }
-}
-
-extension RateController: OverlaySheetDelegate {
-    func passCommentary(text: String) {
-        commentTextField.text = text
+        rateView.collectionView.reloadData()
+        rateView.collectionView.layoutIfNeeded()
     }
 }
 
 extension RateController {
     @objc func dismissVC() {
-        if navigationController?.presentingViewController != nil {
-            dismiss(animated: true, completion: nil)
-            return
-        }
-
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
 
     @objc func commentaryViewTapped() {
-        let overlayVC = OverlayViewController()
-        overlayVC.transitioningDelegate = overlay
-        overlayVC.modalPresentationStyle = .custom
-        overlayVC.delegate = self
-        present(overlayVC, animated: true, completion: nil)
+        commentaryPage = MapCommentaryPage()
+        guard let page = commentaryPage else { return }
+        page.cachedCommentary = rateView.commentTextField.text
+        page.delegate = self
+        present(page, animated: true, completion: nil)
+        dimmedView.alpha = 0.5
+    }
+
+    @objc private func keyboardWillHide() {
+        dimmedView.alpha = 0
     }
 }
 
@@ -336,5 +173,11 @@ extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlow
             viewModel.selectedItems.remove(at: index)
         }
         cell.setDeselectedUI()
+    }
+}
+
+extension RateController: MapCommentaryPageDelegate {
+    func onDoneButtonTapped(commentary: String) {
+        rateView.commentTextField.text = commentary
     }
 }

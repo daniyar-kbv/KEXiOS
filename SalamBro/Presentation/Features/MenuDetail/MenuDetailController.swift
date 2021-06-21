@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-class MenuDetailController: UIViewController {
+final class MenuDetailController: UIViewController {
     private var viewModel: MenuDetailViewModelProtocol
     private let disposeBag: DisposeBag
 
@@ -100,7 +100,9 @@ class MenuDetailController: UIViewController {
         return view
     }()
 
-    private var overlay = OverlayTransitioningDelegate()
+    private let dimmedView = UIView()
+
+    private var commentaryPage: MapCommentaryPage?
 
     public init(viewModel: MenuDetailViewModelProtocol) {
         self.viewModel = viewModel
@@ -114,6 +116,7 @@ class MenuDetailController: UIViewController {
         super.viewDidLoad()
 //        bind()
         layoutUI()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -149,9 +152,10 @@ extension MenuDetailController {
     private func layoutUI() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
+
         [chooseAdditionalItemLabel, additionalItemLabel, chooseAdditionalItemButton].forEach { chooseAdditionalItemView.addSubview($0) }
         commentaryView.addSubview(commentaryField)
-        [imageView, itemTitleLabel, descriptionLabel, chooseAdditionalItemView, commentaryView, proceedButton].forEach { view.addSubview($0) }
+        [imageView, itemTitleLabel, descriptionLabel, chooseAdditionalItemView, commentaryView, proceedButton, dimmedView].forEach { view.addSubview($0) }
 
         imageView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(43)
@@ -217,32 +221,40 @@ extension MenuDetailController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(43)
         }
-    }
 
-    @objc func additionalItemChangeButtonTapped() {
-        viewModel.coordinator.openModificator()
-    }
-
-    @objc func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
-        let overlayVC = OverlayViewController()
-        overlayVC.transitioningDelegate = overlay
-        overlayVC.modalPresentationStyle = .custom
-        overlayVC.delegate = self
-        present(overlayVC, animated: true, completion: nil)
-    }
-
-    @objc func dismissVC() {
-        if navigationController?.presentingViewController != nil {
-            dismiss(animated: true, completion: nil)
-            return
+        dimmedView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
-
-        navigationController?.popViewController(animated: true)
+        dimmedView.backgroundColor = .gray
+        dimmedView.alpha = 0
     }
 }
 
-extension MenuDetailController: OverlaySheetDelegate {
-    func passCommentary(text: String) {
-        commentaryField.text = text
+extension MenuDetailController {
+    @objc private func additionalItemChangeButtonTapped() {
+        viewModel.coordinator.openModificator()
+    }
+
+    @objc private func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
+        commentaryPage = MapCommentaryPage()
+        guard let page = commentaryPage else { return }
+        page.cachedCommentary = commentaryField.text
+        page.delegate = self
+        present(page, animated: true, completion: nil)
+        dimmedView.alpha = 0.5
+    }
+
+    @objc private func keyboardWillHide() {
+        dimmedView.alpha = 0
+    }
+
+    @objc private func dismissVC() {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+extension MenuDetailController: MapCommentaryPageDelegate {
+    func onDoneButtonTapped(commentary: String) {
+        commentaryField.text = commentary
     }
 }
