@@ -7,7 +7,19 @@
 
 import UIKit
 
-class AdditionalItemChooseController: ViewController {
+class ModifiersController: ViewController {
+    private let viewModel: ModifiersViewModel
+    
+    init(viewModel: ModifiersViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: .none, bundle: .none)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     lazy var backButton: UIButton = {
         let button = UIButton()
         button.tintColor = .kexRed
@@ -32,7 +44,7 @@ class AdditionalItemChooseController: ViewController {
             frame: .zero,
             collectionViewLayout: .init()
         )
-        collectionView.register(AdditionalItemCell.self, forCellWithReuseIdentifier: "AdditionalItemCell")
+        collectionView.register(ModifiersCell.self, forCellWithReuseIdentifier: String(describing: ModifiersCell.self))
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +92,7 @@ class AdditionalItemChooseController: ViewController {
     }
 }
 
-extension AdditionalItemChooseController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ModifiersController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_: UICollectionView, didSelectItemAt _: IndexPath) {
         dismiss(animated: true, completion: nil)
     }
@@ -90,7 +102,7 @@ extension AdditionalItemChooseController: UICollectionViewDelegate, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AdditionalItemCell", for: indexPath) as! AdditionalItemCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ModifiersCell.self), for: indexPath) as! ModifiersCell
         return cell
     }
 }

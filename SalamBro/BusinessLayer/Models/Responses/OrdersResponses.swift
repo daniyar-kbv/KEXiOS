@@ -8,58 +8,79 @@
 import Foundation
 
 struct OrderApplyResponse: Codable {
-    let uuid: String
-    let brandId: Int
-    let cityId: Int
-    let address: Address
+    let data: Data?
+    let error: ErrorResponse?
 
-    struct Address: Codable {
-        let id: Int
-        let title: String
-        let longitude: String
-        let latitude: String
-        let country: String
-        let region: String
-        let city: String
-        let district: String
-        let street: String
-        let building: String
-        let corpus: String
-        let flat: String
-        let postalCode: String
+    struct Data: Codable {
+        let uuid: String
+        let localBrand: Int
 
         enum CodingKeys: String, CodingKey {
-            case id, title, longitude, latitude, country, region, city, district, street, building, corpus, flat
-            case postalCode = "postal_code"
+            case uuid
+            case localBrand = "local_brand"
+        }
+    }
+}
+
+struct OrderProductResponse: Codable {
+    let data: Data?
+    let error: ErrorResponse?
+
+    struct Data: Codable {
+        let uuid: String
+        let categories: [Category]
+        let positions: [Position]
+
+        struct Category: Codable {
+            let name: String
+            let uuid: String
+        }
+
+        struct Position: Codable {
+            let uuid: String
+            let name: String
+            let description: String
+            let image: String?
+            let price: Double
+            let category: String
+        }
+    }
+}
+
+struct OrderProductDetailResponse: Codable {
+    let data: Data?
+    let error: ErrorResponse?
+
+    struct Data: Codable {
+        let uuid: String
+        let name: String
+        let description: String
+        let image: String?
+        let price: Double
+        let branchCategory: String
+//        let modifiers: [Modifier]
+
+        enum CodingKeys: String, CodingKey {
+            case uuid, name, description, image, price
+//            case modifiers
+            case branchCategory = "branch_category"
+        }
+
+        struct Modifier: Codable {
+            let uuid: String
+            let name: String
+            let minAmount: Int
+            let maxAmount: Int
+
+            enum CodingKeys: String, CodingKey {
+                case uuid, name
+                case minAmount = "min_amount"
+                case maxAmount = "max_amount"
+            }
         }
     }
 }
 
 struct OrderIncrDecrResponse: Codable {}
-
-struct OrderProductResponse: Codable {
-    let uuid: String
-    let categories: [Category]
-    let positions: [Position]
-
-    struct Category: Codable {
-        let name: String
-        let uuid: String
-    }
-
-    struct Position: Codable {
-        let id: Int
-        let name: String
-        let description: String
-        let image: String
-        let price: Double
-        let branchCategory: String
-
-        enum CodingKeys: String, CodingKey {
-            case id, name, description, image, price
-            case branchCategory = "branch_category"
-        }
-    }
-}
 
 struct OrderUpdateCartResponse: Codable {}

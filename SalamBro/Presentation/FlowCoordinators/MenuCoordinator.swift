@@ -6,68 +6,101 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 import UIKit
 
-final class MenuCoordinator: TabCoordinator {
-    var parentCoordinator: LegacyCoordinator?
+final class MenuCoordinator: BaseCoordinator {
+    private let disposeBag = DisposeBag()
 
-    var childCoordinators: [LegacyCoordinator] = []
-    var navigationController: UINavigationController
-    weak var childNavigationController: UINavigationController!
-    var tabType: TabBarCoordinator.TabType
+    let router: Router
 
-    var addressCoordinator: AddressCoordinator?
+    private let serviceComponents: ServiceComponents
+    private let repositoryComponents: RepositoryComponents
+    private let pagesFactory: MenuPagesFactory
+    private let coordinatorsFactory: MenuCoordinatorsFactory
 
-    init(navigationController: UINavigationController, tabType: TabBarCoordinator.TabType) {
-        self.navigationController = navigationController
-        self.tabType = tabType
+    init(router: Router,
+         serviceComponents: ServiceComponents,
+         repositoryComponents: RepositoryComponents,
+         pagesFactory: MenuPagesFactory,
+         coordinatorsFactory: MenuCoordinatorsFactory)
+    {
+        self.router = router
+        self.serviceComponents = serviceComponents
+        self.repositoryComponents = repositoryComponents
+        self.pagesFactory = pagesFactory
+        self.coordinatorsFactory = coordinatorsFactory
     }
 
-    func start() {
-        let viewModel = MenuViewModel(coordinator: self,
-                                      menuRepository: DIResolver.resolve(MenuRepository.self)!,
-                                      locationRepository: DIResolver.resolve(LocationRepository.self)!,
-                                      brandRepository: DIResolver.resolve(BrandRepository.self)!)
-        let vc = MenuController(viewModel: viewModel, scrollService: MenuScrollService())
-        childNavigationController = templateNavigationController(title: tabType.title,
-                                                                 image: tabType.image,
-                                                                 rootViewController: vc)
+    override func start() {
+        let menuPage = pagesFactory.makeManuPage()
+
+        menuPage.outputs.toChangeBrand
+            .subscribe(onNext: { [weak self] didSave in
+                self?.openChangeBrand(didSave: didSave)
+            }).disposed(by: disposeBag)
+
+        menuPage.outputs.toAddressess
+            .subscribe(onNext: { [weak self] didSave in
+                self?.openChangeAddress(didSelectAddress: didSave)
+            }).disposed(by: disposeBag)
+
+        menuPage.outputs.toPromotion
+            .subscribe(onNext: { [weak self] promotionURL, infoURL in
+                self?.openPromotion(promotionURL: promotionURL, infoURL: infoURL)
+            }).disposed(by: disposeBag)
+
+        menuPage.outputs.toPositionDetail
+            .subscribe(onNext: { [weak self] positionUUID in
+                self?.openDetail(positionUUID: positionUUID)
+            }).disposed(by: disposeBag)
+
+        router.push(viewController: menuPage, animated: true)
     }
 
-    func openSelectMainInfo(didSave: (() -> Void)? = nil) {
-        addressCoordinator = AddressCoordinator(navigationController: childNavigationController,
-                                                pagesFactory: AddressPagesFactoryImpl(),
-                                                flowType: .changeBrand(didSave: didSave))
+    private func openChangeBrand(didSave: (() -> Void)? = nil) {
+        let addressCoordinator = coordinatorsFactory.makeAddressCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, flowType: .changeBrand(didSave: didSave, presentOn: router.getNavigationController()))
+        add(addressCoordinator)
 
-        addressCoordinator?.didFinish = { [weak self] in
-            self?.addressCoordinator = nil
+        addressCoordinator.didFinish = { [weak self] in
+            self?.remove(addressCoordinator)
         }
 
-        addressCoordinator?.start()
+        addressCoordinator.start()
     }
 
     func openChangeAddress(didSelectAddress: (() -> Void)? = nil) {
-        addressCoordinator = AddressCoordinator(navigationController: childNavigationController,
-                                                pagesFactory: AddressPagesFactoryImpl(),
-                                                flowType: .changeAddress(didSelectAddress: didSelectAddress))
+        let addressCoordinator = coordinatorsFactory.makeAddressCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, flowType: .changeAddress(didSelectAddress: didSelectAddress))
+        add(addressCoordinator)
 
-        addressCoordinator?.didFinish = { [weak self] in
-            self?.addressCoordinator = nil
+        addressCoordinator.didFinish = { [weak self] in
+            self?.remove(addressCoordinator)
         }
 
-        addressCoordinator?.start()
+        addressCoordinator.start()
     }
 
-    func openRating() {
-        let child = RatingCoordinator(navigationController: childNavigationController)
-        addChild(child)
-        child.start()
+    private func openPromotion(promotionURL: URL, infoURL: URL?) {
+        let promotionsCoordinator = coordinatorsFactory.makePromotionsCoordinator(promotionURL: promotionURL, infoURL: infoURL)
+        add(promotionsCoordinator)
+
+        promotionsCoordinator.didFinish = { [weak self] in
+            self?.remove(promotionsCoordinator)
+        }
+
+        promotionsCoordinator.start()
     }
 
-    func openDetail() {
-        let child = MenuDetailCoordinator(navigationController: childNavigationController)
-        addChild(child)
-        child.start()
+    private func openDetail(positionUUID: String) {
+        let menuDetailCoordinator = coordinatorsFactory.makeMenuDetailCoordinator(serviceComponents: serviceComponents, positionUUID: positionUUID)
+        add(menuDetailCoordinator)
+
+        menuDetailCoordinator.didFinish = { [weak self] in
+            self?.remove(menuDetailCoordinator)
+        }
+
+        menuDetailCoordinator.start()
     }
 
     func didFinish() {}

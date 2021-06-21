@@ -12,19 +12,19 @@ protocol AddressListPagesFactory {
     func makeAddressDetailPage(deliveryAddress: DeliveryAddress) -> AddressDetailController
 }
 
-final class AddressListPagesFactoryImpl: AddressListPagesFactory {
+final class AddressListPagesFactoryImpl: DependencyFactory, AddressListPagesFactory {
+    private let repositoryComponents: RepositoryComponents
+
+    init(repositoryComponents: RepositoryComponents) {
+        self.repositoryComponents = repositoryComponents
+    }
+
     func makeAddressListPage() -> AddressListController {
-        return .init(locationRepository: getLoactionRepository())
+        return scoped(.init(locationRepository: repositoryComponents.makeLocationRepository()))
     }
 
     func makeAddressDetailPage(deliveryAddress: DeliveryAddress) -> AddressDetailController {
-        return .init(deliveryAddress: deliveryAddress,
-                     locationRepository: getLoactionRepository())
-    }
-}
-
-extension AddressListPagesFactoryImpl {
-    private func getLoactionRepository() -> LocationRepository {
-        return DIResolver.resolve(LocationRepository.self)!
+        return scoped(.init(deliveryAddress: deliveryAddress,
+                            locationRepository: repositoryComponents.makeLocationRepository()))
     }
 }

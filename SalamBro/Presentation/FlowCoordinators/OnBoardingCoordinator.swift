@@ -45,31 +45,22 @@ final class OnBoardingCoordinator: BaseCoordinator {
         router.push(viewController: citiesPage, animated: true)
     }
 
-    private func openBrands(cityId _: Int) {
-//        let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
-//
-//        brandsPage.outputs.didSelectBrand.subscribe(onNext: { [weak self] _ in
-//            self?.openMap()
-//        }).disposed(by: disposeBag)
-//
-//        navigationController.pushViewController(brandsPage, animated: true)
+    private func openBrands(cityId: Int) {
+        let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
 
-//        TODO: remove
+        brandsPage.outputs.didSelectBrand.subscribe(onNext: { [weak self] _ in
+            self?.openMap()
+        }).disposed(by: disposeBag)
 
-        DIResolver.resolve(BrandRepository.self)?.changeCurrent(brand: Brand(id: 1, name: "Салам бро", image: "", isAvailable: true))
-
-        openMap()
+        router.push(viewController: brandsPage, animated: true)
     }
 
     private func openMap() {
-        let mapPage = MapPage(viewModel: MapViewModel(flow: .creation))
-        mapPage.selectedAddress = { [weak self] address in
-            let locationRepository = DIResolver.resolve(LocationRepository.self)
-            let address = Address(name: address.name, longitude: address.longitude, latitude: address.latitude)
-            locationRepository?.changeCurrentAddress(to: address)
+        let mapPage = pagesFactory.makeMapPage()
+
+        mapPage.selectedAddress = { [weak self] _ in
             self?.didFinish?()
             self?.router.getNavigationController().viewControllers.removeAll()
-//            Tech debt: add order apply api
         }
         router.push(viewController: mapPage, animated: true)
     }

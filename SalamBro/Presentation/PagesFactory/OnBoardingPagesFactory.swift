@@ -14,57 +14,57 @@ protocol OnBoadingPagesFactory: AnyObject {
     func makeMapPage() -> MapPage
 }
 
-final class OnBoardingPagesFactoryImpl: OnBoadingPagesFactory {
+final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory {
+    private let serviceComponents: ServiceComponents
+    private let repositoryComponents: RepositoryComponents
+
+    init(serviceComponents: ServiceComponents,
+         repositoryComponents: RepositoryComponents)
+    {
+        self.serviceComponents = serviceComponents
+        self.repositoryComponents = repositoryComponents
+    }
+
     func makeCountriesPage() -> CountriesListController {
-        return .init(viewModel: makeCountriesViewModel())
+        return scoped(.init(viewModel: makeCountriesViewModel()))
     }
 
     private func makeCountriesViewModel() -> CountriesListViewModel {
-        return .init(service: getLocationService(),
-                     repository: getLocationRepository())
+        return scoped(.init(service: serviceComponents.locationService(),
+                            repository: repositoryComponents.makeLocationRepository()))
     }
 
     func makeCitiesPage(countryId: Int) -> CitiesListController {
-        return .init(viewModel: makeCitiesViewModel(countryId: countryId))
+        return scoped(.init(viewModel: makeCitiesViewModel(countryId: countryId)))
     }
 
     private func makeCitiesViewModel(countryId: Int) -> CitiesListViewModel {
-        return .init(countryId: countryId,
-                     service: getLocationService(),
-                     repository: getLocationRepository())
+        return scoped(.init(countryId: countryId,
+                            service: serviceComponents.locationService(),
+                            repository: repositoryComponents.makeLocationRepository()))
     }
 
     func makeBrandsPage(cityId: Int) -> BrandsController {
-        return .init(viewModel: makeBrandsViewModel(cityId: cityId),
-                     flowType: .create)
+        return scoped(.init(viewModel: makeBrandsViewModel(cityId: cityId),
+                            flowType: .create))
     }
 
     private func makeBrandsViewModel(cityId: Int) -> BrandViewModel {
-        return .init(repository: getBrandRepository(),
-                     locationRepository: getLocationRepository(),
-                     service: getLocationService(),
-                     cityId: cityId)
+        return scoped(.init(repository: repositoryComponents.makeBrandRepository(),
+                            locationRepository: repositoryComponents.makeLocationRepository(),
+                            service: serviceComponents.locationService(),
+                            cityId: cityId))
     }
 
     func makeMapPage() -> MapPage {
-        return .init(viewModel: makeMapViewModel())
+        return scoped(.init(viewModel: makeMapViewModel()))
     }
 
     private func makeMapViewModel() -> MapViewModel {
-        return .init(flow: .creation)
-    }
-}
-
-extension OnBoardingPagesFactoryImpl {
-    func getLocationService() -> LocationService {
-        return DIResolver.resolve(LocationService.self)!
-    }
-
-    func getLocationRepository() -> LocationRepository {
-        return DIResolver.resolve(LocationRepository.self)!
-    }
-
-    func getBrandRepository() -> BrandRepository {
-        return DIResolver.resolve(BrandRepository.self)!
+        return scoped(.init(ordersService: serviceComponents.ordersService(),
+                            defaultStorage: DefaultStorageImpl.sharedStorage,
+                            locationRepository: repositoryComponents.makeLocationRepository(),
+                            brandRepository: repositoryComponents.makeBrandRepository(),
+                            flow: .creation))
     }
 }

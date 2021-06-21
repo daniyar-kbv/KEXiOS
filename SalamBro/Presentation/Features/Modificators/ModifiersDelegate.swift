@@ -7,6 +7,6 @@
 
 import UIKit
 
-protocol AdditionalItemDelegate {
+protocol ModifiersDelegate {
     func dissmissView()
 }

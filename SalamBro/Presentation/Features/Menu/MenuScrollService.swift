@@ -12,9 +12,9 @@ import RxSwift
 class MenuScrollService {
     private var disposeBag = DisposeBag()
 
-    lazy var didSelectCategory = PublishRelay<(source: Source, position: Int)>()
+    lazy var didSelectCategory = PublishRelay<(source: Source, category: String)>()
 
-    var currentCategoryPosition: Int = 0
+    var currentCategory: String?
     var isHeaderScrolling: Bool = false
 
     init() {
@@ -23,7 +23,7 @@ class MenuScrollService {
 
     func bind() {
         didSelectCategory.subscribe(onNext: { [weak self] in
-            self?.currentCategoryPosition = $1
+            self?.currentCategory = $1
         }).disposed(by: disposeBag)
     }
 

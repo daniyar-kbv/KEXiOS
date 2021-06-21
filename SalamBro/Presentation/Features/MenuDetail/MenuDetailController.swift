@@ -11,14 +11,16 @@ import RxSwift
 import SnapKit
 import UIKit
 
-class MenuDetailController: ViewController {
-    private var viewModel: MenuDetailViewModelProtocol
-    private let disposeBag: DisposeBag
+class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayable {
+    private var viewModel: MenuDetailViewModel
+
+    private let disposeBag = DisposeBag()
+    let outputs = Output()
+
     lazy var commentarySheetVC = CommentarySheetController()
 
     lazy var imageView: UIImageView = {
         let view = UIImageView()
-        view.image = Asset.fastFood.image
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -26,7 +28,6 @@ class MenuDetailController: ViewController {
     lazy var itemTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
-        label.text = "Чизбургер куриный"
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         return label
@@ -35,7 +36,6 @@ class MenuDetailController: ViewController {
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
-        label.text = "Чизбургер куриный"
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         return label
@@ -93,7 +93,6 @@ class MenuDetailController: ViewController {
     lazy var proceedButton: UIButton = {
         let view = UIButton()
         view.backgroundColor = .kexRed
-        view.setTitle("В корзину за 1 490 ₸", for: .normal)
         view.setTitleColor(.white, for: .normal)
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
@@ -122,47 +121,74 @@ class MenuDetailController: ViewController {
         return view
     }()
 
-    public init(viewModel: MenuDetailViewModelProtocol) {
+    public init(viewModel: MenuDetailViewModel) {
         self.viewModel = viewModel
-        disposeBag = DisposeBag()
+
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder _: NSCoder) { nil }
 
+    deinit {
+        outputs.didTerminate.accept(())
+    }
+
     override public func viewDidLoad() {
         super.viewDidLoad()
-//        bind()
+
         setup()
+        bindViewModel()
+
+        viewModel.update()
     }
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    private func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            }).disposed(by: disposeBag)
 
-        viewModel.coordinator.didFinish()
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                guard let error = error else { return }
+                self?.showError(error)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.itemImage
+            .subscribe(onNext: { [weak self] url in
+                guard let url = url else { return }
+                self?.imageView.setImage(url: url)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.itemTitle
+            .bind(to: itemTitleLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.itemDescription
+            .bind(to: descriptionLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.itemPrice
+            .bind(to: proceedButton.rx.title())
+            .disposed(by: disposeBag)
     }
-
-//    private func bind() {
-//        viewModel.itemTitle
-//            .bind(to: itemTitleLabel.rx.text)
-//            .disposed(by: disposeBag)
-//        viewModel.itemDescription
-//            .bind(to: descriptionLabel.rx.text)
-//            .disposed(by: disposeBag)
-//        viewModel.itemPrice
-//            .bind(to: proceedButton.rx.title())
-//            .disposed(by: disposeBag)
-//    }
 
     private func setup() {
         setupViews()
@@ -256,7 +282,7 @@ class MenuDetailController: ViewController {
     }
 
     @objc func additionalItemChangeButtonTapped() {
-        viewModel.coordinator.openModificator()
+        outputs.toModifiers.accept(())
     }
 
     @objc func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
@@ -269,17 +295,11 @@ class MenuDetailController: ViewController {
 }
 
 extension MenuDetailController: MapDelegate {
-    func dissmissView() {
-//        print("x")
-    }
+    func dissmissView() {}
 
-    func hideCommentarySheet() {
-//        addressSheetVC.view.isHidden = false
-    }
+    func hideCommentarySheet() {}
 
     func showCommentarySheet() {
-//        addressSheetVC.view.isHidden = true
-
         addChild(commentarySheetVC)
         view.addSubview(commentarySheetVC.view)
         commentarySheetVC.commentaryField.attributedPlaceholder = NSAttributedString(
@@ -317,5 +337,14 @@ extension MenuDetailController: MapDelegate {
         } else {
             shadow.isHidden = true
         }
+    }
+}
+
+extension MenuDetailController {
+    struct Output {
+        let didTerminate = PublishRelay<Void>()
+
+//        Tech debt: finish when modifiers api resolved
+        let toModifiers = PublishRelay<Void>()
     }
 }
