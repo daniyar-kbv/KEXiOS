@@ -33,8 +33,10 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     internal var flowType: FlowType
 
     private let locationService: LocationService
+    private let ordersService: OrdersService
     private let locationRepository: LocationRepository
     private let brandRepository: BrandRepository
+    private let defaultStorage: DefaultStorage
 
     public lazy var countries: [Country] = locationRepository.getCountries() ?? []
     public lazy var cities: [City] = locationRepository.getCities() ?? []
@@ -47,13 +49,17 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     private let disposeBag = DisposeBag()
 
     init(locationService: LocationService,
+         ordersService: OrdersService,
          locationRepository: LocationRepository,
          brandRepository: BrandRepository,
+         defaultStorage: DefaultStorage,
          flowType: FlowType)
     {
         self.locationService = locationService
+        self.ordersService = ordersService
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
+        self.defaultStorage = defaultStorage
         self.flowType = flowType
 
         switch flowType {
@@ -113,6 +119,7 @@ extension SelectMainInformationViewModel {
         if let brand = brand {
             brandRepository.changeCurrent(brand: brand)
         }
+
         switch flowType {
         case .create:
             if let deliveryAddress = deliveryAddress {
@@ -121,7 +128,8 @@ extension SelectMainInformationViewModel {
         default:
             break
         }
-        outputs.didSave.accept(())
+
+        ordersApply()
     }
 
     func checkValues() {
@@ -168,6 +176,31 @@ extension SelectMainInformationViewModel {
         locationRepository.set(countries: countries)
         self.countries = countries
         outputs.didGetCountries.accept(countries.map { $0.name })
+    }
+
+    private func ordersApply() {
+        guard let cityId = deliveryAddress?.city?.id,
+              let longitude = deliveryAddress?.address?.longitude.rounded(to: 8),
+              let latitude = deliveryAddress?.address?.latitude.rounded(to: 8),
+              let brandId = brand?.id
+        else { return }
+
+        let dto = OrderApplyDTO(address: OrderApplyDTO.Address(city: cityId,
+                                                               longitude: longitude,
+                                                               latitude: latitude),
+                                localBrand: brandId)
+
+        outputs.didStartRequest.accept(())
+
+        ordersService.applyOrder(dto: dto)
+            .subscribe(onSuccess: { [weak self] leadUUID in
+                self?.outputs.didStartRequest.accept(())
+                self?.defaultStorage.persist(leadUUID: leadUUID)
+                self?.outputs.didSave.accept(())
+            }, onError: { [weak self] error in
+                self?.outputs.didStartRequest.accept(())
+                self?.outputs.didGetError.accept(error as? ErrorPresentable)
+            }).disposed(by: disposeBag)
     }
 }
 
