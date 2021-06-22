@@ -57,6 +57,10 @@ final class AddressPickCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layoutUI()
+
+        selectionStyle = .none
+        changeButton.setTitle(L10n.AddressPickCell.changeButton, for: .normal)
+        deliveryLabel.text = L10n.AddressPickCell.deliverLabel
     }
 
     @available(*, unavailable)

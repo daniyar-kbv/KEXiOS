@@ -8,8 +8,8 @@
 import SnapKit
 import UIKit
 
-final class AdditionalItemCell: UICollectionViewCell {
-    private lazy var itemImageView: UIImageView = {
+class ModifiersCell: UICollectionViewCell {
+    lazy var itemImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "cola")
         view.contentMode = .scaleAspectFit
@@ -45,7 +45,7 @@ final class AdditionalItemCell: UICollectionViewCell {
     }
 }
 
-extension AdditionalItemCell {
+extension ModifiersCell {
     private func layoutUI() {
         [itemImageView, itemTitleLabel, itemPriceLabel].forEach {
             contentView.addSubview($0)

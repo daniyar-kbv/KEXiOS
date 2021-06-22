@@ -10,7 +10,7 @@ import RxSwift
 import UIKit
 import YandexMapKit
 
-final class MapPage: UIViewController, AlertDisplayable {
+final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
     var selectedAddress: ((Address) -> Void)?
 
     private let disposeBag = DisposeBag()
@@ -121,12 +121,28 @@ extension MapPage {
 
         viewModel.outputs.lastSelectedAddress
             .subscribe(onNext: { [weak self] address in
+                self?.handlePageTermination()
                 self?.selectedAddress?(Address(name: address.name,
                                                longitude: address.longitude,
                                                latitude: address.latitude,
                                                commentary: self?.mapAddressView.commentaryTextField.text))
             })
             .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didFinishRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            }).disposed(by: disposeBag)
     }
 
     private func bindViews() {
@@ -145,7 +161,6 @@ extension MapPage {
         mapAddressView.actionButton.rx.tap
             .bind { [weak self] in
                 self?.viewModel.onActionButtonTapped()
-                self?.handlePageTermination()
             }
             .disposed(by: disposeBag)
 

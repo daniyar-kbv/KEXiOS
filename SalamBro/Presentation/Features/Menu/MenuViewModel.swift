@@ -11,94 +11,119 @@ import RxCocoa
 import RxSwift
 import SVProgressHUD
 
-protocol MenuViewModelProtocol: ViewModel {
-    var coordinator: MenuCoordinator { get }
+protocol MenuViewModelProtocol {
+    var outputs: MenuViewModel.Output { get }
     var headerViewModels: [ViewModel?] { get }
     var cellViewModels: [[ViewModel]] { get }
-    var updateTableView: BehaviorRelay<Void?> { get }
     var brandName: BehaviorRelay<String?> { get }
+
     func update()
-    func selectMainInfo()
-    func selectAddress()
 }
 
 final class MenuViewModel: MenuViewModelProtocol {
-    public var coordinator: MenuCoordinator
-    private let menuRepository: MenuRepository
+    private let disposeBag = DisposeBag()
+    let outputs = Output()
+
+    private let defaultStorage: DefaultStorage
+
+    private let promotionsService: PromotionsService
+    private let ordersService: OrdersService
+
     private let locationRepository: LocationRepository
     private let brandRepository: BrandRepository
-    public var headerViewModels: [ViewModel?]
-    public var cellViewModels: [[ViewModel]]
-    public var updateTableView: BehaviorRelay<Void?>
-    public var brandName: BehaviorRelay<String?>
 
-    init(coordinator: MenuCoordinator,
-         menuRepository: MenuRepository,
+    public var headerViewModels: [ViewModel?] = []
+    public var cellViewModels: [[ViewModel]] = []
+
+    public lazy var brandName = BehaviorRelay<String?>(value: brandRepository.getCurrentBrand()?.name)
+
+    init(defaultStorage: DefaultStorage,
+         promotionsService: PromotionsService,
+         ordersService: OrdersService,
          locationRepository: LocationRepository,
          brandRepository: BrandRepository)
     {
-        self.coordinator = coordinator
-        cellViewModels = []
-        headerViewModels = []
-        updateTableView = .init(value: nil)
-        self.menuRepository = menuRepository
+        self.defaultStorage = defaultStorage
+        self.promotionsService = promotionsService
+        self.ordersService = ordersService
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
-        brandName = .init(value: brandRepository.getCurrentBrand()?.name)
-        download()
     }
 
     public func update() {
         download()
-        brandName.accept(brandRepository.getCurrentBrand()?.name)
-    }
 
-    public func selectMainInfo() {
-        coordinator.openSelectMainInfo { [unowned self] in
-            self.update()
-        }
-    }
-
-    public func selectAddress() {
-        coordinator.openChangeAddress { [unowned self] in
-            self.update()
-        }
+        outputs.brandName.accept(brandRepository.getCurrentBrand()?.name)
     }
 
     private func download() {
-        startAnimation()
+        guard let leadUuid = defaultStorage.leadUUID else { return }
+
         cellViewModels = []
         headerViewModels = []
-        updateTableView.accept(())
-        firstly {
-            self.menuRepository.downloadMenuAds()
-        }.done {
-            self.cellViewModels.append([
-                AddressPickCellViewModel(address: self.locationRepository.getCurrentDeliveryAddress()?.address),
-                AdCollectionCellViewModel(ads: $0.map { AdUI(from: $0) }),
-            ])
-        }.then {
-            self.menuRepository.downloadMenuCategories()
-        }.done {
-            self.headerViewModels = [
-                nil,
-                CategoriesSectionHeaderViewModel(categories: $0.map { FoodTypeUI(from: $0) }),
-            ]
-            self.cellViewModels.append(
-                $0.map { category in
-                    category.foods.map { MenuCellViewModel(categoryPosition: category.position, food: FoodUI(from: $0)) }
-                }.flatMap { $0 }
-            )
-//        }.then {
-//            self.menuRepository.downloadMenuItems()
-//        }.done {
-//            self.cellViewModels.append($0.map { FoodUI(from: $0) }
-//                .map { MenuCellViewModel(food: $0) })
-        }.catch {
-            self.coordinator.alert(error: $0)
-        }.finally {
-            self.updateTableView.accept(())
-            self.stopAnimation()
-        }
+
+        outputs.didStartRequest.accept(())
+
+        let promotionsSequence = promotionsService.getPromotions()
+        let productsSequence = ordersService.getProducts(for: leadUuid)
+
+        let finalSequesnce = Single.zip(promotionsSequence,
+                                        productsSequence,
+                                        resultSelector: {
+                                            promotions, productsData ->
+                                                ([PromotionsResponse.ResponseData.Promotion],
+                                                 [OrderProductResponse.Data.Category],
+                                                 [OrderProductResponse.Data.Position]) in
+                                            (
+                                                promotions,
+                                                productsData.categories,
+                                                productsData.positions
+                                            )
+                                        })
+
+        finalSequesnce.subscribe(onSuccess: {
+            [weak self] promotions, categories, positions in
+            self?.outputs.didEndRequest.accept(())
+
+            self?.setPromotions(promotions: promotions)
+            self?.setCategories(categories: categories)
+            self?.setPositions(positions: positions)
+
+            self?.outputs.updateTableView.accept(())
+        }, onError: { [weak self] error in
+            self?.outputs.didEndRequest.accept(())
+            self?.outputs.didGetError.accept(error as? ErrorPresentable)
+        }).disposed(by: disposeBag)
+    }
+
+    private func setPromotions(promotions: [PromotionsResponse.ResponseData.Promotion]) {
+        cellViewModels.append([
+            AddressPickCellViewModel(address: locationRepository.getCurrentDeliveryAddress()?.address),
+            AdCollectionCellViewModel(promotions: promotions),
+        ])
+    }
+
+    private func setCategories(categories: [OrderProductResponse.Data.Category]) {
+        headerViewModels = [
+            nil,
+            CategoriesSectionHeaderViewModel(categories: categories),
+        ]
+    }
+
+    private func setPositions(positions: [OrderProductResponse.Data.Position]) {
+        cellViewModels.append(positions.map { position in
+            MenuCellViewModel(position: position)
+        })
+    }
+}
+
+extension MenuViewModel {
+    struct Output {
+        let brandName = PublishRelay<String?>()
+
+        let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
+        let updateTableView = PublishRelay<Void>()
+        let didGetError = PublishRelay<ErrorPresentable?>()
     }
 }

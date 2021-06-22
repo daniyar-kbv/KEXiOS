@@ -10,12 +10,8 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-public protocol AdCollectionCellDelegate {
-    func goToRating()
-}
-
 final class AdCollectionCell: UITableViewCell {
-    public var delegate: AdCollectionCellDelegate?
+    public var delegate: AddCollectionCellDelegate?
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
@@ -40,6 +36,7 @@ final class AdCollectionCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layoutUI()
+        selectionStyle = .none
     }
 
     @available(*, unavailable)
@@ -74,8 +71,9 @@ extension AdCollectionCell {
 
 extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let promotionURL = URL(string: viewModel.cellViewModels[indexPath.item].promotion.link) else { return }
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        delegate?.goToRating()
+        delegate?.goToRating(promotionURL: promotionURL, infoURL: nil)
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
@@ -96,3 +94,7 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
 }
 
 extension AdCollectionCell: Reusable {}
+
+public protocol AddCollectionCellDelegate {
+    func goToRating(promotionURL: URL, infoURL: URL?)
+}

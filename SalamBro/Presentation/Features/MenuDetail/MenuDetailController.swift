@@ -11,9 +11,11 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class MenuDetailController: UIViewController {
-    private var viewModel: MenuDetailViewModelProtocol
-    private let disposeBag: DisposeBag
+final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayable {
+    private var viewModel: MenuDetailViewModel
+
+    private let disposeBag = DisposeBag()
+    let outputs = Output()
 
     private let contentView = MenuDetailView()
 
@@ -21,20 +23,26 @@ final class MenuDetailController: UIViewController {
 
     private var commentaryPage: MapCommentaryPage?
 
-    public init(viewModel: MenuDetailViewModelProtocol) {
+    public init(viewModel: MenuDetailViewModel) {
         self.viewModel = viewModel
-        disposeBag = DisposeBag()
+
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder _: NSCoder) { nil }
 
+    deinit {
+        outputs.didTerminate.accept(())
+    }
+
     override public func viewDidLoad() {
         super.viewDidLoad()
-//        bind()
+
         layoutUI()
         configureViews()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        bindViewModel()
+        viewModel.update()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -46,23 +54,6 @@ final class MenuDetailController: UIViewController {
         navigationController?.navigationBar.tintColor = .kexRed
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
     }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        viewModel.coordinator.didFinish()
-    }
-
-//    private func bind() {
-//        viewModel.itemTitle
-//            .bind(to: itemTitleLabel.rx.text)
-//            .disposed(by: disposeBag)
-//        viewModel.itemDescription
-//            .bind(to: descriptionLabel.rx.text)
-//            .disposed(by: disposeBag)
-//        viewModel.itemPrice
-//            .bind(to: proceedButton.rx.title())
-//            .disposed(by: disposeBag)
-//    }
 }
 
 extension MenuDetailController {
@@ -71,6 +62,42 @@ extension MenuDetailController {
         contentView.commentaryView.addGestureRecognizer(tap)
 
         contentView.chooseAdditionalItemButton.addTarget(self, action: #selector(additionalItemChangeButtonTapped), for: .touchUpInside)
+    }
+
+    private func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                guard let error = error else { return }
+                self?.showError(error)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.itemImage
+            .subscribe(onNext: { [weak self] url in
+                guard let url = url else { return }
+                self?.contentView.imageView.setImage(url: url)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.itemTitle
+            .bind(to: contentView.itemTitleLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.itemDescription
+            .bind(to: contentView.descriptionLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.itemPrice
+            .bind(to: contentView.proceedButton.rx.title())
+            .disposed(by: disposeBag)
     }
 
     private func layoutUI() {
@@ -86,17 +113,18 @@ extension MenuDetailController {
         dimmedView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+
         dimmedView.backgroundColor = .gray
         dimmedView.alpha = 0
     }
 }
 
 extension MenuDetailController {
-    @objc private func additionalItemChangeButtonTapped() {
-        viewModel.coordinator.openModificator()
+    @objc func additionalItemChangeButtonTapped() {
+        outputs.toModifiers.accept(())
     }
 
-    @objc private func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
+    @objc func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
         commentaryPage = MapCommentaryPage()
         guard let page = commentaryPage else { return }
         page.cachedCommentary = contentView.commentaryField.text
@@ -118,5 +146,14 @@ extension MenuDetailController {
 extension MenuDetailController: MapCommentaryPageDelegate {
     func onDoneButtonTapped(commentary: String) {
         contentView.commentaryField.text = commentary
+    }
+}
+
+extension MenuDetailController {
+    struct Output {
+        let didTerminate = PublishRelay<Void>()
+
+//        Tech debt: finish when modifiers api resolved
+        let toModifiers = PublishRelay<Void>()
     }
 }

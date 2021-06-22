@@ -65,7 +65,7 @@ extension LocationRepositoryImpl {
 
     func changeCurrentCountry(to country: Country) {
         if let index = storage.currentDeliveryAddressIndex {
-            storage.deliveryAddresses?[index].country = country
+            storage.deliveryAddresses[index].country = country
         } else {
             addDeliveryAddress(deliveryAddress: DeliveryAddress(country: country))
         }
@@ -96,7 +96,7 @@ extension LocationRepositoryImpl {
 
     func changeCurrentCity(to city: City) {
         if let index = storage.currentDeliveryAddressIndex {
-            storage.deliveryAddresses?[index].city = city
+            storage.deliveryAddresses[index].city = city
         } else {
             addDeliveryAddress(deliveryAddress: DeliveryAddress(city: city))
         }
@@ -116,7 +116,7 @@ extension LocationRepositoryImpl {
 
     func changeCurrentAddress(to address: Address) {
         if let index = storage.currentDeliveryAddressIndex {
-            storage.deliveryAddresses?[index].address = address
+            storage.deliveryAddresses[index].address = address
         } else {
             addDeliveryAddress(deliveryAddress: DeliveryAddress(address: address))
         }
@@ -136,32 +136,22 @@ extension LocationRepositoryImpl {
 
     func getCurrentDeliveryAddress() -> DeliveryAddress? {
         guard let index = storage.currentDeliveryAddressIndex else { return nil }
-        return storage.deliveryAddresses?[index]
+        return storage.deliveryAddresses[index]
     }
 
     func setCurrentDeliveryAddress(deliveryAddress: DeliveryAddress) {
-        storage.currentDeliveryAddressIndex = storage.deliveryAddresses?.firstIndex(where: { $0 == deliveryAddress })
+        storage.currentDeliveryAddressIndex = storage.deliveryAddresses.firstIndex(where: { $0 == deliveryAddress })
     }
 
     func deleteDeliveryAddress(deliveryAddress: DeliveryAddress) {
-        storage.deliveryAddresses?.removeAll(where: { $0 == deliveryAddress })
-        if let index = storage.currentDeliveryAddressIndex,
-           let first = storage.deliveryAddresses?.first,
-           storage.deliveryAddresses?[index] == deliveryAddress
-        {
-            setCurrentDeliveryAddress(deliveryAddress: first)
-        }
+        let wasCurrent = storage.currentDeliveryAddressIndex != nil &&
+            storage.deliveryAddresses[storage.currentDeliveryAddressIndex!] == deliveryAddress
+        storage.deliveryAddresses.removeAll(where: { $0 == deliveryAddress })
+        storage.currentDeliveryAddressIndex = storage.deliveryAddresses.first != nil && wasCurrent ? 0 : nil
     }
 
     func addDeliveryAddress(deliveryAddress: DeliveryAddress) {
-        var tmpDeliveryAddresses: [DeliveryAddress]
-        if let addresses = storage.deliveryAddresses {
-            tmpDeliveryAddresses = addresses
-        } else {
-            tmpDeliveryAddresses = []
-        }
-        tmpDeliveryAddresses.append(deliveryAddress)
-        storage.deliveryAddresses = tmpDeliveryAddresses
-        storage.currentDeliveryAddressIndex = storage.deliveryAddresses?.firstIndex(where: { $0 == deliveryAddress })
+        storage.deliveryAddresses.append(deliveryAddress)
+        storage.currentDeliveryAddressIndex = storage.deliveryAddresses.firstIndex(where: { $0 == deliveryAddress })
     }
 }

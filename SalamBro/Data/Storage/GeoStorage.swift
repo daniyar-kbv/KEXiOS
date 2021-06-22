@@ -11,7 +11,7 @@ protocol GeoStorage: AnyObject {
     var countries: [Country]? { get set }
     var cities: [City]? { get set }
 
-    var deliveryAddresses: [DeliveryAddress]? { get set }
+    var deliveryAddresses: [DeliveryAddress] { get set }
     var currentDeliveryAddressIndex: Int? { get set }
 }
 
@@ -34,8 +34,8 @@ extension Storage: GeoStorage {
         set { save(key: Keys.cities.rawValue, object: newValue) }
     }
 
-    var deliveryAddresses: [DeliveryAddress]? {
-        get { get(key: Keys.deliveryAddresses.rawValue) }
+    var deliveryAddresses: [DeliveryAddress] {
+        get { get(key: Keys.deliveryAddresses.rawValue) ?? [] }
         set { save(key: Keys.deliveryAddresses.rawValue, object: newValue) }
     }
 

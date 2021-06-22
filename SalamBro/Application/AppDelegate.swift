@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var appCoordinator: AppCoordinator?
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // if you don't have TMDB-Info.plist, just set your key in setApiKey()
         YMKMapKit.setApiKey(apiKey)
         configureProgressHUD()
         configureKeyboardManager()
@@ -25,6 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         configureAppCoordinator()
         appCoordinator?.start()
+
+//        Tech debt: remove when orders apply api stabilize
+        DefaultStorageImpl.sharedStorage.persist(leadUUID: "ace65478-c4ba-4a78-84a8-26c49466244c")
+
         return true
     }
 

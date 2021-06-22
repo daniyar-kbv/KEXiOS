@@ -8,26 +8,23 @@
 import UIKit
 
 class MenuDetailView: UIView {
-    private lazy var imageView: UIImageView = {
+    public lazy var imageView: UIImageView = {
         let view = UIImageView()
-        view.image = Asset.fastFood.image
         view.contentMode = .scaleAspectFit
         return view
     }()
 
-    private lazy var itemTitleLabel: UILabel = {
+    public lazy var itemTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
-        label.text = "Чизбургер куриный"
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         return label
     }()
 
-    private lazy var descriptionLabel: UILabel = {
+    public lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
-        label.text = "Чизбургер куриный"
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         return label
@@ -55,7 +52,6 @@ class MenuDetailView: UIView {
 
     private lazy var additionalItemLabel: UILabel = {
         let view = UILabel()
-        view.text = "Cola 0.5"
         view.font = .systemFont(ofSize: 16, weight: .medium)
         return view
     }()
@@ -78,10 +74,9 @@ class MenuDetailView: UIView {
         return view
     }()
 
-    private lazy var proceedButton: UIButton = {
+    public lazy var proceedButton: UIButton = {
         let view = UIButton()
         view.backgroundColor = .kexRed
-        view.setTitle("В корзину за 1 490 ₸", for: .normal)
         view.setTitleColor(.white, for: .normal)
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true

@@ -13,7 +13,7 @@ import RxSwift
 protocol BrandViewModelProtocol: ViewModel {
     var outputs: BrandViewModel.Outputs { get }
     var brands: [Brand] { get }
-    var ratios: [(Float, Float)] { get }
+    var ratios: [(CGFloat, CGFloat)] { get }
 
     func refreshBrands()
     func didSelect(index: Int)
@@ -35,7 +35,8 @@ final class BrandViewModel: BrandViewModelProtocol {
         }
     }
 
-    var ratios: [(Float, Float)] = []
+    private var cellSizeSequence: [BrandCellSizeType] = [.square, .horizontalShort, .vertical, .square, .square, .horizontalLong]
+    var ratios: [(CGFloat, CGFloat)] = []
 
     init(repository: BrandRepository,
          locationRepository: LocationRepository,
@@ -56,26 +57,14 @@ final class BrandViewModel: BrandViewModelProtocol {
             cachedBrands != []
         {
             brands = cachedBrands
-            outputs.didGetBrands.accept(())
         }
 
         makeBrandsRequest()
     }
 
     private func updateRatio() {
-        for (index, _) in brands.enumerated() {
-            switch (index + 1) % 4 {
-            case 1:
-                ratios.append((1.0, 0.42))
-            case 2:
-                ratios.append((0.58, 0.88))
-            case 3:
-                ratios.append((0.58, 0.42))
-            case 4:
-                ratios.append((0.42, 0.42))
-            default:
-                ratios.append((0.0, 0.0))
-            }
+        for index in 0 ..< brands.count {
+            ratios.append(cellSizeSequence[index % cellSizeSequence.count].ratio)
         }
 
         outputs.didGetBrands.accept(())
@@ -98,14 +87,12 @@ final class BrandViewModel: BrandViewModelProtocol {
         guard let cachedBrands = repository.getBrands() else {
             repository.set(brands: receivedBrands)
             brands = receivedBrands
-            outputs.didGetBrands.accept(())
             return
         }
 
         if cachedBrands == receivedBrands { return }
         repository.set(brands: receivedBrands)
         brands = receivedBrands
-        outputs.didGetBrands.accept(())
     }
 
     func refreshBrands() {
@@ -117,12 +104,6 @@ final class BrandViewModel: BrandViewModelProtocol {
         repository.changeCurrent(brand: brand)
         outputs.didSelectBrand.accept(brand)
     }
-
-    enum FlowType {
-        case firstFlow
-        case changeAddress(didSelectAddress: ((Address) -> Void)?)
-        case changeBrand(didSave: (() -> Void)?)
-    }
 }
 
 extension BrandViewModel {
@@ -130,5 +111,41 @@ extension BrandViewModel {
         let didGetBrands = BehaviorRelay<Void>(value: ())
         let didGetError = PublishRelay<ErrorPresentable?>()
         let didSelectBrand = PublishRelay<Brand>()
+    }
+}
+
+extension BrandViewModel {
+    private enum FlowType {
+        case firstFlow
+        case changeAddress(didSelectAddress: ((Address) -> Void)?)
+        case changeBrand(didSave: (() -> Void)?)
+    }
+
+    private enum BrandCellSizeType {
+        case square
+        case horizontalShort
+        case horizontalLong
+        case vertical
+
+//        MARK: Size rations according to design
+
+        private static let fullSize: CGFloat = 343
+
+        var ratio: (CGFloat, CGFloat) {
+            switch self {
+            case .square:
+                return (146 / Self.fullSize,
+                        146 / Self.fullSize)
+            case .horizontalShort:
+                return (197 / Self.fullSize,
+                        146 / Self.fullSize)
+            case .horizontalLong:
+                return (Self.fullSize / Self.fullSize,
+                        146 / Self.fullSize)
+            case .vertical:
+                return (197 / Self.fullSize,
+                        292 / Self.fullSize)
+            }
+        }
     }
 }

@@ -10,19 +10,19 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AddressCoordinator {
+final class AddressCoordinator: Coordinator {
     private let disposeBag = DisposeBag()
     private let pagesFactory: AddressPagesFactory
 
-    var navigationController: UINavigationController
+    var router: Router
     var flowType: FlowType
     var didFinish: (() -> Void)?
 
-    init(navigationController: UINavigationController,
+    init(router: Router,
          pagesFactory: AddressPagesFactory,
          flowType: FlowType)
     {
-        self.navigationController = navigationController
+        self.router = router
         self.pagesFactory = pagesFactory
         self.flowType = flowType
     }
@@ -31,8 +31,8 @@ final class AddressCoordinator {
         switch flowType {
         case let .changeAddress(didSelectAddress):
             openAddressPicker(didSelectAddress: didSelectAddress)
-        case let .changeBrand(didSave):
-            openSelectMainInfo(flowType: .changeBrand, didSave: didSave)
+        case let .changeBrand(didSave, presentOn):
+            openSelectMainInfo(flowType: .changeBrand, didSave: didSave, presentOn: presentOn)
         }
     }
 
@@ -44,25 +44,28 @@ final class AddressCoordinator {
         }).disposed(by: disposeBag)
 
         addressPickPage.outputs.didSelectAddress.subscribe(onNext: { [weak self] address in
-            self?.openSelectMainInfo(flowType: .changeAddress(address.0), didSave: { [weak self] in
-                didSelectAddress?()
-                address.1()
-            })
+            self?.openSelectMainInfo(flowType: .changeAddress(address.0),
+                                     didSave: {
+                                         didSelectAddress?()
+                                         address.1()
+                                     }, presentOn: addressPickPage)
         }).disposed(by: disposeBag)
 
         addressPickPage.outputs.didAddTapped.subscribe(onNext: { [weak self] onAdd in
-            self?.openSelectMainInfo(flowType: .create, didSave: { [weak self] in
-                didSelectAddress?()
-                onAdd()
-            })
+            self?.openSelectMainInfo(flowType: .create,
+                                     didSave: {
+                                         didSelectAddress?()
+                                         onAdd()
+                                     }, presentOn: addressPickPage)
         }).disposed(by: disposeBag)
 
         let nav = UINavigationController(rootViewController: addressPickPage)
-        present(vc: nav)
+        router.present(nav, animated: true, completion: nil)
     }
 
     private func openSelectMainInfo(flowType: SelectMainInformationViewModel.FlowType,
-                                    didSave: (() -> Void)? = nil)
+                                    didSave: (() -> Void)? = nil,
+                                    presentOn: UIViewController)
     {
         let selectMainInfoPage = pagesFactory.makeSelectMainInfoPage(flowType: flowType)
 
@@ -71,43 +74,52 @@ final class AddressCoordinator {
         }).disposed(by: disposeBag)
 
         selectMainInfoPage.outputs.toMap.subscribe(onNext: { [weak self] params in
-            self?.openMap(address: params.0, params.1)
+            self?.openMap(address: params.0, params.1, presentOn: selectMainInfoPage)
         }).disposed(by: disposeBag)
 
         selectMainInfoPage.outputs.toBrands.subscribe(onNext: { [weak self] cityId, onSelectBrand in
-            self?.openBrands(cityId: cityId, onSelectBrand)
+            self?.openBrands(cityId: cityId, onSelectBrand, presentOn: selectMainInfoPage)
         }).disposed(by: disposeBag)
 
-        selectMainInfoPage.outputs.didSave.subscribe(onNext: { [weak self] in
+        selectMainInfoPage.outputs.didSave.subscribe(onNext: {
             didSave?()
             selectMainInfoPage.dismiss(animated: true)
         }).disposed(by: disposeBag)
 
         let nav = UINavigationController(rootViewController: selectMainInfoPage)
-        present(vc: nav)
+//        Tech debt: change to routers
+        presentOn.present(nav, animated: true)
     }
 
-    private func openMap(address: Address?, _ onSelectAddress: @escaping (Address) -> Void) {
+    private func openMap(address: Address?,
+                         _ onSelectAddress: @escaping (Address) -> Void,
+                         presentOn: UIViewController)
+    {
         let mapPage = pagesFactory.makeMapPage(address: address)
 
-        mapPage.selectedAddress = { [weak self] address in
+        mapPage.selectedAddress = { address in
             onSelectAddress(address)
             mapPage.dismiss(animated: true)
         }
 
         mapPage.modalPresentationStyle = .fullScreen
-        present(vc: mapPage)
+//        Tech debt: change to routers
+        presentOn.present(mapPage, animated: true)
     }
 
-    private func openBrands(cityId: Int, _ onSelectBrand: @escaping (Brand) -> Void) {
+    private func openBrands(cityId: Int,
+                            _ onSelectBrand: @escaping (Brand) -> Void,
+                            presentOn: UIViewController)
+    {
         let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
 
-        brandsPage.outputs.didSelectBrand.subscribe(onNext: { [weak self] brand in
+        brandsPage.outputs.didSelectBrand.subscribe(onNext: { brand in
             onSelectBrand(brand)
         }).disposed(by: disposeBag)
 
         let nav = UINavigationController(rootViewController: brandsPage)
-        present(vc: nav)
+//        Tech debt: change to routers
+        presentOn.present(nav, animated: true)
     }
 
     func finishFlow(completion: () -> Void) {
@@ -116,24 +128,8 @@ final class AddressCoordinator {
 }
 
 extension AddressCoordinator {
-    func getLastPresentedViewController() -> UIViewController {
-        var parentVc: UIViewController = navigationController
-        var childVc: UIViewController? = navigationController.presentedViewController
-        while childVc != nil {
-            parentVc = childVc!
-            childVc = parentVc.presentedViewController
-        }
-        return parentVc
-    }
-
-    func present(vc: UIViewController) {
-        getLastPresentedViewController().present(vc, animated: true)
-    }
-}
-
-extension AddressCoordinator {
     enum FlowType {
         case changeAddress(didSelectAddress: (() -> Void)?)
-        case changeBrand(didSave: (() -> Void)?)
+        case changeBrand(didSave: (() -> Void)?, presentOn: UIViewController)
     }
 }

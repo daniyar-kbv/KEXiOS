@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class BrandsController: ViewController, AlertDisplayable {
+final class BrandsController: UIViewController, AlertDisplayable {
     let outputs = Output()
     private let viewModel: BrandViewModelProtocol
     private let disposeBag: DisposeBag
@@ -24,10 +24,7 @@ final class BrandsController: ViewController, AlertDisplayable {
     }()
 
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: .init()
-        )
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.register(cellType: BrandCell.self)
@@ -57,24 +54,17 @@ final class BrandsController: ViewController, AlertDisplayable {
         viewModel.getBrands()
     }
 
-    // MARK: Tech Debt - Need to configure separate navbar implementation
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.title = L10n.Brands.Navigation.title
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
-        ]
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
     }
 
     private func bind() {
         viewModel.outputs.didGetBrands
-            .do { [unowned self] _ in
-                let ratios = self.viewModel.ratios.map { (CGFloat($0.0), CGFloat($0.1)) }
-                self.collectionView.collectionViewLayout.invalidateLayout()
-                self.collectionView.collectionViewLayout = StagLayout(widthHeightRatios: ratios,
-                                                                      itemSpacing: 16)
+            .do { [weak self] _ in
+                guard let ratios = self?.viewModel.ratios else { return }
+                self?.collectionView.collectionViewLayout.invalidateLayout()
+                self?.collectionView.collectionViewLayout = StagLayout(widthHeightRatios: ratios,
+                                                                       itemSpacing: 0)
             }.bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
 
@@ -94,6 +84,7 @@ final class BrandsController: ViewController, AlertDisplayable {
     private func setup() {
         setupViews()
         setupConstraints()
+        setupNavigationBar()
     }
 
     private func setupViews() {
@@ -103,11 +94,32 @@ final class BrandsController: ViewController, AlertDisplayable {
 
     private func setupConstraints() {
         collectionView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.left.right.equalToSuperview().inset(16)
             $0.top.equalTo(view.snp.topMargin)
             $0.bottom.equalTo(view.snp.bottom)
         }
+    }
+
+    // MARK: Tech Debt - Need to configure separate navbar implementation
+
+    private func setupNavigationBar() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationController?.navigationBar.backIndicatorImage = Asset.chevronLeft.image
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = Asset.chevronLeft.image
+        navigationItem.title = nil
+        navigationItem.title = L10n.Brands.Navigation.title
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+        ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
     }
 
     @objc func handleRefreshControlAction(_: UIRefreshControl) {
