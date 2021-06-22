@@ -15,7 +15,8 @@ protocol CartViewDelegate {
 class CartController: ViewController {
     var openAuth: (() -> Void)?
 
-    var mainTabDelegate: MainTabDelegate?
+//    Tech debt: change counter logic
+//    var mainTabDelegate: MainTabDelegate?
 
     // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
 
@@ -99,7 +100,7 @@ class CartController: ViewController {
         itemsTableView.reloadData()
         updateTableViewFooterUI(cart: cartViewModel.cart)
         orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
-        mainTabDelegate?.setCount(count: cartViewModel.cart.totalProducts)
+//        mainTabDelegate?.setCount(count: cartViewModel.cart.totalProducts)
     }
 
     override func setupNavigationBar() {
@@ -261,7 +262,7 @@ extension CartController: CellDelegate {
         }
         updateTableViewFooterUI(cart: cartViewModel.cart)
         orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
-        mainTabDelegate?.updateCounter(isIncrease: isIncrease)
+//        mainTabDelegate?.updateCounter(isIncrease: isIncrease)
     }
 }
 

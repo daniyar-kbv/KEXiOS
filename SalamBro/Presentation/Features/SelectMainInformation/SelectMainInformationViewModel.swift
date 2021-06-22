@@ -11,7 +11,7 @@ import RxSwift
 
 // Tech debt: change logic to properly change/save addresses
 
-protocol SelectMainInformationViewModelProtocol: ViewModel {
+protocol SelectMainInformationViewModelProtocol {
     var flowType: SelectMainInformationViewModel.FlowType { get }
     var countries: [Country] { get }
     var cities: [City] { get }
@@ -125,30 +125,32 @@ extension SelectMainInformationViewModel {
     }
 
     func checkValues() {
-        outputs.checkResult.accept(deliveryAddress?.isComplete() ?? false)
+        outputs.checkResult.accept((deliveryAddress?.isComplete() ?? false) && brand != nil)
     }
 }
 
 extension SelectMainInformationViewModel {
     func getCountries() {
+        outputs.updateTableView.accept(())
+
         if let cachedCountries = locationRepository.getCountries(),
            cachedCountries != []
         {
             countries = cachedCountries
-            outputs.didGetCountries.accept(())
+            outputs.didGetCountries.accept(cachedCountries.map { $0.name })
         }
 
         makeCountriesRequest()
     }
 
     private func makeCountriesRequest() {
-        startAnimation()
+        outputs.didStartRequest.accept(())
         locationService.getAllCountries()
             .subscribe { [weak self] countriesResponse in
-                self?.stopAnimation()
+                self?.outputs.didEndRequest.accept(())
                 self?.process(received: countriesResponse)
             } onError: { [weak self] error in
-                self?.stopAnimation()
+                self?.outputs.didEndRequest.accept(())
                 self?.outputs.didGetError.accept(error as? ErrorPresentable)
             }
             .disposed(by: disposeBag)
@@ -158,27 +160,27 @@ extension SelectMainInformationViewModel {
         guard let cachedCountries = locationRepository.getCountries() else {
             locationRepository.set(countries: countries)
             self.countries = countries
-            outputs.didGetCountries.accept(())
+            outputs.didGetCountries.accept(countries.map { $0.name })
             return
         }
 
         if countries == cachedCountries { return }
         locationRepository.set(countries: countries)
         self.countries = countries
-        outputs.didGetCountries.accept(())
+        outputs.didGetCountries.accept(countries.map { $0.name })
     }
 }
 
 extension SelectMainInformationViewModel {
     private func getCities() {
         guard let countryId = deliveryAddress?.country?.id else { return }
-        startAnimation()
+        outputs.didStartRequest.accept(())
         locationService.getCities(for: countryId)
             .subscribe { [weak self] citiesResponse in
-                self?.stopAnimation()
+                self?.outputs.didEndRequest.accept(())
                 self?.process(received: citiesResponse)
             } onError: { [weak self] error in
-                self?.stopAnimation()
+                self?.outputs.didEndRequest.accept(())
                 self?.outputs.didGetError.accept(error as? ErrorPresentable)
             }
             .disposed(by: disposeBag)
@@ -186,7 +188,7 @@ extension SelectMainInformationViewModel {
 
     private func process(received cities: [City]) {
         self.cities = cities
-        outputs.didGetCities.accept(())
+        outputs.didGetCities.accept(cities.map { $0.name })
     }
 }
 
@@ -198,9 +200,12 @@ extension SelectMainInformationViewModel {
     }
 
     struct Output {
-        let didGetCountries = PublishRelay<Void>()
-        let didGetCities = PublishRelay<Void>()
+        let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
+
+        let didGetCountries = PublishRelay<[String]>()
+        let didGetCities = PublishRelay<[String]>()
 
         let updateTableView = PublishRelay<Void>()
 

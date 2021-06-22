@@ -24,6 +24,8 @@ class SelectMainInformationCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        selectionStyle = .none
+
         setupView()
     }
 
@@ -46,6 +48,8 @@ class SelectMainInformationCell: UITableViewCell {
         case .brand:
             field.chevronRight = true
             field.descriptionText = L10n.SelectMainInfo.description
+        case .empty:
+            field.isHidden = true
         default:
             break
         }
@@ -57,6 +61,18 @@ class SelectMainInformationCell: UITableViewCell {
         field.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+
+    func setFieldState(isActive: Bool) {
+        field.isActive = isActive
+    }
+
+    func setDataSource(values: [String]) {
+        field.dataSource = values
+    }
+
+    func set(value: String?) {
+        field.currentValue = value
     }
 }
 

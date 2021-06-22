@@ -217,6 +217,11 @@ What should we improve next time?";
 "select_main_info.description" = "The presence or absence of a particular brand depends on your
 delivery addresses";
 "select_main_info.save" = "Save";
+"select_main_info.alert.title" = "Вы уверены?";
+"select_main_info.alert.body.address" = "Если Вы сейчас смените адрес, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить адрес?";
+"select_main_info.alert.body.brand" = "Если Вы сейчас смените бренд, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить бренд?";
+"select_main_info.alert.action.yes" = "Да";
+"select_main_info.alert.action.no" = "Нет";
 
 // MARK: Address Picker
 "address_picker.add" = "Add a new delivery address";

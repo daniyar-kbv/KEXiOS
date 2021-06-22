@@ -24,8 +24,8 @@ final class DropDownTextField: UIView {
 
     var isActive: Bool = true {
         didSet {
-            self.isUserInteractionEnabled = isActive
-            self.alpha = isActive ? 1 : 0.5
+            isUserInteractionEnabled = isActive
+            alpha = isActive ? 1 : 0.5
         }
     }
 
@@ -61,11 +61,8 @@ final class DropDownTextField: UIView {
     public var currentValue: String? {
         get { contentLabel.text }
         set {
-            guard let newValue = newValue else {
-                contentLabel.text = placeholder
-                return
-            }
-            contentLabel.text = newValue
+            contentLabel.textColor = newValue != nil ? .darkGray : .mildBlue
+            contentLabel.text = newValue != nil ? newValue : placeholder
         }
     }
 
