@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-class SelectMainInformationCell: UITableViewCell {
+final class SelectMainInformationCell: UITableViewCell {
     var type: InputType!
 
     let outputs = Output()
