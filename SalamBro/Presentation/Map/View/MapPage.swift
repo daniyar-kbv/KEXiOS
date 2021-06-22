@@ -188,6 +188,7 @@ extension MapPage {
         commentaryPage = MapCommentaryPage()
         guard let page = commentaryPage else { return }
         page.cachedCommentary = mapAddressView.commentaryTextField.text
+        page.configureTextField(placeholder: L10n.Commentary.AddressField.title)
         page.delegate = self
         present(page, animated: true, completion: nil)
     }

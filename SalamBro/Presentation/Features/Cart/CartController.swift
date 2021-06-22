@@ -274,6 +274,8 @@ extension CartController: CartFooterDelegate {
         commentaryPage = MapCommentaryPage()
         guard let page = commentaryPage else { return }
         page.delegate = self
+        page.configureTextField(placeholder: L10n.Promocode.field)
+        page.configureButton(title: L10n.Promocode.button)
         present(page, animated: true, completion: nil)
     }
 }

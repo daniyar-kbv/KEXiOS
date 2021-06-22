@@ -22,6 +22,7 @@
 		3D4DA27CA3639FADEB24DECB1FE01407 /* AddressCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2417F9B147B587AD17128E8DF31887E0 /* AddressCoordinator.swift */; };
 		4DE18EF888C5A2C54C5F1E9A76986EDD /* AddressDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDEFF9F25AE0469403598834AA59983 /* AddressDTO.swift */; };
 		8058AEF62B18DD388EF908D14851CA43 /* AddressDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */; };
+		2A8BD06499A0EF1B7B3408B29011AD84 /* AddressDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302A122089A59FDB30963A7066205B3 /* AddressDetailView.swift */; };
 		917BB57548C760D69B50E0A9B7945C63 /* AddressListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC00CEF1C87BDCF019817DD8504FCA /* AddressListCell.swift */; };
 		D8B431EFFC7D1C8EABE1C263785C1F7F /* AddressListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE579AAB62F7285D13D8932137024BD /* AddressListController.swift */; };
 		E3769750DDCF7BE0F959FB40D21BB31B /* AddressListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDDB514D9313C62358551204FC981A /* AddressListCoordinator.swift */; };
@@ -160,6 +161,7 @@
 		0F95E2F8A0736A2357B034C96FA8E269 /* MenuDetailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CEE743CBD6A9AC2B953C7C235B6D54 /* MenuDetailProvider.swift */; };
 		63AEA1316C35A749DAF76CCE7D58EA62 /* MenuDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8354A71EF61943F99418348B96813F10 /* MenuDetailRepository.swift */; };
 		273C1559DDE727CD8F13DD55DC360B76 /* MenuDetailRepositoryImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C10AB32F7F1DB7B4DA30C1A9A4076F2 /* MenuDetailRepositoryImplementation.swift */; };
+		3A1F65486D1CA5E4F5FD76555765503C /* MenuDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40EF82BF94E24A3AE0963648A5A3DC /* MenuDetailView.swift */; };
 		61B26FE4761F27CF6E61ACDF1738C169 /* MenuDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A149A08B6C3B89EB477BB7C1D8D66FA4 /* MenuDetailViewModel.swift */; };
 		01BBC853F5DA48144239ACD03AE001F5 /* MenuProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86EEEA9142E399267FD627842AED34A /* MenuProvider.swift */; };
 		99C46BFA50B5C1A847040C7176BFEDD0 /* MenuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3B9FF57626CA80C3BDFF085DDCA8F7 /* MenuRepository.swift */; };
@@ -287,6 +289,7 @@
 		2417F9B147B587AD17128E8DF31887E0 /* AddressCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCoordinator.swift; sourceTree = "<group>"; };
 		FCDEFF9F25AE0469403598834AA59983 /* AddressDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDTO.swift; sourceTree = "<group>"; };
 		A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailController.swift; sourceTree = "<group>"; };
+		4302A122089A59FDB30963A7066205B3 /* AddressDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailView.swift; sourceTree = "<group>"; };
 		9BAC00CEF1C87BDCF019817DD8504FCA /* AddressListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListCell.swift; sourceTree = "<group>"; };
 		8CE579AAB62F7285D13D8932137024BD /* AddressListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListController.swift; sourceTree = "<group>"; };
 		04FDDB514D9313C62358551204FC981A /* AddressListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListCoordinator.swift; sourceTree = "<group>"; };
@@ -427,6 +430,7 @@
 		50CEE743CBD6A9AC2B953C7C235B6D54 /* MenuDetailProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailProvider.swift; sourceTree = "<group>"; };
 		8354A71EF61943F99418348B96813F10 /* MenuDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailRepository.swift; sourceTree = "<group>"; };
 		7C10AB32F7F1DB7B4DA30C1A9A4076F2 /* MenuDetailRepositoryImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailRepositoryImplementation.swift; sourceTree = "<group>"; };
+		3A40EF82BF94E24A3AE0963648A5A3DC /* MenuDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailView.swift; sourceTree = "<group>"; };
 		A149A08B6C3B89EB477BB7C1D8D66FA4 /* MenuDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailViewModel.swift; sourceTree = "<group>"; };
 		A86EEEA9142E399267FD627842AED34A /* MenuProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuProvider.swift; sourceTree = "<group>"; };
 		6E3B9FF57626CA80C3BDFF085DDCA8F7 /* MenuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRepository.swift; sourceTree = "<group>"; };
@@ -578,6 +582,15 @@
 				F4726D19E1C728B9D8CD27CF5A2A7DDE /* SupportPagesFactory.swift */,
 			);
 			path = PagesFactory;
+			sourceTree = "<group>";
+		};
+		0364AB01A4863D81F9CBFA2A590A79B8 /* CategoryCell */ = {
+			isa = PBXGroup;
+			children = (
+				BBFECD4B5CD734F1EA7722A3BF202724 /* CategoryCell.swift */,
+				39A53164BC2B29529D13D621B6ABD956 /* CategoryCellViewModel.swift */,
+			);
+			path = CategoryCell;
 			sourceTree = "<group>";
 		};
 		08D6A8241F62B88573896C6DBBC3219A /* View */ = {
@@ -735,16 +748,6 @@
 				37E5A59F4E859046E802C46121F892EE /* SalamBroUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9C0BBBCC0AA9FF7CF1092686B140B637 /* SuggestAddress */ = {
-			isa = PBXGroup;
-			children = (
-				80EEFC49550AA53FB7737FB8D050D23C /* SuggestCell.swift */,
-				A3F7C26F880D7F5610AD019E13CC3497 /* SuggestController.swift */,
-				7F815911534DFDAF14FA73F5EEF71F74 /* SuggestView.swift */,
-			);
-			path = SuggestAddress;
 			sourceTree = "<group>";
 		};
 		324830A97FF4C9828115987BC05C2DDA /* ChangeName */ = {
@@ -953,6 +956,7 @@
 			isa = PBXGroup;
 			children = (
 				A9A8A6DA96615A5D23118333FDAEFFA6 /* AddressDetailController.swift */,
+				4302A122089A59FDB30963A7066205B3 /* AddressDetailView.swift */,
 			);
 			path = AddressDetail;
 			sourceTree = "<group>";
@@ -1043,15 +1047,6 @@
 				90D518B65F82AAFDA5E793620A6E128C /* ViewModel.swift */,
 			);
 			path = Protocols;
-			sourceTree = "<group>";
-		};
-		0364AB01A4863D81F9CBFA2A590A79B8 /* CategoryCell */ = {
-			isa = PBXGroup;
-			children = (
-				BBFECD4B5CD734F1EA7722A3BF202724 /* CategoryCell.swift */,
-				39A53164BC2B29529D13D621B6ABD956 /* CategoryCellViewModel.swift */,
-			);
-			path = CategoryCell;
 			sourceTree = "<group>";
 		};
 		78FE667594F17AE9A38457052E79F069 /* Repository */ = {
@@ -1250,6 +1245,16 @@
 				018CA2527FC79DE32F3A8F5F6DBD869C /* AdCollectionCellViewModel.swift */,
 			);
 			path = AdCollectionCell;
+			sourceTree = "<group>";
+		};
+		9C0BBBCC0AA9FF7CF1092686B140B637 /* SuggestAddress */ = {
+			isa = PBXGroup;
+			children = (
+				80EEFC49550AA53FB7737FB8D050D23C /* SuggestCell.swift */,
+				A3F7C26F880D7F5610AD019E13CC3497 /* SuggestController.swift */,
+				7F815911534DFDAF14FA73F5EEF71F74 /* SuggestView.swift */,
+			);
+			path = SuggestAddress;
 			sourceTree = "<group>";
 		};
 		A01928844D10D114733916B5350BBB26 /* UIModel */ = {
@@ -1536,6 +1541,7 @@
 			isa = PBXGroup;
 			children = (
 				51703115257AFC924D7046E0AD614190 /* MenuDetailController.swift */,
+				3A40EF82BF94E24A3AE0963648A5A3DC /* MenuDetailView.swift */,
 				A149A08B6C3B89EB477BB7C1D8D66FA4 /* MenuDetailViewModel.swift */,
 			);
 			path = MenuDetail;
@@ -1900,6 +1906,7 @@
 				3D4DA27CA3639FADEB24DECB1FE01407 /* AddressCoordinator.swift in Sources */,
 				4DE18EF888C5A2C54C5F1E9A76986EDD /* AddressDTO.swift in Sources */,
 				8058AEF62B18DD388EF908D14851CA43 /* AddressDetailController.swift in Sources */,
+				2A8BD06499A0EF1B7B3408B29011AD84 /* AddressDetailView.swift in Sources */,
 				917BB57548C760D69B50E0A9B7945C63 /* AddressListCell.swift in Sources */,
 				D8B431EFFC7D1C8EABE1C263785C1F7F /* AddressListController.swift in Sources */,
 				E3769750DDCF7BE0F959FB40D21BB31B /* AddressListCoordinator.swift in Sources */,
@@ -2035,6 +2042,7 @@
 				0F95E2F8A0736A2357B034C96FA8E269 /* MenuDetailProvider.swift in Sources */,
 				63AEA1316C35A749DAF76CCE7D58EA62 /* MenuDetailRepository.swift in Sources */,
 				273C1559DDE727CD8F13DD55DC360B76 /* MenuDetailRepositoryImplementation.swift in Sources */,
+				3A1F65486D1CA5E4F5FD76555765503C /* MenuDetailView.swift in Sources */,
 				61B26FE4761F27CF6E61ACDF1738C169 /* MenuDetailViewModel.swift in Sources */,
 				01BBC853F5DA48144239ACD03AE001F5 /* MenuProvider.swift in Sources */,
 				99C46BFA50B5C1A847040C7176BFEDD0 /* MenuRepository.swift in Sources */,

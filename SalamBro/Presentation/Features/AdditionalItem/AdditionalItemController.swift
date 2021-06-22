@@ -62,13 +62,8 @@ extension AdditionalItemController {
 }
 
 extension AdditionalItemController {
-    @objc func dismissVC() {
-        if navigationController?.presentingViewController != nil {
-            dismiss(animated: true, completion: nil)
-            return
-        }
-
-        navigationController?.popViewController(animated: true)
+    @objc private func dismissVC() {
+        dismiss(animated: true, completion: nil)
     }
 }
 

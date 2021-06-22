@@ -91,7 +91,7 @@ extension AddressListController {
 }
 
 extension AddressListController {
-    @objc func dismissVC() {
+    @objc private func dismissVC() {
         navigationController?.popViewController(animated: true)
     }
 }

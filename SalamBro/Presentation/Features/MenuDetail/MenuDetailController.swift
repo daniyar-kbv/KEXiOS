@@ -15,90 +15,7 @@ final class MenuDetailController: UIViewController {
     private var viewModel: MenuDetailViewModelProtocol
     private let disposeBag: DisposeBag
 
-    private lazy var imageView: UIImageView = {
-        let view = UIImageView()
-        view.image = Asset.fastFood.image
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
-
-    private lazy var itemTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
-        label.text = "Чизбургер куриный"
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        return label
-    }()
-
-    private lazy var descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
-        label.text = "Чизбургер куриный"
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        return label
-    }()
-
-    private lazy var commentaryView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.layer.cornerRadius = 10
-        view.layer.masksToBounds = true
-        view.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.commetaryViewTapped(_:)))
-        view.addGestureRecognizer(tap)
-
-        return view
-    }()
-
-    private lazy var chooseAdditionalItemView = UIView()
-
-    private lazy var chooseAdditionalItemLabel: UILabel = {
-        let view = UILabel()
-        view.backgroundColor = .white
-        view.text = L10n.MenuDetail.additionalItemLabel
-        view.textColor = .systemGray
-        view.font = .systemFont(ofSize: 12)
-        return view
-    }()
-
-    private lazy var additionalItemLabel: UILabel = {
-        let view = UILabel()
-        view.text = "Cola 0.5"
-        view.font = .systemFont(ofSize: 16, weight: .medium)
-        return view
-    }()
-
-    private lazy var chooseAdditionalItemButton: UIButton = {
-        let view = UIButton()
-        view.setTitle(L10n.MenuDetail.chooseAdditionalItemButton, for: .normal)
-        view.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        view.setTitleColor(.kexRed, for: .normal)
-        view.addTarget(self, action: #selector(additionalItemChangeButtonTapped), for: .touchUpInside)
-        return view
-    }()
-
-    private lazy var commentaryField: UITextField = {
-        let view = UITextField()
-        view.attributedPlaceholder = NSAttributedString(
-            string: L10n.MenuDetail.commentaryField,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
-        view.isEnabled = false
-        return view
-    }()
-
-    private lazy var proceedButton: UIButton = {
-        let view = UIButton()
-        view.backgroundColor = .kexRed
-        view.setTitle("В корзину за 1 490 ₸", for: .normal)
-        view.setTitleColor(.white, for: .normal)
-        view.layer.cornerRadius = 10
-        view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private let contentView = MenuDetailView()
 
     private let dimmedView = UIView()
 
@@ -116,6 +33,7 @@ final class MenuDetailController: UIViewController {
         super.viewDidLoad()
 //        bind()
         layoutUI()
+        configureViews()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
@@ -131,7 +49,6 @@ final class MenuDetailController: UIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-
         viewModel.coordinator.didFinish()
     }
 
@@ -149,77 +66,21 @@ final class MenuDetailController: UIViewController {
 }
 
 extension MenuDetailController {
+    private func configureViews() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(commetaryViewTapped(_:)))
+        contentView.commentaryView.addGestureRecognizer(tap)
+
+        contentView.chooseAdditionalItemButton.addTarget(self, action: #selector(additionalItemChangeButtonTapped), for: .touchUpInside)
+    }
+
     private func layoutUI() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
 
-        [chooseAdditionalItemLabel, additionalItemLabel, chooseAdditionalItemButton].forEach { chooseAdditionalItemView.addSubview($0) }
-        commentaryView.addSubview(commentaryField)
-        [imageView, itemTitleLabel, descriptionLabel, chooseAdditionalItemView, commentaryView, proceedButton, dimmedView].forEach { view.addSubview($0) }
+        [contentView, dimmedView].forEach { view.addSubview($0) }
 
-        imageView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(43)
-            $0.left.equalToSuperview().offset(40)
-            $0.right.equalToSuperview().offset(-40)
-            $0.height.equalToSuperview().multipliedBy(0.33)
-        }
-
-        itemTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(27)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-        }
-
-        descriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(itemTitleLabel.snp.bottom).offset(8)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-        }
-
-        chooseAdditionalItemLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.left.equalToSuperview()
-            $0.right.equalToSuperview()
-        }
-
-        additionalItemLabel.snp.makeConstraints {
-            $0.top.equalTo(chooseAdditionalItemLabel.snp.bottom).offset(3)
-            $0.left.equalToSuperview()
-            $0.right.equalTo(chooseAdditionalItemButton.snp.left).offset(-8)
-            $0.bottom.equalToSuperview()
-        }
-
-        chooseAdditionalItemButton.snp.makeConstraints {
-            $0.right.equalToSuperview()
-            $0.centerY.equalTo(additionalItemLabel.snp.centerY)
-        }
-
-        chooseAdditionalItemView.snp.makeConstraints {
-            $0.top.equalTo(descriptionLabel.snp.bottom).offset(16)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.height.equalTo(36)
-        }
-
-        commentaryField.snp.makeConstraints {
-            $0.top.equalTo(chooseAdditionalItemView.snp.bottom).offset(16)
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
-            $0.height.equalTo(50)
-        }
-
-        commentaryView.snp.makeConstraints {
-            $0.top.equalTo(chooseAdditionalItemView.snp.bottom).offset(16)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.height.equalTo(50)
-        }
-
-        proceedButton.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
-            $0.height.equalTo(43)
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
 
         dimmedView.snp.makeConstraints {
@@ -238,8 +99,9 @@ extension MenuDetailController {
     @objc private func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
         commentaryPage = MapCommentaryPage()
         guard let page = commentaryPage else { return }
-        page.cachedCommentary = commentaryField.text
+        page.cachedCommentary = contentView.commentaryField.text
         page.delegate = self
+        page.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
         present(page, animated: true, completion: nil)
         dimmedView.alpha = 0.5
     }
@@ -255,6 +117,6 @@ extension MenuDetailController {
 
 extension MenuDetailController: MapCommentaryPageDelegate {
     func onDoneButtonTapped(commentary: String) {
-        commentaryField.text = commentary
+        contentView.commentaryField.text = commentary
     }
 }

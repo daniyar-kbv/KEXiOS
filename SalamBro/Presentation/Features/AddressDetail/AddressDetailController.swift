@@ -22,37 +22,7 @@ final class AddressDetailController: UIViewController {
         return view
     }()
 
-    private lazy var addressTitleLabel: UILabel = {
-        let view = UILabel()
-        view.textColor = .mildBlue
-        view.text = L10n.AddressPicker.titleOne
-        view.font = .systemFont(ofSize: 10, weight: .medium)
-        return view
-    }()
-
-    private lazy var addressLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 14)
-        view.text = deliveryAddress.address?.name
-        return view
-    }()
-
-    private lazy var commentaryTitleLabel: UILabel = {
-        let view = UILabel()
-        view.textColor = .mildBlue
-        view.font = .systemFont(ofSize: 10, weight: .medium)
-        view.numberOfLines = 0
-        view.text = "Комментарий"
-        return view
-    }()
-
-    private lazy var commentaryLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 14)
-        view.numberOfLines = 0
-        view.text = deliveryAddress.address?.commentary
-        return view
-    }()
+    private var contentView = AddressDetailView()
 
     init(deliveryAddress: DeliveryAddress,
          locationRepository: LocationRepository)
@@ -71,6 +41,7 @@ final class AddressDetailController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutUI()
+        configureViews()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -91,43 +62,30 @@ final class AddressDetailController: UIViewController {
 }
 
 extension AddressDetailController {
+    private func configureViews() {
+        if let deliveryAddressName = deliveryAddress.address?.name, let commentary = deliveryAddress.address?.commentary {
+            contentView.configure(name: deliveryAddressName, commentary: commentary)
+        }
+    }
+
     private func layoutUI() {
         view.backgroundColor = .white
-        [addressLabel, addressTitleLabel, commentaryLabel, commentaryTitleLabel].forEach { view.addSubview($0)
-        }
 
-        addressTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(24)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-        }
+        view.addSubview(contentView)
 
-        addressLabel.snp.makeConstraints {
-            $0.top.equalTo(addressTitleLabel.snp.bottom).offset(4)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-        }
-
-        commentaryTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(addressLabel.snp.bottom).offset(24)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-        }
-
-        commentaryLabel.snp.makeConstraints {
-            $0.top.equalTo(commentaryTitleLabel.snp.bottom).offset(4)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+        contentView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin)
+            $0.left.right.bottom.equalToSuperview()
         }
     }
 }
 
 extension AddressDetailController {
-    @objc func dismissVC() {
+    @objc private func dismissVC() {
         navigationController?.popViewController(animated: true)
     }
 
-    @objc func deleteAction() {
+    @objc private func deleteAction() {
 //        Tech debt add localization
         let alert = UIAlertController(title: "Вы уверены?", message: "Вы уверены что хотите удалить адрес доставки?", preferredStyle: .alert)
         alert.view.tintColor = .kexRed

@@ -122,15 +122,16 @@ extension RateController {
 }
 
 extension RateController {
-    @objc func dismissVC() {
+    @objc private func dismissVC() {
         dismiss(animated: true, completion: nil)
     }
 
-    @objc func commentaryViewTapped() {
+    @objc private func commentaryViewTapped() {
         commentaryPage = MapCommentaryPage()
         guard let page = commentaryPage else { return }
         page.cachedCommentary = rateView.commentTextField.text
         page.delegate = self
+        page.configureTextField(placeholder: L10n.RateOrder.CommentaryField.placeholder)
         present(page, animated: true, completion: nil)
         dimmedView.alpha = 0.5
     }
