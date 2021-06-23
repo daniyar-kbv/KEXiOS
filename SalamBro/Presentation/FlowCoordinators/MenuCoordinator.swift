@@ -31,6 +31,7 @@ final class MenuCoordinator: BaseCoordinator {
         self.repositoryComponents = repositoryComponents
         self.pagesFactory = pagesFactory
         self.coordinatorsFactory = coordinatorsFactory
+        router.set(navigationController: router.getNavigationController())
     }
 
     override func start() {

@@ -10,8 +10,6 @@ import UIKit
 
 final class AppCoordinator: BaseCoordinator {
     private var preparedViewControllers: [UIViewController] = []
-    private var navigationControllers = [UINavigationController]()
-    private var restartAuthCoordinator: (() -> Void)?
 
     private(set) var tabBarController: SBTabBarController!
 
@@ -30,10 +28,6 @@ final class AppCoordinator: BaseCoordinator {
 
     override func start() {
         tabBarController = SBTabBarController()
-
-        restartAuthCoordinator = { [weak self] in
-            self?.startAuthCoordinator()
-        }
 
         configureMenuCoordinator()
         configureProfileCoordinator()
@@ -68,7 +62,6 @@ final class AppCoordinator: BaseCoordinator {
 
         preparedViewControllers.append(menuCoordinator.router.getNavigationController())
         add(menuCoordinator)
-        navigationControllers.append(menuCoordinator.router.getNavigationController())
     }
 
     private func configureProfileCoordinator() {
@@ -79,7 +72,6 @@ final class AppCoordinator: BaseCoordinator {
                                                                                       selectedImage: Asset.profile.image)
         preparedViewControllers.append(profileCoordinator.router.getNavigationController())
         add(profileCoordinator)
-        navigationControllers.append(profileCoordinator.router.getNavigationController())
     }
 
     private func configureSupportCoordinator() {
@@ -90,7 +82,6 @@ final class AppCoordinator: BaseCoordinator {
                                                                                       selectedImage: Asset.support.image)
         preparedViewControllers.append(supportCoordinator.router.getNavigationController())
         add(supportCoordinator)
-        navigationControllers.append(supportCoordinator.router.getNavigationController())
     }
 
     private func configureCartCoordinator() {
@@ -102,20 +93,6 @@ final class AppCoordinator: BaseCoordinator {
                                                                                    selectedImage: Asset.cart.image)
         preparedViewControllers.append(cartCoordinator.router.getNavigationController())
         add(cartCoordinator)
-        navigationControllers.append(cartCoordinator.router.getNavigationController())
-    }
-
-    private func startAuthCoordinator() {
-        let authCoordinator = appCoordinatorsFactory.makeAuthCoordinator(serviceComponents: serviceComponents,
-                                                                         repositoryComponents: repositoryComponents)
-
-        add(authCoordinator)
-        authCoordinator.didFinish = { [weak self, weak authCoordinator] in
-            self?.remove(authCoordinator)
-            authCoordinator = nil
-        }
-
-        authCoordinator.start()
     }
 
     private func startOnboardingFlow() {

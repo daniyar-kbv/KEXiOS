@@ -26,7 +26,8 @@ final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
 
     private func makeProfileViewModel() -> ProfileViewModel {
         return scoped(ProfileViewModelImpl(profileService: serviceComponents.profileService(),
-                                           authService: serviceComponents.authService()))
+                                           authService: serviceComponents.authService(),
+                                           tokenStorage: AuthTokenStorageImpl.sharedStorage))
     }
 
     /// Нужно переписать используя viewModel, snapkit и rxswift

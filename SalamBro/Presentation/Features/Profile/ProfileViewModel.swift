@@ -12,8 +12,10 @@ import RxSwift
 protocol ProfileViewModel: AnyObject {
     var tableItems: [ProfileTableItem] { get }
     var outputs: ProfileViewModelImpl.Output { get }
-    func getUserInfo()
     var userInfo: UserInfoResponse? { get }
+
+    func getUserInfo()
+    func logout()
 }
 
 final class ProfileViewModelImpl: ProfileViewModel {
@@ -29,10 +31,12 @@ final class ProfileViewModelImpl: ProfileViewModel {
 
     private let profileService: ProfileService
     private let authService: AuthService
+    private let tokenStorage: AuthTokenStorage
 
-    init(profileService: ProfileService, authService: AuthService) {
+    init(profileService: ProfileService, authService: AuthService, tokenStorage: AuthTokenStorage) {
         self.profileService = profileService
         self.authService = authService
+        self.tokenStorage = tokenStorage
     }
 
     func getUserInfo() {
@@ -51,6 +55,10 @@ final class ProfileViewModelImpl: ProfileViewModel {
                 self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
             })
             .disposed(by: disposeBag)
+    }
+
+    func logout() {
+        tokenStorage.cleanUp()
     }
 }
 
