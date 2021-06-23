@@ -12,6 +12,7 @@ final class CartProductCell: UITableViewCell {
     private lazy var productImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "fastFood")
+        view.contentMode = .scaleAspectFit
         return view
     }()
 
@@ -135,39 +136,39 @@ extension CartProductCell {
 
         productImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(12)
-            $0.left.equalToSuperview().offset(26)
-            $0.width.equalTo(64)
-            $0.height.equalTo(54)
+            $0.left.equalToSuperview().offset(24)
+            $0.width.equalTo(40)
+            $0.height.equalTo(40)
         }
 
         productTitleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(12)
-            $0.left.equalTo(productImageView.snp.right).offset(7)
-            $0.right.equalToSuperview().offset(-22)
+            $0.left.equalTo(productImageView.snp.right).offset(8)
+            $0.right.equalToSuperview().offset(-24)
         }
 
         subitemLabel.snp.makeConstraints {
             $0.top.equalTo(productTitleLabel.snp.bottom).offset(4)
-            $0.left.equalTo(productImageView.snp.right).offset(7)
-            $0.right.equalToSuperview().offset(-22)
+            $0.left.equalTo(productImageView.snp.right).offset(8)
+            $0.right.equalToSuperview().offset(-24)
         }
 
         commentLabel.snp.makeConstraints {
             $0.top.equalTo(subitemLabel.snp.bottom).offset(2)
-            $0.left.equalTo(productImageView.snp.right).offset(7)
-            $0.right.equalToSuperview().offset(-22)
+            $0.left.equalTo(productImageView.snp.right).offset(8)
+            $0.right.equalToSuperview().offset(-24)
         }
 
         priceLabel.snp.makeConstraints {
             $0.top.equalTo(commentLabel.snp.bottom).offset(26)
-            $0.left.equalToSuperview().offset(97)
-            $0.bottom.equalToSuperview().offset(-18)
+            $0.left.equalToSuperview().offset(72)
+            $0.bottom.equalToSuperview().offset(-19)
         }
 
         unavailableLabel.snp.makeConstraints {
             $0.top.equalTo(commentLabel.snp.bottom).offset(26)
-            $0.left.equalToSuperview().offset(97)
-            $0.bottom.equalToSuperview().offset(-18)
+            $0.left.equalToSuperview().offset(72)
+            $0.bottom.equalToSuperview().offset(-19)
         }
 
         stackView = UIStackView(arrangedSubviews: [descreaseButton, countLabel, increaseButton])
@@ -179,9 +180,9 @@ extension CartProductCell {
 
         countLabel.snp.makeConstraints {
             $0.left.equalTo(descreaseButton.snp.right)
-            $0.top.equalTo(stackView).offset(3)
+            $0.top.equalTo(stackView).offset(1)
             $0.right.equalTo(increaseButton.snp.left)
-            $0.bottom.equalTo(stackView).offset(-3)
+            $0.bottom.equalTo(stackView).offset(-1)
             $0.width.equalTo(30)
         }
 
@@ -209,7 +210,7 @@ extension CartProductCell {
             $0.left.equalTo(unavailableLabel.snp.right).offset(3)
             $0.left.equalTo(priceLabel.snp.right).offset(16)
             $0.bottom.equalToSuperview().offset(-11)
-            $0.right.equalToSuperview().offset(-22)
+            $0.right.equalToSuperview().offset(-24)
             $0.height.equalTo(30)
             $0.width.equalTo(90)
         }

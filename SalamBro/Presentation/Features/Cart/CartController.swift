@@ -205,6 +205,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CartAdditionalProductCell.self)
             cell.delegate = self
             cell.configure(item: cartViewModel.cart.productsAdditional[indexPath.row])
+            cell.configureIncreaseButton()
             return cell
         }
     }

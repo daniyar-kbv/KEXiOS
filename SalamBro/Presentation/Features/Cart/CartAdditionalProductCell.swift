@@ -17,6 +17,7 @@ final class CartAdditionalProductCell: UITableViewCell {
     private lazy var productImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "ketchup")
+        view.contentMode = .scaleAspectFit
         return view
     }()
 
@@ -63,9 +64,7 @@ final class CartAdditionalProductCell: UITableViewCell {
 
     private lazy var increaseButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .kexRed
         button.cornerRadius = 5
-        button.setBackgroundImage(UIImage(named: "plus"), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         button.addTarget(self, action: #selector(increaseItemButton), for: .touchUpInside)
         return button
@@ -112,18 +111,18 @@ extension CartAdditionalProductCell {
 
         productImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(12)
-            $0.left.equalToSuperview().offset(26)
-            $0.width.equalTo(64)
-            $0.height.equalTo(64)
+            $0.left.equalToSuperview().offset(24)
+            $0.width.equalTo(40)
+            $0.height.equalTo(40)
         }
 
         productTitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(25)
+            $0.top.equalToSuperview().offset(12)
             $0.left.equalTo(productImageView.snp.right).offset(8)
         }
 
         priceLabel.snp.makeConstraints {
-            $0.top.equalTo(productTitleLabel.snp.bottom).offset(6)
+            $0.top.equalTo(productTitleLabel.snp.bottom).offset(15)
             $0.left.equalTo(productImageView.snp.right).offset(8)
         }
 
@@ -136,9 +135,9 @@ extension CartAdditionalProductCell {
 
         countLabel.snp.makeConstraints {
             $0.left.equalTo(descreaseButton.snp.right)
-            $0.top.equalTo(stackView).offset(3)
+            $0.top.equalTo(stackView).offset(1)
             $0.right.equalTo(increaseButton.snp.left)
-            $0.bottom.equalTo(stackView).offset(-3)
+            $0.bottom.equalTo(stackView).offset(-1)
             $0.width.equalTo(30)
         }
 
@@ -155,18 +154,18 @@ extension CartAdditionalProductCell {
         }
 
         containerView.snp.makeConstraints {
-            $0.left.equalTo(productTitleLabel.snp.right).offset(8)
-            $0.top.equalToSuperview().offset(34)
+            $0.left.equalTo(priceLabel.snp.right).offset(8)
             $0.right.equalToSuperview().offset(-24)
+            $0.top.equalToSuperview().offset(40)
             $0.height.equalTo(30)
             $0.width.equalTo(90)
         }
 
         unavailableLabel.snp.makeConstraints {
-            $0.top.equalTo(productImageView.snp.bottom).offset(4)
+            $0.top.equalTo(priceLabel.snp.bottom).offset(12)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalToSuperview().offset(-8)
+            $0.bottom.equalToSuperview().offset(-10)
         }
     }
 }
@@ -189,8 +188,22 @@ extension CartAdditionalProductCell {
                 priceLabel.alpha = 0.5
                 productImageView.alpha = 0.5
             }
-            counter = count
+
             countLabel.text = "\(counter)"
+        }
+    }
+
+    func configureIncreaseButton() {
+        if counter == 0 {
+            increaseButton.backgroundColor = .clear
+            increaseButton.borderWidth = 1
+            increaseButton.borderColor = .mildBlue
+            increaseButton.setBackgroundImage(UIImage(named: "plus_grey"), for: .normal)
+        } else {
+            increaseButton.backgroundColor = .kexRed
+            increaseButton.borderWidth = 0
+            increaseButton.borderColor = .none
+            increaseButton.setBackgroundImage(UIImage(named: "plus"), for: .normal)
         }
     }
 
