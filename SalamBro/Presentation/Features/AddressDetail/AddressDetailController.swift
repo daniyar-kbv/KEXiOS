@@ -38,14 +38,19 @@ final class AddressDetailController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func loadView() {
+        super.loadView()
+        view = contentView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        layoutUI()
         configureViews()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        view.backgroundColor = .arcticWhite
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.shadowImage = .init()
         navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
@@ -63,19 +68,12 @@ final class AddressDetailController: UIViewController {
 
 extension AddressDetailController {
     private func configureViews() {
-        if let deliveryAddressName = deliveryAddress.address?.name, let commentary = deliveryAddress.address?.commentary {
-            contentView.configure(name: deliveryAddressName, commentary: commentary)
+        if let deliveryAddressName = deliveryAddress.address?.name {
+            contentView.configureAddress(name: deliveryAddressName)
         }
-    }
 
-    private func layoutUI() {
-        view.backgroundColor = .white
-
-        view.addSubview(contentView)
-
-        contentView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin)
-            $0.left.right.bottom.equalToSuperview()
+        if let commentary = deliveryAddress.address?.commentary {
+            contentView.configureCommentary(commentary: commentary)
         }
     }
 }

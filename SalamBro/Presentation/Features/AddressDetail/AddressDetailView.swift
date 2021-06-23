@@ -53,8 +53,11 @@ class AddressDetailView: UIView {
 }
 
 extension AddressDetailView {
-    public func configure(name: String, commentary: String) {
+    public func configureAddress(name: String) {
         addressLabel.text = name
+    }
+
+    public func configureCommentary(commentary: String) {
         commentaryLabel.text = commentary
     }
 
@@ -64,7 +67,8 @@ extension AddressDetailView {
         }
 
         addressTitleLabel.snp.makeConstraints {
-            $0.top.left.equalToSuperview().offset(24)
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(24)
+            $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
         }
 

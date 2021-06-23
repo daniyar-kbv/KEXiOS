@@ -105,7 +105,7 @@ extension MenuDetailView {
         }
 
         imageView.snp.makeConstraints {
-            $0.top.equalTo(snp.topMargin).offset(43)
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(43)
             $0.left.equalToSuperview().offset(40)
             $0.right.equalToSuperview().offset(-40)
             $0.height.equalToSuperview().multipliedBy(0.33)

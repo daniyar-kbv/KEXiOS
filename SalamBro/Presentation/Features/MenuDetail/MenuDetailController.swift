@@ -35,6 +35,11 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
         outputs.didTerminate.accept(())
     }
 
+    override func loadView() {
+        super.loadView()
+        view = contentView
+    }
+
     override public func viewDidLoad() {
         super.viewDidLoad()
 
@@ -104,11 +109,7 @@ extension MenuDetailController {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
 
-        [contentView, dimmedView].forEach { view.addSubview($0) }
-
-        contentView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+        view.addSubview(dimmedView)
 
         dimmedView.snp.makeConstraints {
             $0.edges.equalToSuperview()
