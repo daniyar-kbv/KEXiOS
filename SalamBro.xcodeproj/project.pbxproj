@@ -92,6 +92,7 @@
 		E2ED2BA29EE68CCF38E40BE2A04897A9 /* ChangeAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625E693ECD65B77CD7F46941048696B0 /* ChangeAddressViewModel.swift */; };
 		86FC0A8C4E303A323E41C1DEFA432C2A /* ChangeLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */; };
 		E4E066B4032248830E3B0F8452C2C4F6 /* ChangeNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906133A86D4AF5C94A475D4892939FB8 /* ChangeNameController.swift */; };
+		5520290605FA2A6BF51199D8077E8783 /* ChangeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD53D09D8BB320C553DDBDC20A49B8 /* ChangeNameView.swift */; };
 		E843796335C1B31A86647909D60A27B5 /* ChangeNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540A1568FA39DDAB842661EF692C987B /* ChangeNameViewModel.swift */; };
 		B19672E96C8149F312FD01ED7224045B /* CitiesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25165BC9C032E5EB5B8F281DB57E61 /* CitiesListController.swift */; };
 		99F4A299BE0748BF7799C7D14705F46E /* CitiesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C4535D2136E4D06E0D57D74B2B1904 /* CitiesListViewModel.swift */; };
@@ -229,6 +230,7 @@
 		127A96DA3032469852F3DE835FC5C47C /* SetNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B4882B846EE55133F2EA0DC79C96E2 /* SetNameView.swift */; };
 		A187BA477718285B905045FD4DBBF59F /* SetNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F298A9287002556E415935543464A7 /* SetNameViewModel.swift */; };
 		1F46DD5C2E968C972E578A066C125F8E /* ShareOrderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D2E0A8BCB565935BCEC645CC08C32 /* ShareOrderController.swift */; };
+		1DB4C02BA11CB31E0D0B727F57ED4E76 /* ShareOrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5C8E499169E80E950ED34BCA60403B /* ShareOrderViewModel.swift */; };
 		9540806D1714956FA9B2C2E775CB3A5C /* StagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5D8FF5DD4BCFD49996D346C2CDB4E5 /* StagLayout.swift */; };
 		9C12D1A03462E0B25385C737C544CEFB /* StagLayoutFrameHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4285A853318739ED66D9DF9928A5BF12 /* StagLayoutFrameHolder.swift */; };
 		9D6DE6A1B49BCEC225779D5720049B1B /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850F205CC495DCB2845E88E88CCFE9C8 /* Storage.swift */; };
@@ -370,6 +372,7 @@
 		625E693ECD65B77CD7F46941048696B0 /* ChangeAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressViewModel.swift; sourceTree = "<group>"; };
 		B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLanguageController.swift; sourceTree = "<group>"; };
 		906133A86D4AF5C94A475D4892939FB8 /* ChangeNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameController.swift; sourceTree = "<group>"; };
+		B1BD53D09D8BB320C553DDBDC20A49B8 /* ChangeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameView.swift; sourceTree = "<group>"; };
 		540A1568FA39DDAB842661EF692C987B /* ChangeNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameViewModel.swift; sourceTree = "<group>"; };
 		7B25165BC9C032E5EB5B8F281DB57E61 /* CitiesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListController.swift; sourceTree = "<group>"; };
 		01C4535D2136E4D06E0D57D74B2B1904 /* CitiesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListViewModel.swift; sourceTree = "<group>"; };
@@ -519,6 +522,7 @@
 		47B4882B846EE55133F2EA0DC79C96E2 /* SetNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetNameView.swift; sourceTree = "<group>"; };
 		A0F298A9287002556E415935543464A7 /* SetNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetNameViewModel.swift; sourceTree = "<group>"; };
 		263D2E0A8BCB565935BCEC645CC08C32 /* ShareOrderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOrderController.swift; sourceTree = "<group>"; };
+		0F5C8E499169E80E950ED34BCA60403B /* ShareOrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOrderViewModel.swift; sourceTree = "<group>"; };
 		3A5D8FF5DD4BCFD49996D346C2CDB4E5 /* StagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagLayout.swift; sourceTree = "<group>"; };
 		4285A853318739ED66D9DF9928A5BF12 /* StagLayoutFrameHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagLayoutFrameHolder.swift; sourceTree = "<group>"; };
 		850F205CC495DCB2845E88E88CCFE9C8 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
@@ -792,6 +796,7 @@
 			isa = PBXGroup;
 			children = (
 				906133A86D4AF5C94A475D4892939FB8 /* ChangeNameController.swift */,
+				B1BD53D09D8BB320C553DDBDC20A49B8 /* ChangeNameView.swift */,
 				540A1568FA39DDAB842661EF692C987B /* ChangeNameViewModel.swift */,
 			);
 			path = ChangeName;
@@ -1435,6 +1440,7 @@
 			isa = PBXGroup;
 			children = (
 				263D2E0A8BCB565935BCEC645CC08C32 /* ShareOrderController.swift */,
+				0F5C8E499169E80E950ED34BCA60403B /* ShareOrderViewModel.swift */,
 			);
 			path = ShareOrder;
 			sourceTree = "<group>";
@@ -2026,6 +2032,7 @@
 				E2ED2BA29EE68CCF38E40BE2A04897A9 /* ChangeAddressViewModel.swift in Sources */,
 				86FC0A8C4E303A323E41C1DEFA432C2A /* ChangeLanguageController.swift in Sources */,
 				E4E066B4032248830E3B0F8452C2C4F6 /* ChangeNameController.swift in Sources */,
+				5520290605FA2A6BF51199D8077E8783 /* ChangeNameView.swift in Sources */,
 				E843796335C1B31A86647909D60A27B5 /* ChangeNameViewModel.swift in Sources */,
 				B19672E96C8149F312FD01ED7224045B /* CitiesListController.swift in Sources */,
 				99F4A299BE0748BF7799C7D14705F46E /* CitiesListViewModel.swift in Sources */,
@@ -2155,6 +2162,7 @@
 				127A96DA3032469852F3DE835FC5C47C /* SetNameView.swift in Sources */,
 				A187BA477718285B905045FD4DBBF59F /* SetNameViewModel.swift in Sources */,
 				1F46DD5C2E968C972E578A066C125F8E /* ShareOrderController.swift in Sources */,
+				1DB4C02BA11CB31E0D0B727F57ED4E76 /* ShareOrderViewModel.swift in Sources */,
 				9540806D1714956FA9B2C2E775CB3A5C /* StagLayout.swift in Sources */,
 				9C12D1A03462E0B25385C737C544CEFB /* StagLayoutFrameHolder.swift in Sources */,
 				9D6DE6A1B49BCEC225779D5720049B1B /* Storage.swift in Sources */,

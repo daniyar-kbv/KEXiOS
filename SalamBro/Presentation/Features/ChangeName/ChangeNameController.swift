@@ -9,78 +9,19 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-// MARK: Tech debt, нужно переписать как будет время, не критично.
-
-final class ChangeNameController: ViewController, AlertDisplayable, LoaderDisplayable {
+final class ChangeNameController: UIViewController, AlertDisplayable, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()
 
-    private var yCoordinate: CGFloat?
-
-    private lazy var nameLabel: UILabel = {
-        let view = UILabel()
-        view.textColor = .mildBlue
-        view.font = .systemFont(ofSize: 10, weight: .medium)
-        view.text = L10n.ChangeName.nameLabel
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    private lazy var nameView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.layer.cornerRadius = 10
-        view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    private lazy var nameField: UITextField = {
-        let field = UITextField()
-        field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        field.translatesAutoresizingMaskIntoConstraints = false
-        return field
-    }()
-
-    private lazy var emailLabel: UILabel = {
-        let view = UILabel()
-        view.textColor = .mildBlue
-        view.font = .systemFont(ofSize: 10, weight: .medium)
-        view.text = L10n.ChangeName.emailLabel
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    private lazy var emailView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.layer.cornerRadius = 10
-        view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    private lazy var emailField: UITextField = {
-        let field = UITextField()
-        field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        field.translatesAutoresizingMaskIntoConstraints = false
-        return field
-    }()
-
-    private lazy var saveButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(L10n.ChangeName.SaveButton.title, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.addTarget(self, action: #selector(saveName), for: .touchUpInside)
-        button.backgroundColor = .calmGray
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+    private let contentView = ChangeNameView()
 
     private let viewModel: ChangeNameViewModel
+
+    override func loadView() {
+        super.loadView()
+        view = contentView
+    }
 
     init(viewModel: ChangeNameViewModel) {
         self.viewModel = viewModel
@@ -94,83 +35,55 @@ final class ChangeNameController: ViewController, AlertDisplayable, LoaderDispla
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setupViews()
-        setupConstraints()
+        configureViews()
         bindViewModel()
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.backgroundColor = .arcticWhite
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
         navigationItem.title = L10n.ChangeName.NavigationBar.title
-    }
-
-    private func setupUI() {
-        yCoordinate = saveButton.frame.origin.y
     }
 }
 
 extension ChangeNameController {
-    private func setupViews() {
-        view.backgroundColor = .white
-        nameView.addSubview(nameField)
-        emailView.addSubview(emailField)
-        view.addSubview(nameLabel)
-        view.addSubview(nameView)
-        view.addSubview(emailLabel)
-        view.addSubview(emailView)
-        view.addSubview(saveButton)
+    private func configureViews() {
+        contentView.nameTextField.text = viewModel.oldUserInfo.name
+        contentView.emailTextField.text = viewModel.oldUserInfo.email
+        contentView.saveButton.isEnabled = !(contentView.nameTextField.text?.isEmpty ?? true)
 
-        saveButton.isEnabled = !(nameField.text?.isEmpty ?? true)
-
-        nameField.text = viewModel.oldUserInfo.name
-        emailField.text = viewModel.oldUserInfo.email
-    }
-
-    private func setupConstraints() {
-        nameLabel.leftAnchor.constraint(equalTo: nameView.leftAnchor, constant: 16).isActive = true
-        nameLabel.bottomAnchor.constraint(equalTo: nameView.topAnchor, constant: -4).isActive = true
-
-        nameField.leftAnchor.constraint(equalTo: nameView.leftAnchor, constant: 16).isActive = true
-        nameField.rightAnchor.constraint(equalTo: nameView.rightAnchor, constant: -16).isActive = true
-        nameField.centerYAnchor.constraint(equalTo: nameView.centerYAnchor).isActive = true
-
-        nameView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        nameView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
-        nameView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        nameView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-
-        emailLabel.leftAnchor.constraint(equalTo: emailView.leftAnchor, constant: 16).isActive = true
-        emailLabel.bottomAnchor.constraint(equalTo: emailView.topAnchor, constant: -4).isActive = true
-
-        emailField.leftAnchor.constraint(equalTo: emailView.leftAnchor, constant: 16).isActive = true
-        emailField.rightAnchor.constraint(equalTo: emailView.rightAnchor, constant: -16).isActive = true
-        emailField.centerYAnchor.constraint(equalTo: emailView.centerYAnchor).isActive = true
-
-        emailView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        emailView.topAnchor.constraint(equalTo: nameView.bottomAnchor, constant: 40).isActive = true
-        emailView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        emailView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-
-        saveButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
-        saveButton.topAnchor.constraint(equalTo: emailView.bottomAnchor, constant: 24).isActive = true
-        saveButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        saveButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
+        contentView.nameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        contentView.emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        contentView.saveButton.addTarget(self, action: #selector(saveName), for: .touchUpInside)
     }
 
     @objc private func editingChanged(sender: UITextField) {
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
-        guard let name = nameField.text, let email = emailField.text, !name.isEmpty, !email.isEmpty else {
-            saveButton.isEnabled = false
-            saveButton.backgroundColor = .calmGray
+        guard let name = contentView.nameTextField.text, let email = contentView.emailTextField.text, !name.isEmpty, !email.isEmpty else {
+            contentView.saveButton.isEnabled = false
+            contentView.saveButton.backgroundColor = .calmGray
             return
         }
-        saveButton.isEnabled = true
-        saveButton.backgroundColor = .kexRed
+        contentView.saveButton.isEnabled = true
+        contentView.saveButton.backgroundColor = .kexRed
     }
 
     @objc private func saveName() {
-        viewModel.change(name: nameField.text, email: emailField.text)
+        viewModel.change(name: contentView.nameTextField.text, email: contentView.emailTextField.text)
+    }
+
+    @objc private func dismissVC() {
+        navigationController?.popViewController(animated: true)
     }
 
     private func bindViewModel() {

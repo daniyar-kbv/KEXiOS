@@ -10,8 +10,6 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-// MARK: Tech debt, нужно переписать.
-
 final class AddressPickController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: AddressPickerViewModelProtocol
@@ -139,7 +137,7 @@ extension AddressPickController {
 
         plusButton.snp.makeConstraints {
             $0.centerY.equalTo(addLabel)
-            $0.right.equalToSuperview().offset(-20)
+            $0.right.equalToSuperview().offset(-16)
             $0.size.equalTo(24)
         }
 

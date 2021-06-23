@@ -158,12 +158,12 @@ extension CartController {
         dimmedView.alpha = 0
     }
 
-    func updateTableViewFooterUI(cart: Cart) {
+    private func updateTableViewFooterUI(cart: Cart) {
         tableViewFooter.productsLabel.text = L10n.CartFooter.productsCount(cart.totalProducts)
         tableViewFooter.productsPriceLabel.text = L10n.CartFooter.productsPrice(cart.totalPrice)
     }
 
-    @objc func buttonAction() {
+    @objc private func buttonAction() {
         openAuth?()
     }
 }
