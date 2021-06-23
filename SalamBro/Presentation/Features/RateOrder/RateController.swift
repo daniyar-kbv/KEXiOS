@@ -31,6 +31,11 @@ final class RateController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func loadView() {
+        super.loadView()
+        view = rateView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
@@ -74,11 +79,6 @@ extension RateController {
 
     private func layoutUI() {
         view.backgroundColor = .arcticWhite
-
-        view.addSubview(rateView)
-        rateView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
 
         view.addSubview(dimmedView)
         dimmedView.snp.makeConstraints {

@@ -201,7 +201,7 @@ extension RateView {
         sendButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalToSuperview().offset(-16)
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(43)
         }
     }
