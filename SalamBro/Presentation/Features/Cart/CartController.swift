@@ -12,22 +12,22 @@ protocol CartViewDelegate {
 }
 
 // FIXME: Refactor
-class CartController: ViewController {
+class CartController: UIViewController {
     var openAuth: (() -> Void)?
 
-    var mainTabDelegate: MainTabDelegate?
+    private var mainTabDelegate: MainTabDelegate?
 
     private var commentaryPage: MapCommentaryPage?
 
     // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
 
-    lazy var tableViewFooter: CartFooter = {
+    private lazy var tableViewFooter: CartFooter = {
         let view = CartFooter()
         view.delegate = self
         return view
     }()
 
-    lazy var itemsTableView: UITableView = {
+    private lazy var itemsTableView: UITableView = {
         let table = UITableView()
         table.allowsSelection = false
         table.separatorColor = .mildBlue
@@ -46,21 +46,21 @@ class CartController: ViewController {
         return table
     }()
 
-    lazy var divider: UIView = {
+    private lazy var divider: UIView = {
         let view = UIView()
         view.backgroundColor = .mildBlue
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    lazy var footerView: UIView = {
+    private lazy var footerView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    lazy var orderButton: UIButton = {
+    private lazy var orderButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .kexRed
         button.layer.masksToBounds = true
@@ -70,16 +70,10 @@ class CartController: ViewController {
         return button
     }()
 
-    var shadow: UIView = {
-        let view = UIView()
-        view.backgroundColor = .darkGray
-        view.layer.opacity = 0.7
-        view.isHidden = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private let dimmedView = UIView()
 
     private let cartViewModel: CartViewModel
+
     init(viewModel: CartViewModel) {
         cartViewModel = viewModel
 
@@ -93,54 +87,75 @@ class CartController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setupConstraints()
-
-        itemsTableView.reloadData()
-        updateTableViewFooterUI(cart: cartViewModel.cart)
-        orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
+        layoutUI()
+        configureViews()
         mainTabDelegate?.setCount(count: cartViewModel.cart.totalProducts)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
         navigationItem.title = L10n.Cart.title
     }
 }
 
 extension CartController {
-    fileprivate func setupViews() {
-        view.backgroundColor = .white
-        footerView.addSubview(divider)
-        footerView.addSubview(orderButton)
-        view.addSubview(itemsTableView)
-        view.addSubview(footerView)
-        view.addSubview(shadow)
+    private func configureViews() {
+        itemsTableView.reloadData()
+        updateTableViewFooterUI(cart: cartViewModel.cart)
+        orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
     }
 
-    fileprivate func setupConstraints() {
-        shadow.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        shadow.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        shadow.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        shadow.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    private func layoutUI() {
+        view.backgroundColor = .arcticWhite
 
-        divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        divider.widthAnchor.constraint(equalTo: footerView.widthAnchor).isActive = true
+        [divider, orderButton].forEach {
+            footerView.addSubview($0)
+        }
+        [itemsTableView, footerView, dimmedView].forEach {
+            view.addSubview($0)
+        }
 
-        orderButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor).isActive = true
-        orderButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 24).isActive = true
-        orderButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -24).isActive = true
-        orderButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
+        divider.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.width.equalTo(footerView.snp.width)
+        }
 
-        footerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        footerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        footerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        footerView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        orderButton.snp.makeConstraints {
+            $0.left.equalTo(footerView.snp.left).offset(24)
+            $0.right.equalTo(footerView.snp.right).offset(-24)
+            $0.centerY.equalTo(footerView.snp.centerY)
+            $0.height.equalTo(43)
+        }
 
-        itemsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        itemsTableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        itemsTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        itemsTableView.bottomAnchor.constraint(equalTo: footerView.topAnchor).isActive = true
+        footerView.snp.makeConstraints {
+            $0.left.equalTo(view.safeAreaLayoutGuide.snp.left)
+            $0.right.equalTo(view.safeAreaLayoutGuide.snp.right)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.height.equalTo(75)
+        }
+
+        itemsTableView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.left.equalTo(view.safeAreaLayoutGuide.snp.left)
+            $0.right.equalTo(view.safeAreaLayoutGuide.snp.right)
+            $0.bottom.equalTo(footerView.snp.top)
+        }
+
+        dimmedView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        dimmedView.backgroundColor = .gray
+        dimmedView.alpha = 0
     }
 
     func updateTableViewFooterUI(cart: Cart) {
@@ -278,6 +293,11 @@ extension CartController: CartFooterDelegate {
         page.configureTextField(placeholder: L10n.Promocode.field)
         page.configureButton(title: L10n.Promocode.button)
         present(page, animated: true, completion: nil)
+        dimmedView.alpha = 0.5
+    }
+
+    @objc private func keyboardWillHide() {
+        dimmedView.alpha = 0
     }
 }
 
