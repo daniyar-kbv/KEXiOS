@@ -16,12 +16,12 @@ protocol CategoryCellViewModelProtocol: ViewModel {
 
 final class CategoryCellViewModel: CategoryCellViewModelProtocol {
     let category: OrderProductResponse.Data.Category
-    
+
     var categoryTitle: BehaviorRelay<String>
 
     init(category: OrderProductResponse.Data.Category) {
         self.category = category
-        
+
         categoryTitle = .init(value: category.name)
     }
 }

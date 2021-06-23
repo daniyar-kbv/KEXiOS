@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class AddressListController: ViewController {
+final class AddressListController: UIViewController {
     let outputs = Output()
 
     private var locationRepository: LocationRepository
@@ -19,7 +19,7 @@ final class AddressListController: ViewController {
     private lazy var citiesTableView: UITableView = {
         let tv = UITableView()
         tv.tableFooterView = UIView()
-        tv.register(AddressListTableViewCell.self, forCellReuseIdentifier: AddressListTableViewCell.reuseIdentifier)
+        tv.register(AddressListCell.self, forCellReuseIdentifier: AddressListCell.reuseIdentifier)
         tv.showsVerticalScrollIndicator = false
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.separatorColor = .mildBlue
@@ -50,20 +50,19 @@ final class AddressListController: ViewController {
         layoutUI()
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
         navigationItem.title = L10n.AddressPicker.titleMany
-    }
-
-    private func layoutUI() {
-        view.backgroundColor = .white
-        view.addSubview(citiesTableView)
-        citiesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
-        }
     }
 
     func reload() {
@@ -76,13 +75,34 @@ final class AddressListController: ViewController {
     }
 }
 
+extension AddressListController {
+    private func layoutUI() {
+        view.backgroundColor = .white
+
+        view.addSubview(citiesTableView)
+
+        citiesTableView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+    }
+}
+
+extension AddressListController {
+    @objc private func dismissVC() {
+        navigationController?.popViewController(animated: true)
+    }
+}
+
 extension AddressListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return deliveryAddresses?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let addressCell = tableView.dequeueReusableCell(withIdentifier: AddressListTableViewCell.reuseIdentifier, for: indexPath) as? AddressListTableViewCell else { fatalError() }
+        guard let addressCell = tableView.dequeueReusableCell(withIdentifier: AddressListCell.reuseIdentifier, for: indexPath) as? AddressListCell else { fatalError() }
         addressCell.configure(address: deliveryAddresses?[indexPath.row].address?.name ?? "")
         return addressCell
     }

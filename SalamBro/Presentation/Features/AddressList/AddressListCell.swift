@@ -5,29 +5,30 @@
 //  Created by Arystan on 5/7/21.
 //
 
+import SnapKit
 import UIKit
 
-final class AddressListTableViewCell: UITableViewCell {
-    private let titleLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        lbl.textColor = .darkGray
-        lbl.numberOfLines = 0
-        lbl.lineBreakMode = .byWordWrapping
-        return lbl
+final class AddressListCell: UITableViewCell {
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.textColor = .darkGray
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        return label
     }()
 
-    private let rightArrowImageView: UIImageView = {
-        let imgV = UIImageView(image: Asset.chevronRight.image)
+    private lazy var rightArrowImageView: UIImageView = {
+        let imageView = UIImageView(image: Asset.chevronRight.image)
 
 //         MARK: SwiftGen issue, почему-то икнока chevronRight смотрит вниз 😒
 
-        imgV.transform = CGAffineTransform(rotationAngle: .pi * 1.5)
-        imgV.tintColor = .mildBlue
-        return imgV
+        imageView.transform = CGAffineTransform(rotationAngle: .pi * 1.5)
+        imageView.tintColor = .mildBlue
+        return imageView
     }()
 
-    static let reuseIdentifier = "AddressListTableViewCell"
+    static let reuseIdentifier = "AddressListCell"
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -40,7 +41,7 @@ final class AddressListTableViewCell: UITableViewCell {
     }
 }
 
-extension AddressListTableViewCell {
+extension AddressListCell {
     func configure(address: String) {
         titleLabel.text = address
     }
@@ -48,7 +49,11 @@ extension AddressListTableViewCell {
     private func layoutUI() {
         selectionStyle = .none
         contentView.backgroundColor = .white
-        contentView.addSubview(titleLabel)
+
+        [titleLabel, rightArrowImageView].forEach {
+            contentView.addSubview($0)
+        }
+
         titleLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(24)
@@ -56,7 +61,6 @@ extension AddressListTableViewCell {
             $0.height.greaterThanOrEqualTo(24)
         }
 
-        contentView.addSubview(rightArrowImageView)
         rightArrowImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().offset(-24)

@@ -15,7 +15,7 @@ struct OrderApplyDTO: Encodable {
         case address
         case localBrand = "local_brand"
     }
-    
+
     struct Address: Encodable {
         let city: Int
         let longitude: Double

@@ -19,7 +19,7 @@ protocol DefaultStorage {
     var leadUUID: String? { get }
     func persist(name: String)
     func persist(leadUUID: String)
-    
+
     func cleanUp()
 }
 
@@ -31,7 +31,7 @@ final class DefaultStorageImpl: DefaultStorage {
     var userName: String? {
         return storageProvider.string(forKey: DefaultStorageKey.username.value)
     }
-    
+
     var leadUUID: String? {
         return storageProvider.string(forKey: DefaultStorageKey.leadUUID.value)
     }
@@ -43,7 +43,7 @@ final class DefaultStorageImpl: DefaultStorage {
     func persist(name: String) {
         storageProvider.set(name, forKey: DefaultStorageKey.username.value)
     }
-    
+
     func persist(leadUUID: String) {
         storageProvider.set(leadUUID, forKey: DefaultStorageKey.leadUUID.value)
     }

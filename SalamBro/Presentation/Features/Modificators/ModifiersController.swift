@@ -9,17 +9,18 @@ import UIKit
 
 class ModifiersController: ViewController {
     private let viewModel: ModifiersViewModel
-    
+
     init(viewModel: ModifiersViewModel) {
         self.viewModel = viewModel
-        
+
         super.init(nibName: .none, bundle: .none)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     lazy var backButton: UIButton = {
         let button = UIButton()
         button.tintColor = .kexRed

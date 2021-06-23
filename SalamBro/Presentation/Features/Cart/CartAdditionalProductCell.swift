@@ -1,81 +1,233 @@
 //
-//  CartAdditionalProductCellTableViewCell.swift
+//  CartAdditionalProductCell.swift
 //  SalamBro
 //
-//  Created by Arystan on 3/20/21.
+//  Created by Meruyert Tastandiyeva on 6/17/21.
 //
 
+import Reusable
 import UIKit
 
-protocol CellDelegate {
+protocol CartAdditinalProductCellDelegate: AnyObject {
     func deleteProduct(id: Int, isAdditional: Bool)
     func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool)
 }
 
-class CartAdditionalProductCell: UITableViewCell {
-    @IBOutlet var productTitle: UILabel!
-    @IBOutlet var productPrice: UILabel!
-    @IBOutlet var decreaseButton: UIButton!
-    @IBOutlet var productCountLabel: UILabel!
-    @IBOutlet var inscreaseButton: UIButton!
-    @IBOutlet var availabilityLabel: UILabel!
-    @IBOutlet var productLogo: UIImageView!
+final class CartAdditionalProductCell: UITableViewCell {
+    private lazy var productImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "ketchup")
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
 
-    var product: CartAdditionalProduct!
-    var counter: Int = 0
-    var delegate: CellDelegate!
+    private lazy var productTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 16, weight: .medium)
+        label.textColor = .black
+        label.numberOfLines = 0
+        return label
+    }()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        configureUI()
+    private lazy var priceLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .darkGray
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        return view
+    }()
+
+    private lazy var stackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.alignment = .center
+        view.distribution = .fillEqually
+        view.spacing = 0
+        return view
+    }()
+
+    private lazy var descreaseButton: UIButton = {
+        let button = UIButton()
+        button.borderWidth = 1
+        button.borderColor = .mildBlue
+        button.cornerRadius = 5
+        button.setBackgroundImage(UIImage(named: "minus"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        button.addTarget(self, action: #selector(decreaseItemCount), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var increaseButton: UIButton = {
+        let button = UIButton()
+        button.cornerRadius = 5
+        button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        button.addTarget(self, action: #selector(increaseItemButton), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var countLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.backgroundColor = .lightGray
+        return label
+    }()
+
+    private lazy var unavailableLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 16, weight: .medium)
+        label.textColor = .kexRed
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private var product: CartAdditionalProduct?
+    private var counter: Int = 0
+    var delegate: CartAdditinalProductCellDelegate?
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        layoutUI()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+}
 
-    func configureUI() {
-        inscreaseButton.setImage(UIImage(named: "plus"), for: .normal)
-        inscreaseButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-
-        decreaseButton.setBackgroundImage(UIImage(named: "minus"), for: .normal)
-        decreaseButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-    }
-
-    func bindData(item: CartAdditionalProduct) {
-        product = item
-        productTitle.text = product.name
-        productPrice.text = "\(product.count * product.price) ₸"
-        productCountLabel.text = "\(product.count)"
-        counter = product.count
-
-        if product!.available {
-            availabilityLabel.text = ""
-        } else {
-            availabilityLabel.text = L10n.CartAdditionalProductCell.Availability.title
-            productTitle.alpha = 0.5
-            productPrice.alpha = 0.5
-            productLogo.alpha = 0.5
+extension CartAdditionalProductCell {
+    private func layoutUI() {
+        [productImageView, productTitleLabel, priceLabel, unavailableLabel, containerView].forEach {
+            contentView.addSubview($0)
         }
-        counter = product!.count
-        productCountLabel.text = "\(counter)"
-    }
 
-    @IBAction func decreaseItemCount(_: UIButton) {
-        if counter > 0 {
-            counter -= 1
-            delegate.changeItemCount(id: product.id, isIncrease: false, isAdditional: true)
-            productPrice.text = "\(counter * product!.price) T"
-            productCountLabel.text = "\(counter)"
+        productImageView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(12)
+            $0.left.equalToSuperview().offset(24)
+            $0.width.equalTo(40)
+            $0.height.equalTo(40)
         }
-    }
 
-    @IBAction func increaseItemButton(_: UIButton) {
-        if counter < 999 {
-            counter += 1
-            delegate.changeItemCount(id: product.id, isIncrease: true, isAdditional: true)
-            productPrice.text = "\(counter * product!.price) T"
-            productCountLabel.text = "\(counter)"
+        productTitleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(12)
+            $0.left.equalTo(productImageView.snp.right).offset(8)
+        }
+
+        priceLabel.snp.makeConstraints {
+            $0.top.equalTo(productTitleLabel.snp.bottom).offset(15)
+            $0.left.equalTo(productImageView.snp.right).offset(8)
+        }
+
+        stackView = UIStackView(arrangedSubviews: [descreaseButton, countLabel, increaseButton])
+
+        descreaseButton.snp.makeConstraints {
+            $0.top.left.bottom.equalToSuperview()
+            $0.width.equalTo(30)
+        }
+
+        countLabel.snp.makeConstraints {
+            $0.left.equalTo(descreaseButton.snp.right)
+            $0.top.equalTo(stackView).offset(1)
+            $0.right.equalTo(increaseButton.snp.left)
+            $0.bottom.equalTo(stackView).offset(-1)
+            $0.width.equalTo(30)
+        }
+
+        increaseButton.snp.makeConstraints {
+            $0.left.equalTo(countLabel.snp.right)
+            $0.top.right.bottom.equalToSuperview()
+            $0.width.equalTo(30)
+        }
+
+        containerView.addSubview(stackView)
+
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        containerView.snp.makeConstraints {
+            $0.left.equalTo(priceLabel.snp.right).offset(8)
+            $0.right.equalToSuperview().offset(-24)
+            $0.top.equalToSuperview().offset(40)
+            $0.height.equalTo(30)
+            $0.width.equalTo(90)
+        }
+
+        unavailableLabel.snp.makeConstraints {
+            $0.top.equalTo(priceLabel.snp.bottom).offset(12)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.bottom.equalToSuperview().offset(-10)
         }
     }
 }
+
+extension CartAdditionalProductCell {
+    func configure(item: CartAdditionalProduct) {
+        product = item
+        if let count = product?.count, let price = product?.price, let isAvailable = product?.available {
+            productTitleLabel.text = product?.name
+
+            priceLabel.text = "\(count * price) ₸"
+            countLabel.text = "\(count)"
+            counter = count
+
+            if isAvailable {
+                unavailableLabel.text = ""
+            } else {
+                unavailableLabel.text = L10n.CartAdditionalProductCell.Availability.title
+                productTitleLabel.alpha = 0.5
+                priceLabel.alpha = 0.5
+                productImageView.alpha = 0.5
+            }
+
+            countLabel.text = "\(counter)"
+        }
+    }
+
+    func configureIncreaseButton() {
+        if counter == 0 {
+            increaseButton.backgroundColor = .clear
+            increaseButton.borderWidth = 1
+            increaseButton.borderColor = .mildBlue
+            increaseButton.setBackgroundImage(UIImage(named: "plus_grey"), for: .normal)
+        } else {
+            increaseButton.backgroundColor = .kexRed
+            increaseButton.borderWidth = 0
+            increaseButton.borderColor = .none
+            increaseButton.setBackgroundImage(UIImage(named: "plus"), for: .normal)
+        }
+    }
+
+    @objc private func decreaseItemCount(_: UIButton) {
+        if counter > 0 {
+            counter -= 1
+            if let id = product?.id, let price = product?.price {
+                delegate?.changeItemCount(id: id, isIncrease: false, isAdditional: true)
+                priceLabel.text = "\(counter * price) T"
+            }
+            countLabel.text = "\(counter)"
+        }
+    }
+
+    @objc private func increaseItemButton(_: UIButton) {
+        if counter < 999 {
+            counter += 1
+            if let id = product?.id, let price = product?.price {
+                delegate?.changeItemCount(id: id, isIncrease: true, isAdditional: true)
+                priceLabel.text = "\(counter * price) T"
+            }
+            countLabel.text = "\(counter)"
+        }
+    }
+}
+
+extension CartAdditionalProductCell: Reusable {}

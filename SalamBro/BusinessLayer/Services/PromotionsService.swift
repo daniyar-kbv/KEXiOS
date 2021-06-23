@@ -20,7 +20,7 @@ class PromotionsServiceImpl: PromotionsService {
     init(provider: MoyaProvider<PromotionsAPI>) {
         self.provider = provider
     }
-    
+
     func getPromotions() -> Single<[PromotionsResponse.ResponseData.Promotion]> {
         return provider.rx
             .request(.promotions)
@@ -31,7 +31,7 @@ class PromotionsServiceImpl: PromotionsService {
                 guard let promotionsResponse = try? response.map(PromotionsResponse.self) else {
                     throw NetworkError.badMapping
                 }
-                
+
                 guard let promotions = promotionsResponse.data?.results else {
                     throw NetworkError.error("Нет данных")
                 }
