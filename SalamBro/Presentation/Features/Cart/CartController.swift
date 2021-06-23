@@ -5,6 +5,8 @@
 //  Created by Arystan on 3/18/21.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
 protocol CartViewDelegate {
@@ -13,9 +15,10 @@ protocol CartViewDelegate {
 
 // FIXME: Refactor
 class CartController: ViewController {
-    var openAuth: (() -> Void)?
+    private let viewModel: CartViewModel
+    private let disposeBag = DisposeBag()
 
-    var mainTabDelegate: MainTabDelegate?
+    let outputs = Output()
 
     // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
 
@@ -79,9 +82,8 @@ class CartController: ViewController {
         return view
     }()
 
-    private let cartViewModel: CartViewModel
     init(viewModel: CartViewModel) {
-        cartViewModel = viewModel
+        self.viewModel = viewModel
 
         super.init(nibName: .none, bundle: .none)
     }
@@ -95,16 +97,26 @@ class CartController: ViewController {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
-
-        itemsTableView.reloadData()
-        updateTableViewFooterUI(cart: cartViewModel.cart)
-        orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
-        mainTabDelegate?.setCount(count: cartViewModel.cart.totalProducts)
+        bindViewModel()
+        viewModel.getCart()
     }
 
     override func setupNavigationBar() {
         super.setupNavigationBar()
         navigationItem.title = L10n.Cart.title
+    }
+
+    private func bindViewModel() {
+        viewModel.outputs.update
+            .subscribe(onNext: { [weak self] in
+                self?.update()
+            }).disposed(by: disposeBag)
+    }
+
+    private func update() {
+        itemsTableView.reloadData()
+        updateTableViewFooterUI()
+        orderButton.setTitle(L10n.Cart.OrderButton.title(viewModel.getTotalPrice()), for: .normal)
     }
 }
 
@@ -143,13 +155,13 @@ extension CartController {
         itemsTableView.bottomAnchor.constraint(equalTo: footerView.topAnchor).isActive = true
     }
 
-    func updateTableViewFooterUI(cart: Cart) {
-        tableViewFooter.productsLabel.text = L10n.CartFooter.productsCount(cart.totalProducts)
-        tableViewFooter.productsPriceLabel.text = L10n.CartFooter.productsPrice(cart.totalPrice)
+    func updateTableViewFooterUI() {
+        tableViewFooter.productsLabel.text = L10n.CartFooter.productsCount(viewModel.getTotalCount())
+        tableViewFooter.productsPriceLabel.text = L10n.CartFooter.productsPrice(viewModel.getTotalPrice())
     }
 
     @objc func buttonAction() {
-        openAuth?()
+        outputs.toAuth.accept(())
     }
 }
 
@@ -165,7 +177,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
             let content = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 56))
             let label = UILabel(frame: CGRect(x: 16, y: 24, width: tableView.frame.size.width, height: 24))
             label.font = .boldSystemFont(ofSize: 18)
-            label.text = L10n.Cart.Section0.title(cartViewModel.cart.totalProducts, cartViewModel.cart.totalPrice)
+            label.text = L10n.Cart.Section0.title(viewModel.getTotalCount(), viewModel.getTotalPrice())
             content.addSubview(label)
             content.backgroundColor = .arcticWhite
             return content
@@ -184,84 +196,48 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func numberOfSections(in _: UITableView) -> Int {
-        2
+//        Tech debt: change to 2 when modifiers stabilize
+        1
     }
 
-    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return cartViewModel.cart.products.count
-        } else {
-            return cartViewModel.cart.productsAdditional.count
-        }
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        //        Tech debt: uncomment when modifiers stabilize
+//        if section == 0 {
+        return viewModel.getTotalCount()
+//        }
+//        else {
+//            return cartViewModel.cart.productsAdditional.count
+//        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CartProductCell", for: indexPath) as! CartProductCell
-            cell.delegate = self
-            cell.bindData(with: cartViewModel.cart.products[indexPath.row])
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CartAdditionalProductCell", for: indexPath) as! CartAdditionalProductCell
-            cell.delegate = self
-            cell.bindData(item: cartViewModel.cart.productsAdditional[indexPath.row])
-            return cell
-        }
+        //        Tech debt: uncomment when modifiers stabilize
+//        if indexPath.section == 0 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CartProductCell", for: indexPath) as! CartProductCell
+        cell.delegate = self
+        cell.bindData(with: viewModel.items[indexPath.row])
+        return cell
+//        }
+//        else {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "CartAdditionalProductCell", for: indexPath) as! CartAdditionalProductCell
+//            cell.delegate = self
+//            cell.bindData(item: cartViewModel.cart.productsAdditional[indexPath.row])
+//            return cell
+//        }
     }
 }
 
 // MARK: - Cell Actions
 
 extension CartController: CellDelegate {
-    func deleteProduct(id: Int, isAdditional: Bool) {
-        if !isAdditional {
-            if let index = cartViewModel.cart.products.firstIndex(where: { $0.id == id }) {
-                cartViewModel.cart.products.remove(at: index)
-                let path = IndexPath(row: index, section: 0)
-                itemsTableView.deleteRows(at: [path], with: .automatic)
-            }
-        }
-        updateTableViewFooterUI(cart: cartViewModel.cart)
+    func increment(positionUUID: String?, isAdditional _: Bool) {
+        guard let positionUUID = positionUUID else { return }
+        viewModel.increment(postitonUUID: positionUUID)
     }
 
-    func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool) {
-        if isAdditional {
-            if let index = cartViewModel.cart
-                .productsAdditional.firstIndex(where: { $0.id == id })
-            {
-                let price = cartViewModel.cart.productsAdditional[index].price
-                if isIncrease {
-                    cartViewModel.cart.productsAdditional[index].count += 1
-                    cartViewModel.cart.totalPrice += price
-                    cartViewModel.cart.totalProducts += 1
-                } else {
-                    cartViewModel.cart.productsAdditional[index].count -= 1
-                    cartViewModel.cart.totalPrice -= price
-                    cartViewModel.cart.totalProducts -= 1
-                }
-                itemsTableView.reloadData()
-            }
-        } else {
-            if let index = cartViewModel.cart.products.firstIndex(where: { $0.id == id }) {
-                let price = cartViewModel.cart.products[index].price
-                if isIncrease {
-                    cartViewModel.cart.products[index].count += 1
-                    cartViewModel.cart.totalPrice += price
-                    cartViewModel.cart.totalProducts += 1
-                } else {
-                    cartViewModel.cart.products[index].count -= 1
-                    cartViewModel.cart.totalPrice -= price
-                    cartViewModel.cart.totalProducts -= 1
-                }
-                itemsTableView.reloadData()
-            }
-        }
-        if cartViewModel.cart.totalProducts <= 0 {
-            // view = emptyCartView
-        }
-        updateTableViewFooterUI(cart: cartViewModel.cart)
-        orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
-        mainTabDelegate?.updateCounter(isIncrease: isIncrease)
+    func decrement(positionUUID: String?, isAdditional _: Bool) {
+        guard let positionUUID = positionUUID else { return }
+        viewModel.decrement(postitonUUID: positionUUID)
     }
 }
 
@@ -322,5 +298,11 @@ extension CartController: MapDelegate {
         } else {
             shadow.isHidden = true
         }
+    }
+}
+
+extension CartController {
+    struct Output {
+        let toAuth = PublishRelay<Void>()
     }
 }

@@ -8,8 +8,8 @@
 import UIKit
 
 protocol CellDelegate {
-    func deleteProduct(id: Int, isAdditional: Bool)
-    func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool)
+    func increment(positionUUID: String?, isAdditional: Bool)
+    func decrement(positionUUID: String?, isAdditional: Bool)
 }
 
 class CartAdditionalProductCell: UITableViewCell {
@@ -61,21 +61,22 @@ class CartAdditionalProductCell: UITableViewCell {
         productCountLabel.text = "\(counter)"
     }
 
-    @IBAction func decreaseItemCount(_: UIButton) {
-        if counter > 0 {
-            counter -= 1
-            delegate.changeItemCount(id: product.id, isIncrease: false, isAdditional: true)
-            productPrice.text = "\(counter * product!.price) T"
-            productCountLabel.text = "\(counter)"
-        }
-    }
-
-    @IBAction func increaseItemButton(_: UIButton) {
-        if counter < 999 {
-            counter += 1
-            delegate.changeItemCount(id: product.id, isIncrease: true, isAdditional: true)
-            productPrice.text = "\(counter * product!.price) T"
-            productCountLabel.text = "\(counter)"
-        }
-    }
+    //  Tech debt: uncomment when modifiers stabilize
+//    @IBAction func decreaseItemCount(_: UIButton) {
+//        if counter > 0 {
+//            counter -= 1
+//            delegate.decrement(positionUUID: , isAdditional: <#T##Bool#>)(id: product.id, isIncrease: false, isAdditional: true)
+//            productPrice.text = "\(counter * product!.price) T"
+//            productCountLabel.text = "\(counter)"
+//        }
+//    }
+//
+//    @IBAction func increaseItemButton(_: UIButton) {
+//        if counter < 999 {
+//            counter += 1
+//            delegate.changeItemCount(id: product.id, isIncrease: true, isAdditional: true)
+//            productPrice.text = "\(counter * product!.price) T"
+//            productCountLabel.text = "\(counter)"
+//        }
+//    }
 }

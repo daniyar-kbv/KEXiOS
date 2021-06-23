@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CartDTO: Codable {
+public struct LegacyCartDTO: Codable {
     let id: Int
     var totalProducts: Int
     var totalPrice: Int
@@ -15,7 +15,7 @@ public struct CartDTO: Codable {
     var productsAdditional: [CartAdditionalProductDTO]
 }
 
-public extension CartDTO {
+public extension LegacyCartDTO {
     func toDomain() -> Cart {
         .init(id: id,
               totalProducts: totalProducts,

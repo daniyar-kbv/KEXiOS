@@ -9,7 +9,7 @@ import UIKit
 
 class CartProductCell: UITableViewCell {
     private var counter: Int = 0
-    lazy var product: CartProduct? = nil
+    var item: CartDTO.Item?
     var delegate: CellDelegate!
 
     @IBOutlet var productTitle: UILabel!
@@ -44,50 +44,45 @@ class CartProductCell: UITableViewCell {
         decreaseCountButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
 
-    func bindData(with item: CartProduct) {
-        product = item
-        productTitle.text = product!.name
-        productDescription.text = product!.description
-        productPrice.text = "\(product!.price * product!.count) ₸"
-        productCommentary.text = product!.commentary
+    func bindData(with item: CartDTO.Item) {
+        self.item = item
+        productTitle.text = item.position.name
+        productDescription.text = item.position.description
+        productPrice.text = "\(item.position.price * Double(item.count)) ₸"
+        productCommentary.text = item.comment
 
-        if product!.available {
-            deleteButton.isHidden = true
-            unavailableLabel.isHidden = true
-        } else {
-            deleteButton.isHidden = false
-            unavailableLabel.text = L10n.CartProductCell.Availability.title
-            productTitle.alpha = 0.5
-            productDescription.alpha = 0.5
-//            productPrice.alpha = 0.5
-            productPrice.isHidden = true
-            productLogo.alpha = 0.5
-        }
-        counter = product!.count
+//        Tech debt: add availability
+//        if item!.available {
+        deleteButton.isHidden = true
+        unavailableLabel.isHidden = true
+//        } else {
+//            deleteButton.isHidden = false
+//            unavailableLabel.text = L10n.CartProductCell.Availability.title
+//            itemTitle.alpha = 0.5
+//            itemDescription.alpha = 0.5
+        ////            itemPrice.alpha = 0.5
+//            itemPrice.isHidden = true
+//            itemLogo.alpha = 0.5
+//        }
+        counter = item.count
         productCountLabel.text = "\(counter)"
     }
 
     @IBAction func decreaseItemCount(_: UIButton) {
-        if counter > 0 {
-            counter -= 1
-            delegate.changeItemCount(id: product!.id, isIncrease: false, isAdditional: false)
-            productPrice.text = "\(counter * product!.price) ₸"
-            productCountLabel.text = "\(counter)"
-        } else {
-            delegate.deleteProduct(id: product!.id, isAdditional: false)
-        }
+        counter -= 1
+        productPrice.text = "\(Double(counter) * (item?.position.price ?? 0)) ₸"
+        productCountLabel.text = "\(counter)"
+        delegate.decrement(positionUUID: item?.positionUUID, isAdditional: false)
     }
 
     @IBAction func increaseItemButton(_: UIButton) {
-        if counter < 999 {
-            counter += 1
-            delegate.changeItemCount(id: product!.id, isIncrease: true, isAdditional: false)
-            productPrice.text = "\(counter * product!.price) ₸"
-            productCountLabel.text = "\(counter)"
-        }
+        counter += 1
+        productPrice.text = "\(Double(counter) * (item?.position.price ?? 0)) ₸"
+        productCountLabel.text = "\(counter)"
+        delegate.increment(positionUUID: item?.positionUUID, isAdditional: false)
     }
 
     @IBAction func deleteItem(_: UIButton) {
-        delegate.deleteProduct(id: product!.id, isAdditional: false)
+//        delegate.deleteProduct(id: item!.id, isAdditional: false)
     }
 }

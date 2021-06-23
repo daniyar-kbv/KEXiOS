@@ -97,6 +97,7 @@ class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayabl
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.addTarget(self, action: #selector(proceedButtonTapped), for: .touchUpInside)
         return view
     }()
 
@@ -171,6 +172,11 @@ class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayabl
                 self?.showError(error)
             }).disposed(by: disposeBag)
 
+        viewModel.outputs.close
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.close.accept(())
+            }).disposed(by: disposeBag)
+
         viewModel.outputs.itemImage
             .subscribe(onNext: { [weak self] url in
                 guard let url = url else { return }
@@ -187,6 +193,10 @@ class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayabl
 
         viewModel.outputs.itemPrice
             .bind(to: proceedButton.rx.title())
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.comment
+            .bind(to: commentaryField.rx.text)
             .disposed(by: disposeBag)
     }
 
@@ -281,16 +291,20 @@ class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayabl
         }
     }
 
-    @objc func additionalItemChangeButtonTapped() {
+    @objc private func additionalItemChangeButtonTapped() {
         outputs.toModifiers.accept(())
     }
 
-    @objc func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
+    @objc private func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
         showCommentarySheet()
     }
 
-    @objc func backButtonTapped() {
-        dismiss(animated: true, completion: nil)
+    @objc private func backButtonTapped() {
+        outputs.close.accept(())
+    }
+
+    @objc private func proceedButtonTapped() {
+        viewModel.proceed()
     }
 }
 
@@ -324,7 +338,7 @@ extension MenuDetailController: MapDelegate {
     }
 
     func passCommentary(text: String) {
-        commentaryField.text = text
+        viewModel.set(comment: text)
     }
 
     func reverseGeocoding(searchQuery _: String, title _: String) {
@@ -343,6 +357,7 @@ extension MenuDetailController: MapDelegate {
 extension MenuDetailController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
+        let close = PublishRelay<Void>()
 
 //        Tech debt: finish when modifiers api resolved
         let toModifiers = PublishRelay<Void>()

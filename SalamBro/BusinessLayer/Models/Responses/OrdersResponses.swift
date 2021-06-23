@@ -80,7 +80,3 @@ struct OrderProductDetailResponse: Codable {
         }
     }
 }
-
-struct OrderIncrDecrResponse: Codable {}
-
-struct OrderUpdateCartResponse: Codable {}
