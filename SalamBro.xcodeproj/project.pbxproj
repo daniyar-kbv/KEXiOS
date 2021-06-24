@@ -90,7 +90,9 @@
 		334B795B90A840E1A73CCF310A3035AA /* ChangeAddressEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2891B50CDF85F57ED30F522C394B876 /* ChangeAddressEmptyCell.swift */; };
 		BD8C23BF475AEE66C5673C4B1777ECE4 /* ChangeAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7890DA3741A8500C4738352B95DA9B83 /* ChangeAddressTableViewCell.swift */; };
 		E2ED2BA29EE68CCF38E40BE2A04897A9 /* ChangeAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625E693ECD65B77CD7F46941048696B0 /* ChangeAddressViewModel.swift */; };
+		F992CB5E1530A6934B8BA9FBA4442BD9 /* ChangeLanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890E4D4ABDD3F4386759B9EC305DCA48 /* ChangeLanguageCell.swift */; };
 		86FC0A8C4E303A323E41C1DEFA432C2A /* ChangeLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */; };
+		AD2A25C6E38139475EE591348B59B351 /* ChangeLanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBA0CF74FD9C94C988B4359E76F6961 /* ChangeLanguageViewModel.swift */; };
 		E4E066B4032248830E3B0F8452C2C4F6 /* ChangeNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906133A86D4AF5C94A475D4892939FB8 /* ChangeNameController.swift */; };
 		5520290605FA2A6BF51199D8077E8783 /* ChangeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD53D09D8BB320C553DDBDC20A49B8 /* ChangeNameView.swift */; };
 		E843796335C1B31A86647909D60A27B5 /* ChangeNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540A1568FA39DDAB842661EF692C987B /* ChangeNameViewModel.swift */; };
@@ -374,7 +376,9 @@
 		A2891B50CDF85F57ED30F522C394B876 /* ChangeAddressEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressEmptyCell.swift; sourceTree = "<group>"; };
 		7890DA3741A8500C4738352B95DA9B83 /* ChangeAddressTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressTableViewCell.swift; sourceTree = "<group>"; };
 		625E693ECD65B77CD7F46941048696B0 /* ChangeAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressViewModel.swift; sourceTree = "<group>"; };
+		890E4D4ABDD3F4386759B9EC305DCA48 /* ChangeLanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLanguageCell.swift; sourceTree = "<group>"; };
 		B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLanguageController.swift; sourceTree = "<group>"; };
+		4DBA0CF74FD9C94C988B4359E76F6961 /* ChangeLanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLanguageViewModel.swift; sourceTree = "<group>"; };
 		906133A86D4AF5C94A475D4892939FB8 /* ChangeNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameController.swift; sourceTree = "<group>"; };
 		B1BD53D09D8BB320C553DDBDC20A49B8 /* ChangeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameView.swift; sourceTree = "<group>"; };
 		540A1568FA39DDAB842661EF692C987B /* ChangeNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameViewModel.swift; sourceTree = "<group>"; };
@@ -681,26 +685,6 @@
 			path = BrandCell;
 			sourceTree = "<group>";
 		};
-		5B3AEF2DEA643CC12481E5E7903E3A6A /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				49922E0CD840A07BB32F34F835707F77 /* OrderHistoryButton.swift */,
-				505EEAD5000A52351C4C9B4953EC84EF /* OrderHistoryCellContentView.swift */,
-				EEA4718FF096E081E4C29830D1662B70 /* OrderHistoryInfoView.swift */,
-				56AD08CF67F2D551566F6708C892E88C /* OrderHistoryItemView.swift */,
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
-		2E629D57873FD37A5871BDC7DF9F232D /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				5B3AEF2DEA643CC12481E5E7903E3A6A /* Components */,
-				CC3A6FB745CA8FCD243CDBAC038F7CDA /* OrderHistoryCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
 		13778F5B21BBFEA487BE9B55AB68F1A4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -808,6 +792,15 @@
 				57F54DEBD25B7BE322CB4519FE133516 /* DependencyFactory.swift */,
 			);
 			path = BusinessLayer;
+			sourceTree = "<group>";
+		};
+		2E629D57873FD37A5871BDC7DF9F232D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5B3AEF2DEA643CC12481E5E7903E3A6A /* Components */,
+				CC3A6FB745CA8FCD243CDBAC038F7CDA /* OrderHistoryCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		2F1DCAE1C9B592EF6F4C7C1F545DF14D /* Products */ = {
@@ -1003,6 +996,17 @@
 				4868F2191CBC78948F7169500EA17CF2 /* Verification */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		5B3AEF2DEA643CC12481E5E7903E3A6A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				49922E0CD840A07BB32F34F835707F77 /* OrderHistoryButton.swift */,
+				505EEAD5000A52351C4C9B4953EC84EF /* OrderHistoryCellContentView.swift */,
+				EEA4718FF096E081E4C29830D1662B70 /* OrderHistoryInfoView.swift */,
+				56AD08CF67F2D551566F6708C892E88C /* OrderHistoryItemView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		5BF558556431303A3BD1BBCF1DF4EE39 /* ChangeAddress */ = {
@@ -1224,7 +1228,9 @@
 		8A2649A3D2DC3217F088C02899CF2504 /* ChangeLanguage */ = {
 			isa = PBXGroup;
 			children = (
+				890E4D4ABDD3F4386759B9EC305DCA48 /* ChangeLanguageCell.swift */,
 				B085BA68CB02CCE7723B2D72495ABDF3 /* ChangeLanguageController.swift */,
+				4DBA0CF74FD9C94C988B4359E76F6961 /* ChangeLanguageViewModel.swift */,
 			);
 			path = ChangeLanguage;
 			sourceTree = "<group>";
@@ -2058,7 +2064,9 @@
 				334B795B90A840E1A73CCF310A3035AA /* ChangeAddressEmptyCell.swift in Sources */,
 				BD8C23BF475AEE66C5673C4B1777ECE4 /* ChangeAddressTableViewCell.swift in Sources */,
 				E2ED2BA29EE68CCF38E40BE2A04897A9 /* ChangeAddressViewModel.swift in Sources */,
+				F992CB5E1530A6934B8BA9FBA4442BD9 /* ChangeLanguageCell.swift in Sources */,
 				86FC0A8C4E303A323E41C1DEFA432C2A /* ChangeLanguageController.swift in Sources */,
+				AD2A25C6E38139475EE591348B59B351 /* ChangeLanguageViewModel.swift in Sources */,
 				E4E066B4032248830E3B0F8452C2C4F6 /* ChangeNameController.swift in Sources */,
 				5520290605FA2A6BF51199D8077E8783 /* ChangeNameView.swift in Sources */,
 				E843796335C1B31A86647909D60A27B5 /* ChangeNameViewModel.swift in Sources */,

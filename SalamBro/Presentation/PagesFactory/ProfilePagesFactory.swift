@@ -39,6 +39,10 @@ final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
 
     /// Нужно переписать  используя viewModel, snapkit и rxswift
     func makeChangeLanguagePage() -> ChangeLanguageController {
-        return scoped(.init(nibName: nil, bundle: nil))
+        return scoped(.init(viewModel: makeChangeLanguageViewModel()))
+    }
+
+    private func makeChangeLanguageViewModel() -> ChangeLanguageViewModelImpl {
+        return scoped(ChangeLanguageViewModelImpl())
     }
 }
