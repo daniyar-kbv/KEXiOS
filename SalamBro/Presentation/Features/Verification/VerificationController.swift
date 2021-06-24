@@ -14,7 +14,7 @@ final class VerificationController: UIViewController, LoaderDisplayable, AlertDi
 
     let outputs = Output()
 
-    private var rootView: VerificationView!
+    private var rootView: VerificationView?
     private let viewModel: VerificationViewModel
 
     init(viewModel: VerificationViewModel) {
@@ -46,14 +46,14 @@ final class VerificationController: UIViewController, LoaderDisplayable, AlertDi
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.tintColor = .kexRed
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
-        rootView.startTimer()
+        rootView?.startTimer()
     }
 
     override func viewDidDisappear(_: Bool) {
-        rootView.otpField.text = ""
-        rootView.otpField.clearLabels()
-        rootView.timer.invalidate()
-        rootView.getCodeButton.setTitle(L10n.Verification.Button.title("01:30"), for: .disabled)
+        rootView?.otpField.text = ""
+        rootView?.otpField.clearLabels()
+        rootView?.timer.invalidate()
+        rootView?.getCodeButton.setTitle(L10n.Verification.Button.title("01:30"), for: .disabled)
     }
 
     private func bindViewModel() {
@@ -81,7 +81,7 @@ final class VerificationController: UIViewController, LoaderDisplayable, AlertDi
 
         viewModel.outputs.didResendOTP
             .subscribe(onNext: { [weak self] in
-                self?.rootView.reload()
+                self?.rootView?.reload()
             })
             .disposed(by: disposeBag)
     }

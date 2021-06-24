@@ -14,13 +14,13 @@ final class AuthNumberView: UIView {
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 26)
         button.titleLabel?.textAlignment = .center
-        button.backgroundColor = .clear
         return button
     }()
 
     let chevronView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "chevron.bottom")
+        view.image = UIImage(named: "chevron.bottom")?.withRenderingMode(.alwaysTemplate)
+        view.tintColor = .black
         view.contentMode = .scaleAspectFit
         view.isUserInteractionEnabled = true
         return view
@@ -56,21 +56,21 @@ extension AuthNumberView {
 
         countryCodeButton.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
-            $0.leading.equalToSuperview()
-            $0.width.equalTo(40)
+            $0.left.equalToSuperview()
+            $0.width.equalTo(32)
             $0.height.equalTo(32)
         }
 
         chevronView.snp.makeConstraints {
             $0.centerY.equalTo(countryCodeButton)
-            $0.leading.equalTo(countryCodeButton.snp.trailing)
+            $0.left.equalTo(countryCodeButton.snp.right)
             $0.size.equalTo(24)
         }
 
         numberField.snp.makeConstraints {
             $0.centerY.equalTo(countryCodeButton)
-            $0.leading.equalTo(chevronView.snp.trailing)
-            $0.trailing.equalToSuperview()
+            $0.left.equalTo(chevronView.snp.right).offset(16)
+            $0.right.equalToSuperview()
             $0.height.equalTo(32)
         }
     }

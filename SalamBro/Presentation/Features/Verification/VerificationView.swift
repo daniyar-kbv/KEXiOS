@@ -14,28 +14,26 @@ protocol VerificationViewDelegate: AnyObject {
 
 final class VerificationView: UIView {
     var timer: Timer!
-    var expirationDate = Date()
-    var numSeconds: TimeInterval = 91.0
+    private var expirationDate = Date()
+    private var numSeconds: TimeInterval = 91.0
     weak var delegate: VerificationViewDelegate?
-    var number: String?
+    private var number: String?
 
-    lazy var maintitle: UILabel = {
+    private lazy var maintitle: UILabel = {
         let label = UILabel()
         label.text = L10n.Verification.title
         label.font = .systemFont(ofSize: 32, weight: .semibold)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
-    lazy var subtitle: UILabel = {
+    private lazy var subtitle: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
         label.textColor = .mildBlue
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -46,7 +44,6 @@ final class VerificationView: UIView {
             self.passCode()
             print(code)
         }
-        field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
 
@@ -61,7 +58,6 @@ final class VerificationView: UIView {
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(reload), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -70,8 +66,7 @@ final class VerificationView: UIView {
         self.number = number
         self.delegate = delegate
         subtitle.text = L10n.Verification.subtitle(" " + number)
-        setupViews()
-        setupConstraints()
+        layoutUI()
     }
 
     @available(*, unavailable)
@@ -81,32 +76,38 @@ final class VerificationView: UIView {
 }
 
 extension VerificationView {
-    func setupViews() {
+    private func layoutUI() {
         backgroundColor = .white
-        addSubview(maintitle)
-        addSubview(subtitle)
-        addSubview(otpField)
-        addSubview(getCodeButton)
-    }
 
-    func setupConstraints() {
-        maintitle.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
-        maintitle.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        maintitle.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
+        [maintitle, subtitle, otpField, getCodeButton].forEach {
+            addSubview($0)
+        }
 
-        subtitle.topAnchor.constraint(equalTo: maintitle.bottomAnchor).isActive = true
-        subtitle.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        subtitle.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16).isActive = true
+        maintitle.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+        }
 
-        otpField.topAnchor.constraint(equalTo: subtitle.bottomAnchor, constant: 40).isActive = true
-        otpField.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        otpField.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-        otpField.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        subtitle.snp.makeConstraints {
+            $0.top.equalTo(maintitle.snp.bottom).offset(4)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-16)
+        }
 
-        getCodeButton.topAnchor.constraint(equalTo: otpField.bottomAnchor, constant: 72).isActive = true
-        getCodeButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
-        getCodeButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -18).isActive = true
-        getCodeButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
+        otpField.snp.makeConstraints {
+            $0.top.equalTo(subtitle.snp.bottom).offset(40)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.height.equalTo(65)
+        }
+
+        getCodeButton.snp.makeConstraints {
+            $0.top.equalTo(otpField.snp.bottom).offset(72)
+            $0.left.equalToSuperview().offset(18)
+            $0.right.equalToSuperview().offset(-18)
+            $0.height.equalTo(43)
+        }
     }
 
     func startTimer() {
@@ -119,7 +120,7 @@ extension VerificationView {
         RunLoop.current.add(timer, forMode: RunLoop.Mode.common)
     }
 
-    func currentTimeString() -> String? {
+    private func currentTimeString() -> String? {
         let unitFlags = Set<Calendar.Component>([.hour, .minute, .second])
         let countdown: DateComponents = Calendar.current.dateComponents(unitFlags, from: Date(), to: expirationDate)
 
@@ -132,7 +133,7 @@ extension VerificationView {
         return nil
     }
 
-    @objc func updateUI() {
+    @objc private func updateUI() {
         // Call the currentTimeString method which can decrease the time..
         let timeString = currentTimeString()
         if timeString != nil {
