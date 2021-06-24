@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 protocol PromotionsViewModel {
     var promotionURL: BehaviorRelay<URL> { get }
@@ -17,7 +17,7 @@ protocol PromotionsViewModel {
 final class PromotionsViewModelImpl: PromotionsViewModel {
     let promotionURL: BehaviorRelay<URL>
     let infoURL: BehaviorRelay<URL?>
-    
+
     init(promotionURL: URL, infoURL: URL?) {
         self.promotionURL = BehaviorRelay<URL>(value: promotionURL)
         self.infoURL = BehaviorRelay<URL?>(value: infoURL)

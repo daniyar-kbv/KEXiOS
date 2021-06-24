@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol ModifiersViewModel {
-    
-}
+protocol ModifiersViewModel {}
 
-class ModifiersViewModelImpl: ModifiersViewModel {
-    
-}
+class ModifiersViewModelImpl: ModifiersViewModel {}

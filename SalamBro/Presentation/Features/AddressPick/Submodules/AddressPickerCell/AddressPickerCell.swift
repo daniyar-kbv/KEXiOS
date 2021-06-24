@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-public final class AddressPickerCell: UITableViewCell, Reusable {
+final class AddressPickerCell: UITableViewCell, Reusable {
     private var viewModel: AddressPickerCellViewModelProtocol! {
         didSet { bind() }
     }
@@ -20,10 +20,8 @@ public final class AddressPickerCell: UITableViewCell, Reusable {
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         disposeBag = DisposeBag()
-
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        setup()
+        configure()
     }
 
     public required init?(coder _: NSCoder) { nil }
@@ -47,17 +45,10 @@ public final class AddressPickerCell: UITableViewCell, Reusable {
         }.disposed(by: disposeBag)
     }
 
-    private func setup() {
-        setupViews()
-        setupConstraints()
-    }
-
-    private func setupViews() {
+    private func configure() {
         selectionStyle = .none
         tintColor = .kexRed
         textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         textLabel?.textColor = .darkGray
     }
-
-    private func setupConstraints() {}
 }

@@ -9,14 +9,12 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-//  Tech debt: add navigationcontroller's nav bar
-
-final class AddressDetailController: ViewController {
+final class AddressDetailController: UIViewController {
     let outputs = Output()
     private let locationRepository: LocationRepository
     private let deliveryAddress: DeliveryAddress
 
-    lazy var deleteButton: UIButton = {
+    private lazy var deleteButton: UIButton = {
         let view = UIButton()
         view.tintColor = .kexRed
         view.setImage(UIImage(named: "trash"), for: .normal)
@@ -24,37 +22,7 @@ final class AddressDetailController: ViewController {
         return view
     }()
 
-    lazy var addressTitleLabel: UILabel = {
-        let view = UILabel()
-        view.textColor = .mildBlue
-        view.text = L10n.AddressPicker.titleOne
-        view.font = .systemFont(ofSize: 10, weight: .medium)
-        return view
-    }()
-
-    lazy var addressLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 14)
-        view.text = deliveryAddress.address?.name
-        return view
-    }()
-
-    lazy var commentaryTitleLabel: UILabel = {
-        let view = UILabel()
-        view.textColor = .mildBlue
-        view.font = .systemFont(ofSize: 10, weight: .medium)
-        view.numberOfLines = 0
-        view.text = "Комментарий"
-        return view
-    }()
-
-    lazy var commentaryLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 14)
-        view.numberOfLines = 0
-        view.text = deliveryAddress.address?.commentary
-        return view
-    }()
+    private var contentView = AddressDetailView()
 
     init(deliveryAddress: DeliveryAddress,
          locationRepository: LocationRepository)
@@ -70,58 +38,52 @@ final class AddressDetailController: ViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func loadView() {
+        super.loadView()
+        view = contentView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        configureViews()
     }
 
-    private func setup() {
-        setupViews()
-        setupConstraints()
-    }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.backgroundColor = .arcticWhite
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
         navigationItem.title = L10n.AddressPicker.titleOne
         navigationItem.rightBarButtonItem = .init(customView: deleteButton)
     }
+}
 
-    private func setupViews() {
-        view.backgroundColor = .white
-        [addressLabel, addressTitleLabel, commentaryLabel, commentaryTitleLabel].forEach { view.addSubview($0) }
-    }
-
-    private func setupConstraints() {
-        addressTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.snp.topMargin).offset(24)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+extension AddressDetailController {
+    private func configureViews() {
+        if let deliveryAddressName = deliveryAddress.address?.name {
+            contentView.configureAddress(name: deliveryAddressName)
         }
 
-        addressLabel.snp.makeConstraints {
-            $0.top.equalTo(addressTitleLabel.snp.bottom).offset(4)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-        }
-
-        commentaryTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(addressLabel.snp.bottom).offset(24)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-        }
-
-        commentaryLabel.snp.makeConstraints {
-            $0.top.equalTo(commentaryTitleLabel.snp.bottom).offset(4)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+        if let commentary = deliveryAddress.address?.commentary {
+            contentView.configureCommentary(commentary: commentary)
         }
     }
+}
 
-    @objc func backButtonTapped() {
+extension AddressDetailController {
+    @objc private func dismissVC() {
         navigationController?.popViewController(animated: true)
     }
 
-    @objc func deleteAction() {
+    @objc private func deleteAction() {
 //        Tech debt add localization
         let alert = UIAlertController(title: "Вы уверены?", message: "Вы уверены что хотите удалить адрес доставки?", preferredStyle: .alert)
         alert.view.tintColor = .kexRed

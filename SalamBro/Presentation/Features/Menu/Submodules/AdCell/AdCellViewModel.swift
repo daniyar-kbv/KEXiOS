@@ -16,12 +16,12 @@ protocol AdCellViewModelProtocol: ViewModel {
 
 final class AdCellViewModel: AdCellViewModelProtocol {
     let promotion: PromotionsResponse.ResponseData.Promotion
-    
+
     let promotionImageURL: BehaviorRelay<String?>
 
     init(promotion: PromotionsResponse.ResponseData.Promotion) {
         self.promotion = promotion
-        
+
         promotionImageURL = .init(value: promotion.image)
     }
 }

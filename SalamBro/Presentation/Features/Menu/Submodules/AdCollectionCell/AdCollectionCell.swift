@@ -2,7 +2,7 @@
 //  AdCollectionCell.swift
 //  SalamBro
 //
-//  Created by Arystan on 4/27/21.
+//  Created by Meruyert Tastandiyeva on 6/16/21.
 //
 
 import Reusable
@@ -10,20 +10,11 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AdCollectionCell: UITableViewCell, NibReusable {
+final class AdCollectionCell: UITableViewCell {
     public var delegate: AddCollectionCellDelegate?
 
-    @IBOutlet var collectionView: UICollectionView!
-
-    private var viewModel: AdCollectionCellViewModelProtocol! {
-        didSet { bind() }
-    }
-
-    private var disposeBag = DisposeBag()
-
-    override public func awakeFromNib() {
-        super.awakeFromNib()
-
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         layout.scrollDirection = .horizontal
@@ -33,12 +24,24 @@ final class AdCollectionCell: UITableViewCell, NibReusable {
         collectionView.delegate = self
         collectionView.backgroundColor = .white
         collectionView.register(cellType: AdCell.self)
+        return collectionView
+    }()
 
+    private var viewModel: AdCollectionCellViewModelProtocol! {
+        didSet { bind() }
+    }
+
+    private var disposeBag = DisposeBag()
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        layoutUI()
         selectionStyle = .none
     }
 
-    override public func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override public func prepareForReuse() {
@@ -51,6 +54,19 @@ final class AdCollectionCell: UITableViewCell, NibReusable {
     }
 
     private func bind() {}
+}
+
+extension AdCollectionCell {
+    private func layoutUI() {
+        contentView.addSubview(collectionView)
+
+        collectionView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(16)
+            $0.bottom.equalToSuperview().offset(-8)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(112)
+        }
+    }
 }
 
 extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -76,6 +92,8 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
         return CGSize(width: width, height: height)
     }
 }
+
+extension AdCollectionCell: Reusable {}
 
 public protocol AddCollectionCellDelegate {
     func goToRating(promotionURL: URL, infoURL: URL?)

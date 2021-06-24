@@ -13,7 +13,7 @@ extension Double {
         let multiplier = NSDecimalNumber(decimal: pow(10, decimalPlaces)).doubleValue
         return Darwin.round(self * multiplier) / multiplier
     }
-    
+
     func removeTrailingZeros() -> String {
         let formatter = NumberFormatter()
         let number = NSNumber(value: self)
