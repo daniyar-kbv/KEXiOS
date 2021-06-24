@@ -182,7 +182,7 @@ extension SupportController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             cell.textLabel?.text = viewModel.documents?[indexPath.row].name
             cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-            cell.imageView?.image = UIImage(named: "documents")
+            cell.imageView?.image = SBImageResource.getIcon(for: SupportIcon.documentsIcon)
             return cell
         }
         return UITableViewCell()

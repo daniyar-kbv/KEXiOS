@@ -17,7 +17,7 @@ final class AddressDetailController: UIViewController {
     private lazy var deleteButton: UIButton = {
         let view = UIButton()
         view.tintColor = .kexRed
-        view.setImage(UIImage(named: "trash"), for: .normal)
+        view.setImage(SBImageResource.getIcon(for: AddressListIcon.addressRemoveIcon), for: .normal)
         view.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
         return view
     }()

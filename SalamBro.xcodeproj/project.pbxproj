@@ -223,6 +223,8 @@
 		14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */; };
 		53F582C31D3C53CDF8B56F146E7BBE8B /* RepositoryComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF82D0A9964BEA60C7D9DEE5233BB05 /* RepositoryComponents.swift */; };
 		A272888D22BF6D95BA2FA56607BB36AD /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A53C8C5BE3A25DCC4D92C99A0D3434 /* Router.swift */; };
+		40A974F7135401E5F5FEB3089CFFC325 /* SBIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DAAE10CC0380EEFD9B74C494E23AAF /* SBIcons.swift */; };
+		82A8DDFF32FE8C95FDDB00F6B511BE0A /* SBImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A204783B7B76BD608D149FA4F911FA3 /* SBImages.xcassets */; };
 		249E54E5058664B559F40AB97FE33AA6 /* SMPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FA0391E18BA13EE5B28ABA0384078 /* SMPickerView.swift */; };
 		164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */; };
 		6382A29270DC95FE20964786BA382045 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */; };
@@ -518,6 +520,8 @@
 		D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtension.swift; sourceTree = "<group>"; };
 		7FF82D0A9964BEA60C7D9DEE5233BB05 /* RepositoryComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryComponents.swift; sourceTree = "<group>"; };
 		18A53C8C5BE3A25DCC4D92C99A0D3434 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		82DAAE10CC0380EEFD9B74C494E23AAF /* SBIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBIcons.swift; sourceTree = "<group>"; };
+		1A204783B7B76BD608D149FA4F911FA3 /* SBImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SBImages.xcassets; sourceTree = "<group>"; };
 		0B6FA0391E18BA13EE5B28ABA0384078 /* SMPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMPickerView.swift; sourceTree = "<group>"; };
 		A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
 		E109EA25F926DD19FBD62E082F1EA9E0 /* SalamBro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalamBro.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -714,14 +718,6 @@
 				49C7E8CE52D9B2EDAD2AE0C3C1FD8C6E /* UpdateController.swift */,
 			);
 			path = Update;
-			sourceTree = "<group>";
-		};
-		52C5944BDC0057E022A3CC50AA0D3026 /* Submodules */ = {
-			isa = PBXGroup;
-			children = (
-				59196E7C7D0BCF644EB54B36FA5B863A /* SupportSocialCell.swift */,
-			);
-			path = Submodules;
 			sourceTree = "<group>";
 		};
 		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
@@ -951,6 +947,14 @@
 				18A53C8C5BE3A25DCC4D92C99A0D3434 /* Router.swift */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		52C5944BDC0057E022A3CC50AA0D3026 /* Submodules */ = {
+			isa = PBXGroup;
+			children = (
+				59196E7C7D0BCF644EB54B36FA5B863A /* SupportSocialCell.swift */,
+			);
+			path = Submodules;
 			sourceTree = "<group>";
 		};
 		542581AD1CEBDAE017201B6A7231ED13 /* Constants */ = {
@@ -1398,6 +1402,8 @@
 				43214490E665631BDBAA16AC960299A8 /* Assets+Generated.swift */,
 				33245888AA0FFE7AA10F461052BAC542 /* Assets.xcassets */,
 				118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */,
+				82DAAE10CC0380EEFD9B74C494E23AAF /* SBIcons.swift */,
+				1A204783B7B76BD608D149FA4F911FA3 /* SBImages.xcassets */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -1778,6 +1784,7 @@
 				9617C33EE7EC0B11879A840A0FCEDD8D /* Assets.xcassets in Resources */,
 				05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */,
 				49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */,
+				82A8DDFF32FE8C95FDDB00F6B511BE0A /* SBImages.xcassets in Resources */,
 				164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */,
 				F694560D11CB08F2FE1D2F7E86B4167B /* emptyBasket.json in Resources */,
 				4B9B1575E958577624E23D440A6EE8FE /* noInternet.json in Resources */,
@@ -2184,6 +2191,7 @@
 				14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */,
 				53F582C31D3C53CDF8B56F146E7BBE8B /* RepositoryComponents.swift in Sources */,
 				A272888D22BF6D95BA2FA56607BB36AD /* Router.swift in Sources */,
+				40A974F7135401E5F5FEB3089CFFC325 /* SBIcons.swift in Sources */,
 				249E54E5058664B559F40AB97FE33AA6 /* SMPickerView.swift in Sources */,
 				8E4A70AB75790B6CE43F5044E3EC60D2 /* SecureStorageProvider.swift in Sources */,
 				A109D2E610AD330151B1D430E364F805 /* SelectMainInformationViewController.swift in Sources */,

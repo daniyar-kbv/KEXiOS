@@ -82,13 +82,13 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         switch indexPath.row {
         case 0:
-            cell.imageView?.image = UIImage(named: "kazakh")
+            cell.imageView?.image = SBImageResource.getIcon(for: ProfileIcon.kazakhLanguageIcon)
         case 1:
-            cell.imageView?.image = UIImage(named: "russian")
+            cell.imageView?.image = SBImageResource.getIcon(for: ProfileIcon.russianLanguageIcon)
             cell.accessoryView = checkmark
             marked = indexPath
         case 2:
-            cell.imageView?.image = UIImage(named: "english")
+            cell.imageView?.image = SBImageResource.getIcon(for: ProfileIcon.englishLanguageIcon)
         default:
             break
         }
