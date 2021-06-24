@@ -71,7 +71,7 @@ final class MenuViewModel: MenuViewModelProtocol {
                                         productsSequence,
                                         resultSelector: {
                                             promotions, productsData ->
-                                                ([PromotionsResponse.ResponseData.Promotion],
+                                                ([Promotion],
                                                  [OrderProductResponse.Data.Category],
                                                  [OrderProductResponse.Data.Position]) in
                                             (
@@ -96,7 +96,7 @@ final class MenuViewModel: MenuViewModelProtocol {
         }).disposed(by: disposeBag)
     }
 
-    private func setPromotions(promotions: [PromotionsResponse.ResponseData.Promotion]) {
+    private func setPromotions(promotions: [Promotion]) {
         cellViewModels.append([
             AddressPickCellViewModel(address: locationRepository.getCurrentDeliveryAddress()?.address),
             AdCollectionCellViewModel(promotions: promotions),
