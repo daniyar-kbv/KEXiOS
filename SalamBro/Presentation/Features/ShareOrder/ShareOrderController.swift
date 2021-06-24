@@ -11,9 +11,7 @@ import SnapKit
 import UIKit
 import WebKit
 
-class ShareOrderController: UIViewController {
-    // private let viewModel: ShareOrderViewModel
-
+final class ShareOrderController: UIViewController {
     private let disposeBag = DisposeBag()
 
     private lazy var webView: WKWebView = {
@@ -37,7 +35,6 @@ class ShareOrderController: UIViewController {
     }()
 
     init() {
-        // self.viewModel = viewModel
         super.init(nibName: .none, bundle: .none)
     }
 
@@ -49,7 +46,6 @@ class ShareOrderController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutUI()
-        // bind()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -82,21 +78,15 @@ extension ShareOrderController {
         }
 
         webView.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top).offset(16)
+            $0.top.equalTo(contentView.snp.top)
             $0.left.equalTo(contentView.snp.left).offset(16)
             $0.right.equalTo(contentView.snp.right).offset(-16)
-            $0.bottom.equalTo(contentView.snp.bottom).offset(-16)
+            $0.bottom.equalTo(contentView.snp.bottom)
         }
     }
 }
 
 extension ShareOrderController {
-//    private func bind() {
-//        viewModel.url.bind(onNext: { [weak self] url in
-//            self?.webView.loadHTMLString(htmlString, baseURL: nil)
-//        }).disposed(by: disposeBag)
-//    }
-
     @objc private func addTapped() {
         let url = URL(string: "instagram-stories://share")!
         if UIApplication.shared.canOpenURL(url) {
