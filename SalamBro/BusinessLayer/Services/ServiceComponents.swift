@@ -13,6 +13,7 @@ protocol ServiceComponents: AnyObject {
     func ordersService() -> OrdersService
     func promotionsService() -> PromotionsService
     func profileService() -> ProfileService
+    func documentsService() -> DocumentsService
 }
 
 final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
@@ -42,5 +43,9 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
 
     func profileService() -> ProfileService {
         return shared(ProfileServiceMoyaImpl(provider: MoyaProvider<ProfileAPI>(plugins: [networkPlugin, authPlugin])))
+    }
+
+    func documentsService() -> DocumentsService {
+        return shared(DocumentsServiceImpl(provider: MoyaProvider<DocumentsAPI>(plugins: [networkPlugin])))
     }
 }
