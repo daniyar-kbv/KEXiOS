@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class SupportController: ViewController, LoaderDisplayable, AlertDisplayable {
+final class SupportController: UIViewController, LoaderDisplayable, AlertDisplayable {
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
@@ -63,6 +63,7 @@ final class SupportController: ViewController, LoaderDisplayable, AlertDisplayab
         super.init(nibName: .none, bundle: .none)
 
         layoutUI()
+        setupNavigationBar()
     }
 
     @available(*, unavailable)
@@ -104,9 +105,18 @@ final class SupportController: ViewController, LoaderDisplayable, AlertDisplayab
         socialCollectionView.reloadData()
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-
+    private func setupNavigationBar() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationController?.navigationBar.backIndicatorImage = Asset.chevronLeft.image
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = Asset.chevronLeft.image
         navigationItem.title = L10n.Support.title
     }
 
