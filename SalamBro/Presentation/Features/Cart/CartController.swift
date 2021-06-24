@@ -97,16 +97,8 @@ class CartController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationItem.title = L10n.Cart.title
+
+        setupNavigationBar()
     }
 
     private func bindViewModel() {
@@ -120,6 +112,19 @@ class CartController: UIViewController {
         itemsTableView.reloadData()
         updateTableViewFooterUI()
         orderButton.setTitle(L10n.Cart.OrderButton.title(viewModel.getTotalPrice()), for: .normal)
+    }
+
+    private func setupNavigationBar() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationItem.title = L10n.Cart.title
     }
 }
 
@@ -251,8 +256,9 @@ extension CartController: CartAdditinalProductCellDelegate {
         viewModel.decrement(postitonUUID: positionUUID)
     }
 
-    func delete(positionUUID _: String?, isAdditional _: Bool) {
-//        TODO: finish
+    func delete(positionUUID: String?, isAdditional _: Bool) {
+        guard let positionUUID = positionUUID else { return }
+        viewModel.delete(postitonUUID: positionUUID)
     }
 }
 

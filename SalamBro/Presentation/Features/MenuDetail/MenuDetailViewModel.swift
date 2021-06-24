@@ -30,7 +30,8 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
             outputs.itemImage.accept(URL(string: product?.image ?? ""))
             outputs.itemTitle.accept(product?.name)
             outputs.itemDescription.accept(product?.description)
-            outputs.itemPrice.accept("\(L10n.MenuDetail.proceedButton) \(product?.price.removeTrailingZeros() ?? "")")
+//            Tech debt: change to prices logic
+            outputs.itemPrice.accept("\(L10n.MenuDetail.proceedButton) \(product?.price.first?.removeTrailingZeros() ?? "")")
 //                self?.outputs.itemModifiers.accept(product.modifiers)
         }
     }
@@ -77,7 +78,8 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
             position: .init(name: product.name,
                             image: product.image ?? "",
                             description: product.description,
-                            price: product.price,
+                            //            Tech debt: change to prices logic
+                            price: product.price.first ?? 0,
                             category: product.branchCategory),
 //            Tech debt: add modifiers
             modifiers: []

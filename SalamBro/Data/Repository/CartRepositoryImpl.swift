@@ -60,6 +60,9 @@ extension CartRepositoryImpl {
     func decrementItem(positionUUID: String) {
         guard let index = getIndex(of: positionUUID) else { return }
         storage.cartItems[index].count -= 1
+        if storage.cartItems[index].count == 0 {
+            removeItem(positionUUID: positionUUID)
+        }
         outputs.didChange.accept(storage.cartItems)
     }
 

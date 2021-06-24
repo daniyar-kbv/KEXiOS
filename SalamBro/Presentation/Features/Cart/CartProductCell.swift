@@ -113,8 +113,7 @@ final class CartProductCell: UITableViewCell {
         return button
     }()
 
-    private var counter: Int = 0
-    private var product: CartDTO.Item?
+    private var item: CartDTO.Item?
     var delegate: CartAdditinalProductCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -219,13 +218,13 @@ extension CartProductCell {
 
 extension CartProductCell {
     func configure(with item: CartDTO.Item) {
-        product = item
+        self.item = item
+
         productTitleLabel.text = item.position.name
         subitemLabel.text = item.position.description
-
         priceLabel.text = "\((item.position.price * Double(item.count)).removeTrailingZeros()) ₸"
-
         commentLabel.text = item.comment
+        countLabel.text = "\(item.count)"
 
 //        Tech debt: add availability
         //     if isAvailable {
@@ -240,25 +239,18 @@ extension CartProductCell {
         //     priceLabel.isHidden = true
         //   productImageView.alpha = 0.5
         //   }
-        counter = item.count
-        countLabel.text = "\(counter)"
     }
 
     @objc private func increaseItemButton() {
-        counter += 1
-        delegate?.increment(positionUUID: product?.positionUUID, isAdditional: false)
-//        priceLabel.text = "\(counter * product?.position.price) ₸"
-        countLabel.text = "\(counter)"
+        delegate?.increment(positionUUID: item?.positionUUID, isAdditional: false)
     }
 
     @objc private func decreaseItemCount() {
-        counter -= 1
-        delegate?.decrement(positionUUID: product?.positionUUID, isAdditional: false)
-        countLabel.text = "\(counter)"
+        delegate?.decrement(positionUUID: item?.positionUUID, isAdditional: false)
     }
 
     @objc private func deleteItem() {
-        delegate?.delete(positionUUID: product?.positionUUID, isAdditional: false)
+        delegate?.delete(positionUUID: item?.positionUUID, isAdditional: false)
     }
 }
 

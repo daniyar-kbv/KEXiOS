@@ -15,10 +15,11 @@ protocol CartViewModel {
 
     func getCart()
     func getTotalCount() -> Int
-    func getTotalPrice() -> Double
+    func getTotalPrice() -> String
 
     func increment(postitonUUID: String)
     func decrement(postitonUUID: String)
+    func delete(postitonUUID: String)
 }
 
 class CartViewModelImpl: CartViewModel {
@@ -30,6 +31,8 @@ class CartViewModelImpl: CartViewModel {
 
     init(cartRepository: CartRepository) {
         self.cartRepository = cartRepository
+
+        bind()
     }
 
     private func bind() {
@@ -49,16 +52,23 @@ class CartViewModelImpl: CartViewModel {
         return items.count
     }
 
-    func getTotalPrice() -> Double {
-        return items.map { $0.position.price }.reduce(0, +)
+    func getTotalPrice() -> String {
+        return items.map { $0.position.price * Double($0.count) }.reduce(0, +).removeTrailingZeros()
     }
 
     func increment(postitonUUID: String) {
         cartRepository.incrementItem(positionUUID: postitonUUID)
+        outputs.update.accept(())
     }
 
     func decrement(postitonUUID: String) {
         cartRepository.decrementItem(positionUUID: postitonUUID)
+        outputs.update.accept(())
+    }
+
+    func delete(postitonUUID: String) {
+        cartRepository.removeItem(positionUUID: postitonUUID)
+        outputs.update.accept(())
     }
 }
 

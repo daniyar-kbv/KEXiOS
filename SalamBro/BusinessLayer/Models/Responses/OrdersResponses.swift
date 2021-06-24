@@ -56,7 +56,7 @@ struct OrderProductDetailResponse: Codable {
         let name: String
         let description: String
         let image: String?
-        let price: Double
+        let price: [Double]
         let branchCategory: String
 //        let modifiers: [Modifier]
 
