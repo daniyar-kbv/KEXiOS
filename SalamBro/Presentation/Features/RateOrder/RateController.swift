@@ -17,8 +17,6 @@ final class RateController: UIViewController {
 
     private let rateView = RateView()
 
-    private let dimmedView = UIView()
-
     private var commentaryPage: MapCommentaryPage?
 
     init(viewModel: RateViewModel) {
@@ -39,8 +37,6 @@ final class RateController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
-        layoutUI()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     override func viewDidLayoutSubviews() {
@@ -66,6 +62,8 @@ final class RateController: UIViewController {
 
 extension RateController {
     private func configureViews() {
+        view.backgroundColor = .arcticWhite
+
         rateView.collectionView.delegate = self
         rateView.collectionView.dataSource = self
 
@@ -75,17 +73,6 @@ extension RateController {
         rateView.commentView.addGestureRecognizer(tapCommentary)
 
         rateView.sendButton.addTarget(self, action: #selector(dismissVC), for: .allTouchEvents)
-    }
-
-    private func layoutUI() {
-        view.backgroundColor = .arcticWhite
-
-        view.addSubview(dimmedView)
-        dimmedView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        dimmedView.backgroundColor = .gray
-        dimmedView.alpha = 0
     }
 
     private func didFinishTouchRating(_ rating: Double) {
@@ -128,16 +115,17 @@ extension RateController {
 
     @objc private func commentaryViewTapped() {
         commentaryPage = MapCommentaryPage()
-        guard let page = commentaryPage else { return }
-        page.cachedCommentary = rateView.commentTextField.text
-        page.delegate = self
-        page.configureTextField(placeholder: L10n.RateOrder.CommentaryField.placeholder)
-        present(page, animated: true, completion: nil)
-        dimmedView.alpha = 0.5
-    }
+        commentaryPage?.configureTextField(placeholder: L10n.RateOrder.CommentaryField.placeholder)
+        commentaryPage?.configureButton(title: L10n.Promocode.button)
 
-    @objc private func keyboardWillHide() {
-        dimmedView.alpha = 0
+        commentaryPage?.output.didProceed.subscribe(onNext: { comment in
+            self.rateView.commentTextField.text = comment
+        }).disposed(by: disposeBag)
+        commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
+            self?.commentaryPage = nil
+        }).disposed(by: disposeBag)
+
+        commentaryPage?.openTransitionSheet(on: self)
     }
 }
 

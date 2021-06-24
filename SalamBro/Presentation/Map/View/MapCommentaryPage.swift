@@ -23,6 +23,8 @@ final class MapCommentaryPage: UIViewController {
 
     private let disposeBag = DisposeBag()
 
+    let output = Output()
+
     private let commentaryTextField = MapTextField(image: nil)
     private let actionButton: UIButton = {
         let btn = UIButton()
@@ -30,10 +32,13 @@ final class MapCommentaryPage: UIViewController {
         btn.layer.cornerRadius = 10
         btn.layer.masksToBounds = true
         btn.setTitle(L10n.Commentary.Button.title, for: .normal)
+        btn.addTarget(self, action: #selector(didProceedTapped), for: .touchUpInside)
         return btn
     }()
 
     private let containerView = UIView()
+
+    private var dimmedView = UIView()
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -88,6 +93,7 @@ final class MapCommentaryPage: UIViewController {
 
     @objc private func keyboardWillHide() {
         dismiss(animated: true, completion: nil)
+        dimmedView.alpha = 0
     }
 
     public func configureTextField(placeholder: String) {
@@ -133,4 +139,37 @@ final class MapCommentaryPage: UIViewController {
             $0.height.equalTo(43)
         }
     }
+}
+
+extension MapCommentaryPage {
+    func openTransitionSheet(on vc: UIViewController) {
+        vc.present(self, animated: true)
+        dimmedView.backgroundColor = .gray
+        dimmedView.alpha = 0
+        vc.view.addSubview(dimmedView)
+        dimmedView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        vc.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.dimmedView.alpha = 0.5
+        })
+    }
+
+    private func closeTransitionSheet() {
+        dismiss(animated: true, completion: { [weak self] in
+            self?.output.didTerminate.accept(())
+            self?.dimmedView.alpha = 0
+        })
+    }
+
+    @objc private func didProceedTapped() {
+        output.didProceed.accept(commentaryTextField.text)
+        closeTransitionSheet()
+    }
+}
+
+struct Output {
+    let didProceed = PublishRelay<String?>()
+    let didTerminate = PublishRelay<Void>()
 }

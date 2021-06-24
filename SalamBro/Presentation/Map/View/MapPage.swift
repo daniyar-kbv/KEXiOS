@@ -201,11 +201,17 @@ extension MapPage {
 
     private func showCommentaryPage() {
         commentaryPage = MapCommentaryPage()
-        guard let page = commentaryPage else { return }
-        page.cachedCommentary = mapAddressView.commentaryTextField.text
-        page.configureTextField(placeholder: L10n.Commentary.AddressField.title)
-        page.delegate = self
-        present(page, animated: true, completion: nil)
+        commentaryPage?.configureTextField(placeholder: L10n.Commentary.AddressField.title)
+        commentaryPage?.configureButton(title: L10n.Promocode.button)
+
+        commentaryPage?.output.didProceed.subscribe(onNext: { comment in
+            self.mapAddressView.commentaryTextField.text = comment
+        }).disposed(by: disposeBag)
+        commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
+            self?.commentaryPage = nil
+        }).disposed(by: disposeBag)
+
+        commentaryPage?.openTransitionSheet(on: self)
     }
 }
 

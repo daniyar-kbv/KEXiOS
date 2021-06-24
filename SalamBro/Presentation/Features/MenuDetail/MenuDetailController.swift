@@ -19,8 +19,6 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     private let contentView = MenuDetailView()
 
-    private let dimmedView = UIView()
-
     private var commentaryPage: MapCommentaryPage?
 
     public init(viewModel: MenuDetailViewModel) {
@@ -42,10 +40,7 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-
-        layoutUI()
         configureViews()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         bindViewModel()
         viewModel.update()
     }
@@ -63,6 +58,9 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
 extension MenuDetailController {
     private func configureViews() {
+        view.backgroundColor = .white
+        tabBarController?.tabBar.backgroundColor = .white
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(commetaryViewTapped(_:)))
         contentView.commentaryView.addGestureRecognizer(tap)
 
@@ -104,20 +102,6 @@ extension MenuDetailController {
             .bind(to: contentView.proceedButton.rx.title())
             .disposed(by: disposeBag)
     }
-
-    private func layoutUI() {
-        view.backgroundColor = .white
-        tabBarController?.tabBar.backgroundColor = .white
-
-        view.addSubview(dimmedView)
-
-        dimmedView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-
-        dimmedView.backgroundColor = .gray
-        dimmedView.alpha = 0
-    }
 }
 
 extension MenuDetailController {
@@ -127,16 +111,16 @@ extension MenuDetailController {
 
     @objc func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
         commentaryPage = MapCommentaryPage()
-        guard let page = commentaryPage else { return }
-        page.cachedCommentary = contentView.commentaryField.text
-        page.delegate = self
-        page.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
-        present(page, animated: true, completion: nil)
-        dimmedView.alpha = 0.5
-    }
+        commentaryPage?.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
 
-    @objc private func keyboardWillHide() {
-        dimmedView.alpha = 0
+        commentaryPage?.output.didProceed.subscribe(onNext: { comment in
+            self.contentView.commentaryField.text = comment
+        }).disposed(by: disposeBag)
+        commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
+            self?.commentaryPage = nil
+        }).disposed(by: disposeBag)
+
+        commentaryPage?.openTransitionSheet(on: self)
     }
 
     @objc private func dismissVC() {
