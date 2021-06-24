@@ -28,8 +28,25 @@ extension AlertDisplayable where Self: UIViewController {
             completion()
         }
         alertController.addAction(action)
-        alertController.view.tintColor = UIColor.black
+
+        configure(alertController: alertController)
 
         present(alertController, animated: true, completion: nil)
+    }
+
+    func showAlert(title: String, message: String?, actions: [UIAlertAction]) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        actions.forEach { alertController.addAction($0) }
+
+        configure(alertController: alertController)
+
+        present(alertController, animated: true, completion: nil)
+    }
+
+    private func configure(alertController: UIAlertController) {
+        alertController.actions.forEach {
+            $0.setValue(UIColor.kexRed, forKey: "titleTextColor")
+        }
     }
 }

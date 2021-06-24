@@ -7,6 +7,8 @@
 
 import Foundation
 
+// Tech debt: Legacy
+
 public struct CartProduct {
     let id: Int
     let name: String
