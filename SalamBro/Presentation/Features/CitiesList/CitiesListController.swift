@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class CitiesListController: ViewController, AlertDisplayable {
+final class CitiesListController: UIViewController, AlertDisplayable {
     let outputs = Output()
     private let disposeBag = DisposeBag()
 
@@ -51,16 +51,19 @@ final class CitiesListController: ViewController, AlertDisplayable {
         bind()
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.title = L10n.CitiesList.Navigation.title
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
         navigationController?.navigationBar.titleTextAttributes = [
             .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+            .foregroundColor: UIColor.black,
         ]
-    }
-
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
+        navigationItem.title = L10n.CitiesList.Navigation.title
     }
 }
 
@@ -100,6 +103,10 @@ extension CitiesListController {
     @objc private func handleRefreshControlAction() {
         viewModel.refreshCities()
         refreshControl.endRefreshing()
+    }
+
+    @objc private func dismissVC() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

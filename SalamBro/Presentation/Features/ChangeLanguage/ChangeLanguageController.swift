@@ -47,6 +47,10 @@ final class ChangeLanguageController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
         navigationItem.title = L10n.ChangeLanguage.title
     }

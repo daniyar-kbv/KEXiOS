@@ -10,12 +10,12 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AuthorizationController: ViewController, MaskedTextFieldDelegateListener, AlertDisplayable, LoaderDisplayable {
+final class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener, AlertDisplayable, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()
 
-    lazy var maskedDelegate: MaskedTextFieldDelegate = {
+    private lazy var maskedDelegate: MaskedTextFieldDelegate = {
         let delegate = MaskedTextFieldDelegate(primaryFormat: "([000]) [000] [00] [00]")
         delegate.listener = self
         return delegate
@@ -35,36 +35,7 @@ final class AuthorizationController: ViewController, MaskedTextFieldDelegateList
         return label
     }()
 
-    // MARK: Tech debt, нужно перенести в отдельный класс countryCodeButton, chevronView и numberField
-
-    private let countryCodeButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.darkGray, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 26)
-        button.titleLabel?.textAlignment = .center
-        button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(handlecCountryCodeButtonAction), for: .touchUpInside)
-        return button
-    }()
-
-    private let chevronView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "chevron.bottom")
-        view.contentMode = .scaleAspectFit
-        view.isUserInteractionEnabled = true
-        return view
-    }()
-
-    private let numberField: UITextField = {
-        let field = UITextField()
-        field.keyboardType = .numberPad
-        field.font = .systemFont(ofSize: 26)
-        field.attributedPlaceholder = NSAttributedString(
-            string: L10n.Authorization.NumberField.Placeholder.title,
-            attributes: [.font: UIFont.systemFont(ofSize: 26, weight: .medium)]
-        )
-        return field
-    }()
+    private let numberView = AuthNumberView()
 
     private let getButton: UIButton = {
         let button = UIButton()
@@ -100,6 +71,16 @@ final class AuthorizationController: ViewController, MaskedTextFieldDelegateList
         configureViews()
         configureNavigationBar()
         bindViewModel()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
     }
 
     private func bindViewModel() {
@@ -139,13 +120,17 @@ extension AuthorizationController {
     }
 
     func changeCountryCode(title: String) {
-        countryCodeButton.setTitle(title, for: .normal)
+        numberView.countryCodeButton.setTitle(title, for: .normal)
     }
 }
 
 extension AuthorizationController {
-    @objc func handleGetButtonAction() {
+    @objc private func handleGetButtonAction() {
         viewModel.sendOTP()
+    }
+
+    @objc private func dismissVC() {
+        navigationController?.popViewController(animated: true)
     }
 
     func textField(_: UITextField, didFillMandatoryCharacters complete: Bool, didExtractValue value: String) {
@@ -163,16 +148,17 @@ extension AuthorizationController {
         navigationItem.title = ""
     }
 
-    func configureViews() {
+    private func configureViews() {
         maskedDelegate.listener = self
-        numberField.delegate = maskedDelegate
+        numberView.numberField.delegate = maskedDelegate
         view.backgroundColor = .white
-        countryCodeButton.setTitle(viewModel.getCountryCode(), for: .normal)
+        numberView.countryCodeButton.setTitle(viewModel.getCountryCode(), for: .normal)
         aggreementLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel)))
-        chevronView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlecCountryCodeButtonAction)))
+        numberView.chevronView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlecCountryCodeButtonAction)))
+        numberView.countryCodeButton.addTarget(self, action: #selector(handlecCountryCodeButtonAction), for: .touchUpInside)
     }
 
-    func layoutUI() {
+    private func layoutUI() {
         view.addSubview(authHeaderView)
         authHeaderView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -180,32 +166,16 @@ extension AuthorizationController {
             $0.height.equalTo(view.bounds.height * 0.14)
         }
 
-        view.addSubview(countryCodeButton)
-        countryCodeButton.snp.makeConstraints {
+        view.addSubview(numberView)
+        numberView.snp.makeConstraints {
             $0.top.equalTo(authHeaderView.snp.bottom).offset(40)
             $0.leading.equalToSuperview().offset(24)
-            $0.width.equalTo(40)
-            $0.height.equalTo(32)
-        }
-
-        view.addSubview(chevronView)
-        chevronView.snp.makeConstraints {
-            $0.centerY.equalTo(countryCodeButton)
-            $0.leading.equalTo(countryCodeButton.snp.trailing)
-            $0.size.equalTo(24)
-        }
-
-        view.addSubview(numberField)
-        numberField.snp.makeConstraints {
-            $0.centerY.equalTo(countryCodeButton)
-            $0.leading.equalTo(chevronView.snp.trailing)
             $0.trailing.equalToSuperview().offset(-24)
-            $0.height.equalTo(32)
         }
 
         view.addSubview(aggreementLabel)
         aggreementLabel.snp.makeConstraints {
-            $0.top.equalTo(countryCodeButton.snp.bottom).offset(72)
+            $0.top.equalTo(numberView.snp.bottom).offset(72)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
             $0.height.equalTo(32)

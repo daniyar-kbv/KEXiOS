@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class VerificationController: ViewController, LoaderDisplayable, AlertDisplayable {
+final class VerificationController: UIViewController, LoaderDisplayable, AlertDisplayable {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()
@@ -40,6 +40,12 @@ final class VerificationController: ViewController, LoaderDisplayable, AlertDisp
     }
 
     override func viewWillAppear(_: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
         rootView.startTimer()
     }
 
@@ -78,6 +84,10 @@ final class VerificationController: ViewController, LoaderDisplayable, AlertDisp
                 self?.rootView.reload()
             })
             .disposed(by: disposeBag)
+    }
+
+    @objc private func dismissVC() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

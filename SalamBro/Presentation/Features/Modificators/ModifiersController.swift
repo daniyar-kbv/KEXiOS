@@ -5,9 +5,10 @@
 //  Created by Arystan on 5/1/21.
 //
 
+import SnapKit
 import UIKit
 
-class ModifiersController: ViewController {
+final class ModifiersController: UIViewController {
     private let viewModel: ModifiersViewModel
 
     init(viewModel: ModifiersViewModel) {
@@ -21,26 +22,7 @@ class ModifiersController: ViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.tintColor = .kexRed
-        button.setImage(UIImage(named: "chevron.left"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    lazy var titleLabel: UILabel = {
-        let view = UILabel()
-        view.text = "Выберите напиток"
-        view.font = .systemFont(ofSize: 18, weight: .semibold)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: .init()
@@ -53,42 +35,39 @@ class ModifiersController: ViewController {
         collectionView.delegate = self
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.collectionViewLayout = StagLayout(widthHeightRatios: [(0.5, 0.6), (0.5, 0.6)], itemSpacing: 8)
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 24, bottom: 20, right: 24)
         return collectionView
     }()
 
+    override func loadView() {
+        super.loadView()
+        view = collectionView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setupConstraints()
+        view.backgroundColor = .arcticWhite
     }
 
-    func setupViews() {
-        view.backgroundColor = .white
-        collectionView.backgroundColor = .clear
-        view.addSubview(titleLabel)
-        view.addSubview(collectionView)
-        view.addSubview(backButton)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
+        navigationItem.title = "Выберите напиток"
     }
+}
 
-    func setupConstraints() {
-        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true
-
-        backButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 14).isActive = true
-        backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 18).isActive = true
-
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(backButton.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
-            $0.bottom.equalToSuperview()
-        }
-    }
-
-    @objc func backButtonTapped(_: UIButton!) {
+extension ModifiersController {
+    @objc private func dismissVC() {
         dismiss(animated: true, completion: nil)
     }
 }
