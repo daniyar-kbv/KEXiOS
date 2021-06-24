@@ -86,7 +86,6 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.tintColor = .kexRed
         navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [

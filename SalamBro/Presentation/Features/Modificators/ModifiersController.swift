@@ -34,8 +34,8 @@ final class ModifiersController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.collectionViewLayout.invalidateLayout()
-        collectionView.collectionViewLayout = StagLayout(widthHeightRatios: [(0.5, 0.6), (0.5, 0.6)], itemSpacing: 8)
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 24, bottom: 20, right: 24)
+        collectionView.collectionViewLayout = StagLayout(widthHeightRatios: [(0.49, 0.6)], itemSpacing: 8)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         return collectionView
     }()
 

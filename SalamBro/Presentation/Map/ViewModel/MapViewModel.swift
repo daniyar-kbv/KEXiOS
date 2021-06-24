@@ -61,9 +61,9 @@ final class MapViewModel {
         case .creation:
             locationRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
 //            Tech debt: uncomment when orders applu api stabilize
-//            applyOrders(address: lastAddress)
-            defaultStorage.persist(leadUUID: "ace65478-c4ba-4a78-84a8-26c49466244c")
-            outputs.lastSelectedAddress.accept(lastAddress)
+            applyOrders(address: lastAddress)
+//            defaultStorage.persist(leadUUID: "ace65478-c4ba-4a78-84a8-26c49466244c")
+//            outputs.lastSelectedAddress.accept(lastAddress)
         case .change:
             outputs.lastSelectedAddress.accept(lastAddress)
         }

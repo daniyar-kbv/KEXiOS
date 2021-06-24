@@ -26,15 +26,16 @@ final class SupportCoordinator: BaseCoordinator {
     override func start() {
         let supportPage = pagesFactory.makeSupportPage()
 
-        supportPage.onTapAgreementDocs = { [weak self] in
-            self?.showAgreementPage()
-        }
+        supportPage.outputs.openDocument
+            .subscribe(onNext: { [weak self] url in
+                self?.showAgreementPage(url: url)
+            }).disposed(by: disposeBag)
 
         router.push(viewController: supportPage, animated: true)
     }
 
-    private func showAgreementPage() {
-        let agreementPage = pagesFactory.makeAgreementPage()
+    private func showAgreementPage(url: URL) {
+        let agreementPage = pagesFactory.makeAgreementPage(url: url)
 
         router.push(viewController: agreementPage, animated: true)
     }

@@ -17,8 +17,6 @@ protocol CartViewDelegate {
 class CartController: UIViewController {
     var openAuth: (() -> Void)?
 
-    private var mainTabDelegate: MainTabDelegate?
-
     private var commentaryPage: MapCommentaryPage?
 
     private let disposeBag = DisposeBag()
@@ -93,7 +91,6 @@ class CartController: UIViewController {
         super.viewDidLoad()
         layoutUI()
         configureViews()
-        mainTabDelegate?.setCount(count: cartViewModel.cart.totalProducts)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -102,7 +99,6 @@ class CartController: UIViewController {
         navigationController?.navigationBar.shadowImage = .init()
         navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
         navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
         navigationController?.navigationBar.titleTextAttributes = [
             .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
             .foregroundColor: UIColor.black,
@@ -270,7 +266,7 @@ extension CartController: CartAdditinalProductCellDelegate {
         }
         updateTableViewFooterUI(cart: cartViewModel.cart)
         orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
-        mainTabDelegate?.updateCounter(isIncrease: isIncrease)
+//        mainTabDelegate?.updateCounter(isIncrease: isIncrease)
     }
 }
 
