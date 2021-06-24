@@ -15,8 +15,6 @@ protocol CartViewDelegate {
 class CartController: UIViewController {
     var openAuth: (() -> Void)?
 
-    private var mainTabDelegate: MainTabDelegate?
-
     private var commentaryPage: MapCommentaryPage?
 
     // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
@@ -89,7 +87,6 @@ class CartController: UIViewController {
         super.viewDidLoad()
         layoutUI()
         configureViews()
-        mainTabDelegate?.setCount(count: cartViewModel.cart.totalProducts)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
@@ -277,7 +274,7 @@ extension CartController: CartAdditinalProductCellDelegate {
         }
         updateTableViewFooterUI(cart: cartViewModel.cart)
         orderButton.setTitle(L10n.Cart.OrderButton.title(cartViewModel.cart.totalPrice), for: .normal)
-        mainTabDelegate?.updateCounter(isIncrease: isIncrease)
+//        mainTabDelegate?.updateCounter(isIncrease: isIncrease)
     }
 }
 

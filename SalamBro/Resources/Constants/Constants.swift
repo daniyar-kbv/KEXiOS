@@ -23,8 +23,8 @@ public var apiKey: String {
 public let checkmark = UIImageView(image: UIImage(named: "checkmark"))
 public let ZOOM: Float = 18.0
 
-public let ALA_LAT: Double = 43.222015
-public let ALA_LON: Double = 76.851250
+public let ALA_LAT: Double = 43.241044
+public let ALA_LON: Double = 76.927359
 
 public var htmlString =
     """
