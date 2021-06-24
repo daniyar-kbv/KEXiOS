@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol PromotionsService: AnyObject {
-    func getPromotions() -> Single<[PromotionsResponse.ResponseData.Promotion]>
+    func getPromotions() -> Single<[Promotion]>
 }
 
 class PromotionsServiceImpl: PromotionsService {
@@ -21,7 +21,7 @@ class PromotionsServiceImpl: PromotionsService {
         self.provider = provider
     }
 
-    func getPromotions() -> Single<[PromotionsResponse.ResponseData.Promotion]> {
+    func getPromotions() -> Single<[Promotion]> {
         return provider.rx
             .request(.promotions)
             .map { response in
