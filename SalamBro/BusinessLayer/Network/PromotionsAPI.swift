@@ -43,4 +43,3 @@ extension PromotionsAPI: TargetType {
         return nil
     }
 }
-

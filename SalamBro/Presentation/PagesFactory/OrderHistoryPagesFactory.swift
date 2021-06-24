@@ -23,7 +23,7 @@ final class OrderHistoryPagesFactoryImpl: DependencyFactory, OrderHistoryPagesFa
     }
 
     func makeRateOrderPage() -> RateController {
-        return scoped(.init())
+        return scoped(.init(viewModel: RateViewModel()))
     }
 
     func makeShareOrderPage() -> ShareOrderController {

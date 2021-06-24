@@ -29,6 +29,7 @@ final class MapCommentaryPage: UIViewController {
         btn.backgroundColor = .calmGray
         btn.layer.cornerRadius = 10
         btn.layer.masksToBounds = true
+        btn.setTitle(L10n.Commentary.Button.title, for: .normal)
         return btn
     }()
 
@@ -89,12 +90,19 @@ final class MapCommentaryPage: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    private func layoutUI() {
-        commentaryTextField.becomeFirstResponder()
+    public func configureTextField(placeholder: String) {
         commentaryTextField.attributedPlaceholder = NSAttributedString(
-            string: L10n.Commentary.AddressField.title,
+            string: placeholder,
             attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         )
+    }
+
+    public func configureButton(title: String) {
+        actionButton.setTitle(title, for: .normal)
+    }
+
+    private func layoutUI() {
+        commentaryTextField.becomeFirstResponder()
 
         containerView.backgroundColor = .white
         view.addSubview(containerView)
@@ -106,8 +114,6 @@ final class MapCommentaryPage: UIViewController {
             $0.width.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
-
-        actionButton.setTitle(L10n.Commentary.Button.title, for: .normal)
 
         view.backgroundColor = .clear
 
