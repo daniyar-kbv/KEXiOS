@@ -195,6 +195,7 @@
 		0023E58F63C6BB362CCBDA45E29D096C /* ProfileChildCoordinatorsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346C8557EE2664DF8110DA85A12F4C3C /* ProfileChildCoordinatorsFactory.swift */; };
 		974AE9BE8ACDD9A2039C9F9A06FBFF0E /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACF86860C7711087633FA7491110757 /* ProfileCoordinator.swift */; };
 		76E6A231C962E12B0989804E3B33B490 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D07064F2C35C75CDFBA5B39B221275 /* ProfilePage.swift */; };
+		04A117F0D25895DAAF8681BB57132F0E /* ProfilePageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F9132107B48C36D2C4508F6F7EA70E /* ProfilePageRepository.swift */; };
 		1B9FF087AA2FF5E267FB605E0CB8F243 /* ProfilePagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8801A8C6297BF5F8678DB2E6090404 /* ProfilePagesFactory.swift */; };
 		E8313910EBBD31D7EDDD0C4108C33256 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607A9C883241211935E1461949E3CEC /* ProfileService.swift */; };
 		653D149B28F0F3BCDF06EAE8973AA426 /* ProfileTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0DDCC9AD11C0C483BBE3C815382E5A /* ProfileTableItem.swift */; };
@@ -481,6 +482,7 @@
 		346C8557EE2664DF8110DA85A12F4C3C /* ProfileChildCoordinatorsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileChildCoordinatorsFactory.swift; sourceTree = "<group>"; };
 		4ACF86860C7711087633FA7491110757 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		15D07064F2C35C75CDFBA5B39B221275 /* ProfilePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
+		B6F9132107B48C36D2C4508F6F7EA70E /* ProfilePageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageRepository.swift; sourceTree = "<group>"; };
 		8B8801A8C6297BF5F8678DB2E6090404 /* ProfilePagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePagesFactory.swift; sourceTree = "<group>"; };
 		E607A9C883241211935E1461949E3CEC /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		AB0DDCC9AD11C0C483BBE3C815382E5A /* ProfileTableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableItem.swift; sourceTree = "<group>"; };
@@ -1355,6 +1357,7 @@
 			isa = PBXGroup;
 			children = (
 				15D07064F2C35C75CDFBA5B39B221275 /* ProfilePage.swift */,
+				B6F9132107B48C36D2C4508F6F7EA70E /* ProfilePageRepository.swift */,
 				AB0DDCC9AD11C0C483BBE3C815382E5A /* ProfileTableItem.swift */,
 				6D0F774DE519294C5F347CC964CA5D73 /* ProfileViewModel.swift */,
 			);
@@ -2124,6 +2127,7 @@
 				0023E58F63C6BB362CCBDA45E29D096C /* ProfileChildCoordinatorsFactory.swift in Sources */,
 				974AE9BE8ACDD9A2039C9F9A06FBFF0E /* ProfileCoordinator.swift in Sources */,
 				76E6A231C962E12B0989804E3B33B490 /* ProfilePage.swift in Sources */,
+				04A117F0D25895DAAF8681BB57132F0E /* ProfilePageRepository.swift in Sources */,
 				1B9FF087AA2FF5E267FB605E0CB8F243 /* ProfilePagesFactory.swift in Sources */,
 				E8313910EBBD31D7EDDD0C4108C33256 /* ProfileService.swift in Sources */,
 				653D149B28F0F3BCDF06EAE8973AA426 /* ProfileTableItem.swift in Sources */,

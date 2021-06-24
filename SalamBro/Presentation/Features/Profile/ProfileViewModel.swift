@@ -29,36 +29,39 @@ final class ProfileViewModelImpl: ProfileViewModel {
     private(set) var outputs: Output = .init()
     private(set) var userInfo: UserInfoResponse?
 
-    private let profileService: ProfileService
-    private let authService: AuthService
-    private let tokenStorage: AuthTokenStorage
+    private let repository: ProfilePageRepository
 
-    init(profileService: ProfileService, authService: AuthService, tokenStorage: AuthTokenStorage) {
-        self.profileService = profileService
-        self.authService = authService
-        self.tokenStorage = tokenStorage
+    init(repository: ProfilePageRepository) {
+        self.repository = repository
+        bindOutputs()
     }
 
     func getUserInfo() {
-        outputs.didStartRequest.accept(())
-        profileService.getUserInfo()
-            .subscribe(onSuccess: { [weak self] userResponse in
-                self?.outputs.didEndRequest.accept(())
-                self?.userInfo = userResponse
-                self?.outputs.didGetUserInfo.accept(userResponse)
-            }, onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFail.accept(error)
-                    return
-                }
-                self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
-            })
-            .disposed(by: disposeBag)
+        repository.getUserInfo()
     }
 
     func logout() {
-        tokenStorage.cleanUp()
+        repository.logout()
+    }
+
+    private func bindOutputs() {
+        repository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didFail
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didGetUserInfo
+            .bind(to: outputs.didGetUserInfo)
+            .disposed(by: disposeBag)
+
+        userInfo = repository.userInfo
     }
 }
 
