@@ -20,7 +20,6 @@ final class SupportCoordinator: BaseCoordinator {
         self.router = router
         self.pagesFactory = pagesFactory
         self.coordinatorsFactory = coordinatorsFactory
-        router.set(navigationController: router.getNavigationController())
     }
 
     override func start() {
@@ -31,7 +30,7 @@ final class SupportCoordinator: BaseCoordinator {
                 self?.showAgreementPage(url: url)
             }).disposed(by: disposeBag)
 
-        router.push(viewController: supportPage, animated: true)
+        router.set(navigationController: SBNavigationController(rootViewController: supportPage))
     }
 
     private func showAgreementPage(url: URL) {

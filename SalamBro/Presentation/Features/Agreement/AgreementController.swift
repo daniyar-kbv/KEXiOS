@@ -31,28 +31,23 @@ final class AgreementController: UIViewController {
     }
 
     private func bindViewModel() {
-        viewModel.url.bind(onNext: { [weak self] url in
-            self?.webView.load(URLRequest(url: url))
-        }).disposed(by: disposeBag)
+        viewModel.url
+            .bind(onNext: { [weak self] url in
+                self?.webView.load(URLRequest(url: url))
+            })
+            .disposed(by: disposeBag)
     }
 
     override func loadView() {
         super.loadView()
 
-        view = webView
+        view.addSubview(webView)
+        webView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupNavigationBar()
-    }
-
-    // MARK: - Tech Debt: change
-
-    private func setupNavigationBar() {
-        navigationItem.title = L10n.Rating.information
-        navigationController?.navigationBar.topItem?.title = ""
-        navigationController?.navigationBar.isTranslucent = false
     }
 }

@@ -59,11 +59,7 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 
     init(viewModel: SupportViewModel) {
         self.viewModel = viewModel
-
         super.init(nibName: .none, bundle: .none)
-
-        layoutUI()
-        setupNavigationBar()
     }
 
     @available(*, unavailable)
@@ -73,7 +69,7 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        layoutUI()
         bindViewModel()
         viewModel.getData()
     }
@@ -105,24 +101,9 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
         socialCollectionView.reloadData()
     }
 
-    private func setupNavigationBar() {
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationController?.navigationBar.backIndicatorImage = Asset.chevronLeft.image
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = Asset.chevronLeft.image
-        navigationItem.title = L10n.Support.title
-    }
-
     private func layoutUI() {
-        view.backgroundColor = .white
-
+        view.backgroundColor = .arcticWhite
+        navigationItem.title = L10n.Support.title
         [tableView, socialCollectionView, callButton].forEach { view.addSubview($0) }
 
         tableView.snp.makeConstraints {

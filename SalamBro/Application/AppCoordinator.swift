@@ -68,7 +68,7 @@ final class AppCoordinator: BaseCoordinator {
 
         preparedViewControllers.append(menuCoordinator.router.getNavigationController())
         add(menuCoordinator)
-        navigationControllers.append(menuCoordinator.router.getNavigationController())
+//        navigationControllers.append(menuCoordinator.router.getNavigationController())
     }
 
     private func configureProfileCoordinator() {
@@ -79,7 +79,7 @@ final class AppCoordinator: BaseCoordinator {
                                                                                       selectedImage: Asset.profile.image)
         preparedViewControllers.append(profileCoordinator.router.getNavigationController())
         add(profileCoordinator)
-        navigationControllers.append(profileCoordinator.router.getNavigationController())
+//        navigationControllers.append(profileCoordinator.router.getNavigationController())
     }
 
     private func configureSupportCoordinator() {
@@ -90,7 +90,7 @@ final class AppCoordinator: BaseCoordinator {
                                                                                       selectedImage: Asset.support.image)
         preparedViewControllers.append(supportCoordinator.router.getNavigationController())
         add(supportCoordinator)
-        navigationControllers.append(supportCoordinator.router.getNavigationController())
+//        navigationControllers.append(supportCoordinator.router.getNavigationController())
     }
 
     private func configureCartCoordinator() {
@@ -102,7 +102,7 @@ final class AppCoordinator: BaseCoordinator {
                                                                                    selectedImage: Asset.cart.image)
         preparedViewControllers.append(cartCoordinator.router.getNavigationController())
         add(cartCoordinator)
-        navigationControllers.append(cartCoordinator.router.getNavigationController())
+//        navigationControllers.append(cartCoordinator.router.getNavigationController())
     }
 
     private func startAuthCoordinator() {
