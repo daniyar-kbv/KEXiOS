@@ -35,7 +35,7 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
         return label
     }()
 
-    private let numberView = AuthNumberView()
+    private var numberView: AuthNumberView?
 
     private let getButton: UIButton = {
         let button = UIButton()
@@ -50,6 +50,11 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
     }()
 
     private let viewModel: AuthorizationViewModel
+
+    override func loadView() {
+        super.loadView()
+        numberView = AuthNumberView(delegate: self, maskedDelegate: maskedDelegate)
+    }
 
     init(viewModel: AuthorizationViewModel) {
         self.viewModel = viewModel
@@ -114,12 +119,8 @@ extension AuthorizationController {
         outputs.handleAgreementTextAction.accept(())
     }
 
-    @objc private func handlecCountryCodeButtonAction() {
-        outputs.handleChangeCountryCode.accept(())
-    }
-
     func changeCountryCode(title: String) {
-        numberView.countryCodeButton.setTitle(title, for: .normal)
+        numberView?.configureButtonTitle(with: title)
     }
 }
 
@@ -144,13 +145,13 @@ extension AuthorizationController {
     }
 
     private func configureViews() {
-        maskedDelegate.listener = self
-        numberView.numberField.delegate = maskedDelegate
         view.backgroundColor = .white
-        numberView.countryCodeButton.setTitle(viewModel.getCountryCode(), for: .normal)
+        maskedDelegate.listener = self
+
         aggreementLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel)))
-        numberView.chevronView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlecCountryCodeButtonAction)))
-        numberView.countryCodeButton.addTarget(self, action: #selector(handlecCountryCodeButtonAction), for: .touchUpInside)
+
+        numberView?.configureButtonTitle(with: viewModel.getCountryCode())
+        numberView?.configureActions()
     }
 
     private func layoutUI() {
@@ -160,6 +161,7 @@ extension AuthorizationController {
             $0.left.right.equalToSuperview()
         }
 
+        guard let numberView = numberView else { return }
         view.addSubview(numberView)
         numberView.snp.makeConstraints {
             $0.top.equalTo(authHeaderView.snp.bottom).offset(40)
@@ -183,6 +185,12 @@ extension AuthorizationController {
             $0.right.equalToSuperview().offset(-24)
             $0.height.equalTo(43)
         }
+    }
+}
+
+extension AuthorizationController: AuthNumberViewDelegate {
+    func countryCodeButtonTapped() {
+        outputs.handleChangeCountryCode.accept(())
     }
 }
 

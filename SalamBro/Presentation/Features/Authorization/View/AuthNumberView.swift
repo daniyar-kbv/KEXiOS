@@ -5,11 +5,18 @@
 //  Created by Meruyert Tastandiyeva on 6/24/21.
 //
 
+import InputMask
 import SnapKit
 import UIKit
 
+protocol AuthNumberViewDelegate: AnyObject {
+    func countryCodeButtonTapped()
+}
+
 final class AuthNumberView: UIView {
-    let countryCodeButton: UIButton = {
+    weak var delegate: AuthNumberViewDelegate?
+
+    private let countryCodeButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 26)
@@ -17,7 +24,7 @@ final class AuthNumberView: UIView {
         return button
     }()
 
-    let chevronView: UIImageView = {
+    private let chevronView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "chevron.bottom")?.withRenderingMode(.alwaysTemplate)
         view.tintColor = .black
@@ -26,7 +33,7 @@ final class AuthNumberView: UIView {
         return view
     }()
 
-    let numberField: UITextField = {
+    private let numberField: UITextField = {
         let field = UITextField()
         field.keyboardType = .numberPad
         field.font = .systemFont(ofSize: 26)
@@ -37,8 +44,10 @@ final class AuthNumberView: UIView {
         return field
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: AuthNumberViewDelegate, maskedDelegate: MaskedTextFieldDelegate) {
+        super.init(frame: .zero)
+        self.delegate = delegate
+        numberField.delegate = maskedDelegate
         layoutUI()
     }
 
@@ -49,6 +58,15 @@ final class AuthNumberView: UIView {
 }
 
 extension AuthNumberView {
+    func configureButtonTitle(with buttonTitle: String) {
+        countryCodeButton.setTitle(buttonTitle, for: .normal)
+    }
+
+    func configureActions() {
+        countryCodeButton.addTarget(self, action: #selector(handleCountryCodeButtonAction), for: .touchUpInside)
+        chevronView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCountryCodeButtonAction)))
+    }
+
     private func layoutUI() {
         [countryCodeButton, chevronView, numberField].forEach {
             addSubview($0)
@@ -73,5 +91,9 @@ extension AuthNumberView {
             $0.right.equalToSuperview()
             $0.height.equalTo(32)
         }
+    }
+
+    @objc private func handleCountryCodeButtonAction() {
+        delegate?.countryCodeButtonTapped()
     }
 }
