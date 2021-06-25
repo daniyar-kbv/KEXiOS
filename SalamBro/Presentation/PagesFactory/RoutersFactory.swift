@@ -7,17 +7,8 @@
 
 import UIKit
 
-final class TempNavigationLogic: NavigationLogic {
+final class BaseNavigationLogic: NavigationLogic {
     func configure(viewController _: UIViewController, in navigationController: UINavigationController) -> BarButtonConfiguration {
-        navigationController.setNavigationBarHidden(false, animated: true)
-        navigationController.navigationBar.shadowImage = .init()
-        navigationController.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController.navigationBar.backgroundColor = .clear
-        let textAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.darkGray,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-        ]
-        navigationController.navigationBar.titleTextAttributes = textAttributes
         if navigationController.viewControllers.count > 1 {
             return .withBackButton
         }
@@ -37,26 +28,26 @@ protocol RoutersFactory: AnyObject {
 
 final class RoutersFactoryImpl: DependencyFactory, RoutersFactory {
     func makeMenuRouter() -> Router {
-        return scoped(MainRouter(isRootRouter: true, navigationLogic: TempNavigationLogic()))
+        return scoped(MainRouter(isRootRouter: true, navigationLogic: BaseNavigationLogic()))
     }
 
     func makeProfileRouter() -> Router {
-        return scoped(MainRouter(isRootRouter: true, navigationLogic: TempNavigationLogic()))
+        return scoped(MainRouter(isRootRouter: true, navigationLogic: BaseNavigationLogic()))
     }
 
     func makeSupportRouter() -> Router {
-        return scoped(MainRouter(isRootRouter: true, navigationLogic: TempNavigationLogic()))
+        return scoped(MainRouter(isRootRouter: true, navigationLogic: BaseNavigationLogic()))
     }
 
     func makeCartRouter() -> Router {
-        return scoped(MainRouter(isRootRouter: true, navigationLogic: TempNavigationLogic()))
+        return scoped(MainRouter(isRootRouter: true, navigationLogic: BaseNavigationLogic()))
     }
 
     func makeAuthRouter() -> Router {
-        return scoped(MainRouter(isRootRouter: false, navigationLogic: TempNavigationLogic()))
+        return scoped(MainRouter(isRootRouter: false, navigationLogic: BaseNavigationLogic()))
     }
 
     func makeOnboardingRouter() -> Router {
-        return scoped(MainRouter(isRootRouter: true, navigationLogic: TempNavigationLogic()))
+        return scoped(MainRouter(isRootRouter: true, navigationLogic: BaseNavigationLogic()))
     }
 }

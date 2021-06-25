@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class ShareOrderController: ViewController {
+final class ShareOrderController: UIViewController {
     lazy var webView: WKWebView = {
         let webConfiguration = WKWebViewConfiguration()
         let webView = WKWebView(frame: .zero, configuration: webConfiguration)
@@ -38,13 +38,8 @@ class ShareOrderController: ViewController {
         setupConstraints()
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.rightBarButtonItem = .init(customView: submitButton)
-    }
-
     func setupUI() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "post", style: .done, target: self, action: #selector(addTapped))
+        navigationItem.rightBarButtonItem = .init(customView: submitButton)
         webView.loadHTMLString(htmlString, baseURL: nil)
         view.backgroundColor = .white
         contentView.backgroundColor = .white
@@ -78,9 +73,5 @@ class ShareOrderController: ViewController {
             }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
-    }
-
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
     }
 }

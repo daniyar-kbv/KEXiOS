@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: Tech debt, нужно переписать как будет время, не критично.
 
-final class ChangeNameController: ViewController, AlertDisplayable, LoaderDisplayable {
+final class ChangeNameController: UIViewController, AlertDisplayable, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()
@@ -100,12 +100,8 @@ final class ChangeNameController: ViewController, AlertDisplayable, LoaderDispla
         bindViewModel()
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.title = L10n.ChangeName.NavigationBar.title
-    }
-
     private func setupUI() {
+        navigationItem.title = L10n.ChangeName.NavigationBar.title
         yCoordinate = saveButton.frame.origin.y
     }
 }

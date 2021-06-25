@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class OrderHistoryController: ViewController {
+final class OrderHistoryController: UIViewController {
     var onRateTapped: (() -> Void)?
     var onShareTapped: (() -> Void)?
     var onTerminate: (() -> Void)?
@@ -50,17 +50,8 @@ final class OrderHistoryController: ViewController {
         setupConstraints()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationBar()
-    }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.title = L10n.OrderHistory.title
-    }
-
     func setupViews() {
+        navigationItem.title = L10n.OrderHistory.title
         view.backgroundColor = .white
         view.addSubview(tableView)
     }

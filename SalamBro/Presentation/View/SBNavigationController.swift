@@ -9,10 +9,7 @@ import UIKit
 
 enum BarButtonConfiguration {
     case withBackButton
-    case withCloseButton
-    case both
     case none
-    case custom
 }
 
 protocol NavigationLogic {
@@ -32,12 +29,14 @@ final class SBNavigationController: UINavigationController {
         numberOfVCs = 1
         super.init(rootViewController: rootViewController)
         delegate = self
+        navigationDefaultAppearance()
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         numberOfVCs = 1
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         delegate = self
+        navigationDefaultAppearance()
     }
 
     @available(*, unavailable)
@@ -51,6 +50,18 @@ final class SBNavigationController: UINavigationController {
 
     func removeObserver(_ observer: SBNavigationControllerDelegate) {
         observers.remove(observer)
+    }
+
+    private func navigationDefaultAppearance() {
+        setNavigationBarHidden(false, animated: true)
+        navigationBar.shadowImage = .init()
+        navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationBar.backgroundColor = .clear
+        let textAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+        ]
+        navigationBar.titleTextAttributes = textAttributes
     }
 }
 

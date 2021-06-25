@@ -9,7 +9,6 @@ import UIKit
 
 protocol UIBarButtonConfigurable: AnyObject {
     func setBackButton(completion: @escaping (() -> Void))
-    func setCloseButton(completion: @escaping (() -> Void))
 }
 
 extension UIViewController: UIBarButtonConfigurable {
@@ -19,14 +18,5 @@ extension UIViewController: UIBarButtonConfigurable {
         }
         backBarButtonItem.tintColor = .kexRed
         navigationItem.leftBarButtonItem = backBarButtonItem
-    }
-
-    func setCloseButton(completion: @escaping (() -> Void)) {
-        let closeBarButtonItem = UISBBarButtonItem(title: "Cancel", style: .plain) {
-            completion()
-        }
-
-        closeBarButtonItem.tintColor = .kexRed
-        navigationItem.rightBarButtonItem = closeBarButtonItem
     }
 }

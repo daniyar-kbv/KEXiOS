@@ -47,25 +47,13 @@ final class RateController: UIViewController {
         super.viewDidLayoutSubviews()
         rateView.collectionViewHeightConstraint?.update(offset: rateView.collectionView.contentSize.height)
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
-        navigationItem.title = L10n.RateOrder.title
-    }
 }
 
 extension RateController {
     private func configureViews() {
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
+        navigationItem.title = L10n.RateOrder.title
+
         rateView.collectionView.delegate = self
         rateView.collectionView.dataSource = self
 

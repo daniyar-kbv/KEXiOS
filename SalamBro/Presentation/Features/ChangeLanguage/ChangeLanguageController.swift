@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class ChangeLanguageController: ViewController {
+class ChangeLanguageController: UIViewController {
     lazy var countriesTableView: UITableView = {
         let table = UITableView()
         table.allowsMultipleSelection = false
@@ -35,12 +35,8 @@ class ChangeLanguageController: ViewController {
         setupConstraints()
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-        navigationItem.title = L10n.ChangeLanguage.title
-    }
-
     fileprivate func setupViews() {
+        navigationItem.title = L10n.ChangeLanguage.title
         view.backgroundColor = .white
         view.addSubview(countriesTableView)
     }

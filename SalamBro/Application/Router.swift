@@ -39,12 +39,6 @@ final class MainRouter: Router {
         self?.pop(animated: true)
     }
 
-    private lazy var didTapOnClose: (() -> Void) = { [weak self] in
-        self?.dismiss(animated: true, completion: {
-            self?.didFinish?()
-        })
-    }
-
     private let navigationLogic: NavigationLogic
     private let isRootRouter: Bool
 
@@ -128,18 +122,10 @@ extension MainRouter: SBNavigationControllerDelegate {
         case .withBackButton:
             viewController.setBackButton(completion: didTapOnBack)
             navigationController.interactivePopGestureRecognizer?.delegate = viewController as? UIGestureRecognizerDelegate
-        case .withCloseButton:
-            viewController.navigationItem.setHidesBackButton(true, animated: true)
-            viewController.setCloseButton(completion: didTapOnClose)
-        case .both:
-            viewController.setBackButton(completion: didTapOnBack)
-            viewController.setCloseButton(completion: didTapOnClose)
-            navigationController.interactivePopGestureRecognizer?.delegate = viewController as? UIGestureRecognizerDelegate
         case .none:
             viewController.navigationItem.rightBarButtonItem = nil
             viewController.navigationItem.leftBarButtonItem = nil
             viewController.navigationItem.setHidesBackButton(true, animated: true)
-        case .custom: break
         }
     }
 }
