@@ -9,12 +9,12 @@ import Reusable
 import UIKit
 
 final class ChangeLanguageCell: UITableViewCell {
-    lazy var languageImageView: UIImageView = {
+    private lazy var languageImageView: UIImageView = {
         let view = UIImageView()
         return view
     }()
 
-    lazy var languageLabel: UILabel = {
+    private lazy var languageLabel: UILabel = {
         let view = UILabel()
         return view
     }()
@@ -27,6 +27,11 @@ final class ChangeLanguageCell: UITableViewCell {
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(title: String, image: UIImage) {
+        languageImageView.image = image
+        languageLabel.text = title
     }
 
     private func layoutUI() {
