@@ -124,14 +124,12 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 
         tableView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
-            $0.left.equalToSuperview()
-            $0.right.equalToSuperview()
+            $0.left.right.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
 
         callButton.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-24)
             $0.height.equalTo(43)
         }

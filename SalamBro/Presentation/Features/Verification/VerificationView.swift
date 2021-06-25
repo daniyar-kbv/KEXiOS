@@ -85,8 +85,7 @@ extension VerificationView {
 
         maintitle.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
         }
 
         subtitle.snp.makeConstraints {
@@ -97,15 +96,13 @@ extension VerificationView {
 
         otpField.snp.makeConstraints {
             $0.top.equalTo(subtitle.snp.bottom).offset(40)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(65)
         }
 
         getCodeButton.snp.makeConstraints {
             $0.top.equalTo(otpField.snp.bottom).offset(72)
-            $0.left.equalToSuperview().offset(18)
-            $0.right.equalToSuperview().offset(-18)
+            $0.left.right.equalToSuperview().inset(18)
             $0.height.equalTo(43)
         }
     }

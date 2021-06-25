@@ -74,8 +74,7 @@ extension OrderHistoryController {
 
         tableView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalToSuperview()
         }
     }

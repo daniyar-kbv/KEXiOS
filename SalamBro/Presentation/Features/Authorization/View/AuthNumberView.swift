@@ -75,8 +75,7 @@ extension AuthNumberView {
         countryCodeButton.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
             $0.left.equalToSuperview()
-            $0.width.equalTo(32)
-            $0.height.equalTo(32)
+            $0.width.height.equalTo(32)
         }
 
         chevronView.snp.makeConstraints {

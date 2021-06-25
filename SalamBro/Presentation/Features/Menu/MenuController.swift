@@ -151,8 +151,7 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
 
         brandSelectView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(8)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(48)
         }
 

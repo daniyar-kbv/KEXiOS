@@ -16,15 +16,15 @@ final class ChangeNameController: UIViewController, AlertDisplayable, LoaderDisp
 
     private let contentView = ChangeNameView()
 
-    private let viewModel: ChangeNameViewModel
+    // private let viewModel: ChangeNameViewModel
 
     override func loadView() {
         super.loadView()
         view = contentView
     }
 
-    init(viewModel: ChangeNameViewModel) {
-        self.viewModel = viewModel
+    init() {
+        // self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -36,7 +36,7 @@ final class ChangeNameController: UIViewController, AlertDisplayable, LoaderDisp
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
-        bindViewModel()
+        // bindViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -58,13 +58,13 @@ final class ChangeNameController: UIViewController, AlertDisplayable, LoaderDisp
 
 extension ChangeNameController {
     private func configureViews() {
-        contentView.nameTextField.text = viewModel.oldUserInfo.name
-        contentView.emailTextField.text = viewModel.oldUserInfo.email
+//        contentView.nameTextField.text = viewModel.oldUserInfo.name
+//        contentView.emailTextField.text = viewModel.oldUserInfo.email
         contentView.saveButton.isEnabled = !(contentView.nameTextField.text?.isEmpty ?? true)
 
         contentView.nameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         contentView.emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        contentView.saveButton.addTarget(self, action: #selector(saveName), for: .touchUpInside)
+//        contentView.saveButton.addTarget(self, action: #selector(saveName), for: .touchUpInside)
     }
 
     @objc private func editingChanged(sender: UITextField) {
@@ -78,37 +78,38 @@ extension ChangeNameController {
         contentView.saveButton.backgroundColor = .kexRed
     }
 
-    @objc private func saveName() {
-        viewModel.change(name: contentView.nameTextField.text, email: contentView.emailTextField.text)
-    }
+//
+//    @objc private func saveName() {
+//        viewModel.change(name: contentView.nameTextField.text, email: contentView.emailTextField.text)
+//    }
 
     @objc private func dismissVC() {
         navigationController?.popViewController(animated: true)
     }
 
-    private func bindViewModel() {
-        viewModel.outputs.didStartRequest
-            .bind { [weak self] in
-                self?.showLoader()
-            }
-            .disposed(by: disposeBag)
-
-        viewModel.outputs.didEndRequest
-            .bind { [weak self] in
-                self?.hideLoader()
-            }
-            .disposed(by: disposeBag)
-
-        viewModel.outputs.didFail
-            .bind { [weak self] error in
-                self?.showError(error)
-            }
-            .disposed(by: disposeBag)
-
-        viewModel.outputs.didGetUserInfo
-            .bind(to: outputs.didGetUserInfo)
-            .disposed(by: disposeBag)
-    }
+//    private func bindViewModel() {
+//        viewModel.outputs.didStartRequest
+//            .bind { [weak self] in
+//                self?.showLoader()
+//            }
+//            .disposed(by: disposeBag)
+//
+//        viewModel.outputs.didEndRequest
+//            .bind { [weak self] in
+//                self?.hideLoader()
+//            }
+//            .disposed(by: disposeBag)
+//
+//        viewModel.outputs.didFail
+//            .bind { [weak self] error in
+//                self?.showError(error)
+//            }
+//            .disposed(by: disposeBag)
+//
+//        viewModel.outputs.didGetUserInfo
+//            .bind(to: outputs.didGetUserInfo)
+//            .disposed(by: disposeBag)
+//    }
 
     struct Output {
         let didGetUserInfo = PublishRelay<UserInfoResponse>()

@@ -44,16 +44,14 @@ extension AuthHeaderView {
         addSubview(mainTitle)
         mainTitle.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.greaterThanOrEqualTo(76)
         }
 
         addSubview(subTitle)
         subTitle.snp.makeConstraints {
             $0.top.equalTo(mainTitle.snp.bottom)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.greaterThanOrEqualTo(16)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }

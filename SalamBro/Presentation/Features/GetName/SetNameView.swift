@@ -78,28 +78,24 @@ extension SetNameView {
 
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
-            $0.left.equalTo(safeAreaLayoutGuide.snp.left).offset(24)
-            $0.right.equalTo(safeAreaLayoutGuide.snp.right).offset(-24)
+            $0.left.right.equalTo(safeAreaLayoutGuide).inset(24)
         }
 
         nameField.snp.makeConstraints {
-            $0.left.equalTo(nameView.snp.left).offset(16)
-            $0.right.equalTo(nameView.snp.right).offset(-16)
+            $0.left.right.equalTo(nameView).inset(16)
             $0.centerY.equalTo(nameView.snp.centerY)
         }
 
         nameView.snp.makeConstraints {
             $0.height.equalTo(50)
             $0.top.equalTo(titleLabel.snp.bottom).offset(40)
-            $0.left.equalTo(safeAreaLayoutGuide.snp.left).offset(24)
-            $0.right.equalTo(safeAreaLayoutGuide.snp.right).offset(-24)
+            $0.left.right.equalTo(safeAreaLayoutGuide).inset(24)
         }
 
         nextButton.snp.makeConstraints {
             $0.height.equalTo(43)
             $0.top.equalTo(nameView.snp.bottom).offset(150)
-            $0.left.equalTo(safeAreaLayoutGuide.snp.left).offset(24)
-            $0.right.equalTo(safeAreaLayoutGuide.snp.right).offset(-24)
+            $0.left.right.equalTo(safeAreaLayoutGuide).inset(24)
         }
     }
 

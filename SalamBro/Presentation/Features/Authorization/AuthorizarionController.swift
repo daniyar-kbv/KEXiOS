@@ -165,24 +165,21 @@ extension AuthorizationController {
         view.addSubview(numberView)
         numberView.snp.makeConstraints {
             $0.top.equalTo(authHeaderView.snp.bottom).offset(40)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(31)
         }
 
         view.addSubview(aggreementLabel)
         aggreementLabel.snp.makeConstraints {
             $0.top.equalTo(numberView.snp.bottom).offset(72)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(32)
         }
 
         view.addSubview(getButton)
         getButton.snp.makeConstraints {
             $0.top.equalTo(aggreementLabel.snp.bottom).offset(16)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(43)
         }
     }

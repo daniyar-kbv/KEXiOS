@@ -62,9 +62,8 @@ extension ChangeLanguageController {
         view.addSubview(languagesTableView)
 
         languagesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.left.right.bottom.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.left.right.equalToSuperview()
         }
     }
 }

@@ -106,34 +106,28 @@ extension MenuDetailView {
 
         imageView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(43)
-            $0.left.equalToSuperview().offset(40)
-            $0.right.equalToSuperview().offset(-40)
+            $0.left.right.equalToSuperview().inset(40)
             $0.height.equalToSuperview().multipliedBy(0.33)
         }
 
         itemTitleLabel.snp.makeConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(27)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
         }
 
         descriptionLabel.snp.makeConstraints {
             $0.top.equalTo(itemTitleLabel.snp.bottom).offset(8)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
         }
 
         chooseAdditionalItemLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.left.equalToSuperview()
-            $0.right.equalToSuperview()
+            $0.top.left.right.equalToSuperview()
         }
 
         additionalItemLabel.snp.makeConstraints {
             $0.top.equalTo(chooseAdditionalItemLabel.snp.bottom).offset(3)
-            $0.left.equalToSuperview()
+            $0.left.bottom.equalToSuperview()
             $0.right.equalTo(chooseAdditionalItemButton.snp.left).offset(-8)
-            $0.bottom.equalToSuperview()
         }
 
         chooseAdditionalItemButton.snp.makeConstraints {
@@ -143,28 +137,24 @@ extension MenuDetailView {
 
         chooseAdditionalItemView.snp.makeConstraints {
             $0.top.equalTo(descriptionLabel.snp.bottom).offset(16)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(36)
         }
 
         commentaryField.snp.makeConstraints {
             $0.top.equalTo(chooseAdditionalItemView.snp.bottom).offset(16)
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.height.equalTo(50)
         }
 
         commentaryView.snp.makeConstraints {
             $0.top.equalTo(chooseAdditionalItemView.snp.bottom).offset(16)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(50)
         }
 
         proceedButton.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(43)
         }

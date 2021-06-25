@@ -71,17 +71,12 @@ extension ShareOrderController {
         webView.loadHTMLString(htmlString, baseURL: nil)
 
         contentView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.left.equalTo(view.safeAreaLayoutGuide.snp.left)
-            $0.right.equalTo(view.safeAreaLayoutGuide.snp.right)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
         webView.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top)
-            $0.left.equalTo(contentView.snp.left).offset(16)
-            $0.right.equalTo(contentView.snp.right).offset(-16)
-            $0.bottom.equalTo(contentView.snp.bottom)
+            $0.top.bottom.equalTo(contentView)
+            $0.left.right.equalTo(contentView).inset(16)
         }
     }
 }

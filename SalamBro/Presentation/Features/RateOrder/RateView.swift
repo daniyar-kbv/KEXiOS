@@ -164,20 +164,17 @@ extension RateView {
         }
 
         questionLabel.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.top.equalTo(cosmosContainerView.snp.bottom).offset(32)
         }
 
         suggestionLabel.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.top.equalTo(questionLabel.snp.bottom).offset(8)
         }
 
         collectionView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.top.equalTo(suggestionLabel.snp.bottom).offset(8)
             collectionViewHeightConstraint = $0.height.equalTo(0).constraint
         }
@@ -185,22 +182,19 @@ extension RateView {
         commentView.addSubview(commentTextField)
 
         commentView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.top.equalTo(collectionView.snp.bottom).offset(20)
             $0.bottom.equalToSuperview().offset(-20)
             $0.height.equalTo(50)
         }
 
         commentTextField.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.centerX.centerY.equalToSuperview()
         }
 
         sendButton.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(43)
         }

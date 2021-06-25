@@ -43,15 +43,13 @@ final class ChangeLanguageCell: UITableViewCell {
         }
 
         languageImageView.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.top.bottom.equalTo(safeAreaLayoutGuide)
             $0.left.equalToSuperview().offset(16)
-            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
 
         languageLabel.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.top.bottom.equalTo(safeAreaLayoutGuide)
             $0.left.equalTo(languageImageView.snp.right).offset(4)
-            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
 

@@ -127,8 +127,7 @@ final class OrderHistoryCellContentView: UIView {
         logoView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(24)
             $0.left.equalToSuperview()
-            $0.height.equalTo(48)
-            $0.width.equalTo(48)
+            $0.height.width.equalTo(48)
         }
         orderInfoStack.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(24)

@@ -87,14 +87,12 @@ extension ChangeNameView {
 
         nameView.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(4)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(50)
         }
 
         nameTextField.snp.makeConstraints {
-            $0.left.equalTo(nameView.snp.left).offset(16)
-            $0.right.equalTo(nameView.snp.left).offset(-16)
+            $0.left.right.equalTo(nameView).inset(16)
             $0.centerY.equalTo(nameView.snp.centerY)
         }
 
@@ -105,21 +103,18 @@ extension ChangeNameView {
 
         emailView.snp.makeConstraints {
             $0.top.equalTo(emailLabel.snp.bottom).offset(4)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(50)
         }
 
         emailTextField.snp.makeConstraints {
-            $0.left.equalTo(emailView.snp.left).offset(16)
-            $0.right.equalTo(emailView.snp.left).offset(-16)
+            $0.left.right.equalTo(emailView).inset(16)
             $0.centerY.equalTo(emailView.snp.centerY)
         }
 
         saveButton.snp.makeConstraints {
             $0.top.equalTo(emailView.snp.bottom).offset(24)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(43)
         }
     }
