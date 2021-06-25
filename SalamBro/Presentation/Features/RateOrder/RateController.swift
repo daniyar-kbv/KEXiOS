@@ -116,7 +116,6 @@ extension RateController {
     @objc private func commentaryViewTapped() {
         commentaryPage = MapCommentaryPage()
         commentaryPage?.configureTextField(placeholder: L10n.RateOrder.CommentaryField.placeholder)
-        commentaryPage?.configureButton(title: L10n.Promocode.button)
 
         commentaryPage?.output.didProceed.subscribe(onNext: { comment in
             self.rateView.commentTextField.text = comment

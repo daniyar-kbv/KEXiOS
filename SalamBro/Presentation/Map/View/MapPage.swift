@@ -202,7 +202,6 @@ extension MapPage {
     private func showCommentaryPage() {
         commentaryPage = MapCommentaryPage()
         commentaryPage?.configureTextField(placeholder: L10n.Commentary.AddressField.title)
-        commentaryPage?.configureButton(title: L10n.Promocode.button)
 
         commentaryPage?.output.didProceed.subscribe(onNext: { comment in
             self.mapAddressView.commentaryTextField.text = comment

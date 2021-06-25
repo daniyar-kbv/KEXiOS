@@ -101,7 +101,7 @@ final class AnimationContainerView: UIView {
         lottieAnimationView.play()
     }
 
-    @objc func performAction() {
+    @objc private func performAction() {
         delegate?.performAction(self)
     }
 }

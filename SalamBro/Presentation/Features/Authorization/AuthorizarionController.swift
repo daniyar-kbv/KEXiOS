@@ -157,13 +157,12 @@ extension AuthorizationController {
         view.addSubview(authHeaderView)
         authHeaderView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(view.bounds.height * 0.14)
+            $0.left.right.equalToSuperview()
         }
 
         view.addSubview(numberView)
         numberView.snp.makeConstraints {
-            $0.top.equalTo(authHeaderView.snp.bottom).offset(16)
+            $0.top.equalTo(authHeaderView.snp.bottom).offset(40)
             $0.left.equalToSuperview().offset(24)
             $0.right.equalToSuperview().offset(-24)
             $0.height.equalTo(31)

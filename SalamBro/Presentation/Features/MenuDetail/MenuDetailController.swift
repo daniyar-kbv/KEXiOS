@@ -105,11 +105,11 @@ extension MenuDetailController {
 }
 
 extension MenuDetailController {
-    @objc func additionalItemChangeButtonTapped() {
+    @objc private func additionalItemChangeButtonTapped() {
         outputs.toModifiers.accept(())
     }
 
-    @objc func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
+    @objc private func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
         commentaryPage = MapCommentaryPage()
         commentaryPage?.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
 
