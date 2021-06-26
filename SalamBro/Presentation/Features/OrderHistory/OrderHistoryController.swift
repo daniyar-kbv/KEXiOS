@@ -16,7 +16,7 @@ final class OrderHistoryController: UIViewController {
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
-        view.register(OrderTestCell.self, forCellReuseIdentifier: "Cell")
+        view.register(cellType: OrderTestCell.self)
         view.showsVerticalScrollIndicator = false
         view.backgroundColor = .clear
         view.estimatedRowHeight = 500
@@ -90,9 +90,8 @@ extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! OrderTestCell
+        let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderTestCell.self)
         cell.delegate = self
-        cell.selectionStyle = .none
         return cell
     }
 }

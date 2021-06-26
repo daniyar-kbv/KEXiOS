@@ -9,7 +9,7 @@ import SnapKit
 import UIKit
 
 final class OrderHistoryInfoView: UIView {
-    var itemLabel: UILabel = {
+    private var itemLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .left
         view.textColor = .mildBlue
@@ -17,7 +17,7 @@ final class OrderHistoryInfoView: UIView {
         return view
     }()
 
-    var infoLabel: UILabel = {
+    private var infoLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .left
         return view

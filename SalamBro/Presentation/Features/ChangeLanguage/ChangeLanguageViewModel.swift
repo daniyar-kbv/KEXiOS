@@ -5,21 +5,28 @@
 //  Created by Meruyert Tastandiyeva on 6/24/21.
 //
 
-import Foundation
+import UIKit
 
 protocol ChangeLanguageViewModel: AnyObject {}
 
 final class ChangeLanguageViewModelImpl: ChangeLanguageViewModel {
-    var selectionIndexPath: IndexPath?
-    var marked: IndexPath?
+    var isMarked: Bool?
 
-    public let languages: [String] = [
+    private(set) var languages: [String] = [
         "Kazakh",
         "Russian",
         "English",
     ]
 
     init() {}
+
+    func getLanguage(at indexPath: IndexPath) -> String {
+        return languages[indexPath.row]
+    }
+
+    func getImage(at indexPath: IndexPath) -> UIImage {
+        return UIImage(named: languages[indexPath.row].lowercased()) ?? UIImage()
+    }
 }
 
 extension ChangeLanguageViewModelImpl {}

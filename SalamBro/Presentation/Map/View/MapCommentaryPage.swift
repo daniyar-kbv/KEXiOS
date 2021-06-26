@@ -32,13 +32,12 @@ final class MapCommentaryPage: UIViewController {
         btn.layer.cornerRadius = 10
         btn.layer.masksToBounds = true
         btn.setTitle(L10n.Commentary.Button.title, for: .normal)
-        btn.addTarget(self, action: #selector(didProceedTapped), for: .touchUpInside)
         return btn
     }()
 
     private let containerView = UIView()
 
-    private var dimmedView = UIView()
+    private var dimmedView: UIView?
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -75,8 +74,10 @@ final class MapCommentaryPage: UIViewController {
         actionButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 guard let text = self?.commentaryTextField.text else { return }
-                self?.delegate?.onDoneButtonTapped(commentary: text)
+                self?.output.didProceed.accept(text)
                 self?.dismiss(animated: true, completion: nil)
+                self?.output.didTerminate.accept(())
+                self?.dimmedView?.removeFromSuperview()
             })
             .disposed(by: disposeBag)
     }
@@ -93,7 +94,8 @@ final class MapCommentaryPage: UIViewController {
 
     @objc private func keyboardWillHide() {
         dismiss(animated: true, completion: nil)
-        dimmedView.alpha = 0
+        output.didTerminate.accept(())
+        dimmedView?.removeFromSuperview()
     }
 
     public func configureTextField(placeholder: String) {
@@ -126,16 +128,14 @@ final class MapCommentaryPage: UIViewController {
         containerView.addSubview(commentaryTextField)
         commentaryTextField.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.greaterThanOrEqualTo(50)
         }
 
         containerView.addSubview(actionButton)
         actionButton.snp.makeConstraints {
             $0.top.equalTo(commentaryTextField.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(43)
         }
     }
@@ -143,6 +143,8 @@ final class MapCommentaryPage: UIViewController {
 
 extension MapCommentaryPage {
     func openTransitionSheet(on vc: UIViewController) {
+        dimmedView = UIView()
+        guard let dimmedView = dimmedView else { return }
         vc.present(self, animated: true)
         dimmedView.backgroundColor = .gray
         dimmedView.alpha = 0
@@ -152,20 +154,8 @@ extension MapCommentaryPage {
         }
         vc.view.layoutIfNeeded()
         UIView.animate(withDuration: 0.2, animations: {
-            self.dimmedView.alpha = 0.5
+            self.dimmedView?.alpha = 0.5
         })
-    }
-
-    private func closeTransitionSheet() {
-        dismiss(animated: true, completion: { [weak self] in
-            self?.output.didTerminate.accept(())
-            self?.dimmedView.alpha = 0
-        })
-    }
-
-    @objc private func didProceedTapped() {
-        output.didProceed.accept(commentaryTextField.text)
-        closeTransitionSheet()
     }
 }
 

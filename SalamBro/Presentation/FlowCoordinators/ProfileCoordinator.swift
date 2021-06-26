@@ -26,13 +26,13 @@ final class ProfileCoordinator: BaseCoordinator {
     override func start() {
         let profilePage = pagesFactory.makeProfilePage()
 
-//        profilePage.outputs.onChangeUserInfo
-//            .subscribe(onNext: { [weak self] userInfo in
-//                self?.showChangeUserInfoPage(userInfo: userInfo, completion: { newUserInfo in
-//                    profilePage.updateViews(with: newUserInfo)
-//                })
-//            })
-//            .disposed(by: disposeBag)
+        profilePage.outputs.onChangeUserInfo
+            .subscribe(onNext: { [weak self] userInfo in
+                self?.showChangeUserInfoPage(userInfo: userInfo, completion: { newUserInfo in
+                    profilePage.updateViews(with: newUserInfo)
+                })
+            })
+            .disposed(by: disposeBag)
 
         profilePage.outputs.onTableItemPressed
             .subscribe(onNext: { [weak self] tableItem in
@@ -47,19 +47,19 @@ final class ProfileCoordinator: BaseCoordinator {
         router.push(viewController: profilePage, animated: true)
     }
 
-//    private func showChangeUserInfoPage(userInfo: UserInfoResponse, completion: ((UserInfoResponse) -> Void)?) {
-//        let changeUserInfoPage = pagesFactory.makeChangeUserInfoPage(userInfo: userInfo)
-//        changeUserInfoPage.hidesBottomBarWhenPushed = true
-//
-//        changeUserInfoPage.outputs.didGetUserInfo
-//            .subscribe(onNext: { [weak self] newUserInfo in
-//                completion?(newUserInfo)
-//                self?.router.pop(animated: true)
-//            })
-//            .disposed(by: disposeBag)
-//
-//        router.push(viewController: changeUserInfoPage, animated: true)
-//    }
+    private func showChangeUserInfoPage(userInfo: UserInfoResponse, completion: ((UserInfoResponse) -> Void)?) {
+        let changeUserInfoPage = pagesFactory.makeChangeUserInfoPage(userInfo: userInfo)
+        changeUserInfoPage.hidesBottomBarWhenPushed = true
+
+        changeUserInfoPage.outputs.didGetUserInfo
+            .subscribe(onNext: { [weak self] newUserInfo in
+                completion?(newUserInfo)
+                self?.router.pop(animated: true)
+            })
+            .disposed(by: disposeBag)
+
+        router.push(viewController: changeUserInfoPage, animated: true)
+    }
 
     private func showChangeLanguagePage() {
         let changeLanguagePage = pagesFactory.makeChangeLanguagePage()

@@ -49,6 +49,7 @@ final class AuthNumberView: UIView {
         self.delegate = delegate
         numberField.delegate = maskedDelegate
         layoutUI()
+        configureActions()
     }
 
     @available(*, unavailable)
@@ -62,7 +63,7 @@ extension AuthNumberView {
         countryCodeButton.setTitle(buttonTitle, for: .normal)
     }
 
-    func configureActions() {
+    private func configureActions() {
         countryCodeButton.addTarget(self, action: #selector(handleCountryCodeButtonAction), for: .touchUpInside)
         chevronView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCountryCodeButtonAction)))
     }

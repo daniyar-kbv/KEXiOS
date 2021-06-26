@@ -290,7 +290,3 @@ extension CartController: CartFooterDelegate {
         commentaryPage?.openTransitionSheet(on: self)
     }
 }
-
-extension CartController: MapCommentaryPageDelegate {
-    func onDoneButtonTapped(commentary _: String) {}
-}

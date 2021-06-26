@@ -8,7 +8,14 @@
 import SnapKit
 import UIKit
 
+protocol ChangeNameViewDelegate: AnyObject {
+    func textFieldsTapped(_ textfield: UITextField)
+    func saveButtonTapped()
+}
+
 final class ChangeNameView: UIView {
+    weak var delegate: ChangeNameViewDelegate?
+
     private lazy var nameLabel: UILabel = {
         let view = UILabel()
         view.textColor = .mildBlue
@@ -25,7 +32,7 @@ final class ChangeNameView: UIView {
         return view
     }()
 
-    public lazy var nameTextField: UITextField = {
+    private(set) lazy var nameTextField: UITextField = {
         let field = UITextField()
         return field
     }()
@@ -46,12 +53,12 @@ final class ChangeNameView: UIView {
         return view
     }()
 
-    public lazy var emailTextField: UITextField = {
+    private(set) lazy var emailTextField: UITextField = {
         let field = UITextField()
         return field
     }()
 
-    public lazy var saveButton: UIButton = {
+    private lazy var saveButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.ChangeName.SaveButton.title, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
@@ -61,9 +68,11 @@ final class ChangeNameView: UIView {
         return button
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: ChangeNameViewDelegate) {
+        super.init(frame: .zero)
+        self.delegate = delegate
         layoutUI()
+        configureActions()
     }
 
     @available(*, unavailable)
@@ -73,6 +82,23 @@ final class ChangeNameView: UIView {
 }
 
 extension ChangeNameView {
+    private func configureActions() {
+        nameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        emailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        saveButton.addTarget(self, action: #selector(saveName), for: .touchUpInside)
+    }
+
+    func configureTextFields(name: String, email: String) {
+        nameTextField.text = name
+        emailTextField.text = email
+        saveButton.isEnabled = !(nameTextField.text?.isEmpty ?? true)
+    }
+
+    func configureButton(isEnabled: Bool) {
+        saveButton.isEnabled = isEnabled
+        saveButton.backgroundColor = isEnabled ? .kexRed : .calmGray
+    }
+
     private func layoutUI() {
         nameView.addSubview(nameTextField)
         emailView.addSubview(emailTextField)
@@ -117,5 +143,13 @@ extension ChangeNameView {
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(43)
         }
+    }
+
+    @objc private func editingChanged(sender: UITextField) {
+        delegate?.textFieldsTapped(sender)
+    }
+
+    @objc private func saveName() {
+        delegate?.saveButtonTapped()
     }
 }

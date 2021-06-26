@@ -8,7 +8,14 @@
 import SnapKit
 import UIKit
 
+protocol SuggestViewDelegate: AnyObject {
+    func searchBarTapped(_ textField: UITextField)
+    func doneButtonTapped()
+}
+
 final class SuggestView: UIView {
+    weak var delegate: SuggestViewDelegate?
+
     private lazy var searchItem: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "search")
@@ -16,7 +23,7 @@ final class SuggestView: UIView {
         return imageView
     }()
 
-    public lazy var searchBar: UITextField = {
+    private(set) lazy var searchBar: UITextField = {
         let searchBar = UITextField()
         searchBar.attributedPlaceholder = NSAttributedString(
             string: L10n.Suggest.AddressField.title,
@@ -31,7 +38,7 @@ final class SuggestView: UIView {
         return searchBar
     }()
 
-    public lazy var doneButton: UIButton = {
+    private lazy var doneButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.Suggest.Button.title, for: .normal)
         button.setTitleColor(.kexRed, for: .normal)
@@ -49,9 +56,11 @@ final class SuggestView: UIView {
         return view
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: SuggestViewDelegate) {
+        super.init(frame: .zero)
+        self.delegate = delegate
         layoutUI()
+        configureActions()
     }
 
     @available(*, unavailable)
@@ -61,6 +70,15 @@ final class SuggestView: UIView {
 }
 
 extension SuggestView {
+    private func configureActions() {
+        searchBar.addTarget(self, action: #selector(queryChange(sender:)), for: .editingChanged)
+        doneButton.addTarget(self, action: #selector(cancelAction(_:)), for: .touchUpInside)
+    }
+
+    func setSearchBarText(with text: String) {
+        searchBar.text = text
+    }
+
     private func layoutUI() {
         backgroundColor = .arcticWhite
         [searchItem, searchBar, doneButton, separator].forEach {
@@ -93,5 +111,13 @@ extension SuggestView {
             $0.height.equalTo(0.3)
             $0.bottom.equalToSuperview()
         }
+    }
+
+    @objc private func queryChange(sender: UITextField) {
+        delegate?.searchBarTapped(sender)
+    }
+
+    @objc private func cancelAction(_: UIButton) {
+        delegate?.doneButtonTapped()
     }
 }

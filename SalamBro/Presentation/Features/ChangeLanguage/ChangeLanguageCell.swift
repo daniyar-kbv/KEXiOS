@@ -53,11 +53,11 @@ final class ChangeLanguageCell: UITableViewCell {
         }
     }
 
-    func didSelect(indexPath _: IndexPath) {
+    func didSelect() {
         accessoryView = checkmark
     }
 
-    func didDeselect(indexPath _: IndexPath) {
+    func didDeselect() {
         accessoryView = .none
     }
 }

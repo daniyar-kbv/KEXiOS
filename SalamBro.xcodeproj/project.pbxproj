@@ -206,6 +206,7 @@
 		23896B1EFC43D784F75F6CF9068D9BF9 /* SuggestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EEFC49550AA53FB7737FB8D050D23C /* SuggestCell.swift */; };
 		0704ED753940545365A42336A5123EC4 /* SuggestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F7C26F880D7F5610AD019E13CC3497 /* SuggestController.swift */; };
 		BE278C34ACF14C230C59E0C8762489C7 /* SuggestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F815911534DFDAF14FA73F5EEF71F74 /* SuggestView.swift */; };
+		E64462BD54DBFF8C7A25AAE272A5F5AE /* SuggestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2DC25E71F2EF56A51584C3136E83 /* SuggestViewModel.swift */; };
 		69A912218E3C57CBF42BBF75070D4DDB /* SupportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7614CF30AE2C9C14A22E9C4B8FEC3B6 /* SupportController.swift */; };
 		551364303D228FB15D82CC496BAE5D19 /* SupportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE52B854C4577D1CE6D818B6589ED1D /* SupportCoordinator.swift */; };
 		888680A2C23544CBFCE3458D4377C324 /* SupportCoordinatorsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6FB858A5C93C24546D4D089F9C9BC /* SupportCoordinatorsFactory.swift */; };
@@ -466,6 +467,7 @@
 		80EEFC49550AA53FB7737FB8D050D23C /* SuggestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestCell.swift; sourceTree = "<group>"; };
 		A3F7C26F880D7F5610AD019E13CC3497 /* SuggestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestController.swift; sourceTree = "<group>"; };
 		7F815911534DFDAF14FA73F5EEF71F74 /* SuggestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestView.swift; sourceTree = "<group>"; };
+		045D2DC25E71F2EF56A51584C3136E83 /* SuggestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestViewModel.swift; sourceTree = "<group>"; };
 		E7614CF30AE2C9C14A22E9C4B8FEC3B6 /* SupportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportController.swift; sourceTree = "<group>"; };
 		3BE52B854C4577D1CE6D818B6589ED1D /* SupportCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportCoordinator.swift; sourceTree = "<group>"; };
 		5FB6FB858A5C93C24546D4D089F9C9BC /* SupportCoordinatorsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportCoordinatorsFactory.swift; sourceTree = "<group>"; };
@@ -627,14 +629,6 @@
 				49C7E8CE52D9B2EDAD2AE0C3C1FD8C6E /* UpdateController.swift */,
 			);
 			path = Update;
-			sourceTree = "<group>";
-		};
-		52C5944BDC0057E022A3CC50AA0D3026 /* Submodules */ = {
-			isa = PBXGroup;
-			children = (
-				59196E7C7D0BCF644EB54B36FA5B863A /* SupportSocialCell.swift */,
-			);
-			path = Submodules;
 			sourceTree = "<group>";
 		};
 		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
@@ -835,6 +829,14 @@
 				18A53C8C5BE3A25DCC4D92C99A0D3434 /* Router.swift */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		52C5944BDC0057E022A3CC50AA0D3026 /* Submodules */ = {
+			isa = PBXGroup;
+			children = (
+				59196E7C7D0BCF644EB54B36FA5B863A /* SupportSocialCell.swift */,
+			);
+			path = Submodules;
 			sourceTree = "<group>";
 		};
 		542581AD1CEBDAE017201B6A7231ED13 /* Constants */ = {
@@ -1187,6 +1189,7 @@
 				80EEFC49550AA53FB7737FB8D050D23C /* SuggestCell.swift */,
 				A3F7C26F880D7F5610AD019E13CC3497 /* SuggestController.swift */,
 				7F815911534DFDAF14FA73F5EEF71F74 /* SuggestView.swift */,
+				045D2DC25E71F2EF56A51584C3136E83 /* SuggestViewModel.swift */,
 			);
 			path = SuggestAddress;
 			sourceTree = "<group>";
@@ -1962,6 +1965,7 @@
 				23896B1EFC43D784F75F6CF9068D9BF9 /* SuggestCell.swift in Sources */,
 				0704ED753940545365A42336A5123EC4 /* SuggestController.swift in Sources */,
 				BE278C34ACF14C230C59E0C8762489C7 /* SuggestView.swift in Sources */,
+				E64462BD54DBFF8C7A25AAE272A5F5AE /* SuggestViewModel.swift in Sources */,
 				69A912218E3C57CBF42BBF75070D4DDB /* SupportController.swift in Sources */,
 				551364303D228FB15D82CC496BAE5D19 /* SupportCoordinator.swift in Sources */,
 				888680A2C23544CBFCE3458D4377C324 /* SupportCoordinatorsFactory.swift in Sources */,

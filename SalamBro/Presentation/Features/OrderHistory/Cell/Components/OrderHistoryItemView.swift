@@ -9,13 +9,13 @@ import SnapKit
 import UIKit
 
 final class OrderHistoryItemView: UIView {
-    var itemLabel: UILabel = {
+    private var itemLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .left
         return view
     }()
 
-    var priceLabel: UILabel = {
+    private var priceLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .right
         return view
@@ -38,14 +38,12 @@ final class OrderHistoryItemView: UIView {
             addSubview($0)
         }
         itemLabel.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.top.bottom.equalTo(safeAreaLayoutGuide)
             $0.left.equalToSuperview()
-            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
         priceLabel.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.top.bottom.equalTo(safeAreaLayoutGuide)
             $0.right.equalToSuperview()
-            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
 }

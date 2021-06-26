@@ -151,7 +151,6 @@ extension AuthorizationController {
         aggreementLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel)))
 
         numberView?.configureButtonTitle(with: viewModel.getCountryCode())
-        numberView?.configureActions()
     }
 
     private func layoutUI() {

@@ -10,7 +10,7 @@ import SnapKit
 import UIKit
 
 final class SuggestCell: UITableViewCell {
-    public lazy var addressLabel: UILabel = {
+    private(set) lazy var addressLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = .darkGray
@@ -19,7 +19,7 @@ final class SuggestCell: UITableViewCell {
         return label
     }()
 
-    public lazy var subtitleLabel: UILabel = {
+    private(set) lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = .mildBlue
@@ -40,7 +40,14 @@ final class SuggestCell: UITableViewCell {
 }
 
 extension SuggestCell {
+    func configureUI(address: String, subtitle: String) {
+        addressLabel.text = address
+        subtitleLabel.text = subtitle
+    }
+
     private func layoutUI() {
+        selectionStyle = .none
+
         [addressLabel, subtitleLabel].forEach {
             contentView.addSubview($0)
         }

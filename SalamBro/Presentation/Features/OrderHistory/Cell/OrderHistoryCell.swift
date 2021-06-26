@@ -19,12 +19,14 @@ protocol OrderTestCellDelegate: AnyObject {
 final class OrderTestCell: UITableViewCell, Reusable {
     weak var delegate: OrderTestCellDelegate?
 
-    private let orderView = OrderHistoryCellContentView()
+    private var orderView: OrderHistoryCellContentView?
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        orderView = OrderHistoryCellContentView(delegate: self)
         layoutUI()
-        configureViews()
+        orderView?.configureActions()
+        selectionStyle = .none
     }
 
     @available(*, unavailable)
@@ -38,24 +40,22 @@ final class OrderTestCell: UITableViewCell, Reusable {
 }
 
 extension OrderTestCell {
-    private func configureViews() {
-        orderView.shareToInstagramButton.addTarget(self, action: #selector(shareToInstagram), for: .touchUpInside)
-        orderView.rateOrderButton.addTarget(self, action: #selector(rateOrder), for: .touchUpInside)
-    }
-
     private func layoutUI() {
+        guard let orderView = orderView else { return }
         contentView.addSubview(orderView)
 
         orderView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
+}
 
-    @objc private func rateOrder() {
-        delegate?.rate()
+extension OrderTestCell: OrderHistoryViewDelegate {
+    func shareToInstagramTapped() {
+        delegate?.share()
     }
 
-    @objc private func shareToInstagram() {
-        delegate?.share()
+    func rateOrderTapped() {
+        delegate?.rate()
     }
 }

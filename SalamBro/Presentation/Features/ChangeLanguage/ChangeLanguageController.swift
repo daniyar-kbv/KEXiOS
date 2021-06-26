@@ -79,15 +79,13 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: ChangeLanguageCell.self)
-        if let image = UIImage(named: viewModel.languages[indexPath.row].lowercased()) {
-            cell.configure(title: viewModel.languages[indexPath.row], image: image)
-        }
+        cell.configure(title: viewModel.getLanguage(at: indexPath), image: viewModel.getImage(at: indexPath))
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? ChangeLanguageCell {
-            cell.didSelect(indexPath: indexPath)
+            cell.didSelect()
         }
         navigationController?.popViewController(animated: true)
     }

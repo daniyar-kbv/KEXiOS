@@ -21,12 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureProgressHUD()
         configureKeyboardManager()
         window = UIWindow(frame: UIScreen.main.bounds)
-        let vc = ChangeNameController()
-        let nav = UINavigationController(rootViewController: vc)
-        window?.rootViewController = nav
         window?.makeKeyAndVisible()
-//        configureAppCoordinator()
-//        appCoordinator?.start()
+        configureAppCoordinator()
+        appCoordinator?.start()
 
         return true
     }
