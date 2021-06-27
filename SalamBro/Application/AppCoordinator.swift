@@ -10,8 +10,6 @@ import UIKit
 
 final class AppCoordinator: BaseCoordinator {
     private var preparedViewControllers: [UIViewController] = []
-    private var navigationControllers = [UINavigationController]()
-    private var restartAuthCoordinator: (() -> Void)?
 
     private(set) var tabBarController: SBTabBarController!
 
@@ -30,10 +28,6 @@ final class AppCoordinator: BaseCoordinator {
 
     override func start() {
         tabBarController = SBTabBarController()
-
-        restartAuthCoordinator = { [weak self] in
-            self?.startAuthCoordinator()
-        }
 
         configureMenuCoordinator()
         configureProfileCoordinator()

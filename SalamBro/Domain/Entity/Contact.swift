@@ -44,10 +44,10 @@ extension Contact {
 
         var image: UIImage? {
             switch self {
-            case .instagram: return Asset.Support.insta.image
-            case .tiktok: return Asset.Support.tiktok.image
-            case .email: return Asset.Support.mail.image
-            case .vk: return Asset.Support.vk.image
+            case .instagram: return SBImageResource.getIcon(for: SupportIcon.instagramIcon)
+            case .tiktok: return SBImageResource.getIcon(for: SupportIcon.tikTokIcon)
+            case .email: return SBImageResource.getIcon(for: SupportIcon.mailIcon)
+            case .vk: return SBImageResource.getIcon(for: SupportIcon.vkIcon)
             case .callCenter: return nil
             }
         }

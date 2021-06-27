@@ -10,6 +10,7 @@ import Foundation
 protocol ProfileChildCoordinatorsFactory: AnyObject {
     func makeAddressListCoordinator() -> AddressListCoordinator
     func makeOrderCoordinator() -> OrderHistoryCoordinator
+    func makeAuthCoordinator() -> AuthCoordinator
 }
 
 final class ProfileChildCoordinatorsFactoryImpl: DependencyFactory, ProfileChildCoordinatorsFactory {
@@ -31,5 +32,15 @@ final class ProfileChildCoordinatorsFactoryImpl: DependencyFactory, ProfileChild
     func makeOrderCoordinator() -> OrderHistoryCoordinator {
         return OrderHistoryCoordinator(router: router,
                                        pagesFactory: OrderHistoryPagesFactoryImpl())
+    }
+
+    func makeAuthCoordinator() -> AuthCoordinator {
+        return scoped(.init(router: router,
+                            pagesFactory: makeAuthPagesFactory()))
+    }
+
+    private func makeAuthPagesFactory() -> AuthPagesFactory {
+        return scoped(AuthPagesFactoryImpl(serviceComponents: serviceComponents,
+                                           repositoryComponents: repositoryComponents))
     }
 }
