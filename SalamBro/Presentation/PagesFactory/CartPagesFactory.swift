@@ -23,6 +23,10 @@ final class CartPagesFactoryImpl: DependencyFactory, CartPagesFactory {
     }
 
     func makeCartPage() -> CartController {
-        return scoped(.init(viewModel: CartViewModel(cartRepository: CartRepositoryMockImpl())))
+        return scoped(.init(viewModel: makeCartViewModel()))
+    }
+
+    private func makeCartViewModel() -> CartViewModel {
+        return scoped(CartViewModelImpl(cartRepository: repositoryComponents.makeCartRepository()))
     }
 }

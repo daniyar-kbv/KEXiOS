@@ -10,7 +10,7 @@ import Foundation
 protocol MenuCoordinatorsFactory {
     func makeAddressCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents, flowType: AddressCoordinator.FlowType) -> AddressCoordinator
     func makePromotionsCoordinator(promotionURL: URL, infoURL: URL?) -> PromotionsCoordinator
-    func makeMenuDetailCoordinator(serviceComponents: ServiceComponents, positionUUID: String) -> MenuDetailCoordinator
+    func makeMenuDetailCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents, positionUUID: String) -> MenuDetailCoordinator
 }
 
 class MenuCoordinatorsFactoryImpl: DependencyFactory, MenuCoordinatorsFactory {
@@ -46,14 +46,21 @@ class MenuCoordinatorsFactoryImpl: DependencyFactory, MenuCoordinatorsFactory {
         return scoped(PromotionsPagesFactoryImpl())
     }
 
-    func makeMenuDetailCoordinator(serviceComponents: ServiceComponents, positionUUID: String) -> MenuDetailCoordinator {
+    func makeMenuDetailCoordinator(serviceComponents: ServiceComponents,
+                                   repositoryComponents: RepositoryComponents,
+                                   positionUUID: String) -> MenuDetailCoordinator
+    {
         return scoped(.init(router: router,
                             serviceComponents: serviceComponents,
-                            pagesFactory: makeMenuDetailPageFactory(serviceComponents: serviceComponents),
+                            pagesFactory: makeMenuDetailPageFactory(serviceComponents: serviceComponents,
+                                                                    repositoryComponents: repositoryComponents),
                             positionUUID: positionUUID))
     }
 
-    private func makeMenuDetailPageFactory(serviceComponents: ServiceComponents) -> MenuDetailPagesFactory {
-        return scoped(MenuDetailPagesFactoryImpl(serviceComponents: serviceComponents))
+    private func makeMenuDetailPageFactory(serviceComponents: ServiceComponents,
+                                           repositoryComponents: RepositoryComponents) -> MenuDetailPagesFactory
+    {
+        return scoped(MenuDetailPagesFactoryImpl(serviceComponents: serviceComponents,
+                                                 repositoryComponents: repositoryComponents))
     }
 }

@@ -9,8 +9,9 @@ import Reusable
 import UIKit
 
 protocol CartAdditinalProductCellDelegate: AnyObject {
-    func deleteProduct(id: Int, isAdditional: Bool)
-    func changeItemCount(id: Int, isIncrease: Bool, isAdditional: Bool)
+    func increment(positionUUID: String?, isAdditional: Bool)
+    func decrement(positionUUID: String?, isAdditional: Bool)
+    func delete(positionUUID: String?, isAdditional: Bool)
 }
 
 final class CartAdditionalProductCell: UITableViewCell {
@@ -205,28 +206,30 @@ extension CartAdditionalProductCell {
             increaseButton.borderColor = .none
             increaseButton.setBackgroundImage(UIImage(named: "plus"), for: .normal)
         }
+        counter = product!.count
+        countLabel.text = "\(counter)"
     }
 
+    //  Tech debt: uncomment when modifiers stabilize
     @objc private func decreaseItemCount(_: UIButton) {
-        if counter > 0 {
-            counter -= 1
-            if let id = product?.id, let price = product?.price {
-                delegate?.changeItemCount(id: id, isIncrease: false, isAdditional: true)
-                priceLabel.text = "\(counter * price) T"
-            }
-            countLabel.text = "\(counter)"
-        }
+        //    if counter > 0 {
+        //        counter -= 1
+        //       if let id = product?.id, let price = product?.price {
+        //           delegate?.changeItemCount(id: id, isIncrease: false, isAdditional: true)
+        //         priceLabel.text = "\(counter * price) T"
+        //     }
+        //     countLabel.text = "\(counter)"
+        // }
     }
 
     @objc private func increaseItemButton(_: UIButton) {
-        if counter < 999 {
-            counter += 1
-            if let id = product?.id, let price = product?.price {
-                delegate?.changeItemCount(id: id, isIncrease: true, isAdditional: true)
-                priceLabel.text = "\(counter * price) T"
-            }
-            countLabel.text = "\(counter)"
-        }
+        //   if counter < 999 {
+        //  counter += 1
+        //  if let id = product?.id, let price = product?.price {
+        //      delegate?.changeItemCount(id: id, isIncrease: true, isAdditional: true)
+        //      priceLabel.text = "\(counter * price) T"
+        //  }
+        //  countLabel.text = "\(counter)"
     }
 }
 

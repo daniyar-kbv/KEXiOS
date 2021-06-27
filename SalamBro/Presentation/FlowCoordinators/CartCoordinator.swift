@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
 final class CartCoordinator: BaseCoordinator {
+    private let disposeBag = DisposeBag()
     private(set) var router: Router
     private let pagesFactory: CartPagesFactory
     private let coordinatorsFactory: CartCoordinatorsFactory
@@ -24,9 +27,10 @@ final class CartCoordinator: BaseCoordinator {
     override func start() {
         let cartPage = pagesFactory.makeCartPage()
 
-        cartPage.openAuth = { [weak self] in
+        cartPage.outputs.toAuth.subscribe(onNext: { [weak self] in
             self?.startAuthCoordinator()
-        }
+
+        }).disposed(by: disposeBag)
 
         router.set(navigationController: SBNavigationController(rootViewController: cartPage))
     }

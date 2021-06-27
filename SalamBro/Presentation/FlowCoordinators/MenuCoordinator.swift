@@ -93,7 +93,7 @@ final class MenuCoordinator: BaseCoordinator {
     }
 
     private func openDetail(positionUUID: String) {
-        let menuDetailCoordinator = coordinatorsFactory.makeMenuDetailCoordinator(serviceComponents: serviceComponents, positionUUID: positionUUID)
+        let menuDetailCoordinator = coordinatorsFactory.makeMenuDetailCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, positionUUID: positionUUID)
         add(menuDetailCoordinator)
 
         menuDetailCoordinator.didFinish = { [weak self] in

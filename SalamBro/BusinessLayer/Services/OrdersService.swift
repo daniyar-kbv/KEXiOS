@@ -14,9 +14,8 @@ protocol OrdersService: AnyObject {
     func applyOrder(dto: OrderApplyDTO) -> Single<String>
     func getProducts(for leadUUID: String) -> Single<OrderProductResponse.Data>
     func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<OrderProductDetailResponse.Data>
-    func decrement(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse>
-    func increment(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse>
-    func updateCart(for leadUUID: String) -> Single<OrderUpdateCartResponse>
+    func getCart(for leadUUID: String) -> Single<CartDTO>
+    func updateCart(for leadUUID: String, dto: CartDTO) -> Single<CartDTO>
 }
 
 final class OrdersServiceMoyaImpl: OrdersService {
@@ -87,47 +86,33 @@ final class OrdersServiceMoyaImpl: OrdersService {
             }
     }
 
-//    Tech debt: change to get, put, patch cart
-
-    func decrement(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse> {
+    func getCart(for leadUUID: String) -> Single<CartDTO> {
         return provider.rx
-            .request(.decrement(dto: dto))
+            .request(.getCart(leadUUID: leadUUID))
             .map { response in
 
                 // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
 
-                guard let incDecrResponse = try? response.map(OrderIncrDecrResponse.self) else {
+                guard let cartResponse = try? response.map(CartDTO.self) else {
                     throw NetworkError.badMapping
                 }
 
-                return incDecrResponse
+                return cartResponse
             }
     }
 
-    func increment(dto: OrderIncDecrDTO) -> Single<OrderIncrDecrResponse> {
+    func updateCart(for leadUUID: String, dto: CartDTO) -> Single<CartDTO> {
         return provider.rx
-            .request(.increment(dto: dto))
+            .request(.updateCart(leadUUID: leadUUID, dto: dto))
             .map { response in
 
                 // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
 
-                guard let incDecrResponse = try? response.map(OrderIncrDecrResponse.self) else {
+                guard let cartResponse = try? response.map(CartDTO.self) else {
                     throw NetworkError.badMapping
                 }
 
-                return incDecrResponse
-            }
-    }
-
-    func updateCart(for leadUUID: String) -> Single<OrderUpdateCartResponse> {
-        return provider.rx
-            .request(.updateCart(leadUUID: leadUUID))
-            .map { response in
-                guard let orderUpdateCartResponse = try? response.map(OrderUpdateCartResponse.self) else {
-                    throw NetworkError.badMapping
-                }
-
-                return orderUpdateCartResponse
+                return cartResponse
             }
     }
 }
