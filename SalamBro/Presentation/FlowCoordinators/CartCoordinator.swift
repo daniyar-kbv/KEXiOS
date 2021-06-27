@@ -22,7 +22,6 @@ final class CartCoordinator: BaseCoordinator {
         self.router = router
         self.pagesFactory = pagesFactory
         self.coordinatorsFactory = coordinatorsFactory
-        router.set(navigationController: router.getNavigationController())
     }
 
     override func start() {
@@ -33,7 +32,7 @@ final class CartCoordinator: BaseCoordinator {
 
         }).disposed(by: disposeBag)
 
-        router.push(viewController: cartPage, animated: true)
+        router.set(navigationController: SBNavigationController(rootViewController: cartPage))
     }
 
     private func startAuthCoordinator() {

@@ -22,7 +22,7 @@ protocol CartViewModel {
     func delete(postitonUUID: String)
 }
 
-class CartViewModelImpl: CartViewModel {
+final class CartViewModelImpl: CartViewModel {
     private let disposeBag = DisposeBag()
     private let cartRepository: CartRepository
 
