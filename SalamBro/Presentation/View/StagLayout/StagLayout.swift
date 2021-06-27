@@ -8,7 +8,6 @@
 import UIKit
 
 public class StagLayout: UICollectionViewLayout {
-
     private var contentWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }
         let sectionInsets = collectionView.contentInset
@@ -25,7 +24,8 @@ public class StagLayout: UICollectionViewLayout {
         )
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

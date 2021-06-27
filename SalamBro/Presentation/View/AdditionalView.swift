@@ -7,6 +7,8 @@
 
 import UIKit
 
+//  Tech debt: legacy, remove?
+
 protocol AdditionalViewDelegate {
     func action()
 }

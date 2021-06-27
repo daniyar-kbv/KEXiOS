@@ -33,8 +33,6 @@ class CollectionViewRow {
     var attributes = [UICollectionViewLayoutAttributes]()
     var spacing: CGFloat = 0
 
-
-
     init(spacing: CGFloat) {
         self.spacing = spacing
     }
@@ -44,9 +42,9 @@ class CollectionViewRow {
     }
 
     var rowWidth: CGFloat {
-        return attributes.reduce(0, { result, attribute -> CGFloat in
-            return result + attribute.frame.width
-        }) + CGFloat(attributes.count - 1) * spacing
+        return attributes.reduce(0) { result, attribute -> CGFloat in
+            result + attribute.frame.width
+        } + CGFloat(attributes.count - 1) * spacing
     }
 
     func centerLayout(collectionViewWidth: CGFloat) {
