@@ -86,7 +86,6 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.tintColor = .kexRed
         navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [
@@ -162,8 +161,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         view.addSubview(phoneTitleLabel)
         phoneTitleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(21)
         }
 
@@ -185,23 +183,21 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         view.addSubview(emailLabel)
         emailLabel.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(14)
         }
 
         view.addSubview(logoutButton)
         logoutButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-24)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(43)
         }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
             $0.top.equalTo(emailLabel.snp.bottom).offset(19)
-            $0.leading.trailing.equalToSuperview()
+            $0.left.right.equalToSuperview()
             $0.bottom.equalTo(logoutButton.snp.top).offset(-8)
         }
     }

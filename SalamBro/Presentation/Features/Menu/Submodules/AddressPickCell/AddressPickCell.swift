@@ -109,8 +109,7 @@ extension AddressPickCell {
         containerView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(8)
             $0.bottom.equalToSuperview().offset(-15)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(35)
         }
     }

@@ -80,8 +80,7 @@ extension CategoryCell {
 
         categoryLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().offset(4)
-            $0.right.equalToSuperview().offset(-4)
+            $0.left.right.equalToSuperview().inset(4)
         }
 
         indicatorView.snp.makeConstraints {

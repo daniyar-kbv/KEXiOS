@@ -57,14 +57,12 @@ extension ModifiersCell {
 
         itemTitleLabel.snp.makeConstraints {
             $0.top.equalTo(itemImageView.snp.bottom).offset(4)
-            $0.left.equalToSuperview().offset(8)
-            $0.right.equalToSuperview().offset(-8)
+            $0.left.right.equalToSuperview().inset(8)
         }
 
         itemPriceLabel.snp.makeConstraints {
             $0.top.equalTo(itemTitleLabel.snp.bottom).offset(4)
-            $0.left.equalToSuperview().offset(8)
-            $0.right.equalToSuperview().offset(-8)
+            $0.left.right.equalToSuperview().inset(8)
             $0.bottom.equalToSuperview()
         }
     }

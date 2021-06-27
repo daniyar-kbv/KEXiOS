@@ -9,7 +9,15 @@ import Cosmos
 import SnapKit
 import UIKit
 
+protocol RateViewDelegate: AnyObject {
+    func commentaryViewTapped()
+    func sendButtonTapped()
+    func updateViewModelData(at rating: Int)
+}
+
 final class RateView: UIView {
+    weak var delegate: RateViewDelegate?
+
     private let scrollView = UIScrollView()
     private let contentView = UIView()
 
@@ -18,7 +26,7 @@ final class RateView: UIView {
         return view
     }()
 
-    public lazy var cosmosView: CosmosView = {
+    private lazy var cosmosView: CosmosView = {
         let view = CosmosView()
         view.settings.filledColor = .kexRed
         view.settings.filledBorderColor = .kexRed
@@ -33,7 +41,7 @@ final class RateView: UIView {
         return view
     }()
 
-    public lazy var questionLabel: UILabel = {
+    private lazy var questionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 19, weight: .medium)
         label.textColor = .darkGray
@@ -45,7 +53,7 @@ final class RateView: UIView {
         return label
     }()
 
-    public lazy var suggestionLabel: UILabel = {
+    private lazy var suggestionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.text = L10n.RateOrder.description
@@ -58,7 +66,7 @@ final class RateView: UIView {
         return label
     }()
 
-    public lazy var collectionView: UICollectionView = {
+    private(set) lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: .init()
@@ -68,14 +76,14 @@ final class RateView: UIView {
         return collectionView
     }()
 
-    public lazy var commentView: UIView = {
+    private lazy var commentView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         view.cornerRadius = 10
         return view
     }()
 
-    public lazy var commentTextField: UITextField = {
+    private lazy var commentTextField: UITextField = {
         let textfield = UITextField()
         textfield.attributedPlaceholder = NSAttributedString(
             string: L10n.RateOrder.CommentaryField.placeholder,
@@ -91,7 +99,7 @@ final class RateView: UIView {
         return textfield
     }()
 
-    public lazy var sendButton: UIButton = {
+    private lazy var sendButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.RateOrder.SubmitButton.title, for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -105,12 +113,14 @@ final class RateView: UIView {
         return button
     }()
 
-    public var collectionViewHeightConstraint: Constraint?
+    private(set) var collectionViewHeightConstraint: Constraint?
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureViews()
+    init(delegate: RateViewDelegate) {
+        super.init(frame: .zero)
+        self.delegate = delegate
         layoutUI()
+        configureActions()
+        configureViews()
     }
 
     @available(*, unavailable)
@@ -120,6 +130,13 @@ final class RateView: UIView {
 }
 
 extension RateView {
+    private func configureActions() {
+        let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(commentaryViewTapped))
+        commentView.addGestureRecognizer(tapCommentary)
+
+        sendButton.addTarget(self, action: #selector(dismissVC), for: .allTouchEvents)
+    }
+
     private func configureViews() {
         let layout = UICollectionViewCenterLayout()
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
@@ -131,7 +148,20 @@ extension RateView {
         collectionView.allowsMultipleSelection = true
         collectionView.register(cellType: RateItemCell.self)
 
-        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: safeAreaInsets.bottom + 50, right: 0)
+        scrollView.contentInset = UIEdgeInsets(top: 0,
+                                               left: 0,
+                                               bottom: safeAreaInsets.bottom + 50,
+                                               right: 0)
+
+        cosmosView.didFinishTouchingCosmos = didFinishTouchRating
+    }
+
+    func setCollectionViewHeight() {
+        collectionViewHeightConstraint?.update(offset: collectionView.contentSize.height)
+    }
+
+    func configureTextField(with text: String) {
+        commentTextField.text = text
     }
 
     private func layoutUI() {
@@ -164,20 +194,17 @@ extension RateView {
         }
 
         questionLabel.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.top.equalTo(cosmosContainerView.snp.bottom).offset(32)
         }
 
         suggestionLabel.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.top.equalTo(questionLabel.snp.bottom).offset(8)
         }
 
         collectionView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.top.equalTo(suggestionLabel.snp.bottom).offset(8)
             collectionViewHeightConstraint = $0.height.equalTo(0).constraint
         }
@@ -185,24 +212,61 @@ extension RateView {
         commentView.addSubview(commentTextField)
 
         commentView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.top.equalTo(collectionView.snp.bottom).offset(20)
             $0.bottom.equalToSuperview().offset(-20)
             $0.height.equalTo(50)
         }
 
         commentTextField.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-16)
+            $0.left.right.equalToSuperview().inset(16)
             $0.centerX.centerY.equalToSuperview()
         }
 
         sendButton.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(43)
         }
+    }
+
+    private func didFinishTouchRating(_ rating: Double) {
+        sendButton.isEnabled = true
+        sendButton.backgroundColor = .kexRed
+        switch rating {
+        case 1.0 ..< 2.0:
+            questionLabel.text = L10n.RateOrder.BadRate.title
+            suggestionLabel.text = L10n.RateOrder.BadRate.subtitle
+            delegate?.updateViewModelData(at: 3)
+        case 2.0 ..< 3.0:
+            questionLabel.text = L10n.RateOrder.BadRate.title
+            suggestionLabel.text = L10n.RateOrder.BadRate.subtitle
+            delegate?.updateViewModelData(at: 3)
+        case 3.0 ..< 4.0:
+            questionLabel.text = L10n.RateOrder.AverageRate.title
+            suggestionLabel.text = L10n.RateOrder.AverageRate.title
+            delegate?.updateViewModelData(at: 3)
+        case 4.0 ..< 5.0:
+            questionLabel.text = L10n.RateOrder.GoodRate.title
+            suggestionLabel.text = L10n.RateOrder.GoodRate.subtitle
+            delegate?.updateViewModelData(at: 4)
+        case 5.0:
+            questionLabel.text = L10n.RateOrder.ExcellentRate.title
+            suggestionLabel.text = L10n.RateOrder.ExcellentRate.subtitle
+            delegate?.updateViewModelData(at: 5)
+        default:
+            questionLabel.text = nil
+            suggestionLabel.text = nil
+        }
+        collectionView.reloadData()
+        collectionView.layoutIfNeeded()
+    }
+
+    @objc private func dismissVC() {
+        delegate?.sendButtonTapped()
+    }
+
+    @objc private func commentaryViewTapped() {
+        delegate?.commentaryViewTapped()
     }
 }

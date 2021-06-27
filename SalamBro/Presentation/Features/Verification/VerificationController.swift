@@ -9,12 +9,12 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class VerificationController: ViewController, LoaderDisplayable, AlertDisplayable {
+final class VerificationController: UIViewController, LoaderDisplayable, AlertDisplayable {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()
 
-    private var rootView: VerificationView!
+    private var rootView: VerificationView?
     private let viewModel: VerificationViewModel
 
     init(viewModel: VerificationViewModel) {
@@ -40,14 +40,20 @@ final class VerificationController: ViewController, LoaderDisplayable, AlertDisp
     }
 
     override func viewWillAppear(_: Bool) {
-        rootView.startTimer()
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
+        rootView?.startTimer()
     }
 
     override func viewDidDisappear(_: Bool) {
-        rootView.otpField.text = ""
-        rootView.otpField.clearLabels()
-        rootView.timer.invalidate()
-        rootView.getCodeButton.setTitle(L10n.Verification.Button.title("01:30"), for: .disabled)
+        rootView?.otpField.text = ""
+        rootView?.otpField.clearLabels()
+        rootView?.timer.invalidate()
+        rootView?.getCodeButton.setTitle(L10n.Verification.Button.title("01:30"), for: .disabled)
     }
 
     private func bindViewModel() {
@@ -75,9 +81,13 @@ final class VerificationController: ViewController, LoaderDisplayable, AlertDisp
 
         viewModel.outputs.didResendOTP
             .subscribe(onNext: { [weak self] in
-                self?.rootView.reload()
+                self?.rootView?.reload()
             })
             .disposed(by: disposeBag)
+    }
+
+    @objc private func dismissVC() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

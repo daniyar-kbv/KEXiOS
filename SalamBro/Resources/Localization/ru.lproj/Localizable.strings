@@ -217,6 +217,11 @@
 "select_main_info.title" = "Адрес доставки";
 "select_main_info.description" = "Наличие или отсутствие того или иного бренда - зависит от Вашего адреса доставки";
 "select_main_info.save" = "Сохранить";
+"select_main_info.alert.title" = "Вы уверены?";
+"select_main_info.alert.body.address" = "Если Вы сейчас смените адрес, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить адрес?";
+"select_main_info.alert.body.brand" = "Если Вы сейчас смените бренд, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить бренд?";
+"select_main_info.alert.action.yes" = "Да";
+"select_main_info.alert.action.no" = "Нет";
 
 // MARK: Address Picker
 "address_picker.add" = "Добавить новый адрес";
