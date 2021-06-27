@@ -14,14 +14,14 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
     private let disposeBag = DisposeBag()
 
-    private let phoneTitleLabel: UILabel = {
+    private lazy var phoneTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.textColor = .mildBlue
         return label
     }()
 
-    private let nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = DefaultStorageImpl.sharedStorage.userName ?? ""
         label.font = .systemFont(ofSize: 32, weight: .semibold)
@@ -29,14 +29,14 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         return label
     }()
 
-    private let emailLabel: UILabel = {
+    private lazy var emailLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
         label.textAlignment = .left
         return label
     }()
 
-    private let changeNameButton: UIButton = {
+    private lazy var changeNameButton: UIButton = {
         let label = UIButton()
         label.setTitle(L10n.Profile.EditButton.title, for: .normal)
         label.setTitleColor(.kexRed, for: .normal)
@@ -45,7 +45,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         return label
     }()
 
-    private let tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let table = UITableView()
         table.separatorColor = .mildBlue
         table.addTableHeaderViewLine()
@@ -58,7 +58,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         return table
     }()
 
-    private let logoutButton: UIButton = {
+    private lazy var logoutButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.Profile.LogoutButton.title, for: .normal)
         button.setTitleColor(.mildBlue, for: .normal)
@@ -69,6 +69,8 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         button.layer.masksToBounds = true
         return button
     }()
+
+    private lazy var animationView = AnimationContainerView(delegate: self, animationType: .profile)
 
     private let viewModel: ProfileViewModel
 
@@ -84,11 +86,10 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        layoutUI()
+        navigationItem.title = L10n.Profile.NavigationBar.title
         bindViews()
         bindViewModel()
-
-//        viewModel.getUserInfo()
+        viewModel.getUserInfo()
     }
 
     private func bindViews() {
@@ -104,9 +105,22 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
         logoutButton.rx.tap
             .bind { [weak self] in
-                self?.outputs.onLogout.accept(())
+                self?.handleLogoutAction()
             }
             .disposed(by: disposeBag)
+    }
+
+    private func handleLogoutAction() {
+        let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+            self?.viewModel.logout()
+            self?.showEmptyState()
+        }
+
+        let noAction = UIAlertAction(title: "Нет", style: .default, handler: nil)
+
+        showAlert(title: "Вы уверены?",
+                  message: "Вы уверены что хотите выйти из аккаунта?",
+                  actions: [yesAction, noAction])
     }
 
     private func bindViewModel() {
@@ -124,12 +138,15 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
         viewModel.outputs.didFail
             .subscribe(onNext: { [weak self] error in
-                self?.showError(error)
+                self?.showError(error, completion: {
+                    self?.showEmptyState()
+                })
             })
             .disposed(by: disposeBag)
 
         viewModel.outputs.didGetUserInfo
             .subscribe(onNext: { [weak self] userInfo in
+                self?.layoutUI()
                 self?.updateViews(with: userInfo)
             })
             .disposed(by: disposeBag)
@@ -143,8 +160,16 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         emailLabel.text = model.email
     }
 
+    private func showEmptyState() {
+        view.addSubview(animationView)
+        animationView.isHidden = false
+        animationView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+
     private func layoutUI() {
-        navigationItem.title = L10n.Profile.NavigationBar.title
+        animationView.isHidden = true
         view.backgroundColor = .arcticWhite
         view.addSubview(phoneTitleLabel)
         phoneTitleLabel.snp.makeConstraints {
@@ -191,6 +216,12 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
     }
 }
 
+extension ProfilePage: AnimationContainerViewDelegate {
+    func performAction(_: AnimationContainerView) {
+        outputs.onLoginTapped.accept(())
+    }
+}
+
 extension ProfilePage: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return viewModel.tableItems.count
@@ -216,6 +247,6 @@ extension ProfilePage {
     struct Output {
         let onChangeUserInfo = PublishRelay<UserInfoResponse>()
         let onTableItemPressed = PublishRelay<ProfileTableItem>()
-        let onLogout = PublishRelay<Void>()
+        let onLoginTapped = PublishRelay<Void>()
     }
 }

@@ -43,6 +43,12 @@ final class ProfileCoordinator: BaseCoordinator {
             })
             .disposed(by: disposeBag)
 
+        profilePage.outputs.onLoginTapped
+            .subscribe(onNext: { [weak self] in
+                self?.startAuthCoordinator()
+            })
+            .disposed(by: disposeBag)
+
         router.set(navigationController: SBNavigationController(rootViewController: profilePage))
     }
 
@@ -70,8 +76,9 @@ final class ProfileCoordinator: BaseCoordinator {
         let addressListCoordinator = coordinatorsFactory.makeAddressListCoordinator()
         add(addressListCoordinator)
 
-        addressListCoordinator.didFinish = { [weak self] in
+        addressListCoordinator.didFinish = { [weak self, weak addressListCoordinator] in
             self?.remove(addressListCoordinator)
+            addressListCoordinator = nil
         }
 
         addressListCoordinator.start()
@@ -80,10 +87,21 @@ final class ProfileCoordinator: BaseCoordinator {
     private func showOrderHistoryPage() {
         let orderHistoryCoordinator = coordinatorsFactory.makeOrderCoordinator()
         add(orderHistoryCoordinator)
-        orderHistoryCoordinator.didFinish = { [weak self] in
+        orderHistoryCoordinator.didFinish = { [weak self, weak orderHistoryCoordinator] in
             self?.remove(orderHistoryCoordinator)
+            orderHistoryCoordinator = nil
         }
 
         orderHistoryCoordinator.start()
+    }
+
+    private func startAuthCoordinator() {
+        let authCoordinator = coordinatorsFactory.makeAuthCoordinator()
+        add(authCoordinator)
+        authCoordinator.didFinish = { [weak self, weak authCoordinator] in
+            self?.remove(authCoordinator)
+            authCoordinator = nil
+        }
+        authCoordinator.start()
     }
 }
