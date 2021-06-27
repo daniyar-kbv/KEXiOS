@@ -11,6 +11,7 @@ protocol AlertDisplayable: AnyObject {
     func showError(_ error: ErrorPresentable)
     func showError(_ error: ErrorPresentable, completion: @escaping () -> Void)
     func showAlert(title: String, message: String?, submitTitle: String, completion: @escaping () -> Void)
+    func showAlert(title: String, message: String?, actions: [UIAlertAction])
 }
 
 extension AlertDisplayable where Self: UIViewController {

@@ -105,14 +105,22 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
         logoutButton.rx.tap
             .bind { [weak self] in
-                self?.showAlert(title: "Вы уверены?",
-                                message: "Вы уверены что хотите выйти из аккаунта?",
-                                submitTitle: "Да", completion: {
-                                    self?.viewModel.logout()
-                                    self?.showEmptyState()
-                                })
+                self?.handleLogoutAction()
             }
             .disposed(by: disposeBag)
+    }
+
+    private func handleLogoutAction() {
+        let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+            self?.viewModel.logout()
+            self?.showEmptyState()
+        }
+
+        let noAction = UIAlertAction(title: "Нет", style: .default, handler: nil)
+
+        showAlert(title: "Вы уверены?",
+                  message: "Вы уверены что хотите выйти из аккаунта?",
+                  actions: [yesAction, noAction])
     }
 
     private func bindViewModel() {
