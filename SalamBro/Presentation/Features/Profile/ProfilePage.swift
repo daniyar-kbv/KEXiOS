@@ -82,26 +82,13 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationItem.title = L10n.Profile.NavigationBar.title
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutUI()
         bindViews()
         bindViewModel()
 
-        viewModel.getUserInfo()
+//        viewModel.getUserInfo()
     }
 
     private func bindViews() {
@@ -157,6 +144,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
     }
 
     private func layoutUI() {
+        navigationItem.title = L10n.Profile.NavigationBar.title
         view.backgroundColor = .arcticWhite
         view.addSubview(phoneTitleLabel)
         phoneTitleLabel.snp.makeConstraints {

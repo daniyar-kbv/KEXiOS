@@ -39,26 +39,11 @@ final class ChangeNameController: UIViewController, AlertDisplayable, LoaderDisp
         configureViews()
         bindViewModel()
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        view.backgroundColor = .arcticWhite
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
-        navigationItem.title = L10n.ChangeName.NavigationBar.title
-    }
 }
 
 extension ChangeNameController {
     private func configureViews() {
+        navigationItem.title = L10n.ChangeName.NavigationBar.title
         if let name = viewModel.oldUserInfo.name, let email = viewModel.oldUserInfo.email {
             contentView?.configureTextFields(name: name, email: email)
         }

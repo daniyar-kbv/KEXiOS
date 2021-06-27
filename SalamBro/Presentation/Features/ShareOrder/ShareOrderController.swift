@@ -47,23 +47,13 @@ final class ShareOrderController: UIViewController {
         super.viewDidLoad()
         layoutUI()
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationItem.rightBarButtonItem = .init(customView: submitButton)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
-    }
 }
 
 extension ShareOrderController {
     private func layoutUI() {
         view.backgroundColor = .white
         contentView.backgroundColor = .white
+        navigationItem.rightBarButtonItem = .init(customView: submitButton)
 
         contentView.addSubview(webView)
         view.addSubview(contentView)
@@ -96,9 +86,5 @@ extension ShareOrderController {
             }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
-    }
-
-    @objc private func dismissVC() {
-        navigationController?.popViewController(animated: true)
     }
 }

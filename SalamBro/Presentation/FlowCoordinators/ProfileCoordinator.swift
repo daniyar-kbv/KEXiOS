@@ -20,7 +20,6 @@ final class ProfileCoordinator: BaseCoordinator {
         self.router = router
         self.pagesFactory = pagesFactory
         self.coordinatorsFactory = coordinatorsFactory
-        router.set(navigationController: router.getNavigationController())
     }
 
     override func start() {
@@ -44,7 +43,7 @@ final class ProfileCoordinator: BaseCoordinator {
             })
             .disposed(by: disposeBag)
 
-        router.push(viewController: profilePage, animated: true)
+        router.set(navigationController: SBNavigationController(rootViewController: profilePage))
     }
 
     private func showChangeUserInfoPage(userInfo: UserInfoResponse, completion: ((UserInfoResponse) -> Void)?) {
