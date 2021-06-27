@@ -59,10 +59,7 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 
     init(viewModel: SupportViewModel) {
         self.viewModel = viewModel
-
         super.init(nibName: .none, bundle: .none)
-
-        layoutUI()
     }
 
     @available(*, unavailable)
@@ -72,7 +69,7 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        layoutUI()
         bindViewModel()
         viewModel.getData()
     }
@@ -118,8 +115,8 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
     }
 
     private func layoutUI() {
-        view.backgroundColor = .white
-
+        view.backgroundColor = .arcticWhite
+        navigationItem.title = L10n.Support.title
         [tableView, socialCollectionView, callButton].forEach { view.addSubview($0) }
 
         tableView.snp.makeConstraints {

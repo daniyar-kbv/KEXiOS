@@ -80,6 +80,11 @@ extension MenuDetailController {
                 self?.showError(error)
             }).disposed(by: disposeBag)
 
+        viewModel.outputs.close
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.close.accept(())
+            }).disposed(by: disposeBag)
+
         viewModel.outputs.itemImage
             .subscribe(onNext: { [weak self] url in
                 guard let url = url else { return }
@@ -104,11 +109,24 @@ extension MenuDetailController {
                 .disposed(by: disposeBag)
         }
     }
+
+    private func layoutUI() {
+        view.backgroundColor = .white
+        tabBarController?.tabBar.backgroundColor = .white
+    }
 }
 
 extension MenuDetailController {
     @objc private func dismissVC() {
         dismiss(animated: true, completion: nil)
+    }
+
+    @objc private func backButtonTapped() {
+        outputs.close.accept(())
+    }
+
+    @objc private func proceedButtonTapped() {
+        viewModel.proceed()
     }
 }
 
@@ -122,6 +140,7 @@ extension MenuDetailController: MenuDetailViewDelegate {
                 self.contentView?.configureTextField(text: comment)
             }
         }).disposed(by: disposeBag)
+
         commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
             self?.commentaryPage = nil
         }).disposed(by: disposeBag)
@@ -137,6 +156,7 @@ extension MenuDetailController: MenuDetailViewDelegate {
 extension MenuDetailController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
+        let close = PublishRelay<Void>()
 
 //        Tech debt: finish when modifiers api resolved
         let toModifiers = PublishRelay<Void>()

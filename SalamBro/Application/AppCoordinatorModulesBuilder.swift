@@ -5,7 +5,7 @@
 //  Created by Ilyar Mnazhdin on 18.06.2021.
 //
 
-import UIKit // MARK: Tech debt, после изменения всех координаторов нужно импортить Foundation
+import Foundation
 
 protocol AppCoordinatorsModulesBuilder {
     func buildMenuCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> MenuCoordinator
@@ -16,9 +16,15 @@ protocol AppCoordinatorsModulesBuilder {
     func makeCartCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartCoordinator
 }
 
-class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
+final class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
+    private let routersFactory: RoutersFactory
+
+    init(routersFactory: RoutersFactory) {
+        self.routersFactory = routersFactory
+    }
+
     func buildMenuCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> MenuCoordinator {
-        let router = MainRouter()
+        let router = routersFactory.makeMenuRouter()
         return .init(router: router,
                      serviceComponents: serviceComponents, repositoryComponents: repositoryComponents,
                      pagesFactory: makeMenuPagesFactory(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents),
@@ -36,8 +42,9 @@ class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
     }
 
     func buildOnboardingCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoardingCoordinator {
-        return .init(router: MainRouter(),
-                     pagesFactory: makeOnboardingPagesFactory(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
+        return .init(router: routersFactory.makeOnboardingRouter(),
+                     pagesFactory: makeOnboardingPagesFactory(serviceComponents: serviceComponents,
+                                                              repositoryComponents: repositoryComponents))
     }
 
     private func makeOnboardingPagesFactory(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoadingPagesFactory {
@@ -46,7 +53,7 @@ class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
     }
 
     func buildProfileCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> ProfileCoordinator {
-        let router = MainRouter()
+        let router = routersFactory.makeProfileRouter()
         return .init(router: router,
                      pagesFactory: makeProfilePagesFactory(serviceComponents: serviceComponents),
                      coordinatorsFactory: makeProfileChildCoordinatorsFactory(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, router: router))
@@ -61,7 +68,7 @@ class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
     }
 
     func makeSupportCoordinator(serviceComponents: ServiceComponents) -> SupportCoordinator {
-        let router = MainRouter()
+        let router = routersFactory.makeSupportRouter()
         return .init(router: router,
                      pagesFactory: makeSupportPagesFactory(serviceComponents: serviceComponents),
                      coordinatorsFactory: makeSupportCoordinatorsFactory(router: router, serviceComponents: serviceComponents))
@@ -76,7 +83,7 @@ class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
     }
 
     func makeAuthCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthCoordinator {
-        return .init(router: MainRouter(),
+        return .init(router: routersFactory.makeAuthRouter(),
                      pagesFactory: makeAuthPagesFactory(serviceComponents: serviceComponents,
                                                         repositoryComponents: repositoryComponents))
     }
@@ -87,7 +94,7 @@ class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
     }
 
     func makeCartCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartCoordinator {
-        let router = MainRouter()
+        let router = routersFactory.makeCartRouter()
         return .init(router: router,
                      pagesFactory: makeCartPagesFactory(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents),
                      coordinatorsFactory: makeCartCoordinatorsFactory(router: router, serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))

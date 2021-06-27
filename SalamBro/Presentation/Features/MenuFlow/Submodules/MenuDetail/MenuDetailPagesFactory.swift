@@ -14,9 +14,13 @@ protocol MenuDetailPagesFactory {
 
 class MenuDetailPagesFactoryImpl: DependencyFactory, MenuDetailPagesFactory {
     private let serviceComponents: ServiceComponents
+    private let repositoryComponents: RepositoryComponents
 
-    init(serviceComponents: ServiceComponents) {
+    init(serviceComponents: ServiceComponents,
+         repositoryComponents: RepositoryComponents)
+    {
         self.serviceComponents = serviceComponents
+        self.repositoryComponents = repositoryComponents
     }
 
     func makeMenuDetailPage(positionUUID: String) -> MenuDetailController {
@@ -26,7 +30,8 @@ class MenuDetailPagesFactoryImpl: DependencyFactory, MenuDetailPagesFactory {
     private func makeMenuDetailViewModel(positionUUID: String) -> MenuDetailViewModel {
         return scoped(MenuDetailViewModelImpl(productUUID: positionUUID,
                                               defaultStorage: DefaultStorageImpl.sharedStorage,
-                                              ordersService: serviceComponents.ordersService()))
+                                              ordersService: serviceComponents.ordersService(),
+                                              cartRepository: repositoryComponents.makeCartRepository()))
     }
 
     func makeModifiersPage() -> ModifiersController {

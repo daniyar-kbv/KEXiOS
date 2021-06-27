@@ -13,7 +13,7 @@ import UIKit
 final class MenuCoordinator: BaseCoordinator {
     private let disposeBag = DisposeBag()
 
-    let router: Router
+    private(set) var router: Router
 
     private let serviceComponents: ServiceComponents
     private let repositoryComponents: RepositoryComponents
@@ -56,7 +56,7 @@ final class MenuCoordinator: BaseCoordinator {
                 self?.openDetail(positionUUID: positionUUID)
             }).disposed(by: disposeBag)
 
-        router.push(viewController: menuPage, animated: true)
+        router.set(navigationController: SBNavigationController(rootViewController: menuPage))
     }
 
     private func openChangeBrand(didSave: (() -> Void)? = nil) {
@@ -93,7 +93,7 @@ final class MenuCoordinator: BaseCoordinator {
     }
 
     private func openDetail(positionUUID: String) {
-        let menuDetailCoordinator = coordinatorsFactory.makeMenuDetailCoordinator(serviceComponents: serviceComponents, positionUUID: positionUUID)
+        let menuDetailCoordinator = coordinatorsFactory.makeMenuDetailCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, positionUUID: positionUUID)
         add(menuDetailCoordinator)
 
         menuDetailCoordinator.didFinish = { [weak self] in

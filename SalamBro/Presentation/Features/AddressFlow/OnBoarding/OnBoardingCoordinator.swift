@@ -31,7 +31,7 @@ final class OnBoardingCoordinator: BaseCoordinator {
             self?.openCities(countryId: countryId)
         }).disposed(by: disposeBag)
 
-        router.push(viewController: countriesPage, animated: false)
+        router.set(navigationController: SBNavigationController(rootViewController: countriesPage))
         UIApplication.shared.setRootView(router.getNavigationController())
     }
 
