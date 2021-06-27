@@ -40,7 +40,7 @@ final class OrderHistoryCoordinator: BaseCoordinator {
     private func showRateOrderPage() {
         let rateOrderPage = pagesFactory.makeRateOrderPage()
         rateOrderPage.modalPresentationStyle = .pageSheet
-        let nav = UINavigationController(rootViewController: rateOrderPage)
+        let nav = SBNavigationController(rootViewController: rateOrderPage)
         router.present(nav, animated: true, completion: nil)
     }
 

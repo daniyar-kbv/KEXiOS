@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class CountriesListController: ViewController, AlertDisplayable {
+final class CountriesListController: UIViewController, AlertDisplayable {
     let outputs = Output()
     private let viewModel: CountriesListViewModelProtocol
     private let disposeBag = DisposeBag()
@@ -51,6 +51,20 @@ final class CountriesListController: ViewController, AlertDisplayable {
         bind()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationItem.title = L10n.CountriesList.Navigation.title
+    }
+
     private func bind() {
         viewModel.outputs.didGetCoutries
             .bind(to: countriesTableView.rx.reload)
@@ -64,16 +78,6 @@ final class CountriesListController: ViewController, AlertDisplayable {
         viewModel.outputs.didSelectCountry.subscribe(onNext: { [weak self] countryId in
             self?.outputs.didSelectCountry.accept(countryId)
         }).disposed(by: disposeBag)
-    }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
-
-        navigationItem.title = L10n.CountriesList.Navigation.title
-        navigationController?.navigationBar.layoutIfNeeded()
-        navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
-             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]
     }
 
     private func setup() {

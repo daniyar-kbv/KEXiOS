@@ -5,9 +5,10 @@
 //  Created by Arystan on 3/25/21.
 //
 
+import SnapKit
 import UIKit
 
-final class OrderHistoryController: ViewController {
+final class OrderHistoryController: UIViewController {
     var onRateTapped: (() -> Void)?
     var onShareTapped: (() -> Void)?
     var onTerminate: (() -> Void)?
@@ -15,7 +16,7 @@ final class OrderHistoryController: ViewController {
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
-        view.register(OrderTestCell.self, forCellReuseIdentifier: "Cell")
+        view.register(cellType: OrderTestCell.self)
         view.showsVerticalScrollIndicator = false
         view.backgroundColor = .clear
         view.estimatedRowHeight = 500
@@ -46,32 +47,26 @@ final class OrderHistoryController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setupConstraints()
+        layoutUI()
     }
+}
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationBar()
-    }
-
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
+extension OrderHistoryController {
+    private func layoutUI() {
         navigationItem.title = L10n.OrderHistory.title
-    }
+        view.backgroundColor = .arcticWhite
 
-    func setupViews() {
-        view.backgroundColor = .white
         view.addSubview(tableView)
-    }
 
-    func setupConstraints() {
         tableView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalToSuperview()
         }
+    }
+
+    @objc private func dismissVC() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -81,9 +76,8 @@ extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! OrderTestCell
+        let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderTestCell.self)
         cell.delegate = self
-        cell.selectionStyle = .none
         return cell
     }
 }

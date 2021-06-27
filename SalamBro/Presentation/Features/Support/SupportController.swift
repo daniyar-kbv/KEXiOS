@@ -59,11 +59,7 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 
     init(viewModel: SupportViewModel) {
         self.viewModel = viewModel
-
         super.init(nibName: .none, bundle: .none)
-
-        layoutUI()
-        setupNavigationBar()
     }
 
     @available(*, unavailable)
@@ -73,9 +69,22 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        layoutUI()
         bindViewModel()
         viewModel.getData()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationItem.title = L10n.Support.title
     }
 
     private func bindViewModel() {
@@ -105,36 +114,19 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
         socialCollectionView.reloadData()
     }
 
-    private func setupNavigationBar() {
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationController?.navigationBar.backIndicatorImage = Asset.chevronLeft.image
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = Asset.chevronLeft.image
-        navigationItem.title = L10n.Support.title
-    }
-
     private func layoutUI() {
-        view.backgroundColor = .white
-
+        view.backgroundColor = .arcticWhite
+        navigationItem.title = L10n.Support.title
         [tableView, socialCollectionView, callButton].forEach { view.addSubview($0) }
 
         tableView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
-            $0.left.equalToSuperview()
-            $0.right.equalToSuperview()
+            $0.left.right.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
 
         callButton.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-24)
             $0.height.equalTo(43)
         }

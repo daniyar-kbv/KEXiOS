@@ -36,17 +36,18 @@ public final class MenuDetailCoordinator: Coordinator {
 
         menuDetailPage.outputs.didTerminate
             .subscribe(onNext: { [weak self] in
-                print("")
                 self?.didFinish?()
+            }).disposed(by: disposeBag)
+
+        menuDetailPage.outputs.close
+            .subscribe(onNext: { [weak self] in
+                menuDetailPage.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
         menuDetailPage.outputs.toModifiers
             .subscribe(onNext: { [weak self] in
-                print("toModificators")
                 self?.openModifiers(on: menuDetailPage)
-            }, onDisposed: {
-                print("toModifiers disposed")
-            }).disposed(by: disposeBag)
+            }, onDisposed: {}).disposed(by: disposeBag)
 
         menuDetailPage.modalPresentationStyle = .pageSheet
         router.present(menuDetailPage, animated: true, completion: nil)

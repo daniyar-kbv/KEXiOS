@@ -42,34 +42,12 @@ final class SupportViewModelImpl: SupportViewModel {
             self?.outputs.didEndRequest.accept(())
             self?.documents = documents
             self?.contacts = contacts
-            self?.appendContacts()
             self?.outputs.update.accept(())
         }, onError: { [weak self] error in
             guard let error = error as? ErrorPresentable else { return }
             self?.outputs.didEndRequest.accept(())
             self?.outputs.didGetError.accept(error)
         }).disposed(by: disposeBag)
-    }
-
-//    MARK: Mock data for testing
-
-//    Tech debt: remove when social contacts returned from api
-    private func appendContacts() {
-        let socialContacts = ([.instagram, .tiktok, .email, .vk] as [Contact.`Type`])
-            .map { type -> Contact in
-                switch type {
-                case .instagram, .tiktok:
-                    return Contact(name: type.rawValue, value: "sultan.amanbai")
-                case .email:
-                    return Contact(name: type.rawValue, value: "usembaevsultan08@gmail.com")
-                case .vk:
-                    return Contact(name: type.rawValue, value: "https://vk.com/sultan01cool")
-                default:
-                    return Contact(name: type.rawValue, value: "sultan.amanbai")
-                }
-            }
-
-        contacts?.append(contentsOf: socialContacts)
     }
 
     func getSocialContacts() -> [Contact] {

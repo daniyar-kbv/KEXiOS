@@ -17,9 +17,7 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
     private let disposeBag = DisposeBag()
     let outputs = Output()
 
-    private let contentView = MenuDetailView()
-
-    private let dimmedView = UIView()
+    private var contentView: MenuDetailView?
 
     private var commentaryPage: MapCommentaryPage?
 
@@ -37,15 +35,13 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     override func loadView() {
         super.loadView()
+        contentView = MenuDetailView(delegate: self)
         view = contentView
     }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-
-        layoutUI()
         configureViews()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         bindViewModel()
         viewModel.update()
     }
@@ -63,10 +59,8 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
 extension MenuDetailController {
     private func configureViews() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(commetaryViewTapped(_:)))
-        contentView.commentaryView.addGestureRecognizer(tap)
-
-        contentView.chooseAdditionalItemButton.addTarget(self, action: #selector(additionalItemChangeButtonTapped), for: .touchUpInside)
+        view.backgroundColor = .white
+        tabBarController?.tabBar.backgroundColor = .white
     }
 
     private func bindViewModel() {
@@ -86,73 +80,83 @@ extension MenuDetailController {
                 self?.showError(error)
             }).disposed(by: disposeBag)
 
+        viewModel.outputs.close
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.close.accept(())
+            }).disposed(by: disposeBag)
+
         viewModel.outputs.itemImage
             .subscribe(onNext: { [weak self] url in
                 guard let url = url else { return }
-                self?.contentView.imageView.setImage(url: url)
+                self?.contentView?.setImage(url: url)
             }).disposed(by: disposeBag)
 
-        viewModel.outputs.itemTitle
-            .bind(to: contentView.itemTitleLabel.rx.text)
-            .disposed(by: disposeBag)
+        if let itemTitleLabel = contentView?.itemTitleLabel {
+            viewModel.outputs.itemTitle
+                .bind(to: itemTitleLabel.rx.text)
+                .disposed(by: disposeBag)
+        }
 
-        viewModel.outputs.itemDescription
-            .bind(to: contentView.descriptionLabel.rx.text)
-            .disposed(by: disposeBag)
+        if let itemDescriptionLabel = contentView?.descriptionLabel {
+            viewModel.outputs.itemDescription
+                .bind(to: itemDescriptionLabel.rx.text)
+                .disposed(by: disposeBag)
+        }
 
-        viewModel.outputs.itemPrice
-            .bind(to: contentView.proceedButton.rx.title())
-            .disposed(by: disposeBag)
+        if let itemPriceButton = contentView?.proceedButton {
+            viewModel.outputs.itemPrice
+                .bind(to: itemPriceButton.rx.title())
+                .disposed(by: disposeBag)
+        }
     }
 
     private func layoutUI() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
-
-        view.addSubview(dimmedView)
-
-        dimmedView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-
-        dimmedView.backgroundColor = .gray
-        dimmedView.alpha = 0
     }
 }
 
 extension MenuDetailController {
-    @objc func additionalItemChangeButtonTapped() {
-        outputs.toModifiers.accept(())
-    }
-
-    @objc func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
-        commentaryPage = MapCommentaryPage()
-        guard let page = commentaryPage else { return }
-        page.cachedCommentary = contentView.commentaryField.text
-        page.delegate = self
-        page.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
-        present(page, animated: true, completion: nil)
-        dimmedView.alpha = 0.5
-    }
-
-    @objc private func keyboardWillHide() {
-        dimmedView.alpha = 0
-    }
-
     @objc private func dismissVC() {
         dismiss(animated: true, completion: nil)
     }
+
+    @objc private func backButtonTapped() {
+        outputs.close.accept(())
+    }
+
+    @objc private func proceedButtonTapped() {
+        viewModel.proceed()
+    }
 }
 
-extension MenuDetailController: MapCommentaryPageDelegate {
-    func onDoneButtonTapped(commentary: String) {
-        contentView.commentaryField.text = commentary
+extension MenuDetailController: MenuDetailViewDelegate {
+    func commentaryViewTapped() {
+        commentaryPage = MapCommentaryPage()
+        commentaryPage?.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
+
+        commentaryPage?.output.didProceed.subscribe(onNext: { comment in
+            if let comment = comment {
+                self.contentView?.configureTextField(text: comment)
+            }
+        }).disposed(by: disposeBag)
+
+        commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
+            self?.commentaryPage = nil
+        }).disposed(by: disposeBag)
+
+        commentaryPage?.openTransitionSheet(on: self)
+    }
+
+    func changeButtonTapped() {
+        outputs.toModifiers.accept(())
     }
 }
 
 extension MenuDetailController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
+        let close = PublishRelay<Void>()
 
 //        Tech debt: finish when modifiers api resolved
         let toModifiers = PublishRelay<Void>()

@@ -14,23 +14,40 @@ protocol MenuDetailViewModel: AnyObject {
     var outputs: MenuDetailViewModelImpl.Output { get }
 
     func update()
+    func proceed()
+    func set(comment: String)
 }
 
 final class MenuDetailViewModelImpl: MenuDetailViewModel {
     private let productUUID: String
     private let defaultStorage: DefaultStorage
     private let ordersService: OrdersService
+    private let cartRepository: CartRepository
 
     private let disposeBag = DisposeBag()
+    private var product: OrderProductDetailResponse.Data? {
+        didSet {
+            outputs.itemImage.accept(URL(string: product?.image ?? ""))
+            outputs.itemTitle.accept(product?.name)
+            outputs.itemDescription.accept(product?.description)
+//            Tech debt: change to prices logic
+            outputs.itemPrice.accept("\(L10n.MenuDetail.proceedButton) \(product?.price.first?.removeTrailingZeros() ?? "")")
+//                self?.outputs.itemModifiers.accept(product.modifiers)
+        }
+    }
+
+    private var comment: String?
     let outputs = Output()
 
     init(productUUID: String,
          defaultStorage: DefaultStorage,
-         ordersService: OrdersService)
+         ordersService: OrdersService,
+         cartRepository: CartRepository)
     {
         self.productUUID = productUUID
         self.defaultStorage = defaultStorage
         self.ordersService = ordersService
+        self.cartRepository = cartRepository
     }
 
     public func update() {
@@ -45,18 +62,35 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
         ordersService.getProductDetail(for: leadUUID, by: productUUID)
             .subscribe(onSuccess: { [weak self] product in
                 self?.outputs.didEndRequest.accept(())
-                self?.outputs.itemImage.accept(URL(string: product.image ?? ""))
-                self?.outputs.itemTitle.accept(product.name)
-                self?.outputs.itemDescription.accept(product.description)
-                self?.outputs.itemPrice.accept(String(product.price.removeTrailingZeros()))
-//                self?.outputs.itemModifiers.accept(product.modifiers)
+                self?.product = product
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didGetError.accept(error as? ErrorPresentable)
             }).disposed(by: disposeBag)
     }
 
-//    MARK: test
+    func proceed() {
+        guard let product = product else { return }
+        let item = CartDTO.Item(
+            positionUUID: product.uuid,
+            count: 1,
+            comment: comment ?? "",
+            position: .init(name: product.name,
+                            image: product.image ?? "",
+                            description: product.description,
+                            //            Tech debt: change to prices logic
+                            price: product.price.first ?? 0,
+                            category: product.branchCategory),
+//            Tech debt: add modifiers
+            modifiers: []
+        )
+        cartRepository.addItem(item: item)
+    }
+
+    func set(comment: String) {
+        self.comment = comment
+        outputs.comment.accept(comment)
+    }
 }
 
 extension MenuDetailViewModelImpl {
@@ -65,10 +99,13 @@ extension MenuDetailViewModelImpl {
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
 
+        let close = PublishRelay<Void>()
+
+        let comment = PublishRelay<String>()
         let itemImage = PublishRelay<URL?>()
-        let itemTitle = PublishRelay<String>()
-        let itemDescription = PublishRelay<String>()
-        let itemPrice = PublishRelay<String>()
+        let itemTitle = PublishRelay<String?>()
+        let itemDescription = PublishRelay<String?>()
+        let itemPrice = PublishRelay<String?>()
 //        let itemModifiers = PublishRelay<[OrderProductDetailResponse.Data.Modifier]>()
     }
 }

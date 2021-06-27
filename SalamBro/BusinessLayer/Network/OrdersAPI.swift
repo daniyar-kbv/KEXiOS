@@ -11,11 +11,10 @@ import Moya
 
 enum OrdersAPI {
     case apply(dto: OrderApplyDTO)
-    case decrement(dto: OrderIncDecrDTO)
     case getProducts(leadUUID: String)
     case getProductDetail(leadUUID: String, productUUID: String)
-    case increment(dto: OrderIncDecrDTO)
-    case updateCart(leadUUID: String)
+    case getCart(leadUUID: String)
+    case updateCart(leadUUID: String, dto: CartDTO)
 }
 
 extension OrdersAPI: TargetType {
@@ -28,9 +27,8 @@ extension OrdersAPI: TargetType {
         case .apply: return "orders/apply/"
         case let .getProducts(leadUUID): return "orders/\(leadUUID)/nomenclature/"
         case let .getProductDetail(leadUUID, productUUID): return "orders/\(leadUUID)/nomenclature/\(productUUID)/"
-        case let .decrement(dto): return "orders/\(dto.leadUUID)/decrement/\(dto.positionUUID)"
-        case let .increment(dto): return "orders/\(dto.leadUUID)/increment/\(dto.positionUUID)"
-        case let .updateCart(leadUUID): return "orders/\(leadUUID)/update-cart"
+        case let .getCart(leadUUID): return "orders/\(leadUUID)/cart/"
+        case let .updateCart(leadUUID, _): return "orders/\(leadUUID)/cart/"
         }
     }
 
@@ -39,9 +37,8 @@ extension OrdersAPI: TargetType {
         case .apply: return .post
         case .getProducts: return .get
         case .getProductDetail: return .get
-        case .decrement: return .post
-        case .increment: return .post
-        case .updateCart: return .post
+        case .getCart: return .get
+        case .updateCart: return .put
         }
     }
 
@@ -52,11 +49,10 @@ extension OrdersAPI: TargetType {
     var task: Task {
         switch self {
         case let .apply(dto): return .requestJSONEncodable(dto)
-        case .decrement: return .requestPlain
-        case .increment: return .requestPlain
         case .getProducts: return .requestPlain
         case .getProductDetail: return .requestPlain
-        case .updateCart: return .requestPlain
+        case .getCart: return .requestPlain
+        case let .updateCart(_, dto): return .requestJSONEncodable(dto)
         }
     }
 

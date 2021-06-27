@@ -95,6 +95,19 @@ final class AppCoordinator: BaseCoordinator {
         add(cartCoordinator)
     }
 
+    private func startAuthCoordinator() {
+        let authCoordinator = appCoordinatorsFactory.makeAuthCoordinator(serviceComponents: serviceComponents,
+                                                                         repositoryComponents: repositoryComponents)
+
+        add(authCoordinator)
+        authCoordinator.didFinish = { [weak self, weak authCoordinator] in
+            self?.remove(authCoordinator)
+            authCoordinator = nil
+        }
+
+        authCoordinator.start()
+    }
+
     private func startOnboardingFlow() {
         let onboardingCoordinator = appCoordinatorsFactory.makeOnboardingCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 

@@ -46,23 +46,7 @@ final class AddressListController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         layoutUI()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
-        navigationItem.title = L10n.AddressPicker.titleMany
     }
 
     func reload() {
@@ -77,22 +61,15 @@ final class AddressListController: UIViewController {
 
 extension AddressListController {
     private func layoutUI() {
-        view.backgroundColor = .white
+        navigationItem.title = L10n.AddressPicker.titleMany
+        view.backgroundColor = .arcticWhite
 
         view.addSubview(citiesTableView)
 
         citiesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.left.right.equalToSuperview()
         }
-    }
-}
-
-extension AddressListController {
-    @objc private func dismissVC() {
-        navigationController?.popViewController(animated: true)
     }
 }
 
