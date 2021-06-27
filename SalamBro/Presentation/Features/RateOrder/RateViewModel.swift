@@ -14,15 +14,27 @@ protocol RateViewModelProtocol: AnyObject {}
 final class RateViewModel: RateViewModelProtocol {
     private let disposeBag = DisposeBag()
 
-    public var data: [String] = []
+    private(set) var data: [String] = []
 
-    public let arrayStar13: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.CourierNotFoundClient.text, L10n.RateOrder.Cell.FoodIsMissing.text, L10n.RateOrder.Cell.FoodIsCold.text]
-    public let arrayStar4: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text, L10n.RateOrder.Cell.FoodIsCold.text]
-    public let arrayStar5: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text]
+    private(set) var arrayStar13: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.CourierNotFoundClient.text, L10n.RateOrder.Cell.FoodIsMissing.text, L10n.RateOrder.Cell.FoodIsCold.text]
+    private(set) var arrayStar4: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text, L10n.RateOrder.Cell.FoodIsCold.text]
+    private(set) var arrayStar5: [String] = [L10n.RateOrder.Cell.CourierWork.text, L10n.RateOrder.Cell.GivenTime.text, L10n.RateOrder.Cell.DeliveryTime.text]
 
-    public var selectedItems: [String] = []
+    private(set) var selectedItems: [String] = []
 
     init() {}
+
+    func changeDataSet(with array: [String]) {
+        data = array
+    }
+
+    func condigureSelectedChoices(with choice: String) {
+        selectedItems.append(choice)
+    }
+
+    func deleteSelectedChoice(at index: Int) {
+        selectedItems.remove(at: index)
+    }
 }
 
 extension RateViewModel {}

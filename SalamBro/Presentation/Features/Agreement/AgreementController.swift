@@ -30,12 +30,6 @@ final class AgreementController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func bindViewModel() {
-        viewModel.url.bind(onNext: { [weak self] url in
-            self?.webView.load(URLRequest(url: url))
-        }).disposed(by: disposeBag)
-    }
-
     override func loadView() {
         super.loadView()
 
@@ -44,15 +38,26 @@ final class AgreementController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupNavigationBar()
     }
 
-    // MARK: - Tech Debt: change
-
-    private func setupNavigationBar() {
-        navigationItem.title = L10n.Rating.information
-        navigationController?.navigationBar.topItem?.title = ""
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
         navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
+    }
+
+    private func bindViewModel() {
+        viewModel.url.bind(onNext: { [weak self] url in
+            self?.webView.load(URLRequest(url: url))
+        }).disposed(by: disposeBag)
+    }
+
+    @objc private func dismissVC() {
+        navigationController?.popViewController(animated: true)
     }
 }

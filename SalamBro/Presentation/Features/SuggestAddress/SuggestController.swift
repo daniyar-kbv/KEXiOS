@@ -15,10 +15,7 @@ protocol SuggestControllerDelegate: AnyObject {
 }
 
 final class SuggestController: UIViewController {
-    private lazy var contentView: SuggestView = {
-        let view = SuggestView()
-        return view
-    }()
+    private var contentView: SuggestView?
 
     private lazy var tableView = UITableView()
 
@@ -32,6 +29,11 @@ final class SuggestController: UIViewController {
     private var fullQuery: String = ""
 
     weak var suggestDelegate: SuggestControllerDelegate?
+
+    override func loadView() {
+        super.loadView()
+        contentView = SuggestView(delegate: self)
+    }
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -62,15 +64,13 @@ extension SuggestController {
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .onDrag
 
-        contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 10
-        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-
-        contentView.searchBar.addTarget(self, action: #selector(queryChange(sender:)), for: .editingChanged)
-        contentView.doneButton.addTarget(self, action: #selector(cancelAction(_:)), for: .touchUpInside)
+        contentView?.clipsToBounds = true
+        contentView?.layer.cornerRadius = 10
+        contentView?.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
 
     private func layoutUI() {
+        guard let contentView = contentView else { return }
         [contentView, tableView].forEach {
             view.addSubview($0)
         }
@@ -81,8 +81,7 @@ extension SuggestController {
 
         tableView.snp.makeConstraints {
             $0.top.equalTo(contentView.snp.bottom)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalToSuperview()
         }
     }
@@ -108,35 +107,13 @@ extension SuggestController {
 
         present(alert, animated: true, completion: nil)
     }
-
-    @objc private func queryChange(sender: UITextField) {
-        let suggestHandler = { (response: [YMKSuggestItem]?, error: Error?) -> Void in
-            if let items = response {
-                self.onSuggestResponse(items)
-            } else {
-                self.onSuggestError(error!)
-            }
-        }
-        let point = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
-        suggestSession.suggest(
-            withText: sender.text!,
-            window: YMKBoundingBox(southWest: point, northEast: point),
-            suggestOptions: YMKSuggestOptions(suggestTypes: .geo, userPosition: point, suggestWords: true),
-            responseHandler: suggestHandler
-        )
-    }
-
-    @objc private func cancelAction(_: UIButton) {
-        dismiss(animated: true, completion: nil)
-    }
 }
 
 extension SuggestController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: SuggestCell.self)
-        cell.addressLabel.text = suggestResults[indexPath.row].title.text
-        cell.subtitleLabel.text = suggestResults[indexPath.row].subtitle?.text
-        cell.selectionStyle = .none
+        // add viewModel configuration
+        cell.configureUI(address: suggestResults[indexPath.row].title.text, subtitle: suggestResults[indexPath.row].subtitle!.text)
         return cell
     }
 
@@ -149,18 +126,41 @@ extension SuggestController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! SuggestCell
-        contentView.searchBar.text = cell.addressLabel.text
-        if let subtitle = cell.subtitleLabel.text {
-            fullQuery = subtitle + cell.addressLabel.text!
+        let cell = tableView.cellForRow(at: indexPath) as? SuggestCell
+        guard let address = cell?.addressLabel.text, let title = contentView?.searchBar.text else { return }
+        contentView?.setSearchBarText(with: address)
+
+        if let subtitle = cell?.subtitleLabel.text {
+            fullQuery = subtitle + address
         } else {
-            fullQuery = cell.addressLabel.text!
+            fullQuery = address
         }
         tableView.deselectRow(at: indexPath, animated: true)
         dismiss(animated: true, completion: nil)
 
-        guard let title = contentView.searchBar.text else { return }
-
         suggestDelegate?.reverseGeocoding(searchQuery: fullQuery, title: title)
+    }
+}
+
+extension SuggestController: SuggestViewDelegate {
+    func searchBarTapped(_ textField: UITextField) {
+        let suggestHandler = { (response: [YMKSuggestItem]?, error: Error?) -> Void in
+            if let items = response {
+                self.onSuggestResponse(items)
+            } else {
+                self.onSuggestError(error!)
+            }
+        }
+        let point = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
+        suggestSession.suggest(
+            withText: textField.text!,
+            window: YMKBoundingBox(southWest: point, northEast: point),
+            suggestOptions: YMKSuggestOptions(suggestTypes: .geo, userPosition: point, suggestWords: true),
+            responseHandler: suggestHandler
+        )
+    }
+
+    func doneButtonTapped() {
+        dismiss(animated: true, completion: nil)
     }
 }

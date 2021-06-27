@@ -11,12 +11,12 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable {
+final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayable {
     let outputs = Output()
 
     private let viewModel: MenuViewModelProtocol
     private let disposeBag = DisposeBag()
-    var scrollService: MenuScrollService
+    private var scrollService: MenuScrollService
 
     private lazy var logoView: UIImageView = {
         let view = UIImageView()
@@ -81,7 +81,7 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        setup()
+        layoutUI()
         bindViewModel()
         bindScrollService()
 
@@ -90,7 +90,7 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationBar()
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     private func bindViewModel() {
@@ -119,7 +119,7 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
             }).disposed(by: disposeBag)
     }
 
-    func bindScrollService() {
+    private func bindScrollService() {
         scrollService.didSelectCategory
             .subscribe(onNext: { [weak self] source, category in
                 guard source == .header else { return }
@@ -128,22 +128,11 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
             .disposed(by: disposeBag)
     }
 
-    override func setupNavigationBar() {
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-
-    private func setup() {
-        setupViews()
-        setupConstraints()
-    }
-
-    private func setupViews() {
+    private func layoutUI() {
         view.backgroundColor = .white
         [logoView, brandLabel, bottomChevronImage].forEach { brandSelectView.addSubview($0) }
         [brandSelectView, itemTableView].forEach { view.addSubview($0) }
-    }
 
-    func setupConstraints() {
         logoView.snp.makeConstraints {
             $0.size.equalTo(CGSize(width: 48, height: 48))
             $0.top.left.equalToSuperview()
@@ -162,8 +151,7 @@ final class MenuController: ViewController, AlertDisplayable, LoaderDisplayable 
 
         brandSelectView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(8)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(48)
         }
 
@@ -258,7 +246,7 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension MenuController {
-    func scroll(to category: String) {
+    private func scroll(to category: String) {
         guard let row = viewModel.cellViewModels[itemTableView.numberOfSections - 1]
             .enumerated().first(where: {
                 guard let viewModel = $1 as? MenuCellViewModelProtocol else { return false }
@@ -267,7 +255,7 @@ extension MenuController {
         itemTableView.scrollToRow(at: IndexPath(row: row, section: itemTableView.numberOfSections - 1), at: .top, animated: true)
     }
 
-    func didScrollToItem(at position: Int) {
+    private func didScrollToItem(at position: Int) {
         guard let cellViewModel = viewModel.cellViewModels[itemTableView.numberOfSections - 1][position] as? MenuCellViewModelProtocol,
               !scrollService.isHeaderScrolling,
               scrollService.currentCategory != cellViewModel.position.category else { return }

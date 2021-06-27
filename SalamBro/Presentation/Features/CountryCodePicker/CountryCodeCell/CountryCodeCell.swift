@@ -5,6 +5,7 @@
 //  Created by Abzal Toremuratuly on 02.05.2021.
 //
 
+import SnapKit
 import UIKit
 
 struct CountryCodeModel {
@@ -71,7 +72,8 @@ final class CountryCodeCell: UITableViewCell {
 
     private func setupConstraints() {
         codeLabel.snp.makeConstraints {
-            $0.left.centerY.equalToSuperview()
+            $0.left.equalToSuperview().offset(24)
+            $0.centerY.equalToSuperview()
         }
 
         countryLabel.snp.makeConstraints {

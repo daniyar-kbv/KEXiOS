@@ -5,66 +5,84 @@
 //  Created by Arystan on 4/22/21.
 //
 
+import RxCocoa
+import RxSwift
+import SnapKit
 import UIKit
 import WebKit
 
-class ShareOrderController: ViewController {
-    lazy var webView: WKWebView = {
+final class ShareOrderController: UIViewController {
+    private let disposeBag = DisposeBag()
+
+    private lazy var webView: WKWebView = {
         let webConfiguration = WKWebViewConfiguration()
         let webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.translatesAutoresizingMaskIntoConstraints = false
         return webView
     }()
 
-    lazy var contentView: UIView = {
+    private lazy var contentView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    lazy var submitButton: UIButton = {
+    private lazy var submitButton: UIButton = {
         let view = UIButton()
         view.setTitle(L10n.ShareOrder.submitButton, for: .normal)
         view.titleLabel?.font = .systemFont(ofSize: 14)
         view.setTitleColor(.kexRed, for: .normal)
         view.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
+    init() {
+        super.init(nibName: .none, bundle: .none)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setupConstraints()
+        layoutUI()
     }
 
-    override func setupNavigationBar() {
-        super.setupNavigationBar()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
         navigationItem.rightBarButtonItem = .init(customView: submitButton)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
     }
+}
 
-    func setupUI() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "post", style: .done, target: self, action: #selector(addTapped))
-        webView.loadHTMLString(htmlString, baseURL: nil)
+extension ShareOrderController {
+    private func layoutUI() {
         view.backgroundColor = .white
         contentView.backgroundColor = .white
+
         contentView.addSubview(webView)
         view.addSubview(contentView)
+
+        webView.loadHTMLString(htmlString, baseURL: nil)
+
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        webView.snp.makeConstraints {
+            $0.top.bottom.equalTo(contentView)
+            $0.left.right.equalTo(contentView).inset(16)
+        }
     }
+}
 
-    fileprivate func setupConstraints() {
-        contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        contentView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        contentView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-
-        webView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
-        webView.leftAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leftAnchor, constant: 16).isActive = true
-        webView.rightAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.rightAnchor, constant: -16).isActive = true
-        webView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-    }
-
-    @objc func addTapped() {
+extension ShareOrderController {
+    @objc private func addTapped() {
         let url = URL(string: "instagram-stories://share")!
         if UIApplication.shared.canOpenURL(url) {
             let backgroundData = contentView.asImage().jpegData(compressionQuality: 1.0)!
@@ -80,7 +98,7 @@ class ShareOrderController: ViewController {
         }
     }
 
-    @objc func backButtonTapped() {
+    @objc private func dismissVC() {
         navigationController?.popViewController(animated: true)
     }
 }
