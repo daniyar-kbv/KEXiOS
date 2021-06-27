@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class AddressDetailView: UIView {
+final class AddressDetailView: UIView {
     private lazy var addressTitleLabel: UILabel = {
         let view = UILabel()
         view.textColor = .mildBlue
@@ -68,26 +68,22 @@ extension AddressDetailView {
 
         addressTitleLabel.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(24)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
         }
 
         addressLabel.snp.makeConstraints {
             $0.top.equalTo(addressTitleLabel.snp.bottom).offset(4)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
         }
 
         commentaryTitleLabel.snp.makeConstraints {
             $0.top.equalTo(addressLabel.snp.bottom).offset(24)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
         }
 
         commentaryLabel.snp.makeConstraints {
             $0.top.equalTo(commentaryTitleLabel.snp.bottom).offset(4)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
         }
     }
 }

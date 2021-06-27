@@ -119,8 +119,18 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationItem.title = L10n.SelectMainInfo.title
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(back))
 
-        setupNavigationBar()
         viewModel.checkValues()
     }
 
@@ -191,24 +201,6 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
     private func changeSaveButtonState(isActive: Bool) {
         saveButton.isUserInteractionEnabled = isActive
         saveButton.backgroundColor = isActive ? .kexRed : .calmGray
-    }
-
-//    Tech debt: change navbar logic
-    private func setupNavigationBar() {
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationController?.navigationBar.backIndicatorImage = Asset.chevronLeft.image
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = Asset.chevronLeft.image
-        navigationItem.title = L10n.SelectMainInfo.title
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(back))
     }
 
     private func didSelectItem(type: SelectMainInformationCell.InputType, with index: Int) {

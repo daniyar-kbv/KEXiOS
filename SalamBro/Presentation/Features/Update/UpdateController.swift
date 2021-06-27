@@ -7,8 +7,8 @@
 
 import UIKit
 
-class UpdateController: ViewController {
-    lazy var rootView = AdditionalView(delegate: self, descriptionTitle: L10n.Update.Title.description, buttonTitle: L10n.Update.Button.title, image: UIImage(named: "logo")!)
+class UpdateController: UIViewController {
+    private lazy var rootView = AdditionalView(delegate: self, descriptionTitle: L10n.Update.Title.description, buttonTitle: L10n.Update.Button.title, image: UIImage(named: "logo")!)
 
     override func viewDidLoad() {
         super.viewDidLoad()

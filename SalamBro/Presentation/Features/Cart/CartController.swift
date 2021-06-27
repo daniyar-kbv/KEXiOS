@@ -5,6 +5,8 @@
 //  Created by Arystan on 3/18/21.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
 protocol CartViewDelegate {
@@ -16,6 +18,8 @@ class CartController: UIViewController {
     var openAuth: (() -> Void)?
 
     private var commentaryPage: MapCommentaryPage?
+
+    private let disposeBag = DisposeBag()
 
     // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
 
@@ -87,7 +91,6 @@ class CartController: UIViewController {
         super.viewDidLoad()
         layoutUI()
         configureViews()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -96,7 +99,6 @@ class CartController: UIViewController {
         navigationController?.navigationBar.shadowImage = .init()
         navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
         navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
         navigationController?.navigationBar.titleTextAttributes = [
             .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
             .foregroundColor: UIColor.black,
@@ -118,7 +120,7 @@ extension CartController {
         [divider, orderButton].forEach {
             footerView.addSubview($0)
         }
-        [itemsTableView, footerView, dimmedView].forEach {
+        [itemsTableView, footerView].forEach {
             view.addSubview($0)
         }
 
@@ -147,25 +149,17 @@ extension CartController {
             $0.right.equalTo(view.safeAreaLayoutGuide.snp.right)
             $0.bottom.equalTo(footerView.snp.top)
         }
-
-        dimmedView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        dimmedView.backgroundColor = .gray
-        dimmedView.alpha = 0
     }
 
-    func updateTableViewFooterUI(cart: Cart) {
+    private func updateTableViewFooterUI(cart: Cart) {
         tableViewFooter.productsLabel.text = L10n.CartFooter.productsCount(cart.totalProducts)
         tableViewFooter.productsPriceLabel.text = L10n.CartFooter.productsPrice(cart.totalPrice)
     }
 
-    @objc func buttonAction() {
+    @objc private func buttonAction() {
         openAuth?()
     }
 }
-
-// MARK: - UITableView
 
 extension CartController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
@@ -222,8 +216,6 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
-
-// MARK: - Cell Actions
 
 extension CartController: CartAdditinalProductCellDelegate {
     func deleteProduct(id: Int, isAdditional: Bool) {
@@ -285,19 +277,16 @@ extension CartController: CartAdditinalProductCellDelegate {
 extension CartController: CartFooterDelegate {
     func openPromocode() {
         commentaryPage = MapCommentaryPage()
-        guard let page = commentaryPage else { return }
-        page.delegate = self
-        page.configureTextField(placeholder: L10n.Promocode.field)
-        page.configureButton(title: L10n.Promocode.button)
-        present(page, animated: true, completion: nil)
-        dimmedView.alpha = 0.5
-    }
+        commentaryPage?.configureTextField(placeholder: L10n.Promocode.field)
+        commentaryPage?.configureButton(title: L10n.Promocode.button)
 
-    @objc private func keyboardWillHide() {
-        dimmedView.alpha = 0
-    }
-}
+        commentaryPage?.output.didProceed.subscribe(onNext: { _ in
 
-extension CartController: MapCommentaryPageDelegate {
-    func onDoneButtonTapped(commentary _: String) {}
+        }).disposed(by: disposeBag)
+        commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
+            self?.commentaryPage = nil
+        }).disposed(by: disposeBag)
+
+        commentaryPage?.openTransitionSheet(on: self)
+    }
 }

@@ -5,6 +5,7 @@
 //  Created by Arystan on 3/25/21.
 //
 
+import SnapKit
 import UIKit
 
 final class OrderHistoryController: UIViewController {
@@ -15,7 +16,7 @@ final class OrderHistoryController: UIViewController {
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
-        view.register(OrderTestCell.self, forCellReuseIdentifier: "Cell")
+        view.register(cellType: OrderTestCell.self)
         view.showsVerticalScrollIndicator = false
         view.backgroundColor = .clear
         view.estimatedRowHeight = 500
@@ -46,23 +47,26 @@ final class OrderHistoryController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setupConstraints()
+        layoutUI()
     }
+}
 
-    func setupViews() {
+extension OrderHistoryController {
+    private func layoutUI() {
         navigationItem.title = L10n.OrderHistory.title
-        view.backgroundColor = .white
-        view.addSubview(tableView)
-    }
+        view.backgroundColor = .arcticWhite
 
-    func setupConstraints() {
+        view.addSubview(tableView)
+
         tableView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalToSuperview()
         }
+    }
+
+    @objc private func dismissVC() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -72,9 +76,8 @@ extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! OrderTestCell
+        let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderTestCell.self)
         cell.delegate = self
-        cell.selectionStyle = .none
         return cell
     }
 }

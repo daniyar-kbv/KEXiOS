@@ -67,10 +67,8 @@ extension AddressListController {
         view.addSubview(citiesTableView)
 
         citiesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.left.right.equalToSuperview()
         }
     }
 }

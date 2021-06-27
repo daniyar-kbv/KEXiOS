@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class SetNameController: ViewController, AlertDisplayable, LoaderDisplayable {
+final class SetNameController: UIViewController, AlertDisplayable, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     var didGetEnteredName: ((String) -> Void)?
@@ -34,6 +34,16 @@ final class SetNameController: ViewController, AlertDisplayable, LoaderDisplayab
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
     }
 
     private func bindViewModel() {
@@ -61,6 +71,10 @@ final class SetNameController: ViewController, AlertDisplayable, LoaderDisplayab
                 self?.didGetEnteredName?(name)
             }
             .disposed(by: disposeBag)
+    }
+
+    @objc private func dismissVC() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

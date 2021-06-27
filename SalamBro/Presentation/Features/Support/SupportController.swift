@@ -74,6 +74,19 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
         viewModel.getData()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationItem.title = L10n.Support.title
+    }
+
     private func bindViewModel() {
         viewModel.outputs.didStartReqest
             .subscribe(onNext: { [weak self] in
@@ -108,14 +121,12 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 
         tableView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
-            $0.left.equalToSuperview()
-            $0.right.equalToSuperview()
+            $0.left.right.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
 
         callButton.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-24)
             $0.height.equalTo(43)
         }

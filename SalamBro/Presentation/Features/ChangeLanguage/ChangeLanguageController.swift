@@ -8,12 +8,14 @@
 import SnapKit
 import UIKit
 
-class ChangeLanguageController: UIViewController {
-    lazy var countriesTableView: UITableView = {
+final class ChangeLanguageController: UIViewController {
+    private let viewModel: ChangeLanguageViewModelImpl
+
+    private lazy var languagesTableView: UITableView = {
         let table = UITableView()
         table.allowsMultipleSelection = false
         table.separatorColor = .mildBlue
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.register(cellType: ChangeLanguageCell.self)
         table.tableFooterView = UIView()
         table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         table.dataSource = self
@@ -23,41 +25,33 @@ class ChangeLanguageController: UIViewController {
         return table
     }()
 
-    fileprivate lazy var selectionIndexPath: IndexPath? = nil
+    init(viewModel: ChangeLanguageViewModelImpl) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
 
-    // MARK: Tech Debt - Create in a viewModel
-
-    private var marked: IndexPath?
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setupConstraints()
-    }
-
-    fileprivate func setupViews() {
-        navigationItem.title = L10n.ChangeLanguage.title
-        view.backgroundColor = .white
-        view.addSubview(countriesTableView)
-    }
-
-    fileprivate func setupConstraints() {
-        countriesTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.left.right.bottom.equalToSuperview()
-        }
+        layoutUI()
     }
 }
 
-// MARK: Tech debt
+extension ChangeLanguageController {
+    private func layoutUI() {
+        view.backgroundColor = .arcticWhite
+        view.addSubview(languagesTableView)
 
-public let languages: [String] = [
-    "Kazakh",
-    "Russian",
-    "English",
-]
-
-// MARK: - UITableView
+        languagesTableView.snp.makeConstraints {
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.left.right.equalToSuperview()
+        }
+    }
+}
 
 extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
@@ -65,55 +59,19 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return languages.count
+        return viewModel.languages.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // MARK: Tech Debt - Create in a new class
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = languages[indexPath.row]
-        cell.backgroundColor = .white
-        cell.tintColor = .kexRed
-        cell.selectionStyle = .none
-        switch indexPath.row {
-        case 0:
-            cell.imageView?.image = UIImage(named: "kazakh")
-        case 1:
-            cell.imageView?.image = UIImage(named: "russian")
-            cell.accessoryView = checkmark
-            marked = indexPath
-        case 2:
-            cell.imageView?.image = UIImage(named: "english")
-        default:
-            break
-        }
+        let cell = tableView.dequeueReusableCell(for: indexPath, cellType: ChangeLanguageCell.self)
+        cell.configure(title: viewModel.getLanguage(at: indexPath), image: viewModel.getImage(at: indexPath))
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // MARK: Tech Debt - Create in a new class
-
-        if selectionIndexPath != nil {
-            if selectionIndexPath == indexPath {
-//                selectionIndexPath = nil
-            } else {
-                selectionIndexPath = indexPath
-                let cell = tableView.cellForRow(at: selectionIndexPath!)
-                cell?.accessoryView = checkmark
-            }
-        } else {
-            selectionIndexPath = indexPath
-            let cell = tableView.cellForRow(at: selectionIndexPath!)
-            tableView.cellForRow(at: marked!)?.accessoryView = .none
-            cell?.accessoryView = checkmark
-            marked = indexPath
+        if let cell = tableView.cellForRow(at: indexPath) as? ChangeLanguageCell {
+            cell.didSelect()
         }
         navigationController?.popViewController(animated: true)
-    }
-
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.accessoryView = .none
     }
 }

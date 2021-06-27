@@ -5,6 +5,7 @@
 //  Created by Arystan on 3/10/21.
 //
 
+import SnapKit
 import UIKit
 
 protocol GetNameViewDelegate: AnyObject {
@@ -14,7 +15,7 @@ protocol GetNameViewDelegate: AnyObject {
 final class SetNameView: UIView {
     weak var delegate: GetNameViewDelegate?
 
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.GetName.title
         label.font = UIFont.boldSystemFont(ofSize: 32)
@@ -22,7 +23,7 @@ final class SetNameView: UIView {
         return label
     }()
 
-    lazy var nameView: UIView = {
+    private lazy var nameView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         view.layer.cornerRadius = 10
@@ -31,7 +32,7 @@ final class SetNameView: UIView {
         return view
     }()
 
-    lazy var nameField: UITextField = {
+    private lazy var nameField: UITextField = {
         let field = UITextField()
         field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         field.attributedPlaceholder = NSAttributedString(
@@ -42,7 +43,7 @@ final class SetNameView: UIView {
         return field
     }()
 
-    lazy var nextButton: UIButton = {
+    private lazy var nextButton: UIButton = {
         let button = UIButton()
         button.setTitle(L10n.GetName.Button.title, for: .normal)
         button.addTarget(self, action: #selector(submitAction), for: .touchUpInside)
@@ -57,8 +58,7 @@ final class SetNameView: UIView {
     init(delegate: GetNameViewDelegate) {
         self.delegate = delegate
         super.init(frame: .zero)
-        setupViews()
-        setupConstraints()
+        layoutUI()
     }
 
     @available(*, unavailable)
@@ -68,35 +68,38 @@ final class SetNameView: UIView {
 }
 
 extension SetNameView {
-    func setupViews() {
+    private func layoutUI() {
         backgroundColor = .arcticWhite
-        addSubview(titleLabel)
-        addSubview(nextButton)
+
         nameView.addSubview(nameField)
-        addSubview(nameView)
+        [titleLabel, nextButton, nameView].forEach {
+            addSubview($0)
+        }
+
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.left.right.equalTo(safeAreaLayoutGuide).inset(24)
+        }
+
+        nameField.snp.makeConstraints {
+            $0.left.right.equalTo(nameView).inset(16)
+            $0.centerY.equalTo(nameView.snp.centerY)
+        }
+
+        nameView.snp.makeConstraints {
+            $0.height.equalTo(50)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(40)
+            $0.left.right.equalTo(safeAreaLayoutGuide).inset(24)
+        }
+
+        nextButton.snp.makeConstraints {
+            $0.height.equalTo(43)
+            $0.top.equalTo(nameView.snp.bottom).offset(150)
+            $0.left.right.equalTo(safeAreaLayoutGuide).inset(24)
+        }
     }
 
-    func setupConstraints() {
-        titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-
-        nameField.leftAnchor.constraint(equalTo: nameView.leftAnchor, constant: 16).isActive = true
-        nameField.rightAnchor.constraint(equalTo: nameView.rightAnchor, constant: -16).isActive = true
-        nameField.centerYAnchor.constraint(equalTo: nameView.centerYAnchor).isActive = true
-
-        nameView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        nameView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 40).isActive = true
-        nameView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        nameView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-
-        nextButton.topAnchor.constraint(equalTo: nameView.bottomAnchor, constant: 150).isActive = true
-        nextButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 24).isActive = true
-        nextButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -24).isActive = true
-        nextButton.heightAnchor.constraint(equalToConstant: 43).isActive = true
-    }
-
-    @objc func editingChanged(sender: UITextField) {
+    @objc private func editingChanged(sender: UITextField) {
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
 
         guard let name = nameField.text, !name.isEmpty else {
@@ -108,7 +111,7 @@ extension SetNameView {
         nextButton.backgroundColor = .kexRed
     }
 
-    @objc func submitAction() {
+    @objc private func submitAction() {
         guard let name = nameField.text else { return }
         delegate?.submit(name: name)
     }

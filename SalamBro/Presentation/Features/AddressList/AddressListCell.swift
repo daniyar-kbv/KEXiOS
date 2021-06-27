@@ -56,16 +56,14 @@ extension AddressListCell {
 
         titleLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.greaterThanOrEqualTo(24)
         }
 
         rightArrowImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-24)
-            $0.height.equalTo(24)
-            $0.width.equalTo(24)
+            $0.right.equalToSuperview().offset(-24)
+            $0.height.width.equalTo(24)
         }
     }
 }

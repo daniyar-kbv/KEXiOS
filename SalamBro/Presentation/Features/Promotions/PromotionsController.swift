@@ -32,7 +32,7 @@ final class PromotionsController: UIViewController {
         outputs.didTerminate.accept(())
     }
 
-    lazy var infoButton: UIButton = {
+    private lazy var infoButton: UIButton = {
         let view = UIButton()
         view.setImage(UIImage(named: "info"), for: .normal)
         view.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
@@ -40,7 +40,7 @@ final class PromotionsController: UIViewController {
         return view
     }()
 
-    lazy var webView: WKWebView = {
+    private lazy var webView: WKWebView = {
         let view = WKWebView()
         return view
     }()
@@ -53,12 +53,27 @@ final class PromotionsController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupNavigationBar()
         bindViewModel()
     }
 
-    func bindViewModel() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = .init()
+        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .kexRed
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+            .foregroundColor: UIColor.black,
+        ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
+        navigationItem.title = L10n.Rating.title
+        navigationItem.rightBarButtonItem = .init(customView: infoButton)
+        navigationController?.navigationBar.isTranslucent = false
+    }
+
+    private func bindViewModel() {
         viewModel.promotionURL
             .bind(onNext: { [weak self] url in
                 self?.webView.load(URLRequest(url: url))
@@ -72,29 +87,13 @@ final class PromotionsController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-//    Tech debt: change
-
-    func setupNavigationBar() {
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationController?.navigationBar.backIndicatorImage = Asset.chevronLeft.image
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = Asset.chevronLeft.image
-        navigationItem.title = nil
-        navigationItem.title = L10n.Rating.title
-        navigationItem.rightBarButtonItem = .init(customView: infoButton)
-        navigationController?.navigationBar.isTranslucent = false
-    }
-
-    @objc func infoButtonTapped() {
+    @objc private func infoButtonTapped() {
         guard let infoURL = viewModel.infoURL.value else { return }
         outputs.toInfo.accept(infoURL)
+    }
+
+    @objc private func dismissVC() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

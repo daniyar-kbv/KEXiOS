@@ -21,7 +21,7 @@ final class RateItemCell: UICollectionViewCell {
         return view
     }()
 
-    public lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = .kexRed
@@ -41,18 +41,22 @@ final class RateItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func setSelectedUI() {
+    func setSelectedUI() {
         cellView.backgroundColor = .kexRed
         titleLabel.textColor = .arcticWhite
     }
 
-    public func setDeselectedUI() {
+    func setDeselectedUI() {
         cellView.backgroundColor = .arcticWhite
         titleLabel.textColor = .kexRed
     }
 }
 
 extension RateItemCell {
+    func configureTitleLabel(with text: String) {
+        titleLabel.text = text
+    }
+
     private func layoutUI() {
         contentView.addSubview(cellView)
         cellView.addSubview(titleLabel)
@@ -62,8 +66,7 @@ extension RateItemCell {
         }
 
         titleLabel.snp.makeConstraints {
-            $0.left.top.equalToSuperview().offset(8)
-            $0.right.bottom.equalToSuperview().offset(-8)
+            $0.edges.equalToSuperview().inset(8)
         }
     }
 }
