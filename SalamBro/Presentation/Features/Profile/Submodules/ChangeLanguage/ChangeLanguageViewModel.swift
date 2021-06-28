@@ -5,28 +5,47 @@
 //  Created by Meruyert Tastandiyeva on 6/24/21.
 //
 
-import UIKit
+import Foundation
+import RxCocoa
+import RxSwift
 
-protocol ChangeLanguageViewModel: AnyObject {}
+protocol ChangeLanguageViewModel: AnyObject {
+    var outputs: ChangeLanguageViewModelImpl.Output { get }
+
+    var languages: [Language] { get }
+
+    func getLanguage(at index: Int) -> Language
+    func changeLanguage(at index: Int)
+}
 
 final class ChangeLanguageViewModelImpl: ChangeLanguageViewModel {
-    var isMarked: Bool?
+    private(set) var outputs: Output = .init()
 
-    private(set) var languages: [String] = [
-        "Kazakh",
-        "Russian",
-        "English",
+    private(set) var languages: [Language] = [
+        Language(type: .kazakh, checkmark: false), Language(type: .russian, checkmark: true), Language(type: .english, checkmark: false),
     ]
 
     init() {}
 
-    func getLanguage(at indexPath: IndexPath) -> String {
-        return languages[indexPath.row]
+    func changeLanguage(at index: Int) {
+        configureLanguages(at: index)
+        outputs.didChangeLanguage.accept(())
+        outputs.didEnd.accept(())
     }
 
-    func getImage(at indexPath: IndexPath) -> UIImage {
-        return UIImage(named: languages[indexPath.row].lowercased()) ?? UIImage()
+    func getLanguage(at index: Int) -> Language {
+        return languages[index]
+    }
+
+    private func configureLanguages(at index: Int) {
+        for i in 0 ..< languages.count { languages[i].checkmark = false }
+        languages[index].checkmark = true
     }
 }
 
-extension ChangeLanguageViewModelImpl {}
+extension ChangeLanguageViewModelImpl {
+    struct Output {
+        let didChangeLanguage = PublishRelay<Void>()
+        let didEnd = PublishRelay<Void>()
+    }
+}

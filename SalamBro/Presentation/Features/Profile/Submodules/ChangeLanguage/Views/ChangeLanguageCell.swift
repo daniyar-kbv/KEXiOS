@@ -9,15 +9,9 @@ import Reusable
 import UIKit
 
 final class ChangeLanguageCell: UITableViewCell {
-    private lazy var languageImageView: UIImageView = {
-        let view = UIImageView()
-        return view
-    }()
+    private var languageImageView = UIImageView()
 
-    private lazy var languageLabel: UILabel = {
-        let view = UILabel()
-        return view
-    }()
+    private var languageLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,9 +23,15 @@ final class ChangeLanguageCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(title: String, image: UIImage) {
-        languageImageView.image = image
-        languageLabel.text = title
+    func configure(with item: Language) {
+        languageImageView.image = item.type.icon
+        languageLabel.text = item.type.title
+
+        if item.checkmark {
+            accessoryView = checkmark
+        } else {
+            accessoryView = .none
+        }
     }
 
     private func layoutUI() {
@@ -51,14 +51,6 @@ final class ChangeLanguageCell: UITableViewCell {
             $0.top.bottom.equalTo(safeAreaLayoutGuide)
             $0.left.equalTo(languageImageView.snp.right).offset(4)
         }
-    }
-
-    func didSelect() {
-        accessoryView = checkmark
-    }
-
-    func didDeselect() {
-        accessoryView = .none
     }
 }
 

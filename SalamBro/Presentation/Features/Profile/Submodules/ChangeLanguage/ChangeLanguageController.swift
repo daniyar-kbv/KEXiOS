@@ -5,11 +5,15 @@
 //  Created by Arystan on 3/25/21.
 //
 
+import RxCocoa
+import RxSwift
 import SnapKit
 import UIKit
 
 final class ChangeLanguageController: UIViewController {
-    private let viewModel: ChangeLanguageViewModelImpl
+    private let disposeBag = DisposeBag()
+
+    private let viewModel: ChangeLanguageViewModel
 
     private lazy var languagesTableView: UITableView = {
         let table = UITableView()
@@ -25,7 +29,7 @@ final class ChangeLanguageController: UIViewController {
         return table
     }()
 
-    init(viewModel: ChangeLanguageViewModelImpl) {
+    init(viewModel: ChangeLanguageViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -35,21 +39,28 @@ final class ChangeLanguageController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func loadView() {
+        super.loadView()
+        view = languagesTableView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        layoutUI()
+        view.backgroundColor = .arcticWhite
+        bindViewModel()
     }
 }
 
 extension ChangeLanguageController {
-    private func layoutUI() {
-        view.backgroundColor = .arcticWhite
-        view.addSubview(languagesTableView)
+    private func bindViewModel() {
+        viewModel.outputs.didChangeLanguage
+            .subscribe(onNext: { [weak self] in
+                self?.languagesTableView.reloadData()
+            }).disposed(by: disposeBag)
 
-        languagesTableView.snp.makeConstraints {
-            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.left.right.equalToSuperview()
-        }
+        viewModel.outputs.didEnd.subscribe(onNext: { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }).disposed(by: disposeBag)
     }
 }
 
@@ -64,14 +75,11 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: ChangeLanguageCell.self)
-        cell.configure(title: viewModel.getLanguage(at: indexPath), image: viewModel.getImage(at: indexPath))
+        cell.configure(with: viewModel.getLanguage(at: indexPath.row))
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? ChangeLanguageCell {
-            cell.didSelect()
-        }
-        navigationController?.popViewController(animated: true)
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.changeLanguage(at: indexPath.row)
     }
 }
