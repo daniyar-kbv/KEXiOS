@@ -10,19 +10,20 @@ import RxCocoa
 import RxSwift
 
 protocol ChangeLanguageViewModel: AnyObject {
-    var languages: [Language] { get }
     var outputs: ChangeLanguageViewModelImpl.Output { get }
+
+    var languages: [Language] { get }
 
     func getLanguage(at index: Int) -> Language
     func changeLanguage(at index: Int)
 }
 
 final class ChangeLanguageViewModelImpl: ChangeLanguageViewModel {
+    private(set) var outputs: Output = .init()
+
     private(set) var languages: [Language] = [
         Language(type: .kazakh, checkmark: false), Language(type: .russian, checkmark: true), Language(type: .english, checkmark: false),
     ]
-
-    private(set) var outputs: Output = .init()
 
     init() {}
 
