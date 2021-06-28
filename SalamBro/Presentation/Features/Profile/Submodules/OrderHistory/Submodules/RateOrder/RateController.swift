@@ -39,7 +39,6 @@ final class RateController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
-        bindViewModel()
     }
 
     override func viewDidLayoutSubviews() {
@@ -55,10 +54,6 @@ extension RateController {
         rateView?.collectionView.delegate = self
         rateView?.collectionView.dataSource = self
     }
-}
-
-extension RateController {
-    private func bindViewModel() {}
 
     @objc private func dismissVC() {
         dismiss(animated: true, completion: nil)

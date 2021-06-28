@@ -10,8 +10,6 @@ import RxCocoa
 import RxSwift
 
 protocol RateViewModel: AnyObject {
-    var outputs: RateViewModelImpl.Output { get }
-
     var choices: [RateItem] { get }
     var currentChoices: [RateItem] { get }
 
@@ -21,8 +19,6 @@ protocol RateViewModel: AnyObject {
 }
 
 final class RateViewModelImpl: RateViewModel {
-    private(set) var outputs: Output = .init()
-
     private let disposeBag = DisposeBag()
 
     private(set) var currentChoices: [RateItem] = []
@@ -56,8 +52,4 @@ final class RateViewModelImpl: RateViewModel {
             }
         }
     }
-}
-
-extension RateViewModelImpl {
-    struct Output {}
 }
