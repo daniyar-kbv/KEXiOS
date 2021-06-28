@@ -104,7 +104,7 @@
 		007AB0C732342F848EF737F8CC77C270 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0449D8BAEF9C31EBA09309E71F90CD48 /* Double+Extension.swift */; };
 		E783E4557FDE43D8FF5AAF0DB1817674 /* DropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EEDE8ACCBC6EDCB9938CCD1E2D13FA /* DropDownTextField.swift */; };
 		54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070881AEDB3977B0482B6A6B06A1C201 /* GeoStorage.swift */; };
-		7F123AAC599C93AFA41BCE260D6610D1 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CB97513BD35CC4049F5B644661F6E7 /* Language.swift */; };
+		10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */; };
 		05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */; };
 		AFE4A9CB1651215078FF7933E0FE1E84 /* LoaderDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B1DD3359C1EF5D60E6A24C6244E9F6 /* LoaderDisplayable.swift */; };
 		E2453559AD8A47EC6240ADC2635E02A2 /* Localizable+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03CEB3646262E2848B1FB78A29E5EC2 /* Localizable+Generated.swift */; };
@@ -379,7 +379,7 @@
 		3C6169FACF56887087B2E3B796665DC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		612E966ED830C106DB3057E02A36C798 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82DF8DD4A94962F1A97777FAD3747A32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C7CB97513BD35CC4049F5B644661F6E7 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39BA308FCB7A9A775DD5A1463690B68E /* LegacyCartDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyCartDTO.swift; sourceTree = "<group>"; };
 		54B1DD3359C1EF5D60E6A24C6244E9F6 /* LoaderDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderDisplayable.swift; sourceTree = "<group>"; };
@@ -666,14 +666,6 @@
 				C19C6F9817278082264025445FDBF16B /* Pods-SalamBroTests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		3568A815EB8FFBBAEC18C485158DD811 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				C7CB97513BD35CC4049F5B644661F6E7 /* Language.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		13AE80E6E86EBBEBA54DCDD57FE7CC76 /* Support */ = {
@@ -1603,7 +1595,6 @@
 		B6363EC5A82BBCFBDD0CEF87B9623199 /* ChangeLanguage */ = {
 			isa = PBXGroup;
 			children = (
-				3568A815EB8FFBBAEC18C485158DD811 /* Model */,
 				0D3BDCDCEE84546FB84DC4D5DD177578 /* Views */,
 				765D50EA47692F19A68563A759689BFB /* ChangeLanguageController.swift */,
 				CEE3F050375AD63D810DCE044D5A3624 /* ChangeLanguageViewModel.swift */,
@@ -1725,6 +1716,7 @@
 				E529FB36B2ACFCCE647F95DC5E371274 /* Country.swift */,
 				A42A547CEB0C0E6A8DA07FC98B03EAB0 /* DeliveryAddress.swift */,
 				F54D26BD0FE939E99AE5326265196D7D /* Document.swift */,
+				668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */,
 				377BFFB000782A682DF1A6A62AED1BE5 /* MapAddress.swift */,
 				5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */,
 			);
@@ -2363,7 +2355,7 @@
 				007AB0C732342F848EF737F8CC77C270 /* Double+Extension.swift in Sources */,
 				E783E4557FDE43D8FF5AAF0DB1817674 /* DropDownTextField.swift in Sources */,
 				54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */,
-				7F123AAC599C93AFA41BCE260D6610D1 /* Language.swift in Sources */,
+				10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */,
 				AFE4A9CB1651215078FF7933E0FE1E84 /* LoaderDisplayable.swift in Sources */,
 				E2453559AD8A47EC6240ADC2635E02A2 /* Localizable+Generated.swift in Sources */,
 				11A54FF839FE6A0CBA870EEB511B5D87 /* LocationAPI.swift in Sources */,

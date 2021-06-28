@@ -28,7 +28,7 @@ final class ChangeLanguageViewModelImpl: ChangeLanguageViewModel {
 
     func changeLanguage(at index: Int) {
         configureLanguages(at: index)
-        outputs.didChangeLanguage.accept(index)
+        outputs.didChangeLanguage.accept(())
         outputs.didEnd.accept(())
     }
 
@@ -44,7 +44,7 @@ final class ChangeLanguageViewModelImpl: ChangeLanguageViewModel {
 
 extension ChangeLanguageViewModelImpl {
     struct Output {
-        let didChangeLanguage = PublishRelay<Int>()
+        let didChangeLanguage = PublishRelay<Void>()
         let didEnd = PublishRelay<Void>()
     }
 }

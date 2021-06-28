@@ -10,7 +10,9 @@ import UIKit
 struct Language {
     var type: LanguageTableItem
     var checkmark: Bool
+}
 
+extension Language {
     enum LanguageTableItem {
         case kazakh
         case russian

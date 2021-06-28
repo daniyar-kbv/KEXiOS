@@ -54,12 +54,12 @@ final class ChangeLanguageController: UIViewController {
 extension ChangeLanguageController {
     private func bindViewModel() {
         viewModel.outputs.didChangeLanguage
-            .subscribe(onNext: { _ in
-                self.languagesTableView.reloadData()
+            .subscribe(onNext: { [weak self] in
+                self?.languagesTableView.reloadData()
             }).disposed(by: disposeBag)
 
-        viewModel.outputs.didEnd.subscribe(onNext: { _ in
-            self.navigationController?.popViewController(animated: true)
+        viewModel.outputs.didEnd.subscribe(onNext: { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
         }).disposed(by: disposeBag)
     }
 }

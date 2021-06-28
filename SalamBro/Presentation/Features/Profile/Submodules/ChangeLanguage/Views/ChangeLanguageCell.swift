@@ -9,15 +9,9 @@ import Reusable
 import UIKit
 
 final class ChangeLanguageCell: UITableViewCell {
-    private lazy var languageImageView: UIImageView = {
-        let view = UIImageView()
-        return view
-    }()
+    private var languageImageView = UIImageView()
 
-    private lazy var languageLabel: UILabel = {
-        let view = UILabel()
-        return view
-    }()
+    private var languageLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
