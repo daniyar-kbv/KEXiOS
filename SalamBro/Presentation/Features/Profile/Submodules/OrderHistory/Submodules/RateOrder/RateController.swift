@@ -16,7 +16,7 @@ final class RateController: UIViewController {
 
     private let disposeBag = DisposeBag()
 
-    private var rateView: RateView?
+    private lazy var rateView = RateView(delegate: self)
 
     private var commentaryPage: MapCommentaryPage?
 
@@ -32,18 +32,18 @@ final class RateController: UIViewController {
 
     override func loadView() {
         super.loadView()
-        rateView = RateView(delegate: self)
         view = rateView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = L10n.RateOrder.title
         configureViews()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        rateView?.setCollectionViewHeight()
+        rateView.setCollectionViewHeight()
     }
 }
 
@@ -51,12 +51,8 @@ extension RateController {
     private func configureViews() {
         view.backgroundColor = .arcticWhite
 
-        rateView?.collectionView.delegate = self
-        rateView?.collectionView.dataSource = self
-    }
-
-    @objc private func dismissVC() {
-        dismiss(animated: true, completion: nil)
+        rateView.collectionView.delegate = self
+        rateView.collectionView.dataSource = self
     }
 }
 
@@ -84,7 +80,7 @@ extension RateController: RateViewDelegate {
 
         commentaryPage?.output.didProceed.subscribe(onNext: { comment in
             if let comment = comment {
-                self.rateView?.configureTextField(with: comment)
+                self.rateView.configureTextField(with: comment)
             }
         }).disposed(by: disposeBag)
         commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
