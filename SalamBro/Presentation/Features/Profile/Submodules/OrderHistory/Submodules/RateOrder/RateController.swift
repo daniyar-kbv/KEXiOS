@@ -13,6 +13,7 @@ import UIKit
 
 final class RateController: UIViewController {
     private let viewModel: RateViewModel
+
     private let disposeBag = DisposeBag()
 
     private var rateView: RateView?
@@ -38,6 +39,7 @@ final class RateController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
+        bindViewModel()
     }
 
     override func viewDidLayoutSubviews() {
@@ -56,6 +58,8 @@ extension RateController {
 }
 
 extension RateController {
+    private func bindViewModel() {}
+
     @objc private func dismissVC() {
         dismiss(animated: true, completion: nil)
     }
@@ -63,37 +67,18 @@ extension RateController {
 
 extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return viewModel.data.count
+        return viewModel.currentChoices.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: RateItemCell = collectionView.dequeueReusableCell(for: indexPath, cellType: RateItemCell.self)
-        cell.configureTitleLabel(with: viewModel.data[indexPath.row])
-        if viewModel.selectedItems.firstIndex(of: viewModel.data[indexPath.row]) != nil {
-            cell.setSelectedUI()
-        } else {
-            cell.setDeselectedUI()
-        }
+        let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: RateItemCell.self)
+        cell.configure(with: viewModel.getRateItem(at: indexPath.row))
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as? RateItemCell
-        if let index = viewModel.selectedItems.firstIndex(of: viewModel.data[indexPath.row]) {
-            viewModel.deleteSelectedChoice(at: index)
-            cell?.setDeselectedUI()
-        } else {
-            cell?.setSelectedUI()
-            viewModel.condigureSelectedChoices(with: viewModel.data[indexPath.row])
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! RateItemCell
-        if let index = viewModel.selectedItems.firstIndex(of: viewModel.data[indexPath.row]) {
-            viewModel.deleteSelectedChoice(at: index)
-        }
-        cell.setDeselectedUI()
+        viewModel.condigureDataSet(at: indexPath.row)
+        collectionView.reloadData()
     }
 }
 
@@ -119,15 +104,6 @@ extension RateController: RateViewDelegate {
     }
 
     func updateViewModelData(at rating: Int) {
-        switch rating {
-        case 3:
-            viewModel.changeDataSet(with: viewModel.arrayStar13)
-        case 4:
-            viewModel.changeDataSet(with: viewModel.arrayStar4)
-        case 5:
-            viewModel.changeDataSet(with: viewModel.arrayStar5)
-        default:
-            viewModel.changeDataSet(with: viewModel.arrayStar13)
-        }
+        viewModel.changeDataSet(by: rating)
     }
 }

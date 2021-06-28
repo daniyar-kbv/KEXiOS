@@ -41,6 +41,12 @@ final class RateItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func configure(with item: RateItem) {
+        titleLabel.text = item.title.title
+        cellView.backgroundColor = item.isSelected ? .kexRed : .arcticWhite
+        titleLabel.textColor = item.isSelected ? .arcticWhite : .kexRed
+    }
+
     func setSelectedUI() {
         cellView.backgroundColor = .kexRed
         titleLabel.textColor = .arcticWhite
