@@ -28,9 +28,9 @@ final class ProfileCoordinator: BaseCoordinator {
         let profilePage = pagesFactory.makeProfilePage()
 
         profilePage.outputs.onChangeUserInfo
-            .subscribe(onNext: { [weak self] userInfo in
+            .subscribe(onNext: { [weak self, weak profilePage] userInfo in
                 self?.showChangeUserInfoPage(userInfo: userInfo, completion: { newUserInfo in
-                    profilePage.updateViews(with: newUserInfo)
+                    profilePage?.set(userInfo: newUserInfo)
                 })
             })
             .disposed(by: disposeBag)

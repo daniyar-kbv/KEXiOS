@@ -49,10 +49,6 @@ extension ChangeNameController {
         }
     }
 
-    @objc private func dismissVC() {
-        navigationController?.popViewController(animated: true)
-    }
-
     private func bindViewModel() {
         viewModel.outputs.didStartRequest
             .bind { [weak self] in
