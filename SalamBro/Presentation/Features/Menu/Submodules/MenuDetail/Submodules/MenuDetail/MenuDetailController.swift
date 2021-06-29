@@ -116,6 +116,8 @@ extension MenuDetailController {
     }
 }
 
+extension MenuDe
+
 extension MenuDetailController {
     @objc private func dismissVC() {
         dismiss(animated: true, completion: nil)

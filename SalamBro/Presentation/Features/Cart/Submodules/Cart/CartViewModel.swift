@@ -11,7 +11,7 @@ import RxSwift
 
 protocol CartViewModel {
     var outputs: CartViewModelImpl.Output { get }
-    var items: [CartDTO.Item] { get set }
+    var items: [CartItem] { get set }
 
     func getCart()
     func getTotalCount() -> Int
@@ -26,7 +26,7 @@ final class CartViewModelImpl: CartViewModel {
     private let disposeBag = DisposeBag()
     private let cartRepository: CartRepository
 
-    var items: [CartDTO.Item] = []
+    var items: [CartItem] = []
     let outputs = Output()
 
     init(cartRepository: CartRepository) {

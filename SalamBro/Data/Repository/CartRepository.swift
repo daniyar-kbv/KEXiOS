@@ -12,8 +12,8 @@ import RxSwift
 protocol CartRepository {
     var outputs: CartRepositoryImpl.Output { get }
 
-    func getItems() -> [CartDTO.Item]
-    func addItem(item: CartDTO.Item)
+    func getItems() -> [CartItem]
+    func addItem(item: CartItem)
     func removeItem(positionUUID: String)
     func incrementItem(positionUUID: String)
     func decrementItem(positionUUID: String)
@@ -30,11 +30,11 @@ final class CartRepositoryImpl: CartRepository {
 }
 
 extension CartRepositoryImpl {
-    func getItems() -> [CartDTO.Item] {
+    func getItems() -> [CartItem] {
         return storage.cartItems
     }
 
-    func addItem(item: CartDTO.Item) {
+    func addItem(item: CartItem) {
         if storage.cartItems.contains(item),
            let index = storage.cartItems.firstIndex(of: item)
         {
@@ -73,6 +73,6 @@ extension CartRepositoryImpl {
 
 extension CartRepositoryImpl {
     struct Output {
-        let didChange = PublishRelay<[CartDTO.Item]>()
+        let didChange = PublishRelay<[CartItem]>()
     }
 }

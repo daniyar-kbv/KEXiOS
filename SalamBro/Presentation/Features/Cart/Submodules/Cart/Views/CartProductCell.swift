@@ -113,7 +113,7 @@ final class CartProductCell: UITableViewCell {
         return button
     }()
 
-    private var item: CartDTO.Item?
+    private var item: CartItem?
     var delegate: CartAdditinalProductCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -217,7 +217,7 @@ extension CartProductCell {
 }
 
 extension CartProductCell {
-    func configure(with item: CartDTO.Item) {
+    func configure(with item: CartItem) {
         self.item = item
 
         productTitleLabel.text = item.position.name

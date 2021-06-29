@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureAppCoordinator()
         appCoordinator?.start()
 
+        print("Lead UUID: \(DefaultStorageImpl.sharedStorage.leadUUID ?? "")")
+
         return true
     }
 

@@ -19,19 +19,19 @@ protocol MenuDetailViewModel: AnyObject {
 }
 
 final class MenuDetailViewModelImpl: MenuDetailViewModel {
-    private let productUUID: String
+    private let positionUUID: String
     private let defaultStorage: DefaultStorage
     private let ordersService: OrdersService
     private let cartRepository: CartRepository
 
     private let disposeBag = DisposeBag()
-    private var product: OrderProductDetailResponse.Data? {
+    private var position: MenuPositionDetail? {
         didSet {
-            outputs.itemImage.accept(URL(string: product?.image ?? ""))
-            outputs.itemTitle.accept(product?.name)
-            outputs.itemDescription.accept(product?.description)
+            outputs.itemImage.accept(URL(string: position?.image ?? ""))
+            outputs.itemTitle.accept(position?.name)
+            outputs.itemDescription.accept(position?.description)
 //            Tech debt: change to prices logic
-            outputs.itemPrice.accept("\(L10n.MenuDetail.proceedButton) \(product?.price.first?.removeTrailingZeros() ?? "")")
+            outputs.itemPrice.accept("\(L10n.MenuDetail.proceedButton) \(position?.price.removeTrailingZeros() ?? "")")
 //                self?.outputs.itemModifiers.accept(product.modifiers)
         }
     }
@@ -39,12 +39,12 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     private var comment: String?
     let outputs = Output()
 
-    init(productUUID: String,
+    init(positionUUID: String,
          defaultStorage: DefaultStorage,
          ordersService: OrdersService,
          cartRepository: CartRepository)
     {
-        self.productUUID = productUUID
+        self.positionUUID = positionUUID
         self.defaultStorage = defaultStorage
         self.ordersService = ordersService
         self.cartRepository = cartRepository
@@ -59,10 +59,10 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
 
         outputs.didStartRequest.accept(())
 
-        ordersService.getProductDetail(for: leadUUID, by: productUUID)
-            .subscribe(onSuccess: { [weak self] product in
+        ordersService.getProductDetail(for: leadUUID, by: positionUUID)
+            .subscribe(onSuccess: { [weak self] position in
                 self?.outputs.didEndRequest.accept(())
-                self?.product = product
+                self?.position = position
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didGetError.accept(error as? ErrorPresentable)
@@ -70,21 +70,24 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     }
 
     func proceed() {
-        guard let product = product else { return }
-        let item = CartDTO.Item(
-            positionUUID: product.uuid,
+        guard let position = position else { return }
+
+        let cartItem = CartItem(
+            positionUUID: position.uuid,
             count: 1,
             comment: comment ?? "",
-            position: .init(name: product.name,
-                            image: product.image ?? "",
-                            description: product.description,
-                            //            Tech debt: change to prices logic
-                            price: product.price.first ?? 0,
-                            category: product.branchCategory),
-//            Tech debt: add modifiers
+            position: .init(
+                uuid: position.uuid,
+                name: position.name,
+                image: position.image,
+                description: position.description,
+                price: position.price,
+                categoryUUID: position.categoryUUID
+            ),
             modifiers: []
         )
-        cartRepository.addItem(item: item)
+
+        cartRepository.addItem(item: cartItem)
     }
 
     func set(comment: String) {
