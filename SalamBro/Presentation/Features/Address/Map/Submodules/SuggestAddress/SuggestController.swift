@@ -5,37 +5,27 @@
 //  Created by Meruyert Tastandiyeva on 6/16/21.
 //
 
-import CoreLocation
-import SnapKit
+import RxCocoa
+import RxSwift
 import UIKit
-import YandexMapKitSearch
 
 protocol SuggestControllerDelegate: AnyObject {
     func reverseGeocoding(searchQuery: String, title: String)
 }
 
-final class SuggestController: UIViewController {
-    private var contentView: SuggestView?
+final class SuggestController: UIViewController, AlertDisplayable {
+    private let disposeBag = DisposeBag()
+
+    private let viewModel: SuggestViewModel
+
+    private lazy var contentView = SuggestView(delegate: self)
 
     private lazy var tableView = UITableView()
 
-    private let locationManager = CLLocationManager()
-    private let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
-
-    private var suggestSession: YMKSearchSuggestSession!
-    private var suggestResults: [YMKSuggestItem] = []
-    private var targetLocation = YMKPoint()
-
-    private var fullQuery: String = ""
-
     weak var suggestDelegate: SuggestControllerDelegate?
 
-    override func loadView() {
-        super.loadView()
-        contentView = SuggestView(delegate: self)
-    }
-
-    init() {
+    init(viewModel: SuggestViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -48,7 +38,7 @@ final class SuggestController: UIViewController {
         super.viewDidLoad()
         configureViews()
         layoutUI()
-        suggestSession = searchManager.createSuggestSession()
+        bindViewModel()
     }
 }
 
@@ -64,13 +54,12 @@ extension SuggestController {
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .onDrag
 
-        contentView?.clipsToBounds = true
-        contentView?.layer.cornerRadius = 10
-        contentView?.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 10
+        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
 
     private func layoutUI() {
-        guard let contentView = contentView else { return }
         [contentView, tableView].forEach {
             view.addSubview($0)
         }
@@ -88,32 +77,23 @@ extension SuggestController {
 }
 
 extension SuggestController {
-    private func onSuggestResponse(_ items: [YMKSuggestItem]) {
-        suggestResults = items
-        tableView.reloadData()
-    }
+    private func bindViewModel() {
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.tableView.reloadData()
+            }).disposed(by: disposeBag)
 
-    private func onSuggestError(_ error: Error) {
-        let suggestError = (error as NSError).userInfo[YRTUnderlyingErrorKey] as! YRTError
-        var errorMessage = "Unknown error"
-        if suggestError.isKind(of: YRTNetworkError.self) {
-            errorMessage = "Network error"
-        } else if suggestError.isKind(of: YRTRemoteError.self) {
-            errorMessage = "Remote server error"
-        }
-
-        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-
-        present(alert, animated: true, completion: nil)
+        viewModel.outputs.didFail
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            }).disposed(by: disposeBag)
     }
 }
 
 extension SuggestController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: SuggestCell.self)
-        // add viewModel configuration
-        cell.configureUI(address: suggestResults[indexPath.row].title.text, subtitle: suggestResults[indexPath.row].subtitle!.text)
+        cell.configure(with: viewModel.getResultAddress(at: indexPath.row))
         return cell
     }
 
@@ -122,42 +102,30 @@ extension SuggestController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return suggestResults.count
+        return viewModel.suggestResults.count
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? SuggestCell
-        guard let address = cell?.addressLabel.text, let title = contentView?.searchBar.text else { return }
-        contentView?.setSearchBarText(with: address)
+        guard let address = cell?.addressLabel.text, let title = contentView.searchBar.text else { return }
+        contentView.setSearchBarText(with: address)
 
         if let subtitle = cell?.subtitleLabel.text {
-            fullQuery = subtitle + address
+            viewModel.setQuery(with: subtitle + address)
         } else {
-            fullQuery = address
+            viewModel.setQuery(with: address)
         }
         tableView.deselectRow(at: indexPath, animated: true)
         dismiss(animated: true, completion: nil)
 
-        suggestDelegate?.reverseGeocoding(searchQuery: fullQuery, title: title)
+        suggestDelegate?.reverseGeocoding(searchQuery: viewModel.fullQuery, title: title)
     }
 }
 
 extension SuggestController: SuggestViewDelegate {
     func searchBarTapped(_ textField: UITextField) {
-        let suggestHandler = { (response: [YMKSuggestItem]?, error: Error?) -> Void in
-            if let items = response {
-                self.onSuggestResponse(items)
-            } else {
-                self.onSuggestError(error!)
-            }
-        }
-        let point = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
-        suggestSession.suggest(
-            withText: textField.text!,
-            window: YMKBoundingBox(southWest: point, northEast: point),
-            suggestOptions: YMKSuggestOptions(suggestTypes: .geo, userPosition: point, suggestWords: true),
-            responseHandler: suggestHandler
-        )
+        guard let query = textField.text else { return }
+        viewModel.search(with: query)
     }
 
     func doneButtonTapped() {

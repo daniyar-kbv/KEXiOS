@@ -6,8 +6,8 @@
 //
 
 import Reusable
-import SnapKit
 import UIKit
+import YandexMapKitSearch
 
 final class SuggestCell: UITableViewCell {
     private(set) lazy var addressLabel: UILabel = {
@@ -40,9 +40,9 @@ final class SuggestCell: UITableViewCell {
 }
 
 extension SuggestCell {
-    func configureUI(address: String, subtitle: String) {
-        addressLabel.text = address
-        subtitleLabel.text = subtitle
+    func configure(with item: YMKSuggestItem) {
+        addressLabel.text = item.title.text
+        subtitleLabel.text = item.subtitle?.text
     }
 
     private func layoutUI() {
