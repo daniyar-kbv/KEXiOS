@@ -92,6 +92,10 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         viewModel.getUserInfo()
     }
 
+    func reloadPage() {
+        viewModel.getUserInfo()
+    }
+
     private func bindViews() {
         tableView.delegate = self
         tableView.dataSource = self
