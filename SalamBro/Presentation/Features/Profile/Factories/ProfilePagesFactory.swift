@@ -10,7 +10,7 @@ import Foundation
 protocol ProfilePagesFactory: AnyObject {
     func makeProfilePage() -> ProfilePage
     func makeChangeUserInfoPage(userInfo: UserInfoResponse) -> ChangeNameController
-    func makeChangeLanguagePage() -> ChangeLanguageController // FIXME: Нужно переписать этот class
+    func makeChangeLanguagePage() -> ChangeLanguageController
 }
 
 final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
@@ -42,7 +42,6 @@ final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
         return scoped(ChangeNameViewModelImpl(service: serviceComponents.profileService(), userInfo: userInfo, defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
-    /// Нужно переписать  используя viewModel, snapkit и rxswift
     func makeChangeLanguagePage() -> ChangeLanguageController {
         return scoped(.init(viewModel: makeChangeLanguageViewModel()))
     }

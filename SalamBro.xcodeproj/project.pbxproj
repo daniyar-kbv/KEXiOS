@@ -176,9 +176,10 @@
 		30A29427B5B0E3A39FA2F9993D28B726 /* PromotionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */; };
 		FC675195C94C13C7C3F94F08AF85A05B /* PromotionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069AD1E36FF98BD779EA162DCF63894E /* PromotionsViewModel.swift */; };
 		F3F6FD51C42ACB19D01CA04641E225AF /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5469540D8F0A3653E52AD2E2084BDFF5 /* RateController.swift */; };
+		532FBE3CF89CD141641CA0D76E8ECBB8 /* RateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED087FC022B58289758AB5B3C9837BFC /* RateItem.swift */; };
 		283E45D5260DC090B3765DF51B940D47 /* RateItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AFEC21AF4D0F9FE6B8BD980647787B /* RateItemCell.swift */; };
 		E85F3660219883723DF2282848420A78 /* RateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227203D64E9CD124879F94DE45A8377C /* RateView.swift */; };
-		327A0548372E2CA1001026BD8CFE4218 /* RateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA890D2F101883B6F8196B5032A023D2 /* RateViewModel.swift */; };
+		F137E2CFB323171D55A47C0C3C7E623B /* RateViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8273A3AE513C23EDC61810EB0D50128D /* RateViewModelImpl.swift */; };
 		14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */; };
 		AA74D10048BFD6C997C983D7BDFE50C8 /* RepositoryComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFF32919C8846B915948213E7E3F2FF /* RepositoryComponents.swift */; };
 		B55DF44451CD5F2F717157DC9E288F52 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E985F252CB9593A514BD35B7C1035E58 /* Router.swift */; };
@@ -465,9 +466,10 @@
 		2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsService.swift; sourceTree = "<group>"; };
 		069AD1E36FF98BD779EA162DCF63894E /* PromotionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsViewModel.swift; sourceTree = "<group>"; };
 		5469540D8F0A3653E52AD2E2084BDFF5 /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
+		ED087FC022B58289758AB5B3C9837BFC /* RateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateItem.swift; sourceTree = "<group>"; };
 		35AFEC21AF4D0F9FE6B8BD980647787B /* RateItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateItemCell.swift; sourceTree = "<group>"; };
 		227203D64E9CD124879F94DE45A8377C /* RateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateView.swift; sourceTree = "<group>"; };
-		AA890D2F101883B6F8196B5032A023D2 /* RateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateViewModel.swift; sourceTree = "<group>"; };
+		8273A3AE513C23EDC61810EB0D50128D /* RateViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateViewModelImpl.swift; sourceTree = "<group>"; };
 		D435391A7E63FCE5B02B86962CEAFA6A /* ReactiveExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveExtension.swift; sourceTree = "<group>"; };
 		5AFF32919C8846B915948213E7E3F2FF /* RepositoryComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryComponents.swift; sourceTree = "<group>"; };
 		FE584A4D69832037D4D67AEE8037BD4F /* RepositoryComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryComponents.swift; sourceTree = "<group>"; };
@@ -1692,7 +1694,7 @@
 			children = (
 				D4F76D45BA0DD6295E1DE949A3A26F3C /* Views */,
 				5469540D8F0A3653E52AD2E2084BDFF5 /* RateController.swift */,
-				AA890D2F101883B6F8196B5032A023D2 /* RateViewModel.swift */,
+				8273A3AE513C23EDC61810EB0D50128D /* RateViewModelImpl.swift */,
 			);
 			path = RateOrder;
 			sourceTree = "<group>";
@@ -1719,6 +1721,7 @@
 				668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */,
 				377BFFB000782A682DF1A6A62AED1BE5 /* MapAddress.swift */,
 				5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */,
+				ED087FC022B58289758AB5B3C9837BFC /* RateItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2422,9 +2425,10 @@
 				30A29427B5B0E3A39FA2F9993D28B726 /* PromotionsService.swift in Sources */,
 				FC675195C94C13C7C3F94F08AF85A05B /* PromotionsViewModel.swift in Sources */,
 				F3F6FD51C42ACB19D01CA04641E225AF /* RateController.swift in Sources */,
+				532FBE3CF89CD141641CA0D76E8ECBB8 /* RateItem.swift in Sources */,
 				283E45D5260DC090B3765DF51B940D47 /* RateItemCell.swift in Sources */,
 				E85F3660219883723DF2282848420A78 /* RateView.swift in Sources */,
-				327A0548372E2CA1001026BD8CFE4218 /* RateViewModel.swift in Sources */,
+				F137E2CFB323171D55A47C0C3C7E623B /* RateViewModelImpl.swift in Sources */,
 				14A85F3E303C1B0578E6BAF41918B1CE /* ReactiveExtension.swift in Sources */,
 				AA74D10048BFD6C997C983D7BDFE50C8 /* RepositoryComponents.swift in Sources */,
 				B55DF44451CD5F2F717157DC9E288F52 /* Router.swift in Sources */,

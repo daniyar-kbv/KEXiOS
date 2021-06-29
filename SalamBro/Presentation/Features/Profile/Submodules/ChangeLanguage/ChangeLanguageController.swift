@@ -47,6 +47,7 @@ final class ChangeLanguageController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .arcticWhite
+        navigationItem.title = L10n.ChangeLanguage.NavigationBar.title
         bindViewModel()
     }
 }
