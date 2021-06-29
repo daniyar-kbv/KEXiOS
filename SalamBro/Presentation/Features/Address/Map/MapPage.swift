@@ -193,7 +193,7 @@ extension MapPage {
 
 extension MapPage {
     private func showAddressSearchPage() {
-        searchPage = SuggestController()
+        searchPage = SuggestController(viewModel: SuggestViewModelImpl())
         guard let page = searchPage else { return }
         page.suggestDelegate = self
         present(page, animated: true, completion: nil)

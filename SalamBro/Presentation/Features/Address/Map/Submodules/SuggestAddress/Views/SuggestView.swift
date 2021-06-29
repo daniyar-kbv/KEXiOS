@@ -5,7 +5,6 @@
 //  Created by Meruyert Tastandiyeva on 6/21/21.
 //
 
-import SnapKit
 import UIKit
 
 protocol SuggestViewDelegate: AnyObject {
