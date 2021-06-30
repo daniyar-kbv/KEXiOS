@@ -100,6 +100,7 @@ extension ChangeNameView {
     }
 
     private func layoutUI() {
+        backgroundColor = .arcticWhite
         nameView.addSubview(nameTextField)
         emailView.addSubview(emailTextField)
         [nameLabel, nameView, emailLabel, emailView, saveButton].forEach {

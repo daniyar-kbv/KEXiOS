@@ -12,10 +12,12 @@ import RxSwift
 protocol ProfileViewModel: AnyObject {
     var tableItems: [ProfileTableItem] { get }
     var outputs: ProfileViewModelImpl.Output { get }
-    var userInfo: UserInfoResponse? { get }
+    var currentUserInfo: UserInfoResponse? { get }
 
-    func getUserInfo()
+    func fetchUserInfo()
     func logout()
+    func set(userInfo: UserInfoResponse)
+    func userDidAuthenticate() -> Bool
 }
 
 final class ProfileViewModelImpl: ProfileViewModel {
@@ -27,7 +29,7 @@ final class ProfileViewModelImpl: ProfileViewModel {
     ]
 
     private(set) var outputs: Output = .init()
-    private(set) var userInfo: UserInfoResponse?
+    private(set) var currentUserInfo: UserInfoResponse?
 
     private let repository: ProfilePageRepository
 
@@ -36,12 +38,20 @@ final class ProfileViewModelImpl: ProfileViewModel {
         bindOutputs()
     }
 
-    func getUserInfo() {
-        repository.getUserInfo()
+    func fetchUserInfo() {
+        repository.fetchUserInfo()
     }
 
     func logout() {
         repository.logout()
+    }
+
+    func set(userInfo: UserInfoResponse) {
+        repository.set(userInfo: userInfo)
+    }
+
+    func userDidAuthenticate() -> Bool {
+        repository.userDidAuthenticate()
     }
 
     private func bindOutputs() {
@@ -61,7 +71,11 @@ final class ProfileViewModelImpl: ProfileViewModel {
             .bind(to: outputs.didGetUserInfo)
             .disposed(by: disposeBag)
 
-        userInfo = repository.userInfo
+        repository.outputs.didGetUserInfo
+            .bind { [weak self] userInfo in
+                self?.currentUserInfo = userInfo
+            }
+            .disposed(by: disposeBag)
     }
 }
 

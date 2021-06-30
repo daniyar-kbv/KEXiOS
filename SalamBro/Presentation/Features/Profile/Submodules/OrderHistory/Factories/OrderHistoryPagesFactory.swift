@@ -9,7 +9,7 @@ import UIKit
 
 protocol OrderHistoryPagesFactory: AnyObject {
     func makeOrderHistoryPage() -> OrderHistoryController // FIXME: Tech debt, rewrite this class
-    func makeRateOrderPage() -> RateController // FIXME: Tech debt, rewrite this class
+    func makeRateOrderPage() -> RateController
     func makeShareOrderPage() -> ShareOrderController // FIXME: Tect debt, rewrite this class
 }
 
@@ -23,7 +23,7 @@ final class OrderHistoryPagesFactoryImpl: DependencyFactory, OrderHistoryPagesFa
     }
 
     func makeRateOrderPage() -> RateController {
-        return scoped(.init(viewModel: RateViewModel()))
+        return scoped(.init(viewModel: RateViewModelImpl()))
     }
 
     func makeShareOrderPage() -> ShareOrderController {

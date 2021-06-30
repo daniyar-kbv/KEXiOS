@@ -86,10 +86,23 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = L10n.Profile.NavigationBar.title
+        layoutUI()
+        showEmptyState()
         bindViews()
         bindViewModel()
-        viewModel.getUserInfo()
+        viewModel.fetchUserInfo()
+    }
+
+    func reloadPage() {
+        guard viewModel.userDidAuthenticate() else {
+            return
+        }
+
+        viewModel.fetchUserInfo()
+    }
+
+    func set(userInfo: UserInfoResponse) {
+        viewModel.set(userInfo: userInfo)
     }
 
     private func bindViews() {
@@ -98,7 +111,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
         changeNameButton.rx.tap
             .bind { [weak self] in
-                guard let userInfo = self?.viewModel.userInfo else { return }
+                guard let userInfo = self?.viewModel.currentUserInfo else { return }
                 self?.outputs.onChangeUserInfo.accept(userInfo)
             }
             .disposed(by: disposeBag)
@@ -146,13 +159,13 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
         viewModel.outputs.didGetUserInfo
             .subscribe(onNext: { [weak self] userInfo in
-                self?.layoutUI()
+                self?.hideEmptyState()
                 self?.updateViews(with: userInfo)
             })
             .disposed(by: disposeBag)
     }
 
-    func updateViews(with model: UserInfoResponse) {
+    private func updateViews(with model: UserInfoResponse) {
         if let phoneNumber = model.mobilePhone {
             phoneTitleLabel.text = phoneNumber
         }
@@ -168,9 +181,16 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         }
     }
 
-    private func layoutUI() {
+    private func hideEmptyState() {
         animationView.isHidden = true
+        animationView.snp.removeConstraints()
+        animationView.removeFromSuperview()
+    }
+
+    private func layoutUI() {
+        navigationItem.title = L10n.Profile.NavigationBar.title
         view.backgroundColor = .arcticWhite
+
         view.addSubview(phoneTitleLabel)
         phoneTitleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
