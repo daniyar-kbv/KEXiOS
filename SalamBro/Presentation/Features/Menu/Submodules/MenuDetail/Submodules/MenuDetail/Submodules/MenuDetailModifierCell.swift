@@ -11,14 +11,13 @@ import RxSwift
 import UIKit
 
 final class MenuDetailModifierCell: UITableViewCell {
-    var viewModel: MenuDetailModifierCellViewModel!
+    private var viewModel: MenuDetailModifierCellViewModel!
 
-    lazy var disposeBag = DisposeBag()
+    private lazy var disposeBag = DisposeBag()
 
     private lazy var titleLabel: UILabel = {
         let view = UILabel()
         view.backgroundColor = .white
-        view.text = L10n.MenuDetail.additionalItemLabel
         view.textColor = .systemGray
         view.font = .systemFont(ofSize: 12)
         return view
@@ -35,6 +34,16 @@ final class MenuDetailModifierCell: UITableViewCell {
         view.setTitle(L10n.MenuDetail.chooseAdditionalItemButton, for: .normal)
         view.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         view.setTitleColor(.kexRed, for: .normal)
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+
+    private lazy var bottomStack: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [valueLabel, selectButton])
+        view.distribution = .equalSpacing
+        view.alignment = .bottom
+        view.axis = .horizontal
+        view.spacing = 8
         return view
     }()
 
@@ -55,6 +64,14 @@ final class MenuDetailModifierCell: UITableViewCell {
         bindViewModel()
     }
 
+    func set(value: Modifier) {
+        viewModel.set(value: value)
+    }
+
+    func getValue() -> Modifier? {
+        return viewModel.getValue()
+    }
+
     private func bindViewModel() {
         viewModel.outputs.name
             .bind(to: titleLabel.rx.text)
@@ -68,21 +85,15 @@ final class MenuDetailModifierCell: UITableViewCell {
     private func layoutUI() {
         selectionStyle = .none
 
-        [titleLabel, selectButton, valueLabel].forEach { contentView.addSubview($0) }
+        [titleLabel, bottomStack].forEach { contentView.addSubview($0) }
 
         titleLabel.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
         }
 
-        selectButton.snp.makeConstraints {
-            $0.right.equalToSuperview()
-            $0.centerY.equalToSuperview()
-        }
-
-        valueLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(3)
-            $0.left.bottom.equalToSuperview()
-            $0.right.equalTo(selectButton.snp.left).offset(-8)
+        bottomStack.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(-8)
+            $0.left.right.equalToSuperview()
         }
     }
 }

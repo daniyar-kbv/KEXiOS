@@ -10,3 +10,9 @@ import Foundation
 protocol ModifiersViewModel {}
 
 class ModifiersViewModelImpl: ModifiersViewModel {}
+
+extension ModifiersViewModelImpl {
+    struct Output {
+        let didSelectModifier
+    }
+}

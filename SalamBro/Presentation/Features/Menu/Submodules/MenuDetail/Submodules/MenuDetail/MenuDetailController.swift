@@ -67,7 +67,9 @@ extension MenuDetailController {
     private func configureViews() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
-        contentView?.setTableViewDelegate(delegate: self, dataSource: self)
+
+        contentView?.modifiersTableView.delegate = self
+        contentView?.modifiersTableView.dataSource = self
     }
 
     private func bindViewModel() {
@@ -100,7 +102,7 @@ extension MenuDetailController {
 
         viewModel.outputs.updateModifiers
             .subscribe(onNext: { [weak self] in
-                self?.contentView?.reloadTableView()
+                self?.contentView?.modifiersTableView.reloadData()
             }).disposed(by: disposeBag)
 
         if let itemTitleLabel = contentView?.itemTitleLabel {
@@ -126,6 +128,11 @@ extension MenuDetailController {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
     }
+
+    func set(modifier: Modifier, at indexPath: IndexPath) {
+        let cell = contentView?.modifiersTableView.cellForRow(at: indexPath) as! MenuDetailModifierCell
+        cell.set(value: modifier)
+    }
 }
 
 extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
@@ -143,8 +150,8 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 
-    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
-        outputs.toModifiers.accept(())
+    func tableView(_: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        outputs.toModifiers.accept((viewModel.modifierGroups[indexPath.section], indexPath))
     }
 }
 
@@ -179,10 +186,6 @@ extension MenuDetailController: MenuDetailViewDelegate {
 
         commentaryPage?.openTransitionSheet(on: self)
     }
-
-    func changeButtonTapped() {
-        outputs.toModifiers.accept(())
-    }
 }
 
 extension MenuDetailController {
@@ -190,7 +193,6 @@ extension MenuDetailController {
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()
 
-//        Tech debt: finish when modifiers api resolved
-        let toModifiers = PublishRelay<Void>()
+        let toModifiers = PublishRelay<(ModifierGroup, IndexPath)>()
     }
 }

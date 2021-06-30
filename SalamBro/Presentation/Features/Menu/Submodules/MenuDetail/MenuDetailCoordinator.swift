@@ -40,20 +40,26 @@ public final class MenuDetailCoordinator: Coordinator {
             }).disposed(by: disposeBag)
 
         menuDetailPage.outputs.close
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: {
                 menuDetailPage.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
         menuDetailPage.outputs.toModifiers
-            .subscribe(onNext: { [weak self] in
-                self?.openModifiers(on: menuDetailPage)
+            .subscribe(onNext: { [weak self] modifierGroup, indexPath in
+                self?.openModifiers(on: menuDetailPage,
+                                    modifierGroup: modifierGroup) { modifier in
+                    menuDetailPage.set(modifier: modifier, at: indexPath)
+                }
             }, onDisposed: {}).disposed(by: disposeBag)
 
         menuDetailPage.modalPresentationStyle = .pageSheet
         router.present(menuDetailPage, animated: true, completion: nil)
     }
 
-    private func openModifiers(on presentedController: UIViewController) {
+    private func openModifiers(on presentedController: UIViewController,
+                               modifierGroup _: ModifierGroup,
+                               onSelect _: (Modifier) -> Void)
+    {
         let modifiersPage = pagesFactory.makeModifiersPage()
 
         modifiersPage.modalPresentationStyle = .pageSheet

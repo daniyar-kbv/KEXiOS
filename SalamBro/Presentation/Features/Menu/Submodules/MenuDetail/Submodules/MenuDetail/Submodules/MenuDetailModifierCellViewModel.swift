@@ -11,10 +11,18 @@ import RxSwift
 
 protocol MenuDetailModifierCellViewModel {
     var outputs: MenuDetailModifierCellViewModelImpl.Output { get set }
+
+    func set(value: Modifier)
+    func getValue() -> Modifier?
 }
 
 final class MenuDetailModifierCellViewModelImpl: MenuDetailModifierCellViewModel {
     var outputs: Output
+    var value: Modifier? {
+        didSet {
+            outputs.value.accept(value?.name)
+        }
+    }
 
     init(modifierGroup: ModifierGroup) {
         outputs = Output(modifierGroup: modifierGroup)
@@ -23,6 +31,14 @@ final class MenuDetailModifierCellViewModelImpl: MenuDetailModifierCellViewModel
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func set(value: Modifier) {
+        self.value = value
+    }
+
+    func getValue() -> Modifier? {
+        return value
     }
 }
 

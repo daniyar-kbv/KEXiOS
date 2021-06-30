@@ -32,7 +32,15 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
             outputs.itemTitle.accept(position?.name)
             outputs.itemDescription.accept(position?.description)
             outputs.itemPrice.accept("\(L10n.MenuDetail.proceedButton) \(position?.price.removeTrailingZeros() ?? "")")
-            modifierGroups = position?.modifierGroups ?? []
+
+//            Tech debt: remove when modifiers added to API
+            if let modifierGroups = position?.modifierGroups,
+               modifierGroups.count > 0
+            {
+                self.modifierGroups = modifierGroups
+            } else {
+                setTestModifiers()
+            }
         }
     }
 
@@ -116,5 +124,51 @@ extension MenuDetailViewModelImpl {
         let itemDescription = PublishRelay<String?>()
         let itemPrice = PublishRelay<String?>()
         let updateModifiers = PublishRelay<Void>()
+    }
+}
+
+//  MARK: Test data
+
+extension MenuDetailViewModelImpl {
+    private func setTestModifiers() {
+        var modifierGroups = [ModifierGroup]()
+
+        modifierGroups.append(.init(
+            uuid: "testUUID",
+            name: "Выберите напиток",
+            minAmount: 2,
+            maxAmount: 2,
+            isRequired: true,
+            modifiers: [
+                Modifier(name: "Кола",
+                         uuid: "testUUID"),
+                Modifier(name: "Спрайт",
+                         uuid: "testUUID"),
+                Modifier(name: "Фанта",
+                         uuid: "testUUID"),
+                Modifier(name: "Пепси",
+                         uuid: "testUUID"),
+            ]
+        ))
+
+        modifierGroups.append(.init(
+            uuid: "testUUID",
+            name: "Выберите соус",
+            minAmount: 1,
+            maxAmount: 1,
+            isRequired: true,
+            modifiers: [
+                Modifier(name: "Сырный",
+                         uuid: "testUUID"),
+                Modifier(name: "Кетчуп",
+                         uuid: "testUUID"),
+                Modifier(name: "Барбекю",
+                         uuid: "testUUID"),
+                Modifier(name: "Чесночный",
+                         uuid: "testUUID"),
+            ]
+        ))
+
+        self.modifierGroups = modifierGroups
     }
 }

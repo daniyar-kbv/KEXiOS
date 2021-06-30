@@ -10,7 +10,6 @@ import UIKit
 
 protocol MenuDetailViewDelegate: AnyObject {
     func commentaryViewTapped()
-    func changeButtonTapped()
 }
 
 final class MenuDetailView: UIView {
@@ -38,11 +37,12 @@ final class MenuDetailView: UIView {
         return label
     }()
 
-    private lazy var modifiersTableView: UITableView = {
+    lazy var modifiersTableView: UITableView = {
         let view = UITableView()
         view.register(MenuDetailModifierCell.self, forCellReuseIdentifier: String(describing: MenuDetailModifierCell.self))
         view.isScrollEnabled = false
         view.separatorStyle = .none
+        view.rowHeight = 43
         return view
     }()
 
@@ -103,7 +103,7 @@ extension MenuDetailView {
 
     private func layoutUI() {
         commentaryView.addSubview(commentaryField)
-        [imageView, itemTitleLabel, descriptionLabel, commentaryView, proceedButton].forEach {
+        [imageView, itemTitleLabel, descriptionLabel, modifiersTableView, commentaryView, proceedButton].forEach {
             addSubview($0)
         }
 
@@ -153,22 +153,10 @@ extension MenuDetailView {
             .map { modifiersTableView.numberOfRows(inSection: $0) }
             .reduce(0, +))
             * modifiersTableView.rowHeight
+
         modifiersTableView.snp.updateConstraints {
             $0.height.equalTo(height)
         }
-    }
-
-    func setTableViewDelegate(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
-        modifiersTableView.delegate = delegate
-        modifiersTableView.dataSource = dataSource
-    }
-
-    func reloadTableView() {
-        modifiersTableView.reloadData()
-    }
-
-    @objc private func additionalItemChangeButtonTapped() {
-        delegate?.changeButtonTapped()
     }
 
     @objc private func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
