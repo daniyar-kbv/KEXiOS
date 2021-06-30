@@ -156,10 +156,10 @@ extension MenuDetailController: MenuDetailViewDelegate {
         commentaryPage = MapCommentaryPage()
         commentaryPage?.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
 
-        commentaryPage?.output.didProceed.subscribe(onNext: { comment in
-            if let comment = comment {
-                self.contentView.configureTextField(text: comment)
-            }
+        commentaryPage?.output.didProceed.subscribe(onNext: { [weak self] comment in
+            guard let comment = comment else { return }
+            self?.contentView.configureTextField(text: comment)
+            self?.viewModel.set(comment: comment)
         }).disposed(by: disposeBag)
 
         commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in

@@ -92,7 +92,8 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
         guard let position = position else { return }
         cartRepository.addItem(item: position.toCartItem(
             count: 1,
-            comment: comment ?? ""
+            comment: comment ?? "",
+            modifiers: selectedModifiers.flatMap { $0 }
         ))
         outputs.didProceed.accept(())
     }

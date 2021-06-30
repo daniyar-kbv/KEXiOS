@@ -64,7 +64,7 @@ struct Modifier: Codable {
 }
 
 extension MenuPositionDetail {
-    func toCartItem(count: Int, comment: String) -> CartItem {
+    func toCartItem(count: Int, comment: String, modifiers: [Modifier]) -> CartItem {
         return .init(
             positionUUID: uuid,
             count: count,
@@ -77,7 +77,16 @@ extension MenuPositionDetail {
                 price: price,
                 categoryUUID: categoryUUID
             ),
-            modifiers: []
+            modifiers: modifiers.map { $0.toCartModifier(cout: 1) }
         )
+    }
+}
+
+extension Modifier {
+    func toCartModifier(cout: Int) -> CartModifier {
+        return .init(position: .init(uuid: uuid,
+                                     name: name),
+                     positionUUID: uuid,
+                     count: cout)
     }
 }

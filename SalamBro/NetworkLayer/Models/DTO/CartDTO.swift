@@ -40,8 +40,8 @@ struct CartPosition: Codable, Equatable {
     var name: String
     var image: String?
     var description: String?
-    var price: Double
-    var categoryUUID: String
+    var price: Double?
+    var categoryUUID: String?
 
     enum CodingKeys: String, CodingKey {
         case uuid, name, image, description, price
@@ -49,10 +49,7 @@ struct CartPosition: Codable, Equatable {
     }
 
     static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.name == rhs.name &&
-            lhs.image == rhs.image &&
-            lhs.price == rhs.price &&
-            lhs.categoryUUID == rhs.categoryUUID
+        return lhs.uuid == rhs.uuid
     }
 }
 

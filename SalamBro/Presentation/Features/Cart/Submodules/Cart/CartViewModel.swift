@@ -53,7 +53,7 @@ final class CartViewModelImpl: CartViewModel {
     }
 
     func getTotalPrice() -> String {
-        return items.map { $0.position.price * Double($0.count) }.reduce(0, +).removeTrailingZeros()
+        return items.map { ($0.position.price ?? 0) * Double($0.count) }.reduce(0, +).removeTrailingZeros()
     }
 
     func increment(postitonUUID: String) {
