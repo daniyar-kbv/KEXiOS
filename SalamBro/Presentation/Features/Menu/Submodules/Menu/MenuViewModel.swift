@@ -81,6 +81,7 @@ final class MenuViewModel: MenuViewModelProtocol {
                                             )
                                         })
 
+//        Tech debt: uncomment when promotions API start working
 //        finalSequesnce.subscribe(onSuccess: {
 //            [weak self] promotions, categories, positions in
 //            self?.outputs.didEndRequest.accept(())
