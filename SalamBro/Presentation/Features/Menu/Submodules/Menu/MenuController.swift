@@ -200,8 +200,8 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    public func numberOfSections(in _: UITableView) -> Int {
-        viewModel.cellViewModels.count
+    func numberOfSections(in _: UITableView) -> Int {
+        return viewModel.cellViewModels.count
     }
 
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

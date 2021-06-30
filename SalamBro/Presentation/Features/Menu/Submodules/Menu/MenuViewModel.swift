@@ -81,13 +81,26 @@ final class MenuViewModel: MenuViewModelProtocol {
                                             )
                                         })
 
-        finalSequesnce.subscribe(onSuccess: {
-            [weak self] promotions, categories, positions in
+//        finalSequesnce.subscribe(onSuccess: {
+//            [weak self] promotions, categories, positions in
+//            self?.outputs.didEndRequest.accept(())
+//
+//            self?.setPromotions(promotions: promotions)
+//            self?.setCategories(categories: categories)
+//            self?.setPositions(positions: positions)
+//
+//            self?.outputs.updateTableView.accept(())
+//        }, onError: { [weak self] error in
+//            self?.outputs.didEndRequest.accept(())
+//            self?.outputs.didGetError.accept(error as? ErrorPresentable)
+//        }).disposed(by: disposeBag)
+
+        productsSequence.subscribe(onSuccess: { [weak self] data in
             self?.outputs.didEndRequest.accept(())
 
-            self?.setPromotions(promotions: promotions)
-            self?.setCategories(categories: categories)
-            self?.setPositions(positions: positions)
+            self?.setPromotions(promotions: [])
+            self?.setCategories(categories: data.categories)
+            self?.setPositions(positions: data.positions)
 
             self?.outputs.updateTableView.accept(())
         }, onError: { [weak self] error in

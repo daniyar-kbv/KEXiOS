@@ -18,13 +18,14 @@ final class MenuDetailModifierCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let view = UILabel()
         view.backgroundColor = .white
-        view.textColor = .systemGray
-        view.font = .systemFont(ofSize: 12)
+        view.textColor = .mildBlue
+        view.font = .systemFont(ofSize: 12, weight: .regular)
         return view
     }()
 
     private lazy var valueLabel: UILabel = {
         let view = UILabel()
+        view.textColor = .darkGray
         view.font = .systemFont(ofSize: 16, weight: .medium)
         return view
     }()
@@ -34,7 +35,6 @@ final class MenuDetailModifierCell: UITableViewCell {
         view.setTitle(L10n.MenuDetail.chooseAdditionalItemButton, for: .normal)
         view.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         view.setTitleColor(.kexRed, for: .normal)
-        view.isUserInteractionEnabled = false
         return view
     }()
 
@@ -88,7 +88,8 @@ final class MenuDetailModifierCell: UITableViewCell {
         [titleLabel, bottomStack].forEach { contentView.addSubview($0) }
 
         titleLabel.snp.makeConstraints {
-            $0.top.left.right.equalToSuperview()
+            $0.top.equalToSuperview().offset(8)
+            $0.left.right.equalToSuperview()
         }
 
         bottomStack.snp.makeConstraints {

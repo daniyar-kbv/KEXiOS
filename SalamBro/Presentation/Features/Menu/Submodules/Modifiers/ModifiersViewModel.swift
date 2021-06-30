@@ -6,13 +6,32 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
-protocol ModifiersViewModel {}
+protocol ModifiersViewModel {
+    var outputs: ModifiersViewModelImpl.Output { get }
 
-class ModifiersViewModelImpl: ModifiersViewModel {}
+    var modifiers: [Modifier] { get }
+}
+
+class ModifiersViewModelImpl: ModifiersViewModel {
+    let outputs: Output
+    let modifiers: [Modifier]
+
+    init(modifierGroup: ModifierGroup) {
+        outputs = .init(modifierGroup: modifierGroup)
+        modifiers = modifierGroup.modifiers
+    }
+}
 
 extension ModifiersViewModelImpl {
     struct Output {
-        let didSelectModifier
+        let groupName: BehaviorRelay<String>
+        let update = PublishRelay<Void>()
+
+        init(modifierGroup: ModifierGroup) {
+            groupName = .init(value: modifierGroup.name)
+        }
     }
 }

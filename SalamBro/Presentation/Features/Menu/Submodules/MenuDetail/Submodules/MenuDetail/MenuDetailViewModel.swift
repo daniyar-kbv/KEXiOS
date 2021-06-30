@@ -17,6 +17,7 @@ protocol MenuDetailViewModel: AnyObject {
     func update()
     func proceed()
     func set(comment: String)
+    func set(modifier: Modifier, at indexPath: IndexPath)
 }
 
 final class MenuDetailViewModelImpl: MenuDetailViewModel {
@@ -47,10 +48,14 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     var modifierGroups = [ModifierGroup]() {
         didSet {
             outputs.updateModifiers.accept(())
+            modifierGroups.forEach { _ in selectedModifiers.append([]) }
+            check()
         }
     }
 
+    private var selectedModifiers = [[Modifier]]()
     private var comment: String?
+
     let outputs = Output()
 
     init(positionUUID: String,
@@ -85,28 +90,30 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
 
     func proceed() {
         guard let position = position else { return }
-
-        let cartItem = CartItem(
-            positionUUID: position.uuid,
+        cartRepository.addItem(item: position.toCartItem(
             count: 1,
-            comment: comment ?? "",
-            position: .init(
-                uuid: position.uuid,
-                name: position.name,
-                image: position.image,
-                description: position.description,
-                price: position.price,
-                categoryUUID: position.categoryUUID
-            ),
-            modifiers: []
-        )
-
-        cartRepository.addItem(item: cartItem)
+            comment: comment ?? ""
+        ))
+        outputs.didProceed.accept(())
     }
 
     func set(comment: String) {
         self.comment = comment
         outputs.comment.accept(comment)
+    }
+
+    func set(modifier: Modifier, at indexPath: IndexPath) {
+        selectedModifiers[indexPath.section].append(modifier)
+        check()
+        outputs.didSelectModifier.accept((modifier, indexPath))
+    }
+
+    private func check() {
+        outputs.isComplete.accept(!modifierGroups.enumerated()
+            .map { index, modifierGroup in
+                selectedModifiers[index].count == modifierGroup.maxAmount
+            }
+            .contains(false))
     }
 }
 
@@ -116,18 +123,20 @@ extension MenuDetailViewModelImpl {
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
 
-        let close = PublishRelay<Void>()
-
         let comment = PublishRelay<String>()
         let itemImage = PublishRelay<URL?>()
         let itemTitle = PublishRelay<String?>()
         let itemDescription = PublishRelay<String?>()
         let itemPrice = PublishRelay<String?>()
         let updateModifiers = PublishRelay<Void>()
+
+        let didSelectModifier = PublishRelay<(Modifier, IndexPath)>()
+        let didProceed = PublishRelay<Void>()
+        let isComplete = PublishRelay<Bool>()
     }
 }
 
-//  MARK: Test data
+//  MARK: Test data, remove when modifiers added to API
 
 extension MenuDetailViewModelImpl {
     private func setTestModifiers() {

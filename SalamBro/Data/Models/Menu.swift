@@ -62,3 +62,22 @@ struct Modifier: Codable {
     let name: String
     let uuid: String
 }
+
+extension MenuPositionDetail {
+    func toCartItem(count: Int, comment: String) -> CartItem {
+        return .init(
+            positionUUID: uuid,
+            count: count,
+            comment: comment,
+            position: .init(
+                uuid: uuid,
+                name: name,
+                image: image,
+                description: description,
+                price: price,
+                categoryUUID: categoryUUID
+            ),
+            modifiers: []
+        )
+    }
+}
