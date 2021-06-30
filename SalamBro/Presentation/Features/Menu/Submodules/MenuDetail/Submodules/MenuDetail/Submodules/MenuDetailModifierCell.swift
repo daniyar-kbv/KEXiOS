@@ -66,6 +66,8 @@ final class MenuDetailModifierCell: UITableViewCell {
     }
 
     private func layoutUI() {
+        selectionStyle = .none
+
         [titleLabel, selectButton, valueLabel].forEach { contentView.addSubview($0) }
 
         titleLabel.snp.makeConstraints {

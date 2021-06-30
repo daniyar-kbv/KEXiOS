@@ -12,6 +12,7 @@ import RxSwift
 
 protocol MenuDetailViewModel: AnyObject {
     var outputs: MenuDetailViewModelImpl.Output { get }
+    var modifierGroups: [ModifierGroup] { get set }
 
     func update()
     func proceed()
@@ -30,9 +31,14 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
             outputs.itemImage.accept(URL(string: position?.image ?? ""))
             outputs.itemTitle.accept(position?.name)
             outputs.itemDescription.accept(position?.description)
-//            Tech debt: change to prices logic
             outputs.itemPrice.accept("\(L10n.MenuDetail.proceedButton) \(position?.price.removeTrailingZeros() ?? "")")
-//                self?.outputs.itemModifiers.accept(product.modifiers)
+            modifierGroups = position?.modifierGroups ?? []
+        }
+    }
+
+    var modifierGroups = [ModifierGroup]() {
+        didSet {
+            outputs.updateModifiers.accept(())
         }
     }
 
@@ -109,6 +115,6 @@ extension MenuDetailViewModelImpl {
         let itemTitle = PublishRelay<String?>()
         let itemDescription = PublishRelay<String?>()
         let itemPrice = PublishRelay<String?>()
-//        let itemModifiers = PublishRelay<[OrderProductDetailResponse.Data.Modifier]>()
+        let updateModifiers = PublishRelay<Void>()
     }
 }

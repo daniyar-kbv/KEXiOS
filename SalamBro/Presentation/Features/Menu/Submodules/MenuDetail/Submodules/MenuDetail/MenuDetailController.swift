@@ -55,12 +55,19 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
         navigationController?.navigationBar.tintColor = .kexRed
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
     }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        contentView?.updateTableViewHeight()
+    }
 }
 
 extension MenuDetailController {
     private func configureViews() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
+        contentView?.setTableViewDelegate(delegate: self, dataSource: self)
     }
 
     private func bindViewModel() {
@@ -91,6 +98,11 @@ extension MenuDetailController {
                 self?.contentView?.setImage(url: url)
             }).disposed(by: disposeBag)
 
+        viewModel.outputs.updateModifiers
+            .subscribe(onNext: { [weak self] in
+                self?.contentView?.reloadTableView()
+            }).disposed(by: disposeBag)
+
         if let itemTitleLabel = contentView?.itemTitleLabel {
             viewModel.outputs.itemTitle
                 .bind(to: itemTitleLabel.rx.text)
@@ -116,7 +128,25 @@ extension MenuDetailController {
     }
 }
 
-extension MenuDe
+extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in _: UITableView) -> Int {
+        return viewModel.modifierGroups.count
+    }
+
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.modifierGroups[section].maxAmount
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MenuDetailModifierCell.self), for: indexPath) as! MenuDetailModifierCell
+        cell.configure(modifierGroup: viewModel.modifierGroups[indexPath.section])
+        return cell
+    }
+
+    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
+        outputs.toModifiers.accept(())
+    }
+}
 
 extension MenuDetailController {
     @objc private func dismissVC() {

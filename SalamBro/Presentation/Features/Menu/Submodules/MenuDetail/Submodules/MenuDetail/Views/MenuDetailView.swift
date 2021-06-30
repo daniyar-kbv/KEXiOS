@@ -148,10 +148,23 @@ extension MenuDetailView {
         }
     }
 
-    func updateTableViewHeight(to height: CGFloat) {
+    func updateTableViewHeight() {
+        let height = CGFloat((0 ..< modifiersTableView.numberOfSections)
+            .map { modifiersTableView.numberOfRows(inSection: $0) }
+            .reduce(0, +))
+            * modifiersTableView.rowHeight
         modifiersTableView.snp.updateConstraints {
             $0.height.equalTo(height)
         }
+    }
+
+    func setTableViewDelegate(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+        modifiersTableView.delegate = delegate
+        modifiersTableView.dataSource = dataSource
+    }
+
+    func reloadTableView() {
+        modifiersTableView.reloadData()
     }
 
     @objc private func additionalItemChangeButtonTapped() {
