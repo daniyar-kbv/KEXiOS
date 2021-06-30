@@ -17,6 +17,7 @@ protocol ProfileViewModel: AnyObject {
     func fetchUserInfo()
     func logout()
     func set(userInfo: UserInfoResponse)
+    func userDidAuthenticate() -> Bool
 }
 
 final class ProfileViewModelImpl: ProfileViewModel {
@@ -47,6 +48,10 @@ final class ProfileViewModelImpl: ProfileViewModel {
 
     func set(userInfo: UserInfoResponse) {
         repository.set(userInfo: userInfo)
+    }
+
+    func userDidAuthenticate() -> Bool {
+        repository.userDidAuthenticate()
     }
 
     private func bindOutputs() {

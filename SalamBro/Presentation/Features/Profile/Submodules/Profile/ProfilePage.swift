@@ -94,6 +94,10 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
     }
 
     func reloadPage() {
+        guard viewModel.userDidAuthenticate() else {
+            return
+        }
+
         viewModel.fetchUserInfo()
     }
 

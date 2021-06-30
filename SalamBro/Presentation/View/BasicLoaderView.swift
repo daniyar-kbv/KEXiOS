@@ -20,7 +20,7 @@ final class BasicLoaderView: UIView {
     }
 
     private func configure() {
-        backgroundColor = .arcticWhite
+        backgroundColor = .clear
     }
 
     func showLoader() {

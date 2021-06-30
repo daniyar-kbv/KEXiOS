@@ -23,7 +23,7 @@ extension LoaderDisplayable where Self: UIViewController {
 
     private func showLoader(animated _: Bool, completion _: ((Bool) -> Void)? = nil) {
         view.endEditing(true)
-        let animatedView = loadingView()
+        let animatedView = getLoadingView()
 
         guard let loadingView = animatedView else {
             let loadingView = BasicLoaderView(frame: view.bounds)
@@ -41,7 +41,7 @@ extension LoaderDisplayable where Self: UIViewController {
     }
 
     private func hideLoader(animated _: Bool, completion _: ((Bool) -> Void)? = nil) {
-        let loadingView: BasicLoaderView? = loadingView()
+        let loadingView: BasicLoaderView? = getLoadingView()
 
         if loadingView != nil {
             loadingView?.hideLoader()
@@ -49,7 +49,7 @@ extension LoaderDisplayable where Self: UIViewController {
         }
     }
 
-    private func loadingView() -> BasicLoaderView? {
+    private func getLoadingView() -> BasicLoaderView? {
         var loadingView: BasicLoaderView?
 
         for currentView in view.subviews where currentView as? BasicLoaderView != nil {

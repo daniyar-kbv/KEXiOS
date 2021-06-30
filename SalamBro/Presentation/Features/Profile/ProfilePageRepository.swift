@@ -14,6 +14,7 @@ protocol ProfilePageRepository: AnyObject {
     func fetchUserInfo()
     func set(userInfo: UserInfoResponse)
     func logout()
+    func userDidAuthenticate() -> Bool
 }
 
 final class ProfilePageRepositoryImpl: ProfilePageRepository {
@@ -54,6 +55,11 @@ final class ProfilePageRepositoryImpl: ProfilePageRepository {
 
     func set(userInfo: UserInfoResponse) {
         outputs.didGetUserInfo.accept(userInfo)
+    }
+
+    func userDidAuthenticate() -> Bool {
+        guard let _ = tokenStorage.token else { return false }
+        return true
     }
 }
 
