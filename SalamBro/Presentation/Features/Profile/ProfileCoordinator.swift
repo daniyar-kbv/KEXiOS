@@ -16,6 +16,8 @@ final class ProfileCoordinator: BaseCoordinator {
     private let pagesFactory: ProfilePagesFactory
     private let coordinatorsFactory: ProfileChildCoordinatorsFactory
 
+    private var reloadProfilePage: (() -> Void)?
+
     init(router: Router, pagesFactory: ProfilePagesFactory, coordinatorsFactory: ProfileChildCoordinatorsFactory) {
         self.router = router
         self.pagesFactory = pagesFactory
@@ -26,12 +28,16 @@ final class ProfileCoordinator: BaseCoordinator {
         let profilePage = pagesFactory.makeProfilePage()
 
         profilePage.outputs.onChangeUserInfo
-            .subscribe(onNext: { [weak self] userInfo in
+            .subscribe(onNext: { [weak self, weak profilePage] userInfo in
                 self?.showChangeUserInfoPage(userInfo: userInfo, completion: { newUserInfo in
-                    profilePage.updateViews(with: newUserInfo)
+                    profilePage?.set(userInfo: newUserInfo)
                 })
             })
             .disposed(by: disposeBag)
+
+        reloadProfilePage = { [weak profilePage] in
+            profilePage?.reloadPage()
+        }
 
         profilePage.outputs.onTableItemPressed
             .subscribe(onNext: { [weak self] tableItem in
@@ -101,6 +107,7 @@ final class ProfileCoordinator: BaseCoordinator {
         authCoordinator.didFinish = { [weak self, weak authCoordinator] in
             self?.remove(authCoordinator)
             authCoordinator = nil
+            self?.reloadProfilePage?()
         }
         authCoordinator.start()
     }

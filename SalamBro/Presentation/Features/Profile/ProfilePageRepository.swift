@@ -11,17 +11,16 @@ import RxSwift
 
 protocol ProfilePageRepository: AnyObject {
     var outputs: ProfilePageRepositoryImpl.Output { get }
-    var userInfo: UserInfoResponse? { get }
-
-    func getUserInfo()
+    func fetchUserInfo()
+    func set(userInfo: UserInfoResponse)
     func logout()
+    func userDidAuthenticate() -> Bool
 }
 
 final class ProfilePageRepositoryImpl: ProfilePageRepository {
     private let disposeBag = DisposeBag()
 
     private(set) var outputs: Output = .init()
-    private(set) var userInfo: UserInfoResponse?
 
     private let profileService: ProfileService
     private let authService: AuthService
@@ -33,12 +32,11 @@ final class ProfilePageRepositoryImpl: ProfilePageRepository {
         self.tokenStorage = tokenStorage
     }
 
-    func getUserInfo() {
+    func fetchUserInfo() {
         outputs.didStartRequest.accept(())
         profileService.getUserInfo()
             .subscribe(onSuccess: { [weak self] userResponse in
                 self?.outputs.didEndRequest.accept(())
-                self?.userInfo = userResponse
                 self?.outputs.didGetUserInfo.accept(userResponse)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
@@ -53,6 +51,15 @@ final class ProfilePageRepositoryImpl: ProfilePageRepository {
 
     func logout() {
         tokenStorage.cleanUp()
+    }
+
+    func set(userInfo: UserInfoResponse) {
+        outputs.didGetUserInfo.accept(userInfo)
+    }
+
+    func userDidAuthenticate() -> Bool {
+        guard let _ = tokenStorage.token else { return false }
+        return true
     }
 }
 
