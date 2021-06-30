@@ -69,17 +69,11 @@ final class AddressPickController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
+
         navigationItem.title = L10n.AddressPicker.titleMany
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
     }
 }
 
@@ -116,10 +110,6 @@ extension AddressPickController {
         outputs.didAddTapped.accept { [weak self] in
             self?.viewModel.reload()
         }
-    }
-
-    @objc private func goBack() {
-        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -169,5 +159,6 @@ extension AddressPickController {
         let didSelectAddress = PublishRelay<(DeliveryAddress, () -> Void)>()
         let didAddTapped = PublishRelay<() -> Void>()
         let didTerminate = PublishRelay<Void>()
+        let close = PublishRelay<Void>()
     }
 }

@@ -5,6 +5,8 @@
 //  Created by Dan on 6/3/21.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
 final class OrderHistoryCoordinator: BaseCoordinator {
@@ -12,6 +14,7 @@ final class OrderHistoryCoordinator: BaseCoordinator {
 
     private let router: Router
     private let pagesFactory: OrderHistoryPagesFactory
+    private let disposeBag = DisposeBag()
 
     init(router: Router, pagesFactory: OrderHistoryPagesFactory) {
         self.router = router
@@ -39,6 +42,12 @@ final class OrderHistoryCoordinator: BaseCoordinator {
 
     private func showRateOrderPage() {
         let rateOrderPage = pagesFactory.makeRateOrderPage()
+
+        rateOrderPage.outputs.close
+            .subscribe(onNext: {
+                rateOrderPage.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+
         rateOrderPage.modalPresentationStyle = .pageSheet
         let nav = SBNavigationController(rootViewController: rateOrderPage)
         router.present(nav, animated: true, completion: nil)

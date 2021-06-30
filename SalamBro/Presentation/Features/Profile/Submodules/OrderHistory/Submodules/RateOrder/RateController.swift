@@ -20,6 +20,8 @@ final class RateController: UIViewController {
 
     private var commentaryPage: MapCommentaryPage?
 
+    var outputs = Output()
+
     init(viewModel: RateViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -53,6 +55,10 @@ extension RateController {
 
         rateView.collectionView.delegate = self
         rateView.collectionView.dataSource = self
+
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
     }
 }
 
@@ -91,10 +97,16 @@ extension RateController: RateViewDelegate {
     }
 
     func sendButtonTapped() {
-        dismiss(animated: true, completion: nil)
+        outputs.close.accept(())
     }
 
     func updateViewModelData(at rating: Int) {
         viewModel.changeDataSet(by: rating)
+    }
+}
+
+extension RateController {
+    struct Output {
+        let close = PublishRelay<Void>()
     }
 }

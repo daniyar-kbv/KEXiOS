@@ -49,14 +49,18 @@ public final class MenuDetailCoordinator: Coordinator {
                 self?.openModifiers(on: menuDetailPage)
             }, onDisposed: {}).disposed(by: disposeBag)
 
-        menuDetailPage.modalPresentationStyle = .pageSheet
         router.present(menuDetailPage, animated: true, completion: nil)
     }
 
     private func openModifiers(on presentedController: UIViewController) {
         let modifiersPage = pagesFactory.makeModifiersPage()
 
-        modifiersPage.modalPresentationStyle = .pageSheet
-        presentedController.present(modifiersPage, animated: true)
+        modifiersPage.outputs.close
+            .subscribe(onNext: {
+                modifiersPage.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+
+        let nav = SBNavigationController(rootViewController: modifiersPage)
+        presentedController.present(nav, animated: true)
     }
 }
