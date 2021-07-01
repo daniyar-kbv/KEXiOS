@@ -10,7 +10,7 @@ import UIKit
 
 protocol MenuDetailViewDelegate: AnyObject {
     func commentaryViewTapped()
-    func changeButtonTapped()
+    func proceedButtonTapped()
 }
 
 final class MenuDetailView: UIView {
@@ -38,37 +38,19 @@ final class MenuDetailView: UIView {
         return label
     }()
 
+    lazy var modifiersTableView: UITableView = {
+        let view = UITableView()
+        view.register(MenuDetailModifierCell.self, forCellReuseIdentifier: String(describing: MenuDetailModifierCell.self))
+        view.isScrollEnabled = false
+        view.separatorStyle = .none
+        view.rowHeight = 51
+        return view
+    }()
+
     private lazy var commentaryView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
-        view.layer.cornerRadius = 10
-        view.layer.masksToBounds = true
-        view.isUserInteractionEnabled = true
-        return view
-    }()
-
-    private lazy var chooseAdditionalItemView = UIView()
-
-    private lazy var chooseAdditionalItemLabel: UILabel = {
-        let view = UILabel()
-        view.backgroundColor = .white
-        view.text = L10n.MenuDetail.additionalItemLabel
-        view.textColor = .systemGray
-        view.font = .systemFont(ofSize: 12)
-        return view
-    }()
-
-    private lazy var additionalItemLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 16, weight: .medium)
-        return view
-    }()
-
-    private lazy var chooseAdditionalItemButton: UIButton = {
-        let view = UIButton()
-        view.setTitle(L10n.MenuDetail.chooseAdditionalItemButton, for: .normal)
-        view.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        view.setTitleColor(.kexRed, for: .normal)
+        view.cornerRadius = 10
         return view
     }()
 
@@ -78,7 +60,13 @@ final class MenuDetailView: UIView {
             string: L10n.MenuDetail.commentaryField,
             attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         )
-        view.isEnabled = false
+        view.borderStyle = .none
+        view.clearButtonMode = .never
+        view.minimumFontSize = 17
+        view.adjustsFontSizeToFitWidth = true
+        view.contentHorizontalAlignment = .left
+        view.contentVerticalAlignment = .center
+        view.isUserInteractionEnabled = false
         return view
     }()
 
@@ -117,14 +105,12 @@ extension MenuDetailView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(commetaryViewTapped(_:)))
         commentaryView.addGestureRecognizer(tap)
 
-        chooseAdditionalItemButton.addTarget(self, action: #selector(additionalItemChangeButtonTapped), for: .touchUpInside)
+        proceedButton.addTarget(self, action: #selector(proceedButtonTapped), for: .touchUpInside)
     }
 
     private func layoutUI() {
-        [chooseAdditionalItemLabel, additionalItemLabel, chooseAdditionalItemButton].forEach { chooseAdditionalItemView.addSubview($0)
-        }
         commentaryView.addSubview(commentaryField)
-        [imageView, itemTitleLabel, descriptionLabel, chooseAdditionalItemView, commentaryView, proceedButton].forEach {
+        [imageView, itemTitleLabel, descriptionLabel, modifiersTableView, commentaryView, proceedButton].forEach {
             addSubview($0)
         }
 
@@ -144,35 +130,19 @@ extension MenuDetailView {
             $0.left.right.equalToSuperview().inset(24)
         }
 
-        chooseAdditionalItemLabel.snp.makeConstraints {
-            $0.top.left.right.equalToSuperview()
-        }
-
-        additionalItemLabel.snp.makeConstraints {
-            $0.top.equalTo(chooseAdditionalItemLabel.snp.bottom).offset(3)
-            $0.left.bottom.equalToSuperview()
-            $0.right.equalTo(chooseAdditionalItemButton.snp.left).offset(-8)
-        }
-
-        chooseAdditionalItemButton.snp.makeConstraints {
-            $0.right.equalToSuperview()
-            $0.centerY.equalTo(additionalItemLabel.snp.centerY)
-        }
-
-        chooseAdditionalItemView.snp.makeConstraints {
-            $0.top.equalTo(descriptionLabel.snp.bottom).offset(16)
+        modifiersTableView.snp.makeConstraints {
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(8)
             $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(36)
+            $0.height.equalTo(0)
         }
 
         commentaryField.snp.makeConstraints {
-            $0.top.equalTo(chooseAdditionalItemView.snp.bottom).offset(16)
             $0.left.right.equalToSuperview().inset(16)
-            $0.height.equalTo(50)
+            $0.centerX.centerY.equalToSuperview()
         }
 
         commentaryView.snp.makeConstraints {
-            $0.top.equalTo(chooseAdditionalItemView.snp.bottom).offset(16)
+            $0.top.equalTo(modifiersTableView.snp.bottom).offset(16)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(50)
         }
@@ -184,11 +154,27 @@ extension MenuDetailView {
         }
     }
 
-    @objc private func additionalItemChangeButtonTapped() {
-        delegate?.changeButtonTapped()
+    func updateTableViewHeight() {
+        let height = CGFloat((0 ..< modifiersTableView.numberOfSections)
+            .map { modifiersTableView.numberOfRows(inSection: $0) }
+            .reduce(0, +))
+            * modifiersTableView.rowHeight
+
+        modifiersTableView.snp.updateConstraints {
+            $0.height.equalTo(height)
+        }
+    }
+
+    func setProceedButton(isActive: Bool) {
+        proceedButton.backgroundColor = isActive ? .kexRed : .calmGray
+        proceedButton.isUserInteractionEnabled = isActive
     }
 
     @objc private func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
         delegate?.commentaryViewTapped()
+    }
+
+    @objc func proceedButtonTapped() {
+        delegate?.proceedButtonTapped()
     }
 }

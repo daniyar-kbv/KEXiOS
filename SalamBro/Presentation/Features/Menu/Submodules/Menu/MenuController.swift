@@ -200,8 +200,8 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    public func numberOfSections(in _: UITableView) -> Int {
-        viewModel.cellViewModels.count
+    func numberOfSections(in _: UITableView) -> Int {
+        return viewModel.cellViewModels.count
     }
 
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -246,11 +246,11 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension MenuController {
-    private func scroll(to category: String) {
+    private func scroll(to categoryUUID: String) {
         guard let row = viewModel.cellViewModels[itemTableView.numberOfSections - 1]
             .enumerated().first(where: {
                 guard let viewModel = $1 as? MenuCellViewModelProtocol else { return false }
-                return viewModel.position.category == category
+                return viewModel.position.categoryUUID == categoryUUID
             })?.0 else { return }
         itemTableView.scrollToRow(at: IndexPath(row: row, section: itemTableView.numberOfSections - 1), at: .top, animated: true)
     }
@@ -258,8 +258,8 @@ extension MenuController {
     private func didScrollToItem(at position: Int) {
         guard let cellViewModel = viewModel.cellViewModels[itemTableView.numberOfSections - 1][position] as? MenuCellViewModelProtocol,
               !scrollService.isHeaderScrolling,
-              scrollService.currentCategory != cellViewModel.position.category else { return }
-        scrollService.didSelectCategory.accept((source: .table, category: cellViewModel.position.category))
+              scrollService.currentCategory != cellViewModel.position.categoryUUID else { return }
+        scrollService.didSelectCategory.accept((source: .table, categoryUUID: cellViewModel.position.categoryUUID))
     }
 }
 

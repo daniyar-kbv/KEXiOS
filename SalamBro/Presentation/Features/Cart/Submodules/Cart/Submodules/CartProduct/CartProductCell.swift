@@ -6,6 +6,8 @@
 //
 
 import Reusable
+import RxCocoa
+import RxSwift
 import UIKit
 
 final class CartProductCell: UITableViewCell {
@@ -113,7 +115,9 @@ final class CartProductCell: UITableViewCell {
         return button
     }()
 
-    private var item: CartDTO.Item?
+    private var viewModel: CartProductViewModel!
+    private let disposeBag = DisposeBag()
+
     var delegate: CartAdditinalProductCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -217,40 +221,64 @@ extension CartProductCell {
 }
 
 extension CartProductCell {
-    func configure(with item: CartDTO.Item) {
-        self.item = item
+    func configure(with item: CartItem) {
+        viewModel = CartProductViewModelImpl(inputs: .init(item: item))
 
-        productTitleLabel.text = item.position.name
-        subitemLabel.text = item.position.description
-        priceLabel.text = "\((item.position.price * Double(item.count)).removeTrailingZeros()) ₸"
-        commentLabel.text = item.comment
-        countLabel.text = "\(item.count)"
+        bindViewModel()
+    }
 
-//        Tech debt: add availability
-        //     if isAvailable {
-        deleteButton.isHidden = true
-        unavailableLabel.isHidden = true
-        //   } else {
-        //       stackView.isHidden = true
-        //     deleteButton.isHidden = false
-        //   unavailableLabel.text = L10n.CartProductCell.Availability.title
-        //        productTitleLabel.alpha = 0.5
-        //     subitemLabel.alpha = 0.5
-        //     priceLabel.isHidden = true
-        //   productImageView.alpha = 0.5
-        //   }
+    private func bindViewModel() {
+        viewModel.outputs.itemTitle
+            .bind(to: productTitleLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.modifiersTitles
+            .bind(to: subitemLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.comment
+            .bind(to: commentLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.price
+            .bind(to: priceLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.count
+            .bind(to: countLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.isAvailable
+            .subscribe(onNext: { [weak self] isAvailable in
+                self?.updateAvailability(to: isAvailable)
+            }).disposed(by: disposeBag)
+    }
+
+    private func updateAvailability(to isAvailable: Bool) {
+        if isAvailable {
+            deleteButton.isHidden = true
+            unavailableLabel.isHidden = true
+        } else {
+            stackView.isHidden = true
+            deleteButton.isHidden = false
+            unavailableLabel.text = L10n.CartProductCell.Availability.title
+            productTitleLabel.alpha = 0.5
+            subitemLabel.alpha = 0.5
+            priceLabel.isHidden = true
+            productImageView.alpha = 0.5
+        }
     }
 
     @objc private func increaseItemButton() {
-        delegate?.increment(positionUUID: item?.positionUUID, isAdditional: false)
+        delegate?.increment(positionUUID: viewModel.getPositionUUID(), isAdditional: false)
     }
 
     @objc private func decreaseItemCount() {
-        delegate?.decrement(positionUUID: item?.positionUUID, isAdditional: false)
+        delegate?.decrement(positionUUID: viewModel.getPositionUUID(), isAdditional: false)
     }
 
     @objc private func deleteItem() {
-        delegate?.delete(positionUUID: item?.positionUUID, isAdditional: false)
+        delegate?.delete(positionUUID: viewModel.getPositionUUID(), isAdditional: false)
     }
 }
 

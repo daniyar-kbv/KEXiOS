@@ -40,20 +40,37 @@ public final class MenuDetailCoordinator: Coordinator {
             }).disposed(by: disposeBag)
 
         menuDetailPage.outputs.close
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: {
                 menuDetailPage.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
         menuDetailPage.outputs.toModifiers
-            .subscribe(onNext: { [weak self] in
-                self?.openModifiers(on: menuDetailPage)
-            }, onDisposed: {}).disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] modifierGroup, indexPath in
+                self?.openModifiers(on: menuDetailPage,
+                                    modifierGroup: modifierGroup) { modifier in
+                    menuDetailPage.set(modifier: modifier, at: indexPath)
+                }
+            }).disposed(by: disposeBag)
 
         router.present(menuDetailPage, animated: true, completion: nil)
     }
 
-    private func openModifiers(on presentedController: UIViewController) {
-        let modifiersPage = pagesFactory.makeModifiersPage()
+    private func openModifiers(on presentedController: UIViewController,
+                               modifierGroup: ModifierGroup,
+                               onSelect: @escaping (Modifier) -> Void)
+    {
+        let modifiersPage = pagesFactory.makeModifiersPage(modifierGroup: modifierGroup)
+
+        modifiersPage.outputs.close
+            .subscribe(onNext: {
+                modifiersPage.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+
+        modifiersPage.outputs.didSelectModifier
+            .subscribe(onNext: { modifier in
+                onSelect(modifier)
+                modifiersPage.dismiss(animated: true)
+            }).disposed(by: disposeBag)
 
         modifiersPage.outputs.close
             .subscribe(onNext: {
