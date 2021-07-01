@@ -11,7 +11,7 @@ import RxSwift
 import UIKit
 
 final class MenuDetailModifierCell: UITableViewCell {
-    private var viewModel: MenuDetailModifierCellViewModel!
+    private var viewModel: MenuDetailModifierCellViewModel
 
     private lazy var disposeBag = DisposeBag()
 
@@ -47,21 +47,18 @@ final class MenuDetailModifierCell: UITableViewCell {
         return view
     }()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    init(viewModel: MenuDetailModifierCellViewModel) {
+        self.viewModel = viewModel
+
+        super.init(style: .default, reuseIdentifier: String(describing: Self.self))
 
         layoutUI()
+        bindViewModel()
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func configure(modifierGroup: ModifierGroup) {
-        viewModel = MenuDetailModifierCellViewModelImpl(modifierGroup: modifierGroup)
-
-        bindViewModel()
     }
 
     func set(value: Modifier) {

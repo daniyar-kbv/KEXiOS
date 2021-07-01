@@ -148,10 +148,9 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
         return viewModel.modifierGroups[section].maxAmount
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MenuDetailModifierCell.self), for: indexPath) as! MenuDetailModifierCell
-        cell.configure(modifierGroup: viewModel.modifierGroups[indexPath.section])
-        return cell
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellViewModel = MenuDetailModifierCellViewModelImpl(modifierGroup: viewModel.modifierGroups[indexPath.section])
+        return MenuDetailModifierCell(viewModel: cellViewModel)
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
