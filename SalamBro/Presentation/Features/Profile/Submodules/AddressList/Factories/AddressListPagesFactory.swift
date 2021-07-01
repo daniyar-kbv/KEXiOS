@@ -20,11 +20,18 @@ final class AddressListPagesFactoryImpl: DependencyFactory, AddressListPagesFact
     }
 
     func makeAddressListPage() -> AddressListController {
-        return scoped(.init(locationRepository: repositoryComponents.makeLocationRepository()))
+        return scoped(.init(viewModel: makeAddressListViewModel()))
+    }
+
+    private func makeAddressListViewModel() -> AddressListViewModel {
+        return scoped(AddressListViewModelImpl(locationRepository: repositoryComponents.makeLocationRepository()))
     }
 
     func makeAddressDetailPage(deliveryAddress: DeliveryAddress) -> AddressDetailController {
-        return scoped(.init(deliveryAddress: deliveryAddress,
-                            locationRepository: repositoryComponents.makeLocationRepository()))
+        return scoped(.init(viewModel: makeAddressDetailViewModel(deliveryAddress: deliveryAddress)))
+    }
+
+    private func makeAddressDetailViewModel(deliveryAddress: DeliveryAddress) -> AddressDetailViewModel {
+        return scoped(AddressDetailViewModelImpl(deliveryAddress: deliveryAddress, locationRepository: repositoryComponents.makeLocationRepository()))
     }
 }

@@ -11,8 +11,9 @@ import UIKit
 
 final class AddressDetailController: UIViewController {
     let outputs = Output()
-    private let locationRepository: LocationRepository
-    private let deliveryAddress: DeliveryAddress
+
+    private let viewModel: AddressDetailViewModel
+    private let disposeBag = DisposeBag()
 
     private lazy var deleteButton: UIButton = {
         let view = UIButton()
@@ -24,11 +25,8 @@ final class AddressDetailController: UIViewController {
 
     private var contentView = AddressDetailView()
 
-    init(deliveryAddress: DeliveryAddress,
-         locationRepository: LocationRepository)
-    {
-        self.deliveryAddress = deliveryAddress
-        self.locationRepository = locationRepository
+    init(viewModel: AddressDetailViewModel) {
+        self.viewModel = viewModel
 
         super.init(nibName: .none, bundle: .none)
     }
@@ -45,7 +43,33 @@ final class AddressDetailController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureViews()
+
+        bindViewModel()
+    }
+
+    func bindViewModel() {
+        viewModel.outputs.addressName
+            .subscribe(onNext: { [weak self] addressName in
+                guard let addressName = addressName else { return }
+                self?.contentView.configureAddress(name: addressName)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.comment
+            .subscribe(onNext: { [weak self] comment in
+                guard let comment = comment else { return }
+                self?.contentView.configureCommentary(commentary: comment)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.isCurrent
+            .subscribe(onNext: { [weak self] isCurrent in
+                guard !isCurrent,
+                      let deleteButton = self?.deleteButton else { return }
+                self?.navigationItem.rightBarButtonItem = .init(customView: deleteButton)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didDelete
+            .bind(to: outputs.didDeleteAddress)
+            .disposed(by: disposeBag)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -62,19 +86,6 @@ final class AddressDetailController: UIViewController {
         ]
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
         navigationItem.title = L10n.AddressPicker.titleOne
-        navigationItem.rightBarButtonItem = .init(customView: deleteButton)
-    }
-}
-
-extension AddressDetailController {
-    private func configureViews() {
-        if let deliveryAddressName = deliveryAddress.address?.name {
-            contentView.configureAddress(name: deliveryAddressName)
-        }
-
-        if let commentary = deliveryAddress.address?.commentary {
-            contentView.configureCommentary(commentary: commentary)
-        }
     }
 }
 
@@ -88,9 +99,7 @@ extension AddressDetailController {
         let alert = UIAlertController(title: "Вы уверены?", message: "Вы уверены что хотите удалить адрес доставки?", preferredStyle: .alert)
         alert.view.tintColor = .kexRed
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] _ in
-            guard let deliveryAddress = self?.deliveryAddress else { return }
-            self?.locationRepository.deleteDeliveryAddress(deliveryAddress: deliveryAddress)
-            self?.outputs.didDeleteAddress.accept(())
+            self?.viewModel.delete()
         }))
         alert.addAction(UIAlertAction(title: "Нет", style: .default))
         present(alert, animated: true, completion: nil)
