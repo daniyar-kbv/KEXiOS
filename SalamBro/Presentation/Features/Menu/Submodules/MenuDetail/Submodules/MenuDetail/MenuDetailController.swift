@@ -48,12 +48,10 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
+
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
     }
 }
 
@@ -81,9 +79,8 @@ extension MenuDetailController {
             }).disposed(by: disposeBag)
 
         viewModel.outputs.close
-            .subscribe(onNext: { [weak self] in
-                self?.outputs.close.accept(())
-            }).disposed(by: disposeBag)
+            .bind(to: outputs.close)
+            .disposed(by: disposeBag)
 
         viewModel.outputs.itemImage
             .subscribe(onNext: { [weak self] url in

@@ -62,6 +62,8 @@ extension AddressDetailView {
     }
 
     private func layoutUI() {
+        backgroundColor = .arcticWhite
+
         [addressLabel, addressTitleLabel, commentaryLabel, commentaryTitleLabel].forEach {
             addSubview($0)
         }

@@ -5,11 +5,15 @@
 //  Created by Arystan on 5/1/21.
 //
 
+import RxCocoa
+import RxSwift
 import SnapKit
 import UIKit
 
 final class ModifiersController: UIViewController {
     private let viewModel: ModifiersViewModel
+
+    let outputs = Output()
 
     init(viewModel: ModifiersViewModel) {
         self.viewModel = viewModel
@@ -51,18 +55,10 @@ final class ModifiersController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
-        navigationItem.title = "Выберите напиток"
+
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
     }
 }
 
@@ -84,5 +80,11 @@ extension ModifiersController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ModifiersCell.self), for: indexPath) as! ModifiersCell
         return cell
+    }
+}
+
+extension ModifiersController {
+    struct Output {
+        let close = PublishRelay<Void>()
     }
 }

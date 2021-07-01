@@ -59,7 +59,11 @@ final class AddressCoordinator: Coordinator {
                                      }, presentOn: addressPickPage)
         }).disposed(by: disposeBag)
 
-        let nav = UINavigationController(rootViewController: addressPickPage)
+        addressPickPage.outputs.close.subscribe(onNext: {
+            addressPickPage.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+
+        let nav = SBNavigationController(rootViewController: addressPickPage)
         router.present(nav, animated: true, completion: nil)
     }
 
@@ -86,8 +90,11 @@ final class AddressCoordinator: Coordinator {
             selectMainInfoPage.dismiss(animated: true)
         }).disposed(by: disposeBag)
 
-        let nav = UINavigationController(rootViewController: selectMainInfoPage)
-//        Tech debt: change to routers
+        selectMainInfoPage.outputs.close.subscribe(onNext: {
+            selectMainInfoPage.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+
+        let nav = SBNavigationController(rootViewController: selectMainInfoPage)
         presentOn.present(nav, animated: true)
     }
 
@@ -103,7 +110,6 @@ final class AddressCoordinator: Coordinator {
         }
 
         mapPage.modalPresentationStyle = .fullScreen
-//        Tech debt: change to routers
         presentOn.present(mapPage, animated: true)
     }
 
@@ -117,8 +123,11 @@ final class AddressCoordinator: Coordinator {
             onSelectBrand(brand)
         }).disposed(by: disposeBag)
 
-        let nav = UINavigationController(rootViewController: brandsPage)
-//        Tech debt: change to routers
+        brandsPage.outputs.close.subscribe(onNext: {
+            brandsPage.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+
+        let nav = SBNavigationController(rootViewController: brandsPage)
         presentOn.present(nav, animated: true)
     }
 
