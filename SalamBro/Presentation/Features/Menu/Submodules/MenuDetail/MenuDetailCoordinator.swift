@@ -72,6 +72,11 @@ public final class MenuDetailCoordinator: Coordinator {
                 modifiersPage.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
+        modifiersPage.outputs.close
+            .subscribe(onNext: {
+                modifiersPage.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+
         let nav = SBNavigationController(rootViewController: modifiersPage)
         presentedController.present(nav, animated: true)
     }

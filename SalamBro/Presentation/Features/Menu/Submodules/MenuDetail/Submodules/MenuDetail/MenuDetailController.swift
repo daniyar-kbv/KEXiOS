@@ -51,6 +51,14 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
         contentView.updateTableViewHeight()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
+    }
 }
 
 extension MenuDetailController {

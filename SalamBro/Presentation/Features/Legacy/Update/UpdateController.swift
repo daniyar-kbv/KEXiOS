@@ -48,6 +48,5 @@ extension UpdateController: AdditionalViewDelegate {
 extension UpdateController {
     private func configUI() {
         navigationController?.navigationBar.tintColor = .kexRed
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

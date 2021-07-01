@@ -42,6 +42,10 @@ final class OnBoardingCoordinator: BaseCoordinator {
             self?.openBrands(cityId: cityId)
         }).disposed(by: disposeBag)
 
+        citiesPage.outputs.close.subscribe(onNext: { [weak self] in
+            self?.router.pop(animated: true)
+        }).disposed(by: disposeBag)
+
         router.push(viewController: citiesPage, animated: true)
     }
 
@@ -50,6 +54,10 @@ final class OnBoardingCoordinator: BaseCoordinator {
 
         brandsPage.outputs.didSelectBrand.subscribe(onNext: { [weak self] _ in
             self?.openMap()
+        }).disposed(by: disposeBag)
+
+        brandsPage.outputs.close.subscribe(onNext: { [weak self] in
+            self?.router.pop(animated: true)
         }).disposed(by: disposeBag)
 
         router.push(viewController: brandsPage, animated: true)
