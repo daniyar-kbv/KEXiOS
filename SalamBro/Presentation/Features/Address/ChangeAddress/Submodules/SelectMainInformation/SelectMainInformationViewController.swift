@@ -119,17 +119,11 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
+
         navigationItem.title = L10n.SelectMainInfo.title
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(back))
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
 
         viewModel.checkValues()
     }
@@ -162,11 +156,6 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
             $0.height.equalTo(42)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
         }
-    }
-
-    @objc
-    private func back() {
-        dismiss(animated: true)
     }
 
     @objc
@@ -296,5 +285,6 @@ extension SelectMainInformationViewController {
         let toMap = PublishRelay<(Address?, (_ address: Address) -> Void)>()
         let toBrands = PublishRelay<(Int, (_ brand: Brand) -> Void)>()
         let didSave = PublishRelay<Void>()
+        let close = PublishRelay<Void>()
     }
 }

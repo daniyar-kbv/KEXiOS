@@ -47,6 +47,7 @@ final class CountryCodePickerViewController: UIViewController, AlertDisplayable,
 
     override func loadView() {
         super.loadView()
+
         view = countryCodesTableView
     }
 
@@ -60,18 +61,11 @@ final class CountryCodePickerViewController: UIViewController, AlertDisplayable,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.backgroundColor = .white
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
+
         navigationItem.title = L10n.CountryCodePicker.Navigation.title
-        navigationController?.navigationBar.isTranslucent = false
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
     }
 
     private func bindViewModel() {
@@ -136,5 +130,6 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
 extension CountryCodePickerViewController {
     struct Output {
         let didSelectCountryCode = PublishRelay<Country>()
+        let close = PublishRelay<Void>()
     }
 }

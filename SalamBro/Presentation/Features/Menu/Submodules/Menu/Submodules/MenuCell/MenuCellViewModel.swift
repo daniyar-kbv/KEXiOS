@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 
 protocol MenuCellViewModelProtocol: ViewModel {
-    var position: OrderProductResponse.Data.Position { get }
+    var position: MenuPosition { get }
 
     var itemImageURL: BehaviorRelay<URL?> { get }
     var itemTitle: BehaviorRelay<String?> { get }
@@ -21,14 +21,14 @@ protocol MenuCellViewModelProtocol: ViewModel {
 }
 
 final class MenuCellViewModel: MenuCellViewModelProtocol {
-    let position: OrderProductResponse.Data.Position
+    let position: MenuPosition
 
     let itemImageURL = BehaviorRelay<URL?>(value: nil)
     let itemTitle = BehaviorRelay<String?>(value: nil)
     let itemDescription = BehaviorRelay<String?>(value: nil)
     let itemPrice = BehaviorRelay<String?>(value: nil)
 
-    init(position: OrderProductResponse.Data.Position) {
+    init(position: MenuPosition) {
         self.position = position
     }
 
@@ -36,6 +36,6 @@ final class MenuCellViewModel: MenuCellViewModelProtocol {
         itemImageURL.accept(URL(string: position.image ?? ""))
         itemTitle.accept(position.name)
         itemDescription.accept(position.description)
-        itemPrice.accept("\(position.price.removeTrailingZeros()) ₸") // здесь надо юзать локализацию
+        itemPrice.accept("\(position.price?.removeTrailingZeros() ?? "") ₸") // здесь надо юзать локализацию
     }
 }

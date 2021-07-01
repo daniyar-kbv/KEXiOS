@@ -53,16 +53,7 @@ final class CitiesListController: UIViewController, AlertDisplayable, LoaderDisp
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
+
         navigationItem.title = L10n.CitiesList.Navigation.title
     }
 }
@@ -117,10 +108,6 @@ extension CitiesListController {
         viewModel.getCities()
         refreshControl.endRefreshing()
     }
-
-    @objc private func dismissVC() {
-        navigationController?.popViewController(animated: true)
-    }
 }
 
 extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
@@ -151,5 +138,6 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
 extension CitiesListController {
     struct Output {
         let didSelectCity = PublishRelay<Int>()
+        let close = PublishRelay<Void>()
     }
 }

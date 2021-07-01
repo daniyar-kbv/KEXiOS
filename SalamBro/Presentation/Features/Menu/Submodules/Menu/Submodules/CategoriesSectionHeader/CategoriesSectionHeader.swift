@@ -87,7 +87,7 @@ public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusabl
 
 extension CategoriesSectionHeader: UICollectionViewDelegate, UICollectionViewDataSource {
     public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        scrollService?.didSelectCategory.accept((source: .header, category: viewModel.getCategory(by: indexPath.item)))
+        scrollService?.didSelectCategory.accept((source: .header, categoryUUID: viewModel.getCategory(by: indexPath.item)))
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {

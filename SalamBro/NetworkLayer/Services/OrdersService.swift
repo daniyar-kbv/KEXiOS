@@ -13,7 +13,7 @@ import RxSwift
 protocol OrdersService: AnyObject {
     func applyOrder(dto: OrderApplyDTO) -> Single<String>
     func getProducts(for leadUUID: String) -> Single<OrderProductResponse.Data>
-    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<OrderProductDetailResponse.Data>
+    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail>
     func getCart(for leadUUID: String) -> Single<CartDTO>
     func updateCart(for leadUUID: String, dto: CartDTO) -> Single<CartDTO>
 }
@@ -67,7 +67,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
             }
     }
 
-    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<OrderProductDetailResponse.Data> {
+    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail> {
         return provider.rx
             .request(.getProductDetail(leadUUID: leadUUID, productUUID: productUUID))
             .map { response in

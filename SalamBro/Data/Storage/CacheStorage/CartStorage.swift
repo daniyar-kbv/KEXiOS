@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CartStorage {
-    var cartItems: [CartDTO.Item] { get set }
+    var cartItems: [CartItem] { get set }
 }
 
 extension Storage: CartStorage {
@@ -16,7 +16,7 @@ extension Storage: CartStorage {
         case cartItems
     }
 
-    var cartItems: [CartDTO.Item] {
+    var cartItems: [CartItem] {
         get { get(key: Keys.cartItems.rawValue) ?? [] }
         set { save(key: Keys.cartItems.rawValue, object: newValue) }
     }

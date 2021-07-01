@@ -84,7 +84,11 @@ final class BrandsController: UIViewController, AlertDisplayable {
     private func setup() {
         setupViews()
         setupConstraints()
-        setupNavigationBar()
+
+        navigationItem.title = L10n.Brands.Navigation.title
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
     }
 
     private func setupViews() {
@@ -100,42 +104,9 @@ final class BrandsController: UIViewController, AlertDisplayable {
         }
     }
 
-    // MARK: Tech Debt - Need to configure separate navbar implementation
-
-    private func setupNavigationBar() {
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationController?.navigationBar.backIndicatorImage = Asset.chevronLeft.image
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = Asset.chevronLeft.image
-        navigationItem.title = nil
-        navigationItem.title = L10n.Brands.Navigation.title
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 26, weight: .regular),
-        ]
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(goBack))
-    }
-
     @objc func handleRefreshControlAction(_: UIRefreshControl) {
         viewModel.refreshBrands()
         refreshControl.endRefreshing()
-    }
-
-    // MARK: Tech Debt - When Router is configured, send event of closing to Outputs
-
-    @objc func goBack() {
-        if navigationController?.presentingViewController != nil {
-            dismiss(animated: true, completion: nil)
-            return
-        }
-
-        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -172,5 +143,6 @@ extension BrandsController {
 
     struct Output {
         let didSelectBrand = PublishRelay<Brand>()
+        let close = PublishRelay<Void>()
     }
 }

@@ -12,7 +12,7 @@ import RxSwift
 class MenuScrollService {
     private var disposeBag = DisposeBag()
 
-    lazy var didSelectCategory = PublishRelay<(source: Source, category: String)>()
+    lazy var didSelectCategory = PublishRelay<(source: Source, categoryUUID: String)>()
 
     var currentCategory: String?
     var isHeaderScrolling: Bool = false
