@@ -9,13 +9,13 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-protocol ModifiersViewModel {
+protocol ModifiersViewModel: AnyObject {
     var outputs: ModifiersViewModelImpl.Output { get }
 
     var modifiers: [Modifier] { get }
 }
 
-class ModifiersViewModelImpl: ModifiersViewModel {
+final class ModifiersViewModelImpl: ModifiersViewModel {
     let outputs: Output
     let modifiers: [Modifier]
 

@@ -222,7 +222,7 @@ extension CartProductCell {
 
 extension CartProductCell {
     func configure(with item: CartItem) {
-        viewModel = CartProductViewModelImpl(item: item)
+        viewModel = CartProductViewModelImpl(inputs: .init(item: item))
 
         bindViewModel()
     }
