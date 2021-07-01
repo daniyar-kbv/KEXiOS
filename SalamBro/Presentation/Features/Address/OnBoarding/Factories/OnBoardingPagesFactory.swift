@@ -40,8 +40,11 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
 
     private func makeCitiesViewModel(countryId: Int) -> CitiesListViewModel {
         return scoped(.init(countryId: countryId,
-                            service: serviceComponents.locationService(),
-                            repository: repositoryComponents.makeLocationRepository()))
+                            repository: makeCitiesRepository()))
+    }
+
+    private func makeCitiesRepository() -> CitiesRepository {
+        return scoped(CitiesRepositoryImpl(citiesService: serviceComponents.citiesService(), storage: makeLocalStorage()))
     }
 
     func makeBrandsPage(cityId: Int) -> BrandsController {
@@ -66,5 +69,9 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
                             locationRepository: repositoryComponents.makeLocationRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
                             flow: .creation))
+    }
+
+    private func makeLocalStorage() -> Storage {
+        return shared(.init())
     }
 }
