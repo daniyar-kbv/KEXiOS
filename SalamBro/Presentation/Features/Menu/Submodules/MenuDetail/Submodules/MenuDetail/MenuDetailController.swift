@@ -17,7 +17,7 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
     private let disposeBag = DisposeBag()
     let outputs = Output()
 
-    private var contentView: MenuDetailView?
+    private lazy var contentView = MenuDetailView(delegate: self)
 
     private var commentaryPage: MapCommentaryPage?
 
@@ -35,7 +35,7 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     override func loadView() {
         super.loadView()
-        contentView = MenuDetailView(delegate: self)
+
         view = contentView
     }
 
@@ -46,14 +46,18 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
         viewModel.update()
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        contentView.updateTableViewHeight()
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.tintColor = .kexRed
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.left"), style: .plain, target: self, action: #selector(dismissVC))
+
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
     }
 }
 
@@ -61,6 +65,9 @@ extension MenuDetailController {
     private func configureViews() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
+
+        contentView.modifiersTableView.delegate = self
+        contentView.modifiersTableView.dataSource = self
     }
 
     private func bindViewModel() {
@@ -80,53 +87,74 @@ extension MenuDetailController {
                 self?.showError(error)
             }).disposed(by: disposeBag)
 
-        viewModel.outputs.close
-            .subscribe(onNext: { [weak self] in
-                self?.outputs.close.accept(())
-            }).disposed(by: disposeBag)
-
         viewModel.outputs.itemImage
             .subscribe(onNext: { [weak self] url in
                 guard let url = url else { return }
-                self?.contentView?.setImage(url: url)
+                self?.contentView.setImage(url: url)
             }).disposed(by: disposeBag)
 
-        if let itemTitleLabel = contentView?.itemTitleLabel {
-            viewModel.outputs.itemTitle
-                .bind(to: itemTitleLabel.rx.text)
-                .disposed(by: disposeBag)
-        }
+        viewModel.outputs.updateModifiers
+            .bind(to: contentView.modifiersTableView.rx.reload)
+            .disposed(by: disposeBag)
 
-        if let itemDescriptionLabel = contentView?.descriptionLabel {
-            viewModel.outputs.itemDescription
-                .bind(to: itemDescriptionLabel.rx.text)
-                .disposed(by: disposeBag)
-        }
+        viewModel.outputs.itemTitle
+            .bind(to: contentView.itemTitleLabel.rx.text)
+            .disposed(by: disposeBag)
 
-        if let itemPriceButton = contentView?.proceedButton {
-            viewModel.outputs.itemPrice
-                .bind(to: itemPriceButton.rx.title())
-                .disposed(by: disposeBag)
-        }
+        viewModel.outputs.itemDescription
+            .bind(to: contentView.descriptionLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.itemPrice
+            .bind(to: contentView.proceedButton.rx.title())
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didProceed
+            .bind(to: outputs.close)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.isComplete
+            .subscribe(onNext: { [weak self] isComplete in
+                self?.contentView.setProceedButton(isActive: isComplete)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didSelectModifier
+            .subscribe(onNext: { [weak self] modifier, indexPath in
+                self?.updateCell(with: modifier, at: indexPath)
+            }).disposed(by: disposeBag)
     }
 
     private func layoutUI() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
     }
+
+    private func updateCell(with modifier: Modifier, at indexPath: IndexPath) {
+        let cell = contentView.modifiersTableView.cellForRow(at: indexPath) as! MenuDetailModifierCell
+        cell.set(value: modifier)
+    }
+
+    func set(modifier: Modifier, at indexPath: IndexPath) {
+        viewModel.set(modifier: modifier, at: indexPath)
+    }
 }
 
-extension MenuDetailController {
-    @objc private func dismissVC() {
-        dismiss(animated: true, completion: nil)
+extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in _: UITableView) -> Int {
+        return viewModel.modifierGroups.count
     }
 
-    @objc private func backButtonTapped() {
-        outputs.close.accept(())
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.modifierGroups[section].maxAmount
     }
 
-    @objc private func proceedButtonTapped() {
-        viewModel.proceed()
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellViewModel = MenuDetailModifierCellViewModelImpl(modifierGroup: viewModel.modifierGroups[indexPath.section])
+        return MenuDetailModifierCell(viewModel: cellViewModel)
+    }
+
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        outputs.toModifiers.accept((viewModel.modifierGroups[indexPath.section], indexPath))
     }
 }
 
@@ -135,10 +163,10 @@ extension MenuDetailController: MenuDetailViewDelegate {
         commentaryPage = MapCommentaryPage()
         commentaryPage?.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
 
-        commentaryPage?.output.didProceed.subscribe(onNext: { comment in
-            if let comment = comment {
-                self.contentView?.configureTextField(text: comment)
-            }
+        commentaryPage?.output.didProceed.subscribe(onNext: { [weak self] comment in
+            guard let comment = comment else { return }
+            self?.contentView.configureTextField(text: comment)
+            self?.viewModel.set(comment: comment)
         }).disposed(by: disposeBag)
 
         commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
@@ -148,8 +176,8 @@ extension MenuDetailController: MenuDetailViewDelegate {
         commentaryPage?.openTransitionSheet(on: self)
     }
 
-    func changeButtonTapped() {
-        outputs.toModifiers.accept(())
+    func proceedButtonTapped() {
+        viewModel.proceed()
     }
 }
 
@@ -157,8 +185,6 @@ extension MenuDetailController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()
-
-//        Tech debt: finish when modifiers api resolved
-        let toModifiers = PublishRelay<Void>()
+        let toModifiers = PublishRelay<(ModifierGroup, IndexPath)>()
     }
 }

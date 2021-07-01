@@ -13,8 +13,8 @@ import UIKit
 final class AddressListController: UIViewController {
     let outputs = Output()
 
-    private var locationRepository: LocationRepository
-    private lazy var deliveryAddresses = locationRepository.getDeliveryAddresses()
+    private let viewModel: AddressListViewModel
+    private let disposeBag = DisposeBag()
 
     private lazy var citiesTableView: UITableView = {
         let tv = UITableView()
@@ -33,8 +33,8 @@ final class AddressListController: UIViewController {
         return tv
     }()
 
-    init(locationRepository: LocationRepository) {
-        self.locationRepository = locationRepository
+    init(viewModel: AddressListViewModel) {
+        self.viewModel = viewModel
 
         super.init(nibName: .none, bundle: .none)
     }
@@ -46,11 +46,20 @@ final class AddressListController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         layoutUI()
+        bindViewModel()
+        viewModel.getAddresses()
     }
 
-    func reload() {
-        deliveryAddresses = locationRepository.getDeliveryAddresses()
+    private func bindViewModel() {
+        viewModel.outputs.reload
+            .subscribe(onNext: { [weak self] in
+                self?.reload()
+            }).disposed(by: disposeBag)
+    }
+
+    private func reload() {
         citiesTableView.reloadData()
     }
 
@@ -75,18 +84,17 @@ extension AddressListController {
 
 extension AddressListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return deliveryAddresses?.count ?? 0
+        return viewModel.deliveryAddresses.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let addressCell = tableView.dequeueReusableCell(withIdentifier: AddressListCell.reuseIdentifier, for: indexPath) as? AddressListCell else { fatalError() }
-        addressCell.configure(address: deliveryAddresses?[indexPath.row].address?.name ?? "")
+        addressCell.configure(address: viewModel.deliveryAddresses[indexPath.row].address?.name ?? "")
         return addressCell
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let address = deliveryAddresses?[indexPath.row] else { return }
-        outputs.didSelectAddress.accept((address, reload))
+        outputs.didSelectAddress.accept((viewModel.deliveryAddresses[indexPath.row], reload))
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {

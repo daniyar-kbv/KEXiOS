@@ -19,7 +19,7 @@ protocol CategoriesSectionHeaderViewModelProtocol: ViewModel {
 final class CategoriesSectionHeaderViewModel: CategoriesSectionHeaderViewModelProtocol {
     var cellViewModels: [CategoryCellViewModelProtocol]
 
-    init(categories: [OrderProductResponse.Data.Category]) {
+    init(categories: [MenuCategory]) {
         cellViewModels = categories.map { CategoryCellViewModel(category: $0) }
     }
 

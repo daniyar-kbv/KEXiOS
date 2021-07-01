@@ -20,7 +20,6 @@ class ModifiersCell: UICollectionViewCell {
 
     private lazy var itemTitleLabel: UILabel = {
         let view = UILabel()
-        view.text = "Вода “Coca-Cola” 0,5 л"
         view.font = .systemFont(ofSize: 12)
         view.textColor = .darkGray
         return view
@@ -42,6 +41,10 @@ class ModifiersCell: UICollectionViewCell {
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(modifier: Modifier) {
+        itemTitleLabel.text = modifier.name
     }
 }
 
