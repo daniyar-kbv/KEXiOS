@@ -63,6 +63,7 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
         repository.outputs.didGetCities.bind {
             [weak self] cities in
             self?.cities = cities
+            self?.repository.setCities(cities: cities)
             self?.outputs.didGetCities.accept(())
         }
         .disposed(by: disposeBag)
