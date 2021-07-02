@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
 protocol BrandRepository: AnyObject {
     func getCurrentBrand() -> Brand?
@@ -17,12 +19,15 @@ protocol BrandRepository: AnyObject {
 final class BrandRepositoryImpl: BrandRepository {
     private let storage: BrandStorage
 
-    init(storage: BrandStorage) {
+    private let disposeBag = DisposeBag()
+    private(set) var outputs: Output = .init()
+    private let locationService: LocationService
+
+    init(locationService: LocationService, storage: BrandStorage) {
+        self.locationService = locationService
         self.storage = storage
     }
-}
 
-extension BrandRepositoryImpl {
     func getCurrentBrand() -> Brand? {
         return storage.brand
     }

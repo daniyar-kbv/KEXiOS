@@ -27,8 +27,7 @@ final class BrandViewModel: BrandViewModelProtocol {
     private let disposeBag = DisposeBag()
 
     private let repository: BrandRepository
-    private let service: LocationService
-    private let locationRepository: LocationRepository
+    private let brandRepository: LocationRepository
     private(set) var brands: [Brand] = [] {
         didSet {
             updateRatio()
