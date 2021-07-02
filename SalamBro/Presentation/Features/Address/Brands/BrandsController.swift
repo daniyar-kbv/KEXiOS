@@ -105,7 +105,7 @@ final class BrandsController: UIViewController, AlertDisplayable {
     }
 
     @objc func handleRefreshControlAction(_: UIRefreshControl) {
-        viewModel.refreshBrands()
+        viewModel.getBrands()
         refreshControl.endRefreshing()
     }
 }

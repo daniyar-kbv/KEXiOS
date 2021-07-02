@@ -41,7 +41,7 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
         return scoped(.init(locationService: serviceComponents.locationService(),
                             ordersService: serviceComponents.ordersService(),
                             locationRepository: repositoryComponents.makeLocationRepository(),
-                            brandRepository: repositoryComponents.makeBrandRepository(),
+                            brandRepository: makeBrandRepository(),
                             defaultStorage: DefaultStorageImpl.sharedStorage,
                             flowType: flowType))
     }
@@ -54,7 +54,7 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
         return scoped(.init(ordersService: serviceComponents.ordersService(),
                             defaultStorage: DefaultStorageImpl.sharedStorage,
                             locationRepository: repositoryComponents.makeLocationRepository(),
-                            brandRepository: repositoryComponents.makeBrandRepository(),
+                            brandRepository: makeBrandRepository(),
                             flow: .change,
                             address: address))
     }
@@ -65,9 +65,14 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
     }
 
     private func makeBrandsViewModel(cityId: Int) -> BrandViewModel {
-        return scoped(.init(repository: repositoryComponents.makeBrandRepository(),
-                            locationRepository: repositoryComponents.makeLocationRepository(),
-                            service: serviceComponents.locationService(),
-                            cityId: cityId))
+        return scoped(.init(brandRepository: makeBrandRepository(), locationRepository: repositoryComponents.makeLocationRepository(), cityId: cityId))
+    }
+
+    private func makeBrandRepository() -> BrandRepository {
+        return scoped(BrandRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
+    }
+
+    private func makeLocalStorage() -> Storage {
+        return shared(.init())
     }
 }

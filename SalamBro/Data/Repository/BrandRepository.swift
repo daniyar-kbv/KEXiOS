@@ -10,10 +10,13 @@ import RxCocoa
 import RxSwift
 
 protocol BrandRepository: AnyObject {
-    func getCurrentBrand() -> Brand?
+    var outputs: BrandRepositoryImpl.Output { get }
+
     func getBrands() -> [Brand]?
-    func changeCurrent(brand: Brand)
-    func set(brands: [Brand])
+    func getCurrentBrand() -> Brand?
+    func fetchBrands(with cityId: Int)
+    func changeCurrentBrand(to brand: Brand)
+    func setBrands(brands: [Brand])
 }
 
 final class BrandRepositoryImpl: BrandRepository {
@@ -28,10 +31,6 @@ final class BrandRepositoryImpl: BrandRepository {
         self.storage = storage
     }
 
-    func getCurrentBrand() -> Brand? {
-        return storage.brand
-    }
-
     func getBrands() -> [Brand]? {
         guard
             let brands = storage.brands,
@@ -39,15 +38,44 @@ final class BrandRepositoryImpl: BrandRepository {
         else {
             return nil
         }
-
         return brands
     }
 
-    func changeCurrent(brand: Brand) {
+    func getCurrentBrand() -> Brand? {
+        return storage.brand
+    }
+
+    func fetchBrands(with cityId: Int) {
+        outputs.didStartRequest.accept(())
+        locationService.getBrands(for: cityId)
+            .subscribe(onSuccess: { [weak self] brandsResponse in
+                self?.outputs.didEndRequest.accept(())
+                self?.outputs.didGetBrands.accept(brandsResponse)
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                if let error = error as? ErrorPresentable {
+                    self?.outputs.didFail.accept(error)
+                    return
+                }
+                self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
+            })
+            .disposed(by: disposeBag)
+    }
+
+    func changeCurrentBrand(to brand: Brand) {
         storage.brand = brand
     }
 
-    func set(brands: [Brand]) {
+    func setBrands(brands: [Brand]) {
         storage.brands = brands
+    }
+}
+
+extension BrandRepositoryImpl {
+    struct Output {
+        let didStartRequest = PublishRelay<Void>()
+        let didGetBrands = PublishRelay<[Brand]>()
+        let didEndRequest = PublishRelay<Void>()
+        let didFail = PublishRelay<ErrorPresentable>()
     }
 }
