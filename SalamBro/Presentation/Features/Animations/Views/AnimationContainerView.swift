@@ -10,12 +10,10 @@ import SnapKit
 import UIKit
 
 protocol AnimationContainerViewDelegate: AnyObject {
-    func performAction(_ view: AnimationContainerView)
+    func performAction()
 }
 
 final class AnimationContainerView: UIView {
-    weak var delegate: AnimationContainerViewDelegate?
-
     private lazy var lottieAnimationView: AnimationView = {
         let view = AnimationView()
         view.frame = CGRect(x: 0, y: 0, width: 272, height: 200)
@@ -32,7 +30,7 @@ final class AnimationContainerView: UIView {
         return view
     }()
 
-    private lazy var actionButton: UIButton = {
+    lazy var actionButton: UIButton = {
         let view = UIButton()
         view.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         view.cornerRadius = 10
@@ -41,9 +39,9 @@ final class AnimationContainerView: UIView {
         return view
     }()
 
-    init(delegate: AnimationContainerViewDelegate?, animationType: LottieAnimationModel) {
+    init(animationType: LottieAnimationModel) {
         super.init(frame: .zero)
-        self.delegate = delegate
+
         configureViews(with: animationType)
         layoutUI()
     }
@@ -59,7 +57,6 @@ final class AnimationContainerView: UIView {
         infoLabel.text = type.infoText
 
         actionButton.setTitle(type.getButtonTitle(), for: .normal)
-        actionButton.addTarget(self, action: #selector(performAction), for: .touchUpInside)
 
         lottieAnimationView.animation = type.getAnimation()
     }
@@ -97,11 +94,9 @@ final class AnimationContainerView: UIView {
             $0.centerX.equalToSuperview()
             $0.centerY.equalTo(UIScreen.main.bounds.height / 2.3)
         }
-
-        lottieAnimationView.play()
     }
 
-    @objc private func performAction() {
-        delegate?.performAction(self)
+    func animationPlay() {
+        lottieAnimationView.play()
     }
 }

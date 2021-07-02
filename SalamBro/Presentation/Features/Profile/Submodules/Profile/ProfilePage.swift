@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, AnimationViewPresentable {
     let outputs = Output()
 
     private let disposeBag = DisposeBag()
@@ -69,8 +69,6 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         button.layer.masksToBounds = true
         return button
     }()
-
-    private lazy var animationView = AnimationContainerView(delegate: self, animationType: .profile)
 
     private let viewModel: ProfileViewModel
 
@@ -159,7 +157,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
         viewModel.outputs.didGetUserInfo
             .subscribe(onNext: { [weak self] userInfo in
-                self?.hideEmptyState()
+                self?.hideAnimationView()
                 self?.updateViews(with: userInfo)
             })
             .disposed(by: disposeBag)
@@ -174,17 +172,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
     }
 
     private func showEmptyState() {
-        view.addSubview(animationView)
-        animationView.isHidden = false
-        animationView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-    }
-
-    private func hideEmptyState() {
-        animationView.isHidden = true
-        animationView.snp.removeConstraints()
-        animationView.removeFromSuperview()
+        showAnimationView(delegate: self, animationType: .profile)
     }
 
     private func layoutUI() {
@@ -237,7 +225,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 }
 
 extension ProfilePage: AnimationContainerViewDelegate {
-    func performAction(_: AnimationContainerView) {
+    func performAction() {
         outputs.onLoginTapped.accept(())
     }
 }
