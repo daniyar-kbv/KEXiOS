@@ -12,7 +12,7 @@ import RxSwift
 
 protocol CitiesListViewModelProtocol: AnyObject {
     var outputs: CitiesListViewModel.Output { get }
-    var cities: CityResponse? { get }
+    var cities: [City] { get }
 
     func getCities()
     func getCitiesCount() -> Int
@@ -25,7 +25,7 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
     private let disposeBag = DisposeBag()
     private let countryId: Int
 
-    private(set) var cities: CityResponse?
+    private(set) var cities: [City] = []
 
     private let repository: CitiesRepository
 
@@ -42,16 +42,16 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
     }
 
     func getCitiesCount() -> Int {
-        return cities?.cities.count ?? 0
+        return cities.count
     }
 
     func getCityName(at index: Int) -> String {
-        return cities?.cities[index].name ?? ""
+        return cities[index].name
     }
 
     func didSelect(index: Int) {
-        guard let city = cities?.cities[index] else { return }
-        // repository.changeCurrentCity(to: city)
+        let city = cities[index]
+        repository.changeCurrentCity(to: city)
         outputs.didSelectCity.accept(city.id)
     }
 

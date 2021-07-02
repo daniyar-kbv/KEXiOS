@@ -44,7 +44,7 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
     }
 
     private func makeCitiesRepository() -> CitiesRepository {
-        return scoped(CitiesRepositoryImpl(citiesService: serviceComponents.citiesService(), storage: makeLocalStorage()))
+        return scoped(CitiesRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
     }
 
     func makeBrandsPage(cityId: Int) -> BrandsController {

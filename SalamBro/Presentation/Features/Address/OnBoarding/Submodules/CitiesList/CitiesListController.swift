@@ -46,14 +46,13 @@ final class CitiesListController: UIViewController, AlertDisplayable, LoaderDisp
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.getCities()
         setup()
         bindViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        viewModel.getCities()
         navigationItem.title = L10n.CitiesList.Navigation.title
     }
 }

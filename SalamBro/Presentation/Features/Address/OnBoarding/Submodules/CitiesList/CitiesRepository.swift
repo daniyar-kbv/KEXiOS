@@ -21,16 +21,16 @@ final class CitiesRepositoryImpl: CitiesRepository {
 
     private let disposeBag = DisposeBag()
     private(set) var outputs: Output = .init()
-    private let citiesService: CitiesService
+    private let locationService: LocationService
 
-    init(citiesService: CitiesService, storage: GeoStorage) {
-        self.citiesService = citiesService
+    init(locationService: LocationService, storage: GeoStorage) {
+        self.locationService = locationService
         self.storage = storage
     }
 
     func fetchCities(with countryId: Int) {
         outputs.didStartRequest.accept(())
-        citiesService.getCities(countryId: countryId)
+        locationService.getCities(for: countryId)
             .subscribe(onSuccess: { [weak self] citiesResponse in
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didGetCities.accept(citiesResponse)
@@ -57,7 +57,7 @@ final class CitiesRepositoryImpl: CitiesRepository {
 
 extension CitiesRepositoryImpl {
     struct Output {
-        let didGetCities = PublishRelay<CityResponse>()
+        let didGetCities = PublishRelay<[City]>()
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
