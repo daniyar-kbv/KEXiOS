@@ -10,7 +10,7 @@ import Foundation
 protocol SupportPagesFactory: AnyObject {
     /// Rout View Controller for Coordinator
     func makeSupportPage() -> SupportController
-    func makeAgreementPage(url: URL) -> AgreementController
+    func makeAgreementPage(url: URL, name: String) -> AgreementController
 }
 
 final class SupportPagesFactoryImpl: DependencyFactory, SupportPagesFactory {
@@ -28,11 +28,11 @@ final class SupportPagesFactoryImpl: DependencyFactory, SupportPagesFactory {
         return shared(SupportViewModelImpl(documentsService: serviceComponents.documentsService()))
     }
 
-    func makeAgreementPage(url: URL) -> AgreementController {
-        return scoped(.init(viewModel: makeAgreementViewModel(url: url)))
+    func makeAgreementPage(url: URL, name: String) -> AgreementController {
+        return scoped(.init(viewModel: makeAgreementViewModel(url: url, name: name)))
     }
 
-    private func makeAgreementViewModel(url: URL) -> AgreementViewModel {
-        return scoped(AgreementViewModelImpl(url: url))
+    private func makeAgreementViewModel(url: URL, name: String) -> AgreementViewModel {
+        return scoped(AgreementViewModelImpl(input: .init(url: url, name: name)))
     }
 }

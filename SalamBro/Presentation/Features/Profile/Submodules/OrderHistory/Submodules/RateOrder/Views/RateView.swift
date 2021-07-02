@@ -10,7 +10,6 @@ import SnapKit
 import UIKit
 
 protocol RateViewDelegate: AnyObject {
-    func commentaryViewTapped()
     func sendButtonTapped()
     func updateViewModelData(at rating: Int)
 }
@@ -76,27 +75,10 @@ final class RateView: UIView {
         return collectionView
     }()
 
-    private lazy var commentView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.cornerRadius = 10
+    private lazy var commentTextField: MapTextField = {
+        let view = MapTextField()
+        view.placeholder = L10n.RateOrder.CommentaryField.placeholder
         return view
-    }()
-
-    private lazy var commentTextField: UITextField = {
-        let textfield = UITextField()
-        textfield.attributedPlaceholder = NSAttributedString(
-            string: L10n.RateOrder.CommentaryField.placeholder,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
-        textfield.borderStyle = .none
-        textfield.clearButtonMode = .never
-        textfield.minimumFontSize = 17
-        textfield.adjustsFontSizeToFitWidth = true
-        textfield.contentHorizontalAlignment = .left
-        textfield.contentVerticalAlignment = .center
-        textfield.isUserInteractionEnabled = false
-        return textfield
     }()
 
     private lazy var sendButton: UIButton = {
@@ -131,9 +113,6 @@ final class RateView: UIView {
 
 extension RateView {
     private func configureActions() {
-        let tapCommentary = UITapGestureRecognizer(target: self, action: #selector(commentaryViewTapped))
-        commentView.addGestureRecognizer(tapCommentary)
-
         sendButton.addTarget(self, action: #selector(dismissVC), for: .allTouchEvents)
     }
 
@@ -161,7 +140,7 @@ extension RateView {
     }
 
     func configureTextField(with text: String) {
-        commentTextField.text = text
+        commentTextField.set(text: text)
     }
 
     private func layoutUI() {
@@ -178,7 +157,7 @@ extension RateView {
             $0.edges.width.equalTo(scrollView)
         }
 
-        [cosmosContainerView, questionLabel, suggestionLabel, collectionView, commentView].forEach {
+        [cosmosContainerView, questionLabel, suggestionLabel, collectionView, commentTextField].forEach {
             contentView.addSubview($0)
         }
 
@@ -209,18 +188,11 @@ extension RateView {
             collectionViewHeightConstraint = $0.height.equalTo(0).constraint
         }
 
-        commentView.addSubview(commentTextField)
-
-        commentView.snp.makeConstraints {
+        commentTextField.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(16)
             $0.top.equalTo(collectionView.snp.bottom).offset(20)
             $0.bottom.equalToSuperview().offset(-20)
-            $0.height.equalTo(50)
-        }
-
-        commentTextField.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(16)
-            $0.centerX.centerY.equalToSuperview()
+            $0.height.greaterThanOrEqualTo(50)
         }
 
         sendButton.snp.makeConstraints {
@@ -266,7 +238,7 @@ extension RateView {
         delegate?.sendButtonTapped()
     }
 
-    @objc private func commentaryViewTapped() {
-        delegate?.commentaryViewTapped()
+    func setCommentary(action: @escaping () -> Void) {
+        commentTextField.onShouldBeginEditing = action
     }
 }

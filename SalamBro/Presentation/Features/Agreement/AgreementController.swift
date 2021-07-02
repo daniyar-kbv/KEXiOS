@@ -14,15 +14,14 @@ final class AgreementController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: AgreementViewModel
 
-    private lazy var webView: WKWebView = {
-        let webView = WKWebView()
-        return webView
-    }()
+    private lazy var webView = WKWebView()
 
     init(viewModel: AgreementViewModel) {
         self.viewModel = viewModel
 
         super.init(nibName: .none, bundle: .none)
+
+        bindViewModel()
     }
 
     @available(*, unavailable)
@@ -30,24 +29,21 @@ final class AgreementController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func loadView() {
+        super.loadView()
+
+        view = webView
+    }
+
     private func bindViewModel() {
-        viewModel.url
+        viewModel.ouputs.url
             .bind(onNext: { [weak self] url in
                 self?.webView.load(URLRequest(url: url))
             })
             .disposed(by: disposeBag)
-    }
 
-    override func loadView() {
-        super.loadView()
-
-        view.addSubview(webView)
-        webView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        viewModel.ouputs.name
+            .bind(to: navigationItem.rx.title)
+            .disposed(by: disposeBag)
     }
 }

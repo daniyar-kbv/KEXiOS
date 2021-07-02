@@ -62,6 +62,7 @@ final class SBNavigationController: UINavigationController {
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .semibold),
         ]
         navigationBar.titleTextAttributes = textAttributes
+        navigationBar.isTranslucent = false
     }
 }
 

@@ -19,8 +19,6 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     private lazy var contentView = MenuDetailView(delegate: self)
 
-    private var commentaryPage: MapCommentaryPage?
-
     public init(viewModel: MenuDetailViewModel) {
         self.viewModel = viewModel
 
@@ -43,7 +41,6 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
         super.viewDidLoad()
         configureViews()
         bindViewModel()
-        viewModel.update()
     }
 
     override func viewWillLayoutSubviews() {
@@ -54,6 +51,8 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        viewModel.update()
 
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
@@ -68,6 +67,14 @@ extension MenuDetailController {
 
         contentView.modifiersTableView.delegate = self
         contentView.modifiersTableView.dataSource = self
+
+        contentView.setCommentary { [weak self] in
+            self?.commentaryViewTapped()
+        }
+
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
     }
 
     private func bindViewModel() {
@@ -160,20 +167,17 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
 
 extension MenuDetailController: MenuDetailViewDelegate {
     func commentaryViewTapped() {
-        commentaryPage = MapCommentaryPage()
-        commentaryPage?.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
+        let commentaryPage = MapCommentaryPage()
 
-        commentaryPage?.output.didProceed.subscribe(onNext: { [weak self] comment in
+        commentaryPage.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
+
+        commentaryPage.output.didProceed.subscribe(onNext: { [weak self] comment in
             guard let comment = comment else { return }
             self?.contentView.configureTextField(text: comment)
             self?.viewModel.set(comment: comment)
         }).disposed(by: disposeBag)
 
-        commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
-            self?.commentaryPage = nil
-        }).disposed(by: disposeBag)
-
-        commentaryPage?.openTransitionSheet(on: self)
+        commentaryPage.openTransitionSheet(on: self, with: viewModel.getComment())
     }
 
     func proceedButtonTapped() {
