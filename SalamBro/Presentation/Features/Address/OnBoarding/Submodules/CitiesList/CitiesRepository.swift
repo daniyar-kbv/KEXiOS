@@ -14,6 +14,7 @@ protocol CitiesRepository: AnyObject {
 
     func fetchCities(with countryId: Int)
     func changeCurrentCity(to city: City)
+    func setCities(cities: [City])
 }
 
 final class CitiesRepositoryImpl: CitiesRepository {
@@ -52,6 +53,10 @@ final class CitiesRepositoryImpl: CitiesRepository {
             storage.deliveryAddresses.append(DeliveryAddress(city: city))
             storage.currentDeliveryAddressIndex = storage.deliveryAddresses.firstIndex(where: { $0 == DeliveryAddress(city: city) })
         }
+    }
+
+    func setCities(cities: [City]) {
+        storage.cities = cities
     }
 }
 
