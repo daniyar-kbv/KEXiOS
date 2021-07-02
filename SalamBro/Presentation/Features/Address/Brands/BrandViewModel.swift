@@ -16,9 +16,8 @@ protocol BrandViewModelProtocol: ViewModel {
     var brands: [Brand] { get }
     var ratios: [(CGFloat, CGFloat)] { get }
 
-    // func refreshBrands()
-    func didSelect(index: Int)
     func getBrands()
+    func didSelect(index: Int)
 }
 
 final class BrandViewModel: BrandViewModelProtocol {
@@ -49,9 +48,9 @@ final class BrandViewModel: BrandViewModelProtocol {
     }
 
     private func bindOutputs() {
-//        brandRepository.outputs.didStartRequest
-//            .bind(to: outputs.didStartRequest)
-//            .disposed(by: disposeBag)
+        brandRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
 
         brandRepository.outputs.didGetBrands.bind {
             [weak self] brands in
@@ -61,13 +60,13 @@ final class BrandViewModel: BrandViewModelProtocol {
         }
         .disposed(by: disposeBag)
 
-//        repository.outputs.didEndRequest
-//            .bind(to: outputs.didEndRequest)
-//            .disposed(by: disposeBag)
-//
-//        repository.outputs.didFail
-//            .bind(to: outputs.didFail)
-//            .disposed(by: disposeBag)
+        brandRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        brandRepository.outputs.didFail
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
     }
 
     func getBrands() {
@@ -82,35 +81,6 @@ final class BrandViewModel: BrandViewModelProtocol {
         outputs.didGetBrands.accept(())
     }
 
-//    private func makeBrandsRequest() {
-//        startAnimation()
-//        service.getBrands(for: cityId)
-//            .subscribe(onSuccess: { [weak self] brandsResponse in
-//                self?.stopAnimation()
-//                self?.process(receivedBrands: brandsResponse)
-//            }, onError: { [weak self] error in
-//                self?.stopAnimation()
-//                self?.outputs.didGetError.accept(error as? ErrorPresentable)
-//            })
-//            .disposed(by: disposeBag)
-//    }
-
-//    private func process(receivedBrands: [Brand]) {
-//        guard let cachedBrands = repository.getBrands() else {
-//            repository.set(brands: receivedBrands)
-//            brands = receivedBrands
-//            return
-//        }
-//
-//        if cachedBrands == receivedBrands { return }
-//        repository.set(brands: receivedBrands)
-//        brands = receivedBrands
-//    }
-//
-//    func refreshBrands() {
-//        makeBrandsRequest()
-//    }
-
     func didSelect(index: Int) {
         let brand = brands[index]
         brandRepository.changeCurrentBrand(to: brand)
@@ -120,9 +90,11 @@ final class BrandViewModel: BrandViewModelProtocol {
 
 extension BrandViewModel {
     struct Outputs {
+        let didStartRequest = PublishRelay<Void>()
         let didGetBrands = BehaviorRelay<Void>(value: ())
-        let didGetError = PublishRelay<ErrorPresentable?>()
         let didSelectBrand = PublishRelay<Brand>()
+        let didFail = PublishRelay<ErrorPresentable>()
+        let didEndRequest = PublishRelay<Void>()
     }
 }
 
