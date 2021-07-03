@@ -8,7 +8,7 @@
 import Foundation
 
 protocol RepositoryComponents: AnyObject {
-    func makeLocationRepository() -> LocationRepository
+    func makeLocationRepository() -> AddressRepository
     func makeBrandRepository() -> BrandRepository
     func makeCartRepository() -> CartRepository
     func makeCitiesRepository() -> CitiesRepository
@@ -21,7 +21,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
         self.serviceComponents = serviceComponents
     }
 
-    func makeLocationRepository() -> LocationRepository {
+    func makeLocationRepository() -> AddressRepository {
         return shared(LocationRepositoryImpl(storage: makeLocalStorage()))
     }
 

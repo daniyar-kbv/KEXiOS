@@ -25,10 +25,10 @@ final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
 
     private(set) var countries: [CountryCodeModel] = []
 
-    private let repository: LocationRepository
+    private let repository: AddressRepository
     private let service: LocationService
 
-    init(repository: LocationRepository, service: LocationService) {
+    init(repository: AddressRepository, service: LocationService) {
         self.repository = repository
         self.service = service
     }

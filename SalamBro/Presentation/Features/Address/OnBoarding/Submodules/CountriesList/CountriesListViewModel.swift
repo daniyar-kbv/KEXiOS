@@ -26,10 +26,10 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
     private(set) var countries: [Country] = []
 
     private let service: LocationService
-    private let repository: LocationRepository
+    private let repository: AddressRepository
 
     init(service: LocationService,
-         repository: LocationRepository)
+         repository: AddressRepository)
     {
         self.service = service
         self.repository = repository

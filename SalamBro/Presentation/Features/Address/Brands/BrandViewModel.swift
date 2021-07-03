@@ -28,7 +28,7 @@ final class BrandViewModel: BrandViewModelProtocol {
 
     private let repository: BrandRepository
     private let service: LocationService
-    private let locationRepository: LocationRepository
+    private let locationRepository: AddressRepository
     private(set) var brands: [Brand] = [] {
         didSet {
             updateRatio()
@@ -39,7 +39,7 @@ final class BrandViewModel: BrandViewModelProtocol {
     var ratios: [(CGFloat, CGFloat)] = []
 
     init(repository: BrandRepository,
-         locationRepository: LocationRepository,
+         locationRepository: AddressRepository,
          service: LocationService,
          cityId: Int)
     {

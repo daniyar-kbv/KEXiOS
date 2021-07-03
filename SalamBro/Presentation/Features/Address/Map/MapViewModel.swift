@@ -19,7 +19,7 @@ final class MapViewModel {
 
     private let ordersService: OrdersService
     private let defaultStorage: DefaultStorage
-    private let locationRepository: LocationRepository
+    private let locationRepository: AddressRepository
     private let brandRepository: BrandRepository
 
     let outputs = Output()
@@ -34,7 +34,7 @@ final class MapViewModel {
 
     init(ordersService: OrdersService,
          defaultStorage: DefaultStorage,
-         locationRepository: LocationRepository,
+         locationRepository: AddressRepository,
          brandRepository: BrandRepository,
          flow: MapFlow,
          address: Address? = nil)

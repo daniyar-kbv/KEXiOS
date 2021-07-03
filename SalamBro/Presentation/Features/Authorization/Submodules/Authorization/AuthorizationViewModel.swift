@@ -20,11 +20,11 @@ protocol AuthorizationViewModel: AnyObject {
 final class AuthorizationViewModelImpl {
     private(set) var outputs = Output()
     private let disposeBag = DisposeBag()
-    private let locationRepository: LocationRepository
+    private let locationRepository: AddressRepository
     private let authService: AuthService
     private var phoneNumber: String = ""
 
-    init(locationRepository: LocationRepository, authService: AuthService) {
+    init(locationRepository: AddressRepository, authService: AuthService) {
         self.locationRepository = locationRepository
         self.authService = authService
     }

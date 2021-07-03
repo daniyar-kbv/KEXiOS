@@ -34,7 +34,7 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
 
     private let locationService: LocationService
     private let ordersService: OrdersService
-    private let locationRepository: LocationRepository
+    private let locationRepository: AddressRepository
     private let citiesRepository: CitiesRepository
     private let brandRepository: BrandRepository
     private let defaultStorage: DefaultStorage
@@ -51,7 +51,7 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
 
     init(locationService: LocationService,
          ordersService: OrdersService,
-         locationRepository: LocationRepository,
+         locationRepository: AddressRepository,
          citiesRepository: CitiesRepository,
          brandRepository: BrandRepository,
          defaultStorage: DefaultStorage,

@@ -17,13 +17,13 @@ protocol AddressListViewModel {
 }
 
 final class AddressListViewModelImpl: AddressListViewModel {
-    private let locationRepository: LocationRepository
+    private let locationRepository: AddressRepository
 
     let outputs = Output()
 
     var deliveryAddresses = [DeliveryAddress]()
 
-    init(locationRepository: LocationRepository) {
+    init(locationRepository: AddressRepository) {
         self.locationRepository = locationRepository
     }
 

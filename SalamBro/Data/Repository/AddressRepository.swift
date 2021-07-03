@@ -1,5 +1,5 @@
 //
-//  LocationRepository.swift
+//  AddressRepository.swift
 //  SalamBro
 //
 //  Created by Ilyar Mnazhdin on 27.05.2021.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol LocationRepository: AnyObject {
+protocol AddressRepository: AnyObject {
     func isAddressComplete() -> Bool
 
     func getCurrentCountry() -> Country?
@@ -28,7 +28,7 @@ protocol LocationRepository: AnyObject {
     func addDeliveryAddress(deliveryAddress: DeliveryAddress)
 }
 
-final class LocationRepositoryImpl: LocationRepository {
+final class LocationRepositoryImpl: AddressRepository {
     private let storage: GeoStorage
 
     init(storage: GeoStorage) {
