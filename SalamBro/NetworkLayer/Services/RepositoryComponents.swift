@@ -12,6 +12,7 @@ protocol RepositoryComponents: AnyObject {
     func makeBrandRepository() -> BrandRepository
     func makeCartRepository() -> CartRepository
     func makeCitiesRepository() -> CitiesRepository
+    func makeCountriesRepository() -> CountriesRepository
 }
 
 final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponents {
@@ -35,6 +36,10 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
 
     func makeCitiesRepository() -> CitiesRepository {
         return shared(CitiesRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
+    }
+
+    func makeCountriesRepository() -> CountriesRepository {
+        return shared(CountriesRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
     }
 
     private func makeLocalStorage() -> Storage {

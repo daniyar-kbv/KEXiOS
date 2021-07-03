@@ -25,22 +25,24 @@ final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
 
     private(set) var countries: [CountryCodeModel] = []
 
-    private let repository: LocationRepository
+    private let countriesRepository: CountriesRepository
+    private let addressRepository: LocationRepository
     private let service: LocationService
 
-    init(repository: LocationRepository, service: LocationService) {
-        self.repository = repository
+    init(countriesRepository: CountriesRepository, addressRepository: LocationRepository, service: LocationService) {
+        self.countriesRepository = countriesRepository
+        self.addressRepository = addressRepository
         self.service = service
     }
 
     func selectCodeCountry(at indexPath: IndexPath) -> CountryCodeModel {
         countries[indexPath.row].isSelected.toggle()
-        repository.changeCurrentCountry(to: countries[indexPath.row].country)
+        countriesRepository.changeCurrentCountry(to: countries[indexPath.row].country)
         return countries[indexPath.row]
     }
 
     func getCountries() {
-        if let cachedCountries = repository.getCountries() {
+        if let cachedCountries = countriesRepository.getCountries() {
             convert(cachedCountries: cachedCountries)
             return
         }
@@ -55,7 +57,7 @@ final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
     private func convert(cachedCountries: [Country]) {
         var codeCountries: [CountryCodeModel] = []
         for country in cachedCountries {
-            if country == repository.getCurrentCountry() {
+            if country == addressRepository.getCurrentCountry() {
                 codeCountries.append(CountryCodeModel(country: country, isSelected: true))
                 break
             }
@@ -70,7 +72,7 @@ final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
         service.getAllCountries()
             .subscribe(onSuccess: { [weak self] countries in
                 self?.outputs.didEndRequest.accept(())
-                self?.repository.set(countries: countries)
+                self?.countriesRepository.setCountries(countries: countries)
                 self?.convert(cachedCountries: countries)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())

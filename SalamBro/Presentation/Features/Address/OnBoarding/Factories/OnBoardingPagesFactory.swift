@@ -30,8 +30,7 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
     }
 
     private func makeCountriesViewModel() -> CountriesListViewModel {
-        return scoped(.init(service: serviceComponents.locationService(),
-                            repository: repositoryComponents.makeLocationRepository()))
+        return scoped(.init(repository: repositoryComponents.makeCountriesRepository()))
     }
 
     func makeCitiesPage(countryId: Int) -> CitiesListController {

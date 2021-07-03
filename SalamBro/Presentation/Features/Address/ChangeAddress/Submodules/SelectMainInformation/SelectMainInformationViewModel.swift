@@ -35,10 +35,11 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     private let locationService: LocationService
     private let ordersService: OrdersService
     private let locationRepository: LocationRepository
+    private let countriesRepository: CountriesRepository
     private let brandRepository: BrandRepository
     private let defaultStorage: DefaultStorage
 
-    public lazy var countries: [Country] = locationRepository.getCountries() ?? []
+    public lazy var countries: [Country] = countriesRepository.getCountries() ?? []
     public lazy var cities: [City] = locationRepository.getCities() ?? []
     public lazy var brands: [Brand] = brandRepository.getBrands() ?? []
 
@@ -51,6 +52,7 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     init(locationService: LocationService,
          ordersService: OrdersService,
          locationRepository: LocationRepository,
+         countriesRepository: CountriesRepository,
          brandRepository: BrandRepository,
          defaultStorage: DefaultStorage,
          flowType: FlowType)
@@ -58,6 +60,7 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
         self.locationService = locationService
         self.ordersService = ordersService
         self.locationRepository = locationRepository
+        self.countriesRepository = countriesRepository
         self.brandRepository = brandRepository
         self.defaultStorage = defaultStorage
         self.flowType = flowType
@@ -141,7 +144,7 @@ extension SelectMainInformationViewModel {
     func getCountries() {
         outputs.updateTableView.accept(())
 
-        if let cachedCountries = locationRepository.getCountries(),
+        if let cachedCountries = countriesRepository.getCountries(),
            cachedCountries != []
         {
             countries = cachedCountries
@@ -165,15 +168,15 @@ extension SelectMainInformationViewModel {
     }
 
     private func process(received countries: [Country]) {
-        guard let cachedCountries = locationRepository.getCountries() else {
-            locationRepository.set(countries: countries)
+        guard let cachedCountries = countriesRepository.getCountries() else {
+            countriesRepository.setCountries(countries: countries)
             self.countries = countries
             outputs.didGetCountries.accept(countries.map { $0.name })
             return
         }
 
         if countries == cachedCountries { return }
-        locationRepository.set(countries: countries)
+        countriesRepository.setCountries(countries: countries)
         self.countries = countries
         outputs.didGetCountries.accept(countries.map { $0.name })
     }
