@@ -86,7 +86,7 @@
 		09C96A0E1A5050CFDC69350291C53FEF /* ChangeNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C944067260DA7E1E94BCBBE4820A36 /* ChangeNameViewModel.swift */; };
 		29C6FA966BE00BC726C1BC2B89B375C8 /* CitiesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF100138D87D8BA53128B8129E8E60A /* CitiesListController.swift */; };
 		5F986C5B6E866FC207ADCB23E5754275 /* CitiesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65F2CF6DA6F384B64553D060585D353 /* CitiesListViewModel.swift */; };
-		D34ECE7391DFF42AB85EC538202761AF /* CitiesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909210D6937B21CD2A1A838A19A063E8 /* CitiesRepository.swift */; };
+		F091964D4253066851CF444BC7E80896 /* CitiesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F9B00C87EC9410D224F0BF4AE07C2E /* CitiesRepository.swift */; };
 		02FD958DFEED73F2B0A2F45702768640 /* CitiesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182A758BB1A04D6DD413CD71E6E6FE1 /* CitiesResponse.swift */; };
 		8F0879F3C1CF7D3E797F02DE9FDE9F39 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D108C9F3E1BE55E39EBB94BB446FA4 /* City.swift */; };
 		56EF0190AA0C382AE88C80A7550E9C1F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */; };
@@ -367,7 +367,7 @@
 		C8E7AE2B036AC37A852ACEE0B481798B /* CitiesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListController.swift; sourceTree = "<group>"; };
 		3F606432D1913E96452A893D5CC7D411 /* CitiesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListViewModel.swift; sourceTree = "<group>"; };
 		B65F2CF6DA6F384B64553D060585D353 /* CitiesListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesListViewModel.swift; sourceTree = "<group>"; };
-		909210D6937B21CD2A1A838A19A063E8 /* CitiesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesRepository.swift; sourceTree = "<group>"; };
+		F5F9B00C87EC9410D224F0BF4AE07C2E /* CitiesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesRepository.swift; sourceTree = "<group>"; };
 		D182A758BB1A04D6DD413CD71E6E6FE1 /* CitiesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesResponse.swift; sourceTree = "<group>"; };
 		D4D108C9F3E1BE55E39EBB94BB446FA4 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -1284,6 +1284,7 @@
 			children = (
 				26E67FC3EFB7B8C495F08CE05C78897F /* BrandRepository.swift */,
 				BA1D767B2B1F70796D02742709EA0BDD /* CartRepository.swift */,
+				F5F9B00C87EC9410D224F0BF4AE07C2E /* CitiesRepository.swift */,
 				CA3703B6283B75BE08799884AD20A710 /* LocationRepository.swift */,
 			);
 			path = Repository;
@@ -1958,7 +1959,6 @@
 			children = (
 				BEF100138D87D8BA53128B8129E8E60A /* CitiesListController.swift */,
 				B65F2CF6DA6F384B64553D060585D353 /* CitiesListViewModel.swift */,
-				909210D6937B21CD2A1A838A19A063E8 /* CitiesRepository.swift */,
 			);
 			path = CitiesList;
 			sourceTree = "<group>";
@@ -2396,7 +2396,7 @@
 				09C96A0E1A5050CFDC69350291C53FEF /* ChangeNameViewModel.swift in Sources */,
 				29C6FA966BE00BC726C1BC2B89B375C8 /* CitiesListController.swift in Sources */,
 				5F986C5B6E866FC207ADCB23E5754275 /* CitiesListViewModel.swift in Sources */,
-				D34ECE7391DFF42AB85EC538202761AF /* CitiesRepository.swift in Sources */,
+				F091964D4253066851CF444BC7E80896 /* CitiesRepository.swift in Sources */,
 				02FD958DFEED73F2B0A2F45702768640 /* CitiesResponse.swift in Sources */,
 				8F0879F3C1CF7D3E797F02DE9FDE9F39 /* City.swift in Sources */,
 				56EF0190AA0C382AE88C80A7550E9C1F /* Constants.swift in Sources */,

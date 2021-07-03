@@ -35,11 +35,12 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     private let locationService: LocationService
     private let ordersService: OrdersService
     private let locationRepository: LocationRepository
+    private let citiesRepository: CitiesRepository
     private let brandRepository: BrandRepository
     private let defaultStorage: DefaultStorage
 
     public lazy var countries: [Country] = locationRepository.getCountries() ?? []
-    public lazy var cities: [City] = locationRepository.getCities() ?? []
+    public lazy var cities: [City] = citiesRepository.getCities() ?? []
     public lazy var brands: [Brand] = brandRepository.getBrands() ?? []
 
     lazy var brand: Brand? = brandRepository.getCurrentBrand()
@@ -51,6 +52,7 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     init(locationService: LocationService,
          ordersService: OrdersService,
          locationRepository: LocationRepository,
+         citiesRepository: CitiesRepository,
          brandRepository: BrandRepository,
          defaultStorage: DefaultStorage,
          flowType: FlowType)
@@ -58,6 +60,7 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
         self.locationService = locationService
         self.ordersService = ordersService
         self.locationRepository = locationRepository
+        self.citiesRepository = citiesRepository
         self.brandRepository = brandRepository
         self.defaultStorage = defaultStorage
         self.flowType = flowType

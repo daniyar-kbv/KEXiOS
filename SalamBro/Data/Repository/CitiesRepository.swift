@@ -13,6 +13,7 @@ protocol CitiesRepository: AnyObject {
     var outputs: CitiesRepositoryImpl.Output { get }
 
     func fetchCities(with countryId: Int)
+    func getCities() -> [City]?
     func changeCurrentCity(to city: City)
     func setCities(cities: [City])
 }
@@ -44,6 +45,17 @@ final class CitiesRepositoryImpl: CitiesRepository {
                 self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
             })
             .disposed(by: disposeBag)
+    }
+
+    func getCities() -> [City]? {
+        guard
+            let cities = storage.cities,
+            cities != []
+        else {
+            return nil
+        }
+
+        return cities
     }
 
     func changeCurrentCity(to city: City) {

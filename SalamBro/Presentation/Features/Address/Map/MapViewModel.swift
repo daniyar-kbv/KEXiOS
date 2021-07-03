@@ -116,7 +116,7 @@ final class MapViewModel {
 extension MapViewModel {
     func applyOrders(address: MapAddress) {
         guard let brandId = brandRepository.getCurrentBrand()?.id,
-              let cityId = locationRepository.getCurrectCity()?.id,
+              let cityId = locationRepository.getCurrentCity()?.id,
               let longitude = locationRepository.getCurrentAddress()?.longitude.rounded(to: 8),
               let latitude = locationRepository.getCurrentAddress()?.latitude.rounded(to: 8) else { return }
 

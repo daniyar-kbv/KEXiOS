@@ -15,10 +15,7 @@ protocol LocationRepository: AnyObject {
     func changeCurrentCountry(to country: Country)
     func set(countries: [Country])
 
-    func getCurrectCity() -> City?
-    func getCities() -> [City]?
-    func changeCurrentCity(to city: City)
-    func set(cities: [City])
+    func getCurrentCity() -> City?
 
     func getCurrentAddress() -> Address?
     func changeCurrentAddress(to address: Address)
@@ -76,34 +73,11 @@ extension LocationRepositoryImpl {
     }
 }
 
-// MARK: Cities
+// MARK: Current city
 
 extension LocationRepositoryImpl {
-    func getCurrectCity() -> City? {
+    func getCurrentCity() -> City? {
         return getCurrentDeliveryAddress()?.city
-    }
-
-    func getCities() -> [City]? {
-        guard
-            let cities = storage.cities,
-            cities != []
-        else {
-            return nil
-        }
-
-        return cities
-    }
-
-    func changeCurrentCity(to city: City) {
-        if let index = storage.currentDeliveryAddressIndex {
-            storage.deliveryAddresses[index].city = city
-        } else {
-            addDeliveryAddress(deliveryAddress: DeliveryAddress(city: city))
-        }
-    }
-
-    func set(cities: [City]) {
-        storage.cities = cities
     }
 }
 
