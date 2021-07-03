@@ -26,8 +26,7 @@ final class BrandViewModel: BrandViewModelProtocol {
     private let cityId: Int
     private let disposeBag = DisposeBag()
 
-    private let brandRepository: BrandRepository
-    private let locationRepository: LocationRepository
+    private let repository: BrandRepository
     private(set) var brands: [Brand] = [] {
         didSet {
             updateRatio()
@@ -37,40 +36,36 @@ final class BrandViewModel: BrandViewModelProtocol {
     private var cellSizeSequence: [BrandCellSizeType] = [.square, .horizontalShort, .vertical, .square, .square, .horizontalLong]
     var ratios: [(CGFloat, CGFloat)] = []
 
-    init(brandRepository: BrandRepository,
-         locationRepository: LocationRepository,
-         cityId: Int)
-    {
+    init(brandRepository: BrandRepository, cityId: Int) {
         self.cityId = cityId
-        self.brandRepository = brandRepository
-        self.locationRepository = locationRepository
+        repository = brandRepository
         bindOutputs()
     }
 
     private func bindOutputs() {
-        brandRepository.outputs.didStartRequest
+        repository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        brandRepository.outputs.didGetBrands.bind {
+        repository.outputs.didGetBrands.bind {
             [weak self] brands in
             self?.brands = brands
-            self?.brandRepository.setBrands(brands: brands)
+            self?.repository.setBrands(brands: brands)
             self?.outputs.didGetBrands.accept(())
         }
         .disposed(by: disposeBag)
 
-        brandRepository.outputs.didEndRequest
+        repository.outputs.didEndRequest
             .bind(to: outputs.didEndRequest)
             .disposed(by: disposeBag)
 
-        brandRepository.outputs.didFail
+        repository.outputs.didFail
             .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
     }
 
     func getBrands() {
-        brandRepository.fetchBrands(with: cityId)
+        repository.fetchBrands(with: cityId)
     }
 
     private func updateRatio() {
@@ -83,7 +78,7 @@ final class BrandViewModel: BrandViewModelProtocol {
 
     func didSelect(index: Int) {
         let brand = brands[index]
-        brandRepository.changeCurrentBrand(to: brand)
+        repository.changeCurrentBrand(to: brand)
         outputs.didSelectBrand.accept(brand)
     }
 }

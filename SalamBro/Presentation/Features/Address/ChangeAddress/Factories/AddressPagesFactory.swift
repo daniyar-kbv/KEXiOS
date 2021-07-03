@@ -65,7 +65,7 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
     }
 
     private func makeBrandsViewModel(cityId: Int) -> BrandViewModel {
-        return scoped(.init(brandRepository: repositoryComponents.makeBrandRepository(), locationRepository: repositoryComponents.makeLocationRepository(), cityId: cityId))
+        return scoped(.init(brandRepository: repositoryComponents.makeBrandRepository(), cityId: cityId))
     }
 
     private func makeLocalStorage() -> Storage {
