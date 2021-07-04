@@ -27,7 +27,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     }
 
     func makeBrandRepository() -> BrandRepository {
-        return shared(BrandRepositoryImpl(storage: makeLocalStorage()))
+        return shared(BrandRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
     }
 
     func makeCartRepository() -> CartRepository {

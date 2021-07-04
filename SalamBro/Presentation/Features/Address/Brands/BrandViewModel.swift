@@ -12,23 +12,22 @@ import RxSwift
 
 protocol BrandViewModelProtocol: ViewModel {
     var outputs: BrandViewModel.Outputs { get }
+
     var brands: [Brand] { get }
     var ratios: [(CGFloat, CGFloat)] { get }
 
-    func refreshBrands()
-    func didSelect(index: Int)
     func getBrands()
+    func didSelect(index: Int)
 }
 
 final class BrandViewModel: BrandViewModelProtocol {
-    let outputs = Outputs()
+    private(set) var outputs: Outputs = .init()
 
     private let cityId: Int
     private let disposeBag = DisposeBag()
 
     private let repository: BrandRepository
-    private let service: LocationService
-    private let locationRepository: AddressRepository
+
     private(set) var brands: [Brand] = [] {
         didSet {
             updateRatio()
@@ -38,28 +37,36 @@ final class BrandViewModel: BrandViewModelProtocol {
     private var cellSizeSequence: [BrandCellSizeType] = [.square, .horizontalShort, .vertical, .square, .square, .horizontalLong]
     var ratios: [(CGFloat, CGFloat)] = []
 
-    init(repository: BrandRepository,
-         locationRepository: AddressRepository,
-         service: LocationService,
-         cityId: Int)
-    {
+    init(brandRepository: BrandRepository, cityId: Int) {
         self.cityId = cityId
-        self.repository = repository
-        self.locationRepository = locationRepository
-        self.service = service
+        repository = brandRepository
+        bindOutputs()
+    }
 
-        makeBrandsRequest()
+    private func bindOutputs() {
+        repository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didGetBrands.bind {
+            [weak self] brands in
+            self?.brands = brands
+            self?.repository.setBrands(brands: brands)
+            self?.outputs.didGetBrands.accept(())
+        }
+        .disposed(by: disposeBag)
+
+        repository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didFail
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
     }
 
     func getBrands() {
-        if
-            let cachedBrands = repository.getBrands(),
-            cachedBrands != []
-        {
-            brands = cachedBrands
-        }
-
-        makeBrandsRequest()
+        repository.fetchBrands(with: cityId)
     }
 
     private func updateRatio() {
@@ -70,47 +77,20 @@ final class BrandViewModel: BrandViewModelProtocol {
         outputs.didGetBrands.accept(())
     }
 
-    private func makeBrandsRequest() {
-        startAnimation()
-        service.getBrands(for: cityId)
-            .subscribe(onSuccess: { [weak self] brandsResponse in
-                self?.stopAnimation()
-                self?.process(receivedBrands: brandsResponse)
-            }, onError: { [weak self] error in
-                self?.stopAnimation()
-                self?.outputs.didGetError.accept(error as? ErrorPresentable)
-            })
-            .disposed(by: disposeBag)
-    }
-
-    private func process(receivedBrands: [Brand]) {
-        guard let cachedBrands = repository.getBrands() else {
-            repository.set(brands: receivedBrands)
-            brands = receivedBrands
-            return
-        }
-
-        if cachedBrands == receivedBrands { return }
-        repository.set(brands: receivedBrands)
-        brands = receivedBrands
-    }
-
-    func refreshBrands() {
-        makeBrandsRequest()
-    }
-
     func didSelect(index: Int) {
         let brand = brands[index]
-        repository.changeCurrent(brand: brand)
+        repository.changeCurrentBrand(to: brand)
         outputs.didSelectBrand.accept(brand)
     }
 }
 
 extension BrandViewModel {
     struct Outputs {
+        let didStartRequest = PublishRelay<Void>()
         let didGetBrands = BehaviorRelay<Void>(value: ())
-        let didGetError = PublishRelay<ErrorPresentable?>()
         let didSelectBrand = PublishRelay<Brand>()
+        let didFail = PublishRelay<ErrorPresentable>()
+        let didEndRequest = PublishRelay<Void>()
     }
 }
 

@@ -48,10 +48,7 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
     }
 
     private func makeBrandsViewModel(cityId: Int) -> BrandViewModel {
-        return scoped(.init(repository: repositoryComponents.makeBrandRepository(),
-                            locationRepository: repositoryComponents.makeLocationRepository(),
-                            service: serviceComponents.locationService(),
-                            cityId: cityId))
+        return scoped(.init(brandRepository: repositoryComponents.makeBrandRepository(), cityId: cityId))
     }
 
     func makeMapPage() -> MapPage {

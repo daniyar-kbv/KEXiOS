@@ -163,7 +163,7 @@ extension SelectMainInformationViewModel {
 
     func didSave() {
         if let brand = brand {
-            brandRepository.changeCurrent(brand: brand)
+            brandRepository.changeCurrentBrand(to: brand)
         }
 
         switch flowType {
