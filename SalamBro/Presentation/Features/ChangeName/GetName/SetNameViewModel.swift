@@ -27,7 +27,7 @@ final class SetNameViewModelImpl: SetNameViewModel {
     }
 
     func persist(name: String) {
-        repository.persist(name: name)
+        repository.saveUserName(with: name)
     }
 
     private func bindOutputs() {

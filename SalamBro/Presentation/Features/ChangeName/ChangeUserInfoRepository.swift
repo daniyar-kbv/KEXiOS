@@ -12,8 +12,8 @@ import RxSwift
 protocol ChangeUserInfoRepository: AnyObject {
     var outputs: ChangeUserInfoRepositoryImpl.Output { get }
 
-    func change(name: String?, email: String?)
-    func persist(name: String)
+    func changeUserInfo(name: String?, email: String?)
+    func saveUserName(with name: String)
 }
 
 final class ChangeUserInfoRepositoryImpl: ChangeUserInfoRepository {
@@ -29,7 +29,7 @@ final class ChangeUserInfoRepositoryImpl: ChangeUserInfoRepository {
         self.defaultStorage = defaultStorage
     }
 
-    func change(name: String?, email: String?) {
+    func changeUserInfo(name: String?, email: String?) {
         outputs.didStartRequest.accept(())
         service.updateUserInfo(with: UserInfoDTO(name: name, email: email, mobilePhone: nil))
             .subscribe(onSuccess: { [weak self] userInfo in
@@ -47,7 +47,7 @@ final class ChangeUserInfoRepositoryImpl: ChangeUserInfoRepository {
             .disposed(by: disposeBag)
     }
 
-    func persist(name: String) {
+    func saveUserName(with name: String) {
         outputs.didStartRequest.accept(())
         service.updateUserInfo(with: UserInfoDTO(name: name, email: nil, mobilePhone: nil))
             .subscribe(onSuccess: { [weak self] userInfo in

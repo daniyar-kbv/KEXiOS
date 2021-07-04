@@ -30,7 +30,7 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
     }
 
     func change(name: String?, email: String?) {
-        repository.change(name: name, email: email)
+        repository.changeUserInfo(name: name, email: email)
     }
 
     private func bindOutputs() {
