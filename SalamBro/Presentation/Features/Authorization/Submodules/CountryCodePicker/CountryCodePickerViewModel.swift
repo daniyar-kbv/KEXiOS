@@ -27,12 +27,11 @@ final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
 
     private let countriesRepository: CountriesRepository
     private let addressRepository: LocationRepository
-    private let service: LocationService
 
-    init(countriesRepository: CountriesRepository, addressRepository: LocationRepository, service: LocationService) {
+    init(countriesRepository: CountriesRepository, addressRepository: LocationRepository) {
         self.countriesRepository = countriesRepository
         self.addressRepository = addressRepository
-        self.service = service
+        bindOutputs()
     }
 
     func selectCodeCountry(at indexPath: IndexPath) -> CountryCodeModel {
@@ -68,20 +67,28 @@ final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
     }
 
     private func makeRequest() {
-        outputs.didStartRequest.accept(())
-        service.getAllCountries()
-            .subscribe(onSuccess: { [weak self] countries in
-                self?.outputs.didEndRequest.accept(())
-                self?.countriesRepository.setCountries(countries: countries)
-                self?.convert(cachedCountries: countries)
-            }, onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFail.accept(error)
-                    return
-                }
-                self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
-            })
+        countriesRepository.fetchCountries()
+    }
+
+    private func bindOutputs() {
+        countriesRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        countriesRepository.outputs.didGetCountries.bind {
+            [weak self] countries in
+            self?.countriesRepository.setCountries(countries: countries)
+            self?.convert(cachedCountries: countries)
+            self?.outputs.didGetCountries.accept(())
+        }
+        .disposed(by: disposeBag)
+
+        countriesRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        countriesRepository.outputs.didFail
+            .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
     }
 }
