@@ -32,7 +32,6 @@ protocol SelectMainInformationViewModelProtocol {
 final class SelectMainInformationViewModel: SelectMainInformationViewModelProtocol {
     internal var flowType: FlowType
 
-    private let locationService: LocationService
     private let ordersService: OrdersService
 
     private let locationRepository: AddressRepository
@@ -52,8 +51,7 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     var outputs = Output()
     private let disposeBag = DisposeBag()
 
-    init(locationService: LocationService,
-         ordersService: OrdersService,
+    init(ordersService: OrdersService,
          locationRepository: AddressRepository,
          countriesRepository: CountriesRepository,
          citiesRepository: CitiesRepository,
@@ -61,7 +59,6 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
          defaultStorage: DefaultStorage,
          flowType: FlowType)
     {
-        self.locationService = locationService
         self.ordersService = ordersService
         self.locationRepository = locationRepository
         self.countriesRepository = countriesRepository
@@ -78,10 +75,51 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
         case .create:
             deliveryAddress = DeliveryAddress()
         }
+
+        bindOutputs()
     }
 }
 
 extension SelectMainInformationViewModel {
+    private func bindOutputs() {
+        countriesRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        countriesRepository.outputs.didGetCountries.bind {
+            [weak self] countries in
+            self?.process(received: countries)
+        }
+        .disposed(by: disposeBag)
+
+        countriesRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        countriesRepository.outputs.didFail
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+
+        citiesRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        citiesRepository.outputs.didGetCities.bind {
+            [weak self] cities in
+            self?.cities = cities
+            self?.process(received: cities)
+        }
+        .disposed(by: disposeBag)
+
+        citiesRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        citiesRepository.outputs.didFail
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+    }
+
     func didChange(country index: Int) {
         guard deliveryAddress?.country != countries[index] else { return }
         deliveryAddress?.country = countries[index]
@@ -160,16 +198,7 @@ extension SelectMainInformationViewModel {
     }
 
     private func makeCountriesRequest() {
-        outputs.didStartRequest.accept(())
-        locationService.getAllCountries()
-            .subscribe { [weak self] countriesResponse in
-                self?.outputs.didEndRequest.accept(())
-                self?.process(received: countriesResponse)
-            } onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                self?.outputs.didGetError.accept(error as? ErrorPresentable)
-            }
-            .disposed(by: disposeBag)
+        countriesRepository.fetchCountries()
     }
 
     private func process(received countries: [Country]) {
@@ -215,16 +244,7 @@ extension SelectMainInformationViewModel {
 extension SelectMainInformationViewModel {
     private func getCities() {
         guard let countryId = deliveryAddress?.country?.id else { return }
-        outputs.didStartRequest.accept(())
-        locationService.getCities(for: countryId)
-            .subscribe { [weak self] citiesResponse in
-                self?.outputs.didEndRequest.accept(())
-                self?.process(received: citiesResponse)
-            } onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                self?.outputs.didGetError.accept(error as? ErrorPresentable)
-            }
-            .disposed(by: disposeBag)
+        citiesRepository.fetchCities(with: countryId)
     }
 
     private func process(received cities: [City]) {

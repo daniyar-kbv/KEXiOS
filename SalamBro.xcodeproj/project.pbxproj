@@ -94,7 +94,7 @@
 		8F699535B6CA823BFD614E876109274E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48B66EEDF6F5955128F064B6723FD19 /* Contact.swift */; };
 		5E86B436FE4600F0DBD97A84EAFD84BA /* CountriesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E69ADBFC9D8B59F317C545D93FE2896 /* CountriesListController.swift */; };
 		43503334856AA6F2192D0EEB47BA85CA /* CountriesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86C17EC7F7CEABFF0EF65B8B987AFD0 /* CountriesListViewModel.swift */; };
-		4F8A53E382C631FA466AF4660A37EAD6 /* CountriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEB7DBA778ECED54B1A1A9C862DE8B4 /* CountriesRepository.swift */; };
+		A62C1B34A0649AEA587D96562753A03A /* CountriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF1E4DBA1F2CFFCC7215700E3F93B52 /* CountriesRepository.swift */; };
 		FFC62839CD906450A82EAB9700F33F5A /* CountriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D693DFB2DF4C7DF72F1333868734193 /* CountriesResponse.swift */; };
 		3D948D5ACCD901DB01EA3B8691CB775F /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529FB36B2ACFCCE647F95DC5E371274 /* Country.swift */; };
 		EE70997BCDF83439220FEB9EF1839F27 /* CountryCodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CB4BCDD2B92B5DDDBEAB39C99CD53F /* CountryCodeCell.swift */; };
@@ -376,7 +376,7 @@
 		F48B66EEDF6F5955128F064B6723FD19 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		1E69ADBFC9D8B59F317C545D93FE2896 /* CountriesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListController.swift; sourceTree = "<group>"; };
 		C86C17EC7F7CEABFF0EF65B8B987AFD0 /* CountriesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListViewModel.swift; sourceTree = "<group>"; };
-		ECEB7DBA778ECED54B1A1A9C862DE8B4 /* CountriesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesRepository.swift; sourceTree = "<group>"; };
+		8DF1E4DBA1F2CFFCC7215700E3F93B52 /* CountriesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesRepository.swift; sourceTree = "<group>"; };
 		2D693DFB2DF4C7DF72F1333868734193 /* CountriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesResponse.swift; sourceTree = "<group>"; };
 		E529FB36B2ACFCCE647F95DC5E371274 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		E5CB4BCDD2B92B5DDDBEAB39C99CD53F /* CountryCodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeCell.swift; sourceTree = "<group>"; };
@@ -1288,6 +1288,7 @@
 				26E67FC3EFB7B8C495F08CE05C78897F /* BrandRepository.swift */,
 				BA1D767B2B1F70796D02742709EA0BDD /* CartRepository.swift */,
 				F5F9B00C87EC9410D224F0BF4AE07C2E /* CitiesRepository.swift */,
+				8DF1E4DBA1F2CFFCC7215700E3F93B52 /* CountriesRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1708,7 +1709,6 @@
 			children = (
 				1E69ADBFC9D8B59F317C545D93FE2896 /* CountriesListController.swift */,
 				C86C17EC7F7CEABFF0EF65B8B987AFD0 /* CountriesListViewModel.swift */,
-				ECEB7DBA778ECED54B1A1A9C862DE8B4 /* CountriesRepository.swift */,
 			);
 			path = CountriesList;
 			sourceTree = "<group>";
@@ -2407,7 +2407,7 @@
 				8F699535B6CA823BFD614E876109274E /* Contact.swift in Sources */,
 				5E86B436FE4600F0DBD97A84EAFD84BA /* CountriesListController.swift in Sources */,
 				43503334856AA6F2192D0EEB47BA85CA /* CountriesListViewModel.swift in Sources */,
-				4F8A53E382C631FA466AF4660A37EAD6 /* CountriesRepository.swift in Sources */,
+				A62C1B34A0649AEA587D96562753A03A /* CountriesRepository.swift in Sources */,
 				FFC62839CD906450A82EAB9700F33F5A /* CountriesResponse.swift in Sources */,
 				3D948D5ACCD901DB01EA3B8691CB775F /* Country.swift in Sources */,
 				EE70997BCDF83439220FEB9EF1839F27 /* CountryCodeCell.swift in Sources */,
