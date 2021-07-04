@@ -15,9 +15,11 @@ protocol ProfilePagesFactory: AnyObject {
 
 final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
     private let serviceComponents: ServiceComponents
+    private let repositoryComponents: RepositoryComponents
 
-    init(serviceComponents: ServiceComponents) {
+    init(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) {
         self.serviceComponents = serviceComponents
+        self.repositoryComponents = repositoryComponents
     }
 
     func makeProfilePage() -> ProfilePage {
@@ -39,7 +41,7 @@ final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
     }
 
     private func makeChangeUserInfoViewModel(userInfo: UserInfoResponse) -> ChangeNameViewModel {
-        return scoped(ChangeNameViewModelImpl(service: serviceComponents.profileService(), userInfo: userInfo, defaultStorage: DefaultStorageImpl.sharedStorage))
+        return scoped(ChangeNameViewModelImpl(repository: repositoryComponents.makeChangeUserInfoRepository(), userInfo: userInfo))
     }
 
     func makeChangeLanguagePage() -> ChangeLanguageController {

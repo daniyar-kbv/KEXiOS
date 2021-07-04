@@ -11,8 +11,8 @@ import RxSwift
 
 protocol ChangeNameViewModel: AnyObject {
     var outputs: ChangeNameViewModelImpl.Output { get }
-    func change(name: String?, email: String?)
     var oldUserInfo: UserInfoResponse { get }
+    func change(name: String?, email: String?)
 }
 
 final class ChangeNameViewModelImpl: ChangeNameViewModel {
@@ -20,31 +20,36 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
 
     private(set) var outputs: Output = .init()
 
-    private let service: ProfileService
-    private let defaultStorage: DefaultStorage
+    private let repository: ChangeUserInfoRepository
     private(set) var oldUserInfo: UserInfoResponse
 
-    init(service: ProfileService, userInfo: UserInfoResponse, defaultStorage: DefaultStorage) {
-        self.service = service
-        self.defaultStorage = defaultStorage
+    init(repository: ChangeUserInfoRepository, userInfo: UserInfoResponse) {
+        self.repository = repository
         oldUserInfo = userInfo
+        bindOutputs()
     }
 
     func change(name: String?, email: String?) {
-        outputs.didStartRequest.accept(())
-        service.updateUserInfo(with: UserInfoDTO(name: name, email: email, mobilePhone: nil))
-            .subscribe(onSuccess: { [weak self] userInfo in
-                self?.outputs.didEndRequest.accept(())
+        repository.change(name: name, email: email)
+    }
+
+    private func bindOutputs() {
+        repository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didFail
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didGetUserInfo
+            .bind { [weak self] userInfo in
                 self?.outputs.didGetUserInfo.accept(userInfo)
-                if let name = userInfo.name {
-                    self?.defaultStorage.persist(name: name)
-                }
-            }, onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFail.accept(error)
-                }
-            })
+            }
             .disposed(by: disposeBag)
     }
 }
