@@ -23,7 +23,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     }
 
     func makeLocationRepository() -> AddressRepository {
-        return shared(LocationRepositoryImpl(storage: makeLocalStorage()))
+        return shared(AddressRepositoryImpl(storage: makeLocalStorage()))
     }
 
     func makeBrandRepository() -> BrandRepository {

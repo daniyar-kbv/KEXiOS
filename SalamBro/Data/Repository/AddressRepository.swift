@@ -25,7 +25,7 @@ protocol AddressRepository: AnyObject {
     func addDeliveryAddress(deliveryAddress: DeliveryAddress)
 }
 
-final class LocationRepositoryImpl: AddressRepository {
+final class AddressRepositoryImpl: AddressRepository {
     private let storage: GeoStorage
 
     init(storage: GeoStorage) {
@@ -33,13 +33,13 @@ final class LocationRepositoryImpl: AddressRepository {
     }
 }
 
-extension LocationRepositoryImpl {
+extension AddressRepositoryImpl {
     func isAddressComplete() -> Bool {
         return getCurrentDeliveryAddress()?.isComplete() ?? false
     }
 }
 
-extension LocationRepositoryImpl {
+extension AddressRepositoryImpl {
     func getCurrentCountry() -> Country? {
         return getCurrentDeliveryAddress()?.country
     }
@@ -47,7 +47,7 @@ extension LocationRepositoryImpl {
 
 // MARK: Current city
 
-extension LocationRepositoryImpl {
+extension AddressRepositoryImpl {
     func getCurrentCity() -> City? {
         return getCurrentDeliveryAddress()?.city
     }
@@ -55,7 +55,7 @@ extension LocationRepositoryImpl {
 
 //  MARK: Address
 
-extension LocationRepositoryImpl {
+extension AddressRepositoryImpl {
     func getCurrentAddress() -> Address? {
         return getCurrentDeliveryAddress()?.address
     }
@@ -71,7 +71,7 @@ extension LocationRepositoryImpl {
 
 // MARK: DeliveryAddress
 
-extension LocationRepositoryImpl {
+extension AddressRepositoryImpl {
     func getDeliveryAddresses() -> [DeliveryAddress]? {
         return storage.deliveryAddresses
     }
