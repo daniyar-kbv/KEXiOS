@@ -11,71 +11,61 @@ import RxCocoa
 import RxSwift
 
 protocol CountriesListViewModelProtocol: ViewModel {
+    var outputs: CountriesListViewModel.Output { get }
+
     var countries: [Country] { get }
-    func refresh()
+
     func didSelect(index: Int)
     func getCountries()
-
-    var outputs: CountriesListViewModel.Output { get }
+    func getCountriesCount() -> Int
+    func getCountryName(at index: Int) -> String
 }
 
 final class CountriesListViewModel: CountriesListViewModelProtocol {
-    private(set) var outputs = Output()
+    private(set) var outputs: Output = .init()
     private let disposeBag = DisposeBag()
 
     private(set) var countries: [Country] = []
 
-    private let service: LocationService
-    private let repository: AddressRepository
+    private let repository: CountriesRepository
 
-    init(service: LocationService,
-         repository: AddressRepository)
-    {
-        self.service = service
+    init(repository: CountriesRepository) {
         self.repository = repository
+        bindOutputs()
     }
 
-    func getCountries() {
-        if
-            let cachedCountries = repository.getCountries(),
-            cachedCountries != []
-        {
-            countries = cachedCountries
-            outputs.didGetCoutries.accept(())
+    private func bindOutputs() {
+        repository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didGetCountries.bind {
+            [weak self] countries in
+            self?.countries = countries
+            self?.repository.setCountries(countries: countries)
+            self?.outputs.didGetCountries.accept(())
         }
+        .disposed(by: disposeBag)
 
-        makeCountriesRequest()
-    }
+        repository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
 
-    func refresh() {
-        makeCountriesRequest()
-    }
-
-    private func makeCountriesRequest() {
-        startAnimation()
-        service.getAllCountries()
-            .subscribe { [weak self] countriesResponse in
-                self?.stopAnimation()
-                self?.process(receivedCountries: countriesResponse)
-            } onError: { [weak self] error in
-                self?.stopAnimation()
-                self?.outputs.didGetError.accept(error as? ErrorPresentable)
-            }
+        repository.outputs.didFail
+            .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
     }
 
-    private func process(receivedCountries: [Country]) {
-        guard let cachedCountries = repository.getCountries() else {
-            repository.set(countries: receivedCountries)
-            countries = receivedCountries
-            outputs.didGetCoutries.accept(())
-            return
-        }
+    func getCountries() {
+        repository.fetchCountries()
+    }
 
-        if receivedCountries == cachedCountries { return }
-        repository.set(countries: receivedCountries)
-        countries = receivedCountries
-        outputs.didGetCoutries.accept(())
+    func getCountriesCount() -> Int {
+        return countries.count
+    }
+
+    func getCountryName(at index: Int) -> String {
+        return countries[index].name
     }
 
     func didSelect(index: Int) {
@@ -87,8 +77,10 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
 
 extension CountriesListViewModel {
     struct Output {
-        let didGetCoutries = BehaviorRelay<Void>(value: ())
+        let didStartRequest = PublishRelay<Void>()
+        let didGetCountries = BehaviorRelay<Void>(value: ())
         let didSelectCountry = PublishRelay<Int>()
-        let didGetError = PublishRelay<ErrorPresentable?>()
+        let didFail = PublishRelay<ErrorPresentable>()
+        let didEndRequest = PublishRelay<Void>()
     }
 }

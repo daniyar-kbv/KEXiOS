@@ -25,22 +25,23 @@ final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
 
     private(set) var countries: [CountryCodeModel] = []
 
-    private let repository: AddressRepository
-    private let service: LocationService
+    private let countriesRepository: CountriesRepository
+    private let addressRepository: AddressRepository
 
-    init(repository: AddressRepository, service: LocationService) {
-        self.repository = repository
-        self.service = service
+    init(countriesRepository: CountriesRepository, addressRepository: AddressRepository) {
+        self.countriesRepository = countriesRepository
+        self.addressRepository = addressRepository
+        bindOutputs()
     }
 
     func selectCodeCountry(at indexPath: IndexPath) -> CountryCodeModel {
         countries[indexPath.row].isSelected.toggle()
-        repository.changeCurrentCountry(to: countries[indexPath.row].country)
+        countriesRepository.changeCurrentCountry(to: countries[indexPath.row].country)
         return countries[indexPath.row]
     }
 
     func getCountries() {
-        if let cachedCountries = repository.getCountries() {
+        if let cachedCountries = countriesRepository.getCountries() {
             convert(cachedCountries: cachedCountries)
             return
         }
@@ -55,7 +56,7 @@ final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
     private func convert(cachedCountries: [Country]) {
         var codeCountries: [CountryCodeModel] = []
         for country in cachedCountries {
-            if country == repository.getCurrentCountry() {
+            if country == addressRepository.getCurrentCountry() {
                 codeCountries.append(CountryCodeModel(country: country, isSelected: true))
                 break
             }
@@ -66,20 +67,28 @@ final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
     }
 
     private func makeRequest() {
-        outputs.didStartRequest.accept(())
-        service.getAllCountries()
-            .subscribe(onSuccess: { [weak self] countries in
-                self?.outputs.didEndRequest.accept(())
-                self?.repository.set(countries: countries)
-                self?.convert(cachedCountries: countries)
-            }, onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFail.accept(error)
-                    return
-                }
-                self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
-            })
+        countriesRepository.fetchCountries()
+    }
+
+    private func bindOutputs() {
+        countriesRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        countriesRepository.outputs.didGetCountries.bind {
+            [weak self] countries in
+            self?.countriesRepository.setCountries(countries: countries)
+            self?.convert(cachedCountries: countries)
+            self?.outputs.didGetCountries.accept(())
+        }
+        .disposed(by: disposeBag)
+
+        countriesRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        countriesRepository.outputs.didFail
+            .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
     }
 }

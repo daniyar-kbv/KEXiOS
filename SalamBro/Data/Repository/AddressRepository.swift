@@ -11,9 +11,6 @@ protocol AddressRepository: AnyObject {
     func isAddressComplete() -> Bool
 
     func getCurrentCountry() -> Country?
-    func getCountries() -> [Country]?
-    func changeCurrentCountry(to country: Country)
-    func set(countries: [Country])
 
     func getCurrentCity() -> City?
 
@@ -42,34 +39,9 @@ extension LocationRepositoryImpl {
     }
 }
 
-// MARK: Countries
-
 extension LocationRepositoryImpl {
     func getCurrentCountry() -> Country? {
         return getCurrentDeliveryAddress()?.country
-    }
-
-    func getCountries() -> [Country]? {
-        guard
-            let countries = storage.countries,
-            countries != []
-        else {
-            return nil
-        }
-
-        return countries
-    }
-
-    func changeCurrentCountry(to country: Country) {
-        if let index = storage.currentDeliveryAddressIndex {
-            storage.deliveryAddresses[index].country = country
-        } else {
-            addDeliveryAddress(deliveryAddress: DeliveryAddress(country: country))
-        }
-    }
-
-    func set(countries: [Country]) {
-        storage.countries = countries
     }
 }
 

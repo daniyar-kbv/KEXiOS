@@ -41,6 +41,7 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
         return scoped(.init(locationService: serviceComponents.locationService(),
                             ordersService: serviceComponents.ordersService(),
                             locationRepository: repositoryComponents.makeLocationRepository(),
+                            countriesRepository: repositoryComponents.makeCountriesRepository(),
                             citiesRepository: repositoryComponents.makeCitiesRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
                             defaultStorage: DefaultStorageImpl.sharedStorage,
