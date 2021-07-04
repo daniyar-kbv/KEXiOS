@@ -14,51 +14,43 @@ final class VerificationViewModel {
 
     let outputs = Output()
 
-    private let service: AuthService
-    private let tokenStorage: AuthTokenStorage
+    private let repository: AuthPageRepository
     private(set) var phoneNumber: String
 
-    init(service: AuthService, tokenStorage: AuthTokenStorage, phoneNumber: String) {
-        self.service = service
-        self.tokenStorage = tokenStorage
+    init(repository: AuthPageRepository, phoneNumber: String) {
+        self.repository = repository
         self.phoneNumber = phoneNumber
+        bindOutputs()
+    }
+
+    private func bindOutputs() {
+        repository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didVerifyOTP
+            .bind(to: outputs.didVerifyOTP)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didResendOTP
+            .bind(to: outputs.didResendOTP)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didFail
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
     }
 
     func verifyOTP(code: String) {
-        outputs.didStartRequest.accept(())
-        service.verifyOTP(with: OTPVerifyDTO(code: code, phoneNumber: phoneNumber))
-            .subscribe { [weak self] accessToken in
-                self?.handleTokenResponse(accessToken: accessToken)
-            } onError: { [weak self] error in
-                self?.handleErrorResponse(error: error)
-            }
-            .disposed(by: disposeBag)
+        repository.verifyOTP(code: code, number: phoneNumber)
     }
 
     func resendOTP() {
-        outputs.didStartRequest.accept(())
-        service.resendOTP(with: SendOTPDTO(phoneNumber: phoneNumber))
-            .subscribe(onSuccess: { [weak self] in
-                self?.outputs.didEndRequest.accept(())
-                self?.outputs.didResendOTP.accept(())
-            }, onError: { [weak self] error in
-                self?.handleErrorResponse(error: error)
-            })
-            .disposed(by: disposeBag)
-    }
-
-    private func handleErrorResponse(error: Error?) {
-        outputs.didEndRequest.accept(())
-        if let error = error as? ErrorPresentable {
-            outputs.didFail.accept(error)
-            return
-        }
-    }
-
-    private func handleTokenResponse(accessToken: AccessToken) {
-        outputs.didEndRequest.accept(())
-        tokenStorage.persist(token: accessToken.access, refreshToken: accessToken.refresh)
-        outputs.didVerifyOTP.accept(())
+        repository.resendOTP(with: phoneNumber)
     }
 }
 

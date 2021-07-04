@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func configureAppCoordinator() {
         appCoordinator = AppCoordinator(serviceComponents: ServiceComponentsAssembly(),
-                                        repositoryComponents: RepositoryComponentsAssembly(),
+                                        repositoryComponents: RepositoryComponentsAssembly(serviceComponents: ServiceComponentsAssembly()),
                                         appCoordinatorsFactory: ApplicationCoordinatorFactoryImpl(builder: AppCoordinatorsModulesBuilderImpl(routersFactory: RoutersFactoryImpl())))
     }
 
