@@ -197,6 +197,7 @@
 		89ADAE4D180274C223D01521EEC664AA /* RoutersFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6817B4A898B5A7668B11D266DA592E /* RoutersFactory.swift */; };
 		40A974F7135401E5F5FEB3089CFFC325 /* SBIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DAAE10CC0380EEFD9B74C494E23AAF /* SBIcons.swift */; };
 		82A8DDFF32FE8C95FDDB00F6B511BE0A /* SBImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A204783B7B76BD608D149FA4F911FA3 /* SBImages.xcassets */; };
+		0582424F3C7F6337A806BA206367061A /* SBLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D7224416B4B0242BE2C34E155F92CD /* SBLocalization.swift */; };
 		3E81076664A1AF301DE0F66573ED6705 /* SBNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045BA0ADD7071FFC6E6B8325DD7946AC /* SBNavigationController.swift */; };
 		D70DF2AA4EB372E6D1DE3F6D0CC257F6 /* SBTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05A44C9B4AA0450B55E61CF357A17D9 /* SBTabBarController.swift */; };
 		164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */; };
@@ -501,6 +502,7 @@
 		DE6817B4A898B5A7668B11D266DA592E /* RoutersFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutersFactory.swift; sourceTree = "<group>"; };
 		82DAAE10CC0380EEFD9B74C494E23AAF /* SBIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBIcons.swift; sourceTree = "<group>"; };
 		1A204783B7B76BD608D149FA4F911FA3 /* SBImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SBImages.xcassets; sourceTree = "<group>"; };
+		D9D7224416B4B0242BE2C34E155F92CD /* SBLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBLocalization.swift; sourceTree = "<group>"; };
 		045BA0ADD7071FFC6E6B8325DD7946AC /* SBNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBNavigationController.swift; sourceTree = "<group>"; };
 		A012B6069CF37EAF9A7D520208298845 /* SBNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBNavigationController.swift; sourceTree = "<group>"; };
 		D05A44C9B4AA0450B55E61CF357A17D9 /* SBTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBTabBarController.swift; sourceTree = "<group>"; };
@@ -1588,6 +1590,7 @@
 				118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */,
 				82DAAE10CC0380EEFD9B74C494E23AAF /* SBIcons.swift */,
 				1A204783B7B76BD608D149FA4F911FA3 /* SBImages.xcassets */,
+				D9D7224416B4B0242BE2C34E155F92CD /* SBLocalization.swift */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -2510,6 +2513,7 @@
 				B55DF44451CD5F2F717157DC9E288F52 /* Router.swift in Sources */,
 				89ADAE4D180274C223D01521EEC664AA /* RoutersFactory.swift in Sources */,
 				40A974F7135401E5F5FEB3089CFFC325 /* SBIcons.swift in Sources */,
+				0582424F3C7F6337A806BA206367061A /* SBLocalization.swift in Sources */,
 				3E81076664A1AF301DE0F66573ED6705 /* SBNavigationController.swift in Sources */,
 				D70DF2AA4EB372E6D1DE3F6D0CC257F6 /* SBTabBarController.swift in Sources */,
 				5752366203812F015BDB9D8A4A70F94B /* SecureStorageProvider.swift in Sources */,
