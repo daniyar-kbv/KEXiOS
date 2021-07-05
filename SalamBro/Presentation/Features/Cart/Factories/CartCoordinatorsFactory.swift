@@ -9,6 +9,7 @@ import Foundation
 
 protocol CartCoordinatorsFactory: AnyObject {
     func makeAuthCoordinator() -> AuthCoordinator
+    func makePaymentCoordinator() -> PaymentCoordinator
 }
 
 final class CartCoordinatorsFactoryImpl: DependencyFactory, CartCoordinatorsFactory {
@@ -32,5 +33,13 @@ final class CartCoordinatorsFactoryImpl: DependencyFactory, CartCoordinatorsFact
 
     private func makeAuthPagesFactory() -> AuthPagesFactory {
         return scoped(AuthPagesFactoryImpl(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
+    }
+
+    func makePaymentCoordinator() -> PaymentCoordinator {
+        return scoped(.init(router: router, pagesFactory: makePaymentPagesFactory()))
+    }
+
+    private func makePaymentPagesFactory() -> PaymentPagesFactory {
+        return scoped(PaymentPagesFactoryImpl(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
     }
 }

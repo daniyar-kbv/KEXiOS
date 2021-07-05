@@ -167,6 +167,12 @@
 		2D4CFF98D59AD7A51A19D37476E30C0E /* OrdersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */; };
 		099A87777B0098C8CC9353085E7723C9 /* OrdersResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */; };
 		233AEC182BE1BE8A729C9E18E9244FFE /* OrdersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DBCD36CB1C2C7E3069476CE83EACA /* OrdersService.swift */; };
+		969D6E45BA7015CA3D32B51EB08B9DAF /* PaymentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3100DAB4800C3C9CD7D061006751147 /* PaymentCoordinator.swift */; };
+		AF6718DF41E7B8F9C4FAB0ECF53BDD63 /* PaymentPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40C736022C5C0B5C64C5A5BD01DA3D /* PaymentPagesFactory.swift */; };
+		51FAEC6B14575E52E1601E2BA025634B /* PaymentSelectionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE95E25B0D15120E0BFF70D0C3F7126 /* PaymentSelectionContainerView.swift */; };
+		E00CF9C0A724B335B2DD4DE3842905D9 /* PaymentSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A49F9EFADC55A912A03C4BE05C22939 /* PaymentSelectionView.swift */; };
+		E34BD86B1C5AD585F68B2501D3311046 /* PaymentSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFB1147F72DF060B99D53DC9132A898 /* PaymentSelectionViewController.swift */; };
+		34E773E7FABB7841C223F151B27F418A /* PaymentSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED595CCC0C39A6AA80AB756EA91AF5AC /* PaymentSelectionViewModel.swift */; };
 		1814F54CFAC26967B8C664F02E4AA121 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C9392BFA56499DD56ECB2AF1FC231E8 /* Pods_SalamBro.framework */; };
 		A540ED01AEA76072046DBFB6ABC5F74D /* Pods_SalamBroTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A13733093DD55DBE42A20FB059CFAB /* Pods_SalamBroTests.framework */; };
 		772A73F421F49431296C00EDC5197B97 /* Pods_SalamBro_SalamBroUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AF4E2B9C5CAC0C1D126B547533E2FB0 /* Pods_SalamBro_SalamBroUITests.framework */; };
@@ -452,6 +458,12 @@
 		DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersAPI.swift; sourceTree = "<group>"; };
 		0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersResponses.swift; sourceTree = "<group>"; };
 		3A4DBCD36CB1C2C7E3069476CE83EACA /* OrdersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersService.swift; sourceTree = "<group>"; };
+		C3100DAB4800C3C9CD7D061006751147 /* PaymentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCoordinator.swift; sourceTree = "<group>"; };
+		8E40C736022C5C0B5C64C5A5BD01DA3D /* PaymentPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPagesFactory.swift; sourceTree = "<group>"; };
+		BFE95E25B0D15120E0BFF70D0C3F7126 /* PaymentSelectionContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSelectionContainerView.swift; sourceTree = "<group>"; };
+		0A49F9EFADC55A912A03C4BE05C22939 /* PaymentSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSelectionView.swift; sourceTree = "<group>"; };
+		4FFB1147F72DF060B99D53DC9132A898 /* PaymentSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSelectionViewController.swift; sourceTree = "<group>"; };
+		ED595CCC0C39A6AA80AB756EA91AF5AC /* PaymentSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSelectionViewModel.swift; sourceTree = "<group>"; };
 		8C4C164B21125043DA7278DDEE6014FD /* Pods-SalamBro-SalamBroUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro-SalamBroUITests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9964D7655C30E2886649BA0DDE519E34 /* Pods-SalamBro-SalamBroUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro-SalamBroUITests.release.xcconfig"; path = "Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests.release.xcconfig"; sourceTree = "<group>"; };
 		963B0E7BC68E8ECCBDEC34EB4ABDAAED /* Pods-SalamBro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro.debug.xcconfig"; path = "Target Support Files/Pods-SalamBro/Pods-SalamBro.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1094,6 +1106,7 @@
 				4C562464566E0F7A67DAD4CDDF0B3232 /* Legacy */,
 				CF86187F6E3E40AD84E132FE8AF6445E /* Menu */,
 				573BBF43A6F98EDE156BE5383BD92FD4 /* Navigation */,
+				C2CD75D3785746062C8DA6F0B4B16043 /* Payment */,
 				ADAB19D3E3411B093570797EDBC8AD4A /* Profile */,
 				13AE80E6E86EBBEBA54DCDD57FE7CC76 /* Support */,
 			);
@@ -1145,6 +1158,59 @@
 				02F8D162BA2A4CB0BB9D5D7E4AD07715 /* AdCellViewModel.swift */,
 			);
 			path = AdCell;
+			sourceTree = "<group>";
+		};
+		C2CD75D3785746062C8DA6F0B4B16043 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				651BA7DE63CAD5825DFC7772F9479F63 /* Factories */,
+				4614207EE37A4C3D31AD26B2B0235FC8 /* PaymentSelection */,
+				C3100DAB4800C3C9CD7D061006751147 /* PaymentCoordinator.swift */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		651BA7DE63CAD5825DFC7772F9479F63 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				8E40C736022C5C0B5C64C5A5BD01DA3D /* PaymentPagesFactory.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
+		4614207EE37A4C3D31AD26B2B0235FC8 /* PaymentSelection */ = {
+			isa = PBXGroup;
+			children = (
+				B2C898FFDAA690CC0DAC3E6DD9883463 /* View */,
+				AD767D57DEE5607331FCBE6CF3131298 /* ViewController */,
+				7AE2CB092F5A1A8512D7E44670BC86B8 /* ViewModel */,
+			);
+			path = PaymentSelection;
+			sourceTree = "<group>";
+		};
+		7AE2CB092F5A1A8512D7E44670BC86B8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				ED595CCC0C39A6AA80AB756EA91AF5AC /* PaymentSelectionViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B2C898FFDAA690CC0DAC3E6DD9883463 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BFE95E25B0D15120E0BFF70D0C3F7126 /* PaymentSelectionContainerView.swift */,
+				0A49F9EFADC55A912A03C4BE05C22939 /* PaymentSelectionView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AD767D57DEE5607331FCBE6CF3131298 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4FFB1147F72DF060B99D53DC9132A898 /* PaymentSelectionViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		63529655411685DF2C857AF984795856 /* Views */ = {
@@ -2446,6 +2512,12 @@
 				2D4CFF98D59AD7A51A19D37476E30C0E /* OrdersAPI.swift in Sources */,
 				099A87777B0098C8CC9353085E7723C9 /* OrdersResponses.swift in Sources */,
 				233AEC182BE1BE8A729C9E18E9244FFE /* OrdersService.swift in Sources */,
+				969D6E45BA7015CA3D32B51EB08B9DAF /* PaymentCoordinator.swift in Sources */,
+				AF6718DF41E7B8F9C4FAB0ECF53BDD63 /* PaymentPagesFactory.swift in Sources */,
+				51FAEC6B14575E52E1601E2BA025634B /* PaymentSelectionContainerView.swift in Sources */,
+				E00CF9C0A724B335B2DD4DE3842905D9 /* PaymentSelectionView.swift in Sources */,
+				E34BD86B1C5AD585F68B2501D3311046 /* PaymentSelectionViewController.swift in Sources */,
+				34E773E7FABB7841C223F151B27F418A /* PaymentSelectionViewModel.swift in Sources */,
 				FA4CFDD438F5F9F434061FC36FC6BB4B /* ProfileAPI.swift in Sources */,
 				429688C5C6E9249616F77D82DA3EDACC /* ProfileChildCoordinatorsFactory.swift in Sources */,
 				D5D0676FB07B177D6F857235894387C6 /* ProfileCoordinator.swift in Sources */,
@@ -2693,7 +2765,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 27;
-				DEVELOPMENT_TEAM = ULVD64ZNV2;
+				DEVELOPMENT_TEAM = S4325F4YCU;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2762,7 +2834,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 27;
-				DEVELOPMENT_TEAM = ULVD64ZNV2;
+				DEVELOPMENT_TEAM = S4325F4YCU;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
