@@ -13,7 +13,7 @@ protocol ApplicationCoordinatorFactory: AnyObject {
     func makeAuthCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthCoordinator
     func makeCartCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartCoordinator
     func makeProfileCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> ProfileCoordinator
-    func makeSupportCoordinator(serviceComponents: ServiceComponents) -> SupportCoordinator
+    func makeSupportCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> SupportCoordinator
 }
 
 final class ApplicationCoordinatorFactoryImpl: DependencyFactory, ApplicationCoordinatorFactory {
@@ -35,8 +35,8 @@ final class ApplicationCoordinatorFactoryImpl: DependencyFactory, ApplicationCoo
         return shared(builder.buildProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
     }
 
-    func makeSupportCoordinator(serviceComponents: ServiceComponents) -> SupportCoordinator {
-        return shared(builder.makeSupportCoordinator(serviceComponents: serviceComponents))
+    func makeSupportCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> SupportCoordinator {
+        return shared(builder.makeSupportCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
     }
 
     func makeCartCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartCoordinator {

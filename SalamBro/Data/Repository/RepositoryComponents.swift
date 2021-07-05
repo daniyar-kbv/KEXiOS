@@ -13,6 +13,7 @@ protocol RepositoryComponents: AnyObject {
     func makeCartRepository() -> CartRepository
     func makeCitiesRepository() -> CitiesRepository
     func makeCountriesRepository() -> CountriesRepository
+    func makeDocumentsRepository() -> DocumentsRepository
 }
 
 final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponents {
@@ -27,7 +28,8 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     }
 
     func makeBrandRepository() -> BrandRepository {
-        return shared(BrandRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
+        return shared(BrandRepositoryImpl(locationService: serviceComponents.locationService(),
+                                          storage: makeLocalStorage()))
     }
 
     func makeCartRepository() -> CartRepository {
@@ -35,11 +37,18 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     }
 
     func makeCitiesRepository() -> CitiesRepository {
-        return shared(CitiesRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
+        return shared(CitiesRepositoryImpl(locationService: serviceComponents.locationService(),
+                                           storage: makeLocalStorage()))
     }
 
     func makeCountriesRepository() -> CountriesRepository {
-        return shared(CountriesRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
+        return shared(CountriesRepositoryImpl(locationService: serviceComponents.locationService(),
+                                              storage: makeLocalStorage()))
+    }
+
+    func makeDocumentsRepository() -> DocumentsRepository {
+        return shared(DocumentsRepositoryImpl(storage: makeLocalStorage(),
+                                              service: serviceComponents.documentsService()))
     }
 
     private func makeLocalStorage() -> Storage {

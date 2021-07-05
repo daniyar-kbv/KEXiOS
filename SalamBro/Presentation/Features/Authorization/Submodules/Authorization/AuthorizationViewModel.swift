@@ -14,6 +14,9 @@ protocol AuthorizationViewModel: AnyObject {
     func sendOTP()
     func getCountryCode() -> String
 
+    func getDocuments()
+    func getUserAgreementInfo() -> (URL, String)?
+
     var outputs: AuthorizationViewModelImpl.Output { get }
 }
 
@@ -21,12 +24,20 @@ final class AuthorizationViewModelImpl {
     private(set) var outputs = Output()
     private let disposeBag = DisposeBag()
     private let locationRepository: AddressRepository
+    private let documentsRepository: DocumentsRepository
     private let authService: AuthService
     private var phoneNumber: String = ""
+    private var userAgreement: Document?
 
-    init(locationRepository: AddressRepository, authService: AuthService) {
+    init(locationRepository: AddressRepository,
+         documentsRepository: DocumentsRepository,
+         authService: AuthService)
+    {
         self.locationRepository = locationRepository
+        self.documentsRepository = documentsRepository
         self.authService = authService
+
+        bindDocumentsRepository()
     }
 
     private func handleResponse(error: Error?) {
@@ -63,6 +74,37 @@ extension AuthorizationViewModelImpl: AuthorizationViewModel {
         }
 
         return country.countryCode
+    }
+
+    func getDocuments() {
+        documentsRepository.getUserAgreement()
+    }
+
+    func getUserAgreementInfo() -> (URL, String)? {
+        guard let userAgreement = userAgreement,
+              let url = URL(string: userAgreement.link) else { return nil }
+        return (url, userAgreement.name)
+    }
+}
+
+extension AuthorizationViewModelImpl {
+    private func bindDocumentsRepository() {
+        documentsRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didStartRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didGetError
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didGetUserAgreement
+            .subscribe(onNext: { [weak self] userAgreement in
+                self?.userAgreement = userAgreement
+            }).disposed(by: disposeBag)
     }
 }
 

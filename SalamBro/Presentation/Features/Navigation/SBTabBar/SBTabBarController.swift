@@ -8,8 +8,13 @@
 import UIKit
 
 final class SBTabBarController: UITabBarController {
-    init() {
+    private let viewModel: SBTabBarViewModel
+
+    init(viewModel: SBTabBarViewModel) {
+        self.viewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
+
         configure()
     }
 
@@ -25,5 +30,11 @@ final class SBTabBarController: UITabBarController {
         tabBar.backgroundColor = .white
         tabBar.isTranslucent = false
         tabBar.itemPositioning = .centered
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        viewModel.getDocuments()
     }
 }

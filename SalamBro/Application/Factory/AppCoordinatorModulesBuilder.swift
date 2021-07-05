@@ -11,7 +11,7 @@ protocol AppCoordinatorsModulesBuilder {
     func buildMenuCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> MenuCoordinator
     func buildOnboardingCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoardingCoordinator
     func buildProfileCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> ProfileCoordinator
-    func makeSupportCoordinator(serviceComponents: ServiceComponents) -> SupportCoordinator
+    func makeSupportCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> SupportCoordinator
     func makeAuthCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthCoordinator
     func makeCartCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> CartCoordinator
 }
@@ -67,15 +67,15 @@ final class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
         return ProfileChildCoordinatorsFactoryImpl(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, router: router)
     }
 
-    func makeSupportCoordinator(serviceComponents: ServiceComponents) -> SupportCoordinator {
+    func makeSupportCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> SupportCoordinator {
         let router = routersFactory.makeSupportRouter()
         return .init(router: router,
-                     pagesFactory: makeSupportPagesFactory(serviceComponents: serviceComponents),
+                     pagesFactory: makeSupportPagesFactory(repositoryComponents: repositoryComponents),
                      coordinatorsFactory: makeSupportCoordinatorsFactory(router: router, serviceComponents: serviceComponents))
     }
 
-    private func makeSupportPagesFactory(serviceComponents: ServiceComponents) -> SupportPagesFactory {
-        return SupportPagesFactoryImpl(serviceComponents: serviceComponents)
+    private func makeSupportPagesFactory(repositoryComponents: RepositoryComponents) -> SupportPagesFactory {
+        return SupportPagesFactoryImpl(repositoryComponents: repositoryComponents)
     }
 
     private func makeSupportCoordinatorsFactory(router: Router, serviceComponents: ServiceComponents) -> SupportCoordinatorsFactory {
