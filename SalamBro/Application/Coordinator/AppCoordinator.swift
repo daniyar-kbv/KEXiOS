@@ -46,7 +46,7 @@ final class AppCoordinator: BaseCoordinator {
     }
 
     private func switchFlows() {
-        let locationRepository = repositoryComponents.makeLocationRepository()
+        let locationRepository = repositoryComponents.makeAddressRepository()
         let brandRepository = repositoryComponents.makeBrandRepository()
 
         guard

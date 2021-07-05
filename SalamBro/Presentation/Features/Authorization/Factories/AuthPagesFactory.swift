@@ -29,7 +29,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeAuthPageViewModel() -> AuthorizationViewModel {
-        return scoped(AuthorizationViewModelImpl(locationRepository: repositoryComponents.makeLocationRepository(),
+        return scoped(AuthorizationViewModelImpl(locationRepository: repositoryComponents.makeAddressRepository(),
                                                  documentsRepository: repositoryComponents.makeDocumentsRepository(),
                                                  authService: serviceComponents.authService()))
     }
@@ -49,7 +49,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeSetNameViewModel() -> SetNameViewModel {
-        return scoped(SetNameViewModelImpl(defaultStorage: DefaultStorageImpl.sharedStorage, profileService: serviceComponents.profileService()))
+        return scoped(SetNameViewModelImpl(repository: repositoryComponents.makeChangeUserInfoRepository()))
     }
 
     func makeCountryCodePickerPage() -> CountryCodePickerViewController {
@@ -57,7 +57,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeCountryCodePickerViewModel() -> CountryCodePickerViewModel {
-        return scoped(CountryCodePickerViewModelImpl(countriesRepository: repositoryComponents.makeCountriesRepository(), addressRepository: repositoryComponents.makeLocationRepository()))
+        return scoped(CountryCodePickerViewModelImpl(countriesRepository: repositoryComponents.makeCountriesRepository(), addressRepository: repositoryComponents.makeAddressRepository()))
     }
 
     func makeAgreementPage(url: URL, name: String) -> AgreementController {
