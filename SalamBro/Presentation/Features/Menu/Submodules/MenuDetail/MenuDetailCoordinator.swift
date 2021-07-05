@@ -52,7 +52,8 @@ public final class MenuDetailCoordinator: Coordinator {
                 }
             }).disposed(by: disposeBag)
 
-        router.present(menuDetailPage, animated: true, completion: nil)
+        let nav = SBNavigationController(rootViewController: menuDetailPage)
+        router.present(nav, animated: true, completion: nil)
     }
 
     private func openModifiers(on presentedController: UIViewController,

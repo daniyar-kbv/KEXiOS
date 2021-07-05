@@ -17,6 +17,7 @@ protocol MenuDetailViewModel: AnyObject {
     func update()
     func proceed()
     func set(comment: String)
+    func getComment() -> String?
     func set(modifier: Modifier, at indexPath: IndexPath)
 }
 
@@ -62,6 +63,10 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     func set(comment: String) {
         self.comment = comment
         outputs.comment.accept(comment)
+    }
+
+    func getComment() -> String? {
+        return comment
     }
 
     func set(modifier: Modifier, at indexPath: IndexPath) {

@@ -18,8 +18,6 @@ final class RateController: UIViewController {
 
     private lazy var rateView = RateView(delegate: self)
 
-    private var commentaryPage: MapCommentaryPage?
-
     var outputs = Output()
 
     init(viewModel: RateViewModel) {
@@ -59,6 +57,10 @@ extension RateController {
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }
+
+        rateView.setCommentary { [weak self] in
+            self?.commentaryViewTapped()
+        }
     }
 }
 
@@ -81,19 +83,17 @@ extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlow
 
 extension RateController: RateViewDelegate {
     func commentaryViewTapped() {
-        commentaryPage = MapCommentaryPage()
-        commentaryPage?.configureTextField(placeholder: L10n.RateOrder.CommentaryField.placeholder)
+        let commentaryPage = MapCommentaryPage()
 
-        commentaryPage?.output.didProceed.subscribe(onNext: { comment in
+        commentaryPage.configureTextField(placeholder: L10n.RateOrder.CommentaryField.placeholder)
+
+        commentaryPage.output.didProceed.subscribe(onNext: { comment in
             if let comment = comment {
                 self.rateView.configureTextField(with: comment)
             }
         }).disposed(by: disposeBag)
-        commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
-            self?.commentaryPage = nil
-        }).disposed(by: disposeBag)
 
-        commentaryPage?.openTransitionSheet(on: self)
+        commentaryPage.openTransitionSheet(on: self)
     }
 
     func sendButtonTapped() {

@@ -25,7 +25,12 @@ final class MapViewModel {
     let outputs = Output()
     var currentLocation: YMKPoint?
     var targetLocation: YMKPoint
-    var commentary: String?
+    var commentary: String? {
+        didSet {
+            guard let comment = commentary else { return }
+            outputs.updateComment.accept(comment)
+        }
+    }
 
     private let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
     private var searchSession: YMKSearchSession?
@@ -60,12 +65,9 @@ final class MapViewModel {
         switch flow {
         case .creation:
             locationRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
-//            Tech debt: uncomment when orders applu api stabilize
             applyOrders(address: lastAddress)
-//            defaultStorage.persist(leadUUID: "ace65478-c4ba-4a78-84a8-26c49466244c")
-//            outputs.lastSelectedAddress.accept(lastAddress)
         case .change:
-            outputs.lastSelectedAddress.accept(lastAddress)
+            outputs.lastSelectedAddress.accept((lastAddress, commentary))
         }
     }
 
@@ -131,7 +133,7 @@ extension MapViewModel {
             .subscribe { [weak self] leadUUID in
                 self?.outputs.didFinishRequest.accept(())
                 self?.defaultStorage.persist(leadUUID: leadUUID)
-                self?.outputs.lastSelectedAddress.accept(address)
+                self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
             } onError: { [weak self] error in
                 self?.outputs.didFinishRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
@@ -144,7 +146,8 @@ extension MapViewModel {
     struct Output {
         let moveMapTo = PublishRelay<YMKPoint>()
         let selectedAddress = BehaviorSubject<MapAddress>(value: MapAddress(name: "", formattedAddress: "", longitude: 0, latitude: 0))
-        let lastSelectedAddress = PublishRelay<MapAddress>()
+        let lastSelectedAddress = PublishRelay<(MapAddress, String?)>()
+        let updateComment = PublishRelay<String>()
 
         let didGetError = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()

@@ -29,14 +29,6 @@ final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
     private let locationManager: LocationManager = .init()
 
     private var searchPage: SuggestController?
-    private var commentaryPage: MapCommentaryPage?
-
-    private var isBottom: Bool {
-        if #available(iOS 11.0, *), let keyWindow = UIApplication.shared.keyWindow, keyWindow.safeAreaInsets.bottom > 0 {
-            return true
-        }
-        return false
-    }
 
     init(viewModel: MapViewModel) {
         self.viewModel = viewModel
@@ -108,7 +100,7 @@ extension MapPage {
     private func bindViewModel() {
         viewModel.outputs.selectedAddress
             .subscribe(onNext: { [weak self] mapAddress in
-                self?.mapAddressView.addressTextField.text = mapAddress.name
+                self?.mapAddressView.addressTextField.set(text: mapAddress.name)
                 self?.mapAddressView.changeButtonAppearance(based: mapAddress.name)
             })
             .disposed(by: disposeBag)
@@ -120,14 +112,20 @@ extension MapPage {
             .disposed(by: disposeBag)
 
         viewModel.outputs.lastSelectedAddress
-            .subscribe(onNext: { [weak self] address in
+            .subscribe(onNext: { [weak self] address, commentary in
                 self?.handlePageTermination()
                 self?.selectedAddress?(Address(name: address.name,
                                                longitude: address.longitude,
                                                latitude: address.latitude,
-                                               commentary: self?.mapAddressView.commentaryTextField.text))
+                                               commentary: commentary))
             })
             .disposed(by: disposeBag)
+
+        viewModel.outputs.updateComment
+            .subscribe(onNext: { [weak self] comment in
+                self?.mapAddressView.commentaryTextField.set(text: comment)
+                self?.mapAddressView.layoutIfNeeded()
+            }).disposed(by: disposeBag)
 
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
@@ -164,21 +162,13 @@ extension MapPage {
             }
             .disposed(by: disposeBag)
 
-        mapAddressView.addressTextField.rx
-            .controlEvent(.touchDown)
-            .asObservable()
-            .subscribe(onNext: { [weak self] in
-                self?.showAddressSearchPage()
-            })
-            .disposed(by: disposeBag)
+        mapAddressView.addressTextField.onShouldBeginEditing = { [weak self] in
+            self?.showAddressSearchPage()
+        }
 
-        mapAddressView.commentaryTextField.rx
-            .controlEvent(.touchDown)
-            .asObservable()
-            .subscribe(onNext: { [weak self] in
-                self?.showCommentaryPage()
-            })
-            .disposed(by: disposeBag)
+        mapAddressView.commentaryTextField.onShouldBeginEditing = { [weak self] in
+            self?.showCommentaryPage()
+        }
     }
 
     private func handlePageTermination() {
@@ -200,27 +190,21 @@ extension MapPage {
     }
 
     private func showCommentaryPage() {
-        commentaryPage = MapCommentaryPage()
-        commentaryPage?.configureTextField(placeholder: L10n.Commentary.AddressField.title)
+        let commentaryPage = MapCommentaryPage()
 
-        commentaryPage?.output.didProceed.subscribe(onNext: { comment in
-            self.mapAddressView.commentaryTextField.text = comment
-        }).disposed(by: disposeBag)
-        commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
-            self?.commentaryPage = nil
+        commentaryPage.configureTextField(placeholder: L10n.MapView.CommentaryLabel.title)
+
+        commentaryPage.output.didProceed.subscribe(onNext: { [weak self] comment in
+            self?.viewModel.commentary = comment
         }).disposed(by: disposeBag)
 
-        commentaryPage?.openTransitionSheet(on: self)
+        commentaryPage.openTransitionSheet(on: self, with: viewModel.commentary)
     }
 }
 
-// MARK: Commentary and Search Delegates
+// MARK: Search Delegates
 
-extension MapPage: MapCommentaryPageDelegate, SuggestControllerDelegate {
-    func onDoneButtonTapped(commentary: String) {
-        mapAddressView.commentaryTextField.text = commentary
-    }
-
+extension MapPage: SuggestControllerDelegate {
     func reverseGeocoding(searchQuery: String, title: String) {
         viewModel.reverseGeoCoding(searchQuery: searchQuery, title: title)
     }
@@ -254,14 +238,8 @@ extension MapPage {
 
         view.addSubview(mapAddressView)
         mapAddressView.snp.makeConstraints {
-            if isBottom {
-                $0.height.equalTo(240)
-            } else {
-                $0.height.equalTo(211)
-            }
             $0.bottom.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
+            $0.left.right.equalToSuperview()
         }
 
         view.addSubview(locationButton)
@@ -277,6 +255,6 @@ extension MapPage {
 
 extension MapPage {
     func configureView() {
-        mapAddressView.commentaryTextField.text = viewModel.commentary
+        mapAddressView.commentaryTextField.set(text: viewModel.commentary)
     }
 }
