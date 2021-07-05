@@ -148,20 +148,22 @@ extension MenuDetailController {
 
 extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in _: UITableView) -> Int {
-        return viewModel.modifierGroups.count
+        return viewModel.modifierCellViewModels.count
     }
 
-    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.modifierGroups[section].maxAmount
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        return viewModel.modifierCellViewModels.count
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellViewModel = MenuDetailModifierCellViewModelImpl(modifierGroup: viewModel.modifierGroups[indexPath.section])
-        return MenuDetailModifierCell(viewModel: cellViewModel)
+        return MenuDetailModifierCell(viewModel: viewModel.modifierCellViewModels[indexPath.section][indexPath.row])
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        outputs.toModifiers.accept((viewModel.modifierGroups[indexPath.section], indexPath))
+        outputs.toModifiers.accept(
+            (viewModel.modifierCellViewModels[indexPath.section][indexPath.row].getModifierGroup(),
+             indexPath)
+        )
     }
 }
 
