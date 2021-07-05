@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class CitiesListController: UIViewController, AlertDisplayable {
+final class CitiesListController: UIViewController, AlertDisplayable, LoaderDisplayable {
     let outputs = Output()
     private let disposeBag = DisposeBag()
 
@@ -46,32 +46,44 @@ final class CitiesListController: UIViewController, AlertDisplayable {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.getCities()
         setup()
-        bind()
+        bindViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        viewModel.getCities()
         navigationItem.title = L10n.CitiesList.Navigation.title
     }
 }
 
 extension CitiesListController {
-    private func bind() {
+    private func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            })
+            .disposed(by: disposeBag)
+
         viewModel.outputs.didGetCities
             .bind(to: tableView.rx.reload)
             .disposed(by: disposeBag)
 
-        viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
-            guard let error = error else { return }
-            self?.showError(error)
-        }).disposed(by: disposeBag)
-
         viewModel.outputs.didSelectCity.subscribe(onNext: { [weak self] cityId in
             self?.outputs.didSelectCity.accept(cityId)
         }).disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didFail
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setup() {
@@ -92,7 +104,7 @@ extension CitiesListController {
     }
 
     @objc private func handleRefreshControlAction() {
-        viewModel.refreshCities()
+        viewModel.getCities()
         refreshControl.endRefreshing()
     }
 }
@@ -103,12 +115,12 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
     }
 
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        viewModel.cities.count
+        viewModel.getCitiesCount()
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = viewModel.cities[indexPath.row].name
+        cell.textLabel?.text = viewModel.getCityName(at: indexPath.row)
         cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         cell.textLabel?.textColor = .darkGray
         cell.backgroundColor = .white

@@ -38,9 +38,10 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
     }
 
     private func makeSelectMainInfoViewModel(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewModel {
-        return scoped(.init(locationService: serviceComponents.locationService(),
-                            ordersService: serviceComponents.ordersService(),
+        return scoped(.init(ordersService: serviceComponents.ordersService(),
                             locationRepository: repositoryComponents.makeLocationRepository(),
+                            countriesRepository: repositoryComponents.makeCountriesRepository(),
+                            citiesRepository: repositoryComponents.makeCitiesRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
                             defaultStorage: DefaultStorageImpl.sharedStorage,
                             flowType: flowType))
@@ -65,9 +66,6 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
     }
 
     private func makeBrandsViewModel(cityId: Int) -> BrandViewModel {
-        return scoped(.init(repository: repositoryComponents.makeBrandRepository(),
-                            locationRepository: repositoryComponents.makeLocationRepository(),
-                            service: serviceComponents.locationService(),
-                            cityId: cityId))
+        return scoped(.init(brandRepository: repositoryComponents.makeBrandRepository(), cityId: cityId))
     }
 }

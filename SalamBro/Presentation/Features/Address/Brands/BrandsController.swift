@@ -68,8 +68,7 @@ final class BrandsController: UIViewController, AlertDisplayable {
             }.bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
 
-        viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
-            guard let error = error else { return }
+        viewModel.outputs.didFail.subscribe(onNext: { [weak self] error in
             self?.showError(error)
         }).disposed(by: disposeBag)
 
@@ -105,7 +104,7 @@ final class BrandsController: UIViewController, AlertDisplayable {
     }
 
     @objc func handleRefreshControlAction(_: UIRefreshControl) {
-        viewModel.refreshBrands()
+        viewModel.getBrands()
         refreshControl.endRefreshing()
     }
 }

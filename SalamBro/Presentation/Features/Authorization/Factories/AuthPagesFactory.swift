@@ -56,8 +56,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeCountryCodePickerViewModel() -> CountryCodePickerViewModel {
-        return scoped(CountryCodePickerViewModelImpl(repository: repositoryComponents.makeLocationRepository(),
-                                                     service: serviceComponents.locationService()))
+        return scoped(CountryCodePickerViewModelImpl(countriesRepository: repositoryComponents.makeCountriesRepository(), addressRepository: repositoryComponents.makeLocationRepository()))
     }
 
     func makeAgreementPage() -> AgreementController {
