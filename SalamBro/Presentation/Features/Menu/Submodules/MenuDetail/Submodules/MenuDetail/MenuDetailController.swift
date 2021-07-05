@@ -19,8 +19,6 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     private lazy var contentView = MenuDetailView(delegate: self)
 
-    private var commentaryPage: MapCommentaryPage?
-
     public init(viewModel: MenuDetailViewModel) {
         self.viewModel = viewModel
 
@@ -41,9 +39,9 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+
         configureViews()
         bindViewModel()
-        viewModel.update()
     }
 
     override func viewWillLayoutSubviews() {
@@ -54,6 +52,8 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        viewModel.update()
 
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
@@ -68,6 +68,14 @@ extension MenuDetailController {
 
         contentView.modifiersTableView.delegate = self
         contentView.modifiersTableView.dataSource = self
+
+        contentView.setCommentary { [weak self] in
+            self?.commentaryViewTapped()
+        }
+
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
     }
 
     private func bindViewModel() {
@@ -141,39 +149,38 @@ extension MenuDetailController {
 
 extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in _: UITableView) -> Int {
-        return viewModel.modifierGroups.count
+        return viewModel.modifierCellViewModels.count
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.modifierGroups[section].maxAmount
+        return viewModel.modifierCellViewModels[section].count
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellViewModel = MenuDetailModifierCellViewModelImpl(modifierGroup: viewModel.modifierGroups[indexPath.section])
-        return MenuDetailModifierCell(viewModel: cellViewModel)
+        return MenuDetailModifierCell(viewModel: viewModel.modifierCellViewModels[indexPath.section][indexPath.row])
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        outputs.toModifiers.accept((viewModel.modifierGroups[indexPath.section], indexPath))
+        outputs.toModifiers.accept(
+            (viewModel.modifierCellViewModels[indexPath.section][indexPath.row].getModifierGroup(),
+             indexPath)
+        )
     }
 }
 
 extension MenuDetailController: MenuDetailViewDelegate {
     func commentaryViewTapped() {
-        commentaryPage = MapCommentaryPage()
-        commentaryPage?.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
+        let commentaryPage = MapCommentaryPage()
 
-        commentaryPage?.output.didProceed.subscribe(onNext: { [weak self] comment in
+        commentaryPage.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
+
+        commentaryPage.output.didProceed.subscribe(onNext: { [weak self] comment in
             guard let comment = comment else { return }
             self?.contentView.configureTextField(text: comment)
             self?.viewModel.set(comment: comment)
         }).disposed(by: disposeBag)
 
-        commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
-            self?.commentaryPage = nil
-        }).disposed(by: disposeBag)
-
-        commentaryPage?.openTransitionSheet(on: self)
+        commentaryPage.openTransitionSheet(on: self, with: viewModel.getComment())
     }
 
     func proceedButtonTapped() {

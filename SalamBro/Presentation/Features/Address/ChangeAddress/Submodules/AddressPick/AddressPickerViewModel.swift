@@ -17,7 +17,7 @@ protocol AddressPickerViewModelProtocol: ViewModel {
 }
 
 final class AddressPickerViewModel: AddressPickerViewModelProtocol {
-    private let locationRepository: LocationRepository
+    private let locationRepository: AddressRepository
     public var cellViewModels: [AddressPickerCellViewModelProtocol] = []
     private var addresses: [DeliveryAddress] = []
 
@@ -29,7 +29,7 @@ final class AddressPickerViewModel: AddressPickerViewModelProtocol {
         outputs.didSelectAddress.accept(addresses[index])
     }
 
-    init(locationRepository: LocationRepository) {
+    init(locationRepository: AddressRepository) {
         self.locationRepository = locationRepository
 
         reload()

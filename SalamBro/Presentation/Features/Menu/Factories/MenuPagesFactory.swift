@@ -9,6 +9,7 @@ import Foundation
 
 protocol MenuPagesFactory {
     func makeManuPage() -> MenuController
+    func makePromotionsPage(url: URL, name: String) -> AgreementController
 }
 
 class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
@@ -31,7 +32,15 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
         return scoped(MenuViewModel(defaultStorage: DefaultStorageImpl.sharedStorage,
                                     promotionsService: serviceComponents.promotionsService(),
                                     ordersService: serviceComponents.ordersService(),
-                                    locationRepository: repositoryComponents.makeLocationRepository(),
+                                    locationRepository: repositoryComponents.makeAddressRepository(),
                                     brandRepository: repositoryComponents.makeBrandRepository()))
+    }
+
+    func makePromotionsPage(url: URL, name: String) -> AgreementController {
+        return scoped(.init(viewModel: makePromotionsViewModel(url: url, name: name)))
+    }
+
+    private func makePromotionsViewModel(url: URL, name: String) -> AgreementViewModel {
+        return scoped(AgreementViewModelImpl(input: .init(url: url, name: name)))
     }
 }

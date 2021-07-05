@@ -10,8 +10,8 @@ import RxCocoa
 import RxSwift
 
 protocol SetNameViewModel: AnyObject {
-    func persist(name: String)
     var outputs: SetNameViewModelImpl.Output { get }
+    func persist(name: String)
 }
 
 final class SetNameViewModelImpl: SetNameViewModel {
@@ -19,27 +19,34 @@ final class SetNameViewModelImpl: SetNameViewModel {
 
     private let disposeBag = DisposeBag()
 
-    private let defaultStorage: DefaultStorage
-    private let profileService: ProfileService
+    private let repository: ChangeUserInfoRepository
 
-    init(defaultStorage: DefaultStorage, profileService: ProfileService) {
-        self.defaultStorage = defaultStorage
-        self.profileService = profileService
+    init(repository: ChangeUserInfoRepository) {
+        self.repository = repository
+        bindOutputs()
     }
 
     func persist(name: String) {
-        outputs.didStartRequest.accept(())
-        profileService.updateUserInfo(with: UserInfoDTO(name: name, email: nil, mobilePhone: nil))
-            .subscribe(onSuccess: { [weak self] userInfo in
-                self?.outputs.didEndRequest.accept(())
+        repository.saveUserName(with: name)
+    }
+
+    private func bindOutputs() {
+        repository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didFail
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didSaveUserName
+            .bind { [weak self] userInfo in
                 self?.outputs.didSaveUserName.accept(userInfo)
-                self?.defaultStorage.persist(name: name)
-            }, onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFail.accept(error)
-                }
-            })
+            }
             .disposed(by: disposeBag)
     }
 }

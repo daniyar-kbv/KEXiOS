@@ -40,6 +40,12 @@ final class SuggestController: UIViewController, AlertDisplayable {
         layoutUI()
         bindViewModel()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        contentView.searchBar.becomeFirstResponder()
+    }
 }
 
 extension SuggestController {

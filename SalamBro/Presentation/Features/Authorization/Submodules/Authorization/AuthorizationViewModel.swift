@@ -20,12 +20,13 @@ protocol AuthorizationViewModel: AnyObject {
 final class AuthorizationViewModelImpl {
     private(set) var outputs = Output()
     private let disposeBag = DisposeBag()
-    private let locationRepository: LocationRepository
+
+    private let addressRepository: AddressRepository
     private let authRepository: AuthPageRepository
     private var phoneNumber: String = ""
 
-    init(locationRepository: LocationRepository, authRepository: AuthPageRepository) {
-        self.locationRepository = locationRepository
+    init(addressRepository: AddressRepository, authRepository: AuthPageRepository) {
+        self.addressRepository = addressRepository
         self.authRepository = authRepository
         bindOutputs()
     }
@@ -61,7 +62,7 @@ extension AuthorizationViewModelImpl: AuthorizationViewModel {
     }
 
     func getCountryCode() -> String {
-        guard let country = locationRepository.getCurrentCountry() else {
+        guard let country = addressRepository.getCurrentCountry() else {
             return "+7" // by default Kazakhstan
         }
 

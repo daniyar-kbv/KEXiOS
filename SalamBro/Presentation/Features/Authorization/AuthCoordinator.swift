@@ -51,6 +51,7 @@ final class AuthCoordinator: BaseCoordinator {
             })
             .disposed(by: disposeBag)
 
+        authPage.hidesBottomBarWhenPushed = true
         router.push(viewController: authPage, animated: true)
     }
 

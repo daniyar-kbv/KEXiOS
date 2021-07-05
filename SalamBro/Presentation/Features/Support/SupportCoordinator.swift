@@ -26,15 +26,15 @@ final class SupportCoordinator: BaseCoordinator {
         let supportPage = pagesFactory.makeSupportPage()
 
         supportPage.outputs.openDocument
-            .subscribe(onNext: { [weak self] url in
-                self?.showAgreementPage(url: url)
+            .subscribe(onNext: { [weak self] url, name in
+                self?.showAgreementPage(url: url, name: name)
             }).disposed(by: disposeBag)
 
         router.set(navigationController: SBNavigationController(rootViewController: supportPage))
     }
 
-    private func showAgreementPage(url: URL) {
-        let agreementPage = pagesFactory.makeAgreementPage(url: url)
+    private func showAgreementPage(url: URL, name: String) {
+        let agreementPage = pagesFactory.makeAgreementPage(url: url, name: name)
 
         router.push(viewController: agreementPage, animated: true)
     }

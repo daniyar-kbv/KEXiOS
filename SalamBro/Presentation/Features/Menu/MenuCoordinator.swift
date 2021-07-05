@@ -47,8 +47,8 @@ final class MenuCoordinator: BaseCoordinator {
             }).disposed(by: disposeBag)
 
         menuPage.outputs.toPromotion
-            .subscribe(onNext: { [weak self] promotionURL, infoURL in
-                self?.openPromotion(promotionURL: promotionURL, infoURL: infoURL)
+            .subscribe(onNext: { [weak self] promotionURL, name in
+                self?.openPromotion(promotionURL: promotionURL, name: name)
             }).disposed(by: disposeBag)
 
         menuPage.outputs.toPositionDetail
@@ -81,15 +81,12 @@ final class MenuCoordinator: BaseCoordinator {
         addressCoordinator.start()
     }
 
-    private func openPromotion(promotionURL: URL, infoURL: URL?) {
-        let promotionsCoordinator = coordinatorsFactory.makePromotionsCoordinator(promotionURL: promotionURL, infoURL: infoURL)
-        add(promotionsCoordinator)
+    private func openPromotion(promotionURL: URL, name: String) {
+        let promotionsPage = pagesFactory.makePromotionsPage(url: promotionURL, name: name)
 
-        promotionsCoordinator.didFinish = { [weak self] in
-            self?.remove(promotionsCoordinator)
-        }
+        router.getNavigationController().setNavigationBarHidden(false, animated: true)
 
-        promotionsCoordinator.start()
+        router.push(viewController: promotionsPage, animated: true)
     }
 
     private func openDetail(positionUUID: String) {

@@ -8,10 +8,13 @@
 import Foundation
 
 protocol RepositoryComponents: AnyObject {
-    func makeLocationRepository() -> LocationRepository
+    func makeAddressRepository() -> AddressRepository
     func makeBrandRepository() -> BrandRepository
     func makeCartRepository() -> CartRepository
     func makeAuthRepository() -> AuthPageRepository
+    func makeChangeUserInfoRepository() -> ChangeUserInfoRepository
+    func makeCountriesRepository() -> CountriesRepository
+    func makeCitiesRepository() -> CitiesRepository
 }
 
 final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponents {
@@ -21,12 +24,12 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
         self.serviceComponents = serviceComponents
     }
 
-    func makeLocationRepository() -> LocationRepository {
-        return shared(LocationRepositoryImpl(storage: makeLocalStorage()))
+    func makeAddressRepository() -> AddressRepository {
+        return shared(AddressRepositoryImpl(storage: makeLocalStorage()))
     }
 
     func makeBrandRepository() -> BrandRepository {
-        return shared(BrandRepositoryImpl(storage: makeLocalStorage()))
+        return shared(BrandRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
     }
 
     func makeCartRepository() -> CartRepository {
@@ -35,6 +38,18 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
 
     func makeAuthRepository() -> AuthPageRepository {
         return shared(AuthPageRepositoryImpl(authService: serviceComponents.authService(), tokenStorage: AuthTokenStorageImpl.sharedStorage))
+    }
+
+    func makeChangeUserInfoRepository() -> ChangeUserInfoRepository {
+        return shared(ChangeUserInfoRepositoryImpl(service: serviceComponents.profileService(), defaultStorage: DefaultStorageImpl.sharedStorage))
+    }
+
+    func makeCountriesRepository() -> CountriesRepository {
+        return shared(CountriesRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
+    }
+
+    func makeCitiesRepository() -> CitiesRepository {
+        return shared(CitiesRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
     }
 
     private func makeLocalStorage() -> Storage {

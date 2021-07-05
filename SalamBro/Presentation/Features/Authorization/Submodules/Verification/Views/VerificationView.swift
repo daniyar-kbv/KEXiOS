@@ -40,9 +40,8 @@ final class VerificationView: UIView {
     lazy var otpField: OTPView = {
         let field = OTPView()
         field.setup()
-        field.didEnterLastDigit = { code in
+        field.didEnterLastDigit = { _ in
             self.passCode()
-            print(code)
         }
         return field
     }()

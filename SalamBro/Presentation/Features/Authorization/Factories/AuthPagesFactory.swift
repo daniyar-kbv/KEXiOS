@@ -29,7 +29,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeAuthPageViewModel() -> AuthorizationViewModel {
-        return scoped(AuthorizationViewModelImpl(locationRepository: repositoryComponents.makeLocationRepository(), authRepository: repositoryComponents.makeAuthRepository()))
+        return scoped(AuthorizationViewModelImpl(addressRepository: repositoryComponents.makeAddressRepository(), authRepository: repositoryComponents.makeAuthRepository()))
     }
 
     func makeVerificationPage(phoneNumber: String) -> VerificationController {
@@ -46,7 +46,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeSetNameViewModel() -> SetNameViewModel {
-        return scoped(SetNameViewModelImpl(defaultStorage: DefaultStorageImpl.sharedStorage, profileService: serviceComponents.profileService()))
+        return scoped(SetNameViewModelImpl(repository: repositoryComponents.makeChangeUserInfoRepository()))
     }
 
     func makeCountryCodePickerPage() -> CountryCodePickerViewController {
@@ -54,16 +54,15 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeCountryCodePickerViewModel() -> CountryCodePickerViewModel {
-        return scoped(CountryCodePickerViewModelImpl(repository: repositoryComponents.makeLocationRepository(),
-                                                     service: serviceComponents.locationService()))
+        return scoped(CountryCodePickerViewModelImpl(countriesRepository: repositoryComponents.makeCountriesRepository(), addressRepository: repositoryComponents.makeAddressRepository()))
     }
 
     func makeAgreementPage() -> AgreementController {
 //        Tech debt: change to url passing
-        return scoped(.init(viewModel: makeAgreementViewModel(url: URL(string: "google.kz")!)))
+        return scoped(.init(viewModel: makeAgreementViewModel(url: URL(string: "google.kz")!, name: "")))
     }
 
-    private func makeAgreementViewModel(url: URL) -> AgreementViewModel {
-        return scoped(AgreementViewModelImpl(url: url))
+    private func makeAgreementViewModel(url: URL, name: String) -> AgreementViewModel {
+        return scoped(AgreementViewModelImpl(input: .init(url: url, name: name)))
     }
 }

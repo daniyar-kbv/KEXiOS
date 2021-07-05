@@ -55,12 +55,12 @@ final class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
     func buildProfileCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> ProfileCoordinator {
         let router = routersFactory.makeProfileRouter()
         return .init(router: router,
-                     pagesFactory: makeProfilePagesFactory(serviceComponents: serviceComponents),
+                     pagesFactory: makeProfilePagesFactory(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents),
                      coordinatorsFactory: makeProfileChildCoordinatorsFactory(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, router: router))
     }
 
-    private func makeProfilePagesFactory(serviceComponents: ServiceComponents) -> ProfilePagesFactory {
-        return ProfilePagesFactoryImpl(serviceComponents: serviceComponents)
+    private func makeProfilePagesFactory(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> ProfilePagesFactory {
+        return ProfilePagesFactoryImpl(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
     }
 
     private func makeProfileChildCoordinatorsFactory(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents, router: Router) -> ProfileChildCoordinatorsFactory {

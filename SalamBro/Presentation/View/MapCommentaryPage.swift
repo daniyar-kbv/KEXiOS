@@ -9,20 +9,14 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-protocol MapCommentaryPageDelegate: AnyObject {
-    func onDoneButtonTapped(commentary: String)
-}
-
 final class MapCommentaryPage: UIViewController {
-    weak var delegate: MapCommentaryPageDelegate?
     var cachedCommentary: String? {
         didSet {
-            commentaryTextField.text = cachedCommentary
+            commentaryTextField.set(text: cachedCommentary)
         }
     }
 
     private let disposeBag = DisposeBag()
-
     let output = Output()
 
     private let commentaryTextField = MapTextField(image: nil)
@@ -35,15 +29,24 @@ final class MapCommentaryPage: UIViewController {
         return btn
     }()
 
-    private let containerView = UIView()
-
-    private var dimmedView: UIView?
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 18
+        view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        return view
+    }()
 
     init() {
         super.init(nibName: nil, bundle: nil)
+
         modalPresentationStyle = .overCurrentContext
+
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+
+        layoutUI()
     }
 
     @available(*, unavailable)
@@ -53,21 +56,27 @@ final class MapCommentaryPage: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        layoutUI()
+
         bindViews()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        commentaryTextField.becomeFirstResponder()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        view.backgroundColor = .clear
     }
 
     private func bindViews() {
         commentaryTextField.rx.text.orEmpty
             .subscribe(onNext: { [weak self] text in
-                if text != "" {
-                    self?.actionButton.isEnabled = true
-                    self?.actionButton.backgroundColor = .kexRed
-                    return
-                }
-
-                self?.actionButton.isEnabled = false
-                self?.actionButton.backgroundColor = .calmGray
+                self?.actionButton.isEnabled = !text.isEmpty
+                self?.actionButton.backgroundColor = text.isEmpty ? .calmGray : .kexRed
             })
             .disposed(by: disposeBag)
 
@@ -75,34 +84,30 @@ final class MapCommentaryPage: UIViewController {
             .subscribe(onNext: { [weak self] in
                 guard let text = self?.commentaryTextField.text else { return }
                 self?.output.didProceed.accept(text)
-                self?.dismiss(animated: true, completion: nil)
-                self?.output.didTerminate.accept(())
-                self?.dimmedView?.removeFromSuperview()
+                self?.finish()
             })
             .disposed(by: disposeBag)
     }
 
     @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            containerView.snp.remakeConstraints {
-                $0.height.greaterThanOrEqualTo(149)
-                $0.width.equalToSuperview()
+            containerView.snp.updateConstraints {
                 $0.bottom.equalToSuperview().offset(-keyboardSize.height)
             }
+
+            UIView.animate(withDuration: 0.2, animations: {
+                self.view.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+                self.view.layoutIfNeeded()
+            })
         }
     }
 
     @objc private func keyboardWillHide() {
-        dismiss(animated: true, completion: nil)
-        output.didTerminate.accept(())
-        dimmedView?.removeFromSuperview()
+        close()
     }
 
     public func configureTextField(placeholder: String) {
-        commentaryTextField.attributedPlaceholder = NSAttributedString(
-            string: placeholder,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
+        commentaryTextField.placeholder = placeholder
     }
 
     public func configureButton(title: String) {
@@ -110,20 +115,11 @@ final class MapCommentaryPage: UIViewController {
     }
 
     private func layoutUI() {
-        commentaryTextField.becomeFirstResponder()
-
-        containerView.backgroundColor = .white
         view.addSubview(containerView)
-        containerView.clipsToBounds = true
-        containerView.layer.cornerRadius = 18
-        containerView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         containerView.snp.makeConstraints {
-            $0.height.equalTo(view.frame.height / 2 + 48)
             $0.width.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(300)
         }
-
-        view.backgroundColor = .clear
 
         containerView.addSubview(commentaryTextField)
         commentaryTextField.snp.makeConstraints {
@@ -137,29 +133,38 @@ final class MapCommentaryPage: UIViewController {
             $0.top.equalTo(commentaryTextField.snp.bottom).offset(16)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(43)
+            $0.bottom.equalToSuperview().offset(-16)
         }
     }
 }
 
 extension MapCommentaryPage {
-    func openTransitionSheet(on vc: UIViewController) {
-        dimmedView = UIView()
-        guard let dimmedView = dimmedView else { return }
-        vc.present(self, animated: true)
-        dimmedView.backgroundColor = .gray
-        dimmedView.alpha = 0
-        vc.view.addSubview(dimmedView)
-        dimmedView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+    func openTransitionSheet(on vc: UIViewController,
+                             with comment: String? = nil)
+    {
+        cachedCommentary = comment
+
+        vc.present(self, animated: false)
+    }
+
+    private func finish() {
+        commentaryTextField.resignFirstResponder()
+    }
+
+    private func close() {
+        containerView.snp.updateConstraints {
+            $0.bottom.equalToSuperview().offset(300)
         }
-        vc.view.layoutIfNeeded()
+
         UIView.animate(withDuration: 0.2, animations: {
-            self.dimmedView?.alpha = 0.5
+            self.view.layoutIfNeeded()
+            self.view.backgroundColor = .clear
+        }, completion: { _ in
+            self.dismiss(animated: false)
         })
     }
 }
 
 struct Output {
     let didProceed = PublishRelay<String?>()
-    let didTerminate = PublishRelay<Void>()
 }

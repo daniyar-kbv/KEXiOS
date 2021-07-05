@@ -17,12 +17,12 @@ protocol AddressDetailViewModel {
 
 final class AddressDetailViewModelImpl: AddressDetailViewModel {
     private let deliveryAddress: DeliveryAddress
-    private let locationRepository: LocationRepository
+    private let locationRepository: AddressRepository
 
     let outputs: Output
 
     init(deliveryAddress: DeliveryAddress,
-         locationRepository: LocationRepository)
+         locationRepository: AddressRepository)
     {
         self.deliveryAddress = deliveryAddress
         self.locationRepository = locationRepository
@@ -45,7 +45,7 @@ extension AddressDetailViewModelImpl {
         let didDelete = PublishRelay<Void>()
 
         init(deliveryAddress: DeliveryAddress,
-             locationRepository: LocationRepository)
+             locationRepository: AddressRepository)
         {
             addressName = .init(value: deliveryAddress.address?.name)
             comment = .init(value: deliveryAddress.address?.commentary)
