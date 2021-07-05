@@ -24,7 +24,7 @@ final class AddressListPagesFactoryImpl: DependencyFactory, AddressListPagesFact
     }
 
     private func makeAddressListViewModel() -> AddressListViewModel {
-        return scoped(AddressListViewModelImpl(locationRepository: repositoryComponents.makeLocationRepository()))
+        return scoped(AddressListViewModelImpl(locationRepository: repositoryComponents.makeAddressRepository()))
     }
 
     func makeAddressDetailPage(deliveryAddress: DeliveryAddress) -> AddressDetailController {
@@ -32,6 +32,6 @@ final class AddressListPagesFactoryImpl: DependencyFactory, AddressListPagesFact
     }
 
     private func makeAddressDetailViewModel(deliveryAddress: DeliveryAddress) -> AddressDetailViewModel {
-        return scoped(AddressDetailViewModelImpl(deliveryAddress: deliveryAddress, locationRepository: repositoryComponents.makeLocationRepository()))
+        return scoped(AddressDetailViewModelImpl(deliveryAddress: deliveryAddress, locationRepository: repositoryComponents.makeAddressRepository()))
     }
 }

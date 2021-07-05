@@ -8,11 +8,12 @@
 import Foundation
 
 protocol RepositoryComponents: AnyObject {
-    func makeLocationRepository() -> AddressRepository
+    func makeAddressRepository() -> AddressRepository
     func makeBrandRepository() -> BrandRepository
     func makeCartRepository() -> CartRepository
-    func makeCitiesRepository() -> CitiesRepository
+    func makeChangeUserInfoRepository() -> ChangeUserInfoRepository
     func makeCountriesRepository() -> CountriesRepository
+    func makeCitiesRepository() -> CitiesRepository
 }
 
 final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponents {
@@ -22,7 +23,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
         self.serviceComponents = serviceComponents
     }
 
-    func makeLocationRepository() -> AddressRepository {
+    func makeAddressRepository() -> AddressRepository {
         return shared(AddressRepositoryImpl(storage: makeLocalStorage()))
     }
 
@@ -34,12 +35,16 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
         return shared(CartRepositoryImpl(storage: makeLocalStorage()))
     }
 
-    func makeCitiesRepository() -> CitiesRepository {
-        return shared(CitiesRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
+    func makeChangeUserInfoRepository() -> ChangeUserInfoRepository {
+        return shared(ChangeUserInfoRepositoryImpl(service: serviceComponents.profileService(), defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
     func makeCountriesRepository() -> CountriesRepository {
         return shared(CountriesRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
+    }
+
+    func makeCitiesRepository() -> CitiesRepository {
+        return shared(CitiesRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
     }
 
     private func makeLocalStorage() -> Storage {
