@@ -335,8 +335,8 @@
 		8A5D3E9B55AF14CE144F630130C32424 /* CartFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartFooter.swift; sourceTree = "<group>"; };
 		9FBF64710DC27A9AC625D0965E854543 /* CartPagesFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartPagesFactory.swift; sourceTree = "<group>"; };
 		BBD3C05EF4247C7109615CF144684222 /* CartPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPagesFactory.swift; sourceTree = "<group>"; };
-		91555C3D20F7DA887B651966D34A738F /* CartProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductCell.swift; sourceTree = "<group>"; };
 		6879D461B69AC740D718364EEB90186F /* CartProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductCell.swift; sourceTree = "<group>"; };
+		91555C3D20F7DA887B651966D34A738F /* CartProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductCell.swift; sourceTree = "<group>"; };
 		5B9C4F0B8B65CF56CC08971A29BFB08A /* CartProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartProductViewModel.swift; sourceTree = "<group>"; };
 		BA1D767B2B1F70796D02742709EA0BDD /* CartRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartRepository.swift; sourceTree = "<group>"; };
 		0BC00F0C20C6E1E20FCB3B8BB102EF76 /* CartStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartStorage.swift; sourceTree = "<group>"; };
@@ -693,31 +693,6 @@
 				A21DBF1D8149DD277ACF2EE07316691C /* SupportCoordinator.swift */,
 			);
 			path = Support;
-			sourceTree = "<group>";
-		};
-		656092F878D2202068121F592E2C7F54 /* Submodules */ = {
-			isa = PBXGroup;
-			children = (
-				FAD3D4ACC3D067B55E74C4F3058E1D14 /* CartProduct */,
-			);
-			path = Submodules;
-			sourceTree = "<group>";
-		};
-		FAD3D4ACC3D067B55E74C4F3058E1D14 /* CartProduct */ = {
-			isa = PBXGroup;
-			children = (
-				6879D461B69AC740D718364EEB90186F /* CartProductCell.swift */,
-				5B9C4F0B8B65CF56CC08971A29BFB08A /* CartProductViewModel.swift */,
-			);
-			path = CartProduct;
-            sourceTree = "<group>";
-        };
-		DD06A649E6E2CEE291BE99F4A95AD36D /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				4A3BD738E6A862C60CD7051649F750A4 /* AddressDetailView.swift */,
-			);
-			name = Views;
 			sourceTree = "<group>";
 		};
 		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
@@ -1182,6 +1157,14 @@
 				FA9844FEA036C0704AC08700818D6D9E /* OnBoardingCoordinator.swift */,
 			);
 			path = OnBoarding;
+			sourceTree = "<group>";
+		};
+		656092F878D2202068121F592E2C7F54 /* Submodules */ = {
+			isa = PBXGroup;
+			children = (
+				FAD3D4ACC3D067B55E74C4F3058E1D14 /* CartProduct */,
+			);
+			path = Submodules;
 			sourceTree = "<group>";
 		};
 		66174B70E610873B846EA2DFDBC446DA /* Agreement */ = {
@@ -1885,6 +1868,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		DD06A649E6E2CEE291BE99F4A95AD36D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4A3BD738E6A862C60CD7051649F750A4 /* AddressDetailView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		DEA625A673005AC52EEB53ADC17252D7 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1984,6 +1975,15 @@
 				D3024E6B5CD8BAACEE6C482FDC0CF46C /* ProfilePagesFactory.swift */,
 			);
 			path = Factories;
+			sourceTree = "<group>";
+		};
+		FAD3D4ACC3D067B55E74C4F3058E1D14 /* CartProduct */ = {
+			isa = PBXGroup;
+			children = (
+				6879D461B69AC740D718364EEB90186F /* CartProductCell.swift */,
+				5B9C4F0B8B65CF56CC08971A29BFB08A /* CartProductViewModel.swift */,
+			);
+			path = CartProduct;
 			sourceTree = "<group>";
 		};
 		FFDFF6C60AEB38675AD9D434730341AF /* MenuDetail */ = {
@@ -2717,7 +2717,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 27;
-				DEVELOPMENT_TEAM = S4325F4YCU;
+				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2786,7 +2786,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 27;
-				DEVELOPMENT_TEAM = S4325F4YCU;
+				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
