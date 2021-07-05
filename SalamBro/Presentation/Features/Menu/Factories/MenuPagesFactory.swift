@@ -37,7 +37,7 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
     }
 
     func makePromotionsPage(url: URL, name: String) -> AgreementController {
-        return (.init(viewModel: makePromotionsViewModel(url: url, name: name)))
+        return scoped(.init(viewModel: makePromotionsViewModel(url: url, name: name)))
     }
 
     private func makePromotionsViewModel(url: URL, name: String) -> AgreementViewModel {
