@@ -12,8 +12,8 @@ import RxSwift
 protocol SupportViewModel: AnyObject {
     var outputs: SupportViewModelImpl.Output { get }
 
-    var documents: [Document]? { get set }
-    var contacts: [Contact]? { get set }
+    var documents: [Document] { get set }
+    var contacts: [Contact] { get set }
 
     func getData()
     func getSocialContacts() -> [Contact]
@@ -26,8 +26,8 @@ final class SupportViewModelImpl: SupportViewModel {
 
     let outputs = Output()
 
-    var documents: [Document]?
-    var contacts: [Contact]?
+    var documents = [Document]()
+    var contacts = [Contact]()
 
     init(documentsService: DocumentsService) {
         self.documentsService = documentsService
@@ -51,11 +51,11 @@ final class SupportViewModelImpl: SupportViewModel {
     }
 
     func getSocialContacts() -> [Contact] {
-        return contacts?.filter { $0.getType() != .callCenter } ?? []
+        return contacts.filter { $0.getType() != .callCenter }
     }
 
     func getContact(of type: Contact.`Type`) -> Contact? {
-        return contacts?.first(where: { $0.getType() == type })
+        return contacts.first(where: { $0.getType() == type })
     }
 }
 

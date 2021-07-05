@@ -19,7 +19,6 @@ class CartController: UIViewController {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()
-    private var commentaryPage: MapCommentaryPage?
 
     // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
 
@@ -254,18 +253,16 @@ extension CartController: CartAdditinalProductCellDelegate {
 
 extension CartController: CartFooterDelegate {
     func openPromocode() {
-        commentaryPage = MapCommentaryPage()
-        commentaryPage?.configureTextField(placeholder: L10n.Promocode.field)
-        commentaryPage?.configureButton(title: L10n.Promocode.button)
+        let commentaryPage = MapCommentaryPage()
 
-        commentaryPage?.output.didProceed.subscribe(onNext: { _ in
+        commentaryPage.configureTextField(placeholder: L10n.Promocode.field)
+        commentaryPage.configureButton(title: L10n.Promocode.button)
+
+        commentaryPage.output.didProceed.subscribe(onNext: { _ in
 
         }).disposed(by: disposeBag)
-        commentaryPage?.output.didTerminate.subscribe(onNext: { [weak self] in
-            self?.commentaryPage = nil
-        }).disposed(by: disposeBag)
 
-        commentaryPage?.openTransitionSheet(on: self)
+        commentaryPage.openTransitionSheet(on: self)
     }
 }
 

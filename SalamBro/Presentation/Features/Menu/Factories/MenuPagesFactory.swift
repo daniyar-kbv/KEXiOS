@@ -31,7 +31,7 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
         return scoped(MenuViewModel(defaultStorage: DefaultStorageImpl.sharedStorage,
                                     promotionsService: serviceComponents.promotionsService(),
                                     ordersService: serviceComponents.ordersService(),
-                                    locationRepository: repositoryComponents.makeLocationRepository(),
+                                    locationRepository: repositoryComponents.makeAddressRepository(),
                                     brandRepository: repositoryComponents.makeBrandRepository()))
     }
 }

@@ -30,8 +30,7 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
     }
 
     private func makeCountriesViewModel() -> CountriesListViewModel {
-        return scoped(.init(service: serviceComponents.locationService(),
-                            repository: repositoryComponents.makeLocationRepository()))
+        return scoped(.init(repository: repositoryComponents.makeCountriesRepository()))
     }
 
     func makeCitiesPage(countryId: Int) -> CitiesListController {
@@ -40,8 +39,7 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
 
     private func makeCitiesViewModel(countryId: Int) -> CitiesListViewModel {
         return scoped(.init(countryId: countryId,
-                            service: serviceComponents.locationService(),
-                            repository: repositoryComponents.makeLocationRepository()))
+                            repository: repositoryComponents.makeCitiesRepository()))
     }
 
     func makeBrandsPage(cityId: Int) -> BrandsController {
@@ -50,10 +48,7 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
     }
 
     private func makeBrandsViewModel(cityId: Int) -> BrandViewModel {
-        return scoped(.init(repository: repositoryComponents.makeBrandRepository(),
-                            locationRepository: repositoryComponents.makeLocationRepository(),
-                            service: serviceComponents.locationService(),
-                            cityId: cityId))
+        return scoped(.init(brandRepository: repositoryComponents.makeBrandRepository(), cityId: cityId))
     }
 
     func makeMapPage() -> MapPage {
@@ -63,7 +58,7 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
     private func makeMapViewModel() -> MapViewModel {
         return scoped(.init(ordersService: serviceComponents.ordersService(),
                             defaultStorage: DefaultStorageImpl.sharedStorage,
-                            locationRepository: repositoryComponents.makeLocationRepository(),
+                            locationRepository: repositoryComponents.makeAddressRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
                             flow: .creation))
     }

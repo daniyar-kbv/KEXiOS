@@ -36,13 +36,8 @@ final class MapAddressView: UIView {
     }
 
     func changeButtonAppearance(based text: String) {
-        if text != "" {
-            actionButton.isEnabled = true
-            actionButton.backgroundColor = .kexRed
-            return
-        }
-        actionButton.isEnabled = false
-        actionButton.backgroundColor = .calmGray
+        actionButton.isEnabled = !text.isEmpty
+        actionButton.backgroundColor = text.isEmpty ? .calmGray : .kexRed
     }
 }
 
@@ -53,14 +48,8 @@ extension MapAddressView {
         layer.cornerRadius = 18
         layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
 
-        addressTextField.attributedPlaceholder = NSAttributedString(
-            string: L10n.MapView.AddressField.title,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
-        commentaryTextField.attributedPlaceholder = NSAttributedString(
-            string: L10n.MapView.CommentaryLabel.title,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
+        addressTextField.placeholder = L10n.MapView.AddressField.title
+        commentaryTextField.placeholder = L10n.MapView.CommentaryLabel.title
 
         actionButton.setTitle(L10n.MapView.ProceedButton.title, for: .normal)
     }
@@ -70,25 +59,23 @@ extension MapAddressView {
         addSubview(addressTextField)
         addressTextField.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
-            $0.height.equalTo(50)
+            $0.left.right.equalToSuperview().inset(24)
+            $0.height.greaterThanOrEqualTo(50)
         }
 
         addSubview(commentaryTextField)
         commentaryTextField.snp.makeConstraints {
             $0.top.equalTo(addressTextField.snp.bottom).offset(12)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
-            $0.height.equalTo(50)
+            $0.left.right.equalToSuperview().inset(24)
+            $0.height.greaterThanOrEqualTo(50)
         }
 
         addSubview(actionButton)
         actionButton.snp.makeConstraints {
             $0.top.equalTo(commentaryTextField.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
+            $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(43)
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
         }
     }
 }

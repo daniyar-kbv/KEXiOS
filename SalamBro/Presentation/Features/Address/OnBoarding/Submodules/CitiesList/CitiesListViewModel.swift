@@ -10,75 +10,43 @@ import PromiseKit
 import RxCocoa
 import RxSwift
 
-protocol CitiesListViewModelProtocol: ViewModel {
+protocol CitiesListViewModelProtocol: AnyObject {
+    var outputs: CitiesListViewModel.Output { get }
     var cities: [City] { get }
-    func didSelect(index: Int)
-    func getCities()
-    func refreshCities()
 
-    var outputs: CitiesListViewModel.Outputs { get }
+    func getCities()
+    func getCitiesCount() -> Int
+    func getCityName(at index: Int) -> String
+    func didSelect(index: Int)
 }
 
 final class CitiesListViewModel: CitiesListViewModelProtocol {
-    internal let outputs = Outputs()
+    private(set) var outputs: Output = .init()
     private let disposeBag = DisposeBag()
     private let countryId: Int
 
-    var cities: [City] = []
+    private(set) var cities: [City] = []
 
-    private let service: LocationService
-    private let repository: LocationRepository
+    private let repository: CitiesRepository
 
     init(countryId: Int,
-         service: LocationService,
-         repository: LocationRepository)
+         repository: CitiesRepository)
     {
         self.countryId = countryId
-        self.service = service
         self.repository = repository
+        bindOutputs()
     }
 
     func getCities() {
-        if
-            let cachedCities = repository.getCities(),
-            cachedCities != []
-        {
-            cities = cachedCities
-            outputs.didGetCities.accept(())
-        }
-
-        makeCitiesRequest()
+        repository.fetchCities(with: countryId)
     }
 
-    func refreshCities() {
-        makeCitiesRequest()
+    func getCitiesCount() -> Int {
+        return cities.count
     }
 
-    private func makeCitiesRequest() {
-        startAnimation()
-        service.getCities(for: countryId)
-            .subscribe { [weak self] citiesResponse in
-                self?.stopAnimation()
-                self?.process(receivedCities: citiesResponse)
-            } onError: { [weak self] error in
-                self?.stopAnimation()
-                self?.outputs.didGetError.accept(error as? ErrorPresentable)
-            }
-            .disposed(by: disposeBag)
-    }
-
-    private func process(receivedCities: [City]) {
-        guard let cachedCities = repository.getCities() else {
-            repository.set(cities: receivedCities)
-            cities = receivedCities
-            outputs.didGetCities.accept(())
-            return
-        }
-
-        if cachedCities == receivedCities { return }
-        repository.set(cities: receivedCities)
-        cities = receivedCities
-        outputs.didGetCities.accept(())
+    func getCityName(at index: Int) -> String {
+        return cities[index].name
     }
 
     func didSelect(index: Int) {
@@ -86,12 +54,36 @@ final class CitiesListViewModel: CitiesListViewModelProtocol {
         repository.changeCurrentCity(to: city)
         outputs.didSelectCity.accept(city.id)
     }
+
+    private func bindOutputs() {
+        repository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didGetCities.bind {
+            [weak self] cities in
+            self?.cities = cities
+            self?.repository.setCities(cities: cities)
+            self?.outputs.didGetCities.accept(())
+        }
+        .disposed(by: disposeBag)
+
+        repository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didFail
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
+    }
 }
 
 extension CitiesListViewModel {
-    struct Outputs {
+    struct Output {
+        let didStartRequest = PublishRelay<Void>()
         let didGetCities = BehaviorRelay<Void>(value: ())
         let didSelectCity = PublishRelay<Int>()
-        let didGetError = PublishRelay<ErrorPresentable?>()
+        let didFail = PublishRelay<ErrorPresentable>()
+        let didEndRequest = PublishRelay<Void>()
     }
 }

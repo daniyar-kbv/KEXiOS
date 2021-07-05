@@ -12,11 +12,12 @@ import RxSwift
 
 protocol MenuDetailViewModel: AnyObject {
     var outputs: MenuDetailViewModelImpl.Output { get }
-    var modifierGroups: [ModifierGroup] { get set }
+    var modifierCellViewModels: [[MenuDetailModifierCellViewModel]] { get set }
 
     func update()
     func proceed()
     func set(comment: String)
+    func getComment() -> String?
     func set(modifier: Modifier, at indexPath: IndexPath)
 }
 
@@ -27,35 +28,11 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     private let cartRepository: CartRepository
 
     private let disposeBag = DisposeBag()
-    private var position: MenuPositionDetail? {
-        didSet {
-            outputs.itemImage.accept(URL(string: position?.image ?? ""))
-            outputs.itemTitle.accept(position?.name)
-            outputs.itemDescription.accept(position?.description)
-            outputs.itemPrice.accept("\(L10n.MenuDetail.proceedButton) \(position?.price.removeTrailingZeros() ?? "")")
 
-//            Tech debt: remove when modifiers added to API
-            if let modifierGroups = position?.modifierGroups,
-               modifierGroups.count > 0
-            {
-                self.modifierGroups = modifierGroups
-            } else {
-                setTestModifiers()
-            }
-        }
-    }
-
-    var modifierGroups = [ModifierGroup]() {
-        didSet {
-            outputs.updateModifiers.accept(())
-            modifierGroups.forEach { _ in selectedModifiers.append([]) }
-            check()
-        }
-    }
-
-    private var selectedModifiers = [[Modifier]]()
+    private var position: MenuPositionDetail?
     private var comment: String?
 
+    var modifierCellViewModels: [[MenuDetailModifierCellViewModel]] = []
     let outputs = Output()
 
     init(positionUUID: String,
@@ -69,10 +46,36 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
         self.cartRepository = cartRepository
     }
 
-    public func update() {
+    func update() {
         download()
     }
 
+    func proceed() {
+        guard let position = position else { return }
+        cartRepository.addItem(item: position.toCartItem(
+            count: 1,
+            comment: comment ?? "",
+            modifiers: getSelectedModifiers()
+        ))
+        outputs.didProceed.accept(())
+    }
+
+    func set(comment: String) {
+        self.comment = comment
+        outputs.comment.accept(comment)
+    }
+
+    func getComment() -> String? {
+        return comment
+    }
+
+    func set(modifier: Modifier, at indexPath: IndexPath) {
+        check()
+        outputs.didSelectModifier.accept((modifier, indexPath))
+    }
+}
+
+extension MenuDetailViewModelImpl {
     private func download() {
         guard let leadUUID = defaultStorage.leadUUID else { return }
 
@@ -88,33 +91,30 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
             }).disposed(by: disposeBag)
     }
 
-    func proceed() {
-        guard let position = position else { return }
-        cartRepository.addItem(item: position.toCartItem(
-            count: 1,
-            comment: comment ?? "",
-            modifiers: selectedModifiers.flatMap { $0 }
-        ))
-        outputs.didProceed.accept(())
-    }
+    private func process(position: MenuPositionDetail) {
+        self.position = position
 
-    func set(comment: String) {
-        self.comment = comment
-        outputs.comment.accept(comment)
-    }
+        outputs.itemImage.accept(URL(string: position.image ?? ""))
+        outputs.itemTitle.accept(position.name)
+        outputs.itemDescription.accept(position.description)
+        outputs.itemPrice.accept("\(L10n.MenuDetail.proceedButton) \(position.price.removeTrailingZeros())")
 
-    func set(modifier: Modifier, at indexPath: IndexPath) {
-        selectedModifiers[indexPath.section].append(modifier)
+        modifierCellViewModels = position.modifierGroups.map { modifierGroup in
+            (0 ..< modifierGroup.maxAmount).map { _ in
+                MenuDetailModifierCellViewModelImpl(modifierGroup: modifierGroup)
+            }
+        }
+
+        outputs.updateModifiers.accept(())
         check()
-        outputs.didSelectModifier.accept((modifier, indexPath))
     }
 
     private func check() {
-        outputs.isComplete.accept(!modifierGroups.enumerated()
-            .map { index, modifierGroup in
-                selectedModifiers[index].count == modifierGroup.maxAmount
-            }
-            .contains(false))
+        outputs.isComplete.accept(!modifierCellViewModels.flatMap { $0 }.contains(where: { $0.didSelect() == false }))
+    }
+
+    private func getSelectedModifiers() -> [Modifier] {
+        return modifierCellViewModels.flatMap { $0 }.map { $0.getValue() }.filter { $0 != nil } as! [Modifier]
     }
 }
 
@@ -134,51 +134,5 @@ extension MenuDetailViewModelImpl {
         let didSelectModifier = PublishRelay<(Modifier, IndexPath)>()
         let didProceed = PublishRelay<Void>()
         let isComplete = PublishRelay<Bool>()
-    }
-}
-
-//  MARK: Test data, remove when modifiers added to API
-
-extension MenuDetailViewModelImpl {
-    private func setTestModifiers() {
-        var modifierGroups = [ModifierGroup]()
-
-        modifierGroups.append(.init(
-            uuid: "testUUID",
-            name: "Выберите напиток",
-            minAmount: 2,
-            maxAmount: 2,
-            isRequired: true,
-            modifiers: [
-                Modifier(name: "Кола",
-                         uuid: "testUUID"),
-                Modifier(name: "Спрайт",
-                         uuid: "testUUID"),
-                Modifier(name: "Фанта",
-                         uuid: "testUUID"),
-                Modifier(name: "Пепси",
-                         uuid: "testUUID"),
-            ]
-        ))
-
-        modifierGroups.append(.init(
-            uuid: "testUUID",
-            name: "Выберите соус",
-            minAmount: 1,
-            maxAmount: 1,
-            isRequired: true,
-            modifiers: [
-                Modifier(name: "Сырный",
-                         uuid: "testUUID"),
-                Modifier(name: "Кетчуп",
-                         uuid: "testUUID"),
-                Modifier(name: "Барбекю",
-                         uuid: "testUUID"),
-                Modifier(name: "Чесночный",
-                         uuid: "testUUID"),
-            ]
-        ))
-
-        self.modifierGroups = modifierGroups
     }
 }

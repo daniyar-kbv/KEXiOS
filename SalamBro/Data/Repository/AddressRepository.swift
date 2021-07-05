@@ -1,5 +1,5 @@
 //
-//  LocationRepository.swift
+//  AddressRepository.swift
 //  SalamBro
 //
 //  Created by Ilyar Mnazhdin on 27.05.2021.
@@ -7,18 +7,12 @@
 
 import Foundation
 
-protocol LocationRepository: AnyObject {
+protocol AddressRepository: AnyObject {
     func isAddressComplete() -> Bool
 
     func getCurrentCountry() -> Country?
-    func getCountries() -> [Country]?
-    func changeCurrentCountry(to country: Country)
-    func set(countries: [Country])
 
-    func getCurrectCity() -> City?
-    func getCities() -> [City]?
-    func changeCurrentCity(to city: City)
-    func set(cities: [City])
+    func getCurrentCity() -> City?
 
     func getCurrentAddress() -> Address?
     func changeCurrentAddress(to address: Address)
@@ -31,7 +25,7 @@ protocol LocationRepository: AnyObject {
     func addDeliveryAddress(deliveryAddress: DeliveryAddress)
 }
 
-final class LocationRepositoryImpl: LocationRepository {
+final class AddressRepositoryImpl: AddressRepository {
     private let storage: GeoStorage
 
     init(storage: GeoStorage) {
@@ -39,77 +33,29 @@ final class LocationRepositoryImpl: LocationRepository {
     }
 }
 
-extension LocationRepositoryImpl {
+extension AddressRepositoryImpl {
     func isAddressComplete() -> Bool {
         return getCurrentDeliveryAddress()?.isComplete() ?? false
     }
 }
 
-// MARK: Countries
-
-extension LocationRepositoryImpl {
+extension AddressRepositoryImpl {
     func getCurrentCountry() -> Country? {
         return getCurrentDeliveryAddress()?.country
     }
-
-    func getCountries() -> [Country]? {
-        guard
-            let countries = storage.countries,
-            countries != []
-        else {
-            return nil
-        }
-
-        return countries
-    }
-
-    func changeCurrentCountry(to country: Country) {
-        if let index = storage.currentDeliveryAddressIndex {
-            storage.deliveryAddresses[index].country = country
-        } else {
-            addDeliveryAddress(deliveryAddress: DeliveryAddress(country: country))
-        }
-    }
-
-    func set(countries: [Country]) {
-        storage.countries = countries
-    }
 }
 
-// MARK: Cities
+// MARK: Current city
 
-extension LocationRepositoryImpl {
-    func getCurrectCity() -> City? {
+extension AddressRepositoryImpl {
+    func getCurrentCity() -> City? {
         return getCurrentDeliveryAddress()?.city
-    }
-
-    func getCities() -> [City]? {
-        guard
-            let cities = storage.cities,
-            cities != []
-        else {
-            return nil
-        }
-
-        return cities
-    }
-
-    func changeCurrentCity(to city: City) {
-        if let index = storage.currentDeliveryAddressIndex {
-            storage.deliveryAddresses[index].city = city
-        } else {
-            addDeliveryAddress(deliveryAddress: DeliveryAddress(city: city))
-        }
-    }
-
-    func set(cities: [City]) {
-        storage.cities = cities
     }
 }
 
 //  MARK: Address
 
-extension LocationRepositoryImpl {
+extension AddressRepositoryImpl {
     func getCurrentAddress() -> Address? {
         return getCurrentDeliveryAddress()?.address
     }
@@ -125,7 +71,7 @@ extension LocationRepositoryImpl {
 
 // MARK: DeliveryAddress
 
-extension LocationRepositoryImpl {
+extension AddressRepositoryImpl {
     func getDeliveryAddresses() -> [DeliveryAddress]? {
         return storage.deliveryAddresses
     }

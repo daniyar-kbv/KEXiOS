@@ -26,6 +26,6 @@ class PromotionsPagesFactoryImpl: DependencyFactory, PromotionsPagesFactory {
     }
 
     func makePromotionsInfoViewModel(url: URL) -> AgreementViewModel {
-        return scoped(AgreementViewModelImpl(url: url))
+        return scoped(AgreementViewModelImpl(input: .init(url: url, name: nil)))
     }
 }

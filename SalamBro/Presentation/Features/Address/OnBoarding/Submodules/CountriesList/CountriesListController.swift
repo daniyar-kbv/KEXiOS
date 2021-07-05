@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class CountriesListController: UIViewController, AlertDisplayable {
+final class CountriesListController: UIViewController, AlertDisplayable, LoaderDisplayable {
     let outputs = Output()
     private let viewModel: CountriesListViewModelProtocol
     private let disposeBag = DisposeBag()
@@ -48,7 +48,7 @@ final class CountriesListController: UIViewController, AlertDisplayable {
         super.viewDidLoad()
         viewModel.getCountries()
         setup()
-        bind()
+        bindViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -65,19 +65,32 @@ final class CountriesListController: UIViewController, AlertDisplayable {
         navigationItem.title = L10n.CountriesList.Navigation.title
     }
 
-    private func bind() {
-        viewModel.outputs.didGetCoutries
-            .bind(to: countriesTableView.rx.reload)
+    private func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            })
             .disposed(by: disposeBag)
 
-        viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
-            guard let error = error else { return }
-            self?.showError(error)
-        }).disposed(by: disposeBag)
+        viewModel.outputs.didGetCountries
+            .bind(to: countriesTableView.rx.reload)
+            .disposed(by: disposeBag)
 
         viewModel.outputs.didSelectCountry.subscribe(onNext: { [weak self] countryId in
             self?.outputs.didSelectCountry.accept(countryId)
         }).disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didFail
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setup() {
@@ -101,7 +114,7 @@ final class CountriesListController: UIViewController, AlertDisplayable {
 
     @objc
     private func handleRefreshControlAction() {
-        viewModel.refresh()
+        viewModel.getCountries()
         refreshControl.endRefreshing()
     }
 }
@@ -112,12 +125,12 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        viewModel.countries.count
+        viewModel.getCountriesCount()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = viewModel.countries[indexPath.row].name
+        cell.textLabel?.text = viewModel.getCountryName(at: indexPath.row)
         cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         cell.textLabel?.textColor = .darkGray
         cell.backgroundColor = .white

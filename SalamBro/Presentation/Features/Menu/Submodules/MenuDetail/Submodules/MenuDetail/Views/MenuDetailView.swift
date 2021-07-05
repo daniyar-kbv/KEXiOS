@@ -16,6 +16,16 @@ protocol MenuDetailViewDelegate: AnyObject {
 final class MenuDetailView: UIView {
     weak var delegate: MenuDetailViewDelegate?
 
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: safeAreaInsets.bottom + 75, right: 0)
+        view.delaysContentTouches = false
+        view.showsVerticalScrollIndicator = false
+        return view
+    }()
+
+    private lazy var contentView = UIView()
+
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -47,26 +57,9 @@ final class MenuDetailView: UIView {
         return view
     }()
 
-    private lazy var commentaryView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.cornerRadius = 10
-        return view
-    }()
-
-    private lazy var commentaryField: UITextField = {
-        let view = UITextField()
-        view.attributedPlaceholder = NSAttributedString(
-            string: L10n.MenuDetail.commentaryField,
-            attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
-        )
-        view.borderStyle = .none
-        view.clearButtonMode = .never
-        view.minimumFontSize = 17
-        view.adjustsFontSizeToFitWidth = true
-        view.contentHorizontalAlignment = .left
-        view.contentVerticalAlignment = .center
-        view.isUserInteractionEnabled = false
+    private lazy var commentaryField: MapTextField = {
+        let view = MapTextField()
+        view.placeholder = L10n.MenuDetail.commentaryField
         return view
     }()
 
@@ -90,11 +83,17 @@ final class MenuDetailView: UIView {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        setImageViewSize()
+    }
 }
 
 extension MenuDetailView {
     func configureTextField(text: String) {
-        commentaryField.text = text
+        commentaryField.set(text: text)
     }
 
     func setImageView(with url: URL) {
@@ -102,22 +101,30 @@ extension MenuDetailView {
     }
 
     private func configureActions() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(commetaryViewTapped(_:)))
-        commentaryView.addGestureRecognizer(tap)
-
         proceedButton.addTarget(self, action: #selector(proceedButtonTapped), for: .touchUpInside)
     }
 
     private func layoutUI() {
-        commentaryView.addSubview(commentaryField)
-        [imageView, itemTitleLabel, descriptionLabel, modifiersTableView, commentaryView, proceedButton].forEach {
-            addSubview($0)
+        addSubview(scrollView)
+        scrollView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
+        }
+
+        [imageView, itemTitleLabel, descriptionLabel, modifiersTableView, commentaryField].forEach {
+            contentView.addSubview($0)
         }
 
         imageView.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(43)
+            $0.top.equalToSuperview()
             $0.left.right.equalToSuperview().inset(40)
-            $0.height.equalToSuperview().multipliedBy(0.33)
+            $0.width.equalTo(0)
+            $0.height.equalTo(0)
         }
 
         itemTitleLabel.snp.makeConstraints {
@@ -137,20 +144,26 @@ extension MenuDetailView {
         }
 
         commentaryField.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(16)
-            $0.centerX.centerY.equalToSuperview()
-        }
-
-        commentaryView.snp.makeConstraints {
             $0.top.equalTo(modifiersTableView.snp.bottom).offset(16)
             $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(50)
+            $0.height.greaterThanOrEqualTo(50)
+            $0.bottom.equalToSuperview()
         }
 
+        addSubview(proceedButton)
         proceedButton.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(43)
+        }
+    }
+
+    private func setImageViewSize() {
+        let width = frame.width - 76
+        let height = width * 0.725
+        imageView.snp.updateConstraints {
+            $0.width.equalTo(width)
+            $0.height.equalTo(height)
         }
     }
 
@@ -168,6 +181,10 @@ extension MenuDetailView {
     func setProceedButton(isActive: Bool) {
         proceedButton.backgroundColor = isActive ? .kexRed : .calmGray
         proceedButton.isUserInteractionEnabled = isActive
+    }
+
+    func setCommentary(action: @escaping () -> Void) {
+        commentaryField.onShouldBeginEditing = action
     }
 
     @objc private func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {

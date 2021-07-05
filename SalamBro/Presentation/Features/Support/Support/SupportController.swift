@@ -76,14 +76,7 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
+
         navigationItem.title = L10n.Support.title
     }
 
@@ -154,30 +147,27 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 }
 
 extension SupportController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return 50
-    }
-
-    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let link = viewModel.documents?[indexPath.row].link,
-              let url = URL(string: link) else { return }
-        outputs.openDocument.accept(url)
-    }
-
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return 1
+        return viewModel.documents.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0, indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.selectionStyle = .none
-            cell.textLabel?.text = viewModel.documents?[indexPath.row].name
-            cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-            cell.imageView?.image = SBImageResource.getIcon(for: SupportIcon.documentsIcon)
-            return cell
-        }
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.selectionStyle = .none
+        cell.textLabel?.text = viewModel.documents[indexPath.row].name
+        cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        cell.imageView?.image = SBImageResource.getIcon(for: SupportIcon.documentsIcon)
+        return cell
+    }
+
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let url = URL(string: viewModel.documents[indexPath.row].link) else { return }
+        outputs.openDocument.accept((url,
+                                     viewModel.documents[indexPath.row].name))
+    }
+
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return 50
     }
 }
 
@@ -221,6 +211,6 @@ extension SupportController: UICollectionViewDelegate, UICollectionViewDataSourc
 
 extension SupportController {
     struct Output {
-        let openDocument = PublishRelay<URL>()
+        let openDocument = PublishRelay<(URL, String)>()
     }
 }
