@@ -39,6 +39,7 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+
         configureViews()
         bindViewModel()
     }
@@ -52,6 +53,7 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        print("viewModel.update()")
         viewModel.update()
 
         setBackButton { [weak self] in
@@ -78,6 +80,7 @@ extension MenuDetailController {
     }
 
     private func bindViewModel() {
+        print("bindViewModel")
         viewModel.outputs.didStartRequest
             .subscribe(onNext: { [weak self] in
                 self?.showLoader()
@@ -151,8 +154,8 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
         return viewModel.modifierCellViewModels.count
     }
 
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return viewModel.modifierCellViewModels.count
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.modifierCellViewModels[section].count
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

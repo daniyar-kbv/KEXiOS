@@ -16,12 +16,16 @@ extension AnimationViewPresentable where Self: UIViewController {
     func showAnimationView(delegate: AnimationContainerViewDelegate,
                            animationType: LottieAnimationModel)
     {
+        guard needsPresentation() else { return }
+
         let animationController = AnimationController(animationType: animationType)
         animationController.delegate = delegate
 
         addChild(animationController)
-        animationController.view.frame = view.frame
         view.addSubview(animationController.view)
+        animationController.view.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         animationController.didMove(toParent: self)
     }
 
@@ -32,5 +36,9 @@ extension AnimationViewPresentable where Self: UIViewController {
             animationController.view.removeFromSuperview()
             animationController.removeFromParent()
         }
+    }
+
+    private func needsPresentation() -> Bool {
+        return !children.contains(where: { $0 is AnimationController })
     }
 }

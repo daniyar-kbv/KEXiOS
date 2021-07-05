@@ -72,6 +72,8 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
 
     private let viewModel: ProfileViewModel
 
+    private var needsLayoutUI = true
+
     init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -84,15 +86,16 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        layoutUI()
-        showEmptyState()
+
         bindViews()
         bindViewModel()
-        viewModel.fetchUserInfo()
+
+        reloadPage()
     }
 
     func reloadPage() {
         guard viewModel.userDidAuthenticate() else {
+            showEmptyState()
             return
         }
 
@@ -157,8 +160,9 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
 
         viewModel.outputs.didGetUserInfo
             .subscribe(onNext: { [weak self] userInfo in
-                self?.hideAnimationView()
+                self?.layoutUI()
                 self?.updateViews(with: userInfo)
+                self?.hideAnimationView()
             })
             .disposed(by: disposeBag)
     }
@@ -176,6 +180,9 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
     }
 
     private func layoutUI() {
+        guard needsLayoutUI else { return }
+        needsLayoutUI = false
+
         navigationItem.title = L10n.Profile.NavigationBar.title
         view.backgroundColor = .arcticWhite
 

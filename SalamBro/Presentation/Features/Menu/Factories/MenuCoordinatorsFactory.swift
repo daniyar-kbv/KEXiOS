@@ -9,7 +9,6 @@ import Foundation
 
 protocol MenuCoordinatorsFactory {
     func makeAddressCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents, flowType: AddressCoordinator.FlowType) -> AddressCoordinator
-    func makePromotionsCoordinator(promotionURL: URL, infoURL: URL?) -> PromotionsCoordinator
     func makeMenuDetailCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents, positionUUID: String) -> MenuDetailCoordinator
 }
 
@@ -33,17 +32,6 @@ class MenuCoordinatorsFactoryImpl: DependencyFactory, MenuCoordinatorsFactory {
                                         repositoryComponents: RepositoryComponents) -> AddressPagesFactory
     {
         return scoped(AddressPagesFactoryImpl(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
-    }
-
-    func makePromotionsCoordinator(promotionURL: URL, infoURL: URL?) -> PromotionsCoordinator {
-        return scoped(.init(router: router,
-                            pagesFactory: makePromotionsPageFactory(),
-                            promotionURL: promotionURL,
-                            infoURL: infoURL))
-    }
-
-    private func makePromotionsPageFactory() -> PromotionsPagesFactory {
-        return scoped(PromotionsPagesFactoryImpl())
     }
 
     func makeMenuDetailCoordinator(serviceComponents: ServiceComponents,
