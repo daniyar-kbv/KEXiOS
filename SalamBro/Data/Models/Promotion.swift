@@ -8,9 +8,9 @@
 import Foundation
 
 struct Promotion: Codable {
-    let position: Int
+    let priority: Int
     let id: Int
-    let type: String
+    let name: String
     let image: String
     let slug: String
     let link: String

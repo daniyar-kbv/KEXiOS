@@ -181,12 +181,8 @@
 		395259CD74AC9A4D761F55E6FFD6C201 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA6BABD99CE324F971D2E884E1FA2B /* ProfileViewModel.swift */; };
 		E82C0C971A2D81F1DB77B8B3DB283825 /* Promotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */; };
 		B1F8A5468443016E0841FA168F2A448C /* PromotionsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E03E22502B0B1125F7255C0B59B4AFF /* PromotionsAPI.swift */; };
-		35E1324F5270F90D0B10FACBFD1789EB /* PromotionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97A3002FBC1D0FBED06984EB651E496 /* PromotionsController.swift */; };
-		AD8FCC7443CBA57ED5B4B0020C87266F /* PromotionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF7C663DBA89C70654C8AB4C45C76FA /* PromotionsCoordinator.swift */; };
-		4426B4AC0A8EBB2039006AC81E796651 /* PromotionsPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6AF6EB2F16FF0ED029DC3FAB5FC721 /* PromotionsPagesFactory.swift */; };
 		91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */; };
 		30A29427B5B0E3A39FA2F9993D28B726 /* PromotionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */; };
-		FC675195C94C13C7C3F94F08AF85A05B /* PromotionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069AD1E36FF98BD779EA162DCF63894E /* PromotionsViewModel.swift */; };
 		F3F6FD51C42ACB19D01CA04641E225AF /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5469540D8F0A3653E52AD2E2084BDFF5 /* RateController.swift */; };
 		532FBE3CF89CD141641CA0D76E8ECBB8 /* RateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED087FC022B58289758AB5B3C9837BFC /* RateItem.swift */; };
 		283E45D5260DC090B3765DF51B940D47 /* RateItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AFEC21AF4D0F9FE6B8BD980647787B /* RateItemCell.swift */; };
@@ -484,12 +480,8 @@
 		B3CA6BABD99CE324F971D2E884E1FA2B /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promotion.swift; sourceTree = "<group>"; };
 		6E03E22502B0B1125F7255C0B59B4AFF /* PromotionsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsAPI.swift; sourceTree = "<group>"; };
-		D97A3002FBC1D0FBED06984EB651E496 /* PromotionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsController.swift; sourceTree = "<group>"; };
-		EEF7C663DBA89C70654C8AB4C45C76FA /* PromotionsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsCoordinator.swift; sourceTree = "<group>"; };
-		EB6AF6EB2F16FF0ED029DC3FAB5FC721 /* PromotionsPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsPagesFactory.swift; sourceTree = "<group>"; };
 		9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsResponse.swift; sourceTree = "<group>"; };
 		2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsService.swift; sourceTree = "<group>"; };
-		069AD1E36FF98BD779EA162DCF63894E /* PromotionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsViewModel.swift; sourceTree = "<group>"; };
 		5469540D8F0A3653E52AD2E2084BDFF5 /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
 		ED087FC022B58289758AB5B3C9837BFC /* RateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateItem.swift; sourceTree = "<group>"; };
 		35AFEC21AF4D0F9FE6B8BD980647787B /* RateItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateItemCell.swift; sourceTree = "<group>"; };
@@ -1251,7 +1243,6 @@
 				DEA625A673005AC52EEB53ADC17252D7 /* Menu */,
 				FFDFF6C60AEB38675AD9D434730341AF /* MenuDetail */,
 				B450D5A04E032E2AEC030D74F0A21F31 /* Modifiers */,
-				7DABAEEBB72B647C4D73CAD07ADB1806 /* Promotions */,
 			);
 			path = Submodules;
 			sourceTree = "<group>";
@@ -1302,25 +1293,6 @@
 				8DF1E4DBA1F2CFFCC7215700E3F93B52 /* CountriesRepository.swift */,
 			);
 			path = Repository;
-			sourceTree = "<group>";
-		};
-		7DABAEEBB72B647C4D73CAD07ADB1806 /* Promotions */ = {
-			isa = PBXGroup;
-			children = (
-				8F16DE37C31EADD6ABFA42C59B87FEEF /* Factories */,
-				CD1207F4B4BD5697AC52F7C4A8823CB6 /* Submodules */,
-				EEF7C663DBA89C70654C8AB4C45C76FA /* PromotionsCoordinator.swift */,
-			);
-			path = Promotions;
-			sourceTree = "<group>";
-		};
-		7F8F0C82369C4A843D506B4EB061BDF9 /* Promotions */ = {
-			isa = PBXGroup;
-			children = (
-				D97A3002FBC1D0FBED06984EB651E496 /* PromotionsController.swift */,
-				069AD1E36FF98BD779EA162DCF63894E /* PromotionsViewModel.swift */,
-			);
-			path = Promotions;
 			sourceTree = "<group>";
 		};
 		8225A88D78EDBA0CAB41D761FA594BEF /* Extension */ = {
@@ -1446,14 +1418,6 @@
 				EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */,
 			);
 			path = SalamBroTests;
-			sourceTree = "<group>";
-		};
-		8F16DE37C31EADD6ABFA42C59B87FEEF /* Factories */ = {
-			isa = PBXGroup;
-			children = (
-				EB6AF6EB2F16FF0ED029DC3FAB5FC721 /* PromotionsPagesFactory.swift */,
-			);
-			path = Factories;
 			sourceTree = "<group>";
 		};
 		8F36741ECEC9337D67F6ED9644E60285 /* Views */ = {
@@ -1789,14 +1753,6 @@
 				5CDBDDF296181028DA6C893E34167D29 /* SelectMainInformationViewModel.swift */,
 			);
 			path = SelectMainInformation;
-			sourceTree = "<group>";
-		};
-		CD1207F4B4BD5697AC52F7C4A8823CB6 /* Submodules */ = {
-			isa = PBXGroup;
-			children = (
-				7F8F0C82369C4A843D506B4EB061BDF9 /* Promotions */,
-			);
-			path = Submodules;
 			sourceTree = "<group>";
 		};
 		CF86187F6E3E40AD84E132FE8AF6445E /* Menu */ = {
@@ -2501,12 +2457,8 @@
 				395259CD74AC9A4D761F55E6FFD6C201 /* ProfileViewModel.swift in Sources */,
 				E82C0C971A2D81F1DB77B8B3DB283825 /* Promotion.swift in Sources */,
 				B1F8A5468443016E0841FA168F2A448C /* PromotionsAPI.swift in Sources */,
-				35E1324F5270F90D0B10FACBFD1789EB /* PromotionsController.swift in Sources */,
-				AD8FCC7443CBA57ED5B4B0020C87266F /* PromotionsCoordinator.swift in Sources */,
-				4426B4AC0A8EBB2039006AC81E796651 /* PromotionsPagesFactory.swift in Sources */,
 				91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */,
 				30A29427B5B0E3A39FA2F9993D28B726 /* PromotionsService.swift in Sources */,
-				FC675195C94C13C7C3F94F08AF85A05B /* PromotionsViewModel.swift in Sources */,
 				F3F6FD51C42ACB19D01CA04641E225AF /* RateController.swift in Sources */,
 				532FBE3CF89CD141641CA0D76E8ECBB8 /* RateItem.swift in Sources */,
 				283E45D5260DC090B3765DF51B940D47 /* RateItemCell.swift in Sources */,

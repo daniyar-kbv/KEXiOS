@@ -84,7 +84,7 @@ extension MenuDetailViewModelImpl {
         ordersService.getProductDetail(for: leadUUID, by: positionUUID)
             .subscribe(onSuccess: { [weak self] position in
                 self?.outputs.didEndRequest.accept(())
-                self?.position = position
+                self?.process(position: position)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didGetError.accept(error as? ErrorPresentable)

@@ -40,8 +40,14 @@ final class AddressPickerCell: UITableViewCell, Reusable {
             self.textLabel?.text = $0
         }.disposed(by: disposeBag)
 
-        viewModel.isSelected.bind { [unowned self] in
-            self.accessoryView = $0 ? UIImageView(image: UIImage(named: "checkmark")) : UIImageView(image: UIImage(named: "chevron.right"))
+        viewModel.isSelected.bind { [unowned self] isSelected in
+            self.accessoryView = UIImageView(
+                image: SBImageResource.getIcon(
+                    for: isSelected ?
+                        AddressPickIcon.checkMarkIcon :
+                        AddressPickIcon.arrowRightIcon
+                )
+            )
         }.disposed(by: disposeBag)
     }
 

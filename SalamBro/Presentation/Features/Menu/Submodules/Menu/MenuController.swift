@@ -90,6 +90,7 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
@@ -183,9 +184,6 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
             outputs.toAddressess.accept { [weak self] in
                 self?.viewModel.update()
             }
-        case let cellViewModel as AdCollectionCellViewModel:
-            guard let promotionURL = URL(string: cellViewModel.cellViewModels[indexPath.row].promotion.link) else { return }
-            outputs.toPromotion.accept((promotionURL, nil))
         default:
             break
         }
@@ -270,14 +268,14 @@ extension MenuController: UIScrollViewDelegate {
 }
 
 extension MenuController: AddCollectionCellDelegate {
-    public func goToRating(promotionURL: URL, infoURL: URL?) {
-        outputs.toPromotion.accept((promotionURL, infoURL))
+    public func goToRating(promotionURL: URL, name: String) {
+        outputs.toPromotion.accept((promotionURL, name))
     }
 }
 
 extension MenuController {
     struct Output {
-        let toPromotion = PublishRelay<(URL, URL?)>()
+        let toPromotion = PublishRelay<(URL, String)>()
         let toChangeBrand = PublishRelay<() -> Void>()
         let toAddressess = PublishRelay<() -> Void>()
         let toPositionDetail = PublishRelay<String>()

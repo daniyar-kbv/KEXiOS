@@ -11,6 +11,13 @@ protocol UIImageGetable {
     var name: String { get }
 }
 
+enum AddressPickIcon: String, UIImageGetable {
+    case arrowRightIcon = "arrow_right"
+    case checkMarkIcon = "check_mark"
+
+    var name: String { return rawValue }
+}
+
 enum ProfileIcon: String, UIImageGetable {
     case changeLanguageIcon = "change_language_icon"
     case deliveryAddressIcon = "delivery_address_icon"

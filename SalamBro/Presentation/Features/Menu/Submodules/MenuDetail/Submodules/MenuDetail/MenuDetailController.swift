@@ -39,6 +39,7 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+
         configureViews()
         bindViewModel()
     }
@@ -151,8 +152,8 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
         return viewModel.modifierCellViewModels.count
     }
 
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return viewModel.modifierCellViewModels.count
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.modifierCellViewModels[section].count
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

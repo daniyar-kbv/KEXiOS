@@ -81,27 +81,13 @@ final class MenuViewModel: MenuViewModelProtocol {
                                             )
                                         })
 
-//        Tech debt: uncomment when promotions API start working
-//        finalSequesnce.subscribe(onSuccess: {
-//            [weak self] promotions, categories, positions in
-//            self?.outputs.didEndRequest.accept(())
-//
-//            self?.setPromotions(promotions: promotions)
-//            self?.setCategories(categories: categories)
-//            self?.setPositions(positions: positions)
-//
-//            self?.outputs.updateTableView.accept(())
-//        }, onError: { [weak self] error in
-//            self?.outputs.didEndRequest.accept(())
-//            self?.outputs.didGetError.accept(error as? ErrorPresentable)
-//        }).disposed(by: disposeBag)
-
-        productsSequence.subscribe(onSuccess: { [weak self] data in
+        finalSequesnce.subscribe(onSuccess: {
+            [weak self] promotions, categories, positions in
             self?.outputs.didEndRequest.accept(())
 
-            self?.setPromotions(promotions: [])
-            self?.setCategories(categories: data.categories)
-            self?.setPositions(positions: data.positions)
+            self?.setPromotions(promotions: promotions)
+            self?.setCategories(categories: categories)
+            self?.setPositions(positions: positions)
 
             self?.outputs.updateTableView.accept(())
         }, onError: { [weak self] error in
@@ -111,6 +97,7 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func setPromotions(promotions: [Promotion]) {
+        let promotions = promotions.sorted(by: { $0.priority < $1.priority })
         var topViewModels = [ViewModel]()
         topViewModels.append(AddressPickCellViewModel(address: locationRepository.getCurrentDeliveryAddress()?.address))
         if promotions.count > 0 {
