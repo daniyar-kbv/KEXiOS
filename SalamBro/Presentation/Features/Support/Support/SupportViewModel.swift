@@ -22,32 +22,21 @@ protocol SupportViewModel: AnyObject {
 
 final class SupportViewModelImpl: SupportViewModel {
     private let disposeBag = DisposeBag()
-    private let documentsService: DocumentsService
+    private let documentsRepository: DocumentsRepository
 
     let outputs = Output()
 
     var documents = [Document]()
     var contacts = [Contact]()
 
-    init(documentsService: DocumentsService) {
-        self.documentsService = documentsService
+    init(documentsRepository: DocumentsRepository) {
+        self.documentsRepository = documentsRepository
+
+        bindDocumentsRepository()
     }
 
     func getData() {
-        let sequence = Single.zip(documentsService.getDocuments(),
-                                  documentsService.getContacts())
-
-        outputs.didStartReqest.accept(())
-        sequence.subscribe(onSuccess: { [weak self] documents, contacts in
-            self?.outputs.didEndRequest.accept(())
-            self?.documents = documents
-            self?.contacts = contacts
-            self?.outputs.update.accept(())
-        }, onError: { [weak self] error in
-            guard let error = error as? ErrorPresentable else { return }
-            self?.outputs.didEndRequest.accept(())
-            self?.outputs.didGetError.accept(error)
-        }).disposed(by: disposeBag)
+        documentsRepository.getDocuments()
     }
 
     func getSocialContacts() -> [Contact] {
@@ -56,6 +45,27 @@ final class SupportViewModelImpl: SupportViewModel {
 
     func getContact(of type: Contact.`Type`) -> Contact? {
         return contacts.first(where: { $0.getType() == type })
+    }
+
+    private func bindDocumentsRepository() {
+        documentsRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartReqest)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didGetError
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didGetDocuments
+            .subscribe(onNext: { [weak self] documents, contacts in
+                self?.documents = documents
+                self?.contacts = contacts
+                self?.outputs.update.accept(())
+            }).disposed(by: disposeBag)
     }
 }
 

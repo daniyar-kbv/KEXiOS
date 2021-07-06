@@ -8,16 +8,15 @@
 import Foundation
 
 protocol SupportPagesFactory: AnyObject {
-    /// Rout View Controller for Coordinator
     func makeSupportPage() -> SupportController
     func makeAgreementPage(url: URL, name: String) -> AgreementController
 }
 
 final class SupportPagesFactoryImpl: DependencyFactory, SupportPagesFactory {
-    private let serviceComponents: ServiceComponents
+    private let repositoryComponents: RepositoryComponents
 
-    init(serviceComponents: ServiceComponents) {
-        self.serviceComponents = serviceComponents
+    init(repositoryComponents: RepositoryComponents) {
+        self.repositoryComponents = repositoryComponents
     }
 
     func makeSupportPage() -> SupportController {
@@ -25,7 +24,7 @@ final class SupportPagesFactoryImpl: DependencyFactory, SupportPagesFactory {
     }
 
     private func makeSupportViewModel() -> SupportViewModel {
-        return shared(SupportViewModelImpl(documentsService: serviceComponents.documentsService()))
+        return shared(SupportViewModelImpl(documentsRepository: repositoryComponents.makeDocumentsRepository()))
     }
 
     func makeAgreementPage(url: URL, name: String) -> AgreementController {

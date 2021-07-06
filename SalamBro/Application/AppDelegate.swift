@@ -29,9 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func configureAppCoordinator() {
-        appCoordinator = AppCoordinator(serviceComponents: ServiceComponentsAssembly(),
-                                        repositoryComponents: RepositoryComponentsAssembly(serviceComponents: ServiceComponentsAssembly()),
-                                        appCoordinatorsFactory: ApplicationCoordinatorFactoryImpl(builder: AppCoordinatorsModulesBuilderImpl(routersFactory: RoutersFactoryImpl())))
+        let serviceComponents = ServiceComponentsAssembly()
+        let repositoryComponents = RepositoryComponentsAssembly(serviceComponents: serviceComponents)
+        appCoordinator = AppCoordinator(serviceComponents: serviceComponents,
+                                        repositoryComponents: repositoryComponents,
+                                        appCoordinatorsFactory: ApplicationCoordinatorFactoryImpl(builder: AppCoordinatorsModulesBuilderImpl(routersFactory: RoutersFactoryImpl())),
+                                        pagesFactory: ApplicationPagesFactoryImpl(repositoryComponents: repositoryComponents))
     }
 
     private func configureProgressHUD() {
