@@ -166,6 +166,7 @@
 		D7810ACB5D2FC67EAA18409E1E6F9AFA /* OrderHistoryPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817174D64C954931530A6469F0E37115 /* OrderHistoryPagesFactory.swift */; };
 		72098CFFDF630CECB3586D354E65BB2C /* OrderHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E8BF89CDC2B403CDC8A5BCC7788DC9 /* OrderHistoryViewModel.swift */; };
 		2D4CFF98D59AD7A51A19D37476E30C0E /* OrdersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */; };
+		A6039E7FE93F0390FFEC146F1292BD79 /* OrdersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D6FC842227DF23EBF5A73C8DF1A623 /* OrdersRepository.swift */; };
 		099A87777B0098C8CC9353085E7723C9 /* OrdersResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */; };
 		233AEC182BE1BE8A729C9E18E9244FFE /* OrdersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DBCD36CB1C2C7E3069476CE83EACA /* OrdersService.swift */; };
 		1814F54CFAC26967B8C664F02E4AA121 /* Pods_SalamBro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C9392BFA56499DD56ECB2AF1FC231E8 /* Pods_SalamBro.framework */; };
@@ -452,6 +453,7 @@
 		817174D64C954931530A6469F0E37115 /* OrderHistoryPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryPagesFactory.swift; sourceTree = "<group>"; };
 		02E8BF89CDC2B403CDC8A5BCC7788DC9 /* OrderHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryViewModel.swift; sourceTree = "<group>"; };
 		DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersAPI.swift; sourceTree = "<group>"; };
+		A3D6FC842227DF23EBF5A73C8DF1A623 /* OrdersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersRepository.swift; sourceTree = "<group>"; };
 		0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersResponses.swift; sourceTree = "<group>"; };
 		3A4DBCD36CB1C2C7E3069476CE83EACA /* OrdersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersService.swift; sourceTree = "<group>"; };
 		8C4C164B21125043DA7278DDEE6014FD /* Pods-SalamBro-SalamBroUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SalamBro-SalamBroUITests.debug.xcconfig"; path = "Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1293,6 +1295,7 @@
 				BA1D767B2B1F70796D02742709EA0BDD /* CartRepository.swift */,
 				F5F9B00C87EC9410D224F0BF4AE07C2E /* CitiesRepository.swift */,
 				8DF1E4DBA1F2CFFCC7215700E3F93B52 /* CountriesRepository.swift */,
+				A3D6FC842227DF23EBF5A73C8DF1A623 /* OrdersRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -2448,6 +2451,7 @@
 				D7810ACB5D2FC67EAA18409E1E6F9AFA /* OrderHistoryPagesFactory.swift in Sources */,
 				72098CFFDF630CECB3586D354E65BB2C /* OrderHistoryViewModel.swift in Sources */,
 				2D4CFF98D59AD7A51A19D37476E30C0E /* OrdersAPI.swift in Sources */,
+				A6039E7FE93F0390FFEC146F1292BD79 /* OrdersRepository.swift in Sources */,
 				099A87777B0098C8CC9353085E7723C9 /* OrdersResponses.swift in Sources */,
 				233AEC182BE1BE8A729C9E18E9244FFE /* OrdersService.swift in Sources */,
 				FA4CFDD438F5F9F434061FC36FC6BB4B /* ProfileAPI.swift in Sources */,

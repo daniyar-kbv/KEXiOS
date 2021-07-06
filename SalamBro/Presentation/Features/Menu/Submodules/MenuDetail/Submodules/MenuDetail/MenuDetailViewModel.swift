@@ -24,7 +24,7 @@ protocol MenuDetailViewModel: AnyObject {
 final class MenuDetailViewModelImpl: MenuDetailViewModel {
     private let positionUUID: String
     private let defaultStorage: DefaultStorage
-    private let ordersService: OrdersService
+    private let ordersRepository: OrdersRepository
     private let cartRepository: CartRepository
 
     private let disposeBag = DisposeBag()
@@ -37,13 +37,14 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
 
     init(positionUUID: String,
          defaultStorage: DefaultStorage,
-         ordersService: OrdersService,
+         ordersRepository: OrdersRepository,
          cartRepository: CartRepository)
     {
         self.positionUUID = positionUUID
         self.defaultStorage = defaultStorage
-        self.ordersService = ordersService
+        self.ordersRepository = ordersRepository
         self.cartRepository = cartRepository
+        bindOutputs()
     }
 
     func update() {
@@ -76,19 +77,31 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
 }
 
 extension MenuDetailViewModelImpl {
+    private func bindOutputs() {
+        ordersRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        ordersRepository.outputs.didGetProductDetail.bind {
+            [weak self] position in
+            self?.outputs.didEndRequest.accept(())
+            self?.process(position: position)
+        }
+        .disposed(by: disposeBag)
+
+        ordersRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        ordersRepository.outputs.didFail
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+    }
+
     private func download() {
         guard let leadUUID = defaultStorage.leadUUID else { return }
 
-        outputs.didStartRequest.accept(())
-
-        ordersService.getProductDetail(for: leadUUID, by: positionUUID)
-            .subscribe(onSuccess: { [weak self] position in
-                self?.outputs.didEndRequest.accept(())
-                self?.process(position: position)
-            }, onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                self?.outputs.didGetError.accept(error as? ErrorPresentable)
-            }).disposed(by: disposeBag)
+        ordersRepository.getProductDetail(for: leadUUID, by: positionUUID)
     }
 
     private func process(position: MenuPositionDetail) {

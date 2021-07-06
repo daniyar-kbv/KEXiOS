@@ -27,10 +27,10 @@ final class MenuViewModel: MenuViewModelProtocol {
     private let defaultStorage: DefaultStorage
 
     private let promotionsService: PromotionsService
-    private let ordersService: OrdersService
 
     private let locationRepository: AddressRepository
     private let brandRepository: BrandRepository
+    private let ordersRepository: OrdersRepository
 
     public var headerViewModels: [ViewModel?] = []
     public var cellViewModels: [[ViewModel]] = []
@@ -39,15 +39,15 @@ final class MenuViewModel: MenuViewModelProtocol {
 
     init(defaultStorage: DefaultStorage,
          promotionsService: PromotionsService,
-         ordersService: OrdersService,
          locationRepository: AddressRepository,
-         brandRepository: BrandRepository)
+         brandRepository: BrandRepository,
+         ordersRepository: OrdersRepository)
     {
         self.defaultStorage = defaultStorage
         self.promotionsService = promotionsService
-        self.ordersService = ordersService
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
+        self.ordersRepository = ordersRepository
     }
 
     public func update() {
@@ -65,7 +65,7 @@ final class MenuViewModel: MenuViewModelProtocol {
         outputs.didStartRequest.accept(())
 
         let promotionsSequence = promotionsService.getPromotions()
-        let productsSequence = ordersService.getProducts(for: leadUuid)
+        let productsSequence = ordersRepository.getProducts(for: leadUuid)
 
         let finalSequesnce = Single.zip(promotionsSequence,
                                         productsSequence,

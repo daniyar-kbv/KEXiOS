@@ -32,12 +32,11 @@ protocol SelectMainInformationViewModelProtocol {
 final class SelectMainInformationViewModel: SelectMainInformationViewModelProtocol {
     internal var flowType: FlowType
 
-    private let ordersService: OrdersService
-
     private let locationRepository: AddressRepository
     private let countriesRepository: CountriesRepository
     private let citiesRepository: CitiesRepository
     private let brandRepository: BrandRepository
+    private let ordersRepository: OrdersRepository
     private let defaultStorage: DefaultStorage
 
     public lazy var countries: [Country] = countriesRepository.getCountries() ?? []
@@ -51,19 +50,19 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     var outputs = Output()
     private let disposeBag = DisposeBag()
 
-    init(ordersService: OrdersService,
-         locationRepository: AddressRepository,
+    init(locationRepository: AddressRepository,
          countriesRepository: CountriesRepository,
          citiesRepository: CitiesRepository,
          brandRepository: BrandRepository,
+         ordersRepository: OrdersRepository,
          defaultStorage: DefaultStorage,
          flowType: FlowType)
     {
-        self.ordersService = ordersService
         self.locationRepository = locationRepository
         self.countriesRepository = countriesRepository
         self.citiesRepository = citiesRepository
         self.brandRepository = brandRepository
+        self.ordersRepository = ordersRepository
         self.defaultStorage = defaultStorage
         self.flowType = flowType
 
@@ -116,6 +115,25 @@ extension SelectMainInformationViewModel {
             .disposed(by: disposeBag)
 
         citiesRepository.outputs.didFail
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+
+        ordersRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        ordersRepository.outputs.didGetLeadUUID.bind {
+            [weak self] leadUUID in
+            self?.defaultStorage.persist(leadUUID: leadUUID)
+            self?.outputs.didSave.accept(())
+        }
+        .disposed(by: disposeBag)
+
+        ordersRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        ordersRepository.outputs.didFail
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
     }
@@ -227,17 +245,7 @@ extension SelectMainInformationViewModel {
                                                                latitude: latitude),
                                 localBrand: brandId)
 
-        outputs.didStartRequest.accept(())
-
-        ordersService.applyOrder(dto: dto)
-            .subscribe(onSuccess: { [weak self] leadUUID in
-                self?.outputs.didStartRequest.accept(())
-                self?.defaultStorage.persist(leadUUID: leadUUID)
-                self?.outputs.didSave.accept(())
-            }, onError: { [weak self] error in
-                self?.outputs.didStartRequest.accept(())
-                self?.outputs.didGetError.accept(error as? ErrorPresentable)
-            }).disposed(by: disposeBag)
+        ordersRepository.applyOrder(with: dto)
     }
 }
 

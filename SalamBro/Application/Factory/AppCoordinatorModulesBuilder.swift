@@ -47,9 +47,8 @@ final class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
                                                               repositoryComponents: repositoryComponents))
     }
 
-    private func makeOnboardingPagesFactory(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoadingPagesFactory {
-        return OnBoardingPagesFactoryImpl(serviceComponents: serviceComponents,
-                                          repositoryComponents: repositoryComponents)
+    private func makeOnboardingPagesFactory(serviceComponents _: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoadingPagesFactory {
+        return OnBoardingPagesFactoryImpl(repositoryComponents: repositoryComponents)
     }
 
     func buildProfileCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> ProfileCoordinator {

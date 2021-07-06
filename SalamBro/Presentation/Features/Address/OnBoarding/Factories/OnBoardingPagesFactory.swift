@@ -15,13 +15,9 @@ protocol OnBoadingPagesFactory: AnyObject {
 }
 
 final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory {
-    private let serviceComponents: ServiceComponents
     private let repositoryComponents: RepositoryComponents
 
-    init(serviceComponents: ServiceComponents,
-         repositoryComponents: RepositoryComponents)
-    {
-        self.serviceComponents = serviceComponents
+    init(repositoryComponents: RepositoryComponents) {
         self.repositoryComponents = repositoryComponents
     }
 
@@ -56,10 +52,10 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
     }
 
     private func makeMapViewModel() -> MapViewModel {
-        return scoped(.init(ordersService: serviceComponents.ordersService(),
-                            defaultStorage: DefaultStorageImpl.sharedStorage,
+        return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage,
                             locationRepository: repositoryComponents.makeAddressRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
+                            ordersRepository: repositoryComponents.makeOrdersRepository(),
                             flow: .creation))
     }
 }
