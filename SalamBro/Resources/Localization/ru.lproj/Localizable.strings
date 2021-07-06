@@ -238,3 +238,12 @@
 // MARK: - Close
 "Common.error" = "Ошибка";
 "Common.close" = "Закрыть";
+
+// MARK: - Payment Selection
+
+"Payment.Selection.bill" = "К оплате:";
+"Payment.Selection.change" = "Изменить";
+"Payment.Selection.choosePaymentMethod" = "Выберите способ оплаты";
+"Payment.Selection.orderPayment" = "Оформить заказ";
+"Payment.Selection.paymentMethod" = "Способ оплаты";
+"Payment.Selection.title" = "Оформление заказа";

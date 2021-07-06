@@ -29,9 +29,9 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeAuthPageViewModel() -> AuthorizationViewModel {
-        return scoped(AuthorizationViewModelImpl(locationRepository: repositoryComponents.makeAddressRepository(),
+        return scoped(AuthorizationViewModelImpl(addressRepository: repositoryComponents.makeAddressRepository(),
                                                  documentsRepository: repositoryComponents.makeDocumentsRepository(),
-                                                 authService: serviceComponents.authService()))
+                                                 authRepository: repositoryComponents.makeAuthRepository()))
     }
 
     func makeVerificationPage(phoneNumber: String) -> VerificationController {
@@ -39,8 +39,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeVerificationViewModel(phoneNumber: String) -> VerificationViewModel {
-        return scoped(.init(service: serviceComponents.authService(),
-                            tokenStorage: AuthTokenStorageImpl.sharedStorage,
+        return scoped(.init(repository: repositoryComponents.makeAuthRepository(),
                             phoneNumber: phoneNumber))
     }
 

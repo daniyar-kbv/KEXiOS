@@ -11,6 +11,7 @@ protocol RepositoryComponents: AnyObject {
     func makeAddressRepository() -> AddressRepository
     func makeBrandRepository() -> BrandRepository
     func makeCartRepository() -> CartRepository
+    func makeAuthRepository() -> AuthPageRepository
     func makeChangeUserInfoRepository() -> ChangeUserInfoRepository
     func makeCountriesRepository() -> CountriesRepository
     func makeCitiesRepository() -> CitiesRepository
@@ -35,6 +36,10 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
 
     func makeCartRepository() -> CartRepository {
         return shared(CartRepositoryImpl(storage: makeLocalStorage()))
+    }
+
+    func makeAuthRepository() -> AuthPageRepository {
+        return shared(AuthPageRepositoryImpl(authService: serviceComponents.authService(), tokenStorage: AuthTokenStorageImpl.sharedStorage))
     }
 
     func makeChangeUserInfoRepository() -> ChangeUserInfoRepository {
