@@ -14,6 +14,9 @@ protocol AuthorizationViewModel: AnyObject {
     func sendOTP()
     func getCountryCode() -> String
 
+    func getDocuments()
+    func getUserAgreementInfo() -> (URL, String)?
+
     var outputs: AuthorizationViewModelImpl.Output { get }
 }
 
@@ -23,11 +26,20 @@ final class AuthorizationViewModelImpl {
 
     private let addressRepository: AddressRepository
     private let authRepository: AuthPageRepository
-    private var phoneNumber: String = ""
+    private let documentsRepository: DocumentsRepository
 
-    init(addressRepository: AddressRepository, authRepository: AuthPageRepository) {
+    private var phoneNumber: String = ""
+    private var userAgreement: Document?
+
+    init(addressRepository: AddressRepository,
+         documentsRepository: DocumentsRepository,
+         authRepository: AuthPageRepository)
+    {
         self.addressRepository = addressRepository
+        self.documentsRepository = documentsRepository
         self.authRepository = authRepository
+
+        bindDocumentsRepository()
         bindOutputs()
     }
 
@@ -67,6 +79,37 @@ extension AuthorizationViewModelImpl: AuthorizationViewModel {
         }
 
         return country.countryCode
+    }
+
+    func getDocuments() {
+        documentsRepository.getUserAgreement()
+    }
+
+    func getUserAgreementInfo() -> (URL, String)? {
+        guard let userAgreement = userAgreement,
+              let url = URL(string: userAgreement.link) else { return nil }
+        return (url, userAgreement.name)
+    }
+}
+
+extension AuthorizationViewModelImpl {
+    private func bindDocumentsRepository() {
+        documentsRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didStartRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didGetError
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didGetUserAgreement
+            .subscribe(onNext: { [weak self] userAgreement in
+                self?.userAgreement = userAgreement
+            }).disposed(by: disposeBag)
     }
 }
 

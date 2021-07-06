@@ -11,24 +11,23 @@ import UIKit
 final class AppCoordinator: BaseCoordinator {
     private var preparedViewControllers: [UIViewController] = []
 
-    private(set) var tabBarController: SBTabBarController!
-
     private let serviceComponents: ServiceComponents
     private let repositoryComponents: RepositoryComponents
     private let appCoordinatorsFactory: ApplicationCoordinatorFactory
+    private let pagesFactory: ApplicationPagesFactory
 
     init(serviceComponents: ServiceComponents,
          repositoryComponents: RepositoryComponents,
-         appCoordinatorsFactory: ApplicationCoordinatorFactory)
+         appCoordinatorsFactory: ApplicationCoordinatorFactory,
+         pagesFactory: ApplicationPagesFactory)
     {
         self.serviceComponents = serviceComponents
         self.repositoryComponents = repositoryComponents
         self.appCoordinatorsFactory = appCoordinatorsFactory
+        self.pagesFactory = pagesFactory
     }
 
     override func start() {
-        tabBarController = SBTabBarController()
-
         configureLocalization()
 
         configureMenuCoordinator()
@@ -65,7 +64,7 @@ final class AppCoordinator: BaseCoordinator {
         let menuCoordinator = appCoordinatorsFactory.makeMenuCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
         menuCoordinator.start()
-        menuCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: .tabbarMenuTitle),
+        menuCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: TabBarText.menuTitle),
                                                                                    image: Asset.menu.image,
                                                                                    selectedImage: Asset.menu.image)
 
@@ -76,7 +75,7 @@ final class AppCoordinator: BaseCoordinator {
     private func configureProfileCoordinator() {
         let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
         profileCoordinator.start()
-        profileCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: .tabbarProfileTitle),
+        profileCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: TabBarText.profileTitle),
                                                                                       image: Asset.profile.image,
                                                                                       selectedImage: Asset.profile.image)
         preparedViewControllers.append(profileCoordinator.router.getNavigationController())
@@ -84,9 +83,9 @@ final class AppCoordinator: BaseCoordinator {
     }
 
     private func configureSupportCoordinator() {
-        let supportCoordinator = appCoordinatorsFactory.makeSupportCoordinator(serviceComponents: serviceComponents)
+        let supportCoordinator = appCoordinatorsFactory.makeSupportCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
         supportCoordinator.start()
-        supportCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: .tabbarSupportTitle),
+        supportCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: TabBarText.supportTitle),
                                                                                       image: Asset.support.image,
                                                                                       selectedImage: Asset.support.image)
         preparedViewControllers.append(supportCoordinator.router.getNavigationController())
@@ -97,7 +96,7 @@ final class AppCoordinator: BaseCoordinator {
         let cartCoordinator = appCoordinatorsFactory.makeCartCoordinator(serviceComponents: serviceComponents,
                                                                          repositoryComponents: repositoryComponents)
         cartCoordinator.start()
-        cartCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: .tabbarCartTitle),
+        cartCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: TabBarText.cartTitle),
                                                                                    image: Asset.cart.image,
                                                                                    selectedImage: Asset.cart.image)
         preparedViewControllers.append(cartCoordinator.router.getNavigationController())
@@ -131,8 +130,8 @@ final class AppCoordinator: BaseCoordinator {
     }
 
     private func showTabBarController() {
-        tabBarController.viewControllers = preparedViewControllers
+        pagesFactory.makeSBTabbarController().viewControllers = preparedViewControllers
 
-        UIApplication.shared.setRootView(tabBarController) // MARK: Tech debt
+        UIApplication.shared.setRootView(pagesFactory.makeSBTabbarController()) // MARK: Tech debt
     }
 }

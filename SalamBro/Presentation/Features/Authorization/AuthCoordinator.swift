@@ -46,8 +46,8 @@ final class AuthCoordinator: BaseCoordinator {
             .disposed(by: disposeBag)
 
         authPage.outputs.handleAgreementTextAction
-            .subscribe(onNext: { [weak self] in
-                self?.showAgreementPage()
+            .subscribe(onNext: { [weak self] url, name in
+                self?.showAgreementPage(url: url, name: name)
             })
             .disposed(by: disposeBag)
 
@@ -101,8 +101,8 @@ final class AuthCoordinator: BaseCoordinator {
         router.present(navController, animated: true, completion: nil)
     }
 
-    private func showAgreementPage() {
-        let agreementPage = pagesFactory.makeAgreementPage()
+    private func showAgreementPage(url: URL, name: String) {
+        let agreementPage = pagesFactory.makeAgreementPage(url: url, name: name)
 
         router.push(viewController: agreementPage, animated: true)
     }

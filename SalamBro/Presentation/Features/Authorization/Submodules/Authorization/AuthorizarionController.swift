@@ -77,6 +77,12 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
         bindViewModel()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        viewModel.getDocuments()
+    }
+
     private func bindViewModel() {
         viewModel.outputs.didStartRequest
             .subscribe(onNext: { [weak self] in
@@ -106,7 +112,8 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
 
 extension AuthorizationController {
     @objc private func handleTapOnLabel() {
-        outputs.handleAgreementTextAction.accept(())
+        guard let userAgreementInfo = viewModel.getUserAgreementInfo() else { return }
+        outputs.handleAgreementTextAction.accept(userAgreementInfo)
     }
 
     func changeCountryCode(title: String) {
@@ -185,6 +192,6 @@ extension AuthorizationController {
         let didSendOTP = PublishRelay<String>()
         let didCloseAuthFlow = PublishRelay<Void>()
         let handleChangeCountryCode = PublishRelay<Void>()
-        let handleAgreementTextAction = PublishRelay<Void>()
+        let handleAgreementTextAction = PublishRelay<(URL, String)>()
     }
 }
