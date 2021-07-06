@@ -28,8 +28,8 @@ final class CartCoordinator: BaseCoordinator {
         let cartPage = pagesFactory.makeCartPage()
 
         cartPage.outputs.toAuth.subscribe(onNext: { [weak self] in
-            self?.startAuthCoordinator()
-
+//            self?.startAuthCoordinator()
+            self?.startPaymentCoordinator()
         }).disposed(by: disposeBag)
 
         router.set(navigationController: SBNavigationController(rootViewController: cartPage))
@@ -42,8 +42,21 @@ final class CartCoordinator: BaseCoordinator {
         authCoordinator.didFinish = { [weak self, weak authCoordinator] in
             self?.remove(authCoordinator)
             authCoordinator = nil
+            self?.startPaymentCoordinator()
         }
 
         authCoordinator.start()
+    }
+
+    private func startPaymentCoordinator() {
+        let paymentCoordinator = coordinatorsFactory.makePaymentCoordinator()
+        add(paymentCoordinator)
+
+        paymentCoordinator.didFinish = { [weak self, weak paymentCoordinator] in
+            self?.remove(paymentCoordinator)
+            paymentCoordinator = nil
+        }
+
+        paymentCoordinator.start()
     }
 }
