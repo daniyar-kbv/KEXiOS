@@ -9,7 +9,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-protocol SBTabBarViewModel {
+protocol SBTabBarViewModel: AnyObject {
     func getDocuments()
 }
 

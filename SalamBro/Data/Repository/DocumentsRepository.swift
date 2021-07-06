@@ -9,7 +9,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-protocol DocumentsRepository {
+protocol DocumentsRepository: AnyObject {
     var outputs: DocumentsRepositoryImpl.Output { get }
 
     func getDocuments()

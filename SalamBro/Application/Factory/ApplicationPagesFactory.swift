@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ApplicationPagesFactory {
+protocol ApplicationPagesFactory: AnyObject {
     func makeSBTabbarController() -> SBTabBarController
 }
 
