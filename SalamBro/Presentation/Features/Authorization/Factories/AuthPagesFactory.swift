@@ -12,7 +12,7 @@ protocol AuthPagesFactory: AnyObject {
     func makeVerificationPage(phoneNumber: String) -> VerificationController
     func makeNameEnteringPage() -> SetNameController
     func makeCountryCodePickerPage() -> CountryCodePickerViewController
-    func makeAgreementPage() -> AgreementController
+    func makeAgreementPage(url: URL, name: String) -> AgreementController
 }
 
 final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
@@ -29,8 +29,9 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeAuthPageViewModel() -> AuthorizationViewModel {
-        return scoped(AuthorizationViewModelImpl(locationRepository: repositoryComponents.makeAddressRepository(),
-                                                 authService: serviceComponents.authService()))
+        return scoped(AuthorizationViewModelImpl(addressRepository: repositoryComponents.makeAddressRepository(),
+                                                 documentsRepository: repositoryComponents.makeDocumentsRepository(),
+                                                 authRepository: repositoryComponents.makeAuthRepository()))
     }
 
     func makeVerificationPage(phoneNumber: String) -> VerificationController {
@@ -38,8 +39,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeVerificationViewModel(phoneNumber: String) -> VerificationViewModel {
-        return scoped(.init(service: serviceComponents.authService(),
-                            tokenStorage: AuthTokenStorageImpl.sharedStorage,
+        return scoped(.init(repository: repositoryComponents.makeAuthRepository(),
                             phoneNumber: phoneNumber))
     }
 
@@ -59,9 +59,8 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
         return scoped(CountryCodePickerViewModelImpl(countriesRepository: repositoryComponents.makeCountriesRepository(), addressRepository: repositoryComponents.makeAddressRepository()))
     }
 
-    func makeAgreementPage() -> AgreementController {
-//        Tech debt: change to url passing
-        return scoped(.init(viewModel: makeAgreementViewModel(url: URL(string: "google.kz")!, name: "")))
+    func makeAgreementPage(url: URL, name: String) -> AgreementController {
+        return scoped(.init(viewModel: makeAgreementViewModel(url: url, name: name)))
     }
 
     private func makeAgreementViewModel(url: URL, name: String) -> AgreementViewModel {

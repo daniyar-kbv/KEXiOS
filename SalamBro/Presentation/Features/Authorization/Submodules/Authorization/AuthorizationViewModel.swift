@@ -14,30 +14,53 @@ protocol AuthorizationViewModel: AnyObject {
     func sendOTP()
     func getCountryCode() -> String
 
+    func getDocuments()
+    func getUserAgreementInfo() -> (URL, String)?
+
     var outputs: AuthorizationViewModelImpl.Output { get }
 }
 
 final class AuthorizationViewModelImpl {
     private(set) var outputs = Output()
     private let disposeBag = DisposeBag()
-    private let locationRepository: AddressRepository
-    private let authService: AuthService
-    private var phoneNumber: String = ""
 
-    init(locationRepository: AddressRepository, authService: AuthService) {
-        self.locationRepository = locationRepository
-        self.authService = authService
+    private let addressRepository: AddressRepository
+    private let authRepository: AuthPageRepository
+    private let documentsRepository: DocumentsRepository
+
+    private var phoneNumber: String = ""
+    private var userAgreement: Document?
+
+    init(addressRepository: AddressRepository,
+         documentsRepository: DocumentsRepository,
+         authRepository: AuthPageRepository)
+    {
+        self.addressRepository = addressRepository
+        self.documentsRepository = documentsRepository
+        self.authRepository = authRepository
+
+        bindDocumentsRepository()
+        bindOutputs()
     }
 
-    private func handleResponse(error: Error?) {
-        outputs.didEndRequest.accept(())
+    private func bindOutputs() {
+        authRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
 
-        if let error = error as? ErrorPresentable {
-            outputs.didFail.accept(error)
-            return
-        }
+        authRepository.outputs.didSendOTP
+            .bind { [weak self] number in
+                self?.outputs.didSendOTP.accept(number)
+            }
+            .disposed(by: disposeBag)
 
-        outputs.didSendOTP.accept(phoneNumber)
+        authRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        authRepository.outputs.didFail
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -47,22 +70,46 @@ extension AuthorizationViewModelImpl: AuthorizationViewModel {
     }
 
     func sendOTP() {
-        outputs.didStartRequest.accept(())
-        authService.authorize(with: SendOTPDTO(phoneNumber: phoneNumber))
-            .subscribe(onSuccess: { [weak self] in
-                self?.handleResponse(error: nil)
-            }, onError: { [weak self] error in
-                self?.handleResponse(error: error)
-            })
-            .disposed(by: disposeBag)
+        authRepository.sendOTP(with: phoneNumber)
     }
 
     func getCountryCode() -> String {
-        guard let country = locationRepository.getCurrentCountry() else {
+        guard let country = addressRepository.getCurrentCountry() else {
             return "+7" // by default Kazakhstan
         }
 
         return country.countryCode
+    }
+
+    func getDocuments() {
+        documentsRepository.getUserAgreement()
+    }
+
+    func getUserAgreementInfo() -> (URL, String)? {
+        guard let userAgreement = userAgreement,
+              let url = URL(string: userAgreement.link) else { return nil }
+        return (url, userAgreement.name)
+    }
+}
+
+extension AuthorizationViewModelImpl {
+    private func bindDocumentsRepository() {
+        documentsRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didStartRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didGetError
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
+
+        documentsRepository.outputs.didGetUserAgreement
+            .subscribe(onNext: { [weak self] userAgreement in
+                self?.userAgreement = userAgreement
+            }).disposed(by: disposeBag)
     }
 }
 
