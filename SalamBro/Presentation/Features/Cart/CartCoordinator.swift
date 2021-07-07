@@ -15,6 +15,8 @@ final class CartCoordinator: BaseCoordinator {
     private let pagesFactory: CartPagesFactory
     private let coordinatorsFactory: CartCoordinatorsFactory
 
+    var toMenu: (() -> Void)?
+
     init(router: Router,
          pagesFactory: CartPagesFactory,
          coordinatorsFactory: CartCoordinatorsFactory)
@@ -30,6 +32,10 @@ final class CartCoordinator: BaseCoordinator {
         cartPage.outputs.toAuth.subscribe(onNext: { [weak self] in
 //            self?.startAuthCoordinator()
             self?.startPaymentCoordinator()
+        }).disposed(by: disposeBag)
+
+        cartPage.outputs.toMenu.subscribe(onNext: { [weak self] in
+            self?.toMenu?()
         }).disposed(by: disposeBag)
 
         router.set(navigationController: SBNavigationController(rootViewController: cartPage))

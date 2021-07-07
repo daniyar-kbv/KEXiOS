@@ -35,7 +35,9 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     }
 
     func makeCartRepository() -> CartRepository {
-        return shared(CartRepositoryImpl(storage: makeLocalStorage()))
+        return shared(CartRepositoryImpl(cartStorage: makeLocalStorage(),
+                                         ordersService: serviceComponents.ordersService(),
+                                         defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
     func makeAuthRepository() -> AuthPageRepository {

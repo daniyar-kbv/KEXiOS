@@ -52,11 +52,13 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
 
     func proceed() {
         guard let position = position else { return }
+
         cartRepository.addItem(item: position.toCartItem(
             count: 1,
             comment: comment ?? "",
             modifiers: getSelectedModifiers()
         ))
+
         outputs.didProceed.accept(())
     }
 
@@ -70,8 +72,9 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     }
 
     func set(modifier: Modifier, at indexPath: IndexPath) {
-        check()
+        position?.modifierGroups[indexPath.section].set(modifier: modifier, at: indexPath.row)
         outputs.didSelectModifier.accept((modifier, indexPath))
+        check()
     }
 }
 

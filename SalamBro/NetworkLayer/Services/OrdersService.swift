@@ -14,8 +14,8 @@ protocol OrdersService: AnyObject {
     func applyOrder(dto: OrderApplyDTO) -> Single<String>
     func getProducts(for leadUUID: String) -> Single<OrderProductResponse.Data>
     func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail>
-    func getCart(for leadUUID: String) -> Single<CartDTO>
-    func updateCart(for leadUUID: String, dto: CartDTO) -> Single<CartDTO>
+    func getCart(for leadUUID: String) -> Single<Cart>
+    func updateCart(for leadUUID: String, dto: CartDTO) -> Single<Cart>
 }
 
 final class OrdersServiceMoyaImpl: OrdersService {
@@ -29,8 +29,6 @@ final class OrdersServiceMoyaImpl: OrdersService {
         return provider.rx
             .request(.apply(dto: dto))
             .map { response in
-
-                // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
 
                 guard let applyResponse = try? response.map(OrderApplyResponse.self) else {
                     throw NetworkError.badMapping
@@ -53,8 +51,6 @@ final class OrdersServiceMoyaImpl: OrdersService {
             .request(.getProducts(leadUUID: leadUUID))
             .map { response in
 
-                // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
-
                 guard let orderProductsResponse = try? response.map(OrderProductResponse.self) else {
                     throw NetworkError.badMapping
                 }
@@ -72,8 +68,6 @@ final class OrdersServiceMoyaImpl: OrdersService {
             .request(.getProductDetail(leadUUID: leadUUID, productUUID: productUUID))
             .map { response in
 
-                // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
-
                 guard let orderProductDetailResponse = try? response.map(OrderProductDetailResponse.self) else {
                     throw NetworkError.badMapping
                 }
@@ -86,33 +80,37 @@ final class OrdersServiceMoyaImpl: OrdersService {
             }
     }
 
-    func getCart(for leadUUID: String) -> Single<CartDTO> {
+    func getCart(for leadUUID: String) -> Single<Cart> {
         return provider.rx
             .request(.getCart(leadUUID: leadUUID))
             .map { response in
 
-                // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
-
-                guard let cartResponse = try? response.map(CartDTO.self) else {
+                guard let cartResponse = try? response.map(OrderUpdateCartResponse.self) else {
                     throw NetworkError.badMapping
                 }
 
-                return cartResponse
+                guard let cart = cartResponse.data else {
+                    throw NetworkError.error("Нет данных")
+                }
+
+                return cart
             }
     }
 
-    func updateCart(for leadUUID: String, dto: CartDTO) -> Single<CartDTO> {
+    func updateCart(for leadUUID: String, dto: CartDTO) -> Single<Cart> {
         return provider.rx
             .request(.updateCart(leadUUID: leadUUID, dto: dto))
             .map { response in
 
-                // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
-
-                guard let cartResponse = try? response.map(CartDTO.self) else {
+                guard let cartResponse = try? response.map(OrderUpdateCartResponse.self) else {
                     throw NetworkError.badMapping
                 }
 
-                return cartResponse
+                guard let cart = cartResponse.data else {
+                    throw NetworkError.error("Нет данных")
+                }
+
+                return cart
             }
     }
 }

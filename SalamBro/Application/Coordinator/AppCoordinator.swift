@@ -99,6 +99,10 @@ final class AppCoordinator: BaseCoordinator {
         cartCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: TabBarText.cartTitle),
                                                                                    image: Asset.cart.image,
                                                                                    selectedImage: Asset.cart.image)
+        cartCoordinator.toMenu = { [weak self] in
+            self?.pagesFactory.makeSBTabbarController().selectedIndex = 0
+        }
+
         preparedViewControllers.append(cartCoordinator.router.getNavigationController())
         add(cartCoordinator)
     }
