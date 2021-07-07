@@ -32,11 +32,10 @@ protocol SelectMainInformationViewModelProtocol {
 final class SelectMainInformationViewModel: SelectMainInformationViewModelProtocol {
     internal var flowType: FlowType
 
-    private let locationRepository: AddressRepository
+    private let addressRepository: AddressRepository
     private let countriesRepository: CountriesRepository
     private let citiesRepository: CitiesRepository
     private let brandRepository: BrandRepository
-    private let ordersRepository: OrdersRepository
     private let defaultStorage: DefaultStorage
 
     public lazy var countries: [Country] = countriesRepository.getCountries() ?? []
@@ -50,19 +49,17 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     var outputs = Output()
     private let disposeBag = DisposeBag()
 
-    init(locationRepository: AddressRepository,
+    init(addressRepository: AddressRepository,
          countriesRepository: CountriesRepository,
          citiesRepository: CitiesRepository,
          brandRepository: BrandRepository,
-         ordersRepository: OrdersRepository,
          defaultStorage: DefaultStorage,
          flowType: FlowType)
     {
-        self.locationRepository = locationRepository
+        self.addressRepository = addressRepository
         self.countriesRepository = countriesRepository
         self.citiesRepository = citiesRepository
         self.brandRepository = brandRepository
-        self.ordersRepository = ordersRepository
         self.defaultStorage = defaultStorage
         self.flowType = flowType
 
@@ -70,7 +67,7 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
         case let .changeAddress(deliveryAddress):
             self.deliveryAddress = deliveryAddress
         case .changeBrand:
-            deliveryAddress = locationRepository.getCurrentDeliveryAddress()
+            deliveryAddress = addressRepository.getCurrentDeliveryAddress()
         case .create:
             deliveryAddress = DeliveryAddress()
         }
@@ -118,22 +115,22 @@ extension SelectMainInformationViewModel {
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
 
-        ordersRepository.outputs.didStartRequest
+        addressRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        ordersRepository.outputs.didGetLeadUUID.bind {
+        addressRepository.outputs.didGetLeadUUID.bind {
             [weak self] leadUUID in
             self?.defaultStorage.persist(leadUUID: leadUUID)
             self?.outputs.didSave.accept(())
         }
         .disposed(by: disposeBag)
 
-        ordersRepository.outputs.didEndRequest
+        addressRepository.outputs.didEndRequest
             .bind(to: outputs.didEndRequest)
             .disposed(by: disposeBag)
 
-        ordersRepository.outputs.didFail
+        addressRepository.outputs.didFail
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
     }
@@ -187,7 +184,7 @@ extension SelectMainInformationViewModel {
         switch flowType {
         case .create:
             if let deliveryAddress = deliveryAddress {
-                locationRepository.addDeliveryAddress(deliveryAddress: deliveryAddress)
+                addressRepository.addDeliveryAddress(deliveryAddress: deliveryAddress)
             }
         default:
             break
@@ -245,7 +242,7 @@ extension SelectMainInformationViewModel {
                                                                latitude: latitude),
                                 localBrand: brandId)
 
-        ordersRepository.applyOrder(with: dto)
+        addressRepository.applyOrder(with: dto)
     }
 }
 

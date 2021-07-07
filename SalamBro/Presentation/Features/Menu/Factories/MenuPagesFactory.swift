@@ -33,7 +33,7 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
                                     promotionsService: serviceComponents.promotionsService(),
                                     locationRepository: repositoryComponents.makeAddressRepository(),
                                     brandRepository: repositoryComponents.makeBrandRepository(),
-                                    ordersRepository: repositoryComponents.makeOrdersRepository()))
+                                    menuRepository: repositoryComponents.makeMenuRepository()))
     }
 
     func makePromotionsPage(url: URL, name: String) -> AgreementController {

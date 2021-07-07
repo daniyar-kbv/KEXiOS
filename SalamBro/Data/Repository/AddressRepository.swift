@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
 protocol AddressRepository: AnyObject {
+    var outputs: AddressRepositoryImpl.Output { get }
+
     func isAddressComplete() -> Bool
 
     func getCurrentCountry() -> Country?
@@ -23,13 +27,22 @@ protocol AddressRepository: AnyObject {
     func setCurrentDeliveryAddress(deliveryAddress: DeliveryAddress)
     func deleteDeliveryAddress(deliveryAddress: DeliveryAddress)
     func addDeliveryAddress(deliveryAddress: DeliveryAddress)
+
+    func applyOrder(with dto: OrderApplyDTO)
 }
 
 final class AddressRepositoryImpl: AddressRepository {
+    private(set) var outputs: Output = .init()
+
     private let storage: GeoStorage
 
-    init(storage: GeoStorage) {
+    private let ordersService: OrdersService
+
+    private let disposeBag = DisposeBag()
+
+    init(storage: GeoStorage, ordersService: OrdersService) {
         self.storage = storage
+        self.ordersService = ordersService
     }
 }
 
@@ -99,5 +112,30 @@ extension AddressRepositoryImpl {
     func addDeliveryAddress(deliveryAddress: DeliveryAddress) {
         storage.deliveryAddresses.append(deliveryAddress)
         storage.currentDeliveryAddressIndex = storage.deliveryAddresses.firstIndex(where: { $0 == deliveryAddress })
+    }
+}
+
+extension AddressRepositoryImpl {
+    func applyOrder(with dto: OrderApplyDTO) {
+        outputs.didStartRequest.accept(())
+
+        ordersService.applyOrder(dto: dto)
+            .subscribe { [weak self] leadUUID in
+                self?.outputs.didEndRequest.accept(())
+                self?.outputs.didGetLeadUUID.accept(leadUUID)
+            } onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didFail.accept(error)
+            }.disposed(by: disposeBag)
+    }
+}
+
+extension AddressRepositoryImpl {
+    struct Output {
+        let didGetLeadUUID = PublishRelay<String>()
+        let didFail = PublishRelay<ErrorPresentable>()
+        let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
     }
 }

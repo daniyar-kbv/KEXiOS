@@ -53,9 +53,8 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
 
     private func makeMapViewModel() -> MapViewModel {
         return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage,
-                            locationRepository: repositoryComponents.makeAddressRepository(),
+                            addressRepository: repositoryComponents.makeAddressRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
-                            ordersRepository: repositoryComponents.makeOrdersRepository(),
                             flow: .creation))
     }
 }

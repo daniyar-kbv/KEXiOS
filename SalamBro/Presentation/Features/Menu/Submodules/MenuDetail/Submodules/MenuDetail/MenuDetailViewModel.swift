@@ -24,7 +24,7 @@ protocol MenuDetailViewModel: AnyObject {
 final class MenuDetailViewModelImpl: MenuDetailViewModel {
     private let positionUUID: String
     private let defaultStorage: DefaultStorage
-    private let ordersRepository: OrdersRepository
+    private let menuDetailRepository: MenuDetailRepository
     private let cartRepository: CartRepository
 
     private let disposeBag = DisposeBag()
@@ -37,12 +37,12 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
 
     init(positionUUID: String,
          defaultStorage: DefaultStorage,
-         ordersRepository: OrdersRepository,
+         menuDetailRepository: MenuDetailRepository,
          cartRepository: CartRepository)
     {
         self.positionUUID = positionUUID
         self.defaultStorage = defaultStorage
-        self.ordersRepository = ordersRepository
+        self.menuDetailRepository = menuDetailRepository
         self.cartRepository = cartRepository
         bindOutputs()
     }
@@ -78,22 +78,22 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
 
 extension MenuDetailViewModelImpl {
     private func bindOutputs() {
-        ordersRepository.outputs.didStartRequest
+        menuDetailRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        ordersRepository.outputs.didGetProductDetail.bind {
+        menuDetailRepository.outputs.didGetProductDetail.bind {
             [weak self] position in
             self?.outputs.didEndRequest.accept(())
             self?.process(position: position)
         }
         .disposed(by: disposeBag)
 
-        ordersRepository.outputs.didEndRequest
+        menuDetailRepository.outputs.didEndRequest
             .bind(to: outputs.didEndRequest)
             .disposed(by: disposeBag)
 
-        ordersRepository.outputs.didFail
+        menuDetailRepository.outputs.didFail
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
     }
@@ -101,7 +101,7 @@ extension MenuDetailViewModelImpl {
     private func download() {
         guard let leadUUID = defaultStorage.leadUUID else { return }
 
-        ordersRepository.getProductDetail(for: leadUUID, by: positionUUID)
+        menuDetailRepository.getProductDetail(for: leadUUID, by: positionUUID)
     }
 
     private func process(position: MenuPositionDetail) {

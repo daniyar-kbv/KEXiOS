@@ -34,11 +34,10 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
     }
 
     private func makeSelectMainInfoViewModel(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewModel {
-        return scoped(.init(locationRepository: repositoryComponents.makeAddressRepository(),
+        return scoped(.init(addressRepository: repositoryComponents.makeAddressRepository(),
                             countriesRepository: repositoryComponents.makeCountriesRepository(),
                             citiesRepository: repositoryComponents.makeCitiesRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
-                            ordersRepository: repositoryComponents.makeOrdersRepository(),
                             defaultStorage: DefaultStorageImpl.sharedStorage,
                             flowType: flowType))
     }
@@ -49,9 +48,8 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
 
     private func makeMapViewModel(address: Address?) -> MapViewModel {
         return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage,
-                            locationRepository: repositoryComponents.makeAddressRepository(),
+                            addressRepository: repositoryComponents.makeAddressRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
-                            ordersRepository: repositoryComponents.makeOrdersRepository(),
                             flow: .change,
                             address: address))
     }

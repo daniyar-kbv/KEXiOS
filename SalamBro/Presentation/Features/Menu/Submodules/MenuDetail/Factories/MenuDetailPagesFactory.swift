@@ -30,7 +30,7 @@ class MenuDetailPagesFactoryImpl: DependencyFactory, MenuDetailPagesFactory {
     private func makeMenuDetailViewModel(positionUUID: String) -> MenuDetailViewModel {
         return scoped(MenuDetailViewModelImpl(positionUUID: positionUUID,
                                               defaultStorage: DefaultStorageImpl.sharedStorage,
-                                              ordersRepository: repositoryComponents.makeOrdersRepository(),
+                                              menuDetailRepository: repositoryComponents.makeMenuDetailRepository(),
                                               cartRepository: repositoryComponents.makeCartRepository()))
     }
 
