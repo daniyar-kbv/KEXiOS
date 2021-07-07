@@ -1,0 +1,240 @@
+/* 
+  Localizable.strings
+  SalamBro
+
+  Created by Arystan on 3/17/21.
+  
+*/
+
+// MARK: - UPDATE
+"Update.title.description" = "We added a lot of new features and fixed several bugs for your convenient use";
+"Update.button.title" = "Update app";
+
+// MARK: - CountriesList
+"CountriesList.navigation.title" = "Select country";
+
+// MARK: - CitiesList
+"CitiesList.navigation.title" = "Select city";
+
+// MARK: - Address
+"Address.form.country.title" = "Country*";
+"Address.form.city.title" = "City*";
+"Address.form.street.title" = "Street*";
+"Address.form.building.title" = "Building*";
+"Address.form.apartment.title" = "Apartment";
+"Address.form.entrance.title" = "Entrance";
+"Address.form.floor.title" = "Floor";
+"Address.form.commentary.title" = "Commentary for address";
+"Address.button.title" = "Save address";
+"Address.navigation.title" = "Set delivery address";
+
+// MARK: - Brands
+"Brands.navigation.title" = "Select brand";
+
+// MARK: - Authorization
+"Authorization.title" = "Enter your phone number";
+"Authorization.subtitle" = "A confirmation SMS code will be sent to this number";
+"Authorization.numberField.placeholder.title" = "Phone number";
+"Authorization.agreement.inactive.title" = "By continuing, you agree to the collection, processing of personal data and ";
+"Authorization.agreement.active.title" = "User agreement";
+"Authorization.button.title" = "Get code";
+
+// MARK: - Verification
+"Verification.title" = "Enter the code from the message";
+"Verification.subtitle" = "We sent it to number %@";
+"Verification.button.title" = "Resend again in: %@";
+"Verification.button.timeout" = "Resend code again";
+
+// MARK: - Agreement
+"Agreement.navigation.title" = "Legal documents";
+
+// MARK: - CountryCodePicker
+"CountryCodePicker.navigation.title" = "Select country code";
+
+// MARK: - GetName
+"GetName.title" = "What is your name?";
+"GetName.field.title" = "Enter your name";
+"GetName.button.title" = "Next";
+
+// MARK: - MainTab
+"MainTab.Menu.Title" = "Menu";
+"MainTab.Profile.Title" = "Profile";
+"MainTab.Support.Title" = "Help";
+"MainTab.Cart.Title" = "Cart";
+
+// MARK: - Cart
+"Cart.section0.title" = "%@ items for %@ ₸";
+"Cart.section1.title" = "Additional products";
+"Cart.emptyCart.description" = "You have no items in cart";
+"Cart.emptyCart.button.title" = "Go to menu";
+"Cart.orderButton.title" = "Place an order for %@ ₸";
+"Cart.title" = "Cart";
+
+// MARK: - CartFooter
+"CartFooter.promocodeButton.title" = "Enter promocode";
+"CartFooter.productsPrice" = "%@ ₸";
+"CartFooter.productsCount" = "%@ items";
+"CartFooter.deliveryLabel" = "Delivery";
+"CartFooter.deliveryPrice" = "%@ ₸";
+
+// MARK: - CartProductCell
+"CartProductCell.deleteButton.title" = "Delete";
+"CartProductCell.availability.title" = "Product unavailable";
+
+// MARK: - CartAdditionalProductCell
+"CartAdditionalProductCell.deleteButton.title" = "Delete";
+"CartAdditionalProductCell.availability.title" = "Product unavailable";
+
+// MARK: - Profile
+"Profile.navigationBar.title" = "Profile";
+"Profile.editButton.title" = "Edit";
+"Profile.orderHistory" = "Order history";
+"Profile.changeLanguage" = "Change application language";
+"Profile.logoutButton.title" = "Logout";
+"Profile.deliveryAddress" = "Delivery addresses";
+
+// MARK: - ChangeName
+"ChangeName.navigationBar.title" = "Change";
+"ChangeName.nameField.placeholder" = "insert name";
+"ChangeName.saveButton.title" = "Save";
+"ChangeName.nameLabel" = "Name";
+"ChangeName.emailLabel" = "E-mail";
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.navigationBar.title" = "Select language";
+
+// MARK: - Map
+"MapView.addressField.title" = "Delivery address";
+"MapView.commentaryLabel.title" = "Commentary(apartment N, entrance, ...)";
+"MapView.proceedButton.title" = "Proceed to order";
+
+// MARK: - Suggest
+"Suggest.addressField.title" = "Enter address";
+"Suggest.button.title" = "Cancel";
+
+// MARK: - Commentary
+"Commentary.addressField.title" = "Commentary(apartment N, entrance, ...)";
+"Commentary.button.title" = "Done";
+
+// MARK: - RateOrder
+"RateOrder.title" = "Rate order";
+// bad
+"RateOrder.badRate.title" = "We apologise! Something went wrong?";
+"RateOrder.badRate.subtitle" = "We want to fix this! Something went wrong,
+how do you need it? Your comments will help us much!";
+// average
+"RateOrder.averageRate.title" = "Clear! What should we improve?";
+"RateOrder.averageRate.subtitle" = "Average is not cool. What should we
+fix next time?";
+// good
+"RateOrder.goodRate.title" = "Thank you! What could we
+improve?";
+"RateOrder.goodRate.subtitle" = "4/5 is good - but not perfect.
+What should we improve next time?";
+// excellent
+"RateOrder.excellentRate.title" = "It's good that everything went well!";
+"RateOrder.excellentRate.subtitle" = "What did you like the most?";
+
+// itemCells
+"RateOrder.cell.courierWork.text" = "Courier work";
+"RateOrder.cell.givenTime.text" = "Suggested time";
+"RateOrder.cell.courierNotFoundClient.text" = "The courier did not find me";
+"RateOrder.cell.foodIsMissing.text" = "Missing dish";
+"RateOrder.cell.foodIsCold.text" = "The food was cold";
+"RateOrder.cell.deliveryTime.text" = "Delivery time";
+
+"RateOrder.submitButton.title" = "Send";
+"RateOrder.commentaryField.placeholder" = "Add commentary";
+"RateOrder.title" = "Rate order";
+"RateOrder.description" = "Your rate will help us to increase quality of delivery";
+
+// MARK: - Country
+"Country.Kazakhstan" = "Kazakhstan";
+"Country.Russia" = "Russian Federation";
+"Country.USA" = "USA";
+
+
+// MARK: - Cities
+"Cities.almaty" = "Almaty";
+"Cities.nursultan" = "Nur-Sultan";
+"Cities.aktobe" = "Aktobe";
+"Cities.taldykorgan" = "Taldykorgan";
+"Cities.uralsk" = "Uralsk";
+"Cities.aktau" = "Aktau";
+"Cities.shymkent" = "Shymkent";
+"Cities.taraz" = "Taraz";
+
+// MARK: - Menu
+"Menu.categories.combo" = "Combo";
+"Menu.categories.burgers" = "Burgers";
+"Menu.categories.hotdogs" = "Hot-dogs";
+"Menu.categories.drinks" = "Drinks";
+"Menu.categories.sauces" = "Sauces";
+"Menu.categories.other" = "Other";
+
+// MARK: - AddressPickCell
+"AddressPickCell.changeButton" = "Change";
+"AddressPickCell.deliverLabel" = "Deliver to:";
+
+
+// MARK: - MenuDetail
+"MenuDetail.proceedButton" = "Add to cart for";
+"MenuDetail.additionalItemLabel" = "Choose drink";
+"MenuDetail.commentaryField" = "Commentary to dish";
+"MenuDetail.chooseAdditionalItemButton" = "Change";
+
+// MARK: - Support
+"Support.title" = "Support";
+"Support.documents" = "Legal documents";
+"Support.callcenter" = "Сall the call-center";
+
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.title" = "Application Language";
+"ChangeLanguage.kazakh" = "Kazakh";
+"ChangeLanguage.russian" = "Russian";
+"ChangeLanguage.english" = "English";
+
+// MARK: - OrderHistory
+"OrderHistory.title" = "Order history";
+
+// MARK: - Rating
+"Rating.title" = "Ratings";
+"Rating.overall" = "General";
+"Rating.weekly" = "Weekly";
+"Rating.place" = "PLACE";
+"Rating.user" = "USER";
+"Rating.sum" = "SUM";
+"Rating.participate" = "Participate";
+"Rating.information" = "Information";
+
+// MARK: - Select Main Info
+"select_main_info.country" = "Country";
+"select_main_info.city" = "City";
+"select_main_info.address" = "Address";
+"select_main_info.brand" = "Brand";
+"select_main_info.title" = "Delivery address";
+"select_main_info.description" = "The presence or absence of a particular brand depends on your
+delivery addresses";
+"select_main_info.save" = "Save";
+"select_main_info.alert.title" = "Вы уверены?";
+"select_main_info.alert.body.address" = "Если Вы сейчас смените адрес, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить адрес?";
+"select_main_info.alert.body.brand" = "Если Вы сейчас смените бренд, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить бренд?";
+"select_main_info.alert.action.yes" = "Да";
+"select_main_info.alert.action.no" = "Нет";
+
+// MARK: Address Picker
+"address_picker.add" = "Add a new delivery address";
+"address_picker.titleOne" = "Delivery address";
+"address_picker.titleMany" = "Delivery addresses";
+
+//MARK: ShareOrder
+"ShareOrder.submitButton" = "Share";
+
+//MARK: Promocode
+"Promocode.button" = "Use";
+"Promocode.field" = "Enter promocode";
+
+// MARK: - Close
+"Common.error" = "Error";
+"Common.close" = "Close";
