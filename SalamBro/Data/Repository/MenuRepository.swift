@@ -47,6 +47,7 @@ final class MenuRepositoryImpl: MenuRepository {
                                                productsData.positions
                                            )
                                        })
+        outputs.didStartRequest.accept(())
         finalSequence.subscribe(onSuccess: {
             [weak self] promotions, categories, positions in
             self?.outputs.didGetPromotions.accept(promotions)

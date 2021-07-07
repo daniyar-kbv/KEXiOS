@@ -25,6 +25,7 @@ final class MenuDetailRepositoryImpl: MenuDetailRepository {
     }
 
     func getProductDetail(for leadUUID: String, by positionUUID: String) {
+        outputs.didStartRequest.accept(())
         ordersService.getProductDetail(for: leadUUID, by: positionUUID)
             .subscribe(onSuccess: { [weak self] position in
                 self?.outputs.didEndRequest.accept(())
