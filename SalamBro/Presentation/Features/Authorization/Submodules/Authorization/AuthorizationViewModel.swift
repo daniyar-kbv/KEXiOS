@@ -25,7 +25,7 @@ final class AuthorizationViewModelImpl {
     private let disposeBag = DisposeBag()
 
     private let addressRepository: AddressRepository
-    private let authRepository: AuthPageRepository
+    private let authRepository: AuthRepository
     private let documentsRepository: DocumentsRepository
 
     private var phoneNumber: String = ""
@@ -33,7 +33,7 @@ final class AuthorizationViewModelImpl {
 
     init(addressRepository: AddressRepository,
          documentsRepository: DocumentsRepository,
-         authRepository: AuthPageRepository)
+         authRepository: AuthRepository)
     {
         self.addressRepository = addressRepository
         self.documentsRepository = documentsRepository

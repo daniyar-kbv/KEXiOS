@@ -36,5 +36,6 @@ final class SBTabBarController: UITabBarController {
         super.viewDidLoad()
 
         viewModel.getDocuments()
+        viewModel.refreshToken()
     }
 }
