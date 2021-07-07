@@ -9,17 +9,18 @@ import Foundation
 import UIKit
 
 protocol AnimationViewPresentable {
-    func showAnimationView(delegate: AnimationContainerViewDelegate, animationType: LottieAnimationModel)
+    func showAnimationView(animationType: LottieAnimationModel,
+                           action: (() -> Void)?)
 }
 
 extension AnimationViewPresentable where Self: UIViewController {
-    func showAnimationView(delegate: AnimationContainerViewDelegate,
-                           animationType: LottieAnimationModel)
+    func showAnimationView(animationType: LottieAnimationModel,
+                           action: (() -> Void)? = nil)
     {
         guard needsPresentation() else { return }
 
         let animationController = AnimationController(animationType: animationType)
-        animationController.delegate = delegate
+        animationController.action = action
 
         addChild(animationController)
         view.addSubview(animationController.view)

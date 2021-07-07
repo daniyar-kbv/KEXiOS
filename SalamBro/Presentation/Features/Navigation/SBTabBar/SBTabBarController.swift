@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SBTabBarController: UITabBarController {
+final class SBTabBarController: UITabBarController, AnimationViewPresentable {
     private let viewModel: SBTabBarViewModel
 
     init(viewModel: SBTabBarViewModel) {
