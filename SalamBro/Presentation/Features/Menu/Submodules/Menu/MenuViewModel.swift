@@ -26,8 +26,6 @@ final class MenuViewModel: MenuViewModelProtocol {
 
     private let defaultStorage: DefaultStorage
 
-    private let promotionsService: PromotionsService
-
     private let locationRepository: AddressRepository
     private let brandRepository: BrandRepository
     private let menuRepository: MenuRepository
@@ -38,13 +36,11 @@ final class MenuViewModel: MenuViewModelProtocol {
     public lazy var brandName = BehaviorRelay<String?>(value: brandRepository.getCurrentBrand()?.name)
 
     init(defaultStorage: DefaultStorage,
-         promotionsService: PromotionsService,
          locationRepository: AddressRepository,
          brandRepository: BrandRepository,
          menuRepository: MenuRepository)
     {
         self.defaultStorage = defaultStorage
-        self.promotionsService = promotionsService
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
         self.menuRepository = menuRepository
@@ -64,7 +60,7 @@ final class MenuViewModel: MenuViewModelProtocol {
 
         outputs.didStartRequest.accept(())
 
-        let promotionsSequence = promotionsService.getPromotions()
+        let promotionsSequence = menuRepository.getPromotions()
         let productsSequence = menuRepository.getProducts(for: leadUuid)
 
         let finalSequesnce = Single.zip(promotionsSequence,

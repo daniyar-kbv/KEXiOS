@@ -30,7 +30,6 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
 
     private func makeMenuViewModel() -> MenuViewModelProtocol {
         return scoped(MenuViewModel(defaultStorage: DefaultStorageImpl.sharedStorage,
-                                    promotionsService: serviceComponents.promotionsService(),
                                     locationRepository: repositoryComponents.makeAddressRepository(),
                                     brandRepository: repositoryComponents.makeBrandRepository(),
                                     menuRepository: repositoryComponents.makeMenuRepository()))
