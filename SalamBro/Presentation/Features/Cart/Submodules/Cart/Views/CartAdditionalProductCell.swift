@@ -17,7 +17,6 @@ protocol CartAdditinalProductCellDelegate: AnyObject {
 final class CartAdditionalProductCell: UITableViewCell {
     private lazy var productImageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "ketchup")
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -57,7 +56,7 @@ final class CartAdditionalProductCell: UITableViewCell {
         button.borderWidth = 1
         button.borderColor = .mildBlue
         button.cornerRadius = 5
-        button.setBackgroundImage(UIImage(named: "minus"), for: .normal)
+        button.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.minus), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         button.addTarget(self, action: #selector(decreaseItemCount), for: .touchUpInside)
         return button
@@ -199,12 +198,12 @@ extension CartAdditionalProductCell {
             increaseButton.backgroundColor = .clear
             increaseButton.borderWidth = 1
             increaseButton.borderColor = .mildBlue
-            increaseButton.setBackgroundImage(UIImage(named: "plus_grey"), for: .normal)
+            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusGray), for: .normal)
         } else {
             increaseButton.backgroundColor = .kexRed
             increaseButton.borderWidth = 0
             increaseButton.borderColor = .none
-            increaseButton.setBackgroundImage(UIImage(named: "plus"), for: .normal)
+            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusWhite), for: .normal)
         }
         counter = product!.count
         countLabel.text = "\(counter)"

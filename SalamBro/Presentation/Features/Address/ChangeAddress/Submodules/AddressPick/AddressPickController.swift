@@ -28,7 +28,7 @@ final class AddressPickController: UIViewController {
 
     private lazy var plusButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "add"), for: .normal)
+        button.setImage(SBImageResource.getIcon(for: AddressIcons.AddressPick.add), for: .normal)
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 24, weight: .medium)
         return button

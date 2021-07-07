@@ -60,6 +60,7 @@ final class OrderHistoryCellContentView: UIView {
 
     private lazy var shareToInstagramButton: UIButton = {
         let view = UIButton()
+//        Tech debt: change
         view.setImage(UIImage(named: "shareToInstagram"), for: .normal)
         return view
     }()
