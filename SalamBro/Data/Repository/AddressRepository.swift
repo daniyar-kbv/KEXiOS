@@ -28,20 +28,22 @@ protocol AddressRepository: AnyObject {
     func deleteDeliveryAddress(deliveryAddress: DeliveryAddress)
     func addDeliveryAddress(deliveryAddress: DeliveryAddress)
 
-    func applyOrder(with dto: OrderApplyDTO)
+    func applyOrder()
 }
 
 final class AddressRepositoryImpl: AddressRepository {
     private(set) var outputs: Output = .init()
 
-    private let storage: GeoStorage
+    private let geoStorage: GeoStorage
+    private let brandStorage: BrandStorage
 
     private let ordersService: OrdersService
 
     private let disposeBag = DisposeBag()
 
-    init(storage: GeoStorage, ordersService: OrdersService) {
-        self.storage = storage
+    init(storage: GeoStorage, brandStorage: BrandStorage, ordersService: OrdersService) {
+        geoStorage = storage
+        self.brandStorage = brandStorage
         self.ordersService = ordersService
     }
 }
@@ -74,8 +76,8 @@ extension AddressRepositoryImpl {
     }
 
     func changeCurrentAddress(to address: Address) {
-        if let index = storage.currentDeliveryAddressIndex {
-            storage.deliveryAddresses[index].address = address
+        if let index = geoStorage.currentDeliveryAddressIndex {
+            geoStorage.deliveryAddresses[index].address = address
         } else {
             addDeliveryAddress(deliveryAddress: DeliveryAddress(address: address))
         }
@@ -86,37 +88,48 @@ extension AddressRepositoryImpl {
 
 extension AddressRepositoryImpl {
     func getDeliveryAddresses() -> [DeliveryAddress]? {
-        return storage.deliveryAddresses
+        return geoStorage.deliveryAddresses
     }
 
     func setDeliveryAddressses(deliveryAddresses: [DeliveryAddress]) {
-        storage.deliveryAddresses = deliveryAddresses
+        geoStorage.deliveryAddresses = deliveryAddresses
     }
 
     func getCurrentDeliveryAddress() -> DeliveryAddress? {
-        guard let index = storage.currentDeliveryAddressIndex else { return nil }
-        return storage.deliveryAddresses[index]
+        guard let index = geoStorage.currentDeliveryAddressIndex else { return nil }
+        return geoStorage.deliveryAddresses[index]
     }
 
     func setCurrentDeliveryAddress(deliveryAddress: DeliveryAddress) {
-        storage.currentDeliveryAddressIndex = storage.deliveryAddresses.firstIndex(where: { $0 == deliveryAddress })
+        geoStorage.currentDeliveryAddressIndex = geoStorage.deliveryAddresses.firstIndex(where: { $0 == deliveryAddress })
     }
 
     func deleteDeliveryAddress(deliveryAddress: DeliveryAddress) {
-        let wasCurrent = storage.currentDeliveryAddressIndex != nil &&
-            storage.deliveryAddresses[storage.currentDeliveryAddressIndex!] == deliveryAddress
-        storage.deliveryAddresses.removeAll(where: { $0 == deliveryAddress })
-        storage.currentDeliveryAddressIndex = storage.deliveryAddresses.first != nil && wasCurrent ? 0 : nil
+        let wasCurrent = geoStorage.currentDeliveryAddressIndex != nil &&
+            geoStorage.deliveryAddresses[geoStorage.currentDeliveryAddressIndex!] == deliveryAddress
+        geoStorage.deliveryAddresses.removeAll(where: { $0 == deliveryAddress })
+        geoStorage.currentDeliveryAddressIndex = geoStorage.deliveryAddresses.first != nil && wasCurrent ? 0 : nil
     }
 
     func addDeliveryAddress(deliveryAddress: DeliveryAddress) {
-        storage.deliveryAddresses.append(deliveryAddress)
-        storage.currentDeliveryAddressIndex = storage.deliveryAddresses.firstIndex(where: { $0 == deliveryAddress })
+        geoStorage.deliveryAddresses.append(deliveryAddress)
+        geoStorage.currentDeliveryAddressIndex = geoStorage.deliveryAddresses.firstIndex(where: { $0 == deliveryAddress })
     }
 }
 
 extension AddressRepositoryImpl {
-    func applyOrder(with dto: OrderApplyDTO) {
+    func applyOrder() {
+        guard let cityId = getCurrentCity()?.id,
+              let longitude = getCurrentAddress()?.longitude.rounded(to: 8),
+              let latitude = getCurrentAddress()?.latitude.rounded(to: 8),
+              let brandId = brandStorage.brand?.id
+        else { return }
+
+        let dto = OrderApplyDTO(address: OrderApplyDTO.Address(city: cityId,
+                                                               longitude: longitude,
+                                                               latitude: latitude),
+                                localBrand: brandId)
+
         outputs.didStartRequest.accept(())
 
         ordersService.applyOrder(dto: dto)

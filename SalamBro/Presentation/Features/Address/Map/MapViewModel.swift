@@ -63,7 +63,7 @@ final class MapViewModel {
         case .creation:
             addressRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
             bindToOrdersOutputs(using: lastAddress)
-            applyOrders()
+            addressRepository.applyOrder()
         case .change:
             outputs.lastSelectedAddress.accept((lastAddress, commentary))
         }
@@ -133,22 +133,6 @@ extension MapViewModel {
         addressRepository.outputs.didFail
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
-    }
-
-    func applyOrders() {
-        guard let brandId = brandRepository.getCurrentBrand()?.id,
-              let cityId = addressRepository.getCurrentCity()?.id,
-              let longitude = addressRepository.getCurrentAddress()?.longitude.rounded(to: 8),
-              let latitude = addressRepository.getCurrentAddress()?.latitude.rounded(to: 8) else { return }
-
-        let dto: OrderApplyDTO = .init(address: .init(city: cityId,
-                                                      longitude: longitude,
-                                                      latitude: latitude),
-                                       localBrand: brandId)
-
-        outputs.didStartRequest.accept(())
-
-        addressRepository.applyOrder(with: dto)
     }
 }
 

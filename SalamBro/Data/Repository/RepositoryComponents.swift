@@ -29,6 +29,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
 
     func makeAddressRepository() -> AddressRepository {
         return shared(AddressRepositoryImpl(storage: makeLocalStorage(),
+                                            brandStorage: makeLocalStorage(),
                                             ordersService: serviceComponents.ordersService()))
     }
 
@@ -63,7 +64,8 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
 
     func makeMenuRepository() -> MenuRepository {
         return shared(MenuRepositoryImpl(ordersService: serviceComponents.ordersService(),
-                                         promotionsService: serviceComponents.promotionsService()))
+                                         promotionsService: serviceComponents.promotionsService(),
+                                         storage: DefaultStorageImpl.sharedStorage))
     }
 
     func makeMenuDetailRepository() -> MenuDetailRepository {

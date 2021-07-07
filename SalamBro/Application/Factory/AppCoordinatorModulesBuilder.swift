@@ -9,7 +9,7 @@ import Foundation
 
 protocol AppCoordinatorsModulesBuilder {
     func buildMenuCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> MenuCoordinator
-    func buildOnboardingCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoardingCoordinator
+    func buildOnboardingCoordinator(repositoryComponents: RepositoryComponents) -> OnBoardingCoordinator
     func buildProfileCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> ProfileCoordinator
     func makeSupportCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> SupportCoordinator
     func makeAuthCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> AuthCoordinator
@@ -27,27 +27,25 @@ final class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
         let router = routersFactory.makeMenuRouter()
         return .init(router: router,
                      serviceComponents: serviceComponents, repositoryComponents: repositoryComponents,
-                     pagesFactory: makeMenuPagesFactory(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents),
+                     pagesFactory: makeMenuPagesFactory(repositoryComponents: repositoryComponents),
                      coordinatorsFactory: makeMenuCoordinatorsFactory(router: router))
     }
 
-    private func makeMenuPagesFactory(serviceComponents: ServiceComponents,
-                                      repositoryComponents: RepositoryComponents) -> MenuPagesFactory
+    private func makeMenuPagesFactory(repositoryComponents: RepositoryComponents) -> MenuPagesFactory
     {
-        return MenuPagesFactoryIml(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+        return MenuPagesFactoryIml(repositoryComponents: repositoryComponents)
     }
 
     private func makeMenuCoordinatorsFactory(router: Router) -> MenuCoordinatorsFactory {
         return MenuCoordinatorsFactoryImpl(router: router)
     }
 
-    func buildOnboardingCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoardingCoordinator {
+    func buildOnboardingCoordinator(repositoryComponents: RepositoryComponents) -> OnBoardingCoordinator {
         return .init(router: routersFactory.makeOnboardingRouter(),
-                     pagesFactory: makeOnboardingPagesFactory(serviceComponents: serviceComponents,
-                                                              repositoryComponents: repositoryComponents))
+                     pagesFactory: makeOnboardingPagesFactory(repositoryComponents: repositoryComponents))
     }
 
-    private func makeOnboardingPagesFactory(serviceComponents _: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoadingPagesFactory {
+    private func makeOnboardingPagesFactory(repositoryComponents: RepositoryComponents) -> OnBoadingPagesFactory {
         return OnBoardingPagesFactoryImpl(repositoryComponents: repositoryComponents)
     }
 

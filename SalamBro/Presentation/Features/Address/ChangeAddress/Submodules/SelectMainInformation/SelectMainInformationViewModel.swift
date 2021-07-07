@@ -190,7 +190,7 @@ extension SelectMainInformationViewModel {
             break
         }
 
-        ordersApply()
+        addressRepository.applyOrder()
     }
 
     func checkValues() {
@@ -228,21 +228,6 @@ extension SelectMainInformationViewModel {
         countriesRepository.setCountries(countries: countries)
         self.countries = countries
         outputs.didGetCountries.accept(countries.map { $0.name })
-    }
-
-    private func ordersApply() {
-        guard let cityId = deliveryAddress?.city?.id,
-              let longitude = deliveryAddress?.address?.longitude.rounded(to: 8),
-              let latitude = deliveryAddress?.address?.latitude.rounded(to: 8),
-              let brandId = brand?.id
-        else { return }
-
-        let dto = OrderApplyDTO(address: OrderApplyDTO.Address(city: cityId,
-                                                               longitude: longitude,
-                                                               latitude: latitude),
-                                localBrand: brandId)
-
-        addressRepository.applyOrder(with: dto)
     }
 }
 

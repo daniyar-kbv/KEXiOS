@@ -13,13 +13,9 @@ protocol MenuPagesFactory {
 }
 
 class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
-    private let serviceComponents: ServiceComponents
     private let repositoryComponents: RepositoryComponents
 
-    init(serviceComponents: ServiceComponents,
-         repositoryComponents: RepositoryComponents)
-    {
-        self.serviceComponents = serviceComponents
+    init(repositoryComponents: RepositoryComponents) {
         self.repositoryComponents = repositoryComponents
     }
 
@@ -29,8 +25,7 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
     }
 
     private func makeMenuViewModel() -> MenuViewModelProtocol {
-        return scoped(MenuViewModel(defaultStorage: DefaultStorageImpl.sharedStorage,
-                                    locationRepository: repositoryComponents.makeAddressRepository(),
+        return scoped(MenuViewModel(locationRepository: repositoryComponents.makeAddressRepository(),
                                     brandRepository: repositoryComponents.makeBrandRepository(),
                                     menuRepository: repositoryComponents.makeMenuRepository()))
     }
