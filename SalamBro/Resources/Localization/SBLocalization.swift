@@ -27,6 +27,23 @@ enum TabBarText: UILocalizable {
     }
 }
 
+enum ProfileText {
+    enum RateOrder: UILocalizable {
+        case courierWork
+
+        var localized: String {
+            switch self {
+            case .courierWork: return "RateOrder.cell.courierWork.text" = "Courier work"
+                "RateOrder.cell.givenTime.text" = "Suggested time"
+                "RateOrder.cell.courierNotFoundClient.text" = "The courier did not find me"
+                "RateOrder.cell.foodIsMissing.text" = "Missing dish"
+                "RateOrder.cell.foodIsCold.text" = "The food was cold"
+                "RateOrder.cell.deliveryTime.text" = "Delivery time"
+            }
+        }
+    }
+}
+
 enum PaymentSelectionText: UILocalizable {
     case title
     case paymentMethod
