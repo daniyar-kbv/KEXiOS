@@ -28,10 +28,10 @@ class MenuCoordinatorsFactoryImpl: DependencyFactory, MenuCoordinatorsFactory {
                             flowType: flowType))
     }
 
-    private func makeAddressPageFactory(serviceComponents: ServiceComponents,
+    private func makeAddressPageFactory(serviceComponents _: ServiceComponents,
                                         repositoryComponents: RepositoryComponents) -> AddressPagesFactory
     {
-        return scoped(AddressPagesFactoryImpl(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
+        return scoped(AddressPagesFactoryImpl(repositoryComponents: repositoryComponents))
     }
 
     func makeMenuDetailCoordinator(serviceComponents: ServiceComponents,

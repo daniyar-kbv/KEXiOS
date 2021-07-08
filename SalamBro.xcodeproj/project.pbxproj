@@ -145,9 +145,11 @@
 		0F6EDB3BF0F718CBD37B35A97815E8CF /* MenuDetailModifierCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5A87058074F994208B24E2875942F8 /* MenuDetailModifierCell.swift */; };
 		2248234CE0AEC888C4C8ECDD06EB7BFA /* MenuDetailModifierCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E447DEF5BA91A6C9E93348724327529B /* MenuDetailModifierCellViewModel.swift */; };
 		5A6BAC34C5A894DB92B1FFE37960DDBA /* MenuDetailPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0048A7160C86BFE434D3B0C8CFFBDEE5 /* MenuDetailPagesFactory.swift */; };
+		F581187DA52C99AAA8131BB579A58EF7 /* MenuDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0D85F06C2D2F71B8A0770205F1A8A4 /* MenuDetailRepository.swift */; };
 		1579B21034DA3D0912771C8B70E926C8 /* MenuDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8741CF0DA2EE1EB4751BA5FD9210E49B /* MenuDetailView.swift */; };
 		F34CFD067EAB9F98111052EB958393F2 /* MenuDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D06D01F7EA0A80FA0BB8138071A11 /* MenuDetailViewModel.swift */; };
 		7005F10010D73E0F31FFA6FDC2F46890 /* MenuPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B055E32FE5DD6B8B16C58441DE86DCD /* MenuPagesFactory.swift */; };
+		34FB6344DBA4296A94E96483659A07D3 /* MenuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ECEC156A2E051E74B15FA38585B064 /* MenuRepository.swift */; };
 		74DC8C457E1764678119B5AEE7F15D1F /* MenuScrollService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9F9B4F3D470F45D05B0B111C1147FA /* MenuScrollService.swift */; };
 		3724C7586494DADA2761ACC98C289541 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E293076F2566561A24316CBC7D8C9D9 /* MenuViewModel.swift */; };
 		3AC791218F35D5FB49E5FD5F81D2189C /* ModifiersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AB23F9D8F86F5A5A562E0E0120A8C6 /* ModifiersCell.swift */; };
@@ -441,9 +443,11 @@
 		BD5A87058074F994208B24E2875942F8 /* MenuDetailModifierCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailModifierCell.swift; sourceTree = "<group>"; };
 		E447DEF5BA91A6C9E93348724327529B /* MenuDetailModifierCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailModifierCellViewModel.swift; sourceTree = "<group>"; };
 		0048A7160C86BFE434D3B0C8CFFBDEE5 /* MenuDetailPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailPagesFactory.swift; sourceTree = "<group>"; };
+		EE0D85F06C2D2F71B8A0770205F1A8A4 /* MenuDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailRepository.swift; sourceTree = "<group>"; };
 		8741CF0DA2EE1EB4751BA5FD9210E49B /* MenuDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailView.swift; sourceTree = "<group>"; };
 		559D06D01F7EA0A80FA0BB8138071A11 /* MenuDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailViewModel.swift; sourceTree = "<group>"; };
 		4B055E32FE5DD6B8B16C58441DE86DCD /* MenuPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPagesFactory.swift; sourceTree = "<group>"; };
+		57ECEC156A2E051E74B15FA38585B064 /* MenuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRepository.swift; sourceTree = "<group>"; };
 		4A9F9B4F3D470F45D05B0B111C1147FA /* MenuScrollService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScrollService.swift; sourceTree = "<group>"; };
 		6E293076F2566561A24316CBC7D8C9D9 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		08AB23F9D8F86F5A5A562E0E0120A8C6 /* ModifiersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifiersCell.swift; sourceTree = "<group>"; };
@@ -721,15 +725,6 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		92999484D014D71A59AE48BE9A1A53A8 /* SBTabBar */ = {
-			isa = PBXGroup;
-			children = (
-				DC309BD440BECC27202E38140297F527 /* SBTabBarController.swift */,
-				FBFBFF447EDEBE7F7F92A24AAB70F11D /* SBTabBarViewModel.swift */,
-			);
-			path = SBTabBar;
-			sourceTree = "<group>";
-		};
 		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -738,14 +733,6 @@
 				7AF4E2B9C5CAC0C1D126B547533E2FB0 /* Pods_SalamBro_SalamBroUITests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D6C8D57E55C2D0AF4685B10D8211943C /* SBNavigation */ = {
-			isa = PBXGroup;
-			children = (
-				80F7907A61A66E9CEA660C77C6B23428 /* SBNavigationController.swift */,
-			);
-			path = SBNavigation;
 			sourceTree = "<group>";
 		};
 		1AB789DC7ED7A6FD139439B124380A34 /* Factory */ = {
@@ -991,6 +978,16 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		4614207EE37A4C3D31AD26B2B0235FC8 /* PaymentSelection */ = {
+			isa = PBXGroup;
+			children = (
+				B2C898FFDAA690CC0DAC3E6DD9883463 /* View */,
+				AD767D57DEE5607331FCBE6CF3131298 /* ViewController */,
+				7AE2CB092F5A1A8512D7E44670BC86B8 /* ViewModel */,
+			);
+			path = PaymentSelection;
+			sourceTree = "<group>";
+		};
 		49413994E238D9BEE9FFD390032860DD /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -1179,14 +1176,12 @@
 			path = AdCell;
 			sourceTree = "<group>";
 		};
-		C2CD75D3785746062C8DA6F0B4B16043 /* Payment */ = {
+		63529655411685DF2C857AF984795856 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				651BA7DE63CAD5825DFC7772F9479F63 /* Factories */,
-				4614207EE37A4C3D31AD26B2B0235FC8 /* PaymentSelection */,
-				C3100DAB4800C3C9CD7D061006751147 /* PaymentCoordinator.swift */,
+				7FC4EA05929CD6BD6F23DE1953B60211 /* AddressListCell.swift */,
 			);
-			path = Payment;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		651BA7DE63CAD5825DFC7772F9479F63 /* Factories */ = {
@@ -1195,49 +1190,6 @@
 				8E40C736022C5C0B5C64C5A5BD01DA3D /* PaymentPagesFactory.swift */,
 			);
 			path = Factories;
-			sourceTree = "<group>";
-		};
-		4614207EE37A4C3D31AD26B2B0235FC8 /* PaymentSelection */ = {
-			isa = PBXGroup;
-			children = (
-				B2C898FFDAA690CC0DAC3E6DD9883463 /* View */,
-				AD767D57DEE5607331FCBE6CF3131298 /* ViewController */,
-				7AE2CB092F5A1A8512D7E44670BC86B8 /* ViewModel */,
-			);
-			path = PaymentSelection;
-			sourceTree = "<group>";
-		};
-		7AE2CB092F5A1A8512D7E44670BC86B8 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				ED595CCC0C39A6AA80AB756EA91AF5AC /* PaymentSelectionViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		B2C898FFDAA690CC0DAC3E6DD9883463 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				BFE95E25B0D15120E0BFF70D0C3F7126 /* PaymentSelectionContainerView.swift */,
-				0A49F9EFADC55A912A03C4BE05C22939 /* PaymentSelectionView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		AD767D57DEE5607331FCBE6CF3131298 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				4FFB1147F72DF060B99D53DC9132A898 /* PaymentSelectionViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		63529655411685DF2C857AF984795856 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				7FC4EA05929CD6BD6F23DE1953B60211 /* AddressListCell.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		652E4042EABEC98211B88ABC5E4FC304 /* OnBoarding */ = {
@@ -1377,9 +1329,19 @@
 				F5F9B00C87EC9410D224F0BF4AE07C2E /* CitiesRepository.swift */,
 				8DF1E4DBA1F2CFFCC7215700E3F93B52 /* CountriesRepository.swift */,
 				9704691945512A186F2A1F4CC6553A2E /* DocumentsRepository.swift */,
+				EE0D85F06C2D2F71B8A0770205F1A8A4 /* MenuDetailRepository.swift */,
+				57ECEC156A2E051E74B15FA38585B064 /* MenuRepository.swift */,
 				5DB08FF8057E5534CDF7DE46C58195F2 /* RepositoryComponents.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		7AE2CB092F5A1A8512D7E44670BC86B8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				ED595CCC0C39A6AA80AB756EA91AF5AC /* PaymentSelectionViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		8225A88D78EDBA0CAB41D761FA594BEF /* Extension */ = {
@@ -1536,6 +1498,15 @@
 			path = AddressPick;
 			sourceTree = "<group>";
 		};
+		92999484D014D71A59AE48BE9A1A53A8 /* SBTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				DC309BD440BECC27202E38140297F527 /* SBTabBarController.swift */,
+				FBFBFF447EDEBE7F7F92A24AAB70F11D /* SBTabBarViewModel.swift */,
+			);
+			path = SBTabBar;
+			sourceTree = "<group>";
+		};
 		972D5536BA0B5F460F37CDBF67A384C4 /* AddressList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1626,6 +1597,14 @@
 			path = SalamBroUITests;
 			sourceTree = "<group>";
 		};
+		AD767D57DEE5607331FCBE6CF3131298 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4FFB1147F72DF060B99D53DC9132A898 /* PaymentSelectionViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		ADAB19D3E3411B093570797EDBC8AD4A /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -1670,6 +1649,15 @@
 				CC3FD6837D8EED154A27E94EAD7B8B6A /* upgrade.json */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		B2C898FFDAA690CC0DAC3E6DD9883463 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BFE95E25B0D15120E0BFF70D0C3F7126 /* PaymentSelectionContainerView.swift */,
+				0A49F9EFADC55A912A03C4BE05C22939 /* PaymentSelectionView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		B450D5A04E032E2AEC030D74F0A21F31 /* Modifiers */ = {
@@ -1775,6 +1763,16 @@
 				C86C17EC7F7CEABFF0EF65B8B987AFD0 /* CountriesListViewModel.swift */,
 			);
 			path = CountriesList;
+			sourceTree = "<group>";
+		};
+		C2CD75D3785746062C8DA6F0B4B16043 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				651BA7DE63CAD5825DFC7772F9479F63 /* Factories */,
+				4614207EE37A4C3D31AD26B2B0235FC8 /* PaymentSelection */,
+				C3100DAB4800C3C9CD7D061006751147 /* PaymentCoordinator.swift */,
+			);
+			path = Payment;
 			sourceTree = "<group>";
 		};
 		C2F437937B577C823AE335B74D6D494B /* Legacy */ = {
@@ -1889,6 +1887,14 @@
 				616729BA80FA3A5FEB0EF12E101342BE /* UICollectionViewCenterLayout.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		D6C8D57E55C2D0AF4685B10D8211943C /* SBNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				80F7907A61A66E9CEA660C77C6B23428 /* SBNavigationController.swift */,
+			);
+			path = SBNavigation;
 			sourceTree = "<group>";
 		};
 		D71CFD49BC5A6E18AF69F8F212D63500 /* ScrollService */ = {
@@ -2513,9 +2519,11 @@
 				0F6EDB3BF0F718CBD37B35A97815E8CF /* MenuDetailModifierCell.swift in Sources */,
 				2248234CE0AEC888C4C8ECDD06EB7BFA /* MenuDetailModifierCellViewModel.swift in Sources */,
 				5A6BAC34C5A894DB92B1FFE37960DDBA /* MenuDetailPagesFactory.swift in Sources */,
+				F581187DA52C99AAA8131BB579A58EF7 /* MenuDetailRepository.swift in Sources */,
 				1579B21034DA3D0912771C8B70E926C8 /* MenuDetailView.swift in Sources */,
 				F34CFD067EAB9F98111052EB958393F2 /* MenuDetailViewModel.swift in Sources */,
 				7005F10010D73E0F31FFA6FDC2F46890 /* MenuPagesFactory.swift in Sources */,
+				34FB6344DBA4296A94E96483659A07D3 /* MenuRepository.swift in Sources */,
 				74DC8C457E1764678119B5AEE7F15D1F /* MenuScrollService.swift in Sources */,
 				3724C7586494DADA2761ACC98C289541 /* MenuViewModel.swift in Sources */,
 				3AC791218F35D5FB49E5FD5F81D2189C /* ModifiersCell.swift in Sources */,

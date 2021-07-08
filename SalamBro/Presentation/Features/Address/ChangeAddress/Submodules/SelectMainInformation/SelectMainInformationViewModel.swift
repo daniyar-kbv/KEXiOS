@@ -32,9 +32,7 @@ protocol SelectMainInformationViewModelProtocol {
 final class SelectMainInformationViewModel: SelectMainInformationViewModelProtocol {
     internal var flowType: FlowType
 
-    private let ordersService: OrdersService
-
-    private let locationRepository: AddressRepository
+    private let addressRepository: AddressRepository
     private let countriesRepository: CountriesRepository
     private let citiesRepository: CitiesRepository
     private let brandRepository: BrandRepository
@@ -51,16 +49,14 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
     var outputs = Output()
     private let disposeBag = DisposeBag()
 
-    init(ordersService: OrdersService,
-         locationRepository: AddressRepository,
+    init(addressRepository: AddressRepository,
          countriesRepository: CountriesRepository,
          citiesRepository: CitiesRepository,
          brandRepository: BrandRepository,
          defaultStorage: DefaultStorage,
          flowType: FlowType)
     {
-        self.ordersService = ordersService
-        self.locationRepository = locationRepository
+        self.addressRepository = addressRepository
         self.countriesRepository = countriesRepository
         self.citiesRepository = citiesRepository
         self.brandRepository = brandRepository
@@ -71,7 +67,7 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
         case let .changeAddress(deliveryAddress):
             self.deliveryAddress = deliveryAddress
         case .changeBrand:
-            deliveryAddress = locationRepository.getCurrentDeliveryAddress()
+            deliveryAddress = addressRepository.getCurrentDeliveryAddress()
         case .create:
             deliveryAddress = DeliveryAddress()
         }
@@ -116,6 +112,25 @@ extension SelectMainInformationViewModel {
             .disposed(by: disposeBag)
 
         citiesRepository.outputs.didFail
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+
+        addressRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        addressRepository.outputs.didGetLeadUUID.bind {
+            [weak self] leadUUID in
+            self?.defaultStorage.persist(leadUUID: leadUUID)
+            self?.outputs.didSave.accept(())
+        }
+        .disposed(by: disposeBag)
+
+        addressRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        addressRepository.outputs.didFail
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
     }
@@ -169,13 +184,13 @@ extension SelectMainInformationViewModel {
         switch flowType {
         case .create:
             if let deliveryAddress = deliveryAddress {
-                locationRepository.addDeliveryAddress(deliveryAddress: deliveryAddress)
+                addressRepository.addDeliveryAddress(deliveryAddress: deliveryAddress)
             }
         default:
             break
         }
 
-        ordersApply()
+        addressRepository.applyOrder()
     }
 
     func checkValues() {
@@ -213,31 +228,6 @@ extension SelectMainInformationViewModel {
         countriesRepository.setCountries(countries: countries)
         self.countries = countries
         outputs.didGetCountries.accept(countries.map { $0.name })
-    }
-
-    private func ordersApply() {
-        guard let cityId = deliveryAddress?.city?.id,
-              let longitude = deliveryAddress?.address?.longitude.rounded(to: 8),
-              let latitude = deliveryAddress?.address?.latitude.rounded(to: 8),
-              let brandId = brand?.id
-        else { return }
-
-        let dto = OrderApplyDTO(address: OrderApplyDTO.Address(city: cityId,
-                                                               longitude: longitude,
-                                                               latitude: latitude),
-                                localBrand: brandId)
-
-        outputs.didStartRequest.accept(())
-
-        ordersService.applyOrder(dto: dto)
-            .subscribe(onSuccess: { [weak self] leadUUID in
-                self?.outputs.didStartRequest.accept(())
-                self?.defaultStorage.persist(leadUUID: leadUUID)
-                self?.outputs.didSave.accept(())
-            }, onError: { [weak self] error in
-                self?.outputs.didStartRequest.accept(())
-                self?.outputs.didGetError.accept(error as? ErrorPresentable)
-            }).disposed(by: disposeBag)
     }
 }
 
