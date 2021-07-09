@@ -1,6 +1,0 @@
-strings:
-  inputs:
-    - SalamBro/Resources/Localization/en.lproj
-  outputs:
-    - templateName: structured-swift5
-      output: SalamBro/Resources/Localization/Localizable+Generated.swift

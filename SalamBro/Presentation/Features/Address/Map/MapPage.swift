@@ -58,6 +58,7 @@ final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
 extension MapPage: LocationManagerDelegate {
     func askUserForPermission() {
+//        Tech debt: localize
         showAlert(title: "Location Services are disabled", message: "Please enable Location Services in your Settings")
     }
 
@@ -192,7 +193,7 @@ extension MapPage {
     private func showCommentaryPage() {
         let commentaryPage = MapCommentaryPage()
 
-        commentaryPage.configureTextField(placeholder: L10n.MapView.CommentaryLabel.title)
+        commentaryPage.configureTextField(placeholder: SBLocalization.localized(key: AddressText.Map.Commentary.placeholder))
 
         commentaryPage.output.didProceed.subscribe(onNext: { [weak self] comment in
             self?.viewModel.commentary = comment

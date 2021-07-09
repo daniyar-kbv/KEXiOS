@@ -107,7 +107,7 @@ final class CartProductCell: UITableViewCell {
         button.borderWidth = 1
         button.borderColor = .mildBlue
         button.cornerRadius = 5
-        button.setTitle(L10n.CartProductCell.DeleteButton.title, for: .normal)
+        button.setTitle(SBLocalization.localized(key: CartText.Cart.ProductCell.deleteButton), for: .normal)
         button.setTitleColor(.kexRed, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
         button.addTarget(self, action: #selector(deleteItem), for: .touchUpInside)
@@ -260,7 +260,7 @@ extension CartProductCell {
         } else {
             stackView.isHidden = true
             deleteButton.isHidden = false
-            unavailableLabel.text = L10n.CartProductCell.Availability.title
+            unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.ProductCell.availability)
             productTitleLabel.alpha = 0.5
             subitemLabel.alpha = 0.5
             priceLabel.isHidden = true

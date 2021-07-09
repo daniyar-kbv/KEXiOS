@@ -24,17 +24,17 @@ extension RateItem {
         var title: String {
             switch self {
             case .notFound:
-                return L10n.RateOrder.Cell.CourierNotFoundClient.text
+                return SBLocalization.localized(key: ProfileText.RateOrder.Item.clientNotFound)
             case .foodIsMissing:
-                return L10n.RateOrder.Cell.FoodIsMissing.text
+                return SBLocalization.localized(key: ProfileText.RateOrder.Item.missingFood)
             case .foodIsCold:
-                return L10n.RateOrder.Cell.FoodIsCold.text
+                return SBLocalization.localized(key: ProfileText.RateOrder.Item.coldFood)
             case .courierWork:
-                return L10n.RateOrder.Cell.CourierWork.text
+                return SBLocalization.localized(key: ProfileText.RateOrder.Item.courierWork)
             case .givenTime:
-                return L10n.RateOrder.Cell.GivenTime.text
+                return SBLocalization.localized(key: ProfileText.RateOrder.Item.givenTime)
             case .deliveryTime:
-                return L10n.RateOrder.Cell.DeliveryTime.text
+                return SBLocalization.localized(key: ProfileText.RateOrder.Item.deliveryTime)
             }
         }
     }

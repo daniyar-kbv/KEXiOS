@@ -43,7 +43,7 @@ final class ChangeNameController: UIViewController, AlertDisplayable, LoaderDisp
 
 extension ChangeNameController {
     private func configureViews() {
-        navigationItem.title = L10n.ChangeName.NavigationBar.title
+        navigationItem.title = SBLocalization.localized(key: ProfileText.ChangeName.title)
         if let name = viewModel.oldUserInfo.name, let email = viewModel.oldUserInfo.email {
             contentView?.configureTextFields(name: name, email: email)
         }

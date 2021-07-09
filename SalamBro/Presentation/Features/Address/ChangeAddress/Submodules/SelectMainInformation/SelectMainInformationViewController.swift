@@ -35,7 +35,7 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .kexRed
         button.layer.cornerRadius = 10
-        button.setTitle(L10n.SelectMainInfo.save, for: .normal)
+        button.setTitle(SBLocalization.localized(key: AddressText.SelectMainInfo.save), for: .normal)
         button.addTarget(self, action: #selector(save), for: .touchUpInside)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .regular)
         return button
@@ -120,7 +120,7 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        navigationItem.title = L10n.SelectMainInfo.title
+        navigationItem.title = SBLocalization.localized(key: AddressText.SelectMainInfo.title)
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }
@@ -161,7 +161,7 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
     @objc
     private func save() {
         let firstAction = UIAlertAction(
-            title: L10n.SelectMainInfo.Alert.Action.yes,
+            title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.actionYes),
             style: .default,
             handler: { _ in
                 self.viewModel.didSave()
@@ -169,19 +169,19 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
         )
 
         let secondAction = UIAlertAction(
-            title: L10n.SelectMainInfo.Alert.Action.no,
+            title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.actionNo),
             style: .default,
             handler: nil
         )
 
         switch viewModel.flowType {
         case .create:
-            showAlert(title: L10n.SelectMainInfo.Alert.title,
-                      message: L10n.SelectMainInfo.Alert.Body.address,
+            showAlert(title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.title),
+                      message: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.bodyAddress),
                       actions: [firstAction, secondAction])
         case .changeAddress, .changeBrand:
-            showAlert(title: L10n.SelectMainInfo.Alert.title,
-                      message: L10n.SelectMainInfo.Alert.Body.address,
+            showAlert(title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.title),
+                      message: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.bodyBrand),
                       actions: [firstAction, secondAction])
         }
     }

@@ -24,7 +24,7 @@ final class CategoryCell: UICollectionViewCell {
 
     public lazy var categoryLabel: UILabel = {
         let label = UILabel()
-        label.text = L10n.AddressPickCell.deliverLabel
+        label.text = SBLocalization.localized(key: MenuText.Menu.Address.addressTitle)
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.textColor = .mildBlue
         label.textAlignment = .center

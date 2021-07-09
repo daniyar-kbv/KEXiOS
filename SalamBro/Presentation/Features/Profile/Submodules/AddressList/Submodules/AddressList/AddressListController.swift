@@ -70,7 +70,7 @@ final class AddressListController: UIViewController {
 
 extension AddressListController {
     private func layoutUI() {
-        navigationItem.title = L10n.AddressPicker.titleMany
+        navigationItem.title = SBLocalization.localized(key: ProfileText.AddressList.title)
         view.backgroundColor = .arcticWhite
 
         view.addSubview(citiesTableView)

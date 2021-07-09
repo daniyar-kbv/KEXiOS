@@ -35,7 +35,7 @@ extension PromotionsAPI: TargetType {
 
     var task: Task {
         switch self {
-        case let .promotions: return .requestPlain
+        case .promotions: return .requestPlain
         }
     }
 

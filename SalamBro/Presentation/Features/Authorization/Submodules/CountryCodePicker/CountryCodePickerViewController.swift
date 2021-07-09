@@ -62,7 +62,7 @@ final class CountryCodePickerViewController: UIViewController, AlertDisplayable,
         super.viewWillAppear(animated)
         view.backgroundColor = .white
 
-        navigationItem.title = L10n.CountryCodePicker.Navigation.title
+        navigationItem.title = SBLocalization.localized(key: AuthorizationText.CountryCode.title)
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }

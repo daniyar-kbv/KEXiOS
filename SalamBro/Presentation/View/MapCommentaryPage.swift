@@ -25,7 +25,7 @@ final class MapCommentaryPage: UIViewController {
         btn.backgroundColor = .calmGray
         btn.layer.cornerRadius = 10
         btn.layer.masksToBounds = true
-        btn.setTitle(L10n.Commentary.Button.title, for: .normal)
+        btn.setTitle(SBLocalization.localized(key: CommentaryText.buttonTitle), for: .normal)
         return btn
     }()
 

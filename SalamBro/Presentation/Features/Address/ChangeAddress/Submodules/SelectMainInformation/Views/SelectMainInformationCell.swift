@@ -47,7 +47,7 @@ final class SelectMainInformationCell: UITableViewCell {
             field.chevronRight = true
         case .brand:
             field.chevronRight = true
-            field.descriptionText = L10n.SelectMainInfo.description
+            field.descriptionText = SBLocalization.localized(key: AddressText.SelectMainInfo.description)
         case .empty:
             field.isHidden = true
         default:
@@ -97,13 +97,13 @@ extension SelectMainInformationCell {
         var title: String {
             switch self {
             case .country:
-                return L10n.SelectMainInfo.country
+                return SBLocalization.localized(key: AddressText.SelectMainInfo.countryTitle)
             case .city:
-                return L10n.SelectMainInfo.city
+                return SBLocalization.localized(key: AddressText.SelectMainInfo.cityTitle)
             case .address:
-                return L10n.SelectMainInfo.address
+                return SBLocalization.localized(key: AddressText.SelectMainInfo.addressTitle)
             case .brand:
-                return L10n.SelectMainInfo.brand
+                return SBLocalization.localized(key: AddressText.SelectMainInfo.brandTitle)
             case .empty:
                 return ""
             }
@@ -112,14 +112,13 @@ extension SelectMainInformationCell {
         var placeholder: String {
             switch self {
             case .country:
-                return L10n.CountriesList.Navigation.title
+                return SBLocalization.localized(key: AddressText.SelectMainInfo.countryPlaceholder)
             case .city:
-                return L10n.CitiesList.Navigation.title
+                return SBLocalization.localized(key: AddressText.SelectMainInfo.cityPlaceholder)
             case .address:
-//        Tech debt: change currentValue to appropriate localized text
-                return L10n.SelectMainInfo.address
+                return SBLocalization.localized(key: AddressText.SelectMainInfo.addressPlaceholder)
             case .brand:
-                return L10n.Brands.Navigation.title
+                return SBLocalization.localized(key: AddressText.SelectMainInfo.brandPlaceholder)
             case .empty:
                 return ""
             }

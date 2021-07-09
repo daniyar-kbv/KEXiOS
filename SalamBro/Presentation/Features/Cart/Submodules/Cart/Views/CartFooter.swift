@@ -44,7 +44,7 @@ class CartFooter: UIView {
 
     lazy var deliveryLabel: UILabel = {
         let label = UILabel()
-        label.text = L10n.CartFooter.deliveryLabel
+        label.text = SBLocalization.localized(key: CartText.Cart.Footer.deliveryTitle)
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +53,7 @@ class CartFooter: UIView {
 
     lazy var deliveryPriceLabel: UILabel = {
         let label = UILabel()
-        label.text = L10n.CartFooter.deliveryPrice(500)
+        label.text = SBLocalization.localized(key: CartText.Cart.Footer.deliveryPrice, arguments: String(500))
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
         label.textAlignment = .right
@@ -72,7 +72,7 @@ class CartFooter: UIView {
 
     lazy var promocodeButton: UIButton = {
         let button = UIButton()
-        button.setTitle(L10n.CartFooter.PromocodeButton.title, for: .normal)
+        button.setTitle(SBLocalization.localized(key: CartText.Cart.Footer.promocodeButton), for: .normal)
         button.backgroundColor = .arcticWhite
         button.setTitleColor(.kexRed, for: .normal)
         button.layer.cornerRadius = 10

@@ -38,7 +38,7 @@ final class AuthNumberView: UIView {
         field.keyboardType = .numberPad
         field.font = .systemFont(ofSize: 26)
         field.attributedPlaceholder = NSAttributedString(
-            string: L10n.Authorization.NumberField.Placeholder.title,
+            string: SBLocalization.localized(key: AuthorizationText.Auth.numberPlaceholder),
             attributes: [.font: UIFont.systemFont(ofSize: 26, weight: .medium)]
         )
         return field

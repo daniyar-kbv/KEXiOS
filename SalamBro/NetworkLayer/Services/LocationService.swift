@@ -34,7 +34,7 @@ final class LocationServiceMoyaImpl: LocationService {
                     throw error
                 }
 
-                guard let data = countryResponse.data else { throw NetworkError.error("Нет данных") }
+                guard let data = countryResponse.data else { throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData)) }
 
                 return data.results
             }
@@ -51,7 +51,7 @@ final class LocationServiceMoyaImpl: LocationService {
                     throw error
                 }
 
-                guard let data = citiesResponse.data else { throw NetworkError.error("Нет данных") }
+                guard let data = citiesResponse.data else { throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData)) }
 
                 return data.cities
             }

@@ -33,7 +33,7 @@ final class PaymentSelectionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = SBLocalization.localized(key: PaymentSelectionText.title)
+        title = SBLocalization.localized(key: Payment.PaymentSelectionText.title)
     }
 }
 

@@ -16,6 +16,7 @@ enum PaymentMethodType {
     case inApp
     case cash
 
+//        Tech debt: localize
     var title: String {
         switch self {
         case .cash: return "Наличными курьеру"
@@ -33,6 +34,7 @@ struct PaymentMethod: PaymentMethodSelectable {
 enum PaymentMethodError: ErrorPresentable {
     case incorrectIndexPath
 
+//        Tech debt: localize
     var presentationDescription: String {
         return "не валидный indexPath"
     }

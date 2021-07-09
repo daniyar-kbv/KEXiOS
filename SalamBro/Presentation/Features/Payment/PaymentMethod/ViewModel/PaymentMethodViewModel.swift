@@ -15,6 +15,7 @@ protocol PaymentMethodViewModel: AnyObject {
 
 final class PaymentMethodViewModelImpl: PaymentMethodViewModel {
     var mockData: [PaymentMethod] = [
+        //        Tech debt: localize
         .init(paymentType: .storedCard("Карта *9023")),
         .init(paymentType: .inApp, isSelected: true),
         .init(paymentType: .cash),

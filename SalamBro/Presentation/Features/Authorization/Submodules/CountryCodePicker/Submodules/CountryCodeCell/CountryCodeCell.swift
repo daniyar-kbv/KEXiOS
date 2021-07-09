@@ -24,7 +24,6 @@ final class CountryCodeCell: UITableViewCell {
 
     private lazy var countryLabel: UILabel = {
         let view = UILabel()
-        view.text = "text"
         view.font = .systemFont(ofSize: 16, weight: .medium)
         view.textColor = .mildBlue
         return view

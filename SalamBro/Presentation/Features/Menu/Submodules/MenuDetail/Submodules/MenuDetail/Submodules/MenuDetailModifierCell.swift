@@ -32,7 +32,7 @@ final class MenuDetailModifierCell: UITableViewCell {
 
     private lazy var selectButton: UIButton = {
         let view = UIButton()
-        view.setTitle(L10n.MenuDetail.chooseAdditionalItemButton, for: .normal)
+        view.setTitle(SBLocalization.localized(key: MenuText.MenuDetail.changeButton), for: .normal)
         view.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         view.setTitleColor(.kexRed, for: .normal)
         return view

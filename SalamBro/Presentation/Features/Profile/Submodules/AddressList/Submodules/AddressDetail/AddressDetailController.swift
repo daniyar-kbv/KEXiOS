@@ -74,8 +74,7 @@ final class AddressDetailController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        navigationItem.title = L10n.AddressPicker.titleOne
+        navigationItem.title = SBLocalization.localized(key: ProfileText.AddressDetail.title)
     }
 }
 
@@ -85,7 +84,7 @@ extension AddressDetailController {
     }
 
     @objc private func deleteAction() {
-//        Tech debt add localization
+//        Tech debt: localize
         let alert = UIAlertController(title: "Вы уверены?", message: "Вы уверены что хотите удалить адрес доставки?", preferredStyle: .alert)
         alert.view.tintColor = .kexRed
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] _ in
