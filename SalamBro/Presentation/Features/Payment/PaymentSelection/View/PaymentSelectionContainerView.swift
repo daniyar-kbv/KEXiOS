@@ -9,8 +9,14 @@ import RxCocoa
 import RxSwift
 import UIKit
 
+protocol PaymentSelectionContainerViewDelegate: AnyObject {
+    func handleChangePaymentMethod()
+}
+
 final class PaymentSelectionContainerView: UIView {
     private let disposeBag = DisposeBag()
+
+    weak var delegate: PaymentSelectionContainerViewDelegate?
 
     private let paymentSelectionView = PaymentSelectionView()
     private let actionButton: UIButton = {
@@ -56,7 +62,8 @@ final class PaymentSelectionContainerView: UIView {
 
 extension PaymentSelectionContainerView {
     private func bindViews() {
-        actionButton.rx
+        actionButton
+            .rx
             .tap
             .subscribe(onNext: { [weak self] in
                 guard let _ = self else { return }
@@ -64,11 +71,11 @@ extension PaymentSelectionContainerView {
             })
             .disposed(by: disposeBag)
 
-        paymentSelectionView.changeButton.rx
+        paymentSelectionView.changeButton
+            .rx
             .tap
             .subscribe(onNext: { [weak self] in
-                guard let _ = self else { return }
-                debugPrint("changed tapped")
+                self?.delegate?.handleChangePaymentMethod()
             })
             .disposed(by: disposeBag)
     }
