@@ -71,8 +71,8 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     }
 
     func set(modifier: Modifier, at indexPath: IndexPath) {
-        check()
         outputs.didSelectModifier.accept((modifier, indexPath))
+        check()
     }
 }
 
@@ -123,11 +123,14 @@ extension MenuDetailViewModelImpl {
     }
 
     private func check() {
-        outputs.isComplete.accept(!modifierCellViewModels.flatMap { $0 }.contains(where: { $0.didSelect() == false }))
+        outputs.isComplete.accept(!modifierCellViewModels.flatMap { $0 }
+            .contains(where: { $0.didSelect() == false }))
     }
 
     private func getSelectedModifiers() -> [Modifier] {
-        return modifierCellViewModels.flatMap { $0 }.map { $0.getValue() }.filter { $0 != nil } as! [Modifier]
+        return modifierCellViewModels.flatMap { $0 }
+            .map { $0.getValue() }
+            .filter { $0 != nil } as! [Modifier]
     }
 }
 
