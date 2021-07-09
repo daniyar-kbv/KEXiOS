@@ -278,6 +278,12 @@ extension MenuController: AddCollectionCellDelegate {
     }
 }
 
+extension MenuController: Reloadable {
+    func reload() {
+        viewModel.update()
+    }
+}
+
 extension MenuController {
     struct Output {
         let toPromotion = PublishRelay<(URL, String)>()

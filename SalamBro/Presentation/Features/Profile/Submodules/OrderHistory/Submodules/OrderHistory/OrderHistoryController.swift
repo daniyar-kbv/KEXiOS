@@ -82,6 +82,12 @@ extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension OrderHistoryController: Reloadable {
+    func reload() {
+//        Tech debt: add reload action
+    }
+}
+
 extension OrderHistoryController: OrderTestCellDelegate {
     func share() {
         onShareTapped?()

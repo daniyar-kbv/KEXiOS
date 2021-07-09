@@ -144,6 +144,12 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension CountriesListController: Reloadable {
+    func reload() {
+        viewModel.getCountries()
+    }
+}
+
 extension CountriesListController {
     struct Output {
         let didSelectCountry = PublishRelay<Int>()

@@ -177,7 +177,9 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
     }
 
     private func showEmptyState() {
-        showAnimationView(delegate: self, animationType: .profile)
+        showAnimationView(animationType: .profile) { [weak self] in
+            self?.outputs.onLoginTapped.accept(())
+        }
     }
 
     private func layoutUI() {
@@ -232,12 +234,6 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
     }
 }
 
-extension ProfilePage: AnimationContainerViewDelegate {
-    func performAction() {
-        outputs.onLoginTapped.accept(())
-    }
-}
-
 extension ProfilePage: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return viewModel.tableItems.count
@@ -256,6 +252,12 @@ extension ProfilePage: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = viewModel.tableItems[indexPath.row]
         outputs.onTableItemPressed.accept(item)
+    }
+}
+
+extension ProfilePage: Reloadable {
+    func reload() {
+        reloadPage()
     }
 }
 

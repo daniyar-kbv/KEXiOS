@@ -188,6 +188,12 @@ extension MenuDetailController: MenuDetailViewDelegate {
     }
 }
 
+extension MenuDetailController: Reloadable {
+    func reload() {
+        viewModel.update()
+    }
+}
+
 extension MenuDetailController {
     struct Output {
         let didTerminate = PublishRelay<Void>()

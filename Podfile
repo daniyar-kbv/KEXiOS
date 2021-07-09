@@ -28,11 +28,14 @@ target 'SalamBro' do
   # Additional MapKit modules.
   pod 'YandexMapKitSearch', '3.4'
 
-  #rateView
+  # Pad for rate view
   pod 'Cosmos'
 
-  #Pod for Lottie animations
+  # Pod for Lottie animations
   pod 'lottie-ios'
+
+  # Pod for observing internet connection
+  pod 'ReachabilitySwift'
 
   target 'SalamBroTests' do
     inherit! :search_paths
