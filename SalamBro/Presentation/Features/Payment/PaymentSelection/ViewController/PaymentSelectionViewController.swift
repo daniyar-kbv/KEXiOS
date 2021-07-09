@@ -10,12 +10,16 @@ import UIKit
 final class PaymentSelectionViewController: UIViewController {
     var onChangePaymentMethod: (() -> Void)?
 
-    private var containerView: PaymentSelectionContainerView!
-
     private let viewModel: PaymentSelectionViewModel
+    private lazy var contentView: PaymentSelectionContainerView = {
+        let view = PaymentSelectionContainerView()
+        view.delegate = self
+        return view
+    }()
 
     init(viewModel: PaymentSelectionViewModel) {
         self.viewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -26,14 +30,14 @@ final class PaymentSelectionViewController: UIViewController {
 
     override func loadView() {
         super.loadView()
-        containerView = PaymentSelectionContainerView()
-        containerView.delegate = self
-        view = containerView
+
+        view = contentView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = SBLocalization.localized(key: Payment.PaymentSelectionText.title)
+
+        title = SBLocalization.localized(key: PaymentText.PaymentSelection.title)
     }
 }
 

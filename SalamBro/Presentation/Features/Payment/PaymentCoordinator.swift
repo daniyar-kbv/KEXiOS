@@ -35,7 +35,25 @@ final class PaymentCoordinator: BaseCoordinator {
 
     private func showChangePaymentVC() {
         let paymentMethodVC = pagesFactory.makePaymentMethodPage()
+
+        paymentMethodVC.outputs.didSelectNewCard
+            .subscribe(onNext: { [weak self] in
+                self?.showCardPage(on: paymentMethodVC)
+            }).disposed(by: disposeBag)
+
         router.push(viewController: paymentMethodVC, animated: true)
+    }
+
+    private func showCardPage(on viewController: UIViewController) {
+        let cardPage = pagesFactory.makePaymentCardPage()
+
+        cardPage.outputs.close
+            .subscribe(onNext: {
+                cardPage.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+
+        let nav = SBNavigationController(rootViewController: cardPage)
+        viewController.present(nav, animated: true)
     }
 }
 

@@ -10,6 +10,7 @@ import Foundation
 protocol PaymentPagesFactory: AnyObject {
     func makePaymentSelectionPage() -> PaymentSelectionViewController
     func makePaymentMethodPage() -> PaymentMethodViewController
+    func makePaymentCardPage() -> PaymentCardViewController
 }
 
 final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
@@ -35,5 +36,13 @@ final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
 
     private func makePaymentMethodVCViewModel() -> PaymentMethodVCViewModel {
         return scoped(PaymentMethodVCViewModelImpl())
+    }
+
+    func makePaymentCardPage() -> PaymentCardViewController {
+        return scoped(.init(viewModel: makePaymentCardViewModel()))
+    }
+
+    private func makePaymentCardViewModel() -> PaymentCardViewModel {
+        return scoped(PaymentCardViewModelImpl())
     }
 }
