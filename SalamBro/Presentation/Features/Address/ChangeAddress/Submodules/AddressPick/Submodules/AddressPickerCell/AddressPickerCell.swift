@@ -44,8 +44,8 @@ final class AddressPickerCell: UITableViewCell, Reusable {
             self.accessoryView = UIImageView(
                 image: SBImageResource.getIcon(
                     for: isSelected ?
-                        AddressPickIcon.checkMarkIcon :
-                        AddressPickIcon.arrowRightIcon
+                        AddressIcons.AddressPick.checkMarkIcon :
+                        AddressIcons.AddressPick.arrowRightIcon
                 )
             )
         }.disposed(by: disposeBag)

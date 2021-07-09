@@ -15,13 +15,9 @@ protocol AddressPagesFactory {
 }
 
 final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
-    private var serviceComponents: ServiceComponents
     private let repositoryComponents: RepositoryComponents
 
-    init(serviceComponents: ServiceComponents,
-         repositoryComponents: RepositoryComponents)
-    {
-        self.serviceComponents = serviceComponents
+    init(repositoryComponents: RepositoryComponents) {
         self.repositoryComponents = repositoryComponents
     }
 
@@ -38,8 +34,7 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
     }
 
     private func makeSelectMainInfoViewModel(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewModel {
-        return scoped(.init(ordersService: serviceComponents.ordersService(),
-                            locationRepository: repositoryComponents.makeAddressRepository(),
+        return scoped(.init(addressRepository: repositoryComponents.makeAddressRepository(),
                             countriesRepository: repositoryComponents.makeCountriesRepository(),
                             citiesRepository: repositoryComponents.makeCitiesRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
@@ -52,9 +47,8 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
     }
 
     private func makeMapViewModel(address: Address?) -> MapViewModel {
-        return scoped(.init(ordersService: serviceComponents.ordersService(),
-                            defaultStorage: DefaultStorageImpl.sharedStorage,
-                            locationRepository: repositoryComponents.makeAddressRepository(),
+        return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage,
+                            addressRepository: repositoryComponents.makeAddressRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
                             flow: .change,
                             address: address))

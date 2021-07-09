@@ -20,9 +20,12 @@ extension Language {
 
         var icon: UIImage? {
             switch self {
-            case .kazakh: return SBImageResource.getIcon(for: ProfileIcon.kazakhLanguageIcon)
-            case .russian: return SBImageResource.getIcon(for: ProfileIcon.russianLanguageIcon)
-            case .english: return SBImageResource.getIcon(for: ProfileIcon.englishLanguageIcon)
+            case .kazakh:
+                return SBImageResource.getIcon(for: ProfileIcons.ChangeLanguage.kazakhLanguageIcon)
+            case .russian:
+                return SBImageResource.getIcon(for: ProfileIcons.ChangeLanguage.russianLanguageIcon)
+            case .english:
+                return SBImageResource.getIcon(for: ProfileIcons.ChangeLanguage.englishLanguageIcon)
             }
         }
 

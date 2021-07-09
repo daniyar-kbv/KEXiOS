@@ -97,7 +97,7 @@ final class AuthCoordinator: BaseCoordinator {
                 countryCodePickerPage.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
-        let navController = UINavigationController(rootViewController: countryCodePickerPage)
+        let navController = SBNavigationController(rootViewController: countryCodePickerPage)
         router.present(navController, animated: true, completion: nil)
     }
 
