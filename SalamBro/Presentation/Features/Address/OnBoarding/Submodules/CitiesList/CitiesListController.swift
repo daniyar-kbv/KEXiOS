@@ -134,6 +134,12 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension CitiesListController: Reloadable {
+    func reload() {
+        viewModel.getCities()
+    }
+}
+
 extension CitiesListController {
     struct Output {
         let didSelectCity = PublishRelay<Int>()

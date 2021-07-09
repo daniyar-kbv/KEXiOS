@@ -14,6 +14,7 @@ import YandexMapKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
+    private var reachabilityManager: ReachabilityManager?
     private var appCoordinator: AppCoordinator?
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -24,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         configureAppCoordinator()
         appCoordinator?.start()
+
+        reachabilityManager = ReachabilityManagerImpl.shared
+        reachabilityManager?.start()
 
         return true
     }

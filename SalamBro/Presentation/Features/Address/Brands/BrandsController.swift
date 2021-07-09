@@ -134,6 +134,12 @@ extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate
     }
 }
 
+extension BrandsController: Reloadable {
+    func reload() {
+        viewModel.getBrands()
+    }
+}
+
 extension BrandsController {
     enum FlowType: Equatable {
         case create

@@ -127,6 +127,12 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
     }
 }
 
+extension CountryCodePickerViewController: Reloadable {
+    func reload() {
+        viewModel.refresh()
+    }
+}
+
 extension CountryCodePickerViewController {
     struct Output {
         let didSelectCountryCode = PublishRelay<Country>()
