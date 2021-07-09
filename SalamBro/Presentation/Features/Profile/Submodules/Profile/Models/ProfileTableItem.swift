@@ -14,9 +14,9 @@ enum ProfileTableItem {
 
     var icon: UIImage? {
         switch self {
-        case .orderHistory: return SBImageResource.getIcon(for: ProfileIcon.orderHistoryIcon)
-        case .deliveryAddress: return SBImageResource.getIcon(for: ProfileIcon.deliveryAddressIcon)
-        case .changeLanguage: return SBImageResource.getIcon(for: ProfileIcon.changeLanguageIcon)
+        case .orderHistory: return SBImageResource.getIcon(for: ProfileIcons.Profile.orderHistoryIcon)
+        case .deliveryAddress: return SBImageResource.getIcon(for: ProfileIcons.Profile.deliveryAddressIcon)
+        case .changeLanguage: return SBImageResource.getIcon(for: ProfileIcons.Profile.changeLanguageIcon)
         }
     }
 

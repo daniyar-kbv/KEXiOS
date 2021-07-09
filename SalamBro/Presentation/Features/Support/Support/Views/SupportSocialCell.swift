@@ -17,7 +17,6 @@ class SupportSocialCell: UICollectionViewCell {
 
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "vk")
         view.isUserInteractionEnabled = true
         return view
     }()

@@ -19,11 +19,7 @@ final class AddressListCell: UITableViewCell {
     }()
 
     private lazy var rightArrowImageView: UIImageView = {
-        let imageView = UIImageView(image: Asset.chevronRight.image)
-
-//         MARK: SwiftGen issue, почему-то икнока chevronRight смотрит вниз 😒
-
-        imageView.transform = CGAffineTransform(rotationAngle: .pi * 1.5)
+        let imageView = UIImageView(image: SBImageResource.getIcon(for: ProfileIcons.AddressList.addressArrow))
         imageView.tintColor = .mildBlue
         return imageView
     }()

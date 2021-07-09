@@ -15,7 +15,6 @@ protocol MenuViewModelProtocol {
     var outputs: MenuViewModel.Output { get }
     var headerViewModels: [ViewModel?] { get }
     var cellViewModels: [[ViewModel]] { get }
-    var brandName: BehaviorRelay<String?> { get }
 
     func update()
 }
@@ -31,8 +30,6 @@ final class MenuViewModel: MenuViewModelProtocol {
     public var headerViewModels: [ViewModel?] = []
     public var cellViewModels: [[ViewModel]] = []
 
-    public lazy var brandName = BehaviorRelay<String?>(value: brandRepository.getCurrentBrand()?.name)
-
     init(locationRepository: AddressRepository,
          brandRepository: BrandRepository,
          menuRepository: MenuRepository)
@@ -46,6 +43,7 @@ final class MenuViewModel: MenuViewModelProtocol {
     public func update() {
         download()
 
+        outputs.brandImage.accept(brandRepository.getCurrentBrand()?.image)
         outputs.brandName.accept(brandRepository.getCurrentBrand()?.name)
     }
 
@@ -117,6 +115,7 @@ final class MenuViewModel: MenuViewModelProtocol {
 
 extension MenuViewModel {
     struct Output {
+        let brandImage = PublishRelay<String?>()
         let brandName = PublishRelay<String?>()
 
         let didStartRequest = PublishRelay<Void>()
