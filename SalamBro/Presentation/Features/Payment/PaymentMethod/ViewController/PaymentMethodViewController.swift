@@ -30,6 +30,7 @@ final class PaymentMethodViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        Tech debt: localize
         title = "Способ оплаты"
         setBackButton { [weak self] in
             self?.navigationController?.popViewController(animated: true)
