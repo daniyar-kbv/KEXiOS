@@ -8,8 +8,6 @@ target 'SalamBro' do
   pod 'Alamofire'
   pod 'RxSwift'
   pod 'RxCocoa'
-  pod 'PromiseKit'
-  pod 'Swinject'
   pod 'SnapKit'
   pod 'Reusable'
   pod 'DropDown'
@@ -24,7 +22,6 @@ target 'SalamBro' do
 
   # Pods for SalamBro
   pod 'InputMask'
-  pod 'SwiftGen'
 
   # Pods for yandex-map
   pod 'YandexMapKit', '3.4'

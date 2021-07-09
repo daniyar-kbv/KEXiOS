@@ -2122,7 +2122,6 @@
 			buildConfigurationList = 1BE4FF57A37CBC8F5A690B99F3C51991 /* Build configuration list for PBXNativeTarget "SalamBro" */;
 			buildPhases = (
 				AF8C389205F0CDB75427EF1F9D3B0CDB /* [CP] Check Pods Manifest.lock */,
-				FDA3F36C746C7D4EC61E3CE9EAC8C181 /* SwiftGen */,
 				726A4C7A1C0EEE40E7A93402BA037355 /* Sources */,
 				0DE5C5EC10EE4C5C4DC260A1F5CC2D4A /* Frameworks */,
 				4C7EAF6205E790C561FC9532C28380B4 /* Resources */,
@@ -2371,24 +2370,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro-SalamBroUITests/Pods-SalamBro-SalamBroUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		FDA3F36C746C7D4EC61E3CE9EAC8C181 /* SwiftGen */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftGen;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [[ -f \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" ]]; then\n  \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" \nelse\n  echo \"warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it.\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

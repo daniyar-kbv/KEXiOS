@@ -1,8 +1,0 @@
-xcassets:
-  inputs:
-    - SalamBro/Resources/Assets/Assets.xcassets
-  outputs:
-    - templateName: swift5
-      params:
-        forceProvidesNamespaces: true
-      output: SalamBro/Resources/Assets/Assets+Generated.swift

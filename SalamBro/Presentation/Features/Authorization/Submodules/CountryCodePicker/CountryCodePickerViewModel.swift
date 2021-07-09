@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import PromiseKit
 import RxCocoa
 import RxSwift
 
