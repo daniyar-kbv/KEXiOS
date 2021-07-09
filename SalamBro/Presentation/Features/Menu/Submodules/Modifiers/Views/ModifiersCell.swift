@@ -11,7 +11,6 @@ import UIKit
 class ModifiersCell: UICollectionViewCell {
     lazy var itemImageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "cola")
         view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
@@ -27,7 +26,6 @@ class ModifiersCell: UICollectionViewCell {
 
     private lazy var itemPriceLabel: UILabel = {
         let view = UILabel()
-        view.text = "0 ₸"
         view.font = .systemFont(ofSize: 12)
         view.textColor = .darkGray
         return view

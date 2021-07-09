@@ -11,16 +11,25 @@ import RxSwift
 
 protocol SBTabBarViewModel: AnyObject {
     func getDocuments()
+    func refreshToken()
 }
 
 final class SBTabBarViewModelImpl: SBTabBarViewModel {
-    private let repository: DocumentsRepository
+    private let documentsRepository: DocumentsRepository
+    private let authRepository: AuthRepository
 
-    init(repository: DocumentsRepository) {
-        self.repository = repository
+    init(documentsRepository: DocumentsRepository,
+         authRepository: AuthRepository)
+    {
+        self.documentsRepository = documentsRepository
+        self.authRepository = authRepository
     }
 
     func getDocuments() {
-        repository.getDocuments()
+        documentsRepository.getDocuments()
+    }
+
+    func refreshToken() {
+        authRepository.refreshToken()
     }
 }

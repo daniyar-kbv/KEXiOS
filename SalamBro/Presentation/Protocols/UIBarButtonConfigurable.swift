@@ -13,9 +13,13 @@ protocol UIBarButtonConfigurable: AnyObject {
 
 extension UIViewController: UIBarButtonConfigurable {
     func setBackButton(completion: @escaping (() -> Void)) {
-        let backBarButtonItem = UISBBarButtonItem(image: Asset.chevronLeft.image, style: .plain) {
+        guard let image = SBImageResource.getIcon(for: NavigationBar.back) else { return }
+
+        let backBarButtonItem = UISBBarButtonItem(image: image,
+                                                  style: .plain) {
             completion()
         }
+
         backBarButtonItem.tintColor = .kexRed
         navigationItem.leftBarButtonItem = backBarButtonItem
     }

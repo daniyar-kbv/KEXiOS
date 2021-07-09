@@ -9,15 +9,16 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-protocol AuthPageRepository: AnyObject {
-    var outputs: AuthPageRepositoryImpl.Output { get }
+protocol AuthRepository: AnyObject {
+    var outputs: AuthRepositoryImpl.Output { get }
 
     func sendOTP(with number: String)
     func verifyOTP(code: String, number: String)
     func resendOTP(with number: String)
+    func refreshToken()
 }
 
-final class AuthPageRepositoryImpl: AuthPageRepository {
+final class AuthRepositoryImpl: AuthRepository {
     private let disposeBag = DisposeBag()
 
     private(set) var outputs: Output = .init()
@@ -53,7 +54,7 @@ final class AuthPageRepositoryImpl: AuthPageRepository {
         outputs.didStartRequest.accept(())
         authService.verifyOTP(with: OTPVerifyDTO(code: code, phoneNumber: number))
             .subscribe { [weak self] accessToken in
-                self?.handleTokenResponse(accessToken: accessToken)
+                self?.handleTokenResponse(accessToken: accessToken.access, refreshToken: accessToken.refresh)
             } onError: { [weak self] error in
                 self?.handleErrorResponse(error: error)
             }
@@ -72,6 +73,17 @@ final class AuthPageRepositoryImpl: AuthPageRepository {
             .disposed(by: disposeBag)
     }
 
+    func refreshToken() {
+        guard let refreshToken = tokenStorage.refreshToken else { return }
+        authService.refreshToken(with: .init(refresh: refreshToken))
+            .subscribe(onSuccess: { [weak self] refreshTokenResponse in
+                self?.handleTokenResponse(accessToken: refreshTokenResponse.access, refreshToken: refreshTokenResponse.refresh)
+            }, onError: { [weak self] error in
+                self?.handleErrorResponse(error: error)
+            })
+            .disposed(by: disposeBag)
+    }
+
     private func handleErrorResponse(error: Error?) {
         outputs.didEndRequest.accept(())
         if let error = error as? ErrorPresentable {
@@ -80,14 +92,14 @@ final class AuthPageRepositoryImpl: AuthPageRepository {
         }
     }
 
-    private func handleTokenResponse(accessToken: AccessToken) {
+    private func handleTokenResponse(accessToken: String, refreshToken: String) {
         outputs.didEndRequest.accept(())
-        tokenStorage.persist(token: accessToken.access, refreshToken: accessToken.refresh)
+        tokenStorage.persist(token: accessToken, refreshToken: refreshToken)
         outputs.didVerifyOTP.accept(())
     }
 }
 
-extension AuthPageRepositoryImpl {
+extension AuthRepositoryImpl {
     struct Output {
         let didSendOTP = PublishRelay<String>()
         let didVerifyOTP = PublishRelay<Void>()

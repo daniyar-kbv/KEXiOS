@@ -36,5 +36,6 @@ final class SBTabBarController: UITabBarController, AnimationViewPresentable {
         super.viewDidLoad()
 
         viewModel.getDocuments()
+        viewModel.refreshToken()
     }
 }
