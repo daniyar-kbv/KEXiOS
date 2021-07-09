@@ -50,8 +50,6 @@ final class CartCoordinator: BaseCoordinator {
 
     private func startPaymentCoordinator() {
         let paymentCoordinator = coordinatorsFactory.makePaymentCoordinator()
-        paymentCoordinator.start()
-
         add(paymentCoordinator)
 
         paymentCoordinator.didFinish = { [weak self, weak paymentCoordinator] in
@@ -59,6 +57,6 @@ final class CartCoordinator: BaseCoordinator {
             paymentCoordinator = nil
         }
 
-        router.present(paymentCoordinator.router.getNavigationController(), animated: true, completion: nil)
+        paymentCoordinator.start()
     }
 }
