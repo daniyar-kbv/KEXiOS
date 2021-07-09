@@ -51,7 +51,7 @@ struct CartPosition: Codable, Equatable {
 }
 
 struct CartModifierGroup: Codable, Equatable {
-    let uuid: String?
+    let uuid: String
     var modifiers: [CartModifier]
 
     enum CodingKeys: String, CodingKey {
@@ -87,8 +87,7 @@ extension Cart {
                 comment: item.comment,
                 modifierGroups: item.modifierGroups.map { modifierGroup in
                     .init(
-                        //                        Tech debt: remove
-                        uuid: modifierGroup.uuid ?? "",
+                        uuid: modifierGroup.uuid,
                         modifiers: modifierGroup.modifiers.map { modifier in
                             .init(
                                 positionUUID: modifier.position.uuid,
