@@ -90,7 +90,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 guard let cart = cartResponse.data else {
-                    throw NetworkError.error("Нет данных")
+                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
                 }
 
                 return cart
@@ -107,7 +107,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 guard let cart = cartResponse.data else {
-                    throw NetworkError.error("Нет данных")
+                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
                 }
 
                 return cart
