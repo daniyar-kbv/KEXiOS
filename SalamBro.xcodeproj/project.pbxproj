@@ -1818,15 +1818,6 @@
 			path = Payment;
 			sourceTree = "<group>";
 		};
-			isa = PBXGroup;
-			children = (
-				651BA7DE63CAD5825DFC7772F9479F63 /* Factories */,
-				4614207EE37A4C3D31AD26B2B0235FC8 /* PaymentSelection */,
-				C3100DAB4800C3C9CD7D061006751147 /* PaymentCoordinator.swift */,
-			);
-			path = Payment;
-			sourceTree = "<group>";
-		};
 		C3BC1606460AC7E43AB27A13C5C4E42E /* RateOrder */ = {
 			isa = PBXGroup;
 			children = (
