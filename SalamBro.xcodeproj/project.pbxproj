@@ -1178,24 +1178,6 @@
 			path = Factories;
 			sourceTree = "<group>";
 		};
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
 		63529655411685DF2C857AF984795856 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1537,12 +1519,6 @@
 			path = AddressList;
 			sourceTree = "<group>";
 		};
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		9A04070BA15AF77294D2966D69027C3A /* ShareOrder */ = {
 			isa = PBXGroup;
 			children = (
@@ -1798,15 +1774,6 @@
 			path = Payment;
 			sourceTree = "<group>";
 		};
-			isa = PBXGroup;
-			children = (
-				651BA7DE63CAD5825DFC7772F9479F63 /* Factories */,
-				4614207EE37A4C3D31AD26B2B0235FC8 /* PaymentSelection */,
-				C3100DAB4800C3C9CD7D061006751147 /* PaymentCoordinator.swift */,
-			);
-			path = Payment;
-			sourceTree = "<group>";
-		};
 		C3BC1606460AC7E43AB27A13C5C4E42E /* RateOrder */ = {
 			isa = PBXGroup;
 			children = (
@@ -1911,12 +1878,6 @@
 				616729BA80FA3A5FEB0EF12E101342BE /* UICollectionViewCenterLayout.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-			isa = PBXGroup;
-			children = (
-			);
-			path = PaymentMethod;
 			sourceTree = "<group>";
 		};
 		D6C8D57E55C2D0AF4685B10D8211943C /* SBNavigation */ = {
