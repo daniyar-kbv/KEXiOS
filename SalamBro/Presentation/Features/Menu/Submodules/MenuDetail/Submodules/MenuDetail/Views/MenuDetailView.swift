@@ -59,7 +59,7 @@ final class MenuDetailView: UIView {
 
     private lazy var commentaryField: MapTextField = {
         let view = MapTextField()
-        view.placeholder = L10n.MenuDetail.commentaryField
+        view.placeholder = SBLocalization.localized(key: MenuText.MenuDetail.commentPlaceholder)
         return view
     }()
 

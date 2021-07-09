@@ -10,7 +10,7 @@ import UIKit
 final class AuthHeaderView: UIView {
     private let mainTitle: UILabel = {
         let label = UILabel()
-        label.text = L10n.Authorization.title
+        label.text = SBLocalization.localized(key: AuthorizationText.Auth.title)
         label.font = .boldSystemFont(ofSize: 32)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -19,7 +19,7 @@ final class AuthHeaderView: UIView {
 
     private let subTitle: UILabel = {
         let label = UILabel()
-        label.text = L10n.Authorization.subtitle
+        label.text = SBLocalization.localized(key: AuthorizationText.Auth.subtitle)
         label.font = .systemFont(ofSize: 12)
         label.textColor = .mildBlue
         label.numberOfLines = 0

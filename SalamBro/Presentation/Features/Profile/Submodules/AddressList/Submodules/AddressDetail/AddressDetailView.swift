@@ -12,7 +12,7 @@ final class AddressDetailView: UIView {
     private lazy var addressTitleLabel: UILabel = {
         let view = UILabel()
         view.textColor = .mildBlue
-        view.text = L10n.AddressPicker.titleOne
+        view.text = SBLocalization.localized(key: ProfileText.AddressDetail.title)
         view.font = .systemFont(ofSize: 10, weight: .medium)
         return view
     }()
@@ -29,6 +29,7 @@ final class AddressDetailView: UIView {
         view.textColor = .mildBlue
         view.font = .systemFont(ofSize: 10, weight: .medium)
         view.numberOfLines = 0
+//        Tech debt: localize
         view.text = "Комментарий"
         return view
     }()

@@ -17,7 +17,7 @@ final class SetNameView: UIView {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = L10n.GetName.title
+        label.text = SBLocalization.localized(key: AuthorizationText.GetName.title)
         label.font = UIFont.boldSystemFont(ofSize: 32)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -36,7 +36,7 @@ final class SetNameView: UIView {
         let field = UITextField()
         field.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         field.attributedPlaceholder = NSAttributedString(
-            string: L10n.GetName.Field.title,
+            string: SBLocalization.localized(key: AuthorizationText.GetName.fieldTitle),
             attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         )
         field.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +45,7 @@ final class SetNameView: UIView {
 
     private lazy var nextButton: UIButton = {
         let button = UIButton()
-        button.setTitle(L10n.GetName.Button.title, for: .normal)
+        button.setTitle(SBLocalization.localized(key: AuthorizationText.GetName.buttonTitle), for: .normal)
         button.addTarget(self, action: #selector(submitAction), for: .touchUpInside)
         button.backgroundColor = .calmGray
         button.isEnabled = false

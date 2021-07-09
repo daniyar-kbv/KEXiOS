@@ -45,7 +45,7 @@ final class VerificationController: UIViewController, LoaderDisplayable, AlertDi
         rootView?.otpField.text = ""
         rootView?.otpField.clearLabels()
         rootView?.timer.invalidate()
-        rootView?.getCodeButton.setTitle(L10n.Verification.Button.title("01:30"), for: .disabled)
+        rootView?.getCodeButton.setTitle(SBLocalization.localized(key: AuthorizationText.Verification.Button.title, arguments: "01:30"), for: .disabled)
     }
 
     private func bindViewModel() {

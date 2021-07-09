@@ -17,7 +17,7 @@ final class SuggestView: UIView {
 
     private lazy var searchItem: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "search")
+        imageView.image = SBImageResource.getIcon(for: AddressIcons.Suggest.search)
         imageView.tintColor = .mildBlue
         return imageView
     }()
@@ -25,7 +25,7 @@ final class SuggestView: UIView {
     private(set) lazy var searchBar: UITextField = {
         let searchBar = UITextField()
         searchBar.attributedPlaceholder = NSAttributedString(
-            string: L10n.Suggest.AddressField.title,
+            string: SBLocalization.localized(key: AddressText.Suggest.fieldTitle),
             attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         )
         searchBar.borderStyle = .none
@@ -39,7 +39,7 @@ final class SuggestView: UIView {
 
     private lazy var doneButton: UIButton = {
         let button = UIButton()
-        button.setTitle(L10n.Suggest.Button.title, for: .normal)
+        button.setTitle(SBLocalization.localized(key: AddressText.Suggest.buttonTitle), for: .normal)
         button.setTitleColor(.kexRed, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.contentHorizontalAlignment = .center

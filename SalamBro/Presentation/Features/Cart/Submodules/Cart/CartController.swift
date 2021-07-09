@@ -121,17 +121,18 @@ class CartController: UIViewController, AnimationViewPresentable, LoaderDisplaya
 
     private func update() {
         guard !viewModel.getIsEmpty() else {
-            showAnimationView(delegate: self, animationType: .emptyBasket)
+            showAnimationView(animationType: .emptyBasket)
             return
         }
 
         hideAnimationView()
         itemsTableView.reloadData()
         updateTableViewFooterUI()
-        orderButton.setTitle(L10n.Cart.OrderButton.title(viewModel.getTotalPrice()), for: .normal)
+        orderButton.setTitle(SBLocalization.localized(key: CartText.Cart.buttonTitle, arguments: viewModel.getTotalPrice()), for: .normal)
     }
 
     private func setupNavigationBar() {
+//        Texh debt: set nav bar
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.shadowImage = .init()
         navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
@@ -140,7 +141,7 @@ class CartController: UIViewController, AnimationViewPresentable, LoaderDisplaya
             .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
             .foregroundColor: UIColor.black,
         ]
-        navigationItem.title = L10n.Cart.title
+        navigationItem.title = SBLocalization.localized(key: CartText.Cart.navigationTitle)
     }
 }
 
@@ -183,8 +184,8 @@ extension CartController {
     }
 
     func updateTableViewFooterUI() {
-        tableViewFooter.productsLabel.text = L10n.CartFooter.productsCount(viewModel.getTotalCount())
-        tableViewFooter.productsPriceLabel.text = L10n.CartFooter.productsPrice(viewModel.getTotalPrice())
+        tableViewFooter.productsLabel.text = SBLocalization.localized(key: CartText.Cart.Footer.productsCount, arguments: String(viewModel.getTotalCount()))
+        tableViewFooter.productsPriceLabel.text = SBLocalization.localized(key: CartText.Cart.Footer.productsPrice, arguments: String(viewModel.getTotalPrice()))
     }
 
     @objc func buttonAction() {
@@ -202,7 +203,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
             let content = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 56))
             let label = UILabel(frame: CGRect(x: 16, y: 24, width: tableView.frame.size.width, height: 24))
             label.font = .boldSystemFont(ofSize: 18)
-            label.text = L10n.Cart.Section0.title(viewModel.getTotalCount(), viewModel.getTotalPrice())
+            label.text = SBLocalization.localized(key: CartText.Cart.titleFirst, arguments: String(viewModel.getTotalCount()), String(viewModel.getTotalPrice()))
             content.addSubview(label)
             content.backgroundColor = .arcticWhite
             return content
@@ -212,7 +213,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
             let separator = UIView(frame: CGRect(x: 24, y: 0, width: tableView.frame.width - 48, height: 0.5))
             separator.backgroundColor = .mildBlue
             label.font = .boldSystemFont(ofSize: 16)
-            label.text = L10n.Cart.Section1.title
+            label.text = SBLocalization.localized(key: CartText.Cart.titleSecond)
             view.addSubview(label)
             view.addSubview(separator)
             view.backgroundColor = .arcticWhite
@@ -269,18 +270,18 @@ extension CartController: CartAdditinalProductCellDelegate {
     }
 }
 
-extension CartController: AnimationContainerViewDelegate {
-    func performAction() {
-        outputs.toMenu.accept(())
-    }
-}
+// extension CartController: AnimationContainerViewDelegate {
+//    func performAction() {
+//        outputs.toMenu.accept(())
+//    }
+// }
 
 extension CartController: CartFooterDelegate {
     func openPromocode() {
         let commentaryPage = MapCommentaryPage()
 
-        commentaryPage.configureTextField(placeholder: L10n.Promocode.field)
-        commentaryPage.configureButton(title: L10n.Promocode.button)
+        commentaryPage.configureTextField(placeholder: SBLocalization.localized(key: CartText.Cart.Promocode.placeholder))
+        commentaryPage.configureButton(title: SBLocalization.localized(key: CartText.Cart.Promocode.button))
 
         commentaryPage.output.didProceed.subscribe(onNext: { _ in
 

@@ -62,7 +62,7 @@ final class CountriesListController: UIViewController, AlertDisplayable, LoaderD
             .font: UIFont.systemFont(ofSize: 26, weight: .regular),
             .foregroundColor: UIColor.black,
         ]
-        navigationItem.title = L10n.CountriesList.Navigation.title
+        navigationItem.title = SBLocalization.localized(key: AddressText.Countries.title)
     }
 
     private func bindViewModel() {
@@ -141,6 +141,12 @@ extension CountriesListController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelect(index: indexPath.row)
+    }
+}
+
+extension CountriesListController: Reloadable {
+    func reload() {
+        viewModel.getCountries()
     }
 }
 

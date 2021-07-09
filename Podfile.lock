@@ -14,15 +14,7 @@ PODS:
   - Moya/RxSwift (14.0.0):
     - Moya/Core
     - RxSwift (~> 5.0)
-  - PromiseKit (6.13.1):
-    - PromiseKit/CorePromise (= 6.13.1)
-    - PromiseKit/Foundation (= 6.13.1)
-    - PromiseKit/UIKit (= 6.13.1)
-  - PromiseKit/CorePromise (6.13.1)
-  - PromiseKit/Foundation (6.13.1):
-    - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.13.1):
-    - PromiseKit/CorePromise
+  - ReachabilitySwift (5.0.0)
   - Reusable (4.1.1):
     - Reusable/Storyboard (= 4.1.1)
     - Reusable/View (= 4.1.1)
@@ -36,8 +28,6 @@ PODS:
   - RxSwift (5.1.2)
   - SnapKit (5.0.1)
   - SVProgressHUD (2.2.5)
-  - SwiftGen (6.4.0)
-  - Swinject (2.7.1)
   - YandexMapKit (3.4):
     - YandexRuntime (= 3.4)
   - YandexMapKitSearch (3.4):
@@ -56,14 +46,12 @@ DEPENDENCIES:
   - KeychainAccess
   - lottie-ios
   - Moya/RxSwift (~> 14.0)
-  - PromiseKit
+  - ReachabilitySwift
   - Reusable
   - RxCocoa
   - RxSwift
   - SnapKit
   - SVProgressHUD
-  - SwiftGen
-  - Swinject
   - YandexMapKit (= 3.4)
   - YandexMapKitSearch (= 3.4)
 
@@ -79,15 +67,13 @@ SPEC REPOS:
     - KeychainAccess
     - lottie-ios
     - Moya
-    - PromiseKit
+    - ReachabilitySwift
     - Reusable
     - RxCocoa
     - RxRelay
     - RxSwift
     - SnapKit
     - SVProgressHUD
-    - SwiftGen
-    - Swinject
     - YandexMapKit
     - YandexMapKitSearch
     - YandexRuntime
@@ -103,19 +89,17 @@ SPEC CHECKSUMS:
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   lottie-ios: a033bb989eea77d9f99cc4e2bbdd3788229761ad
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
-  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
-  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   YandexMapKit: f222923561fe159dd8480d927f61950fc5ff3b8d
   YandexMapKitSearch: 9d658009a11ce4973e5b1c59aacb72c3f63c808a
   YandexRuntime: 2547d72a3ce4757f16ad188cfbe8a124ae13d806
 
-PODFILE CHECKSUM: 9630ce148be382dbcbe243b8b3728c3c5d3741de
+PODFILE CHECKSUM: 0dc0a595e0dd924aa7f8467f8e61c4c79bace776
 
 COCOAPODS: 1.10.1

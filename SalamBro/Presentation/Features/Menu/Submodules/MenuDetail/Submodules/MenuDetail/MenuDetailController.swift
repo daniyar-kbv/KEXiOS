@@ -172,7 +172,7 @@ extension MenuDetailController: MenuDetailViewDelegate {
     func commentaryViewTapped() {
         let commentaryPage = MapCommentaryPage()
 
-        commentaryPage.configureTextField(placeholder: L10n.MenuDetail.commentaryField)
+        commentaryPage.configureTextField(placeholder: SBLocalization.localized(key: MenuText.MenuDetail.commentPlaceholder))
 
         commentaryPage.output.didProceed.subscribe(onNext: { [weak self] comment in
             guard let comment = comment else { return }
@@ -185,6 +185,12 @@ extension MenuDetailController: MenuDetailViewDelegate {
 
     func proceedButtonTapped() {
         viewModel.proceed()
+    }
+}
+
+extension MenuDetailController: Reloadable {
+    func reload() {
+        viewModel.update()
     }
 }
 

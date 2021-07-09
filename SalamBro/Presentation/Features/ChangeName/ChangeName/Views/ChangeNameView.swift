@@ -20,7 +20,7 @@ final class ChangeNameView: UIView {
         let view = UILabel()
         view.textColor = .mildBlue
         view.font = .systemFont(ofSize: 10, weight: .medium)
-        view.text = L10n.ChangeName.nameLabel
+        view.text = SBLocalization.localized(key: ProfileText.ChangeName.name)
         return view
     }()
 
@@ -41,7 +41,7 @@ final class ChangeNameView: UIView {
         let view = UILabel()
         view.textColor = .mildBlue
         view.font = .systemFont(ofSize: 10, weight: .medium)
-        view.text = L10n.ChangeName.emailLabel
+        view.text = SBLocalization.localized(key: ProfileText.ChangeName.edit)
         return view
     }()
 
@@ -60,7 +60,7 @@ final class ChangeNameView: UIView {
 
     private lazy var saveButton: UIButton = {
         let button = UIButton()
-        button.setTitle(L10n.ChangeName.SaveButton.title, for: .normal)
+        button.setTitle(SBLocalization.localized(key: ProfileText.ChangeName.saveButton), for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.backgroundColor = .calmGray
         button.layer.cornerRadius = 10

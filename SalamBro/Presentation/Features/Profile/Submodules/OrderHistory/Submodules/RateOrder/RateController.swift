@@ -37,7 +37,7 @@ final class RateController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = L10n.RateOrder.title
+        navigationItem.title = SBLocalization.localized(key: ProfileText.RateOrder.title)
         configureViews()
     }
 
@@ -85,7 +85,7 @@ extension RateController: RateViewDelegate {
     func commentaryViewTapped() {
         let commentaryPage = MapCommentaryPage()
 
-        commentaryPage.configureTextField(placeholder: L10n.RateOrder.CommentaryField.placeholder)
+        commentaryPage.configureTextField(placeholder: SBLocalization.localized(key: ProfileText.RateOrder.commentaryPlaceholder))
 
         commentaryPage.output.didProceed.subscribe(onNext: { comment in
             if let comment = comment {

@@ -21,14 +21,14 @@ final class AddressPickController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .darkGray
-        label.text = L10n.AddressPicker.add
+        label.text = SBLocalization.localized(key: AddressText.AddressPick.add)
         label.isUserInteractionEnabled = true
         return label
     }()
 
     private lazy var plusButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "add"), for: .normal)
+        button.setImage(SBImageResource.getIcon(for: AddressIcons.AddressPick.add), for: .normal)
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 24, weight: .medium)
         return button
@@ -70,7 +70,7 @@ final class AddressPickController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        navigationItem.title = L10n.AddressPicker.titleMany
+        navigationItem.title = SBLocalization.localized(key: ProfileText.AddressList.title)
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }

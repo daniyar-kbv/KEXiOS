@@ -12,7 +12,7 @@ final class PaymentSelectionView: UIView {
         let label = UILabel()
         label.textColor = .mildBlue
         label.font = UIFont.systemFont(ofSize: 12)
-        label.text = SBLocalization.localized(key: PaymentSelectionText.paymentMethod)
+        label.text = SBLocalization.localized(key: Payment.PaymentSelectionText.paymentMethod)
         return label
     }()
 
@@ -20,13 +20,13 @@ final class PaymentSelectionView: UIView {
         let label = UILabel()
         label.textColor = .mildBlue
         label.font = UIFont.systemFont(ofSize: 16)
-        label.text = SBLocalization.localized(key: PaymentSelectionText.choosePaymentMethod)
+        label.text = SBLocalization.localized(key: Payment.PaymentSelectionText.choosePaymentMethod)
         return label
     }()
 
     private(set) var changeButton: UIButton = {
         let button = UIButton()
-        button.setTitle(SBLocalization.localized(key: PaymentSelectionText.change), for: .normal)
+        button.setTitle(SBLocalization.localized(key: Payment.PaymentSelectionText.change), for: .normal)
         button.backgroundColor = .arcticWhite
         button.setTitleColor(.kexRed, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)

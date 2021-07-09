@@ -38,7 +38,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
 
     private lazy var changeNameButton: UIButton = {
         let label = UIButton()
-        label.setTitle(L10n.Profile.EditButton.title, for: .normal)
+        label.setTitle(SBLocalization.localized(key: ProfileText.Profile.editButton), for: .normal)
         label.setTitleColor(.kexRed, for: .normal)
         label.titleLabel?.font = .systemFont(ofSize: 12)
         label.isUserInteractionEnabled = true
@@ -60,7 +60,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
 
     private lazy var logoutButton: UIButton = {
         let button = UIButton()
-        button.setTitle(L10n.Profile.LogoutButton.title, for: .normal)
+        button.setTitle(SBLocalization.localized(key: ProfileText.Profile.logoutButton), for: .normal)
         button.setTitleColor(.mildBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
         button.borderWidth = 1
@@ -125,13 +125,14 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
     }
 
     private func handleLogoutAction() {
+        //  Tech debt: localize
         let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
             self?.viewModel.logout()
             self?.showEmptyState()
         }
 
         let noAction = UIAlertAction(title: "Нет", style: .default, handler: nil)
-
+        //  Tech debt: localize
         showAlert(title: "Вы уверены?",
                   message: "Вы уверены что хотите выйти из аккаунта?",
                   actions: [yesAction, noAction])
@@ -176,14 +177,16 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
     }
 
     private func showEmptyState() {
-        showAnimationView(delegate: self, animationType: .profile)
+        showAnimationView(animationType: .profile) { [weak self] in
+            self?.outputs.onLoginTapped.accept(())
+        }
     }
 
     private func layoutUI() {
         guard needsLayoutUI else { return }
         needsLayoutUI = false
 
-        navigationItem.title = L10n.Profile.NavigationBar.title
+        navigationItem.title = SBLocalization.localized(key: ProfileText.Profile.title)
         view.backgroundColor = .arcticWhite
 
         view.addSubview(phoneTitleLabel)
@@ -231,12 +234,6 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
     }
 }
 
-extension ProfilePage: AnimationContainerViewDelegate {
-    func performAction() {
-        outputs.onLoginTapped.accept(())
-    }
-}
-
 extension ProfilePage: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return viewModel.tableItems.count
@@ -255,6 +252,12 @@ extension ProfilePage: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = viewModel.tableItems[indexPath.row]
         outputs.onTableItemPressed.accept(item)
+    }
+}
+
+extension ProfilePage: Reloadable {
+    func reload() {
+        reloadPage()
     }
 }
 

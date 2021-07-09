@@ -23,8 +23,8 @@ final class ApplicationCoordinatorFactoryImpl: DependencyFactory, ApplicationCoo
         self.builder = builder
     }
 
-    func makeOnboardingCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoardingCoordinator {
-        return scoped(builder.buildOnboardingCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents))
+    func makeOnboardingCoordinator(serviceComponents _: ServiceComponents, repositoryComponents: RepositoryComponents) -> OnBoardingCoordinator {
+        return scoped(builder.buildOnboardingCoordinator(repositoryComponents: repositoryComponents))
     }
 
     func makeMenuCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents) -> MenuCoordinator {

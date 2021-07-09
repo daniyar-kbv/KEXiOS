@@ -8,8 +8,6 @@ target 'SalamBro' do
   pod 'Alamofire'
   pod 'RxSwift'
   pod 'RxCocoa'
-  pod 'PromiseKit'
-  pod 'Swinject'
   pod 'SnapKit'
   pod 'Reusable'
   pod 'DropDown'
@@ -24,18 +22,20 @@ target 'SalamBro' do
 
   # Pods for SalamBro
   pod 'InputMask'
-  pod 'SwiftGen'
 
   # Pods for yandex-map
   pod 'YandexMapKit', '3.4'
   # Additional MapKit modules.
   pod 'YandexMapKitSearch', '3.4'
 
-  #rateView
+  # Pad for rate view
   pod 'Cosmos'
 
-  #Pod for Lottie animations
+  # Pod for Lottie animations
   pod 'lottie-ios'
+
+  # Pod for observing internet connection
+  pod 'ReachabilitySwift'
 
   target 'SalamBroTests' do
     inherit! :search_paths

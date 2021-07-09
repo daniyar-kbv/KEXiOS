@@ -84,7 +84,7 @@ final class BrandsController: UIViewController, AlertDisplayable {
         setupViews()
         setupConstraints()
 
-        navigationItem.title = L10n.Brands.Navigation.title
+        navigationItem.title = SBLocalization.localized(key: AddressText.Brands.title)
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }
@@ -131,6 +131,12 @@ extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate
             cell.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             cell.layoutSubviews()
         }
+    }
+}
+
+extension BrandsController: Reloadable {
+    func reload() {
+        viewModel.getBrands()
     }
 }
 

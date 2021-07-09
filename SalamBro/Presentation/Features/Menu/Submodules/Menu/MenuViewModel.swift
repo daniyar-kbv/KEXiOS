@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import PromiseKit
 import RxCocoa
 import RxSwift
 import SVProgressHUD
@@ -15,7 +14,6 @@ protocol MenuViewModelProtocol {
     var outputs: MenuViewModel.Output { get }
     var headerViewModels: [ViewModel?] { get }
     var cellViewModels: [[ViewModel]] { get }
-    var brandName: BehaviorRelay<String?> { get }
 
     func update()
 }
@@ -24,76 +22,70 @@ final class MenuViewModel: MenuViewModelProtocol {
     private let disposeBag = DisposeBag()
     let outputs = Output()
 
-    private let defaultStorage: DefaultStorage
-
-    private let promotionsService: PromotionsService
-    private let ordersService: OrdersService
-
     private let locationRepository: AddressRepository
     private let brandRepository: BrandRepository
+    private let menuRepository: MenuRepository
 
     public var headerViewModels: [ViewModel?] = []
     public var cellViewModels: [[ViewModel]] = []
 
-    public lazy var brandName = BehaviorRelay<String?>(value: brandRepository.getCurrentBrand()?.name)
-
-    init(defaultStorage: DefaultStorage,
-         promotionsService: PromotionsService,
-         ordersService: OrdersService,
-         locationRepository: AddressRepository,
-         brandRepository: BrandRepository)
+    init(locationRepository: AddressRepository,
+         brandRepository: BrandRepository,
+         menuRepository: MenuRepository)
     {
-        self.defaultStorage = defaultStorage
-        self.promotionsService = promotionsService
-        self.ordersService = ordersService
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
+        self.menuRepository = menuRepository
+        bindOutputs()
     }
 
     public func update() {
         download()
 
+        outputs.brandImage.accept(brandRepository.getCurrentBrand()?.image)
         outputs.brandName.accept(brandRepository.getCurrentBrand()?.name)
     }
 
-    private func download() {
-        guard let leadUuid = defaultStorage.leadUUID else { return }
+    private func bindOutputs() {
+        menuRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
 
+        menuRepository.outputs.didGetPromotions.bind {
+            [weak self] promotions in
+            self?.setPromotions(promotions: promotions)
+        }
+        .disposed(by: disposeBag)
+
+        menuRepository.outputs.didGetCategories.bind {
+            [weak self] categories in
+            self?.setCategories(categories: categories)
+        }
+        .disposed(by: disposeBag)
+
+        menuRepository.outputs.didGetPositions.bind {
+            [weak self] positions in
+            self?.setPositions(positions: positions)
+        }
+        .disposed(by: disposeBag)
+
+        menuRepository.outputs.didEndRequest.bind {
+            [weak self] _ in
+            self?.outputs.didEndRequest.accept(())
+            self?.outputs.updateTableView.accept(())
+        }
+        .disposed(by: disposeBag)
+
+        menuRepository.outputs.didGetError
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+    }
+
+    private func download() {
         cellViewModels = []
         headerViewModels = []
 
-        outputs.didStartRequest.accept(())
-
-        let promotionsSequence = promotionsService.getPromotions()
-        let productsSequence = ordersService.getProducts(for: leadUuid)
-
-        let finalSequesnce = Single.zip(promotionsSequence,
-                                        productsSequence,
-                                        resultSelector: {
-                                            promotions, productsData ->
-                                                ([Promotion],
-                                                 [MenuCategory],
-                                                 [MenuPosition]) in
-                                            (
-                                                promotions,
-                                                productsData.categories,
-                                                productsData.positions
-                                            )
-                                        })
-
-        finalSequesnce.subscribe(onSuccess: {
-            [weak self] promotions, categories, positions in
-            self?.outputs.didEndRequest.accept(())
-
-            self?.setPromotions(promotions: promotions)
-            self?.setCategories(categories: categories)
-            self?.setPositions(positions: positions)
-
-            self?.outputs.updateTableView.accept(())
-        }, onError: { [weak self] error in
-            self?.outputs.didEndRequest.accept(())
-            self?.outputs.didGetError.accept(error as? ErrorPresentable)
-        }).disposed(by: disposeBag)
+        menuRepository.getMenuItems()
     }
 
     private func setPromotions(promotions: [Promotion]) {
@@ -122,6 +114,7 @@ final class MenuViewModel: MenuViewModelProtocol {
 
 extension MenuViewModel {
     struct Output {
+        let brandImage = PublishRelay<String?>()
         let brandName = PublishRelay<String?>()
 
         let didStartRequest = PublishRelay<Void>()

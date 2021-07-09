@@ -53,7 +53,7 @@ final class CitiesListController: UIViewController, AlertDisplayable, LoaderDisp
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.getCities()
-        navigationItem.title = L10n.CitiesList.Navigation.title
+        navigationItem.title = SBLocalization.localized(key: AddressText.Cities.title)
     }
 }
 
@@ -131,6 +131,12 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelect(index: indexPath.row)
+    }
+}
+
+extension CitiesListController: Reloadable {
+    func reload() {
+        viewModel.getCities()
     }
 }
 

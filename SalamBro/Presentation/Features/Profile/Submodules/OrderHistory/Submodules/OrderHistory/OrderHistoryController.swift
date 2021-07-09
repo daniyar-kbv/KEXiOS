@@ -53,7 +53,7 @@ final class OrderHistoryController: UIViewController {
 
 extension OrderHistoryController {
     private func layoutUI() {
-        navigationItem.title = L10n.OrderHistory.title
+        navigationItem.title = SBLocalization.localized(key: ProfileText.OrderHistory.title)
         view.backgroundColor = .arcticWhite
 
         view.addSubview(tableView)
@@ -79,6 +79,12 @@ extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderTestCell.self)
         cell.delegate = self
         return cell
+    }
+}
+
+extension OrderHistoryController: Reloadable {
+    func reload() {
+//        Tech debt: add reload action
     }
 }
 

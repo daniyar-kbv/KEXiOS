@@ -34,8 +34,8 @@ final class RateView: UIView {
         view.settings.emptyColor = .white
         view.settings.starSize = 30
         view.settings.starMargin = 16
-        view.settings.emptyImage = UIImage(named: "star.empty")
-        view.settings.filledImage = UIImage(named: "star.filled")
+        view.settings.emptyImage = SBImageResource.getIcon(for: ProfileIcons.RateOrder.starEmpty)
+        view.settings.filledImage = SBImageResource.getIcon(for: ProfileIcons.RateOrder.starFilled)
         view.rating = 0
         return view
     }()
@@ -55,7 +55,7 @@ final class RateView: UIView {
     private lazy var suggestionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.text = L10n.RateOrder.description
+        label.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.defaultTitle)
         label.textColor = .darkGray
         label.baselineAdjustment = .alignBaselines
         label.lineBreakMode = .byWordWrapping
@@ -77,13 +77,13 @@ final class RateView: UIView {
 
     private lazy var commentTextField: MapTextField = {
         let view = MapTextField()
-        view.placeholder = L10n.RateOrder.CommentaryField.placeholder
+        view.placeholder = SBLocalization.localized(key: ProfileText.RateOrder.commentaryPlaceholder)
         return view
     }()
 
     private lazy var sendButton: UIButton = {
         let button = UIButton()
-        button.setTitle(L10n.RateOrder.SubmitButton.title, for: .normal)
+        button.setTitle(SBLocalization.localized(key: ProfileText.RateOrder.submitButton), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .mildBlue
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
@@ -207,24 +207,24 @@ extension RateView {
         sendButton.backgroundColor = .kexRed
         switch rating {
         case 1.0 ..< 2.0:
-            questionLabel.text = L10n.RateOrder.BadRate.title
-            suggestionLabel.text = L10n.RateOrder.BadRate.subtitle
+            questionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Bad.title)
+            suggestionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Bad.subtitle)
             delegate?.updateViewModelData(at: 3)
         case 2.0 ..< 3.0:
-            questionLabel.text = L10n.RateOrder.BadRate.title
-            suggestionLabel.text = L10n.RateOrder.BadRate.subtitle
+            questionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Bad.title)
+            suggestionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Bad.title)
             delegate?.updateViewModelData(at: 3)
         case 3.0 ..< 4.0:
-            questionLabel.text = L10n.RateOrder.AverageRate.title
-            suggestionLabel.text = L10n.RateOrder.AverageRate.title
+            questionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Average.title)
+            suggestionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Average.subtitle)
             delegate?.updateViewModelData(at: 3)
         case 4.0 ..< 5.0:
-            questionLabel.text = L10n.RateOrder.GoodRate.title
-            suggestionLabel.text = L10n.RateOrder.GoodRate.subtitle
+            questionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Good.title)
+            suggestionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Good.subtitle)
             delegate?.updateViewModelData(at: 4)
         case 5.0:
-            questionLabel.text = L10n.RateOrder.ExcellentRate.title
-            suggestionLabel.text = L10n.RateOrder.ExcellentRate.subtitle
+            questionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Excelent.title)
+            suggestionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Excelent.subtitle)
             delegate?.updateViewModelData(at: 5)
         default:
             questionLabel.text = nil

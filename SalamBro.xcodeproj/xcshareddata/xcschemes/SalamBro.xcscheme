@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E6B175BB25ED523F00A9F827"
+               BlueprintIdentifier = "7A22E01C8B56D310B4D732A36B7A09FE"
                BuildableName = "SalamBro.app"
                BlueprintName = "SalamBro"
                ReferencedContainer = "container:SalamBro.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E6B175D125ED524000A9F827"
+               BlueprintIdentifier = "9A5D3DC4F3CF36850954996200C22598"
                BuildableName = "SalamBroTests.xctest"
                BlueprintName = "SalamBroTests"
                ReferencedContainer = "container:SalamBro.xcodeproj">
@@ -42,7 +42,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E6B175DC25ED524000A9F827"
+               BlueprintIdentifier = "4B5B63CCAA2BB21ACB069B7226837DE6"
                BuildableName = "SalamBroUITests.xctest"
                BlueprintName = "SalamBroUITests"
                ReferencedContainer = "container:SalamBro.xcodeproj">
@@ -65,7 +65,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E6B175BB25ED523F00A9F827"
+            BlueprintIdentifier = "7A22E01C8B56D310B4D732A36B7A09FE"
             BuildableName = "SalamBro.app"
             BlueprintName = "SalamBro"
             ReferencedContainer = "container:SalamBro.xcodeproj">
@@ -82,7 +82,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E6B175BB25ED523F00A9F827"
+            BlueprintIdentifier = "7A22E01C8B56D310B4D732A36B7A09FE"
             BuildableName = "SalamBro.app"
             BlueprintName = "SalamBro"
             ReferencedContainer = "container:SalamBro.xcodeproj">

@@ -62,7 +62,7 @@ final class CountryCodePickerViewController: UIViewController, AlertDisplayable,
         super.viewWillAppear(animated)
         view.backgroundColor = .white
 
-        navigationItem.title = L10n.CountryCodePicker.Navigation.title
+        navigationItem.title = SBLocalization.localized(key: AuthorizationText.CountryCode.title)
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }
@@ -124,6 +124,12 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let codeCountry = viewModel.selectCodeCountry(at: indexPath)
         outputs.didSelectCountryCode.accept(codeCountry.country)
+    }
+}
+
+extension CountryCodePickerViewController: Reloadable {
+    func reload() {
+        viewModel.refresh()
     }
 }
 

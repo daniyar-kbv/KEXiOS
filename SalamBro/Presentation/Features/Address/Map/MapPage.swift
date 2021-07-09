@@ -21,9 +21,9 @@ final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
     }()
 
     private let mapAddressView = MapAddressView()
-    private let backButton = MapActionButton(image: Asset.chevronLeft.image)
-    private let locationButton = MapActionButton(image: Asset.location.image)
-    private let pinView = UIImageView(image: Asset.marker.image)
+    private let backButton = MapActionButton(image: SBImageResource.getIcon(for: AddressIcons.Map.backButton))
+    private let locationButton = MapActionButton(image: SBImageResource.getIcon(for: AddressIcons.Map.location))
+    private let pinView = UIImageView(image: SBImageResource.getIcon(for: AddressIcons.Map.marker))
 
     private let viewModel: MapViewModel
     private let locationManager: LocationManager = .init()
@@ -58,6 +58,7 @@ final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
 extension MapPage: LocationManagerDelegate {
     func askUserForPermission() {
+//        Tech debt: localize
         showAlert(title: "Location Services are disabled", message: "Please enable Location Services in your Settings")
     }
 
@@ -192,7 +193,7 @@ extension MapPage {
     private func showCommentaryPage() {
         let commentaryPage = MapCommentaryPage()
 
-        commentaryPage.configureTextField(placeholder: L10n.MapView.CommentaryLabel.title)
+        commentaryPage.configureTextField(placeholder: SBLocalization.localized(key: AddressText.Map.Commentary.placeholder))
 
         commentaryPage.output.didProceed.subscribe(onNext: { [weak self] comment in
             self?.viewModel.commentary = comment

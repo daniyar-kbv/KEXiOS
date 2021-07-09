@@ -20,7 +20,6 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
 
     private lazy var logoView: UIImageView = {
         let view = UIImageView()
-        view.image = Asset.Brands.salamBro4.image
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -33,7 +32,7 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
 
     private lazy var bottomChevronImage: UIImageView = {
         let view = UIImageView()
-        view.image = Asset.chevronBottom.image
+        view.image = SBImageResource.getIcon(for: MenuIcons.Menu.arrow)
         return view
     }()
 
@@ -95,7 +94,13 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
     }
 
     private func bindViewModel() {
-        viewModel.brandName
+        viewModel.outputs.brandImage
+            .subscribe(onNext: { [weak self] imageString in
+                guard let url = URL(string: imageString ?? "") else { return }
+                self?.logoView.setImage(url: url)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.brandName
             .bind(to: brandLabel.rx.text)
             .disposed(by: disposeBag)
 
@@ -199,7 +204,7 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func numberOfSections(in _: UITableView) -> Int {
-        return viewModel.cellViewModels.count
+        return viewModel.headerViewModels.count
     }
 
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -270,6 +275,12 @@ extension MenuController: UIScrollViewDelegate {
 extension MenuController: AddCollectionCellDelegate {
     public func goToRating(promotionURL: URL, name: String) {
         outputs.toPromotion.accept((promotionURL, name))
+    }
+}
+
+extension MenuController: Reloadable {
+    func reload() {
+        viewModel.update()
     }
 }
 

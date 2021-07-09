@@ -1,0 +1,397 @@
+//
+//  SBLocalization.swift
+//  SalamBro
+//
+//  Created by Ilyar Mnazhdin on 01.07.2021.
+//
+
+import Foundation
+
+protocol UILocalizable {
+    var localized: String { get }
+}
+
+enum TabBarText: String, UILocalizable {
+    case profileTitle = "MainTab.Cart.Title"
+    case menuTitle = "MainTab.Menu.Title"
+    case supportTitle = "MainTab.Profile.Title"
+    case cartTitle = "MainTab.Support.Title"
+
+    var localized: String { rawValue }
+}
+
+enum CommentaryText: String, UILocalizable {
+    case buttonTitle = "Commentary.button.title"
+
+    var localized: String { rawValue }
+}
+
+enum ErrorText: UILocalizable {
+    enum Alert: String, UILocalizable {
+        case title = "Common.error"
+        case action = "Common.close"
+
+        var localized: String { rawValue }
+    }
+
+    enum Network: String, UILocalizable {
+        case mappingError = "Error.mappingError"
+        case noData = "Error.noData"
+
+        var localized: String { rawValue }
+    }
+
+    var localized: String { "" }
+}
+
+enum AddressText: UILocalizable {
+    enum Countries: String, UILocalizable {
+        case title = "CountriesList.navigation.title"
+
+        var localized: String { rawValue }
+    }
+
+    enum Cities: String, UILocalizable {
+        case title = "CitiesList.navigation.title"
+
+        var localized: String { rawValue }
+    }
+
+    enum Map: String, UILocalizable {
+        case addressField = "MapView.addressField.title"
+        case commentaryField = "MapView.commentaryLabel.title"
+        case proceedButton = "MapView.proceedButton.title"
+
+        enum Commentary: String, UILocalizable {
+            case placeholder = "Commentary.addressField.title"
+
+            var localized: String { rawValue }
+        }
+
+        var localized: String { rawValue }
+    }
+
+    enum Suggest: String, UILocalizable {
+        case fieldTitle = "Suggest.addressField.title"
+        case buttonTitle = "Suggest.button.title"
+
+        var localized: String { rawValue }
+    }
+
+    enum Brands: String, UILocalizable {
+        case title = "Brands.navigation.title"
+
+        var localized: String { rawValue }
+    }
+
+    enum AddressPick: String, UILocalizable {
+        case add = "address_picker.add"
+
+        var localized: String { rawValue }
+    }
+
+    enum SelectMainInfo: String, UILocalizable {
+        case countryTitle = "select_main_info.country"
+        case countryPlaceholder = "select_main_info.country.placeholder"
+        case cityTitle = "select_main_info.city"
+        case cityPlaceholder = "select_main_info.city.placeholder"
+        case addressTitle = "select_main_info.address"
+        case addressPlaceholder = "select_main_info.address.placeholder"
+        case brandTitle = "select_main_info.brand"
+        case brandPlaceholder = "select_main_info.brand.placeholder"
+        case title = "select_main_info.title"
+        case description = "select_main_info.description"
+        case save = "select_main_info.save"
+        case alertTitle = "select_main_info.alert.title"
+        case alertBody = "select_main_info.alert.body.address"
+        case alertBodyBrand = "select_main_info.alert.body.brand"
+        case alertActionYes = "select_main_info.alert.action.yes"
+        case alertActionNo = "select_main_info.alert.action.no"
+
+        var localized: String { rawValue }
+
+        enum Alert: String, UILocalizable {
+            case title = "select_main_info.alert.title"
+            case bodyAddress = "select_main_info.alert.body.address"
+            case bodyBrand = "select_main_info.alert.body.brand"
+            case actionYes = "select_main_info.alert.action.yes"
+            case actionNo = "select_main_info.alert.action.no"
+
+            var localized: String { rawValue }
+        }
+    }
+
+    var localized: String { "" }
+}
+
+enum AuthorizationText: UILocalizable {
+    enum Auth: String, UILocalizable {
+        case title = "Authorization.title"
+        case subtitle = "Authorization.subtitle"
+        case numberPlaceholder = "Authorization.numberField.placeholder.title"
+        case buttonTitle = "Authorization.button.title"
+
+        var localized: String { rawValue }
+
+        enum Agreement: String, UILocalizable {
+            case inactive = "Authorization.agreement.inactive.title"
+            case active = "Authorization.agreement.active.title"
+
+            var localized: String { rawValue }
+        }
+    }
+
+    enum Verification: String, UILocalizable {
+        case title = "Verification.title"
+        case subtitle = "Verification.subtitle"
+
+        var localized: String { rawValue }
+
+        enum Button: String, UILocalizable {
+            case title = "Verification.button.title"
+            case timeout = "Verification.button.timeout"
+
+            var localized: String { rawValue }
+        }
+    }
+
+    enum CountryCode: String, UILocalizable {
+        case title = "CountryCodePicker.navigation.title"
+
+        var localized: String { rawValue }
+    }
+
+    var localized: String { "" }
+
+    enum GetName: String, UILocalizable {
+        case title = "GetName.title"
+        case fieldTitle = "GetName.field.title"
+        case buttonTitle = "GetName.button.title"
+
+        var localized: String { rawValue }
+    }
+}
+
+enum MenuText: UILocalizable {
+    enum Menu: UILocalizable {
+        enum Address: String, UILocalizable {
+            case changeButton = "AddressPickCell.changeButton"
+            case addressTitle = "AddressPickCell.deliverLabel"
+
+            var localized: String { rawValue }
+        }
+
+        var localized: String { "" }
+    }
+
+    enum MenuDetail: String, UILocalizable {
+        case proceedButton = "MenuDetail.proceedButton"
+        case commentPlaceholder = "MenuDetail.commentaryField"
+        case changeButton = "MenuDetail.chooseAdditionalItemButton"
+
+        var localized: String { rawValue }
+    }
+
+    var localized: String { "" }
+}
+
+enum ProfileText: UILocalizable {
+    enum Profile: String, UILocalizable {
+        case title = "Profile.navigationBar.title"
+        case editButton = "Profile.editButton.title"
+        case orderHistory = "Profile.orderHistory"
+        case changeLanguage = "Profile.changeLanguage"
+        case deliveryAddress = "Profile.deliveryAddress"
+        case logoutButton = "Profile.logoutButton.title"
+
+        var localized: String { rawValue }
+    }
+
+    enum ChangeName: String, UILocalizable {
+        case title = "ChangeName.navigationBar.title"
+        case placeholder = "ChangeName.nameField.placeholder"
+        case saveButton = "ChangeName.saveButton.title"
+        case name = "ChangeName.nameLabel"
+        case edit = "ChangeName.emailLabel"
+
+        var localized: String { rawValue }
+    }
+
+    enum ChangeLanguage: String, UILocalizable {
+        case title = "ChangeLanguage.title"
+        case english = "ChangeLanguage.english"
+        case russian = "ChangeLanguage.russian"
+        case kazakh = "ChangeLanguage.kazakh"
+
+        var localized: String { rawValue }
+    }
+
+    enum AddressList: String, UILocalizable {
+        case title = "address_picker.titleMany"
+
+        var localized: String { rawValue }
+    }
+
+    enum AddressDetail: String, UILocalizable {
+        case title = "address_picker.titleOne"
+
+        var localized: String { rawValue }
+    }
+
+    enum OrderHistory: String, UILocalizable {
+        case title = "OrderHistory.title"
+
+        var localized: String { rawValue }
+    }
+
+    enum ShareOrder: String, UILocalizable {
+        case submitButton = "ShareOrder.submitButton"
+
+        var localized: String { rawValue }
+    }
+
+    enum RateOrder: String, UILocalizable {
+        case title = "RateOrder.title"
+        case submitButton = "RateOrder.submitButton.title"
+        case commentaryPlaceholder = "RateOrder.commentaryField.placeholder"
+
+        var localized: String { rawValue }
+
+        enum Item: String, UILocalizable {
+            case courierWork = "RateOrder.cell.courierWork.text"
+            case givenTime = "RateOrder.cell.givenTime.text"
+            case clientNotFound = "RateOrder.cell.courierNotFoundClient.text"
+            case missingFood = "RateOrder.cell.foodIsMissing.text"
+            case coldFood = "RateOrder.cell.foodIsCold.text"
+            case deliveryTime = "RateOrder.cell.deliveryTime.text"
+
+            var localized: String { rawValue }
+        }
+
+        enum Description: String, UILocalizable {
+            case defaultTitle = "RateOrder.description"
+
+            enum Bad: String, UILocalizable {
+                case title = "RateOrder.badRate.title"
+                case subtitle = "RateOrder.badRate.subtitle"
+
+                var localized: String { rawValue }
+            }
+
+            enum Average: String, UILocalizable {
+                case title = "RateOrder.averageRate.title"
+                case subtitle = "RateOrder.averageRate.subtitle"
+
+                var localized: String { rawValue }
+            }
+
+            enum Good: String, UILocalizable {
+                case title = "RateOrder.goodRate.title"
+                case subtitle = "RateOrder.goodRate.subtitle"
+
+                var localized: String { rawValue }
+            }
+
+            enum Excelent: String, UILocalizable {
+                case title = "RateOrder.excellentRate.title"
+                case subtitle = "RateOrder.excellentRate.subtitle"
+
+                var localized: String { rawValue }
+            }
+
+            var localized: String { rawValue }
+        }
+    }
+
+    var localized: String { "" }
+}
+
+enum SupportText: UILocalizable {
+    enum Support: String, UILocalizable {
+        case title = "Support.title"
+        case callCenter = "Support.callcenter"
+
+        var localized: String { rawValue }
+    }
+
+    var localized: String { "" }
+}
+
+enum CartText: UILocalizable {
+    enum Cart: String, UILocalizable {
+        case navigationTitle = "Cart.title"
+        case titleFirst = "Cart.section0.title"
+        case titleSecond = "Cart.section1.title"
+        case buttonTitle = "Cart.orderButton.title"
+
+        var localized: String { rawValue }
+
+        enum Footer: String, UILocalizable {
+            case promocodeButton = "CartFooter.promocodeButton.title"
+            case productsPrice = "CartFooter.productsPrice"
+            case productsCount = "CartFooter.productsCount"
+            case deliveryTitle = "CartFooter.deliveryLabel"
+            case deliveryPrice = "CartFooter.deliveryPrice"
+
+            var localized: String { rawValue }
+        }
+
+        enum ProductCell: String, UILocalizable {
+            case deleteButton = "CartProductCell.deleteButton.title"
+            case availability = "CartProductCell.availability.title"
+
+            var localized: String { rawValue }
+        }
+
+        enum AdditionalCell: String, UILocalizable {
+            case deleteButton = "CartAdditionalProductCell.deleteButton.title"
+            case availability = "CartAdditionalProductCell.availability.title"
+
+            var localized: String { rawValue }
+        }
+
+        enum Promocode: String, UILocalizable {
+            case button = "Promocode.button"
+            case placeholder = "Promocode.field"
+
+            var localized: String { rawValue }
+        }
+    }
+
+    var localized: String { "" }
+}
+
+enum Payment: UILocalizable {
+    enum PaymentSelectionText: String, UILocalizable {
+        case title = "Payment.Selection.bill"
+        case paymentMethod = "Payment.Selection.change"
+        case choosePaymentMethod = "Payment.Selection.choosePaymentMethod"
+        case change = "Payment.Selection.orderPayment"
+        case bill = "Payment.Selection.paymentMethod"
+        case orderPayment = "Payment.Selection.title"
+
+        var localized: String { rawValue }
+    }
+
+    var localized: String { "" }
+}
+
+enum SBLocalization {
+    static func localized(key: UILocalizable) -> String {
+        guard
+            let language = DefaultStorageImpl.sharedStorage.appLocale,
+            let path = Bundle.main.path(forResource: language, ofType: "lproj"),
+            let bundle = Bundle(path: path)
+        else {
+            return NSLocalizedString(key.localized, tableName: "Localizable", comment: "")
+        }
+
+        return NSLocalizedString(key.localized, tableName: "Localizable", bundle: bundle, comment: "")
+    }
+
+    static func localized(key: UILocalizable, arguments: String...) -> String {
+        let localizedString = localized(key: key)
+
+        return String(format: localizedString, arguments: arguments)
+    }
+}

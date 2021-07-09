@@ -9,10 +9,6 @@ import Lottie
 import SnapKit
 import UIKit
 
-protocol AnimationContainerViewDelegate: AnyObject {
-    func performAction()
-}
-
 final class AnimationContainerView: UIView {
     private lazy var lottieAnimationView: AnimationView = {
         let view = AnimationView()

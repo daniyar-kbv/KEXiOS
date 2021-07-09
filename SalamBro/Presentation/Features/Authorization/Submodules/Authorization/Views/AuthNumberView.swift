@@ -26,7 +26,7 @@ final class AuthNumberView: UIView {
 
     private let chevronView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "chevron.bottom")?.withRenderingMode(.alwaysTemplate)
+        view.image = SBImageResource.getIcon(for: AuthorizationIcons.Auth.arrow)?.withRenderingMode(.alwaysTemplate)
         view.tintColor = .black
         view.contentMode = .scaleAspectFit
         view.isUserInteractionEnabled = true
@@ -38,7 +38,7 @@ final class AuthNumberView: UIView {
         field.keyboardType = .numberPad
         field.font = .systemFont(ofSize: 26)
         field.attributedPlaceholder = NSAttributedString(
-            string: L10n.Authorization.NumberField.Placeholder.title,
+            string: SBLocalization.localized(key: AuthorizationText.Auth.numberPlaceholder),
             attributes: [.font: UIFont.systemFont(ofSize: 26, weight: .medium)]
         )
         return field

@@ -64,9 +64,11 @@ final class AppCoordinator: BaseCoordinator {
         let menuCoordinator = appCoordinatorsFactory.makeMenuCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
         menuCoordinator.start()
-        menuCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: TabBarText.menuTitle),
-                                                                                   image: Asset.menu.image,
-                                                                                   selectedImage: Asset.menu.image)
+        menuCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(
+            title: SBLocalization.localized(key: TabBarText.menuTitle),
+            image: SBImageResource.getIcon(for: TabBarIcon.menu),
+            selectedImage: SBImageResource.getIcon(for: TabBarIcon.menu)
+        )
 
         preparedViewControllers.append(menuCoordinator.router.getNavigationController())
         add(menuCoordinator)
@@ -74,20 +76,28 @@ final class AppCoordinator: BaseCoordinator {
 
     private func configureProfileCoordinator() {
         let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
         profileCoordinator.start()
-        profileCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: TabBarText.profileTitle),
-                                                                                      image: Asset.profile.image,
-                                                                                      selectedImage: Asset.profile.image)
+        profileCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(
+            title: SBLocalization.localized(key: TabBarText.profileTitle),
+            image: SBImageResource.getIcon(for: TabBarIcon.profile),
+            selectedImage: SBImageResource.getIcon(for: TabBarIcon.profile)
+        )
+
         preparedViewControllers.append(profileCoordinator.router.getNavigationController())
         add(profileCoordinator)
     }
 
     private func configureSupportCoordinator() {
         let supportCoordinator = appCoordinatorsFactory.makeSupportCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
         supportCoordinator.start()
-        supportCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: TabBarText.supportTitle),
-                                                                                      image: Asset.support.image,
-                                                                                      selectedImage: Asset.support.image)
+        supportCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(
+            title: SBLocalization.localized(key: TabBarText.supportTitle),
+            image: SBImageResource.getIcon(for: TabBarIcon.support),
+            selectedImage: SBImageResource.getIcon(for: TabBarIcon.support)
+        )
+
         preparedViewControllers.append(supportCoordinator.router.getNavigationController())
         add(supportCoordinator)
     }
@@ -96,9 +106,12 @@ final class AppCoordinator: BaseCoordinator {
         let cartCoordinator = appCoordinatorsFactory.makeCartCoordinator(serviceComponents: serviceComponents,
                                                                          repositoryComponents: repositoryComponents)
         cartCoordinator.start()
-        cartCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(title: SBLocalization.localized(key: TabBarText.cartTitle),
-                                                                                   image: Asset.cart.image,
-                                                                                   selectedImage: Asset.cart.image)
+        cartCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(
+            title: SBLocalization.localized(key: TabBarText.cartTitle),
+            image: SBImageResource.getIcon(for: TabBarIcon.cart),
+            selectedImage: SBImageResource.getIcon(for: TabBarIcon.cart)
+        )
+
         cartCoordinator.toMenu = { [weak self] in
             self?.pagesFactory.makeSBTabbarController().selectedIndex = 0
         }

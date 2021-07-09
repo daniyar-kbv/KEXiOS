@@ -41,7 +41,7 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 
     private lazy var callButton: UIButton = {
         let button = UIButton()
-        button.setTitle(L10n.Support.callcenter, for: .normal)
+        button.setTitle(SBLocalization.localized(key: SupportText.Support.callCenter), for: .normal)
         button.setTitleColor(.kexRed, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.addTarget(self, action: #selector(call), for: .touchUpInside)
@@ -72,12 +72,8 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
         layoutUI()
         bindViewModel()
         viewModel.getData()
-    }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        navigationItem.title = L10n.Support.title
+        navigationItem.title = SBLocalization.localized(key: SupportText.Support.title)
     }
 
     private func bindViewModel() {
@@ -109,7 +105,7 @@ final class SupportController: UIViewController, LoaderDisplayable, AlertDisplay
 
     private func layoutUI() {
         view.backgroundColor = .arcticWhite
-        navigationItem.title = L10n.Support.title
+
         [tableView, socialCollectionView, callButton].forEach { view.addSubview($0) }
 
         tableView.snp.makeConstraints {
@@ -156,7 +152,7 @@ extension SupportController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.textLabel?.text = viewModel.documents[indexPath.row].name
         cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        cell.imageView?.image = SBImageResource.getIcon(for: SupportIcon.documentsIcon)
+        cell.imageView?.image = SBImageResource.getIcon(for: SupportIcons.Support.documentsIcon)
         return cell
     }
 

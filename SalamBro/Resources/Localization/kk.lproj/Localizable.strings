@@ -1,0 +1,198 @@
+/* 
+  Localizable.strings
+  SalamBro
+
+  Created by Arystan on 3/17/21.
+  
+*/
+
+// MARK: - CountriesList
+"CountriesList.navigation.title" = "KZ Выберите страну";
+
+// MARK: - CitiesList
+"CitiesList.navigation.title" = "KZ Выберите город";
+
+// MARK: - Brands
+"Brands.navigation.title" = "KZ Выберите бренд";
+
+// MARK: - Authorization
+"Authorization.title" = "KZ Введите Ваш номер телефона";
+"Authorization.subtitle" = "KZ На этот номер придет подтверждающий СМС код";
+"Authorization.numberField.placeholder.title" = "KZ Номер телефона";
+"Authorization.agreement.inactive.title" = "KZ Продолжая, вы соглашаетесь со сбором, обработкой персональных данных и ";
+"Authorization.agreement.active.title" = "KZ Пользовательским соглашением";
+"Authorization.button.title" = "KZ Получить код";
+
+// MARK: - Verification
+"Verification.title" = "KZ Введите код из сообщения";
+"Verification.subtitle" = "KZ Мы отправили его на номер %@";
+"Verification.button.title" = "KZ Отправить повторно через: %@";
+"Verification.button.timeout" = "KZ Отправить код повторно";
+
+// MARK: - CountryCodePicker
+"CountryCodePicker.navigation.title" = "KZ Выберите код страны";
+
+// MARK: - GetName
+"GetName.title" = "KZ Как Вас зовут?";
+"GetName.field.title" = "KZ Введите Ваше имя";
+"GetName.button.title" = "KZ Далее";
+
+// MARK: - MainTab
+"MainTab.Menu.Title" = "KZ Меню";
+"MainTab.Profile.Title" = "KZ Профиль";
+"MainTab.Support.Title" = "KZ Помощь";
+"MainTab.Cart.Title" = "KZ Корзина";
+
+// MARK: - Cart
+"Cart.section0.title" = "KZ %@ товаров на %@ ₸";
+"Cart.section1.title" = "KZ Дополнительные покупки";
+"Cart.orderButton.title" = "KZ Оформить заказ на %@ ₸";
+"Cart.title" = "KZ Корзина";
+
+// MARK: - CartFooter
+"CartFooter.promocodeButton.title" = "KZ Ввести промокод";
+"CartFooter.productsPrice" = "KZ %@ ₸";
+"CartFooter.productsCount" = "KZ %@ товара";
+"CartFooter.deliveryLabel" = "KZ Доставка";
+"CartFooter.deliveryPrice" = "KZ %@ ₸";
+
+// MARK: - CartProductCell
+"CartProductCell.deleteButton.title" = "KZ Удалить";
+"CartProductCell.availability.title" = "KZ Товар недоступен";
+
+// MARK: - CartAdditionalProductCell
+"CartAdditionalProductCell.deleteButton.title" = "KZ Удалить";
+"CartAdditionalProductCell.availability.title" = "KZ Товар недоступен";
+
+// MARK: - Profile
+"Profile.navigationBar.title" = "KZ Профиль";
+"Profile.editButton.title" = "KZ Изменить";
+"Profile.orderHistory" = "KZ История заказов";
+"Profile.changeLanguage" = "KZ Сменить язык приложения";
+"Profile.logoutButton.title" = "KZ Выйти из аккаунта";
+"Profile.deliveryAddress" = "KZ Адреса доставки";
+
+// MARK: - ChangeName
+"ChangeName.navigationBar.title" = "KZ Изменить";
+"ChangeName.nameField.placeholder" = "KZ введите имя";
+"ChangeName.saveButton.title" = "KZ Сохранить";
+"ChangeName.nameLabel" = "KZ Имя";
+"ChangeName.emailLabel" = "KZ E-mail";
+
+// MARK: - Map
+"MapView.addressField.title" = "KZ Адрес доставки";
+"MapView.commentaryLabel.title" = "KZ Комментарий (квартира, подъезд, ...)";
+"MapView.proceedButton.title" = "KZ Перейти к заказу";
+
+// MARK: - Suggest
+"Suggest.addressField.title" = "KZ Введите адрес";
+"Suggest.button.title" = "KZ Отменить";
+
+// MARK: - Commentary
+"Commentary.button.title" = "KZ Готово";
+
+// MARK: - RateOrder
+"RateOrder.title" = "KZ Оцените заказ";
+// bad
+"RateOrder.badRate.title" = "KZ Просим прощения! Что пошло не так?";
+"RateOrder.badRate.subtitle" = "KZ Мы хотим это исправить! Что пошло не так,
+как нужно? Ваши комментарии очень нам
+помогут!";
+// average
+"RateOrder.averageRate.title" = "KZ Понятно! Что нам следует улучшить?";
+"RateOrder.averageRate.subtitle" = "KZ Средне - это не круто. Что нам следует
+исправить в следующий раз?";
+// good
+"RateOrder.goodRate.title" = "KZ Благодарим! Что мы могли бы
+улучшить?";
+"RateOrder.goodRate.subtitle" = "KZ 4/5 это хорошо - но не идеально.
+Что нам стоит улучшить в следующий раз?";
+// excellent
+"RateOrder.excellentRate.title" = "KZ Хорошо, что все прошло славно!";
+"RateOrder.excellentRate.subtitle" = "KZ Что понравилось больше всего?";
+// itemCells
+"RateOrder.cell.courierWork.text" = "KZ Работа курьера";
+"RateOrder.cell.givenTime.text" = "KZ Предлагаемое время";
+"RateOrder.cell.courierNotFoundClient.text" = "KZ Курьер не нашел меня";
+"RateOrder.cell.foodIsMissing.text" = "KZ Отсутствует блюдо";
+"RateOrder.cell.foodIsCold.text" = "KZ Еда была холодной";
+"RateOrder.cell.deliveryTime.text" = "KZ Время доставки";
+
+"RateOrder.submitButton.title" = "KZ Отправить";
+"RateOrder.commentaryField.placeholder" = "KZ Добавить комментарий";
+"RateOrder.title" = "KZ Оцените заказ";
+"RateOrder.description" = "KZ Ваша оценка поможет улучшить качество
+нашей доставки";
+
+// MARK: - AddressPickCell
+"AddressPickCell.changeButton" = "KZ Изменить";
+"AddressPickCell.deliverLabel" = "KZ Доставим на:";
+
+// MARK: - MenuDetail
+"MenuDetail.proceedButton" = "KZ В корзину за";
+"MenuDetail.commentaryField" = "KZ Комментарий к блюду";
+"MenuDetail.chooseAdditionalItemButton" = "KZ Изменить";
+
+// MARK: - Support
+"Support.title" = "KZ Помощь";
+"Support.callcenter" = "KZ Позвонить в Call-центр";
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.title" = "KZ Язык приложения";
+"ChangeLanguage.kazakh" = "KZ Казахский";
+"ChangeLanguage.russian" = "KZ Русский";
+"ChangeLanguage.english" = "KZ Английский";
+
+// MARK: - OrderHistory
+"OrderHistory.title" = "KZ История заказов";
+
+// MARK: - Select Main Info
+"select_main_info.country" = "KZ Страна";
+"select_main_info.country.placeholder" = "KZ Выберите страну";
+"select_main_info.city" = "KZ Город";
+"select_main_info.city.placeholder" = "KZ Выберите город";
+"select_main_info.address" = "KZ Адрес";
+"select_main_info.address.placeholder" = "KZ Введите адрес";
+"select_main_info.brand" = "KZ Бренд";
+"select_main_info.brand.placeholder" = "KZ Выберите бренд";
+"select_main_info.title" = "KZ Адрес доставки";
+"select_main_info.description" = "KZ Наличие или отсутствие того или иного бренда - зависит от Вашего адреса доставки";
+"select_main_info.save" = "KZ Сохранить";
+"select_main_info.alert.title" = "KZ Вы уверены?";
+"select_main_info.alert.body.address" = "KZ Если Вы сейчас смените адрес, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить адрес?";
+"select_main_info.alert.body.brand" = "KZ Если Вы сейчас смените бренд, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить бренд?";
+"select_main_info.alert.action.yes" = "KZ Да";
+"select_main_info.alert.action.no" = "KZ Нет";
+
+// MARK: - Address Picker
+"address_picker.add" = "KZ Добавить новый адрес";
+
+// MARK: - AddressList
+"address_picker.titleMany" = "KZ Адреса доставки";
+
+// MARK: - AddressDetail
+"address_picker.titleOne" = "KZ Адрес доставки";
+
+// MARK: - ShareOrder
+"ShareOrder.submitButton" = "KZ Опубликовать";
+
+// MARK: - Promocode
+"Promocode.button" = "KZ Применить";
+"Promocode.field" = "KZ Введите промокод";
+
+// MARK: - Close
+"Common.error" = "KZ Ошибка";
+"Common.close" = "KZ Закрыть";
+
+// MARK: - Error
+"Error.mappingError" = "KZ Неудалось обработать ответ";
+"Error.noData" = "KZ Нет данных";
+
+// MARK: - Payment Selection
+
+"Payment.Selection.bill" = "KZ К оплате:";
+"Payment.Selection.change" = "KZ Изменить";
+"Payment.Selection.choosePaymentMethod" = "KZ Выберите способ оплаты";
+"Payment.Selection.orderPayment" = "KZ Оформить заказ";
+"Payment.Selection.paymentMethod" = "KZ Способ оплаты";
+"Payment.Selection.title" = "KZ Оформление заказа";

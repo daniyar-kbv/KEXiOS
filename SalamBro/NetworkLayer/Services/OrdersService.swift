@@ -39,7 +39,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 guard let leadUUID = applyResponse.data?.uuid else {
-                    throw NetworkError.error("Нет данных")
+                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
                 }
 
                 return leadUUID
@@ -56,7 +56,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 guard let data = orderProductsResponse.data else {
-                    throw NetworkError.error("Нет данных")
+                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
                 }
 
                 return data
@@ -73,7 +73,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 guard let data = orderProductDetailResponse.data else {
-                    throw NetworkError.error("Нет данных")
+                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
                 }
 
                 return data

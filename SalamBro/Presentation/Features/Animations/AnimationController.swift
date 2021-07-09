@@ -12,7 +12,7 @@ final class AnimationController: UIViewController {
     private let animationType: LottieAnimationModel
     private lazy var contenView = AnimationContainerView(animationType: animationType)
 
-    weak var delegate: AnimationContainerViewDelegate?
+    var action: (() -> Void)?
 
     init(animationType: LottieAnimationModel) {
         self.animationType = animationType
@@ -48,6 +48,6 @@ final class AnimationController: UIViewController {
     }
 
     @objc private func performAction() {
-        delegate?.performAction()
+        action?()
     }
 }

@@ -11,10 +11,12 @@ protocol RepositoryComponents: AnyObject {
     func makeAddressRepository() -> AddressRepository
     func makeBrandRepository() -> BrandRepository
     func makeCartRepository() -> CartRepository
-    func makeAuthRepository() -> AuthPageRepository
+    func makeAuthRepository() -> AuthRepository
     func makeChangeUserInfoRepository() -> ChangeUserInfoRepository
     func makeCountriesRepository() -> CountriesRepository
     func makeCitiesRepository() -> CitiesRepository
+    func makeMenuRepository() -> MenuRepository
+    func makeMenuDetailRepository() -> MenuDetailRepository
     func makeDocumentsRepository() -> DocumentsRepository
 }
 
@@ -26,7 +28,9 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     }
 
     func makeAddressRepository() -> AddressRepository {
-        return shared(AddressRepositoryImpl(storage: makeLocalStorage()))
+        return shared(AddressRepositoryImpl(storage: makeLocalStorage(),
+                                            brandStorage: makeLocalStorage(),
+                                            ordersService: serviceComponents.ordersService()))
     }
 
     func makeBrandRepository() -> BrandRepository {
@@ -40,12 +44,13 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
                                          defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
-    func makeAuthRepository() -> AuthPageRepository {
-        return shared(AuthPageRepositoryImpl(authService: serviceComponents.authService(), tokenStorage: AuthTokenStorageImpl.sharedStorage))
+    func makeAuthRepository() -> AuthRepository {
+        return shared(AuthRepositoryImpl(authService: serviceComponents.authService(), tokenStorage: AuthTokenStorageImpl.sharedStorage))
     }
 
     func makeChangeUserInfoRepository() -> ChangeUserInfoRepository {
-        return shared(ChangeUserInfoRepositoryImpl(service: serviceComponents.profileService(), defaultStorage: DefaultStorageImpl.sharedStorage))
+        return shared(ChangeUserInfoRepositoryImpl(service: serviceComponents.profileService(),
+                                                   defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
     func makeCountriesRepository() -> CountriesRepository {
@@ -54,7 +59,18 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     }
 
     func makeCitiesRepository() -> CitiesRepository {
-        return shared(CitiesRepositoryImpl(locationService: serviceComponents.locationService(), storage: makeLocalStorage()))
+        return shared(CitiesRepositoryImpl(locationService: serviceComponents.locationService(),
+                                           storage: makeLocalStorage()))
+    }
+
+    func makeMenuRepository() -> MenuRepository {
+        return shared(MenuRepositoryImpl(ordersService: serviceComponents.ordersService(),
+                                         promotionsService: serviceComponents.promotionsService(),
+                                         storage: DefaultStorageImpl.sharedStorage))
+    }
+
+    func makeMenuDetailRepository() -> MenuDetailRepository {
+        return shared(MenuDetailRepositoryImpl(ordersService: serviceComponents.ordersService()))
     }
 
     func makeDocumentsRepository() -> DocumentsRepository {

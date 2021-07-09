@@ -21,7 +21,7 @@ final class VerificationView: UIView {
 
     private lazy var maintitle: UILabel = {
         let label = UILabel()
-        label.text = L10n.Verification.title
+        label.text = SBLocalization.localized(key: AuthorizationText.Verification.title)
         label.font = .systemFont(ofSize: 32, weight: .semibold)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -50,7 +50,7 @@ final class VerificationView: UIView {
         let button = UIButton()
         button.backgroundColor = .white
         button.isEnabled = false
-        button.setTitle(L10n.Verification.Button.title("01:30"), for: .disabled)
+        button.setTitle(SBLocalization.localized(key: AuthorizationText.Verification.Button.title, arguments: "01:30"), for: .disabled)
         button.setTitleColor(.mildBlue, for: .disabled)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.setTitleColor(.white, for: .normal)
@@ -64,7 +64,7 @@ final class VerificationView: UIView {
         super.init(frame: .zero)
         self.number = number
         self.delegate = delegate
-        subtitle.text = L10n.Verification.subtitle(" " + number)
+        subtitle.text = SBLocalization.localized(key: AuthorizationText.Verification.subtitle, arguments: " " + number)
         layoutUI()
     }
 
@@ -133,11 +133,11 @@ extension VerificationView {
         // Call the currentTimeString method which can decrease the time..
         let timeString = currentTimeString()
         if timeString != nil {
-            getCodeButton.setTitle(" " + L10n.Verification.Button.title(timeString!), for: .disabled)
+            getCodeButton.setTitle(" " + SBLocalization.localized(key: AuthorizationText.Verification.Button.title, arguments: timeString!), for: .disabled)
         } else {
             getCodeButton.isEnabled = true
             getCodeButton.backgroundColor = .kexRed
-            getCodeButton.setTitle(L10n.Verification.Button.timeout, for: .normal)
+            getCodeButton.setTitle(SBLocalization.localized(key: AuthorizationText.Verification.Button.timeout), for: .normal)
         }
     }
 
