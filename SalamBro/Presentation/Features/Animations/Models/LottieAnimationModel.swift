@@ -7,6 +7,7 @@
 
 import Lottie
 
+// Tech debt: localize
 enum LottieAnimationModel: String, CaseIterable {
     case orderHistory
     case emptyBasket

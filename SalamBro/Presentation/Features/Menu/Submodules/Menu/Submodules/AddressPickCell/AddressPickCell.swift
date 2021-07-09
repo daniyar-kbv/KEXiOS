@@ -18,7 +18,7 @@ final class AddressPickCell: UITableViewCell {
 
     public lazy var deliveryLabel: UILabel = {
         let label = UILabel()
-        label.text = L10n.AddressPickCell.deliverLabel
+        label.text = SBLocalization.localized(key: MenuText.Menu.Address.addressTitle)
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = .mildBlue
         label.baselineAdjustment = .alignBaselines
@@ -37,7 +37,7 @@ final class AddressPickCell: UITableViewCell {
 
     private lazy var changeButton: UIButton = {
         let button = UIButton()
-        button.setTitle(L10n.AddressPickCell.changeButton, for: .normal)
+        button.setTitle(SBLocalization.localized(key: MenuText.Menu.Address.changeButton), for: .normal)
         button.setTitleColor(.kexRed, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.contentHorizontalAlignment = .center
@@ -59,8 +59,6 @@ final class AddressPickCell: UITableViewCell {
         layoutUI()
 
         selectionStyle = .none
-        changeButton.setTitle(L10n.AddressPickCell.changeButton, for: .normal)
-        deliveryLabel.text = L10n.AddressPickCell.deliverLabel
     }
 
     @available(*, unavailable)

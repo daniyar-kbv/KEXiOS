@@ -84,7 +84,7 @@ final class BrandsController: UIViewController, AlertDisplayable {
         setupViews()
         setupConstraints()
 
-        navigationItem.title = L10n.Brands.Navigation.title
+        navigationItem.title = SBLocalization.localized(key: AddressText.Brands.title)
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }

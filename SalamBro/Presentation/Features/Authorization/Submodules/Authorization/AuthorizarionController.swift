@@ -25,7 +25,8 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
 
     private let aggreementLabel: UILabel = {
         let label = UILabel()
-        label.text = L10n.Authorization.Agreement.Inactive.title + L10n.Authorization.Agreement.Active.title
+        label.text = SBLocalization.localized(key: AuthorizationText.Auth.Agreement.inactive) +
+            SBLocalization.localized(key: AuthorizationText.Auth.Agreement.active)
         label.font = .systemFont(ofSize: 12)
         label.textColor = .mildBlue
         label.numberOfLines = 0
@@ -39,7 +40,7 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
 
     private let getButton: UIButton = {
         let button = UIButton()
-        button.setTitle(L10n.Authorization.Button.title, for: .normal)
+        button.setTitle(SBLocalization.localized(key: AuthorizationText.Auth.buttonTitle), for: .normal)
         button.addTarget(self, action: #selector(handleGetButtonAction), for: .touchUpInside)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.backgroundColor = .calmGray

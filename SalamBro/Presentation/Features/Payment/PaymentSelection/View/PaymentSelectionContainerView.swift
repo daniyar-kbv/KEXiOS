@@ -15,7 +15,7 @@ final class PaymentSelectionContainerView: UIView {
     private let paymentSelectionView = PaymentSelectionView()
     private let actionButton: UIButton = {
         let button = UIButton()
-        button.setTitle(SBLocalization.localized(key: PaymentSelectionText.orderPayment), for: .normal)
+        button.setTitle(SBLocalization.localized(key: Payment.PaymentSelectionText.orderPayment), for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.backgroundColor = .calmGray
         button.isEnabled = false
@@ -28,7 +28,7 @@ final class PaymentSelectionContainerView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .darkGray
-        label.text = SBLocalization.localized(key: PaymentSelectionText.bill)
+        label.text = SBLocalization.localized(key: Payment.PaymentSelectionText.bill)
         label.textAlignment = .left
         return label
     }()

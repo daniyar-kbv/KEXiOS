@@ -22,9 +22,9 @@ enum ProfileTableItem {
 
     var title: String {
         switch self {
-        case .changeLanguage: return L10n.Profile.changeLanguage
-        case .deliveryAddress: return L10n.Profile.deliveryAddress
-        case .orderHistory: return L10n.Profile.orderHistory
+        case .changeLanguage: return SBLocalization.localized(key: ProfileText.Profile.changeLanguage)
+        case .deliveryAddress: return SBLocalization.localized(key: ProfileText.Profile.deliveryAddress)
+        case .orderHistory: return SBLocalization.localized(key: ProfileText.Profile.orderHistory)
         }
     }
 }

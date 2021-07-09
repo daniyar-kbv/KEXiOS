@@ -50,7 +50,7 @@ final class AuthServiceMoyaImpl: AuthService {
                     throw error
                 }
 
-                guard let token = tokenResponse.data else { throw NetworkError.error("Нет данных") }
+                guard let token = tokenResponse.data else { throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData)) }
 
                 return token
             }

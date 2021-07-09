@@ -83,6 +83,7 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
+    // Tech debt: localize
     private lazy var addressItem = OrderHistoryInfoView(title: "Адрес доставки", info: "мкр. Орбита 1, 41")
     private lazy var paymentItem = OrderHistoryInfoView(title: "Детали оплаты", info: "Картой в приложении")
     private lazy var statusItem = OrderHistoryInfoView(title: "Статус заказа", info: "Доставлен")
@@ -100,6 +101,7 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
+    // Tech debt: localize
     private lazy var sendCheckButton = OrderHistoryButton(color: .black, titleString: "Отправить чек на почту")
     private lazy var rateOrderButton = OrderHistoryButton(color: .kexRed, titleString: "Оценить заказ")
     private lazy var repeatOrderButton = OrderHistoryButton(color: .mildBlue, titleString: "Повторить заказ")

@@ -48,10 +48,10 @@ extension MapAddressView {
         layer.cornerRadius = 18
         layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
 
-        addressTextField.placeholder = L10n.MapView.AddressField.title
-        commentaryTextField.placeholder = L10n.MapView.CommentaryLabel.title
+        addressTextField.placeholder = SBLocalization.localized(key: AddressText.Map.addressField)
+        commentaryTextField.placeholder = SBLocalization.localized(key: AddressText.Map.commentaryField)
 
-        actionButton.setTitle(L10n.MapView.ProceedButton.title, for: .normal)
+        actionButton.setTitle(SBLocalization.localized(key: AddressText.Map.proceedButton), for: .normal)
     }
 
     private func layoutUI() {

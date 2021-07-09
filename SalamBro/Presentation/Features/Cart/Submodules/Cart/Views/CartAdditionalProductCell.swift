@@ -184,7 +184,7 @@ extension CartAdditionalProductCell {
             if isAvailable {
                 unavailableLabel.text = ""
             } else {
-                unavailableLabel.text = L10n.CartAdditionalProductCell.Availability.title
+                unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.AdditionalCell.availability)
                 productTitleLabel.alpha = 0.5
                 priceLabel.alpha = 0.5
                 productImageView.alpha = 0.5

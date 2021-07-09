@@ -53,7 +53,7 @@ final class OrderHistoryController: UIViewController {
 
 extension OrderHistoryController {
     private func layoutUI() {
-        navigationItem.title = L10n.OrderHistory.title
+        navigationItem.title = SBLocalization.localized(key: ProfileText.OrderHistory.title)
         view.backgroundColor = .arcticWhite
 
         view.addSubview(tableView)

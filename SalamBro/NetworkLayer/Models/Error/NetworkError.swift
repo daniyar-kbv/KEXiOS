@@ -17,7 +17,7 @@ enum NetworkError: ErrorPresentable {
 
     var presentationDescription: String {
         switch self {
-        case .badMapping: return "Mapping error"
+        case .badMapping: return SBLocalization.localized(key: ErrorText.Network.mappingError)
         case let .error(error): return error
         }
     }
