@@ -968,12 +968,6 @@
 			path = CountryCodePicker;
 			sourceTree = "<group>";
 		};
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		45788FC689A0515A94F86B6FC9172D75 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -1841,12 +1835,6 @@
 			path = SelectMainInformation;
 			sourceTree = "<group>";
 		};
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
 		CF86187F6E3E40AD84E132FE8AF6445E /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1909,12 +1897,6 @@
 				4A9F9B4F3D470F45D05B0B111C1147FA /* MenuScrollService.swift */,
 			);
 			path = ScrollService;
-			sourceTree = "<group>";
-		};
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		DBD52C5CDF384BB877575B4D36E2B921 /* Responses */ = {
