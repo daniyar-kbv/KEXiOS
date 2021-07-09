@@ -14,10 +14,10 @@ final class VerificationViewModel {
 
     let outputs = Output()
 
-    private let repository: AuthPageRepository
+    private let repository: AuthRepository
     private(set) var phoneNumber: String
 
-    init(repository: AuthPageRepository, phoneNumber: String) {
+    init(repository: AuthRepository, phoneNumber: String) {
         self.repository = repository
         self.phoneNumber = phoneNumber
         bindOutputs()
