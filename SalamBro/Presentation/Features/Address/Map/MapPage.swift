@@ -21,9 +21,9 @@ final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
     }()
 
     private let mapAddressView = MapAddressView()
-    private let backButton = MapActionButton(image: Asset.chevronLeft.image)
-    private let locationButton = MapActionButton(image: Asset.location.image)
-    private let pinView = UIImageView(image: Asset.marker.image)
+    private let backButton = MapActionButton(image: SBImageResource.getIcon(for: AddressIcons.Map.backButton))
+    private let locationButton = MapActionButton(image: SBImageResource.getIcon(for: AddressIcons.Map.location))
+    private let pinView = UIImageView(image: SBImageResource.getIcon(for: AddressIcons.Map.marker))
 
     private let viewModel: MapViewModel
     private let locationManager: LocationManager = .init()

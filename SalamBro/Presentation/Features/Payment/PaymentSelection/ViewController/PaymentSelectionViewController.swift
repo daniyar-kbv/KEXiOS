@@ -8,6 +8,8 @@
 import UIKit
 
 final class PaymentSelectionViewController: UIViewController {
+    var onChangePaymentMethod: (() -> Void)?
+
     private var containerView: PaymentSelectionContainerView!
 
     private let viewModel: PaymentSelectionViewModel
@@ -25,11 +27,18 @@ final class PaymentSelectionViewController: UIViewController {
     override func loadView() {
         super.loadView()
         containerView = PaymentSelectionContainerView()
+        containerView.delegate = self
         view = containerView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = SBLocalization.localized(key: Payment.PaymentSelectionText.title)
+    }
+}
+
+extension PaymentSelectionViewController: PaymentSelectionContainerViewDelegate {
+    func handleChangePaymentMethod() {
+        onChangePaymentMethod?()
     }
 }

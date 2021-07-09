@@ -12,7 +12,7 @@ import UIKit
 final class MapAddressView: UIView {
     private let disposeBag = DisposeBag()
 
-    let addressTextField = MapTextField(image: UIImage(named: "map_right_icon"))
+    let addressTextField = MapTextField(image: SBImageResource.getIcon(for: AddressIcons.Map.arrow))
     let commentaryTextField = MapTextField()
     let actionButton: UIButton = {
         let btn = UIButton()

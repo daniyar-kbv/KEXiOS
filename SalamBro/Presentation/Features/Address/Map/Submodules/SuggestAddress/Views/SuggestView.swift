@@ -17,7 +17,7 @@ final class SuggestView: UIView {
 
     private lazy var searchItem: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "search")
+        imageView.image = SBImageResource.getIcon(for: AddressIcons.Suggest.search)
         imageView.tintColor = .mildBlue
         return imageView
     }()

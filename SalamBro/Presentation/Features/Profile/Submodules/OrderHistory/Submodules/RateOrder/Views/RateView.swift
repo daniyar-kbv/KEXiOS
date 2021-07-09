@@ -34,8 +34,8 @@ final class RateView: UIView {
         view.settings.emptyColor = .white
         view.settings.starSize = 30
         view.settings.starMargin = 16
-        view.settings.emptyImage = UIImage(named: "star.empty")
-        view.settings.filledImage = UIImage(named: "star.filled")
+        view.settings.emptyImage = SBImageResource.getIcon(for: ProfileIcons.RateOrder.starEmpty)
+        view.settings.filledImage = SBImageResource.getIcon(for: ProfileIcons.RateOrder.starFilled)
         view.rating = 0
         return view
     }()

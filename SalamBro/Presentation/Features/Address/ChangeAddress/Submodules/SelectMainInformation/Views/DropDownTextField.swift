@@ -107,7 +107,7 @@ final class DropDownTextField: UIView {
 
     private lazy var chevronImageView: UIImageView = {
         let view = UIImageView()
-        view.image = Asset.chevronBottom.image.withRenderingMode(.alwaysTemplate)
+        view.image = SBImageResource.getIcon(for: AddressIcons.SelectMainInfo.arrow)?.withRenderingMode(.alwaysTemplate)
         view.tintColor = .mildBlue
         return view
     }()

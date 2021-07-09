@@ -13,7 +13,6 @@ import UIKit
 final class CartProductCell: UITableViewCell {
     private lazy var productImageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "fastFood")
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -77,7 +76,7 @@ final class CartProductCell: UITableViewCell {
         button.borderWidth = 1
         button.borderColor = .mildBlue
         button.cornerRadius = 5
-        button.setBackgroundImage(UIImage(named: "minus"), for: .normal)
+        button.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.minus), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         button.addTarget(self, action: #selector(decreaseItemCount), for: .touchUpInside)
         return button
@@ -87,7 +86,7 @@ final class CartProductCell: UITableViewCell {
         let button = UIButton()
         button.backgroundColor = .kexRed
         button.cornerRadius = 5
-        button.setBackgroundImage(UIImage(named: "plus"), for: .normal)
+        button.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusWhite), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         button.addTarget(self, action: #selector(increaseItemButton), for: .touchUpInside)
         return button

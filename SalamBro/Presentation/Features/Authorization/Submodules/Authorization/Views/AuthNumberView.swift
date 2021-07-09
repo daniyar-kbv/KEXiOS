@@ -26,7 +26,7 @@ final class AuthNumberView: UIView {
 
     private let chevronView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "chevron.bottom")?.withRenderingMode(.alwaysTemplate)
+        view.image = SBImageResource.getIcon(for: AuthorizationIcons.Auth.arrow)?.withRenderingMode(.alwaysTemplate)
         view.tintColor = .black
         view.contentMode = .scaleAspectFit
         view.isUserInteractionEnabled = true
