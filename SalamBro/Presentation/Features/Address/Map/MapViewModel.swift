@@ -17,9 +17,8 @@ final class MapViewModel {
         case change
     }
 
-    private let ordersService: OrdersService
     private let defaultStorage: DefaultStorage
-    private let locationRepository: AddressRepository
+    private let addressRepository: AddressRepository
     private let brandRepository: BrandRepository
 
     let outputs = Output()
@@ -37,16 +36,14 @@ final class MapViewModel {
     private(set) var flow: MapFlow
     private let disposeBag = DisposeBag()
 
-    init(ordersService: OrdersService,
-         defaultStorage: DefaultStorage,
-         locationRepository: AddressRepository,
+    init(defaultStorage: DefaultStorage,
+         addressRepository: AddressRepository,
          brandRepository: BrandRepository,
          flow: MapFlow,
          address: Address? = nil)
     {
-        self.ordersService = ordersService
         self.defaultStorage = defaultStorage
-        self.locationRepository = locationRepository
+        self.addressRepository = addressRepository
         self.brandRepository = brandRepository
 
         self.flow = flow
@@ -64,8 +61,9 @@ final class MapViewModel {
         guard let lastAddress = try? outputs.selectedAddress.value() else { return }
         switch flow {
         case .creation:
-            locationRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
-            applyOrders(address: lastAddress)
+            addressRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
+            bindToOrdersOutputs(using: lastAddress)
+            addressRepository.applyOrder()
         case .change:
             outputs.lastSelectedAddress.accept((lastAddress, commentary))
         }
@@ -116,29 +114,25 @@ final class MapViewModel {
 }
 
 extension MapViewModel {
-    func applyOrders(address: MapAddress) {
-        guard let brandId = brandRepository.getCurrentBrand()?.id,
-              let cityId = locationRepository.getCurrentCity()?.id,
-              let longitude = locationRepository.getCurrentAddress()?.longitude.rounded(to: 8),
-              let latitude = locationRepository.getCurrentAddress()?.latitude.rounded(to: 8) else { return }
+    private func bindToOrdersOutputs(using address: MapAddress) {
+        addressRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
 
-        let dto: OrderApplyDTO = .init(address: .init(city: cityId,
-                                                      longitude: longitude,
-                                                      latitude: latitude),
-                                       localBrand: brandId)
+        addressRepository.outputs.didGetLeadUUID.bind {
+            [weak self] leadUUID in
+            self?.defaultStorage.persist(leadUUID: leadUUID)
+            self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
+        }
+        .disposed(by: disposeBag)
 
-        outputs.didStartRequest.accept(())
+        addressRepository.outputs.didEndRequest
+            .bind(to: outputs.didFinishRequest)
+            .disposed(by: disposeBag)
 
-        ordersService.applyOrder(dto: dto)
-            .subscribe { [weak self] leadUUID in
-                self?.outputs.didFinishRequest.accept(())
-                self?.defaultStorage.persist(leadUUID: leadUUID)
-                self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
-            } onError: { [weak self] error in
-                self?.outputs.didFinishRequest.accept(())
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didGetError.accept(error)
-            }.disposed(by: disposeBag)
+        addressRepository.outputs.didFail
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
     }
 }
 
