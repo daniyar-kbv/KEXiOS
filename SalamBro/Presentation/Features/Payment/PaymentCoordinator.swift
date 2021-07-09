@@ -14,7 +14,7 @@ final class PaymentCoordinator: BaseCoordinator {
 
     var didFinish: (() -> Void)?
 
-    private let router: Router
+    private(set) var router: Router
     private let pagesFactory: PaymentPagesFactory
 
     init(router: Router, pagesFactory: PaymentPagesFactory) {
@@ -24,8 +24,18 @@ final class PaymentCoordinator: BaseCoordinator {
 
     override func start() {
         let paymentSelectionVC = pagesFactory.makePaymentSelectionPage()
-        let navVC = SBNavigationController(rootViewController: paymentSelectionVC)
-        router.present(navVC, animated: true, completion: nil)
+        let navigationVC = SBNavigationController(rootViewController: paymentSelectionVC)
+
+        paymentSelectionVC.onChangePaymentMethod = { [weak self] in
+            self?.showChangePaymentVC()
+        }
+
+        router.set(navigationController: navigationVC)
+    }
+
+    private func showChangePaymentVC() {
+        let paymentMethodVC = pagesFactory.makePaymentMethodPage()
+        router.push(viewController: paymentMethodVC, animated: true)
     }
 }
 
