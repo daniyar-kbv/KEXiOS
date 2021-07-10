@@ -31,7 +31,7 @@ final class ProfileChildCoordinatorsFactoryImpl: DependencyFactory, ProfileChild
 
     func makeOrderCoordinator() -> OrderHistoryCoordinator {
         return OrderHistoryCoordinator(router: router,
-                                       pagesFactory: OrderHistoryPagesFactoryImpl())
+                                       pagesFactory: OrderHistoryPagesFactoryImpl(repositoryComponents: repositoryComponents))
     }
 
     func makeAuthCoordinator() -> AuthCoordinator {

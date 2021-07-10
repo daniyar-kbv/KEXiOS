@@ -95,6 +95,10 @@ final class RateView: UIView {
         return button
     }()
 
+    private var questionTitle: String = ""
+    private var suggestionDescription: String = ""
+    private(set) var rating: Int = 0
+
     private(set) var collectionViewHeightConstraint: Constraint?
 
     init(delegate: RateViewDelegate) {
@@ -141,6 +145,10 @@ extension RateView {
 
     func configureTextField(with text: String) {
         commentTextField.set(text: text)
+    }
+
+    func getComment() -> String {
+        return commentTextField.text
     }
 
     private func layoutUI() {
@@ -202,34 +210,21 @@ extension RateView {
         }
     }
 
+    func configureQuestionLabel(title: String) {
+        questionTitle = title
+    }
+
+    func configureSuggestionLabel(description: String) {
+        suggestionDescription = description
+    }
+
     private func didFinishTouchRating(_ rating: Double) {
         sendButton.isEnabled = true
         sendButton.backgroundColor = .kexRed
-        switch rating {
-        case 1.0 ..< 2.0:
-            questionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Bad.title)
-            suggestionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Bad.subtitle)
-            delegate?.updateViewModelData(at: 3)
-        case 2.0 ..< 3.0:
-            questionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Bad.title)
-            suggestionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Bad.title)
-            delegate?.updateViewModelData(at: 3)
-        case 3.0 ..< 4.0:
-            questionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Average.title)
-            suggestionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Average.subtitle)
-            delegate?.updateViewModelData(at: 3)
-        case 4.0 ..< 5.0:
-            questionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Good.title)
-            suggestionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Good.subtitle)
-            delegate?.updateViewModelData(at: 4)
-        case 5.0:
-            questionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Excelent.title)
-            suggestionLabel.text = SBLocalization.localized(key: ProfileText.RateOrder.Description.Excelent.subtitle)
-            delegate?.updateViewModelData(at: 5)
-        default:
-            questionLabel.text = nil
-            suggestionLabel.text = nil
-        }
+        self.rating = Int(rating)
+        delegate?.updateViewModelData(at: self.rating)
+        questionLabel.text = questionTitle
+        suggestionLabel.text = suggestionDescription
         collectionView.reloadData()
         collectionView.layoutIfNeeded()
     }

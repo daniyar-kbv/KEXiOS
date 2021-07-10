@@ -14,6 +14,12 @@ protocol OrderHistoryPagesFactory: AnyObject {
 }
 
 final class OrderHistoryPagesFactoryImpl: DependencyFactory, OrderHistoryPagesFactory {
+    private let repositoryComponents: RepositoryComponents
+
+    init(repositoryComponents: RepositoryComponents) {
+        self.repositoryComponents = repositoryComponents
+    }
+
     func makeOrderHistoryPage() -> OrderHistoryController {
         return scoped(.init(viewModel: makeOrderHistoryViewModel()))
     }
@@ -23,7 +29,7 @@ final class OrderHistoryPagesFactoryImpl: DependencyFactory, OrderHistoryPagesFa
     }
 
     func makeRateOrderPage() -> RateController {
-        return scoped(.init(viewModel: RateViewModelImpl()))
+        return scoped(.init(viewModel: RateViewModelImpl(repository: repositoryComponents.makeRateOrderRepository())))
     }
 
     func makeShareOrderPage() -> ShareOrderController {

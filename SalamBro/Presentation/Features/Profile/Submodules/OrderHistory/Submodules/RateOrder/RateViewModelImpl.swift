@@ -10,46 +10,105 @@ import RxCocoa
 import RxSwift
 
 protocol RateViewModel: AnyObject {
-    var choices: [RateItem] { get }
+    var outputs: RateViewModelImpl.Output { get }
     var currentChoices: [RateItem] { get }
 
+    func getRateChoices()
     func getRateItem(at index: Int) -> RateItem
     func changeDataSet(by rating: Int)
-    func condigureDataSet(at index: Int)
+    func configureDataSet(at index: Int)
+    func sendUserRate(stars: Int, comment: String)
 }
 
 final class RateViewModelImpl: RateViewModel {
+    private(set) var outputs: Output = .init()
     private let disposeBag = DisposeBag()
 
+    private var rateChoices: [RateStarList] = []
     private(set) var currentChoices: [RateItem] = []
+    private var selectedChoices: [RateItem] = []
+    private var rating = 0
 
-    private(set) var choices: [RateItem] = [RateItem(title: .notFound, isSelected: false), RateItem(title: .foodIsMissing, isSelected: false), RateItem(title: .foodIsCold, isSelected: false), RateItem(title: .courierWork, isSelected: false), RateItem(title: .givenTime, isSelected: false), RateItem(title: .deliveryTime, isSelected: false)]
+    private let repository: RateOrderRepository
 
-    init() {}
+    init(repository: RateOrderRepository) {
+        self.repository = repository
+        bindOutputs()
+    }
+
+    func getRateChoices() {
+        repository.fetchRates()
+    }
 
     func getRateItem(at index: Int) -> RateItem {
         return currentChoices[index]
     }
 
     func changeDataSet(by rating: Int) {
-        switch rating {
-        case 3:
-            currentChoices = Array(choices[0 ... 4])
-        case 4:
-            currentChoices = Array(choices[2 ... 5])
-        case 5:
-            currentChoices = Array(choices[3 ... 5])
-        default:
-            break
+        currentChoices = []
+        self.rating = rating
+        for i in rateChoices[rating - 1].samples {
+            if selectedChoices.contains(where: { $0.title == i.name }) {
+                currentChoices.append(RateItem(title: i.name, isSelected: true))
+            } else {
+                currentChoices.append(RateItem(title: i.name, isSelected: false))
+            }
+        }
+        outputs.didGetQuestionTitle.accept(rateChoices[rating - 1].title)
+        outputs.didGetSuggestionTitle.accept(rateChoices[rating - 1].description)
+    }
+
+    func configureDataSet(at index: Int) {
+        if selectedChoices.contains(where: { $0.title == currentChoices[index].title }) {
+            if let index = selectedChoices.firstIndex(of: currentChoices[index]) {
+                currentChoices[index].isSelected.toggle()
+                selectedChoices.remove(at: index)
+            }
+        } else {
+            currentChoices[index].isSelected.toggle()
+            selectedChoices.append(currentChoices[index])
         }
     }
 
-    func condigureDataSet(at index: Int) {
-        for i in 0 ..< choices.count {
-            if choices[i].title == currentChoices[index].title {
-                currentChoices[index].isSelected.toggle()
-                choices[i].isSelected.toggle()
+    private func bindOutputs() {
+        repository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didFail
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
+
+        repository.outputs.didGetRates
+            .bind { [weak self] rates in
+                self?.rateChoices = rates
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func sendUserRate(stars: Int, comment: String) {
+        var samples: [Int] = []
+        for i in 0 ..< selectedChoices.count {
+            if rateChoices[rating - 1].samples.contains(where: { $0.name == selectedChoices[i].title }) {
+                if let index = rateChoices[rating - 1].samples.firstIndex(where: { $0.name == selectedChoices[i].title }) {
+                    samples.append(rateChoices[rating - 1].samples[index].id)
+                }
             }
         }
+        repository.set(stars: stars, order: 5, comment: comment, samples: samples)
+    }
+}
+
+extension RateViewModelImpl {
+    struct Output {
+        let didGetQuestionTitle = PublishRelay<String>()
+        let didGetSuggestionTitle = PublishRelay<String>()
+        let didFail = PublishRelay<ErrorPresentable>()
+        let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
     }
 }
