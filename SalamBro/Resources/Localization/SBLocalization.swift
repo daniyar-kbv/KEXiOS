@@ -373,6 +373,34 @@ enum Payment: UILocalizable {
         var localized: String { rawValue }
     }
 
+    enum PaymentCash: String, UILocalizable {
+        case title = "Payment.Cash.title"
+        case topText = "Payment.Cash.topText"
+
+        var localized: String { rawValue }
+
+        enum Title: String, UILocalizable {
+            case defaultTitle = "Payment.Cash.titleDefault"
+            case change = "Payment.Cash.titleChange"
+
+            var localized: String { rawValue }
+        }
+
+        enum Field: String, UILocalizable {
+            case placeholder = "Payment.Cash.fieldPlaceholder"
+            case description = "Payment.Cash.fieldDescription"
+
+            var localized: String { rawValue }
+        }
+
+        enum Button: String, UILocalizable {
+            case noChange = "Payment.Cash.Button.noChange"
+            case submit = "Payment.Cash.Button.submit"
+
+            var localized: String { rawValue }
+        }
+    }
+
     var localized: String { "" }
 }
 
