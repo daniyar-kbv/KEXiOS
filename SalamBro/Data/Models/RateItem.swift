@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RateItem: Codable {
+struct RateItem {
     var title: String
     var isSelected: Bool
 }

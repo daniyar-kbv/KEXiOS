@@ -47,15 +47,16 @@ final class RateViewModelImpl: RateViewModel {
     func changeDataSet(by rating: Int) {
         currentChoices = []
         self.rating = rating
-        for i in rateChoices[rating - 1].samples {
+        let choices = rateChoices[rating - 1]
+        for i in choices.samples {
             if selectedChoices.contains(where: { $0.title == i.name }) {
                 currentChoices.append(RateItem(title: i.name, isSelected: true))
             } else {
                 currentChoices.append(RateItem(title: i.name, isSelected: false))
             }
         }
-        outputs.didGetQuestionTitle.accept(rateChoices[rating - 1].title)
-        outputs.didGetSuggestionTitle.accept(rateChoices[rating - 1].description)
+        outputs.didGetQuestionTitle.accept(choices.title)
+        outputs.didGetSuggestionTitle.accept(choices.description)
     }
 
     func configureDataSet(at index: Int) {
@@ -92,10 +93,11 @@ final class RateViewModelImpl: RateViewModel {
 
     func sendUserRate(stars: Int, comment: String) {
         var samples: [Int] = []
+        let choices = rateChoices[rating - 1].samples
         for i in 0 ..< selectedChoices.count {
-            if rateChoices[rating - 1].samples.contains(where: { $0.name == selectedChoices[i].title }) {
-                if let index = rateChoices[rating - 1].samples.firstIndex(where: { $0.name == selectedChoices[i].title }) {
-                    samples.append(rateChoices[rating - 1].samples[index].id)
+            if choices.contains(where: { $0.name == selectedChoices[i].title }) {
+                if let index = choices.firstIndex(where: { $0.name == selectedChoices[i].title }) {
+                    samples.append(choices[index].id)
                 }
             }
         }
