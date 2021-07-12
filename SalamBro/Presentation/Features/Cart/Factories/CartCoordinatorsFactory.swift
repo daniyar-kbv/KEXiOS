@@ -36,8 +36,7 @@ final class CartCoordinatorsFactoryImpl: DependencyFactory, CartCoordinatorsFact
     }
 
     func makePaymentCoordinator() -> PaymentCoordinator {
-        return scoped(.init(router: MainRouter(isRootRouter: false,
-                                               navigationLogic: BaseNavigationLogic()),
+        return scoped(.init(router: router,
                             pagesFactory: makePaymentPagesFactory()))
     }
 
