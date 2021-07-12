@@ -26,7 +26,7 @@ final class CartProductViewModelImpl: CartProductViewModel {
     }
 
     func getPositionUUID() -> String {
-        return inputs.item.positionUUID
+        return inputs.item.position.uuid
     }
 }
 
@@ -45,7 +45,10 @@ extension CartProductViewModelImpl {
 
         init(item: CartItem) {
             itemTitle = .init(value: item.position.name)
-            modifiersTitles = .init(value: item.modifiers.map { $0.position.name }.joined(separator: ", "))
+            modifiersTitles = .init(value: item.modifierGroups
+                .flatMap { $0.modifiers }
+                .map { $0.position.name }
+                .joined(separator: ", "))
             comment = .init(value: item.comment)
             price = .init(value: "\(((item.position.price ?? 0) * Double(item.count)).removeTrailingZeros()) ₸")
             count = .init(value: String(item.count))

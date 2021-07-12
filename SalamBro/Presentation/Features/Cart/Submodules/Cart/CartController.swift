@@ -14,13 +14,11 @@ protocol CartViewDelegate {
 }
 
 // FIXME: Refactor
-class CartController: UIViewController {
+class CartController: UIViewController, AnimationViewPresentable, LoaderDisplayable, AlertDisplayable {
     private let viewModel: CartViewModel
     private let disposeBag = DisposeBag()
 
     let outputs = Output()
-
-    // private lazy var emptyCartView = AnimationContainerView(delegate: self, animationType: .emptyBasket)
 
     private lazy var tableViewFooter: CartFooter = {
         let view = CartFooter()
@@ -86,8 +84,10 @@ class CartController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         layoutUI()
         bindViewModel()
+
         viewModel.getCart()
     }
 
@@ -102,9 +102,30 @@ class CartController: UIViewController {
             .subscribe(onNext: { [weak self] in
                 self?.update()
             }).disposed(by: disposeBag)
+
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            }).disposed(by: disposeBag)
     }
 
     private func update() {
+        guard !viewModel.getIsEmpty() else {
+            showAnimationView(animationType: .emptyBasket)
+            return
+        }
+
+        hideAnimationView()
         itemsTableView.reloadData()
         updateTableViewFooterUI()
         orderButton.setTitle(SBLocalization.localized(key: CartText.Cart.buttonTitle, arguments: viewModel.getTotalPrice()), for: .normal)
@@ -206,7 +227,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        //        Tech debt: uncomment when modifiers stabilize
+//        Tech debt: uncomment when modifiers stabilize
 //        if section == 0 {
         return viewModel.getTotalCount()
 //        }
@@ -216,6 +237,7 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        Tech debt: uncomment when modifiers stabilize
         //      if indexPath.section == 0 {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CartProductCell.self)
         cell.delegate = self
@@ -249,7 +271,9 @@ extension CartController: CartAdditinalProductCellDelegate {
 }
 
 // extension CartController: AnimationContainerViewDelegate {
-//    func performAction() {}
+//    func performAction() {
+//        outputs.toMenu.accept(())
+//    }
 // }
 
 extension CartController: CartFooterDelegate {
@@ -270,5 +294,6 @@ extension CartController: CartFooterDelegate {
 extension CartController {
     struct Output {
         let toAuth = PublishRelay<Void>()
+        let toMenu = PublishRelay<Void>()
     }
 }

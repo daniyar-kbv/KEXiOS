@@ -5,12 +5,16 @@
 //  Created by Ilyar Mnazhdin on 06.07.2021.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
 final class PaymentMethodViewController: UIViewController {
     private var paymentMethodView: PaymentMethodView!
 
     private let viewModel: PaymentMethodVCViewModel
+
+    let outputs = Output()
 
     init(viewModel: PaymentMethodVCViewModel) {
         self.viewModel = viewModel
@@ -30,10 +34,16 @@ final class PaymentMethodViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        Tech debt: localize
+        // Tech debt: localize
         title = "Способ оплаты"
         setBackButton { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
+            self?.outputs.close.accept(())
         }
+    }
+}
+
+extension PaymentMethodViewController {
+    struct Output {
+        let close = PublishRelay<Void>()
     }
 }

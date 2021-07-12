@@ -8,16 +8,16 @@
 import Foundation
 
 protocol CartStorage {
-    var cartItems: [CartItem] { get set }
+    var cart: Cart { get set }
 }
 
 extension Storage: CartStorage {
     private enum Keys: String {
-        case cartItems
+        case cart
     }
 
-    var cartItems: [CartItem] {
-        get { get(key: Keys.cartItems.rawValue) ?? [] }
-        set { save(key: Keys.cartItems.rawValue, object: newValue) }
+    var cart: Cart {
+        get { get(key: Keys.cart.rawValue) ?? Cart(items: []) }
+        set { save(key: Keys.cart.rawValue, object: newValue) }
     }
 }

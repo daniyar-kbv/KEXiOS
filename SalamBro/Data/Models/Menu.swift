@@ -33,7 +33,7 @@ struct MenuPositionDetail: Codable {
     let image: String?
     let price: Double
     let categoryUUID: String
-    let modifierGroups: [ModifierGroup]
+    var modifierGroups: [ModifierGroup]
 
     enum CodingKeys: String, CodingKey {
         case uuid, name, description, image, price
@@ -50,6 +50,8 @@ struct ModifierGroup: Codable {
     let isRequired: Bool
     let modifiers: [Modifier]
 
+    lazy var selectedModifiers: [Modifier?] = (0 ..< maxAmount).map { _ in nil }
+
     enum CodingKeys: String, CodingKey {
         case uuid, name, modifiers
         case minAmount = "min_amount"
@@ -61,32 +63,43 @@ struct ModifierGroup: Codable {
 struct Modifier: Codable {
     let name: String
     let uuid: String
+    let image: String?
 }
 
 extension MenuPositionDetail {
-    func toCartItem(count: Int, comment: String, modifiers: [Modifier]) -> CartItem {
+    func toCartItem(count: Int, comment: String, modifiers _: [Modifier]) -> CartItem {
         return .init(
-            positionUUID: uuid,
             count: count,
             comment: comment,
             position: .init(
                 uuid: uuid,
                 name: name,
                 image: image,
-                description: description,
                 price: price,
                 categoryUUID: categoryUUID
             ),
-            modifiers: modifiers.map { $0.toCartModifier(cout: 1) }
+            modifierGroups: modifierGroups.map { modifierGroup in
+                var modifierGroup = modifierGroup
+                return .init(
+                    uuid: modifierGroup.uuid,
+                    modifiers: modifierGroup.selectedModifiers.compactMap { $0 }.map { modifier in
+                        .init(
+                            position: .init(
+                                uuid: modifier.uuid,
+                                name: modifier.name,
+                                image: modifier.image
+                            ),
+                            count: 1
+                        )
+                    }
+                )
+            }
         )
     }
 }
 
-extension Modifier {
-    func toCartModifier(cout: Int) -> CartModifier {
-        return .init(position: .init(uuid: uuid,
-                                     name: name),
-                     positionUUID: uuid,
-                     count: cout)
+extension ModifierGroup {
+    mutating func set(modifier: Modifier, at index: Int) {
+        selectedModifiers[index] = modifier
     }
 }

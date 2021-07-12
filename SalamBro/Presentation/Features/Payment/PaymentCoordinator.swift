@@ -24,18 +24,31 @@ final class PaymentCoordinator: BaseCoordinator {
 
     override func start() {
         let paymentSelectionVC = pagesFactory.makePaymentSelectionPage()
+
+        paymentSelectionVC.outputs.close
+            .subscribe(onNext: { [weak self] in
+                self?.router.dismiss(animated: true, completion: nil)
+            }).disposed(by: disposeBag)
+
+        paymentSelectionVC.outputs.onChangePaymentMethod
+            .subscribe(onNext: { [weak self] in
+                self?.showChangePaymentVC(on: paymentSelectionVC)
+            }).disposed(by: disposeBag)
+
         let navigationVC = SBNavigationController(rootViewController: paymentSelectionVC)
-
-        paymentSelectionVC.onChangePaymentMethod = { [weak self] in
-            self?.showChangePaymentVC()
-        }
-
-        router.set(navigationController: navigationVC)
+        router.present(navigationVC, animated: true, completion: nil)
     }
 
-    private func showChangePaymentVC() {
+    private func showChangePaymentVC(on viewController: UIViewController) {
         let paymentMethodVC = pagesFactory.makePaymentMethodPage()
-        router.push(viewController: paymentMethodVC, animated: true)
+
+        paymentMethodVC.outputs.close
+            .subscribe(onNext: {
+                paymentMethodVC.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+
+        let navigationVC = SBNavigationController(rootViewController: paymentMethodVC)
+        viewController.present(navigationVC, animated: true)
     }
 }
 

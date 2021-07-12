@@ -12,10 +12,10 @@ protocol UILocalizable {
 }
 
 enum TabBarText: String, UILocalizable {
-    case profileTitle = "MainTab.Cart.Title"
+    case profileTitle = "MainTab.Profile.Title"
     case menuTitle = "MainTab.Menu.Title"
-    case supportTitle = "MainTab.Profile.Title"
-    case cartTitle = "MainTab.Support.Title"
+    case supportTitle = "MainTab.Support.Title"
+    case cartTitle = "MainTab.Cart.Title"
 
     var localized: String { rawValue }
 }

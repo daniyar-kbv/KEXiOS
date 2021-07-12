@@ -37,3 +37,8 @@ struct OrderProductDetailResponse: Codable {
     let data: MenuPositionDetail?
     let error: ErrorResponse?
 }
+
+struct OrderUpdateCartResponse: Codable {
+    let data: Cart?
+    let error: ErrorResponse?
+}
