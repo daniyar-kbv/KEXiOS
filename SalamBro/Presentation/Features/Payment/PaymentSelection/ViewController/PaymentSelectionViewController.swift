@@ -5,17 +5,25 @@
 //  Created by Ilyar Mnazhdin on 06.07.2021.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
 final class PaymentSelectionViewController: UIViewController {
-    var onChangePaymentMethod: (() -> Void)?
-
     private var containerView: PaymentSelectionContainerView!
 
     private let viewModel: PaymentSelectionViewModel
+    private lazy var contentView: PaymentSelectionContainerView = {
+        let view = PaymentSelectionContainerView()
+        view.delegate = self
+        return view
+    }()
+
+    let outputs = Output()
 
     init(viewModel: PaymentSelectionViewModel) {
         self.viewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -24,21 +32,37 @@ final class PaymentSelectionViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        outputs.didTerminate.accept(())
+    }
+
     override func loadView() {
         super.loadView()
-        containerView = PaymentSelectionContainerView()
-        containerView.delegate = self
-        view = containerView
+
+        view = contentView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = SBLocalization.localized(key: Payment.PaymentSelectionText.title)
+
+        title = SBLocalization.localized(key: PaymentText.PaymentSelection.title)
+
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
     }
 }
 
 extension PaymentSelectionViewController: PaymentSelectionContainerViewDelegate {
     func handleChangePaymentMethod() {
-        onChangePaymentMethod?()
+        outputs.onChangePaymentMethod.accept(())
+    }
+}
+
+extension PaymentSelectionViewController {
+    struct Output {
+        let didTerminate = PublishRelay<Void>()
+        let close = PublishRelay<Void>()
+        let onChangePaymentMethod = PublishRelay<Void>()
     }
 }

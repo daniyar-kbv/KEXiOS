@@ -171,3 +171,12 @@
 "Payment.Selection.orderPayment" = "EN Оформить заказ";
 "Payment.Selection.paymentMethod" = "EN Способ оплаты";
 "Payment.Selection.title" = "EN Оформление заказа";
+
+// MARK: - Payment Card
+
+"Payment.Card.title" = "EN Картой в приложении";
+"Payment.Card.saveCard" = "EN Сохранить карту";
+"Payment.Card.cardNumber" = "EN Номер карты";
+"Payment.Card.expiryDate" = "EN Срок действия";
+"Payment.Card.cardholderName" = "EN Имя Фамилия";
+"Payment.Card.saveButton" = "EN Далее";

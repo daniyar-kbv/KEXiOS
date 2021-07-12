@@ -20,59 +20,92 @@ protocol CartRepository {
 }
 
 final class CartRepositoryImpl: CartRepository {
-    private var storage: CartStorage
+    private var cartStorage: CartStorage
+    private let ordersService: OrdersService
+    private let defaultStorage: DefaultStorage
+
+    private let disposeBag = DisposeBag()
 
     let outputs = Output()
 
-    init(storage: CartStorage) {
-        self.storage = storage
+    init(cartStorage: CartStorage,
+         ordersService: OrdersService,
+         defaultStorage: DefaultStorage)
+    {
+        self.cartStorage = cartStorage
+        self.ordersService = ordersService
+        self.defaultStorage = defaultStorage
     }
 }
 
 extension CartRepositoryImpl {
     func getItems() -> [CartItem] {
-        return storage.cartItems
+        return cartStorage.cart.items
     }
 
     func addItem(item: CartItem) {
-        if storage.cartItems.contains(item),
-           let index = storage.cartItems.firstIndex(of: item)
+        if cartStorage.cart.items.contains(item),
+           let index = cartStorage.cart.items.firstIndex(of: item)
         {
-            storage.cartItems[index].count += 1
+            cartStorage.cart.items[index].count += 1
         } else {
-            storage.cartItems.append(item)
+            cartStorage.cart.items.append(item)
         }
-        outputs.didChange.accept(storage.cartItems)
+        outputs.didChange.accept(cartStorage.cart.items)
+        updateCart()
     }
 
     func removeItem(positionUUID: String) {
         guard let index = getIndex(of: positionUUID) else { return }
-        storage.cartItems.remove(at: index)
-        outputs.didChange.accept(storage.cartItems)
+        cartStorage.cart.items.remove(at: index)
+        outputs.didChange.accept(cartStorage.cart.items)
     }
 
     func incrementItem(positionUUID: String) {
         guard let index = getIndex(of: positionUUID) else { return }
-        storage.cartItems[index].count += 1
-        outputs.didChange.accept(storage.cartItems)
+        cartStorage.cart.items[index].count += 1
+        outputs.didChange.accept(cartStorage.cart.items)
+        updateCart()
     }
 
     func decrementItem(positionUUID: String) {
         guard let index = getIndex(of: positionUUID) else { return }
-        storage.cartItems[index].count -= 1
-        if storage.cartItems[index].count == 0 {
+        cartStorage.cart.items[index].count -= 1
+        if cartStorage.cart.items[index].count == 0 {
             removeItem(positionUUID: positionUUID)
         }
-        outputs.didChange.accept(storage.cartItems)
+        outputs.didChange.accept(cartStorage.cart.items)
+        updateCart()
     }
 
     private func getIndex(of positionUUID: String) -> Int? {
-        return storage.cartItems.firstIndex(where: { $0.positionUUID == positionUUID })
+        return cartStorage.cart.items.firstIndex(where: { $0.position.uuid == positionUUID })
+    }
+
+    private func updateCart() {
+        guard let leadUUID = defaultStorage.leadUUID else { return }
+        let dto = cartStorage.cart.toDTO()
+        outputs.didStartRequest.accept(())
+        ordersService.updateCart(for: leadUUID, dto: dto)
+            .subscribe(onSuccess: { [weak self] cart in
+                self?.outputs.didEndRequest.accept(())
+                self?.cartStorage.cart = cart
+                self?.outputs.didChange.accept(cart.items)
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didGetError.accept(error)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 extension CartRepositoryImpl {
     struct Output {
         let didChange = PublishRelay<[CartItem]>()
+
+        let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
+        let didGetError = PublishRelay<ErrorPresentable>()
     }
 }
