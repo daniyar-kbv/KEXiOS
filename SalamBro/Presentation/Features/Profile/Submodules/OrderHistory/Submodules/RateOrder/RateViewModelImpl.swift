@@ -45,16 +45,18 @@ final class RateViewModelImpl: RateViewModel {
 
     func changeDataSet(by rating: Int) {
         currentChoices = []
-        let choices = rateChoices[rating - 1]
-        for i in choices.samples {
-            if selectedChoices.contains(where: { $0.sample.id == i.id }) {
-                currentChoices.append(RateItem(sample: i, isSelected: true))
-            } else {
-                currentChoices.append(RateItem(sample: i, isSelected: false))
+        let choices = rateChoices.first(where: { $0.value == rating })
+        if let choices = choices {
+            for i in choices.samples {
+                if selectedChoices.contains(where: { $0.sample.id == i.id }) {
+                    currentChoices.append(RateItem(sample: i, isSelected: true))
+                } else {
+                    currentChoices.append(RateItem(sample: i, isSelected: false))
+                }
             }
+            outputs.didGetQuestionTitle.accept(choices.title)
+            outputs.didGetSuggestionTitle.accept(choices.description)
         }
-        outputs.didGetQuestionTitle.accept(choices.title)
-        outputs.didGetSuggestionTitle.accept(choices.description)
     }
 
     func configureDataSet(at index: Int) {
