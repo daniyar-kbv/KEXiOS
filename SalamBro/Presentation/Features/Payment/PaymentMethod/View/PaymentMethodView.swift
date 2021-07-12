@@ -8,13 +8,21 @@
 import UIKit
 
 final class PaymentMethodView: UIView {
-    private let tableView = UITableView()
+    private lazy var tableView: UITableView = {
+        let view = UITableView()
+        view.backgroundColor = .arcticWhite
+        view.tableFooterView = UIView()
+        view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        view.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
+        view.rowHeight = 50
+        view.separatorColor = .mildBlue
+        return view
+    }()
 
-    private let viewModel: PaymentMethodViewModel
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
-    init(viewModel: PaymentMethodViewModel) {
-        self.viewModel = viewModel
-        super.init(frame: .zero)
         configure()
     }
 
@@ -22,34 +30,16 @@ final class PaymentMethodView: UIView {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
 
-extension PaymentMethodView: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return viewModel.getCountOfPaymentMethods()
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        cell.textLabel?.textColor = .darkGray
-        cell.textLabel?.text = viewModel.getPaymentMethod(for: indexPath).paymentType.title
-        return cell
+    func setTableViewDelegate(_ delegate: UITableViewDelegate & UITableViewDataSource) {
+        tableView.delegate = delegate
+        tableView.dataSource = delegate
     }
 }
 
 extension PaymentMethodView {
     private func configure() {
         backgroundColor = .arcticWhite
-        tableView.backgroundColor = .arcticWhite
-        tableView.tableFooterView = UIView()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
-        tableView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
-        tableView.rowHeight = 50
-        tableView.separatorColor = .mildBlue
 
         addSubview(tableView)
         tableView.snp.makeConstraints {

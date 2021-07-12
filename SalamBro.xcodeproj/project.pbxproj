@@ -171,12 +171,15 @@
 		2D4CFF98D59AD7A51A19D37476E30C0E /* OrdersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */; };
 		099A87777B0098C8CC9353085E7723C9 /* OrdersResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */; };
 		233AEC182BE1BE8A729C9E18E9244FFE /* OrdersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DBCD36CB1C2C7E3069476CE83EACA /* OrdersService.swift */; };
+		4CF09171746B5D6413B282AEDA4DA272 /* PaymentCardMaskedField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22724A1122133C5CBE4604F23CC45586 /* PaymentCardMaskedField.swift */; };
+		4072B1E103D54535E395F98534F250A2 /* PaymentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361F7C92FA2BE7D434FD21CE3E56C73F /* PaymentCardView.swift */; };
+		B8DD3CAD8B2CA71781CE847435BA1E7E /* PaymentCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A0F38836B59B96ABE67662E7559625 /* PaymentCardViewController.swift */; };
+		2D9DF6AC5A59EBD48D293E8DD5400EEB /* PaymentCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4790808745536C5D2D691A83B128DEF5 /* PaymentCardViewModel.swift */; };
 		969D6E45BA7015CA3D32B51EB08B9DAF /* PaymentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3100DAB4800C3C9CD7D061006751147 /* PaymentCoordinator.swift */; };
 		C59261AAB64BAC583C7110B9A021ED1E /* PaymentMethodPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF6259544276727B079A7B94D49BEA6 /* PaymentMethodPresentable.swift */; };
 		8AB65871A88B639153690D84EDBEFCFD /* PaymentMethodVCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BDD5FE5A5AAC86E74BBDDFE2A9B8A2 /* PaymentMethodVCViewModel.swift */; };
 		B695EBEA3222F68D25045AB355D6143B /* PaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EEF7402B7CC80248F721B6A2E26962 /* PaymentMethodView.swift */; };
 		95AE817A5F8E0A7F37A1F00542EC6509 /* PaymentMethodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166E4CD545D34044DE2362610BD1346B /* PaymentMethodViewController.swift */; };
-		3FFD23044669808021E5980D7C354530 /* PaymentMethodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F747C180B34123F70C20A0FC75EFCA /* PaymentMethodViewModel.swift */; };
 		AF6718DF41E7B8F9C4FAB0ECF53BDD63 /* PaymentPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40C736022C5C0B5C64C5A5BD01DA3D /* PaymentPagesFactory.swift */; };
 		51FAEC6B14575E52E1601E2BA025634B /* PaymentSelectionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE95E25B0D15120E0BFF70D0C3F7126 /* PaymentSelectionContainerView.swift */; };
 		E00CF9C0A724B335B2DD4DE3842905D9 /* PaymentSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A49F9EFADC55A912A03C4BE05C22939 /* PaymentSelectionView.swift */; };
@@ -473,12 +476,15 @@
 		DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersAPI.swift; sourceTree = "<group>"; };
 		0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersResponses.swift; sourceTree = "<group>"; };
 		3A4DBCD36CB1C2C7E3069476CE83EACA /* OrdersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersService.swift; sourceTree = "<group>"; };
+		22724A1122133C5CBE4604F23CC45586 /* PaymentCardMaskedField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardMaskedField.swift; sourceTree = "<group>"; };
+		361F7C92FA2BE7D434FD21CE3E56C73F /* PaymentCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardView.swift; sourceTree = "<group>"; };
+		57A0F38836B59B96ABE67662E7559625 /* PaymentCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardViewController.swift; sourceTree = "<group>"; };
+		4790808745536C5D2D691A83B128DEF5 /* PaymentCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardViewModel.swift; sourceTree = "<group>"; };
 		C3100DAB4800C3C9CD7D061006751147 /* PaymentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCoordinator.swift; sourceTree = "<group>"; };
 		AFF6259544276727B079A7B94D49BEA6 /* PaymentMethodPresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodPresentable.swift; sourceTree = "<group>"; };
 		E8BDD5FE5A5AAC86E74BBDDFE2A9B8A2 /* PaymentMethodVCViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodVCViewModel.swift; sourceTree = "<group>"; };
 		00EEF7402B7CC80248F721B6A2E26962 /* PaymentMethodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodView.swift; sourceTree = "<group>"; };
 		166E4CD545D34044DE2362610BD1346B /* PaymentMethodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodViewController.swift; sourceTree = "<group>"; };
-		13F747C180B34123F70C20A0FC75EFCA /* PaymentMethodViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodViewModel.swift; sourceTree = "<group>"; };
 		8E40C736022C5C0B5C64C5A5BD01DA3D /* PaymentPagesFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentPagesFactory.swift; sourceTree = "<group>"; };
 		BFE95E25B0D15120E0BFF70D0C3F7126 /* PaymentSelectionContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSelectionContainerView.swift; sourceTree = "<group>"; };
 		0A49F9EFADC55A912A03C4BE05C22939 /* PaymentSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSelectionView.swift; sourceTree = "<group>"; };
@@ -741,48 +747,23 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		D5514A6685F84E134CEBBA4943EBBC3C /* PaymentMethod */ = {
+		7F929E8FEF2D4EA4F0EC379912F49070 /* PaymentCard */ = {
 			isa = PBXGroup;
 			children = (
-				D9802EB985CF7C9ACC377EE06C7FF523 /* Model */,
-				448C2E20A938B287219E31C75A6CF00F /* View */,
-				CF5C9144BDFCBE6E71E7754690FCD540 /* ViewController */,
-				992BB7DF3025AF848165DD86DF04AFC3 /* ViewModel */,
+				51F495979040F1AB5B456FCA9C4E503F /* Views */,
+				57A0F38836B59B96ABE67662E7559625 /* PaymentCardViewController.swift */,
+				4790808745536C5D2D691A83B128DEF5 /* PaymentCardViewModel.swift */,
 			);
-			path = PaymentMethod;
+			path = PaymentCard;
 			sourceTree = "<group>";
 		};
-		992BB7DF3025AF848165DD86DF04AFC3 /* ViewModel */ = {
+		51F495979040F1AB5B456FCA9C4E503F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E8BDD5FE5A5AAC86E74BBDDFE2A9B8A2 /* PaymentMethodVCViewModel.swift */,
-				13F747C180B34123F70C20A0FC75EFCA /* PaymentMethodViewModel.swift */,
+				22724A1122133C5CBE4604F23CC45586 /* PaymentCardMaskedField.swift */,
+				361F7C92FA2BE7D434FD21CE3E56C73F /* PaymentCardView.swift */,
 			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		D9802EB985CF7C9ACC377EE06C7FF523 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				AFF6259544276727B079A7B94D49BEA6 /* PaymentMethodPresentable.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		448C2E20A938B287219E31C75A6CF00F /* View */ = {
-			isa = PBXGroup;
-			children = (
-				00EEF7402B7CC80248F721B6A2E26962 /* PaymentMethodView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		CF5C9144BDFCBE6E71E7754690FCD540 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				166E4CD545D34044DE2362610BD1346B /* PaymentMethodViewController.swift */,
-			);
-			path = ViewController;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
@@ -1022,6 +1003,14 @@
 				66E198B1FC15BB7A249EECD265F09899 /* CountryCodePickerViewModel.swift */,
 			);
 			path = CountryCodePicker;
+			sourceTree = "<group>";
+		};
+		448C2E20A938B287219E31C75A6CF00F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				00EEF7402B7CC80248F721B6A2E26962 /* PaymentMethodView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		45788FC689A0515A94F86B6FC9172D75 /* Services */ = {
@@ -1569,6 +1558,14 @@
 			path = AddressList;
 			sourceTree = "<group>";
 		};
+		992BB7DF3025AF848165DD86DF04AFC3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E8BDD5FE5A5AAC86E74BBDDFE2A9B8A2 /* PaymentMethodVCViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		9A04070BA15AF77294D2966D69027C3A /* ShareOrder */ = {
 			isa = PBXGroup;
 			children = (
@@ -1827,6 +1824,7 @@
 			isa = PBXGroup;
 			children = (
 				651BA7DE63CAD5825DFC7772F9479F63 /* Factories */,
+				7F929E8FEF2D4EA4F0EC379912F49070 /* PaymentCard */,
 				D5514A6685F84E134CEBBA4943EBBC3C /* PaymentMethod */,
 				4614207EE37A4C3D31AD26B2B0235FC8 /* PaymentSelection */,
 				C3100DAB4800C3C9CD7D061006751147 /* PaymentCoordinator.swift */,
@@ -1893,6 +1891,14 @@
 			path = SelectMainInformation;
 			sourceTree = "<group>";
 		};
+		CF5C9144BDFCBE6E71E7754690FCD540 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				166E4CD545D34044DE2362610BD1346B /* PaymentMethodViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		CF86187F6E3E40AD84E132FE8AF6445E /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1941,6 +1947,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		D5514A6685F84E134CEBBA4943EBBC3C /* PaymentMethod */ = {
+			isa = PBXGroup;
+			children = (
+				D9802EB985CF7C9ACC377EE06C7FF523 /* Model */,
+				448C2E20A938B287219E31C75A6CF00F /* View */,
+				CF5C9144BDFCBE6E71E7754690FCD540 /* ViewController */,
+				992BB7DF3025AF848165DD86DF04AFC3 /* ViewModel */,
+			);
+			path = PaymentMethod;
+			sourceTree = "<group>";
+		};
 		D6C8D57E55C2D0AF4685B10D8211943C /* SBNavigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1955,6 +1972,14 @@
 				4A9F9B4F3D470F45D05B0B111C1147FA /* MenuScrollService.swift */,
 			);
 			path = ScrollService;
+			sourceTree = "<group>";
+		};
+		D9802EB985CF7C9ACC377EE06C7FF523 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AFF6259544276727B079A7B94D49BEA6 /* PaymentMethodPresentable.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		DBD52C5CDF384BB877575B4D36E2B921 /* Responses */ = {
@@ -2572,12 +2597,15 @@
 				2D4CFF98D59AD7A51A19D37476E30C0E /* OrdersAPI.swift in Sources */,
 				099A87777B0098C8CC9353085E7723C9 /* OrdersResponses.swift in Sources */,
 				233AEC182BE1BE8A729C9E18E9244FFE /* OrdersService.swift in Sources */,
+				4CF09171746B5D6413B282AEDA4DA272 /* PaymentCardMaskedField.swift in Sources */,
+				4072B1E103D54535E395F98534F250A2 /* PaymentCardView.swift in Sources */,
+				B8DD3CAD8B2CA71781CE847435BA1E7E /* PaymentCardViewController.swift in Sources */,
+				2D9DF6AC5A59EBD48D293E8DD5400EEB /* PaymentCardViewModel.swift in Sources */,
 				969D6E45BA7015CA3D32B51EB08B9DAF /* PaymentCoordinator.swift in Sources */,
 				C59261AAB64BAC583C7110B9A021ED1E /* PaymentMethodPresentable.swift in Sources */,
 				8AB65871A88B639153690D84EDBEFCFD /* PaymentMethodVCViewModel.swift in Sources */,
 				B695EBEA3222F68D25045AB355D6143B /* PaymentMethodView.swift in Sources */,
 				95AE817A5F8E0A7F37A1F00542EC6509 /* PaymentMethodViewController.swift in Sources */,
-				3FFD23044669808021E5980D7C354530 /* PaymentMethodViewModel.swift in Sources */,
 				AF6718DF41E7B8F9C4FAB0ECF53BDD63 /* PaymentPagesFactory.swift in Sources */,
 				51FAEC6B14575E52E1601E2BA025634B /* PaymentSelectionContainerView.swift in Sources */,
 				E00CF9C0A724B335B2DD4DE3842905D9 /* PaymentSelectionView.swift in Sources */,

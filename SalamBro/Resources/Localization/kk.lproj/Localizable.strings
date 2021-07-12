@@ -196,3 +196,12 @@
 "Payment.Selection.orderPayment" = "KZ Оформить заказ";
 "Payment.Selection.paymentMethod" = "KZ Способ оплаты";
 "Payment.Selection.title" = "KZ Оформление заказа";
+
+// MARK: - Payment Card
+
+"Payment.Card.title" = "KZ Картой в приложении";
+"Payment.Card.saveCard" = "KZ Сохранить карту";
+"Payment.Card.cardNumber" = "KZ Номер карты";
+"Payment.Card.expiryDate" = "KZ Срок действия";
+"Payment.Card.cardholderName" = "KZ Имя Фамилия";
+"Payment.Card.saveButton" = "KZ Далее";
