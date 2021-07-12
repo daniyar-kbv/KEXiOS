@@ -15,6 +15,8 @@ final class PaymentMethodViewController: UIViewController {
 
     let outputs = Output()
 
+    let outputs = Output()
+
     init(viewModel: PaymentMethodVCViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -37,7 +39,7 @@ final class PaymentMethodViewController: UIViewController {
 //        Tech debt: localize
         title = "Способ оплаты"
         setBackButton { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
+            self?.outputs.close.accept(())
         }
         contentView.setTableViewDelegate(self)
     }
@@ -70,5 +72,11 @@ extension PaymentMethodViewController: UITableViewDelegate, UITableViewDataSourc
 extension PaymentMethodViewController {
     struct Output {
         let didSelectNewCard = PublishRelay<Void>()
+    }
+}
+
+extension PaymentMethodViewController {
+    struct Output {
+        let close = PublishRelay<Void>()
     }
 }

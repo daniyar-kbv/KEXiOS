@@ -5,10 +5,12 @@
 //  Created by Ilyar Mnazhdin on 06.07.2021.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
 final class PaymentSelectionViewController: UIViewController {
-    var onChangePaymentMethod: (() -> Void)?
+    private var containerView: PaymentSelectionContainerView!
 
     private let viewModel: PaymentSelectionViewModel
     private lazy var contentView: PaymentSelectionContainerView = {
@@ -16,6 +18,8 @@ final class PaymentSelectionViewController: UIViewController {
         view.delegate = self
         return view
     }()
+
+    let outputs = Output()
 
     init(viewModel: PaymentSelectionViewModel) {
         self.viewModel = viewModel
@@ -38,11 +42,22 @@ final class PaymentSelectionViewController: UIViewController {
         super.viewDidLoad()
 
         title = SBLocalization.localized(key: PaymentText.PaymentSelection.title)
+
+        setBackButton { [weak self] in
+            self?.outputs.close.accept(())
+        }
     }
 }
 
 extension PaymentSelectionViewController: PaymentSelectionContainerViewDelegate {
     func handleChangePaymentMethod() {
-        onChangePaymentMethod?()
+        outputs.onChangePaymentMethod.accept(())
+    }
+}
+
+extension PaymentSelectionViewController {
+    struct Output {
+        let close = PublishRelay<Void>()
+        let onChangePaymentMethod = PublishRelay<Void>()
     }
 }
