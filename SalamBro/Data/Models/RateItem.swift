@@ -8,12 +8,12 @@
 import Foundation
 
 struct RateItem {
-    var title: String
+    var sample: RateSample
     var isSelected: Bool
 }
 
 extension RateItem: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.title == rhs.title || lhs.isSelected == rhs.isSelected
+        lhs.isSelected == rhs.isSelected
     }
 }

@@ -18,22 +18,3 @@ struct UserRateDTO: Encodable {
         case sample = "rate_samples"
     }
 }
-
-struct UserRateResponseContainer: Codable {
-    let data: UserRateResponse?
-    let error: ErrorResponse?
-}
-
-struct UserRateResponse: Codable {
-    var star: Int
-    var order: Int
-    var comment: String?
-    var sample: [Int]?
-    let error: ErrorResponse?
-
-    enum CodingKeys: String, CodingKey {
-        case star, order, comment
-        case sample = "rate_samples"
-        case error
-    }
-}

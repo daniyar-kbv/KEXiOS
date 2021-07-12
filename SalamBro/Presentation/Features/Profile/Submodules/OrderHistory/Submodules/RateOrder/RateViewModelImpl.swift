@@ -27,7 +27,6 @@ final class RateViewModelImpl: RateViewModel {
     private var rateChoices: [RateStarList] = []
     private(set) var currentChoices: [RateItem] = []
     private var selectedChoices: [RateItem] = []
-    private var rating = 0
 
     private let repository: RateOrderRepository
 
@@ -46,13 +45,12 @@ final class RateViewModelImpl: RateViewModel {
 
     func changeDataSet(by rating: Int) {
         currentChoices = []
-        self.rating = rating
         let choices = rateChoices[rating - 1]
         for i in choices.samples {
-            if selectedChoices.contains(where: { $0.title == i.name }) {
-                currentChoices.append(RateItem(title: i.name, isSelected: true))
+            if selectedChoices.contains(where: { $0.sample.id == i.id }) {
+                currentChoices.append(RateItem(sample: i, isSelected: true))
             } else {
-                currentChoices.append(RateItem(title: i.name, isSelected: false))
+                currentChoices.append(RateItem(sample: i, isSelected: false))
             }
         }
         outputs.didGetQuestionTitle.accept(choices.title)
@@ -60,10 +58,10 @@ final class RateViewModelImpl: RateViewModel {
     }
 
     func configureDataSet(at index: Int) {
-        if selectedChoices.contains(where: { $0.title == currentChoices[index].title }) {
-            if let index = selectedChoices.firstIndex(of: currentChoices[index]) {
+        if currentChoices[index].isSelected {
+            if let i = selectedChoices.firstIndex(of: currentChoices[index]) {
+                selectedChoices.remove(at: i)
                 currentChoices[index].isSelected.toggle()
-                selectedChoices.remove(at: index)
             }
         } else {
             currentChoices[index].isSelected.toggle()
@@ -93,11 +91,10 @@ final class RateViewModelImpl: RateViewModel {
 
     func sendUserRate(stars: Int, comment: String) {
         var samples: [Int] = []
-        let choices = rateChoices[rating - 1].samples
         for i in 0 ..< selectedChoices.count {
-            if choices.contains(where: { $0.name == selectedChoices[i].title }) {
-                if let index = choices.firstIndex(where: { $0.name == selectedChoices[i].title }) {
-                    samples.append(choices[index].id)
+            if currentChoices.contains(where: { $0.sample.id == selectedChoices[i].sample.id }) {
+                if let index = currentChoices.firstIndex(where: { $0.sample.id == selectedChoices[i].sample.id }) {
+                    samples.append(currentChoices[index].sample.id)
                 }
             }
         }
