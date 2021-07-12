@@ -112,6 +112,10 @@ final class AppCoordinator: BaseCoordinator {
             selectedImage: SBImageResource.getIcon(for: TabBarIcon.cart)
         )
 
+        cartCoordinator.toMenu = { [weak self] in
+            self?.pagesFactory.makeSBTabbarController().selectedIndex = 0
+        }
+
         preparedViewControllers.append(cartCoordinator.router.getNavigationController())
         add(cartCoordinator)
     }

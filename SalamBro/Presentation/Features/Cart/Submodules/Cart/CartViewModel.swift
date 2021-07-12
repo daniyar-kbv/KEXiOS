@@ -16,6 +16,7 @@ protocol CartViewModel {
     func getCart()
     func getTotalCount() -> Int
     func getTotalPrice() -> String
+    func getIsEmpty() -> Bool
 
     func increment(postitonUUID: String)
     func decrement(postitonUUID: String)
@@ -41,6 +42,18 @@ final class CartViewModelImpl: CartViewModel {
                 self?.items = items
                 self?.outputs.update.accept(())
             }).disposed(by: disposeBag)
+
+        cartRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        cartRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        cartRepository.outputs.didGetError
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
     }
 
     func getCart() {
@@ -56,6 +69,12 @@ final class CartViewModelImpl: CartViewModel {
         return items.map { ($0.position.price ?? 0) * Double($0.count) }.reduce(0, +).removeTrailingZeros()
     }
 
+    func getIsEmpty() -> Bool {
+        return items.isEmpty
+    }
+}
+
+extension CartViewModelImpl {
     func increment(postitonUUID: String) {
         cartRepository.incrementItem(positionUUID: postitonUUID)
         outputs.update.accept(())
@@ -75,5 +94,9 @@ final class CartViewModelImpl: CartViewModel {
 extension CartViewModelImpl {
     struct Output {
         let update = PublishRelay<Void>()
+
+        let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
+        let didGetError = PublishRelay<ErrorPresentable>()
     }
 }
