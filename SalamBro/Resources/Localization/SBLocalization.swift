@@ -385,10 +385,16 @@ enum PaymentText: UILocalizable {
     }
 
     enum PaymentCash: String, UILocalizable {
-        case title = "Payment.Cash.title"
         case topText = "Payment.Cash.topText"
 
         var localized: String { rawValue }
+
+        enum Title: String, UILocalizable {
+            case base = "Payment.Cash.titleDefault"
+            case change = "Payment.Cash.titleChange"
+
+            var localized: String { rawValue }
+        }
 
         enum Field: String, UILocalizable {
             case placeholder = "Payment.Cash.fieldPlaceholder"

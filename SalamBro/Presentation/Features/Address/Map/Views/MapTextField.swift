@@ -8,6 +8,8 @@
 import UIKit
 
 final class MapTextField: UITextView {
+    var inputType: InputType = .text
+
     var placeholder: String = "" {
         didSet {
             guard isEmpty else { return }
@@ -25,6 +27,7 @@ final class MapTextField: UITextView {
     private var imageView: UIImageView?
 
     var onShouldBeginEditing: (() -> Void)?
+    var onChange: (() -> Void)?
 
     init(image: UIImage? = nil) {
         super.init(frame: .zero, textContainer: .none)
@@ -73,8 +76,14 @@ final class MapTextField: UITextView {
         textContainerInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 40)
     }
 
-    private func moveCursor() {
-        selectedTextRange = textRange(from: beginningOfDocument, to: beginningOfDocument)
+    private func formatText() {
+        switch inputType {
+        case .decimal:
+            guard let intValue = Int(text.replacingOccurrences(of: " ", with: "")) else { return }
+            text = intValue.formattedWithSeparator
+        default:
+            break
+        }
     }
 }
 
@@ -89,7 +98,6 @@ extension MapTextField: UITextViewDelegate {
 
     func textViewDidBeginEditing(_: UITextView) {
         guard isEmpty else { return }
-        moveCursor()
     }
 
     func textViewDidEndEditing(_: UITextView) {
@@ -104,16 +112,35 @@ extension MapTextField: UITextViewDelegate {
             textView.text = text
             textColor = .darkGray
             isEmpty = false
+            onChange?()
+            formatText()
             return false
         }
 
         if !isEmpty, newText == "" {
             textView.text = placeholder
             isEmpty = true
-            moveCursor()
+            onChange?()
+            formatText()
             return false
         }
 
-        return true
+        textView.text = newText
+        onChange?()
+        formatText()
+        return false
+    }
+}
+
+extension MapTextField {
+    override func caretRect(for position: UITextPosition) -> CGRect {
+        return isEmpty ? .zero : super.caretRect(for: position)
+    }
+}
+
+extension MapTextField {
+    enum InputType {
+        case text
+        case decimal
     }
 }

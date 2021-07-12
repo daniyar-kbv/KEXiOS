@@ -11,6 +11,7 @@ protocol PaymentPagesFactory: AnyObject {
     func makePaymentSelectionPage() -> PaymentSelectionViewController
     func makePaymentMethodPage() -> PaymentMethodViewController
     func makePaymentCardPage() -> PaymentCardViewController
+    func makePaymentCashPage() -> PaymentCashViewController
 }
 
 final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
@@ -44,5 +45,13 @@ final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
 
     private func makePaymentCardViewModel() -> PaymentCardViewModel {
         return scoped(PaymentCardViewModelImpl())
+    }
+
+    func makePaymentCashPage() -> PaymentCashViewController {
+        return scoped(.init(viewModel: makePaymentCashViewModel()))
+    }
+
+    private func makePaymentCashViewModel() -> PaymentCashViewModel {
+        return scoped(PaymentCashViewModelImpl())
     }
 }

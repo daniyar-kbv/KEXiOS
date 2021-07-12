@@ -6,9 +6,25 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
-protocol PaymentSelectionViewModel: AnyObject {}
+protocol PaymentSelectionViewModel: AnyObject {
+    var outputs: PaymentSelectionViewModelImpl.Output { get }
+
+    func set(paymentMethod: PaymentMethodType)
+}
 
 final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
-    init() {}
+    let outputs = Output()
+
+    func set(paymentMethod: PaymentMethodType) {
+        outputs.didSelectPaymentMethod.accept(paymentMethod.title)
+    }
+}
+
+extension PaymentSelectionViewModelImpl {
+    struct Output {
+        let didSelectPaymentMethod = PublishRelay<String>()
+    }
 }

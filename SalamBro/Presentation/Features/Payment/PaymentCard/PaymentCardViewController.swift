@@ -12,7 +12,11 @@ import UIKit
 
 class PaymentCardViewController: UIViewController {
     private let viewModel: PaymentCardViewModel
-    private let contentView = PaymentCardView()
+    private lazy var contentView: PaymentCardView = {
+        let view = PaymentCardView()
+        view.delegate = self
+        return view
+    }()
 
     let outputs = Output()
 
@@ -43,8 +47,15 @@ class PaymentCardViewController: UIViewController {
     }
 }
 
+extension PaymentCardViewController: PaymentCardViewDelegate {
+    func onSaveTap() {
+        outputs.onDone.accept(())
+    }
+}
+
 extension PaymentCardViewController {
     struct Output {
         let close = PublishRelay<Void>()
+        let onDone = PublishRelay<Void>()
     }
 }

@@ -13,14 +13,14 @@ protocol PaymentMethodSelectable {
 
 enum PaymentMethodType {
     case storedCard(String)
-    case inApp
+    case card
     case cash
 
 //        Tech debt: localize
     var title: String {
         switch self {
         case .cash: return "Наличными курьеру"
-        case .inApp: return "Картой в приложении"
+        case .card: return "Картой в приложении"
         case let .storedCard(value): return value
         }
     }

@@ -13,7 +13,7 @@ protocol PaymentCardViewDelegate {
 }
 
 final class PaymentCardView: UIView {
-    private var delegate: PaymentCardViewDelegate?
+    var delegate: PaymentCardViewDelegate?
 
     private lazy var cardNumberField = PaymentCardMaskedField(inputType: .cardNumber)
     private lazy var expiryDateField = PaymentCardMaskedField(inputType: .expiryDate)

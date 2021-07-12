@@ -19,6 +19,7 @@ final class PaymentSelectionContainerView: UIView {
     weak var delegate: PaymentSelectionContainerViewDelegate?
 
     private let paymentSelectionView = PaymentSelectionView()
+
     private let actionButton: UIButton = {
         let button = UIButton()
         button.setTitle(SBLocalization.localized(key: PaymentText.PaymentSelection.orderPayment), for: .normal)
@@ -61,13 +62,21 @@ final class PaymentSelectionContainerView: UIView {
 }
 
 extension PaymentSelectionContainerView {
+    func setPaymentMethod(text: String) {
+        paymentSelectionView.setPaymentMethod(text: text)
+
+        actionButton.backgroundColor = .kexRed
+        actionButton.isEnabled = true
+    }
+}
+
+extension PaymentSelectionContainerView {
     private func bindViews() {
         actionButton
             .rx
             .tap
             .subscribe(onNext: { [weak self] in
                 guard let _ = self else { return }
-                debugPrint("action tapped")
             })
             .disposed(by: disposeBag)
 
