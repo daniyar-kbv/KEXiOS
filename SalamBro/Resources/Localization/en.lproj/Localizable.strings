@@ -91,6 +91,14 @@
 // MARK: - Commentary
 "Commentary.button.title" = "EN Готово";
 
+// MARK: - RateOrder
+"RateOrder.title" = "EN Оцените заказ";
+
+"RateOrder.submitButton.title" = "EN Отправить";
+"RateOrder.commentaryField.placeholder" = "EN Добавить комментарий";
+"RateOrder.title" = "EN Оцените заказ";
+"RateOrder.description" = "EN Ваша оценка поможет улучшить качество нашей доставки";
+
 // MARK: - AddressPickCell
 "AddressPickCell.changeButton" = "EN Изменить";
 "AddressPickCell.deliverLabel" = "EN Доставим на:";

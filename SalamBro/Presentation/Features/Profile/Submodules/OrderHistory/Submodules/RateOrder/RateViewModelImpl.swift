@@ -59,7 +59,9 @@ final class RateViewModelImpl: RateViewModel {
 
     func configureDataSet(at index: Int) {
         if currentChoices[index].isSelected {
-            if let i = selectedChoices.firstIndex(of: currentChoices[index]) {
+            if let i = selectedChoices.firstIndex(where:
+                { $0.sample.id == currentChoices[index].sample.id })
+            {
                 selectedChoices.remove(at: i)
                 currentChoices[index].isSelected.toggle()
             }
