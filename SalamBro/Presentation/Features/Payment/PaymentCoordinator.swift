@@ -25,6 +25,11 @@ final class PaymentCoordinator: BaseCoordinator {
     override func start() {
         let paymentSelectionVC = pagesFactory.makePaymentSelectionPage()
 
+        paymentSelectionVC.outputs.didTerminate
+            .subscribe(onNext: { [weak self] in
+                self?.handlePaymentTermination()
+            }).disposed(by: disposeBag)
+
         paymentSelectionVC.outputs.close
             .subscribe(onNext: { [weak self] in
                 self?.router.dismiss(animated: true, completion: nil)
@@ -46,6 +51,7 @@ final class PaymentCoordinator: BaseCoordinator {
             .subscribe(onNext: {
                 paymentMethodVC.dismiss(animated: true)
             }).disposed(by: disposeBag)
+
         paymentMethodVC.outputs.didSelectNewCard
             .subscribe(onNext: { [weak self] in
                 self?.showCardPage(on: paymentMethodVC)
@@ -70,7 +76,6 @@ final class PaymentCoordinator: BaseCoordinator {
 
 extension PaymentCoordinator {
     private func handlePaymentTermination() {
-        router.dismiss(animated: true, completion: nil)
         didFinish?()
     }
 }

@@ -32,6 +32,10 @@ final class PaymentSelectionViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        outputs.didTerminate.accept(())
+    }
+
     override func loadView() {
         super.loadView()
 
@@ -57,6 +61,7 @@ extension PaymentSelectionViewController: PaymentSelectionContainerViewDelegate 
 
 extension PaymentSelectionViewController {
     struct Output {
+        let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()
         let onChangePaymentMethod = PublishRelay<Void>()
     }

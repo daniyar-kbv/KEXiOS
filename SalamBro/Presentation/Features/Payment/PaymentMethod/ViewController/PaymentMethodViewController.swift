@@ -15,8 +15,6 @@ final class PaymentMethodViewController: UIViewController {
 
     let outputs = Output()
 
-    let outputs = Output()
-
     init(viewModel: PaymentMethodVCViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -71,12 +69,7 @@ extension PaymentMethodViewController: UITableViewDelegate, UITableViewDataSourc
 
 extension PaymentMethodViewController {
     struct Output {
-        let didSelectNewCard = PublishRelay<Void>()
-    }
-}
-
-extension PaymentMethodViewController {
-    struct Output {
         let close = PublishRelay<Void>()
+        let didSelectNewCard = PublishRelay<Void>()
     }
 }
