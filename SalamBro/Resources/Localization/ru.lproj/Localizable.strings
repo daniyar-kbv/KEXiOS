@@ -198,6 +198,15 @@
 "Payment.Selection.paymentMethod" = "Способ оплаты";
 "Payment.Selection.title" = "Оформление заказа";
 
+// MARK: - Payment Card
+
+"Payment.Card.title" = "Картой в приложении";
+"Payment.Card.saveCard" = "Сохранить карту";
+"Payment.Card.cardNumber" = "Номер карты";
+"Payment.Card.expiryDate" = "Срок действия";
+"Payment.Card.cardholderName" = "Имя Фамилия";
+"Payment.Card.saveButton" = "Далее";
+
 // MARK: - Payment Cash
 
 "Payment.Cash.titleDefault" = "Оформление заказа";
