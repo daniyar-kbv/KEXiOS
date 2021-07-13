@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class RateController: UIViewController {
+final class RateController: UIViewController, AlertDisplayable, LoaderDisplayable {
     private let viewModel: RateViewModel
 
     private let disposeBag = DisposeBag()
@@ -39,6 +39,8 @@ final class RateController: UIViewController {
         super.viewDidLoad()
         navigationItem.title = SBLocalization.localized(key: ProfileText.RateOrder.title)
         configureViews()
+        viewModel.getRateChoices()
+        bindOutputs()
     }
 
     override func viewDidLayoutSubviews() {
@@ -62,6 +64,38 @@ extension RateController {
             self?.commentaryViewTapped()
         }
     }
+
+    private func bindOutputs() {
+        viewModel.outputs.didStartRequest
+            .bind { [weak self] in
+                self?.showLoader()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .bind { [weak self] in
+                self?.hideLoader()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didFail
+            .bind { [weak self] error in
+                self?.showError(error)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetQuestionTitle
+            .bind { [weak self] title in
+                self?.rateView.configureQuestionLabel(title: title)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetSuggestionTitle
+            .bind { [weak self] description in
+                self?.rateView.configureSuggestionLabel(description: description)
+            }
+            .disposed(by: disposeBag)
+    }
 }
 
 extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -76,7 +110,7 @@ extension RateController: UICollectionViewDelegate, UICollectionViewDelegateFlow
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.condigureDataSet(at: indexPath.row)
+        viewModel.configureDataSet(at: indexPath.row)
         collectionView.reloadData()
     }
 }
@@ -98,6 +132,7 @@ extension RateController: RateViewDelegate {
 
     func sendButtonTapped() {
         outputs.close.accept(())
+        viewModel.sendUserRate(stars: rateView.rating, comment: rateView.getComment())
     }
 
     func updateViewModelData(at rating: Int) {

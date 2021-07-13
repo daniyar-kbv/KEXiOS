@@ -42,7 +42,7 @@ final class RateItemCell: UICollectionViewCell {
     }
 
     func configure(with item: RateItem) {
-        titleLabel.text = item.title.title
+        titleLabel.text = item.sample.name
         cellView.backgroundColor = item.isSelected ? .kexRed : .arcticWhite
         titleLabel.textColor = item.isSelected ? .arcticWhite : .kexRed
     }

@@ -201,9 +201,14 @@
 		B1F8A5468443016E0841FA168F2A448C /* PromotionsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E03E22502B0B1125F7255C0B59B4AFF /* PromotionsAPI.swift */; };
 		91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */; };
 		30A29427B5B0E3A39FA2F9993D28B726 /* PromotionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */; };
+		285F01ECFBD4DE5188CA3D9D7354D6CD /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7120A99F9624B614E4F4E0E1F245EA7F /* Rate.swift */; };
+		C1E5E55D2DD31456EB78F95E23216B86 /* RateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237BE45C3C3B7D8C2AFB438760AE2926 /* RateAPI.swift */; };
 		F3F6FD51C42ACB19D01CA04641E225AF /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5469540D8F0A3653E52AD2E2084BDFF5 /* RateController.swift */; };
 		532FBE3CF89CD141641CA0D76E8ECBB8 /* RateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED087FC022B58289758AB5B3C9837BFC /* RateItem.swift */; };
 		283E45D5260DC090B3765DF51B940D47 /* RateItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AFEC21AF4D0F9FE6B8BD980647787B /* RateItemCell.swift */; };
+		5166C473EBD058280E41896BB60E8EB8 /* RateOrderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81451ACA2DD4EA857C11CDCB2BD1552F /* RateOrderRepository.swift */; };
+		19A0594927E6C5F0B5194B8FE8A4CB09 /* RateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E6DDB3DF68BE9298E9DEDF1A94117 /* RateResponse.swift */; };
+		EF3FF78F6154D7BDF301309EB4457327 /* RateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBD4C20818092EA168A52FBF350C119 /* RateService.swift */; };
 		E85F3660219883723DF2282848420A78 /* RateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227203D64E9CD124879F94DE45A8377C /* RateView.swift */; };
 		F137E2CFB323171D55A47C0C3C7E623B /* RateViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8273A3AE513C23EDC61810EB0D50128D /* RateViewModelImpl.swift */; };
 		791F84DFC5B72853FE01E6658475522A /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D08A7040F61CF9CB70BD22F11FC77B /* ReachabilityManager.swift */; };
@@ -258,6 +263,8 @@
 		B8E8F18212F6159EAB6B844CE37B070E /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CEDB14AEF3AEBD246905B8FBE76ED /* UIView+Extension.swift */; };
 		C7EA573E1B7947AC6844F19B0447B2D9 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AD8559B1194198F403317A8B1FDB88 /* UIViewController+Extension.swift */; };
 		3D9D1C8A0F46ACB784CF2F7E835A1F93 /* UserInfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741F81064E76308F846D01C08D7D4967 /* UserInfoDTO.swift */; };
+		F8B88802EB0A7B65BBF24F67D4E91414 /* UserRateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE0DA1FB0DE4E3C8E8D6E842854D9D7 /* UserRateDTO.swift */; };
+		705EFF1A322AB524C50562A4B5AB4CC7 /* UserRateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91F9684B40F872FD54F252A4DA6EC71 /* UserRateResponse.swift */; };
 		E4A52B8D350E5F9D37C53D0DD9B0B7B0 /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070FC4B639887549271AB9D7D9EF4A05 /* VerificationController.swift */; };
 		F96DC3637922C0FE65B93A31C6A502F5 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB3BEEED8720A393931C0EDF7DD9334 /* VerificationView.swift */; };
 		3A1241917CF669E66C65AFEC067D29E4 /* VerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF36C0CB8AE32428957FC4CE88CB18B /* VerificationViewModel.swift */; };
@@ -520,9 +527,14 @@
 		6E03E22502B0B1125F7255C0B59B4AFF /* PromotionsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsAPI.swift; sourceTree = "<group>"; };
 		9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsResponse.swift; sourceTree = "<group>"; };
 		2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsService.swift; sourceTree = "<group>"; };
+		7120A99F9624B614E4F4E0E1F245EA7F /* Rate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rate.swift; sourceTree = "<group>"; };
+		237BE45C3C3B7D8C2AFB438760AE2926 /* RateAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateAPI.swift; sourceTree = "<group>"; };
 		5469540D8F0A3653E52AD2E2084BDFF5 /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
 		ED087FC022B58289758AB5B3C9837BFC /* RateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateItem.swift; sourceTree = "<group>"; };
 		35AFEC21AF4D0F9FE6B8BD980647787B /* RateItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateItemCell.swift; sourceTree = "<group>"; };
+		81451ACA2DD4EA857C11CDCB2BD1552F /* RateOrderRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateOrderRepository.swift; sourceTree = "<group>"; };
+		EA7E6DDB3DF68BE9298E9DEDF1A94117 /* RateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateResponse.swift; sourceTree = "<group>"; };
+		BBBD4C20818092EA168A52FBF350C119 /* RateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateService.swift; sourceTree = "<group>"; };
 		227203D64E9CD124879F94DE45A8377C /* RateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateView.swift; sourceTree = "<group>"; };
 		8273A3AE513C23EDC61810EB0D50128D /* RateViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateViewModelImpl.swift; sourceTree = "<group>"; };
 		E1D08A7040F61CF9CB70BD22F11FC77B /* ReachabilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityManager.swift; sourceTree = "<group>"; };
@@ -585,6 +597,8 @@
 		CF8CEDB14AEF3AEBD246905B8FBE76ED /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		81AD8559B1194198F403317A8B1FDB88 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		741F81064E76308F846D01C08D7D4967 /* UserInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoDTO.swift; sourceTree = "<group>"; };
+		BCE0DA1FB0DE4E3C8E8D6E842854D9D7 /* UserRateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRateDTO.swift; sourceTree = "<group>"; };
+		E91F9684B40F872FD54F252A4DA6EC71 /* UserRateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRateResponse.swift; sourceTree = "<group>"; };
 		070FC4B639887549271AB9D7D9EF4A05 /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
 		EDB3BEEED8720A393931C0EDF7DD9334 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
 		ADF36C0CB8AE32428957FC4CE88CB18B /* VerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewModel.swift; sourceTree = "<group>"; };
@@ -656,6 +670,7 @@
 				DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */,
 				1837B6B60911400AFFDA44172683C858 /* ProfileAPI.swift */,
 				6E03E22502B0B1125F7255C0B59B4AFF /* PromotionsAPI.swift */,
+				237BE45C3C3B7D8C2AFB438760AE2926 /* RateAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1022,6 +1037,7 @@
 				3A4DBCD36CB1C2C7E3069476CE83EACA /* OrdersService.swift */,
 				543FD8B676F68AC8A263E0325C017085 /* ProfileService.swift */,
 				2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */,
+				BBBD4C20818092EA168A52FBF350C119 /* RateService.swift */,
 				D592E9FBAE65EA1FFBABA684C5ADCB9B /* ServiceComponents.swift */,
 			);
 			path = Services;
@@ -1372,6 +1388,7 @@
 				9704691945512A186F2A1F4CC6553A2E /* DocumentsRepository.swift */,
 				EE0D85F06C2D2F71B8A0770205F1A8A4 /* MenuDetailRepository.swift */,
 				57ECEC156A2E051E74B15FA38585B064 /* MenuRepository.swift */,
+				81451ACA2DD4EA857C11CDCB2BD1552F /* RateOrderRepository.swift */,
 				5DB08FF8057E5534CDF7DE46C58195F2 /* RepositoryComponents.swift */,
 			);
 			path = Repository;
@@ -1431,6 +1448,7 @@
 				BFCA77ACAE98C929BB38F9C19EADFC57 /* CartDTO.swift */,
 				16426AE457FE6F7DF042B7802295013A /* OrderApplyDTO.swift */,
 				741F81064E76308F846D01C08D7D4967 /* UserInfoDTO.swift */,
+				BCE0DA1FB0DE4E3C8E8D6E842854D9D7 /* UserRateDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -1866,6 +1884,7 @@
 				377BFFB000782A682DF1A6A62AED1BE5 /* MapAddress.swift */,
 				4FF32ADAB2B8FEF982A4A9355E2F96AD /* Menu.swift */,
 				5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */,
+				7120A99F9624B614E4F4E0E1F245EA7F /* Rate.swift */,
 				ED087FC022B58289758AB5B3C9837BFC /* RateItem.swift */,
 			);
 			path = Models;
@@ -1992,6 +2011,8 @@
 				D4F53FD96D4DCA4120B2D49D29161F43 /* DocumentsResponses.swift */,
 				0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */,
 				9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */,
+				EA7E6DDB3DF68BE9298E9DEDF1A94117 /* RateResponse.swift */,
+				E91F9684B40F872FD54F252A4DA6EC71 /* UserRateResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -2624,9 +2645,14 @@
 				B1F8A5468443016E0841FA168F2A448C /* PromotionsAPI.swift in Sources */,
 				91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */,
 				30A29427B5B0E3A39FA2F9993D28B726 /* PromotionsService.swift in Sources */,
+				285F01ECFBD4DE5188CA3D9D7354D6CD /* Rate.swift in Sources */,
+				C1E5E55D2DD31456EB78F95E23216B86 /* RateAPI.swift in Sources */,
 				F3F6FD51C42ACB19D01CA04641E225AF /* RateController.swift in Sources */,
 				532FBE3CF89CD141641CA0D76E8ECBB8 /* RateItem.swift in Sources */,
 				283E45D5260DC090B3765DF51B940D47 /* RateItemCell.swift in Sources */,
+				5166C473EBD058280E41896BB60E8EB8 /* RateOrderRepository.swift in Sources */,
+				19A0594927E6C5F0B5194B8FE8A4CB09 /* RateResponse.swift in Sources */,
+				EF3FF78F6154D7BDF301309EB4457327 /* RateService.swift in Sources */,
 				E85F3660219883723DF2282848420A78 /* RateView.swift in Sources */,
 				F137E2CFB323171D55A47C0C3C7E623B /* RateViewModelImpl.swift in Sources */,
 				791F84DFC5B72853FE01E6658475522A /* ReachabilityManager.swift in Sources */,
@@ -2677,6 +2703,8 @@
 				B8E8F18212F6159EAB6B844CE37B070E /* UIView+Extension.swift in Sources */,
 				C7EA573E1B7947AC6844F19B0447B2D9 /* UIViewController+Extension.swift in Sources */,
 				3D9D1C8A0F46ACB784CF2F7E835A1F93 /* UserInfoDTO.swift in Sources */,
+				F8B88802EB0A7B65BBF24F67D4E91414 /* UserRateDTO.swift in Sources */,
+				705EFF1A322AB524C50562A4B5AB4CC7 /* UserRateResponse.swift in Sources */,
 				E4A52B8D350E5F9D37C53D0DD9B0B7B0 /* VerificationController.swift in Sources */,
 				F96DC3637922C0FE65B93A31C6A502F5 /* VerificationView.swift in Sources */,
 				3A1241917CF669E66C65AFEC067D29E4 /* VerificationViewModel.swift in Sources */,
