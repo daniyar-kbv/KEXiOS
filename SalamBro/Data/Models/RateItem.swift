@@ -14,6 +14,6 @@ struct RateItem {
 
 extension RateItem: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.isSelected == rhs.isSelected
+        lhs.sample.id == rhs.sample.id
     }
 }

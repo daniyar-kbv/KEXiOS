@@ -45,25 +45,18 @@ final class RateViewModelImpl: RateViewModel {
 
     func changeDataSet(by rating: Int) {
         currentChoices = []
-        let choices = rateChoices.first(where: { $0.value == rating })
-        if let choices = choices {
-            for i in choices.samples {
-                if selectedChoices.contains(where: { $0.sample.id == i.id }) {
-                    currentChoices.append(RateItem(sample: i, isSelected: true))
-                } else {
-                    currentChoices.append(RateItem(sample: i, isSelected: false))
-                }
-            }
-            outputs.didGetQuestionTitle.accept(choices.title)
-            outputs.didGetSuggestionTitle.accept(choices.description)
+        guard let choices = rateChoices.first(where: { $0.value == rating }) else { return }
+        currentChoices = choices.samples.map { sample in
+            .init(sample: sample,
+                  isSelected: selectedChoices.contains(where: { $0.sample.id == sample.id }))
         }
+        outputs.didGetQuestionTitle.accept(choices.title)
+        outputs.didGetSuggestionTitle.accept(choices.description)
     }
 
     func configureDataSet(at index: Int) {
         if currentChoices[index].isSelected {
-            if let i = selectedChoices.firstIndex(where:
-                { $0.sample.id == currentChoices[index].sample.id })
-            {
+            if let i = selectedChoices.firstIndex(of: currentChoices[index]) {
                 selectedChoices.remove(at: i)
                 currentChoices[index].isSelected.toggle()
             }
@@ -94,14 +87,7 @@ final class RateViewModelImpl: RateViewModel {
     }
 
     func sendUserRate(stars: Int, comment: String) {
-        var samples: [Int] = []
-        for i in 0 ..< selectedChoices.count {
-            if currentChoices.contains(where: { $0.sample.id == selectedChoices[i].sample.id }) {
-                if let index = currentChoices.firstIndex(where: { $0.sample.id == selectedChoices[i].sample.id }) {
-                    samples.append(currentChoices[index].sample.id)
-                }
-            }
-        }
+        let samples = selectedChoices.filter { currentChoices.contains($0) }.map { $0.sample.id }
         repository.set(stars: stars, order: 5, comment: comment, samples: samples)
     }
 }

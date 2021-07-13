@@ -94,36 +94,11 @@
 
 // MARK: - RateOrder
 "RateOrder.title" = "Оцените заказ";
-// bad
-"RateOrder.badRate.title" = "Просим прощения! Что пошло не так?";
-"RateOrder.badRate.subtitle" = "Мы хотим это исправить! Что пошло не так,
-как нужно? Ваши комментарии очень нам
-помогут!";
-// average
-"RateOrder.averageRate.title" = "Понятно! Что нам следует улучшить?";
-"RateOrder.averageRate.subtitle" = "Средне - это не круто. Что нам следует
-исправить в следующий раз?";
-// good
-"RateOrder.goodRate.title" = "Благодарим! Что мы могли бы
-улучшить?";
-"RateOrder.goodRate.subtitle" = "4/5 это хорошо - но не идеально.
-Что нам стоит улучшить в следующий раз?";
-// excellent
-"RateOrder.excellentRate.title" = "Хорошо, что все прошло славно!";
-"RateOrder.excellentRate.subtitle" = "Что понравилось больше всего?";
-// itemCells
-"RateOrder.cell.courierWork.text" = "Работа курьера";
-"RateOrder.cell.givenTime.text" = "Предлагаемое время";
-"RateOrder.cell.courierNotFoundClient.text" = "Курьер не нашел меня";
-"RateOrder.cell.foodIsMissing.text" = "Отсутствует блюдо";
-"RateOrder.cell.foodIsCold.text" = "Еда была холодной";
-"RateOrder.cell.deliveryTime.text" = "Время доставки";
 
 "RateOrder.submitButton.title" = "Отправить";
 "RateOrder.commentaryField.placeholder" = "Добавить комментарий";
 "RateOrder.title" = "Оцените заказ";
-"RateOrder.description" = "Ваша оценка поможет улучшить качество
-нашей доставки";
+"RateOrder.description" = "Ваша оценка поможет улучшить качество нашей доставки";
 
 // MARK: - AddressPickCell
 "AddressPickCell.changeButton" = "Изменить";
