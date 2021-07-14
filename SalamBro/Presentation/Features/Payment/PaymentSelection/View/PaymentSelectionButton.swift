@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PaymentSelectionView: UIButton {
+final class PaymentSelectionButton: UIButton {
     private let paymentMethodLabel: UILabel = {
         let label = UILabel()
         label.textColor = .mildBlue
@@ -30,6 +30,7 @@ final class PaymentSelectionView: UIButton {
         view.distribution = .equalSpacing
         view.alignment = .fill
         view.spacing = 3
+        view.isUserInteractionEnabled = false
         return view
     }()
 
@@ -39,13 +40,9 @@ final class PaymentSelectionView: UIButton {
         label.backgroundColor = .arcticWhite
         label.textColor = .kexRed
         label.font = UIFont.systemFont(ofSize: 14)
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        label.isUserInteractionEnabled = false
         return label
-    }()
-
-    private lazy var mainStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [leftStack, changeLabel])
-        view.distribution = .
-            return view
     }()
 
     init() {
@@ -59,13 +56,26 @@ final class PaymentSelectionView: UIButton {
     }
 }
 
-extension PaymentSelectionView {
+extension PaymentSelectionButton {
     func setPaymentMethod(text: String) {
         choosePaymentMethodLabel.text = text
         choosePaymentMethodLabel.textColor = .darkGray
     }
 }
 
-extension PaymentSelectionView {
-    private func configure() {}
+extension PaymentSelectionButton {
+    private func configure() {
+        [changeLabel, leftStack].forEach { addSubview($0) }
+
+        changeLabel.snp.makeConstraints {
+            $0.right.equalToSuperview().offset(-24)
+            $0.centerY.equalToSuperview()
+        }
+
+        leftStack.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(4)
+            $0.left.equalToSuperview().offset(24)
+            $0.right.equalTo(changeLabel.snp.left)
+        }
+    }
 }
