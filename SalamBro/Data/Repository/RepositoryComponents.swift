@@ -18,6 +18,7 @@ protocol RepositoryComponents: AnyObject {
     func makeMenuRepository() -> MenuRepository
     func makeMenuDetailRepository() -> MenuDetailRepository
     func makeDocumentsRepository() -> DocumentsRepository
+    func makeRateOrderRepository() -> RateOrderRepository
     func makePaymentRepository() -> PaymentRepository
 }
 
@@ -77,6 +78,10 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     func makeDocumentsRepository() -> DocumentsRepository {
         return shared(DocumentsRepositoryImpl(storage: makeLocalStorage(),
                                               service: serviceComponents.documentsService()))
+    }
+
+    func makeRateOrderRepository() -> RateOrderRepository {
+        return shared(RateOrderRepositoryImpl(rateService: serviceComponents.rateService()))
     }
 
     func makePaymentRepository() -> PaymentRepository {

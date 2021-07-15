@@ -257,47 +257,8 @@ enum ProfileText: UILocalizable {
 
         var localized: String { rawValue }
 
-        enum Item: String, UILocalizable {
-            case courierWork = "RateOrder.cell.courierWork.text"
-            case givenTime = "RateOrder.cell.givenTime.text"
-            case clientNotFound = "RateOrder.cell.courierNotFoundClient.text"
-            case missingFood = "RateOrder.cell.foodIsMissing.text"
-            case coldFood = "RateOrder.cell.foodIsCold.text"
-            case deliveryTime = "RateOrder.cell.deliveryTime.text"
-
-            var localized: String { rawValue }
-        }
-
         enum Description: String, UILocalizable {
             case defaultTitle = "RateOrder.description"
-
-            enum Bad: String, UILocalizable {
-                case title = "RateOrder.badRate.title"
-                case subtitle = "RateOrder.badRate.subtitle"
-
-                var localized: String { rawValue }
-            }
-
-            enum Average: String, UILocalizable {
-                case title = "RateOrder.averageRate.title"
-                case subtitle = "RateOrder.averageRate.subtitle"
-
-                var localized: String { rawValue }
-            }
-
-            enum Good: String, UILocalizable {
-                case title = "RateOrder.goodRate.title"
-                case subtitle = "RateOrder.goodRate.subtitle"
-
-                var localized: String { rawValue }
-            }
-
-            enum Excelent: String, UILocalizable {
-                case title = "RateOrder.excellentRate.title"
-                case subtitle = "RateOrder.excellentRate.subtitle"
-
-                var localized: String { rawValue }
-            }
 
             var localized: String { rawValue }
         }
