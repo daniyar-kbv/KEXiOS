@@ -10,8 +10,8 @@ import Foundation
 protocol PaymentPagesFactory: AnyObject {
     func makePaymentSelectionPage() -> PaymentSelectionViewController
     func makePaymentMethodPage() -> PaymentMethodViewController
-    func makePaymentCardPage() -> PaymentCardViewController
-    func makePaymentCashPage() -> PaymentCashViewController
+    func makePaymentCardPage(paymentMethod: PaymentMethod) -> PaymentCardViewController
+    func makePaymentCashPage(paymentMethod: PaymentMethod) -> PaymentCashViewController
 }
 
 final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
@@ -28,7 +28,7 @@ final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
     }
 
     private func makePaymentSelectionViewModel() -> PaymentSelectionViewModel {
-        return scoped(PaymentSelectionViewModelImpl())
+        return scoped(PaymentSelectionViewModelImpl(paymentRepository: repositoryComponents.makePaymentRepository()))
     }
 
     func makePaymentMethodPage() -> PaymentMethodViewController {
@@ -36,22 +36,28 @@ final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
     }
 
     private func makePaymentMethodVCViewModel() -> PaymentMethodVCViewModel {
-        return scoped(PaymentMethodVCViewModelImpl())
+        return scoped(PaymentMethodVCViewModelImpl(paymentRepository: repositoryComponents.makePaymentRepository()))
     }
 
-    func makePaymentCardPage() -> PaymentCardViewController {
-        return scoped(.init(viewModel: makePaymentCardViewModel()))
+    func makePaymentCardPage(paymentMethod: PaymentMethod) -> PaymentCardViewController {
+        return scoped(.init(viewModel: makePaymentCardViewModel(paymentMethod: paymentMethod)))
     }
 
-    private func makePaymentCardViewModel() -> PaymentCardViewModel {
-        return scoped(PaymentCardViewModelImpl())
+    private func makePaymentCardViewModel(paymentMethod: PaymentMethod) -> PaymentCardViewModel {
+        return scoped(PaymentCardViewModelImpl(
+            paymentRepository: repositoryComponents.makePaymentRepository(),
+            paymentMethod: paymentMethod
+        ))
     }
 
-    func makePaymentCashPage() -> PaymentCashViewController {
-        return scoped(.init(viewModel: makePaymentCashViewModel()))
+    func makePaymentCashPage(paymentMethod: PaymentMethod) -> PaymentCashViewController {
+        return scoped(.init(viewModel: makePaymentCashViewModel(paymentMethod: paymentMethod)))
     }
 
-    private func makePaymentCashViewModel() -> PaymentCashViewModel {
-        return scoped(PaymentCashViewModelImpl())
+    private func makePaymentCashViewModel(paymentMethod: PaymentMethod) -> PaymentCashViewModel {
+        return scoped(PaymentCashViewModelImpl(
+            paymentRepository: repositoryComponents.makePaymentRepository(),
+            paymentMethod: paymentMethod
+        ))
     }
 }

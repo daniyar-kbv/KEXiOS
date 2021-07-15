@@ -205,6 +205,8 @@
 "Payment.Card.expiryDate" = "KZ Срок действия";
 "Payment.Card.cardholderName" = "KZ Имя Фамилия";
 "Payment.Card.saveButton" = "KZ Далее";
+"Payment.Card.Error.invalidCard" = "KZ Не валидный номер карты";
+"Payment.Card.Error.invalidExpiryDate" = "KZ Не валидный срок дейсвия карты";
 
 // MARK: - Payment Cash
 

@@ -37,6 +37,11 @@ target 'SalamBro' do
   # Pod for observing internet connection
   pod 'ReachabilitySwift'
 
+  # Pod for payments
+  pod 'Cloudpayments', :git =>  "https://github.com/cloudpayments/CloudPayments-SDK-iOS", :branch => "master"
+  pod 'CloudpaymentsNetworking', :git =>  "https://github.com/cloudpayments/CloudPayments-SDK-iOS", :branch => "master"
+
+
   target 'SalamBroTests' do
     inherit! :search_paths
     # Pods for testing

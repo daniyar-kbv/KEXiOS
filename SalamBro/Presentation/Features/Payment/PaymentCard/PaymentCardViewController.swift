@@ -10,8 +10,10 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-class PaymentCardViewController: UIViewController {
+class PaymentCardViewController: UIViewController, AlertDisplayable {
+    private let disposeBag = DisposeBag()
     private let viewModel: PaymentCardViewModel
+
     private lazy var contentView: PaymentCardView = {
         let view = PaymentCardView()
         view.delegate = self
@@ -24,6 +26,8 @@ class PaymentCardViewController: UIViewController {
         self.viewModel = viewModel
 
         super.init(nibName: .none, bundle: .none)
+
+        bindViewModel()
     }
 
     @available(*, unavailable)
@@ -45,11 +49,26 @@ class PaymentCardViewController: UIViewController {
             self?.outputs.close.accept(())
         }
     }
+
+    private func bindViewModel() {
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.onDone
+            .bind(to: outputs.onDone)
+            .disposed(by: disposeBag)
+    }
 }
 
 extension PaymentCardViewController: PaymentCardViewDelegate {
     func onSaveTap() {
-        outputs.onDone.accept(())
+        viewModel.processCardInfo(cardNumber: contentView.getCardNumber(),
+                                  expiryDate: contentView.getExpieryDate(),
+                                  cvv: contentView.getCVV(),
+                                  cardholderName: contentView.getCardholderName(),
+                                  needsSave: contentView.getNeedsSave())
     }
 }
 

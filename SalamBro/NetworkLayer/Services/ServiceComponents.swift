@@ -14,6 +14,7 @@ protocol ServiceComponents: AnyObject {
     func promotionsService() -> PromotionsService
     func profileService() -> ProfileService
     func documentsService() -> DocumentsService
+    func paymentsService() -> PaymentsService
 }
 
 final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
@@ -47,5 +48,9 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
 
     func documentsService() -> DocumentsService {
         return shared(DocumentsServiceImpl(provider: MoyaProvider<DocumentsAPI>(plugins: [networkPlugin])))
+    }
+
+    func paymentsService() -> PaymentsService {
+        return shared(PaymentsServiceMoyaImpl(provider: MoyaProvider<PaymentsAPI>(plugins: [networkPlugin, authPlugin])))
     }
 }

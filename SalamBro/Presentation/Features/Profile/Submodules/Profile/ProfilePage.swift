@@ -177,7 +177,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
     }
 
     private func showEmptyState() {
-        showAnimationView(animationType: .profile) { [weak self] in
+        showAnimationView(animationType: .profile, fullScreen: false) { [weak self] in
             self?.outputs.onLoginTapped.accept(())
         }
     }

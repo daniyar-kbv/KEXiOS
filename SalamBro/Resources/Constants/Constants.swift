@@ -7,24 +7,29 @@
 
 import UIKit
 
-public let screenSize: CGRect = UIScreen.main.bounds
+struct Constants {
+    let screenSize: CGRect = UIScreen.main.bounds
 
-public var apiKey: String {
-    guard let filePath = Bundle.main.path(forResource: "SalamBro-Info", ofType: "plist") else {
-        fatalError("Couldn't find file 'TMDB-Info.plist'.")
+    static let apiKey = getPlistValue(by: "API_KEY")
+    static let cloudpaymentsMerchantId = getPlistValue(by: "CLOUDPAYMENTS_MERCHANT_ID")
+
+    static let checkmark = UIImageView(image: UIImage(named: "checkmark"))
+    static let ZOOM: Float = 18.0
+
+    static let ALA_LAT: Double = 43.241044
+    static let ALA_LON: Double = 76.927359
+
+    private static func getPlistValue(by key: String) -> String {
+        guard let filePath = Bundle.main.path(forResource: "SalamBro-Info", ofType: "plist") else {
+            fatalError("Couldn't find file 'SalamBro-Info.plist'.")
+        }
+        let plist = NSDictionary(contentsOfFile: filePath)
+        guard let value = plist?.object(forKey: key) as? String else {
+            fatalError("Couldn't find key '\(key)' in 'SalamBro-Info.plist'.")
+        }
+        return value
     }
-    let plist = NSDictionary(contentsOfFile: filePath)
-    guard let value = plist?.object(forKey: "API_KEY") as? String else {
-        fatalError("Couldn't find key 'API_KEY' in 'SalamBro-Info.plist'.")
-    }
-    return value
 }
-
-public let checkmark = UIImageView(image: UIImage(named: "checkmark"))
-public let ZOOM: Float = 18.0
-
-public let ALA_LAT: Double = 43.241044
-public let ALA_LON: Double = 76.927359
 
 public var htmlString =
     """

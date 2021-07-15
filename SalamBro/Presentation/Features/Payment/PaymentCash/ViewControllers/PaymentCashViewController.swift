@@ -65,6 +65,10 @@ class PaymentCashViewController: UIViewController {
             .subscribe(onNext: { [weak self] isLess in
                 self?.contentView.set(isChangeLess: isLess)
             }).disposed(by: disposeBag)
+
+        viewModel.outputs.onDone
+            .bind(to: outputs.onDone)
+            .disposed(by: disposeBag)
     }
 
     private func configTitle(needChange: Bool) {
@@ -76,7 +80,7 @@ class PaymentCashViewController: UIViewController {
 
 extension PaymentCashViewController: PaymentCashViewDelegate {
     func onSubmit() {
-        outputs.onDone.accept(())
+        viewModel.submit()
     }
 
     func textViewDidChange(text: String) {

@@ -55,7 +55,7 @@ final class SuggestViewModelImpl: SuggestViewModel {
                 }
             }
         }
-        let point = YMKPoint(latitude: ALA_LAT, longitude: ALA_LON)
+        let point = YMKPoint(latitude: Constants.ALA_LAT, longitude: Constants.ALA_LON)
         suggestSession.suggest(
             withText: query,
             window: YMKBoundingBox(southWest: point, northEast: point),

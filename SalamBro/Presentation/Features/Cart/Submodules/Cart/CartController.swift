@@ -121,7 +121,9 @@ class CartController: UIViewController, AnimationViewPresentable, LoaderDisplaya
 
     private func update() {
         guard !viewModel.getIsEmpty() else {
-            showAnimationView(animationType: .emptyBasket)
+            showAnimationView(animationType: .emptyBasket, fullScreen: false) { [weak self] in
+                self?.outputs.toMenu.accept(())
+            }
             return
         }
 
@@ -269,12 +271,6 @@ extension CartController: CartAdditinalProductCellDelegate {
         viewModel.delete(postitonUUID: positionUUID)
     }
 }
-
-// extension CartController: AnimationContainerViewDelegate {
-//    func performAction() {
-//        outputs.toMenu.accept(())
-//    }
-// }
 
 extension CartController: CartFooterDelegate {
     func openPromocode() {
