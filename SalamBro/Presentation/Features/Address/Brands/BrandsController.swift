@@ -9,6 +9,7 @@ import Reusable
 import RxCocoa
 import RxSwift
 import SnapKit
+import Spruce
 import UIKit
 
 final class BrandsController: UIViewController, AlertDisplayable {
@@ -16,6 +17,9 @@ final class BrandsController: UIViewController, AlertDisplayable {
     private let viewModel: BrandViewModelProtocol
     private let disposeBag: DisposeBag
     private let flowType: FlowType
+
+    let animations: [StockAnimation] = [.slide(.up, .moderately), .fadeIn]
+    var sortFunction: SortFunction = CorneredSortFunction(corner: .topLeft, interObjectDelay: 0.05)
 
     private lazy var refreshControl: UIRefreshControl = {
         let action = UIRefreshControl()
@@ -49,18 +53,16 @@ final class BrandsController: UIViewController, AlertDisplayable {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.spruce.prepare(with: animations)
         setup()
         bind()
         viewModel.getBrands()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
     private func bind() {
         viewModel.outputs.didGetBrands
             .do { [weak self] _ in
+                self?.callAnimation()
                 guard let ratios = self?.viewModel.ratios else { return }
                 self?.collectionView.collectionViewLayout.invalidateLayout()
                 self?.collectionView.collectionViewLayout = StagLayout(widthHeightRatios: ratios,
@@ -106,6 +108,14 @@ final class BrandsController: UIViewController, AlertDisplayable {
     @objc func handleRefreshControlAction(_: UIRefreshControl) {
         viewModel.getBrands()
         refreshControl.endRefreshing()
+        callAnimation()
+    }
+
+    private func callAnimation() {
+        let animation = SpringAnimation(duration: 0.7)
+        DispatchQueue.main.async {
+            self.collectionView.spruce.animate(self.animations, animationType: animation, sortFunction: self.sortFunction)
+        }
     }
 }
 
@@ -123,14 +133,6 @@ extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate
         let brand = viewModel.brands[indexPath.row]
         cell.configure(brand: brand)
         return cell
-    }
-
-    public func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt _: IndexPath) {
-        cell.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-        UIView.animate(withDuration: 0.3) {
-            cell.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            cell.layoutSubviews()
-        }
     }
 }
 
