@@ -13,12 +13,14 @@ protocol PaymentCardViewDelegate {
 }
 
 final class PaymentCardView: UIView {
-    private var delegate: PaymentCardViewDelegate?
+    var delegate: PaymentCardViewDelegate?
 
     private lazy var cardNumberField = PaymentCardMaskedField(inputType: .cardNumber)
     private lazy var expiryDateField = PaymentCardMaskedField(inputType: .expiryDate)
     private lazy var cvvCodeField = PaymentCardMaskedField(inputType: .CVV)
     private lazy var cardholderNameField = PaymentCardMaskedField(inputType: .cardhodlerName)
+
+    private lazy var fields = [cardNumberField, expiryDateField, cvvCodeField, cardholderNameField]
 
     private lazy var middleStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [expiryDateField, cvvCodeField])
@@ -56,7 +58,6 @@ final class PaymentCardView: UIView {
         view.setTitle(SBLocalization.localized(key: PaymentText.PaymentCard.saveButton), for: .normal)
         view.addTarget(self, action: #selector(handleSaveButtonAction), for: .touchUpInside)
         view.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        view.backgroundColor = .calmGray
         view.isEnabled = false
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
@@ -67,6 +68,8 @@ final class PaymentCardView: UIView {
         super.init(frame: frame)
 
         layoutUI()
+        configActions()
+        configButtonEnable(false)
     }
 
     @available(*, unavailable)
@@ -106,6 +109,23 @@ final class PaymentCardView: UIView {
             $0.top.equalTo(switchButton.snp.bottom).offset(48)
             $0.height.equalTo(43)
             $0.left.right.equalToSuperview().inset(24)
+        }
+    }
+
+    private func configButtonEnable(_ isEnabled: Bool) {
+        saveButton.backgroundColor = isEnabled ? .kexRed : .calmGray
+        saveButton.isUserInteractionEnabled = isEnabled
+    }
+
+    private func checkFields() {
+        configButtonEnable(!fields.map { $0.isComplete() }.contains(false))
+    }
+
+    private func configActions() {
+        fields.forEach { field in
+            field.setMaskedTextChangedCallback { [weak self] _, _, _ in
+                self?.checkFields()
+            }
         }
     }
 }

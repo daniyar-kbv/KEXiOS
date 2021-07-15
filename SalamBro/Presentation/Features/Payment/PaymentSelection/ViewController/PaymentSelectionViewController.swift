@@ -10,8 +10,7 @@ import RxSwift
 import UIKit
 
 final class PaymentSelectionViewController: UIViewController {
-    private var containerView: PaymentSelectionContainerView!
-
+    private let disposeBag = DisposeBag()
     private let viewModel: PaymentSelectionViewModel
     private lazy var contentView: PaymentSelectionContainerView = {
         let view = PaymentSelectionContainerView()
@@ -46,10 +45,22 @@ final class PaymentSelectionViewController: UIViewController {
         super.viewDidLoad()
 
         title = SBLocalization.localized(key: PaymentText.PaymentSelection.title)
-
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }
+
+        bindViewModel()
+    }
+
+    private func bindViewModel() {
+        viewModel.outputs.didSelectPaymentMethod
+            .subscribe(onNext: { [weak self] text in
+                self?.contentView.setPaymentMethod(text: text)
+            }).disposed(by: disposeBag)
+    }
+
+    func selected(paymentMethod: PaymentMethodType) {
+        viewModel.set(paymentMethod: paymentMethod)
     }
 }
 

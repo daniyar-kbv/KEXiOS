@@ -58,18 +58,13 @@ extension PaymentMethodViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch viewModel.getPaymentMethod(for: indexPath).paymentType {
-        case .inApp:
-            outputs.didSelectNewCard.accept(())
-        default:
-            break
-        }
+        outputs.didSelectPaymentMethod.accept(viewModel.getPaymentMethod(for: indexPath).paymentType)
     }
 }
 
 extension PaymentMethodViewController {
     struct Output {
         let close = PublishRelay<Void>()
-        let didSelectNewCard = PublishRelay<Void>()
+        let didSelectPaymentMethod = PublishRelay<PaymentMethodType>()
     }
 }

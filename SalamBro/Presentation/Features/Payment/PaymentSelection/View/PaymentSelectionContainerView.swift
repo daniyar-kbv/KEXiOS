@@ -18,7 +18,8 @@ final class PaymentSelectionContainerView: UIView {
 
     weak var delegate: PaymentSelectionContainerViewDelegate?
 
-    private let paymentSelectionView = PaymentSelectionView()
+    private let paymentSelectionButton = PaymentSelectionButton()
+
     private let actionButton: UIButton = {
         let button = UIButton()
         button.setTitle(SBLocalization.localized(key: PaymentText.PaymentSelection.orderPayment), for: .normal)
@@ -45,6 +46,7 @@ final class PaymentSelectionContainerView: UIView {
         label.text = "2 870 ₸"
         label.textColor = .darkGray
         label.textAlignment = .right
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return label
     }()
 
@@ -61,17 +63,25 @@ final class PaymentSelectionContainerView: UIView {
 }
 
 extension PaymentSelectionContainerView {
+    func setPaymentMethod(text: String) {
+        paymentSelectionButton.setPaymentMethod(text: text)
+
+        actionButton.backgroundColor = .kexRed
+        actionButton.isEnabled = true
+    }
+}
+
+extension PaymentSelectionContainerView {
     private func bindViews() {
         actionButton
             .rx
             .tap
             .subscribe(onNext: { [weak self] in
                 guard let _ = self else { return }
-                debugPrint("action tapped")
             })
             .disposed(by: disposeBag)
 
-        paymentSelectionView.changeButton
+        paymentSelectionButton
             .rx
             .tap
             .subscribe(onNext: { [weak self] in
@@ -82,11 +92,10 @@ extension PaymentSelectionContainerView {
 
     private func configure() {
         backgroundColor = .white
-        addSubview(paymentSelectionView)
-        paymentSelectionView.snp.makeConstraints {
+        addSubview(paymentSelectionButton)
+        paymentSelectionButton.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).offset(24)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(40)
         }
 
         addSubview(actionButton)
@@ -101,8 +110,6 @@ extension PaymentSelectionContainerView {
         billTitleLabel.snp.makeConstraints {
             $0.bottom.equalTo(actionButton.snp.top).offset(-16)
             $0.leading.equalToSuperview().offset(24)
-            $0.width.equalTo(88)
-            $0.height.equalTo(21)
         }
 
         addSubview(billLabel)
@@ -110,7 +117,6 @@ extension PaymentSelectionContainerView {
             $0.bottom.equalTo(actionButton.snp.top).offset(-16)
             $0.trailing.equalToSuperview().offset(-24)
             $0.leading.equalTo(billTitleLabel.snp.trailing).offset(16)
-            $0.height.equalTo(21)
         }
     }
 }
