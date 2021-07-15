@@ -180,3 +180,13 @@
 "Payment.Card.expiryDate" = "EN Срок действия";
 "Payment.Card.cardholderName" = "EN Имя Фамилия";
 "Payment.Card.saveButton" = "EN Далее";
+
+// MARK: - Payment Cash
+
+"Payment.Cash.titleDefault" = "EN Оформление заказа";
+"Payment.Cash.titleChange" = "EN Сдача";
+"Payment.Cash.topText" = "EN Заказ на %@ ₸.\nС какой суммы подготовить сдачу?";
+"Payment.Cash.fieldPlaceholder" = "EN Введите сумму сдачи";
+"Payment.Cash.fieldDescription" = "EN Укажите сумму больше стоимости заказа";
+"Payment.Cash.Button.noChange" = "EN У меня без сдачи";
+"Payment.Cash.Button.submit" = "EN Готово";

@@ -324,12 +324,12 @@ enum CartText: UILocalizable {
 
 enum PaymentText: UILocalizable {
     enum PaymentSelection: String, UILocalizable {
-        case title = "Payment.Selection.bill"
-        case paymentMethod = "Payment.Selection.change"
+        case title = "Payment.Selection.title"
+        case paymentMethod = "Payment.Selection.paymentMethod"
         case choosePaymentMethod = "Payment.Selection.choosePaymentMethod"
-        case change = "Payment.Selection.orderPayment"
-        case bill = "Payment.Selection.paymentMethod"
-        case orderPayment = "Payment.Selection.title"
+        case change = "Payment.Selection.change"
+        case bill = "Payment.Selection.bill"
+        case orderPayment = "Payment.Selection.orderPayment"
 
         var localized: String { rawValue }
     }
@@ -343,6 +343,33 @@ enum PaymentText: UILocalizable {
         case saveButton = "Payment.Card.saveButton"
 
         var localized: String { rawValue }
+    }
+
+    enum PaymentCash: String, UILocalizable {
+        case topText = "Payment.Cash.topText"
+
+        var localized: String { rawValue }
+
+        enum Title: String, UILocalizable {
+            case base = "Payment.Cash.titleDefault"
+            case change = "Payment.Cash.titleChange"
+
+            var localized: String { rawValue }
+        }
+
+        enum Field: String, UILocalizable {
+            case placeholder = "Payment.Cash.fieldPlaceholder"
+            case description = "Payment.Cash.fieldDescription"
+
+            var localized: String { rawValue }
+        }
+
+        enum Button: String, UILocalizable {
+            case noChange = "Payment.Cash.Button.noChange"
+            case submit = "Payment.Cash.Button.submit"
+
+            var localized: String { rawValue }
+        }
     }
 
     var localized: String { "" }

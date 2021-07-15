@@ -17,7 +17,7 @@ final class PaymentMethodVCViewModelImpl: PaymentMethodVCViewModel {
     var mockData: [PaymentMethod] = [
         //        Tech debt: localize
         .init(paymentType: .storedCard("Карта *9023")),
-        .init(paymentType: .inApp, isSelected: true),
+        .init(paymentType: .card, isSelected: true),
         .init(paymentType: .cash),
     ]
 
