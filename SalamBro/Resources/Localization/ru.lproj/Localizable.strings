@@ -108,6 +108,8 @@
 "MenuDetail.proceedButton" = "В корзину за";
 "MenuDetail.commentaryField" = "Комментарий к блюду";
 "MenuDetail.chooseAdditionalItemButton" = "Изменить";
+"MenuDetail.required" = "Обязательно";
+"MenuDetail.choose" = "Выберите";
 
 // MARK: - Support
 "Support.title" = "Помощь";

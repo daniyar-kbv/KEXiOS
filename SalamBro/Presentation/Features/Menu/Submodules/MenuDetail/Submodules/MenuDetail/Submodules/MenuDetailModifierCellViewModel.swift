@@ -20,17 +20,12 @@ protocol MenuDetailModifierCellViewModel {
 
 final class MenuDetailModifierCellViewModelImpl: MenuDetailModifierCellViewModel {
     private let modifierGroup: ModifierGroup
-    private var value: Modifier? {
-        didSet {
-            outputs.value.accept(value?.name)
-        }
-    }
+    private var value: Modifier?
 
-    var outputs: Output
+    lazy var outputs = Output(name: makeTitle())
 
     init(modifierGroup: ModifierGroup) {
         self.modifierGroup = modifierGroup
-        outputs = Output(modifierGroup: modifierGroup)
     }
 
     @available(*, unavailable)
@@ -56,14 +51,48 @@ final class MenuDetailModifierCellViewModelImpl: MenuDetailModifierCellViewModel
 }
 
 extension MenuDetailModifierCellViewModelImpl {
-    struct Output {
-        private let modifierGroup: ModifierGroup
+    private func makeTitle() -> NSAttributedString {
+        let attributedTitle = NSMutableAttributedString(
+            string: modifierGroup.name,
+            attributes: [
+                NSAttributedString.Key.foregroundColor: UIColor.mildBlue,
+            ]
+        )
 
-        init(modifierGroup: ModifierGroup) {
-            self.modifierGroup = modifierGroup
+        if modifierGroup.isRequired {
+            let dotString = NSAttributedString(
+                string: " • ",
+                attributes: [
+                    NSAttributedString.Key.foregroundColor: UIColor.mildBlue,
+                ]
+            )
+
+            let requiredString = NSAttributedString(
+                string: SBLocalization.localized(key: MenuText.MenuDetail.required),
+                attributes: [
+                    NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+                ]
+            )
+
+            attributedTitle.append(dotString)
+            attributedTitle.append(requiredString)
         }
 
-        lazy var name = BehaviorRelay<String>(value: self.modifierGroup.name)
-        lazy var value = BehaviorRelay<String?>(value: nil)
+        return attributedTitle as NSAttributedString
+    }
+
+    private func makeValueText() {
+        modifierGroup.selectedModifiers.map { $0. }
+    }
+}
+
+extension MenuDetailModifierCellViewModelImpl {
+    struct Output {
+        init(name: NSAttributedString) {
+            self.name = .init(value: name)
+        }
+
+        let name: BehaviorRelay<NSAttributedString>
+        let value = BehaviorRelay<String?>(value: nil)
     }
 }

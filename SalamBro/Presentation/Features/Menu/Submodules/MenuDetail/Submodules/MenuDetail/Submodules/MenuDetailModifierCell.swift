@@ -17,8 +17,6 @@ final class MenuDetailModifierCell: UITableViewCell {
 
     private lazy var titleLabel: UILabel = {
         let view = UILabel()
-        view.backgroundColor = .white
-        view.textColor = .mildBlue
         view.font = .systemFont(ofSize: 12, weight: .regular)
         return view
     }()
@@ -27,6 +25,8 @@ final class MenuDetailModifierCell: UITableViewCell {
         let view = UILabel()
         view.textColor = .darkGray
         view.font = .systemFont(ofSize: 16, weight: .medium)
+        view.textColor = .mildBlue
+        view.text = SBLocalization.localized(key: MenuText.MenuDetail.choose)
         return view
     }()
 
@@ -71,12 +71,16 @@ final class MenuDetailModifierCell: UITableViewCell {
 
     private func bindViewModel() {
         viewModel.outputs.name
-            .bind(to: titleLabel.rx.text)
+            .bind(to: titleLabel.rx.attributedText)
             .disposed(by: disposeBag)
 
         viewModel.outputs.value
-            .bind(to: valueLabel.rx.text)
-            .disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] text in
+                self?.valueLabel.text = text != nil ?
+                    text :
+                    SBLocalization.localized(key: MenuText.MenuDetail.choose)
+                self?.valueLabel.textColor = text != nil ? .darkGray : .mildBlue
+            }).disposed(by: disposeBag)
     }
 
     private func layoutUI() {

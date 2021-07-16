@@ -11,7 +11,7 @@ import RxSwift
 
 protocol MenuDetailViewModel: AnyObject {
     var outputs: MenuDetailViewModelImpl.Output { get }
-    var modifierCellViewModels: [[MenuDetailModifierCellViewModel]] { get set }
+    var modifierCellViewModels: [MenuDetailModifierCellViewModel] { get set }
 
     func update()
     func proceed()
@@ -31,7 +31,7 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     private var position: MenuPositionDetail?
     private var comment: String?
 
-    var modifierCellViewModels: [[MenuDetailModifierCellViewModel]] = []
+    var modifierCellViewModels: [MenuDetailModifierCellViewModel] = []
     let outputs = Output()
 
     init(positionUUID: String,
@@ -112,13 +112,68 @@ extension MenuDetailViewModelImpl {
         outputs.itemImage.accept(URL(string: position.image ?? ""))
         outputs.itemTitle.accept(position.name)
         outputs.itemDescription.accept(position.description)
-//        Tech debt: add string format to localization
         outputs.itemPrice.accept("\(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton)) \(position.price.removeTrailingZeros())")
 
-        modifierCellViewModels = position.modifierGroups.map { modifierGroup in
-            (0 ..< modifierGroup.maxAmount).map { _ in
-                MenuDetailModifierCellViewModelImpl(modifierGroup: modifierGroup)
-            }
+//        modifierCellViewModels = position.modifierGroups.map {
+//            MenuDetailModifierCellViewModelImpl(modifierGroup: $0)
+//        }
+
+        let modifierGroups: [ModifierGroup] = [
+            .init(uuid: "1",
+                  name: "Выберите напиток",
+                  minAmount: 1,
+                  maxAmount: 1,
+                  isRequired: true,
+                  modifiers: [
+                      .init(name: "Кола",
+                            uuid: "1",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Спрайт",
+                            uuid: "2",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Фанта",
+                            uuid: "3",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                  ],
+                  selectedModifiers: nil),
+            .init(uuid: "2",
+                  name: "Выберите напиток",
+                  minAmount: 1,
+                  maxAmount: 3,
+                  isRequired: true,
+                  modifiers: [
+                      .init(name: "Кола",
+                            uuid: "4",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Спрайт",
+                            uuid: "5",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Фанта",
+                            uuid: "6",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                  ],
+                  selectedModifiers: nil),
+            .init(uuid: "3",
+                  name: "Выберите напиток",
+                  minAmount: 0,
+                  maxAmount: 3,
+                  isRequired: false,
+                  modifiers: [
+                      .init(name: "Кола",
+                            uuid: "7",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Спрайт",
+                            uuid: "8",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Фанта",
+                            uuid: "9",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                  ],
+                  selectedModifiers: nil),
+        ]
+
+        modifierCellViewModels = modifierGroups.map {
+            MenuDetailModifierCellViewModelImpl(modifierGroup: $0)
         }
 
         outputs.updateModifiers.accept(())
@@ -126,12 +181,12 @@ extension MenuDetailViewModelImpl {
     }
 
     private func check() {
-        outputs.isComplete.accept(!modifierCellViewModels.flatMap { $0 }
+        outputs.isComplete.accept(!modifierCellViewModels
             .contains(where: { $0.didSelect() == false }))
     }
 
     private func getSelectedModifiers() -> [Modifier] {
-        return modifierCellViewModels.flatMap { $0 }
+        return modifierCellViewModels
             .map { $0.getValue() }
             .filter { $0 != nil } as! [Modifier]
     }

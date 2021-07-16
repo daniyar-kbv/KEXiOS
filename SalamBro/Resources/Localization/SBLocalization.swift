@@ -188,6 +188,8 @@ enum MenuText: UILocalizable {
         case proceedButton = "MenuDetail.proceedButton"
         case commentPlaceholder = "MenuDetail.commentaryField"
         case changeButton = "MenuDetail.chooseAdditionalItemButton"
+        case required = "MenuDetail.required"
+        case choose = "MenuDetail.choose"
 
         var localized: String { rawValue }
     }

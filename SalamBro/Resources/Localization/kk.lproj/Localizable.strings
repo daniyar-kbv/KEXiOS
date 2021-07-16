@@ -107,6 +107,8 @@
 "MenuDetail.proceedButton" = "KZ В корзину за";
 "MenuDetail.commentaryField" = "KZ Комментарий к блюду";
 "MenuDetail.chooseAdditionalItemButton" = "KZ Изменить";
+"MenuDetail.required" = "KZ Обязательно";
+"MenuDetail.choose" = "KZ Выберите";
 
 // MARK: - Support
 "Support.title" = "KZ Помощь";

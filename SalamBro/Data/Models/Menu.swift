@@ -50,7 +50,7 @@ struct ModifierGroup: Codable {
     let isRequired: Bool
     let modifiers: [Modifier]
 
-    lazy var selectedModifiers: [Modifier?] = (0 ..< maxAmount).map { _ in nil }
+    lazy var selectedModifiers: [Modifier] = []
 
     enum CodingKeys: String, CodingKey {
         case uuid, name, modifiers

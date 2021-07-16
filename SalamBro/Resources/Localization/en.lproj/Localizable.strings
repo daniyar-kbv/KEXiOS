@@ -107,6 +107,8 @@
 "MenuDetail.proceedButton" = "EN В корзину за";
 "MenuDetail.commentaryField" = "EN Комментарий к блюду";
 "MenuDetail.chooseAdditionalItemButton" = "EN Изменить";
+"MenuDetail.required" = "EN Обязательно";
+"MenuDetail.choose" = "EN Выберите";
 
 // MARK: - Support
 "Support.title" = "EN Помощь";
