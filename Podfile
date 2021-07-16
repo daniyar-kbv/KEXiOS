@@ -37,6 +37,9 @@ target 'SalamBro' do
   # Pod for observing internet connection
   pod 'ReachabilitySwift'
 
+  # Pod for Brands' animation
+  pod "Spruce", '2.2.0'
+
   target 'SalamBroTests' do
     inherit! :search_paths
     # Pods for testing
