@@ -19,7 +19,7 @@ protocol MenuDetailModifierCellViewModel {
 }
 
 final class MenuDetailModifierCellViewModelImpl: MenuDetailModifierCellViewModel {
-    private let modifierGroup: ModifierGroup
+    private var modifierGroup: ModifierGroup
     private var value: Modifier?
 
     lazy var outputs = Output(name: makeTitle())
@@ -82,7 +82,12 @@ extension MenuDetailModifierCellViewModelImpl {
     }
 
     private func makeValueText() {
-        modifierGroup.selectedModifiers.map { $0. }
+        let valueText = modifierGroup
+            .selectedModifiers
+            .map { $0.name }
+            .joined(separator: ", ")
+
+        outputs.value.accept(valueText)
     }
 }
 

@@ -134,8 +134,7 @@ extension MenuDetailViewModelImpl {
                       .init(name: "Фанта",
                             uuid: "3",
                             image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                  ],
-                  selectedModifiers: nil),
+                  ]),
             .init(uuid: "2",
                   name: "Выберите напиток",
                   minAmount: 1,
@@ -151,8 +150,7 @@ extension MenuDetailViewModelImpl {
                       .init(name: "Фанта",
                             uuid: "6",
                             image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                  ],
-                  selectedModifiers: nil),
+                  ]),
             .init(uuid: "3",
                   name: "Выберите напиток",
                   minAmount: 0,
@@ -168,8 +166,7 @@ extension MenuDetailViewModelImpl {
                       .init(name: "Фанта",
                             uuid: "9",
                             image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                  ],
-                  selectedModifiers: nil),
+                  ]),
         ]
 
         modifierCellViewModels = modifierGroups.map {

@@ -50,7 +50,7 @@ struct ModifierGroup: Codable {
     let isRequired: Bool
     let modifiers: [Modifier]
 
-    lazy var selectedModifiers: [Modifier] = []
+    var selectedModifiers: [Modifier] = []
 
     enum CodingKeys: String, CodingKey {
         case uuid, name, modifiers
@@ -79,7 +79,7 @@ extension MenuPositionDetail {
                 categoryUUID: categoryUUID
             ),
             modifierGroups: modifierGroups.map { modifierGroup in
-                var modifierGroup = modifierGroup
+                let modifierGroup = modifierGroup
                 return .init(
                     uuid: modifierGroup.uuid,
                     modifiers: modifierGroup.selectedModifiers.compactMap { $0 }.map { modifier in
