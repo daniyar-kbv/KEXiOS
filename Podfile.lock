@@ -27,7 +27,7 @@ PODS:
     - RxSwift (~> 5)
   - RxSwift (5.1.2)
   - SnapKit (5.0.1)
-  - Spruce (1.0.0)
+  - Spruce (2.2.0)
   - SVProgressHUD (2.2.5)
   - YandexMapKit (3.4):
     - YandexRuntime (= 3.4)
@@ -52,7 +52,7 @@ DEPENDENCIES:
   - RxCocoa
   - RxSwift
   - SnapKit
-  - Spruce (~> 1.0.0)
+  - Spruce (= 2.2.0)
   - SVProgressHUD
   - YandexMapKit (= 3.4)
   - YandexMapKitSearch (= 3.4)
@@ -98,12 +98,12 @@ SPEC CHECKSUMS:
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  Spruce: 07ffdb990923f500111fcbf13d102e16075b230e
+  Spruce: 8456e4ab61ec6fd045e77dfcf07916e2e89f24d9
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   YandexMapKit: f222923561fe159dd8480d927f61950fc5ff3b8d
   YandexMapKitSearch: 9d658009a11ce4973e5b1c59aacb72c3f63c808a
   YandexRuntime: 2547d72a3ce4757f16ad188cfbe8a124ae13d806
 
-PODFILE CHECKSUM: f1dcb28635bb011abe1221287355bdee5a1dd857
+PODFILE CHECKSUM: 1a45378003695fd0f3952e32c22ee12bfd5b0095
 
 COCOAPODS: 1.10.1
