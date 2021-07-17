@@ -35,8 +35,9 @@ class PaymentMethod {
     var title: String {
         switch type {
         case .savedCard:
-            guard let card = value as? SavedCard else { return "" }
-            return "Карта *\(card.lastFourDigits)"
+            guard let card = value as? MyCard else { return "" }
+//                Tech debt: change
+            return "Карта \(card.cardMaskedNumber)"
         case .card: return "Картой в приложении"
         case .cash: return "Наличными курьеру"
         }
@@ -59,7 +60,7 @@ extension PaymentMethod: Equatable {
 
         switch lhs.type {
         case .savedCard:
-            return lhs.value as? SavedCard == rhs.value as? SavedCard
+            return lhs.value as? MyCard == rhs.value as? MyCard
         case .card:
             return lhs.value as? PaymentCard == rhs.value as? PaymentCard
         case .cash:

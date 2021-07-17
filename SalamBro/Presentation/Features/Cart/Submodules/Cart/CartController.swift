@@ -117,6 +117,14 @@ class CartController: UIViewController, AnimationViewPresentable, LoaderDisplaya
             .subscribe(onNext: { [weak self] error in
                 self?.showError(error)
             }).disposed(by: disposeBag)
+
+        viewModel.outputs.toAuth
+            .bind(to: outputs.toAuth)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.toPayment
+            .bind(to: outputs.toPayment)
+            .disposed(by: disposeBag)
     }
 
     private func update() {
@@ -191,7 +199,7 @@ extension CartController {
     }
 
     @objc func buttonAction() {
-        outputs.toAuth.accept(())
+        viewModel.proceedButtonTapped()
     }
 }
 
@@ -290,6 +298,7 @@ extension CartController: CartFooterDelegate {
 extension CartController {
     struct Output {
         let toAuth = PublishRelay<Void>()
+        let toPayment = PublishRelay<Void>()
         let toMenu = PublishRelay<Void>()
     }
 }

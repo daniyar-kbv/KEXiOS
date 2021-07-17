@@ -126,7 +126,7 @@ final class PaymentCoordinator: BaseCoordinator {
 
         cashPage.outputs.close
             .subscribe(onNext: {
-                cashPage.dismiss(animated: false)
+                cashPage.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
         let nav = SBNavigationController(rootViewController: cashPage)

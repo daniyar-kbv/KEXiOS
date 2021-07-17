@@ -28,3 +28,13 @@ struct CreatePaymentDTO: Encodable {
         case cardholderName = "card_holder_name"
     }
 }
+
+struct Create3DSPaymentDTO: Encodable {
+    let paRes: String
+    let transactionId: String
+
+    enum CodingKeys: String, CodingKey {
+        case paRes = "pa_res"
+        case transactionId = "outer_id"
+    }
+}

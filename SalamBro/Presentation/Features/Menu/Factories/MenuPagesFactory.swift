@@ -27,7 +27,8 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
     private func makeMenuViewModel() -> MenuViewModelProtocol {
         return scoped(MenuViewModel(locationRepository: repositoryComponents.makeAddressRepository(),
                                     brandRepository: repositoryComponents.makeBrandRepository(),
-                                    menuRepository: repositoryComponents.makeMenuRepository()))
+                                    menuRepository: repositoryComponents.makeMenuRepository(),
+                                    defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
     func makePromotionsPage(url: URL, name: String) -> AgreementController {

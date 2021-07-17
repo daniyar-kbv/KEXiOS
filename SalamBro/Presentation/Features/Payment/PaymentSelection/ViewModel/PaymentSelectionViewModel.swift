@@ -19,11 +19,21 @@ protocol PaymentSelectionViewModel: AnyObject {
 final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
     private let disposeBag = DisposeBag()
     private let paymentRepository: PaymentRepository
+    private let menuRepository: MenuRepository
+    private let cartRepository: CartRepository
+    private let defaultStorage: DefaultStorage
 
     let outputs = Output()
 
-    init(paymentRepository: PaymentRepository) {
+    init(paymentRepository: PaymentRepository,
+         menuRepository: MenuRepository,
+         cartRepository: CartRepository,
+         defaultStorage: DefaultStorage)
+    {
         self.paymentRepository = paymentRepository
+        self.menuRepository = menuRepository
+        self.cartRepository = cartRepository
+        self.defaultStorage = defaultStorage
 
         bindRepository()
     }
@@ -43,17 +53,28 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
                 self?.outputs.didSelectPaymentMethod.accept(selectedPaymentMethod.title)
             }).disposed(by: disposeBag)
 
-        paymentRepository.outputs.didStartRequest
+        paymentRepository.outputs.didStartPaymentRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        paymentRepository.outputs.didEndRequest
+        paymentRepository.outputs.didEndPaymentRequest
             .bind(to: outputs.didEndRequest)
             .disposed(by: disposeBag)
 
         paymentRepository.outputs.didGetError
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
+
+        paymentRepository.outputs.didMakePayment
+            .subscribe(onNext: { [weak self] orderStatus in
+                self?.finishPayment(orderStatus: orderStatus)
+            }).disposed(by: disposeBag)
+    }
+
+    private func finishPayment(orderStatus _: OrderStatus) {
+        cartRepository.cleanUp()
+        defaultStorage.cleanUp(key: .leadUUID)
+        menuRepository.getMenuItems()
     }
 }
 

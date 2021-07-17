@@ -20,6 +20,7 @@ protocol RepositoryComponents: AnyObject {
     func makeDocumentsRepository() -> DocumentsRepository
     func makeRateOrderRepository() -> RateOrderRepository
     func makePaymentRepository() -> PaymentRepository
+    func makeProfileRepository() -> ProfilePageRepository
 }
 
 final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponents {
@@ -87,6 +88,12 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     func makePaymentRepository() -> PaymentRepository {
         return weakShared(PaymentRepositoryImpl(paymentService: serviceComponents.paymentsService(),
                                                 defaultStorage: DefaultStorageImpl.sharedStorage))
+    }
+
+    func makeProfileRepository() -> ProfilePageRepository {
+        return shared(ProfilePageRepositoryImpl(profileService: serviceComponents.profileService(),
+                                                authService: serviceComponents.authService(),
+                                                tokenStorage: AuthTokenStorageImpl.sharedStorage))
     }
 
     private func makeLocalStorage() -> Storage {

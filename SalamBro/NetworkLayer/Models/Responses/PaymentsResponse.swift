@@ -16,3 +16,15 @@ struct CreatePaymentResponse: Decodable {
     let data: OrderStatus?
     let error: ErrorResponse?
 }
+
+struct MyCardsResponse: Decodable {
+    let data: Data?
+    let error: ErrorResponse?
+
+    struct Data: Decodable {
+        let count: Int
+        let next: String?
+        let previous: String?
+        let results: [MyCard]
+    }
+}

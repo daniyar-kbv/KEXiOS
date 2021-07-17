@@ -11,6 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol PaymentsService: AnyObject {
+    func myCards() -> Single<[MyCard]>
     func createOrder(dto: CreateOrderDTO) -> Single<Void>
     func createPayment(dto: CreatePaymentDTO) -> Single<OrderStatus>
 }
@@ -22,6 +23,26 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
         self.provider = provider
     }
 
+    func myCards() -> Single<[MyCard]> {
+        return provider.rx
+            .request(.myCards)
+            .map { response in
+                guard let response = try? response.map(MyCardsResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = response.error {
+                    throw error
+                }
+
+                guard let myCards = response.data?.results else {
+                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
+                }
+
+                return myCards
+            }
+    }
+
     func createOrder(dto: CreateOrderDTO) -> Single<Void> {
         return provider.rx
             .request(.createOrder(dto: dto))
@@ -31,6 +52,10 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
                 }
 
                 if let error = response.error {
+                    guard error.code != Constants.ErrorCode.orderAlreadyExists else {
+                        return ()
+                    }
+
                     throw error
                 }
 

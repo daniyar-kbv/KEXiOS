@@ -19,6 +19,12 @@ struct Constants {
     static let ALA_LAT: Double = 43.241044
     static let ALA_LON: Double = 76.927359
 
+    enum ErrorCode {
+        static let orderAlreadyExists = "order_already_exists"
+    }
+}
+
+extension Constants {
     private static func getPlistValue(by key: String) -> String {
         guard let filePath = Bundle.main.path(forResource: "SalamBro-Info", ofType: "plist") else {
             fatalError("Couldn't find file 'SalamBro-Info.plist'.")

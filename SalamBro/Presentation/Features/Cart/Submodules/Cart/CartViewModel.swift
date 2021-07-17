@@ -21,17 +21,23 @@ protocol CartViewModel {
     func increment(postitonUUID: String)
     func decrement(postitonUUID: String)
     func delete(postitonUUID: String)
+
+    func proceedButtonTapped()
 }
 
 final class CartViewModelImpl: CartViewModel {
     private let disposeBag = DisposeBag()
     private let cartRepository: CartRepository
+    private let profileRepository: ProfilePageRepository
 
     var items: [CartItem] = []
     let outputs = Output()
 
-    init(cartRepository: CartRepository) {
+    init(cartRepository: CartRepository,
+         profileRepository: ProfilePageRepository)
+    {
         self.cartRepository = cartRepository
+        self.profileRepository = profileRepository
 
         bind()
     }
@@ -72,6 +78,15 @@ final class CartViewModelImpl: CartViewModel {
     func getIsEmpty() -> Bool {
         return items.isEmpty
     }
+
+    func proceedButtonTapped() {
+        guard profileRepository.userDidAuthenticate() else {
+            outputs.toAuth.accept(())
+            return
+        }
+
+        outputs.toPayment.accept(())
+    }
 }
 
 extension CartViewModelImpl {
@@ -98,5 +113,8 @@ extension CartViewModelImpl {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
+
+        let toAuth = PublishRelay<Void>()
+        let toPayment = PublishRelay<Void>()
     }
 }

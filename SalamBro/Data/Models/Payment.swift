@@ -8,12 +8,18 @@
 import Foundation
 
 struct OrderStatus: Decodable {
-    let order: Int
+    let uuid: String
+    let outerId: String
+    let paReq: String?
+    let acsURL: String?
     let status: String
-    let statusReason: String
+    let statusReason: String?
 
     enum CodingKeys: String, CodingKey {
-        case order, status
+        case uuid, status
+        case outerId = "outer_id"
+        case paReq = "pa_req"
+        case acsURL = "acs_url"
         case statusReason = "status_reason"
     }
 }
@@ -24,21 +30,33 @@ extension OrderStatus {
     }
 
     enum StatusType: String {
+        case new = "NEW"
         case completed = "COMPLETED"
         case canceled = "CANCELLED"
         case declined = "DECLINED"
+        case awaitingAuthentication = "AWAITING_AUTHENTICATION"
     }
 }
 
-struct SavedCard {
-    let id: Int
-    let lastFourDigits: String
+struct MyCard: Decodable {
+    let uuid: String
+    let cardHolderName: String
+    let cardMaskedNumber: String
+    let cardExpirationDate: String
+    let cardType: String
+
+    enum CodingKeys: String, CodingKey {
+        case uuid
+        case cardHolderName = "card_holder_name"
+        case cardMaskedNumber = "card_masked_number"
+        case cardExpirationDate = "card_expiration_date"
+        case cardType = "card_type"
+    }
 }
 
-extension SavedCard: Equatable {
+extension MyCard: Equatable {
     static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.id == rhs.id &&
-            lhs.lastFourDigits == rhs.lastFourDigits
+        return lhs.uuid == rhs.uuid
     }
 }
 
