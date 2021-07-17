@@ -40,6 +40,10 @@ target 'SalamBro' do
   # Pod for Brands' animation
   pod "Spruce", '2.2.0'
 
+  # Firebase
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Messaging'
+
   target 'SalamBroTests' do
     inherit! :search_paths
     # Pods for testing

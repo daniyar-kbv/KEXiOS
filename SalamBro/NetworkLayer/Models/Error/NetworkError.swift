@@ -13,11 +13,13 @@ protocol ErrorPresentable: Error {
 
 enum NetworkError: ErrorPresentable {
     case badMapping
+    case noData
     case error(String)
 
     var presentationDescription: String {
         switch self {
         case .badMapping: return SBLocalization.localized(key: ErrorText.Network.mappingError)
+        case .noData: return SBLocalization.localized(key: ErrorText.Network.noData)
         case let .error(error): return error
         }
     }

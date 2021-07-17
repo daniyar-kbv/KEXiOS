@@ -38,6 +38,8 @@ final class AppCoordinator: BaseCoordinator {
         switchFlows()
     }
 
+    func handleNotification(pushNotification _: PushNotification) {}
+
     private func configureLocalization() {
         guard let _ = DefaultStorageImpl.sharedStorage.appLocale else {
             DefaultStorageImpl.sharedStorage.persist(appLocale: Locale.current.identifier.components(separatedBy: "_")[0]) // Default system locale

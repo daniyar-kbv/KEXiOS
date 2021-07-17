@@ -119,12 +119,11 @@ extension MapViewModel {
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        addressRepository.outputs.didGetLeadUUID.bind {
-            [weak self] leadUUID in
-            self?.defaultStorage.persist(leadUUID: leadUUID)
-            self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
-        }
-        .disposed(by: disposeBag)
+        addressRepository.outputs.didGetLeadUUID
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
+            })
+            .disposed(by: disposeBag)
 
         addressRepository.outputs.didEndRequest
             .bind(to: outputs.didFinishRequest)

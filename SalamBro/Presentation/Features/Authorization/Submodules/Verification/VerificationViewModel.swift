@@ -14,43 +14,48 @@ final class VerificationViewModel {
 
     let outputs = Output()
 
-    private let repository: AuthRepository
+    private let authRepository: AuthRepository
+    private let notificationsRepository: PushNotificationsRepository
     private(set) var phoneNumber: String
 
-    init(repository: AuthRepository, phoneNumber: String) {
-        self.repository = repository
+    init(authRepository: AuthRepository,
+         notificationsRepository: PushNotificationsRepository,
+         phoneNumber: String)
+    {
+        self.authRepository = authRepository
+        self.notificationsRepository = notificationsRepository
         self.phoneNumber = phoneNumber
         bindOutputs()
     }
 
     private func bindOutputs() {
-        repository.outputs.didStartRequest
+        authRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        repository.outputs.didVerifyOTP
+        authRepository.outputs.didVerifyOTP
             .bind(to: outputs.didVerifyOTP)
             .disposed(by: disposeBag)
 
-        repository.outputs.didResendOTP
+        authRepository.outputs.didResendOTP
             .bind(to: outputs.didResendOTP)
             .disposed(by: disposeBag)
 
-        repository.outputs.didEndRequest
+        authRepository.outputs.didEndRequest
             .bind(to: outputs.didEndRequest)
             .disposed(by: disposeBag)
 
-        repository.outputs.didFail
+        authRepository.outputs.didFail
             .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
     }
 
     func verifyOTP(code: String) {
-        repository.verifyOTP(code: code, number: phoneNumber)
+        authRepository.verifyOTP(code: code, number: phoneNumber)
     }
 
     func resendOTP() {
-        repository.resendOTP(with: phoneNumber)
+        authRepository.resendOTP(with: phoneNumber)
     }
 }
 
