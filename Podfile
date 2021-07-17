@@ -37,6 +37,9 @@ target 'SalamBro' do
   # Pod for observing internet connection
   pod 'ReachabilitySwift'
 
+  # Pod for Brands' animation
+  pod "Spruce", '2.2.0'
+  
   # Pod for payments
   pod 'Cloudpayments', :git =>  "https://github.com/cloudpayments/CloudPayments-SDK-iOS", :branch => "master"
   pod 'CloudpaymentsNetworking', :git =>  "https://github.com/cloudpayments/CloudPayments-SDK-iOS", :branch => "master"
