@@ -93,8 +93,7 @@ final class MenuViewModel: MenuViewModelProtocol {
 
     private func bindAddressRepository() {
         locationRepository.outputs.didGetLeadUUID
-            .subscribe(onNext: { [weak self] leadUUID in
-                self?.defaultStorage.persist(leadUUID: leadUUID)
+            .subscribe(onNext: { [weak self] in
                 self?.update()
             }).disposed(by: disposeBag)
     }

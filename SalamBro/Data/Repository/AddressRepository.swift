@@ -158,7 +158,12 @@ extension AddressRepositoryImpl {
 
 extension AddressRepositoryImpl {
     private func fcmTokenCreate() {
-        notificationsService.fcmTokenCreate()
+        guard let leadUUID = defaultStorage.leadUUID,
+              let fcmToken = defaultStorage.fcmToken else { return }
+
+        let dto = FCMTokenCreateDTO(leadUUID: leadUUID, fcmToken: fcmToken)
+
+        notificationsService.fcmTokenCreate(dto: dto)
             .subscribe()
             .disposed(by: disposeBag)
     }

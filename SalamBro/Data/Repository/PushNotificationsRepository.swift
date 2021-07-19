@@ -30,9 +30,11 @@ final class PushNotificationsRepositoryImpl: PushNotificationsRepository {
     }
 
     func tokenUpdate(fcmToken: String) {
-        guard fcmToken != defaultStorage.fcmToken else { return }
+        guard let fcmToken = defaultStorage.fcmToken else { return }
 
-        notificationsService.fcmTokenUpdate()
+        let dto = FCMTokenUpdateDTO(fcmToken: fcmToken)
+
+        notificationsService.fcmTokenUpdate(dto: dto)
             .subscribe()
             .disposed(by: disposeBag)
     }

@@ -25,9 +25,9 @@ final class PushNotificationsServiceMoyaImpl: PushNotificationsService {
         self.provider = provider
     }
 
-    func fcmTokenUpdate(dto _: FCMTokenUpdateDTO) -> Single<Void> {
+    func fcmTokenUpdate(dto: FCMTokenUpdateDTO) -> Single<Void> {
         return provider.rx
-            .request(.fcmTokenUpdate)
+            .request(.fcmTokenUpdate(dto: dto))
             .map { response in
                 guard let response = try? response.map(PushNotificationsFCMTokenUpdateResponse.self) else {
                     throw NetworkError.badMapping

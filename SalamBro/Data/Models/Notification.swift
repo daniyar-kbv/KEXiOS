@@ -32,7 +32,10 @@ class PushNotification {
 
 extension PushNotification {
     enum PushType: String {
-        case test
+        case info = "INFO"
+        case promotions = "PROMOTION"
+        case orderRate = "ORDER_RATE"
+        case orderStatusUpdate = "ORDER_STATUS_UPDATE"
     }
 }
 

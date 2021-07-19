@@ -448,8 +448,8 @@
 		070881AEDB3977B0482B6A6B06A1C201 /* GeoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoStorage.swift; sourceTree = "<group>"; };
 		04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3C6169FACF56887087B2E3B796665DC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E9C0AD81DF662457ACBFD84D90AF44BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82DF8DD4A94962F1A97777FAD3747A32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9C0AD81DF662457ACBFD84D90AF44BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39BA308FCB7A9A775DD5A1463690B68E /* LegacyCartDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyCartDTO.swift; sourceTree = "<group>"; };
@@ -789,6 +789,14 @@
 			path = Submodules;
 			sourceTree = "<group>";
 		};
+		12394A5115DC0311ED41109E4F3DBCA4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5D841210F58CA8DA409C11582DE8C696 /* PaymentCardViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		13778F5B21BBFEA487BE9B55AB68F1A4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -810,22 +818,6 @@
 				A21DBF1D8149DD277ACF2EE07316691C /* SupportCoordinator.swift */,
 			);
 			path = Support;
-			sourceTree = "<group>";
-		};
-		12394A5115DC0311ED41109E4F3DBCA4 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				5D841210F58CA8DA409C11582DE8C696 /* PaymentCardViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		B3CBE4B9A036BA3E8CB39BC37256E199 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				F7B1CF2D4ED70367529D3B32549BEF13 /* PaymentCardViewController.swift */,
-			);
-			path = ViewController;
 			sourceTree = "<group>";
 		};
 		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
@@ -1176,15 +1168,6 @@
 				32EEE5D86DC6A55586D8809FABE54E7A /* AppDelegate.swift */,
 			);
 			path = Application;
-			sourceTree = "<group>";
-		};
-		F60E9B3B1E597277A2D662757633B9C6 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				6084ABDFDB9352185A02BB9E9370BF29 /* PaymentCardMaskedField.swift */,
-				A41290F89962F294E2049FA97B233586 /* PaymentCardView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		53B499A045A3830A19D9775F4DE96114 /* MenuCell */ = {
@@ -1825,6 +1808,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		B3CBE4B9A036BA3E8CB39BC37256E199 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F7B1CF2D4ED70367529D3B32549BEF13 /* PaymentCardViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		B450D5A04E032E2AEC030D74F0A21F31 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2232,6 +2223,15 @@
 				D3024E6B5CD8BAACEE6C482FDC0CF46C /* ProfilePagesFactory.swift */,
 			);
 			path = Factories;
+			sourceTree = "<group>";
+		};
+		F60E9B3B1E597277A2D662757633B9C6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6084ABDFDB9352185A02BB9E9370BF29 /* PaymentCardMaskedField.swift */,
+				A41290F89962F294E2049FA97B233586 /* PaymentCardView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		FAD3D4ACC3D067B55E74C4F3058E1D14 /* CartProduct */ = {
@@ -3006,7 +3006,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = ULVD64ZNV2;
-				INFOPLIST_FILE = SalamBro/Info.plist;
+				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3075,7 +3075,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = ULVD64ZNV2;
-				INFOPLIST_FILE = SalamBro/Info.plist;
+				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
