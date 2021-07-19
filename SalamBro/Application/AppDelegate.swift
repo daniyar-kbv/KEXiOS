@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var repositoryComponents = RepositoryComponentsAssembly(serviceComponents: serviceComponents)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        YMKMapKit.setApiKey(apiKey)
+        YMKMapKit.setApiKey(Constants.apiKey)
         configureAppCoordinator()
         configureProgressHUD()
         configureKeyboardManager()

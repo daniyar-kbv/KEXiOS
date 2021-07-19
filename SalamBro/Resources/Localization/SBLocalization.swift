@@ -343,6 +343,13 @@ enum PaymentText: UILocalizable {
         case saveButton = "Payment.Card.saveButton"
 
         var localized: String { rawValue }
+
+        enum Error: String, UILocalizable {
+            case invalidCard = "Payment.Card.Error.invalidCard"
+            case invalidExpiryDate = "Payment.Card.Error.invalidExpiryDate"
+
+            var localized: String { rawValue }
+        }
     }
 
     enum PaymentCash: String, UILocalizable {

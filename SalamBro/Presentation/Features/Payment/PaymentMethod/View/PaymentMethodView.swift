@@ -8,11 +8,11 @@
 import UIKit
 
 final class PaymentMethodView: UIView {
-    private lazy var tableView: UITableView = {
+    private(set) lazy var tableView: UITableView = {
         let view = UITableView()
         view.backgroundColor = .arcticWhite
         view.tableFooterView = UIView()
-        view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        view.register(PaymentMethodCell.self, forCellReuseIdentifier: String(describing: PaymentMethodCell.self))
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
         view.rowHeight = 50

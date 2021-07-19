@@ -32,10 +32,8 @@ struct ErrorResponse: Codable, ErrorPresentable {
     var presentationDescription: String {
         #if DEBUG
             return code
+        #else
+            return message
         #endif
-
-        // MARK: Tech debt, before upload to AppStore uncomment this 👇🏻  code and comment ⬆️ code
-
-//        return message
     }
 }

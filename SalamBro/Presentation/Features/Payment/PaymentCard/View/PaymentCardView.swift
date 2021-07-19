@@ -6,14 +6,18 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 import UIKit
 
-protocol PaymentCardViewDelegate {
+protocol PaymentCardViewDelegate: AnyObject {
     func onSaveTap()
 }
 
 final class PaymentCardView: UIView {
-    var delegate: PaymentCardViewDelegate?
+    weak var delegate: PaymentCardViewDelegate?
+
+    private let disposeBag = DisposeBag()
 
     private lazy var cardNumberField = PaymentCardMaskedField(inputType: .cardNumber)
     private lazy var expiryDateField = PaymentCardMaskedField(inputType: .expiryDate)
@@ -56,9 +60,7 @@ final class PaymentCardView: UIView {
     private lazy var saveButton: UIButton = {
         let view = UIButton()
         view.setTitle(SBLocalization.localized(key: PaymentText.PaymentCard.saveButton), for: .normal)
-        view.addTarget(self, action: #selector(handleSaveButtonAction), for: .touchUpInside)
         view.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        view.isEnabled = false
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         return view
@@ -127,11 +129,31 @@ final class PaymentCardView: UIView {
                 self?.checkFields()
             }
         }
-    }
-}
 
-extension PaymentCardView {
-    @objc func handleSaveButtonAction() {
-        delegate?.onSaveTap()
+        saveButton
+            .rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.delegate?.onSaveTap()
+            }).disposed(by: disposeBag)
+    }
+
+    func getCardNumber() -> String? {
+        return cardNumberField.text
+    }
+
+    func getExpieryDate() -> String? {
+        return expiryDateField.text
+    }
+
+    func getCVV() -> String? {
+        return cvvCodeField.text
+    }
+
+    func getCardholderName() -> String? {
+        return cardholderNameField.text
+    }
+
+    func getNeedsSave() -> Bool {
+        return switchButton.isOn
     }
 }

@@ -37,16 +37,24 @@ final class PaymentCoordinator: BaseCoordinator {
 
         paymentSelectionVC.outputs.onChangePaymentMethod
             .subscribe(onNext: { [weak self] in
-                self?.showChangePaymentVC(on: paymentSelectionVC) { paymentMethod in
-                    paymentSelectionVC.selected(paymentMethod: paymentMethod)
-                }
+                self?.showChangePaymentVC(on: paymentSelectionVC)
+            }).disposed(by: disposeBag)
+
+        paymentSelectionVC.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showPaymentInProcessView(on: paymentSelectionVC)
+            }).disposed(by: disposeBag)
+
+        paymentSelectionVC.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hidePaymentInProcessView(on: paymentSelectionVC)
             }).disposed(by: disposeBag)
 
         let navigationVC = SBNavigationController(rootViewController: paymentSelectionVC)
         router.present(navigationVC, animated: true, completion: nil)
     }
 
-    private func showChangePaymentVC(on viewController: UIViewController, _ onSelect: @escaping (PaymentMethodType) -> Void) {
+    private func showChangePaymentVC(on viewController: UIViewController) {
         let paymentMethodVC = pagesFactory.makePaymentMethodPage()
 
         paymentMethodVC.outputs.close
@@ -55,17 +63,22 @@ final class PaymentCoordinator: BaseCoordinator {
             }).disposed(by: disposeBag)
 
         paymentMethodVC.outputs.didSelectPaymentMethod
-            .subscribe(onNext: { [weak self] method in
-                switch method {
+            .subscribe(onNext: {
+                paymentMethodVC.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+
+        paymentMethodVC.outputs.showPaymentMethod
+            .subscribe(onNext: { [weak self] paymentMethod in
+                switch paymentMethod.type {
                 case .card:
-                    self?.showCardPage(on: paymentMethodVC) {
+                    self?.showCardPage(on: paymentMethodVC,
+                                       paymentMethod: paymentMethod) {
                         paymentMethodVC.dismiss(animated: true)
-                        onSelect(method)
                     }
                 case .cash:
-                    self?.showCashPage(on: paymentMethodVC) {
+                    self?.showCashPage(on: paymentMethodVC,
+                                       paymentMethod: paymentMethod) {
                         paymentMethodVC.dismiss(animated: true)
-                        onSelect(method)
                     }
                 default:
                     break
@@ -76,11 +89,14 @@ final class PaymentCoordinator: BaseCoordinator {
         viewController.present(navigationVC, animated: true)
     }
 
-    private func showCardPage(on viewController: UIViewController, _ onDone: @escaping () -> Void) {
-        let cardPage = pagesFactory.makePaymentCardPage()
+    private func showCardPage(on viewController: UIViewController,
+                              paymentMethod: PaymentMethod,
+                              _ onDone: @escaping () -> Void)
+    {
+        let cardPage = pagesFactory.makePaymentCardPage(paymentMethod: paymentMethod)
 
         cardPage.outputs.onDone
-            .subscribe(onNext: {
+            .subscribe(onNext: { _ in
                 cardPage.dismiss(animated: false, completion: {
                     onDone()
                 })
@@ -95,11 +111,14 @@ final class PaymentCoordinator: BaseCoordinator {
         viewController.present(nav, animated: true)
     }
 
-    private func showCashPage(on viewController: UIViewController, _ onDone: @escaping () -> Void) {
-        let cashPage = pagesFactory.makePaymentCashPage()
+    private func showCashPage(on viewController: UIViewController,
+                              paymentMethod: PaymentMethod,
+                              _ onDone: @escaping () -> Void)
+    {
+        let cashPage = pagesFactory.makePaymentCashPage(paymentMethod: paymentMethod)
 
         cashPage.outputs.onDone
-            .subscribe(onNext: {
+            .subscribe(onNext: { _ in
                 cashPage.dismiss(animated: false, completion: {
                     onDone()
                 })
@@ -114,17 +133,13 @@ final class PaymentCoordinator: BaseCoordinator {
         viewController.present(nav, animated: true)
     }
 
-    private func showPaymentInProcessView() {
-        guard let viewController = UIApplication.shared.keyWindow?.rootViewController as? UIViewController & AnimationViewPresentable else { return }
-
-        viewController.showAnimationView(animationType: .payment) { [weak self] in
-            self?.hideShowPaymentInProcessView()
+    private func showPaymentInProcessView(on viewController: UIViewController & AnimationViewPresentable) {
+        viewController.showAnimationView(animationType: .payment, fullScreen: true) {
+//            Tech debt
         }
     }
 
-    private func hideShowPaymentInProcessView() {
-        guard let viewController = UIApplication.shared.keyWindow?.rootViewController as? UIViewController & AnimationViewPresentable else { return }
-
+    private func hidePaymentInProcessView(on viewController: UIViewController & AnimationViewPresentable) {
         viewController.hideAnimationView()
     }
 }

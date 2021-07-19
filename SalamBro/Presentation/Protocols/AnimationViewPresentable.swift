@@ -10,33 +10,33 @@ import UIKit
 
 protocol AnimationViewPresentable {
     func showAnimationView(animationType: LottieAnimationModel,
+                           fullScreen: Bool,
                            action: (() -> Void)?)
 }
 
 extension AnimationViewPresentable where Self: UIViewController {
     func showAnimationView(animationType: LottieAnimationModel,
+                           fullScreen: Bool,
                            action: (() -> Void)? = nil)
     {
         guard needsPresentation() else { return }
 
         let animationController = AnimationController(animationType: animationType)
         animationController.action = action
+        animationController.modalPresentationStyle = fullScreen ? .fullScreen : .currentContext
 
-        addChild(animationController)
-        view.addSubview(animationController.view)
-        animationController.view.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        guard let presentedViewController = presentedViewController else {
+            present(animationController, animated: false)
+            return
         }
-        animationController.didMove(toParent: self)
+
+        presentedViewController.dismiss(animated: false, completion: {
+            self.present(animationController, animated: false)
+        })
     }
 
-    func hideAnimationView() {
-        children.forEach {
-            guard let animationController = $0 as? AnimationController else { return }
-            animationController.willMove(toParent: nil)
-            animationController.view.removeFromSuperview()
-            animationController.removeFromParent()
-        }
+    func hideAnimationView(_ completionHandler: (() -> Void)? = nil) {
+        presentedViewController?.dismiss(animated: false, completion: completionHandler)
     }
 
     private func needsPresentation() -> Bool {

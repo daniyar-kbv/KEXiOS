@@ -30,7 +30,10 @@ final class CartCoordinator: BaseCoordinator {
         let cartPage = pagesFactory.makeCartPage()
 
         cartPage.outputs.toAuth.subscribe(onNext: { [weak self] in
-//            self?.startAuthCoordinator()
+            self?.startAuthCoordinator()
+        }).disposed(by: disposeBag)
+
+        cartPage.outputs.toPayment.subscribe(onNext: { [weak self] in
             self?.startPaymentCoordinator()
         }).disposed(by: disposeBag)
 

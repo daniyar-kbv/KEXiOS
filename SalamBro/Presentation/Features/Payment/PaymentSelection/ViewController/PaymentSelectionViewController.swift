@@ -5,11 +5,12 @@
 //  Created by Ilyar Mnazhdin on 06.07.2021.
 //
 
+import Cloudpayments
 import RxCocoa
 import RxSwift
 import UIKit
 
-final class PaymentSelectionViewController: UIViewController {
+final class PaymentSelectionViewController: UIViewController, AlertDisplayable, AnimationViewPresentable {
     private let disposeBag = DisposeBag()
     private let viewModel: PaymentSelectionViewModel
     private lazy var contentView: PaymentSelectionContainerView = {
@@ -49,6 +50,15 @@ final class PaymentSelectionViewController: UIViewController {
             self?.outputs.close.accept(())
         }
 
+//        let cardCryptogramPacket = Card.makeCardCryptogramPacket(
+//            with: "4111 1111 1111 1111",
+//            expDate: "11/23",
+//            cvv: "111",
+//            merchantPublicID: Constants.cloudpaymentsMerchantId
+//        )
+//
+//        print(cardCryptogramPacket)
+
         bindViewModel()
     }
 
@@ -57,10 +67,19 @@ final class PaymentSelectionViewController: UIViewController {
             .subscribe(onNext: { [weak self] text in
                 self?.contentView.setPaymentMethod(text: text)
             }).disposed(by: disposeBag)
-    }
 
-    func selected(paymentMethod: PaymentMethodType) {
-        viewModel.set(paymentMethod: paymentMethod)
+        viewModel.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -68,10 +87,17 @@ extension PaymentSelectionViewController: PaymentSelectionContainerViewDelegate 
     func handleChangePaymentMethod() {
         outputs.onChangePaymentMethod.accept(())
     }
+
+    func handleSubmitButtonTap() {
+        viewModel.makePayment()
+    }
 }
 
 extension PaymentSelectionViewController {
     struct Output {
+        let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
+
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()
         let onChangePaymentMethod = PublishRelay<Void>()

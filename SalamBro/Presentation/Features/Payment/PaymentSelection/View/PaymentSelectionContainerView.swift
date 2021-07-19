@@ -11,6 +11,7 @@ import UIKit
 
 protocol PaymentSelectionContainerViewDelegate: AnyObject {
     func handleChangePaymentMethod()
+    func handleSubmitButtonTap()
 }
 
 final class PaymentSelectionContainerView: UIView {
@@ -77,7 +78,7 @@ extension PaymentSelectionContainerView {
             .rx
             .tap
             .subscribe(onNext: { [weak self] in
-                guard let _ = self else { return }
+                self?.delegate?.handleSubmitButtonTap()
             })
             .disposed(by: disposeBag)
 

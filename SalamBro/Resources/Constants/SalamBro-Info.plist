@@ -4,5 +4,7 @@
 <dict>
 	<key>API_KEY</key>
 	<string>c4d8ffe6-c93f-4f23-ac7a-89362bd75d36</string>
+	<key>CLOUDPAYMENTS_MERCHANT_ID</key>
+	<string>pk_2ec019c3a3a24b44996a1a2ca6f8c</string>
 </dict>
 </plist>
