@@ -14,6 +14,7 @@ final class PaymentCoordinator: BaseCoordinator {
     private let disposeBag = DisposeBag()
 
     var didFinish: (() -> Void)?
+    var didMakePayment: (() -> Void)?
 
     private(set) var router: Router
     private let pagesFactory: PaymentPagesFactory
@@ -61,6 +62,11 @@ final class PaymentCoordinator: BaseCoordinator {
         paymentSelectionVC.outputs.hide3DS
             .subscribe(onNext: { [weak self] in
                 self?.hide3DS()
+            }).disposed(by: disposeBag)
+
+        paymentSelectionVC.outputs.didMakePayment
+            .subscribe(onNext: { [weak self] in
+                self?.didMakePayment?()
             }).disposed(by: disposeBag)
 
         let navigationVC = SBNavigationController(rootViewController: paymentSelectionVC)

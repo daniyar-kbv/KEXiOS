@@ -63,7 +63,7 @@ final class MapViewModel {
         case .creation:
             addressRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
             bindToOrdersOutputs(using: lastAddress)
-            addressRepository.applyOrder()
+            addressRepository.applyOrder(withAddress: true)
         case .change:
             outputs.lastSelectedAddress.accept((lastAddress, commentary))
         }
@@ -120,8 +120,7 @@ extension MapViewModel {
             .disposed(by: disposeBag)
 
         addressRepository.outputs.didGetLeadUUID.bind {
-            [weak self] leadUUID in
-            self?.defaultStorage.persist(leadUUID: leadUUID)
+            [weak self] in
             self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
         }
         .disposed(by: disposeBag)

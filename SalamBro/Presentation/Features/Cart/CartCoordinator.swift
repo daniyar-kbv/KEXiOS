@@ -16,6 +16,7 @@ final class CartCoordinator: BaseCoordinator {
     private let coordinatorsFactory: CartCoordinatorsFactory
 
     var toMenu: (() -> Void)?
+    var toOrderHistory: (() -> Void)?
 
     init(router: Router,
          pagesFactory: CartPagesFactory,
@@ -64,6 +65,10 @@ final class CartCoordinator: BaseCoordinator {
         paymentCoordinator.didFinish = { [weak self, weak paymentCoordinator] in
             self?.remove(paymentCoordinator)
             paymentCoordinator = nil
+        }
+
+        paymentCoordinator.didMakePayment = { [weak self] in
+            self?.toOrderHistory?()
         }
 
         paymentCoordinator.start()

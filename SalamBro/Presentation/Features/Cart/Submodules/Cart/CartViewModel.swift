@@ -92,17 +92,14 @@ final class CartViewModelImpl: CartViewModel {
 extension CartViewModelImpl {
     func increment(postitonUUID: String) {
         cartRepository.incrementItem(positionUUID: postitonUUID)
-        outputs.update.accept(())
     }
 
     func decrement(postitonUUID: String) {
         cartRepository.decrementItem(positionUUID: postitonUUID)
-        outputs.update.accept(())
     }
 
     func delete(postitonUUID: String) {
         cartRepository.removeItem(positionUUID: postitonUUID)
-        outputs.update.accept(())
     }
 }
 

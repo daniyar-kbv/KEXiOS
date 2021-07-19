@@ -51,15 +51,6 @@ final class PaymentSelectionViewController: UIViewController, AlertDisplayable, 
             self?.outputs.close.accept(())
         }
 
-//        let cardCryptogramPacket = Card.makeCardCryptogramPacket(
-//            with: "4111 1111 1111 1111",
-//            expDate: "11/23",
-//            cvv: "111",
-//            merchantPublicID: Constants.cloudpaymentsMerchantId
-//        )
-//
-//        print(cardCryptogramPacket)
-
         bindViewModel()
     }
 
@@ -89,6 +80,10 @@ final class PaymentSelectionViewController: UIViewController, AlertDisplayable, 
         viewModel.outputs.hide3DS
             .bind(to: outputs.hide3DS)
             .disposed(by: disposeBag)
+
+        viewModel.outputs.didMakePayment
+            .bind(to: outputs.didMakePayment)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -112,5 +107,6 @@ extension PaymentSelectionViewController {
         let onChangePaymentMethod = PublishRelay<Void>()
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()
+        let didMakePayment = PublishRelay<Void>()
     }
 }

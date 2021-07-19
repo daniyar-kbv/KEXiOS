@@ -120,8 +120,7 @@ extension SelectMainInformationViewModel {
             .disposed(by: disposeBag)
 
         addressRepository.outputs.didGetLeadUUID.bind {
-            [weak self] leadUUID in
-            self?.defaultStorage.persist(leadUUID: leadUUID)
+            [weak self] in
             self?.outputs.didSave.accept(())
         }
         .disposed(by: disposeBag)
@@ -190,7 +189,7 @@ extension SelectMainInformationViewModel {
             break
         }
 
-        addressRepository.applyOrder()
+        addressRepository.applyOrder(withAddress: true)
     }
 
     func checkValues() {

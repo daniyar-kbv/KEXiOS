@@ -92,7 +92,9 @@ extension PaymentRepositoryImpl {
     func makePayment() {
         switch selectedPaymentMethod?.type {
         case .savedCard:
-            break
+            createOrder(
+                createCardPayment
+            )
         case .card:
             createOrder(
                 createPayment
@@ -146,18 +148,38 @@ extension PaymentRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
-    private func process(orderStatus: OrderStatus) {
+    private func createCardPayment() {
+        guard let leadUUID = defaultStorage.leadUUID,
+              let card: MyCard = selectedPaymentMethod?.getValue() else { return }
+
+        let dto = CardPaymentDTO(leadUUID: leadUUID, cardUUID: card.uuid)
+
+        paymentService.createCardPayment(dto: dto)
+            .subscribe(onSuccess: { [weak self] orderStatus in
+                self?.outputs.didEndPaymentRequest.accept(())
+                self?.process(orderStatus: orderStatus)
+            }, onError: { [weak self] error in
+                self?.outputs.didEndPaymentRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didGetError.accept(error)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func process(orderStatus: OrderStatusProtocol) {
         switch orderStatus.determineStatus() {
         case .completed:
-            outputs.didMakePayment.accept(orderStatus)
+            outputs.didMakePayment.accept(())
         case .awaitingAuthentication:
             show3DS(orderStatus: orderStatus)
         default:
-            break
+            guard let statusReason = orderStatus.statusReason else { return }
+            let error = ErrorResponse(code: orderStatus.status, message: statusReason)
+            outputs.didGetError.accept(error)
         }
     }
 
-    private func show3DS(orderStatus: OrderStatus) {
+    private func show3DS(orderStatus: OrderStatusProtocol) {
         guard let paReq = orderStatus.paReq,
               let acsUrl = orderStatus.acsURL else { return }
 
@@ -191,15 +213,16 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
     }
 
     func onAuthorizationCompleted(with md: String, paRes: String) {
-        threeDsProcessor = nil
         outputs.hide3DS.accept(())
-//        Tech debt: deinit paymentUUID
         guard let paymentUUID = paymentUUID else { return }
         send3DS(paymentUUID: paymentUUID, paRes: paRes, transactionId: md)
+        threeDsProcessor = nil
+        self.paymentUUID = nil
     }
 
     func onAuthorizationFailed(with html: String) {
         threeDsProcessor = nil
+        paymentUUID = nil
         outputs.hide3DS.accept(())
         print("error: \(html)")
     }
@@ -220,6 +243,6 @@ extension PaymentRepositoryImpl {
         let selectedPaymentMethod = BehaviorRelay<PaymentMethod?>(value: nil)
         let paymentMethods = PublishRelay<[PaymentMethod]>()
 
-        let didMakePayment = PublishRelay<OrderStatus>()
+        let didMakePayment = PublishRelay<Void>()
     }
 }

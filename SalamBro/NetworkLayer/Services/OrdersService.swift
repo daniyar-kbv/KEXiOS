@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol OrdersService: AnyObject {
-    func applyOrder(dto: OrderApplyDTO) -> Single<String>
+    func applyOrder(dto: OrderApplyDTO?) -> Single<String>
     func getProducts(for leadUUID: String) -> Single<OrderProductResponse.Data>
     func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail>
     func getCart(for leadUUID: String) -> Single<Cart>
@@ -25,7 +25,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
         self.provider = provider
     }
 
-    func applyOrder(dto: OrderApplyDTO) -> Single<String> {
+    func applyOrder(dto: OrderApplyDTO? = nil) -> Single<String> {
         return provider.rx
             .request(.apply(dto: dto))
             .map { response in

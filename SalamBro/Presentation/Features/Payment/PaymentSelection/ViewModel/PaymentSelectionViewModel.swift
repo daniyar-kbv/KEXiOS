@@ -20,19 +20,19 @@ protocol PaymentSelectionViewModel: AnyObject {
 final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
     private let disposeBag = DisposeBag()
     private let paymentRepository: PaymentRepository
-    private let menuRepository: MenuRepository
+    private let addressRepository: AddressRepository
     private let cartRepository: CartRepository
     private let defaultStorage: DefaultStorage
 
     let outputs = Output()
 
     init(paymentRepository: PaymentRepository,
-         menuRepository: MenuRepository,
+         addressRepository: AddressRepository,
          cartRepository: CartRepository,
          defaultStorage: DefaultStorage)
     {
         self.paymentRepository = paymentRepository
-        self.menuRepository = menuRepository
+        self.addressRepository = addressRepository
         self.cartRepository = cartRepository
         self.defaultStorage = defaultStorage
 
@@ -67,8 +67,8 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
             .disposed(by: disposeBag)
 
         paymentRepository.outputs.didMakePayment
-            .subscribe(onNext: { [weak self] orderStatus in
-                self?.finishPayment(orderStatus: orderStatus)
+            .subscribe(onNext: { [weak self] in
+                self?.finishPayment()
             }).disposed(by: disposeBag)
 
         paymentRepository.outputs.show3DS
@@ -80,10 +80,11 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
             .disposed(by: disposeBag)
     }
 
-    private func finishPayment(orderStatus _: OrderStatus) {
-        cartRepository.cleanUp()
+    private func finishPayment() {
         defaultStorage.cleanUp(key: .leadUUID)
-        menuRepository.getMenuItems()
+        cartRepository.cleanUp()
+        addressRepository.applyOrder(withAddress: false)
+        outputs.didMakePayment.accept(())
     }
 }
 
@@ -96,5 +97,6 @@ extension PaymentSelectionViewModelImpl {
         let didSelectPaymentMethod = PublishRelay<String>()
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()
+        let didMakePayment = PublishRelay<Void>()
     }
 }

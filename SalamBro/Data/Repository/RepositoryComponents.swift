@@ -33,6 +33,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     func makeAddressRepository() -> AddressRepository {
         return shared(AddressRepositoryImpl(storage: makeLocalStorage(),
                                             brandStorage: makeLocalStorage(),
+                                            defaultStorage: DefaultStorageImpl.sharedStorage,
                                             ordersService: serviceComponents.ordersService()))
     }
 

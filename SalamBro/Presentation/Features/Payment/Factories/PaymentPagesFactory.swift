@@ -32,7 +32,7 @@ final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
     private func makePaymentSelectionViewModel() -> PaymentSelectionViewModel {
         return scoped(PaymentSelectionViewModelImpl(
             paymentRepository: repositoryComponents.makePaymentRepository(),
-            menuRepository: repositoryComponents.makeMenuRepository(),
+            addressRepository: repositoryComponents.makeAddressRepository(),
             cartRepository: repositoryComponents.makeCartRepository(),
             defaultStorage: DefaultStorageImpl.sharedStorage
         )
