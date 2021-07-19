@@ -9,7 +9,7 @@ import Foundation
 
 struct OrderStatus: Decodable {
     let uuid: String
-    let outerId: String
+    let transactionId: String
     let paReq: String?
     let acsURL: String?
     let status: String
@@ -17,7 +17,7 @@ struct OrderStatus: Decodable {
 
     enum CodingKeys: String, CodingKey {
         case uuid, status
-        case outerId = "outer_id"
+        case transactionId = "outer_id"
         case paReq = "pa_req"
         case acsURL = "acs_url"
         case statusReason = "status_reason"

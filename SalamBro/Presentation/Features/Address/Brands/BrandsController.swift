@@ -18,8 +18,8 @@ final class BrandsController: UIViewController, AlertDisplayable {
     private let disposeBag: DisposeBag
     private let flowType: FlowType
 
-    let animations: [StockAnimation] = [.slide(.up, .moderately), .fadeIn]
-    var sortFunction: SortFunction = CorneredSortFunction(corner: .topLeft, interObjectDelay: 0.05)
+    let animations: [StockAnimation] = [.expand(.moderately), .fadeIn]
+    var sortFunction: SortFunction = RandomSortFunction(interObjectDelay: 0.05)
 
     private lazy var refreshControl: UIRefreshControl = {
         let action = UIRefreshControl()

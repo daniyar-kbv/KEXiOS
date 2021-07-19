@@ -8,6 +8,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import WebKit
 
 protocol PaymentSelectionViewModel: AnyObject {
     var outputs: PaymentSelectionViewModelImpl.Output { get }
@@ -69,6 +70,14 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
             .subscribe(onNext: { [weak self] orderStatus in
                 self?.finishPayment(orderStatus: orderStatus)
             }).disposed(by: disposeBag)
+
+        paymentRepository.outputs.show3DS
+            .bind(to: outputs.show3DS)
+            .disposed(by: disposeBag)
+
+        paymentRepository.outputs.hide3DS
+            .bind(to: outputs.hide3DS)
+            .disposed(by: disposeBag)
     }
 
     private func finishPayment(orderStatus _: OrderStatus) {
@@ -85,5 +94,7 @@ extension PaymentSelectionViewModelImpl {
         let didGetError = PublishRelay<ErrorPresentable>()
 
         let didSelectPaymentMethod = PublishRelay<String>()
+        let show3DS = PublishRelay<WKWebView>()
+        let hide3DS = PublishRelay<Void>()
     }
 }
