@@ -77,7 +77,10 @@ final class AuthRepositoryImpl: AuthRepository {
         guard let refreshToken = tokenStorage.refreshToken else { return }
         authService.refreshToken(with: .init(refresh: refreshToken))
             .subscribe(onSuccess: { [weak self] refreshTokenResponse in
-                self?.handleTokenResponse(accessToken: refreshTokenResponse.access, refreshToken: refreshTokenResponse.refresh)
+//                Tech debt: remove it
+                var token = refreshTokenResponse.access
+                token.removeLast()
+                self?.handleTokenResponse(accessToken: token, refreshToken: refreshTokenResponse.refresh)
             }, onError: { [weak self] error in
                 self?.handleErrorResponse(error: error)
             })

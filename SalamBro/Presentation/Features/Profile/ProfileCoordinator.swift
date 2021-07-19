@@ -51,7 +51,9 @@ final class ProfileCoordinator: BaseCoordinator {
 
         profilePage.outputs.onLoginTapped
             .subscribe(onNext: { [weak self] in
-                self?.startAuthCoordinator()
+                profilePage.hideAnimationView { [weak self] in
+                    self?.startAuthCoordinator()
+                }
             })
             .disposed(by: disposeBag)
 
