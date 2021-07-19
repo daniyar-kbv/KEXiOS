@@ -11,9 +11,9 @@ import RxCocoa
 import RxSwift
 
 protocol PushNotificationsService: AnyObject {
-    func fcmTokenUpdate() -> Single<Void>
+    func fcmTokenUpdate(dto: FCMTokenUpdateDTO) -> Single<Void>
     func fcmTokenLogin(leadUUID: String) -> Single<Void>
-    func fcmTokenCreate() -> Single<Void>
+    func fcmTokenCreate(dto: FCMTokenCreateDTO) -> Single<Void>
 }
 
 final class PushNotificationsServiceMoyaImpl: PushNotificationsService {
@@ -25,7 +25,7 @@ final class PushNotificationsServiceMoyaImpl: PushNotificationsService {
         self.provider = provider
     }
 
-    func fcmTokenUpdate() -> Single<Void> {
+    func fcmTokenUpdate(dto _: FCMTokenUpdateDTO) -> Single<Void> {
         return provider.rx
             .request(.fcmTokenUpdate)
             .map { response in
@@ -65,9 +65,9 @@ final class PushNotificationsServiceMoyaImpl: PushNotificationsService {
             }
     }
 
-    func fcmTokenCreate() -> Single<Void> {
+    func fcmTokenCreate(dto: FCMTokenCreateDTO) -> Single<Void> {
         return provider.rx
-            .request(.fcmTokenCreate)
+            .request(.fcmTokenCreate(dto: dto))
             .map { response in
                 guard let response = try? response.map(PushNotificationsFCMTokenCreateResponse.self) else {
                     throw NetworkError.badMapping

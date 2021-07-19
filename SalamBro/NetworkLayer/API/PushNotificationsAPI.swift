@@ -8,9 +8,9 @@
 import Moya
 
 enum PushNotificationsAPI {
-    case fcmTokenUpdate
+    case fcmTokenUpdate(dto: FCMTokenUpdateDTO)
     case fcmTokenLogin(leadUUID: String)
-    case fcmTokenCreate
+    case fcmTokenCreate(dto: FCMTokenCreateDTO)
 }
 
 extension PushNotificationsAPI: TargetType {
@@ -40,9 +40,9 @@ extension PushNotificationsAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .fcmTokenUpdate: return .requestPlain
+        case let .fcmTokenUpdate(dto): return .requestJSONEncodable(dto)
         case .fcmTokenLogin: return .requestPlain
-        case .fcmTokenCreate: return .requestPlain
+        case let .fcmTokenCreate(dto): return .requestJSONEncodable(dto)
         }
     }
 

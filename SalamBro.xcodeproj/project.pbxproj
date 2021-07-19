@@ -118,6 +118,7 @@
 		E783E4557FDE43D8FF5AAF0DB1817674 /* DropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EEDE8ACCBC6EDCB9938CCD1E2D13FA /* DropDownTextField.swift */; };
 		4689A2E43C9E1832756F31868F0DBF8F /* Formatted+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CA23E645A53D190EF1336A05E81C3 /* Formatted+Extension.swift */; };
 		54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070881AEDB3977B0482B6A6B06A1C201 /* GeoStorage.swift */; };
+		7FF3C00C520DBCFD5B1F801D9F8B482F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */; };
 		10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */; };
 		05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */; };
 		AFE4A9CB1651215078FF7933E0FE1E84 /* LoaderDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B1DD3359C1EF5D60E6A24C6244E9F6 /* LoaderDisplayable.swift */; };
@@ -208,6 +209,7 @@
 		91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */; };
 		30A29427B5B0E3A39FA2F9993D28B726 /* PromotionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */; };
 		C14F742DCAFAC7971F7E3C76E7303E05 /* PushNotificationsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */; };
+		AD8CE2AD0CB755170CD5CC960D7D5CDC /* PushNotificationsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */; };
 		3AE7C8AEC851E7B7ED23B3A6F002D941 /* PushNotificationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F178F78BC6BC7A15130B516809ABED08 /* PushNotificationsRepository.swift */; };
 		2E57825538FA6811267451053BBD4F3A /* PushNotificationsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C104E0F72B95CD8995731A35025480 /* PushNotificationsResponse.swift */; };
 		B5E2FBCBB697E4A45394A3E464CABDED /* PushNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F58FDA6067CD76CD218CBA8EECF2EA /* PushNotificationsService.swift */; };
@@ -437,8 +439,9 @@
 		31EEDE8ACCBC6EDCB9938CCD1E2D13FA /* DropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTextField.swift; sourceTree = "<group>"; };
 		CF1CA23E645A53D190EF1336A05E81C3 /* Formatted+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatted+Extension.swift"; sourceTree = "<group>"; };
 		070881AEDB3977B0482B6A6B06A1C201 /* GeoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoStorage.swift; sourceTree = "<group>"; };
+		04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3C6169FACF56887087B2E3B796665DC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		612E966ED830C106DB3057E02A36C798 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9C0AD81DF662457ACBFD84D90AF44BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82DF8DD4A94962F1A97777FAD3747A32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -544,6 +547,7 @@
 		9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsResponse.swift; sourceTree = "<group>"; };
 		2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsService.swift; sourceTree = "<group>"; };
 		DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsAPI.swift; sourceTree = "<group>"; };
+		13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsDTO.swift; sourceTree = "<group>"; };
 		F178F78BC6BC7A15130B516809ABED08 /* PushNotificationsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsRepository.swift; sourceTree = "<group>"; };
 		84C104E0F72B95CD8995731A35025480 /* PushNotificationsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsResponse.swift; sourceTree = "<group>"; };
 		C9F58FDA6067CD76CD218CBA8EECF2EA /* PushNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsService.swift; sourceTree = "<group>"; };
@@ -1126,7 +1130,6 @@
 				E2CFAFECBD802E10974E8B3D87A10EF4 /* NetworkLayer */,
 				6A5A2E05A27203182915B196C5DA6419 /* Presentation */,
 				1F58FEA39DEB7D7466031AF71202F231 /* Resources */,
-				612E966ED830C106DB3057E02A36C798 /* Info.plist */,
 			);
 			path = SalamBro;
 			sourceTree = "<group>";
@@ -1164,6 +1167,8 @@
 			isa = PBXGroup;
 			children = (
 				76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */,
+				04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */,
+				E9C0AD81DF662457ACBFD84D90AF44BB /* Info.plist */,
 				A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */,
 			);
 			path = Constants;
@@ -1491,6 +1496,7 @@
 				271993661A630A7B6361573B6E862B2F /* AuthDTO.swift */,
 				BFCA77ACAE98C929BB38F9C19EADFC57 /* CartDTO.swift */,
 				16426AE457FE6F7DF042B7802295013A /* OrderApplyDTO.swift */,
+				13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */,
 				741F81064E76308F846D01C08D7D4967 /* UserInfoDTO.swift */,
 				BCE0DA1FB0DE4E3C8E8D6E842854D9D7 /* UserRateDTO.swift */,
 			);
@@ -2338,6 +2344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24CFCB9971C6D77EBF33A951D09DC20E /* Assets.xcassets in Resources */,
+				7FF3C00C520DBCFD5B1F801D9F8B482F /* GoogleService-Info.plist in Resources */,
 				05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */,
 				49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */,
 				AFE10B4ADDD5D00277E3D3352EFD195B /* SBImages.xcassets in Resources */,
@@ -2714,6 +2721,7 @@
 				91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */,
 				30A29427B5B0E3A39FA2F9993D28B726 /* PromotionsService.swift in Sources */,
 				C14F742DCAFAC7971F7E3C76E7303E05 /* PushNotificationsAPI.swift in Sources */,
+				AD8CE2AD0CB755170CD5CC960D7D5CDC /* PushNotificationsDTO.swift in Sources */,
 				3AE7C8AEC851E7B7ED23B3A6F002D941 /* PushNotificationsRepository.swift in Sources */,
 				2E57825538FA6811267451053BBD4F3A /* PushNotificationsResponse.swift in Sources */,
 				B5E2FBCBB697E4A45394A3E464CABDED /* PushNotificationsService.swift in Sources */,
