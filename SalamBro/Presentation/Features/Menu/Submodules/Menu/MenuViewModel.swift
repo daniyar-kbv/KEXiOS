@@ -25,18 +25,23 @@ final class MenuViewModel: MenuViewModelProtocol {
     private let locationRepository: AddressRepository
     private let brandRepository: BrandRepository
     private let menuRepository: MenuRepository
+    private let defaultStorage: DefaultStorage
 
     public var headerViewModels: [ViewModel?] = []
     public var cellViewModels: [[ViewModel]] = []
 
     init(locationRepository: AddressRepository,
          brandRepository: BrandRepository,
-         menuRepository: MenuRepository)
+         menuRepository: MenuRepository,
+         defaultStorage: DefaultStorage)
     {
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
         self.menuRepository = menuRepository
-        bindOutputs()
+        self.defaultStorage = defaultStorage
+
+        bindMenuRepository()
+        bindAddressRepository()
     }
 
     public func update() {
@@ -46,9 +51,20 @@ final class MenuViewModel: MenuViewModelProtocol {
         outputs.brandName.accept(brandRepository.getCurrentBrand()?.name)
     }
 
-    private func bindOutputs() {
+    private func bindMenuRepository() {
         menuRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        menuRepository.outputs.didEndRequest.bind {
+            [weak self] _ in
+            self?.outputs.didEndRequest.accept(())
+            self?.outputs.updateTableView.accept(())
+        }
+        .disposed(by: disposeBag)
+
+        menuRepository.outputs.didGetError
+            .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
 
         menuRepository.outputs.didGetPromotions.bind {
@@ -69,16 +85,18 @@ final class MenuViewModel: MenuViewModelProtocol {
         }
         .disposed(by: disposeBag)
 
-        menuRepository.outputs.didEndRequest.bind {
-            [weak self] _ in
-            self?.outputs.didEndRequest.accept(())
-            self?.outputs.updateTableView.accept(())
-        }
-        .disposed(by: disposeBag)
+        menuRepository.outputs.needsLeadUUID
+            .subscribe(onNext: { [weak self] in
+                self?.locationRepository.applyOrder()
+            }).disposed(by: disposeBag)
+    }
 
-        menuRepository.outputs.didGetError
-            .bind(to: outputs.didGetError)
-            .disposed(by: disposeBag)
+    private func bindAddressRepository() {
+        locationRepository.outputs.didGetLeadUUID
+            .subscribe(onNext: { [weak self] leadUUID in
+                self?.defaultStorage.persist(leadUUID: leadUUID)
+                self?.update()
+            }).disposed(by: disposeBag)
     }
 
     private func download() {

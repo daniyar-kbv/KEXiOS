@@ -66,7 +66,6 @@ final class DefaultStorageImpl: DefaultStorage {
     }
 
     func cleanUp(key: DefaultStorageKey) {
-        let empty = ""
-        storageProvider.set(empty, forKey: key.value)
+        storageProvider.set(nil, forKey: key.value)
     }
 }

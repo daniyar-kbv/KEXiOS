@@ -117,11 +117,21 @@ class CartController: UIViewController, AnimationViewPresentable, LoaderDisplaya
             .subscribe(onNext: { [weak self] error in
                 self?.showError(error)
             }).disposed(by: disposeBag)
+
+        viewModel.outputs.toAuth
+            .bind(to: outputs.toAuth)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.toPayment
+            .bind(to: outputs.toPayment)
+            .disposed(by: disposeBag)
     }
 
     private func update() {
         guard !viewModel.getIsEmpty() else {
-            showAnimationView(animationType: .emptyBasket)
+            showAnimationView(animationType: .emptyBasket, fullScreen: false) { [weak self] in
+                self?.outputs.toMenu.accept(())
+            }
             return
         }
 
@@ -189,7 +199,7 @@ extension CartController {
     }
 
     @objc func buttonAction() {
-        outputs.toAuth.accept(())
+        viewModel.proceedButtonTapped()
     }
 }
 
@@ -270,12 +280,6 @@ extension CartController: CartAdditinalProductCellDelegate {
     }
 }
 
-// extension CartController: AnimationContainerViewDelegate {
-//    func performAction() {
-//        outputs.toMenu.accept(())
-//    }
-// }
-
 extension CartController: CartFooterDelegate {
     func openPromocode() {
         let commentaryPage = MapCommentaryPage()
@@ -294,6 +298,7 @@ extension CartController: CartFooterDelegate {
 extension CartController {
     struct Output {
         let toAuth = PublishRelay<Void>()
+        let toPayment = PublishRelay<Void>()
         let toMenu = PublishRelay<Void>()
     }
 }

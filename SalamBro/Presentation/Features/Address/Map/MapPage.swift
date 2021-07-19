@@ -65,7 +65,7 @@ extension MapPage: LocationManagerDelegate {
     func didChangeLocation(latitude: Double, longtitude: Double) {
         viewModel.currentLocation = YMKPoint(latitude: latitude, longitude: longtitude)
         guard let position = viewModel.currentLocation else { return }
-        yandexMapView.mapWindow.map.move(with: YMKCameraPosition(target: position, zoom: ZOOM, azimuth: 0, tilt: 0))
+        yandexMapView.mapWindow.map.move(with: YMKCameraPosition(target: position, zoom: Constants.ZOOM, azimuth: 0, tilt: 0))
     }
 }
 
@@ -87,7 +87,7 @@ extension MapPage: YMKMapCameraListener {
 
     private func moveMap(to point: YMKPoint) {
         yandexMapView.mapWindow.map.move(with: YMKCameraPosition(target: point,
-                                                                 zoom: ZOOM,
+                                                                 zoom: Constants.ZOOM,
                                                                  azimuth: 0,
                                                                  tilt: 0),
                                          animationType: YMKAnimation(type: .smooth, duration: 0),

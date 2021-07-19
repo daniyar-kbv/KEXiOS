@@ -69,10 +69,11 @@ final class ReachabilityManagerImpl: ReachabilityManager {
         guard let viewController = UIApplication.shared.keyWindow?.rootViewController as? UIViewController & AnimationViewPresentable else { return }
 
         if isReachable {
-            viewController.hideAnimationView()
-            reloadTopViewController()
+            viewController.hideAnimationView {
+                self.reloadTopViewController()
+            }
         } else {
-            viewController.showAnimationView(animationType: .noInternet) { [weak self] in
+            viewController.showAnimationView(animationType: .noInternet, fullScreen: true) { [weak self] in
                 self?.reloadTopViewController()
             }
         }

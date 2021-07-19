@@ -1,6 +1,9 @@
 PODS:
   - Alamofire (5.4.3)
   - Cache (6.0.0)
+  - Cloudpayments (1.1.0):
+    - CloudpaymentsNetworking
+  - CloudpaymentsNetworking (1.0.1)
   - Cosmos (23.0.0)
   - DropDown (2.3.13)
   - Imaginary (5.0.0):
@@ -39,6 +42,8 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - Cache
+  - Cloudpayments (from `https://github.com/cloudpayments/CloudPayments-SDK-iOS`, branch `master`)
+  - CloudpaymentsNetworking (from `https://github.com/cloudpayments/CloudPayments-SDK-iOS`, branch `master`)
   - Cosmos
   - DropDown
   - Imaginary
@@ -81,9 +86,27 @@ SPEC REPOS:
     - YandexMapKitSearch
     - YandexRuntime
 
+EXTERNAL SOURCES:
+  Cloudpayments:
+    :branch: master
+    :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
+  CloudpaymentsNetworking:
+    :branch: master
+    :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
+
+CHECKOUT OPTIONS:
+  Cloudpayments:
+    :commit: 6bdd8be84fb420b7b1bcd82966a51a4806927650
+    :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
+  CloudpaymentsNetworking:
+    :commit: 6bdd8be84fb420b7b1bcd82966a51a4806927650
+    :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
+
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
+  Cloudpayments: ee7ae571b7cd037df3309649f61eb91ee9b5feff
+  CloudpaymentsNetworking: c16a709b98a0a3222da8d3afa4c15eb364161e35
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   Imaginary: cf5e3a7dd6ab1dcbd47ba8ce5edf2307c4e99eb3
@@ -104,6 +127,6 @@ SPEC CHECKSUMS:
   YandexMapKitSearch: 9d658009a11ce4973e5b1c59aacb72c3f63c808a
   YandexRuntime: 2547d72a3ce4757f16ad188cfbe8a124ae13d806
 
-PODFILE CHECKSUM: 1a45378003695fd0f3952e32c22ee12bfd5b0095
+PODFILE CHECKSUM: d82ac082be029e344da8fae6b22416d77eb9fb55
 
 COCOAPODS: 1.10.1

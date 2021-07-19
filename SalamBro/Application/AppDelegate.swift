@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var appCoordinator: AppCoordinator?
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        YMKMapKit.setApiKey(apiKey)
+        YMKMapKit.setApiKey(Constants.apiKey)
         configureProgressHUD()
         configureKeyboardManager()
         window = UIWindow(frame: UIScreen.main.bounds)

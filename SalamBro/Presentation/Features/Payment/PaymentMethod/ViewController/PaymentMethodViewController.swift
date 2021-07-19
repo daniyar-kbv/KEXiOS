@@ -9,7 +9,8 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class PaymentMethodViewController: UIViewController {
+final class PaymentMethodViewController: UIViewController, LoaderDisplayable, AlertDisplayable {
+    private let disposeBag = DisposeBag()
     private let viewModel: PaymentMethodVCViewModel
     private lazy var contentView = PaymentMethodView()
 
@@ -17,7 +18,10 @@ final class PaymentMethodViewController: UIViewController {
 
     init(viewModel: PaymentMethodVCViewModel) {
         self.viewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
+
+        bindViewModel()
     }
 
     @available(*, unavailable)
@@ -40,6 +44,39 @@ final class PaymentMethodViewController: UIViewController {
             self?.outputs.close.accept(())
         }
         contentView.setTableViewDelegate(self)
+
+        viewModel.getPaymentMethods()
+    }
+}
+
+extension PaymentMethodViewController {
+    private func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.needsUpdate
+            .bind(to: contentView.tableView.rx.reload)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didSelectPaymentMethod
+            .bind(to: outputs.didSelectPaymentMethod)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.showPaymentMethod
+            .bind(to: outputs.showPaymentMethod)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -49,22 +86,22 @@ extension PaymentMethodViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.selectionStyle = .none
-        cell.textLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        cell.textLabel?.textColor = .darkGray
-        cell.textLabel?.text = viewModel.getPaymentMethod(for: indexPath).paymentType.title
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PaymentMethodCell.self), for: indexPath) as! PaymentMethodCell
+        let paymentMethodInfo = viewModel.getPaymentMethodInfo(for: indexPath)
+        cell.configure(title: paymentMethodInfo.paymentMethodTitle,
+                       isSelected: paymentMethodInfo.isSelected)
         return cell
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        outputs.didSelectPaymentMethod.accept(viewModel.getPaymentMethod(for: indexPath).paymentType)
+        viewModel.selectPaymentMethod(at: indexPath)
     }
 }
 
 extension PaymentMethodViewController {
     struct Output {
         let close = PublishRelay<Void>()
-        let didSelectPaymentMethod = PublishRelay<PaymentMethodType>()
+        let didSelectPaymentMethod = PublishRelay<Void>()
+        let showPaymentMethod = PublishRelay<PaymentMethod>()
     }
 }
