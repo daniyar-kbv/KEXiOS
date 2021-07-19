@@ -70,7 +70,7 @@ final class MenuCoordinator: BaseCoordinator {
         addressCoordinator.start()
     }
 
-    func openChangeAddress(didSelectAddress: (() -> Void)? = nil) {
+    private func openChangeAddress(didSelectAddress: (() -> Void)? = nil) {
         let addressCoordinator = coordinatorsFactory.makeAddressCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, flowType: .changeAddress(didSelectAddress: didSelectAddress))
         add(addressCoordinator)
 
@@ -81,7 +81,7 @@ final class MenuCoordinator: BaseCoordinator {
         addressCoordinator.start()
     }
 
-    private func openPromotion(promotionURL: URL, name: String) {
+    func openPromotion(promotionURL: URL, name: String?) {
         let promotionsPage = pagesFactory.makePromotionsPage(url: promotionURL, name: name)
 
         router.getNavigationController().setNavigationBarHidden(false, animated: true)

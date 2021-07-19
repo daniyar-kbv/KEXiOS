@@ -103,8 +103,7 @@ extension AppDelegate {
     func userNotificationCenter(_: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler _: @escaping (UNNotificationPresentationOptions) -> Void) {
         let userInfo = notification.request.content.userInfo
         guard let pushNotification = PushNotification(dictionary: userInfo) else { return }
-
-        appCoordinator?.handleNotification(pushNotification: pushNotification)
+        showNotificationAlert(pushNotification: pushNotification)
     }
 
 //    MARK: - Notification recieved in background
@@ -114,5 +113,15 @@ extension AppDelegate {
         guard let pushNotification = PushNotification(dictionary: userInfo) else { return }
 
         appCoordinator?.handleNotification(pushNotification: pushNotification)
+    }
+
+    func showNotificationAlert(pushNotification: PushNotification) {
+        guard let rootViewController = window?.rootViewController as? AlertDisplayable else { return }
+
+        rootViewController.showAlert(title: pushNotification.aps.alert.title,
+                                     message: pushNotification.aps.alert.body,
+                                     submitTitle: SBLocalization.localized(key: AlertText.ok)) { [weak self] in
+            self?.appCoordinator?.handleNotification(pushNotification: pushNotification)
+        }
     }
 }

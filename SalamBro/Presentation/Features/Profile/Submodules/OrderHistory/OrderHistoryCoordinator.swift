@@ -40,7 +40,7 @@ final class OrderHistoryCoordinator: BaseCoordinator {
         router.push(viewController: orderHistoryPage, animated: true)
     }
 
-    private func showRateOrderPage() {
+    func showRateOrderPage() {
         let rateOrderPage = pagesFactory.makeRateOrderPage()
 
         rateOrderPage.outputs.close

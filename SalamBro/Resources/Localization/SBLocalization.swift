@@ -44,6 +44,12 @@ enum ErrorText: UILocalizable {
     var localized: String { "" }
 }
 
+enum AlertText: String, UILocalizable {
+    case ok = "Alert.ok"
+
+    var localized: String { rawValue }
+}
+
 enum AddressText: UILocalizable {
     enum Countries: String, UILocalizable {
         case title = "CountriesList.navigation.title"
