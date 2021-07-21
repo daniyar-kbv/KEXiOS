@@ -31,13 +31,25 @@ final class ModifiersController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(ModifiersCell.self, forCellWithReuseIdentifier: String(describing: ModifiersCell.self))
+        collectionView.register(cellType: ModifiersCell.self)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .arcticWhite
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.contentInset = UIEdgeInsets(top: 24, left: 23, bottom: 20, right: 23)
         return collectionView
+    }()
+
+    private lazy var doneButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .kexRed
+        button.cornerRadius = 10
+        button.setTitle(SBLocalization.localized(key: CommentaryText.buttonTitle), for: .normal)
+        button.setTitleColor(.arcticWhite, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
+        button.layer.masksToBounds = true
+        return button
     }()
 
     override func loadView() {
@@ -64,21 +76,45 @@ final class ModifiersController: UIViewController {
         viewModel.outputs.update
             .bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
+
+        viewModel.outputs.showDoneButton
+            .bind { [weak self] _ in
+                self?.addDoneButton()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.hideDoneButton
+            .bind { [weak self] _ in
+                self?.doneButton.removeFromSuperview()
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func addDoneButton() {
+        view.addSubview(doneButton)
+
+        doneButton.snp.makeConstraints {
+            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(24)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            $0.height.equalTo(43)
+        }
+    }
+
+    @objc private func doneButtonPressed() {
+        outputs.getModifiers.accept(viewModel.modifiers)
     }
 }
 
 extension ModifiersController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        outputs.didSelectModifier.accept(viewModel.modifiers[indexPath.item])
-    }
-
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return viewModel.modifiers.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ModifiersCell.self), for: indexPath) as! ModifiersCell
-        cell.configure(modifier: viewModel.modifiers[indexPath.item])
+        let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: ModifiersCell.self)
+        cell.configure(modifier: viewModel.modifiers[indexPath.row], index: indexPath.row)
+        cell.configureUI(with: viewModel.getCellStatus(at: indexPath.row))
+        cell.delegate = self
         return cell
     }
 
@@ -98,9 +134,21 @@ extension ModifiersController: UICollectionViewDelegate, UICollectionViewDataSou
     }
 }
 
+extension ModifiersController: ModifiersCellDelegate {
+    func decreaseQuantity(at index: Int, with count: Int) {
+        viewModel.changeModifierCount(at: index, with: count)
+        viewModel.decreaseTotalCount()
+    }
+
+    func increaseQuantity(at index: Int, with count: Int) {
+        viewModel.changeModifierCount(at: index, with: count)
+        viewModel.increaseTotalCount()
+    }
+}
+
 extension ModifiersController {
     struct Output {
         let close = PublishRelay<Void>()
-        let didSelectModifier = PublishRelay<Modifier>()
+        let getModifiers = PublishRelay<[Modifier]>()
     }
 }

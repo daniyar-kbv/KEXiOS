@@ -58,7 +58,7 @@ public final class MenuDetailCoordinator: Coordinator {
 
     private func openModifiers(on presentedController: UIViewController,
                                modifierGroup: ModifierGroup,
-                               onSelect: @escaping (Modifier) -> Void)
+                               onSelect _: @escaping (Modifier) -> Void)
     {
         let modifiersPage = pagesFactory.makeModifiersPage(modifierGroup: modifierGroup)
 
@@ -67,14 +67,9 @@ public final class MenuDetailCoordinator: Coordinator {
                 modifiersPage.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
-        modifiersPage.outputs.didSelectModifier
-            .subscribe(onNext: { modifier in
-                onSelect(modifier)
-                modifiersPage.dismiss(animated: true)
-            }).disposed(by: disposeBag)
+        modifiersPage.outputs.getModifiers
+            .subscribe(onNext: { _ in
 
-        modifiersPage.outputs.close
-            .subscribe(onNext: {
                 modifiersPage.dismiss(animated: true)
             }).disposed(by: disposeBag)
 

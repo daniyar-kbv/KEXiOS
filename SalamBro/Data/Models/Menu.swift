@@ -51,6 +51,7 @@ struct ModifierGroup: Codable {
     let modifiers: [Modifier]
 
     var selectedModifiers: [Modifier] = []
+    var totalCount: Int = 0
 
     enum CodingKeys: String, CodingKey {
         case uuid, name, modifiers
@@ -64,6 +65,7 @@ struct Modifier: Codable {
     let name: String
     let uuid: String
     let image: String?
+    var itemCount: Int = 0
 }
 
 extension MenuPositionDetail {

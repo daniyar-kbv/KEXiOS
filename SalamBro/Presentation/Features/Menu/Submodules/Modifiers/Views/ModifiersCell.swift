@@ -5,11 +5,17 @@
 //  Created by Arystan on 5/2/21.
 //
 
+import Reusable
 import SnapKit
 import UIKit
 
-class ModifiersCell: UICollectionViewCell {
-    lazy var itemImageView: UIImageView = {
+protocol ModifiersCellDelegate: AnyObject {
+    func decreaseQuantity(at index: Int, with count: Int)
+    func increaseQuantity(at index: Int, with count: Int)
+}
+
+final class ModifiersCell: UICollectionViewCell {
+    private lazy var itemImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 10
@@ -31,6 +37,58 @@ class ModifiersCell: UICollectionViewCell {
         return view
     }()
 
+    private lazy var stackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [
+            self.descreaseButton,
+            self.countLabel,
+            self.increaseButton,
+        ])
+        view.axis = .horizontal
+        view.alignment = .center
+        view.distribution = .fillProportionally
+        view.spacing = 0
+        return view
+    }()
+
+    private lazy var descreaseButton: UIButton = {
+        let button = UIButton()
+        button.borderWidth = 1
+        button.borderColor = .mildBlue
+        button.cornerRadius = 5
+        button.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.minus), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        button.addTarget(self, action: #selector(decreaseItemCount), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var increaseButton: UIButton = {
+        let button = UIButton()
+        button.borderWidth = 1
+        button.borderColor = .mildBlue
+        button.cornerRadius = 5
+        button.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusGray), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        button.addTarget(self, action: #selector(increaseItemCount), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var countLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.backgroundColor = .clear
+        label.text = "0"
+        return label
+    }()
+
+    private var itemCount = 0
+
+    private var index = 0
+
+    var delegate: ModifiersCellDelegate?
+
     override init(frame _: CGRect) {
         super.init(frame: .zero)
         layoutUI()
@@ -41,14 +99,48 @@ class ModifiersCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(modifier: Modifier) {
+    func configure(modifier: Modifier, index: Int) {
         itemTitleLabel.text = modifier.name
+        countLabel.text = "\(modifier.itemCount)"
+        itemCount = modifier.itemCount
+        self.index = index
+
+        if modifier.itemCount > 0 {
+            increaseButton.borderColor = .clear
+            increaseButton.backgroundColor = .kexRed
+            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusWhite), for: .normal)
+            itemImageView.borderColor = .kexRed
+            itemImageView.borderWidth = 1
+        } else {
+            increaseButton.borderColor = .mildBlue
+            increaseButton.backgroundColor = .clear
+            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusGray), for: .normal)
+            itemImageView.borderColor = .clear
+        }
+    }
+
+    func configureUI(with status: (Bool, Bool)) {
+        switch status {
+        case (true, true):
+            contentView.alpha = 1
+            contentView.isUserInteractionEnabled = true
+            increaseButton.alpha = 1
+            increaseButton.isUserInteractionEnabled = true
+        case (true, false):
+            increaseButton.alpha = 0.5
+            increaseButton.isUserInteractionEnabled = false
+        case (false, false):
+            contentView.alpha = 0.5
+            contentView.isUserInteractionEnabled = false
+        default:
+            contentView.alpha = 1
+        }
     }
 }
 
 extension ModifiersCell {
     private func layoutUI() {
-        [itemImageView, itemTitleLabel, itemPriceLabel].forEach {
+        [itemImageView, itemTitleLabel, itemPriceLabel, stackView].forEach {
             contentView.addSubview($0)
         }
 
@@ -58,13 +150,51 @@ extension ModifiersCell {
 
         itemTitleLabel.snp.makeConstraints {
             $0.top.equalTo(itemImageView.snp.bottom).offset(4)
-            $0.left.right.equalToSuperview().inset(8)
+            $0.left.right.equalToSuperview()
         }
 
         itemPriceLabel.snp.makeConstraints {
             $0.top.equalTo(itemTitleLabel.snp.bottom).offset(4)
-            $0.left.right.equalToSuperview().inset(8)
-            $0.bottom.equalToSuperview()
+            $0.left.right.equalToSuperview()
+        }
+
+        descreaseButton.snp.makeConstraints {
+            $0.top.left.bottom.equalToSuperview()
+            $0.width.height.equalTo(30)
+        }
+
+        countLabel.snp.makeConstraints {
+            $0.left.equalTo(descreaseButton.snp.right)
+            $0.right.equalTo(increaseButton.snp.left)
+            $0.top.bottom.equalToSuperview()
+        }
+
+        increaseButton.snp.makeConstraints {
+            $0.left.equalTo(countLabel.snp.right)
+            $0.top.right.bottom.equalToSuperview()
+            $0.width.height.equalTo(30)
+        }
+
+        stackView.snp.makeConstraints {
+            $0.top.equalTo(itemPriceLabel.snp.bottom).offset(4)
+            $0.left.right.bottom.equalToSuperview()
+            $0.height.equalTo(30)
         }
     }
 }
+
+extension ModifiersCell {
+    @objc private func decreaseItemCount() {
+        if itemCount > 0 {
+            itemCount = itemCount - 1
+        }
+        delegate?.decreaseQuantity(at: index, with: itemCount)
+    }
+
+    @objc private func increaseItemCount() {
+        itemCount = itemCount + 1
+        delegate?.increaseQuantity(at: index, with: itemCount)
+    }
+}
+
+extension ModifiersCell: Reusable {}
