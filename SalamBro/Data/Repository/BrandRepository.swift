@@ -65,7 +65,6 @@ final class BrandRepositoryImpl: BrandRepository {
 
     func changeCurrentBrand(to brand: Brand) {
         storage.brand = brand
-        outputs.didSelectBrand.accept(brand)
     }
 
     func setBrands(brands: [Brand]) {
@@ -79,7 +78,5 @@ extension BrandRepositoryImpl {
         let didGetBrands = PublishRelay<[Brand]>()
         let didEndRequest = PublishRelay<Void>()
         let didFail = PublishRelay<ErrorPresentable>()
-
-        let didSelectBrand = PublishRelay<Brand>()
     }
 }
