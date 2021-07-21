@@ -105,9 +105,7 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
             .disposed(by: disposeBag)
 
         viewModel.outputs.updateTableView
-            .subscribe(onNext: { [weak self] in
-                self?.itemTableView.reloadData()
-            })
+            .bind(to: itemTableView.rx.reload)
             .disposed(by: disposeBag)
 
         viewModel.outputs.didStartRequest
@@ -229,11 +227,14 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    public func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.tableSections[section].cellViewModels.count
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard viewModel.tableSections.count > 0,
+              viewModel.tableSections[indexPath.section].cellViewModels.count > 0
+        else { return .init() }
         let cellViewModel = viewModel.tableSections[indexPath.section].cellViewModels[indexPath.row]
         switch viewModel.tableSections[indexPath.section].type {
         case .address:
@@ -279,12 +280,13 @@ extension MenuController {
     }
 
     private func didScrollToItem(at position: Int) {
-        guard let cellViewModel = viewModel
-            .tableSections[itemTableView.numberOfSections - 1]
-            .cellViewModels[position]
-            as? MenuCellViewModelProtocol,
-            !scrollService.isHeaderScrolling,
-            scrollService.currentCategory != cellViewModel.position.categoryUUID else { return }
+        guard viewModel.tableSections.count > 0,
+              let cellViewModel = viewModel
+              .tableSections[itemTableView.numberOfSections - 1]
+              .cellViewModels[position]
+              as? MenuCellViewModelProtocol,
+              !scrollService.isHeaderScrolling,
+              scrollService.currentCategory != cellViewModel.position.categoryUUID else { return }
         scrollService.didSelectCategory.accept((source: .table, categoryUUID: cellViewModel.position.categoryUUID))
     }
 }
