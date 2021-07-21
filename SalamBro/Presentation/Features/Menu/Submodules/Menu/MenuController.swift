@@ -16,7 +16,6 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
 
     private let viewModel: MenuViewModelProtocol
     private let disposeBag = DisposeBag()
-    private var scrollService: MenuScrollService
 
     private lazy var logoView: UIImageView = {
         let view = UIImageView()
@@ -68,9 +67,8 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
         return view
     }()
 
-    public init(viewModel: MenuViewModelProtocol, scrollService: MenuScrollService) {
+    public init(viewModel: MenuViewModelProtocol) {
         self.viewModel = viewModel
-        self.scrollService = scrollService
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -82,7 +80,6 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
 
         layoutUI()
         bindViewModel()
-        bindScrollService()
 
         viewModel.update()
     }
@@ -123,13 +120,22 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
                 guard let error = error else { return }
                 self?.showError(error)
             }).disposed(by: disposeBag)
-    }
 
-    private func bindScrollService() {
-        scrollService.didSelectCategory
-            .subscribe(onNext: { [weak self] source, category in
-                guard source == .header else { return }
-                self?.scroll(to: category)
+        viewModel.outputs.toPromotion
+            .bind(to: outputs.toPromotion)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.toAddressess
+            .bind(to: outputs.toAddressess)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.toPositionDetail
+            .bind(to: outputs.toPositionDetail)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.scrollToRowAt
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.itemTableView.scrollToRow(at: indexPath, at: .top, animated: true)
             })
             .disposed(by: disposeBag)
     }
@@ -181,125 +187,38 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
 }
 
 extension MenuController: UITableViewDelegate, UITableViewDataSource {
-    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch viewModel.tableSections[indexPath.section].type {
-        case .positions:
-            guard let cellViewModel = viewModel
-                .tableSections[indexPath.section]
-                .cellViewModels[indexPath.row]
-                as? MenuCellViewModelProtocol
-            else { return }
-
-            outputs.toPositionDetail.accept(cellViewModel.position.uuid)
-        case .address:
-            outputs.toAddressess.accept { [weak self] in
-                self?.viewModel.update()
-            }
-        default:
-            break
-        }
-    }
-
-    public func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch viewModel.tableSections[section].type {
-        case .positions:
-            return 44
-        default:
-            return 0
-        }
-    }
-
     func numberOfSections(in _: UITableView) -> Int {
-        return viewModel.tableSections.count
-    }
-
-    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        switch viewModel.tableSections[section].type {
-        case .positions:
-            guard let headerViewModel = viewModel.tableSections[section].headerViewModel as? CategoriesSectionHeaderViewModelProtocol
-            else { return nil }
-            let header = tableView.dequeueReusableHeaderFooterView(CategoriesSectionHeader.self)
-            header?.set(headerViewModel)
-            header?.scrollService = scrollService
-            return header
-        default:
-            return nil
-        }
+        return viewModel.numberOfSections()
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.tableSections[section].cellViewModels.count
+        return viewModel.numberOfRows(in: section)
     }
 
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard viewModel.tableSections.count > 0,
-              viewModel.tableSections[indexPath.section].cellViewModels.count > 0
-        else { return .init() }
-        let cellViewModel = viewModel.tableSections[indexPath.section].cellViewModels[indexPath.row]
-        switch viewModel.tableSections[indexPath.section].type {
-        case .address:
-            guard let viewModel = cellViewModel as? AddressPickCellViewModelProtocol
-            else { return .init() }
-            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AddressPickCell.self)
-            cell.set(viewModel)
-            return cell
-        case .promotions:
-            guard let viewModel = cellViewModel as? AdCollectionCellViewModelProtocol
-            else { return .init() }
-            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AdCollectionCell.self)
-            cell.set(viewModel)
-            cell.delegate = self
-            return cell
-        case .positions:
-            guard let viewModel = cellViewModel as? MenuCellViewModelProtocol
-            else { return .init() }
-            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: MenuCell.self)
-            cell.set(viewModel)
-            return cell
-        }
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return viewModel.heightForHeader(in: section)
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return viewModel.viewForHeader(in: tableView, for: section)
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return viewModel.cell(in: tableView, for: indexPath)
+    }
+
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath)
     }
 
     func tableView(_: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
-        didScrollToItem(at: indexPath.row)
-    }
-}
-
-extension MenuController {
-    private func scroll(to categoryUUID: String) {
-        guard let row = viewModel
-            .tableSections[itemTableView.numberOfSections - 1]
-            .cellViewModels
-            .enumerated()
-            .first(where: {
-                guard let viewModel = $1 as? MenuCellViewModelProtocol else { return false }
-                return viewModel.position.categoryUUID == categoryUUID
-            })?
-            .0
-        else { return }
-        itemTableView.scrollToRow(at: IndexPath(row: row, section: itemTableView.numberOfSections - 1), at: .top, animated: true)
-    }
-
-    private func didScrollToItem(at position: Int) {
-        guard viewModel.tableSections.count > 0,
-              let cellViewModel = viewModel
-              .tableSections[itemTableView.numberOfSections - 1]
-              .cellViewModels[position]
-              as? MenuCellViewModelProtocol,
-              !scrollService.isHeaderScrolling,
-              scrollService.currentCategory != cellViewModel.position.categoryUUID else { return }
-        scrollService.didSelectCategory.accept((source: .table, categoryUUID: cellViewModel.position.categoryUUID))
+        viewModel.willDisplayRow(at: indexPath)
     }
 }
 
 extension MenuController: UIScrollViewDelegate {
     func scrollViewDidEndScrollingAnimation(_: UIScrollView) {
-        scrollService.finishedScrolling()
-    }
-}
-
-extension MenuController: AddCollectionCellDelegate {
-    public func goToRating(promotionURL: URL, name: String) {
-        outputs.toPromotion.accept((promotionURL, name))
+        viewModel.finishedScrolling()
     }
 }
 
