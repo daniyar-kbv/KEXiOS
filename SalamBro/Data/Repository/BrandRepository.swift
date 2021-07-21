@@ -50,6 +50,7 @@ final class BrandRepositoryImpl: BrandRepository {
         locationService.getBrands(for: cityId)
             .subscribe(onSuccess: { [weak self] brandsResponse in
                 self?.outputs.didEndRequest.accept(())
+                self?.setBrands(brands: brandsResponse)
                 self?.outputs.didGetBrands.accept(brandsResponse)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
@@ -64,6 +65,7 @@ final class BrandRepositoryImpl: BrandRepository {
 
     func changeCurrentBrand(to brand: Brand) {
         storage.brand = brand
+        outputs.didSelectBrand.accept(brand)
     }
 
     func setBrands(brands: [Brand]) {
@@ -77,5 +79,7 @@ extension BrandRepositoryImpl {
         let didGetBrands = PublishRelay<[Brand]>()
         let didEndRequest = PublishRelay<Void>()
         let didFail = PublishRelay<ErrorPresentable>()
+
+        let didSelectBrand = PublishRelay<Brand>()
     }
 }

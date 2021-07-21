@@ -11,7 +11,7 @@ protocol OnBoadingPagesFactory: AnyObject {
     func makeCountriesPage() -> CountriesListController
     func makeCitiesPage(countryId: Int) -> CitiesListController
     func makeBrandsPage(cityId: Int) -> BrandsController
-    func makeMapPage() -> MapPage
+    func makeMapPage(deliveryAddress: DeliveryAddress) -> MapPage
 }
 
 final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory {
@@ -44,17 +44,20 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
     }
 
     private func makeBrandsViewModel(cityId: Int) -> BrandViewModel {
-        return scoped(.init(brandRepository: repositoryComponents.makeBrandRepository(), cityId: cityId))
+        return scoped(.init(brandsRepository: repositoryComponents.makeBrandRepository(),
+                            addressRepository: repositoryComponents.makeAddressRepository(),
+                            cityId: cityId))
     }
 
-    func makeMapPage() -> MapPage {
-        return scoped(.init(viewModel: makeMapViewModel()))
+    func makeMapPage(deliveryAddress: DeliveryAddress) -> MapPage {
+        return scoped(.init(viewModel: makeMapViewModel(deliveryAddress: deliveryAddress)))
     }
 
-    private func makeMapViewModel() -> MapViewModel {
+    private func makeMapViewModel(deliveryAddress: DeliveryAddress) -> MapViewModel {
         return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage,
                             addressRepository: repositoryComponents.makeAddressRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
-                            flow: .creation))
+                            flow: .creation,
+                            deliveryAddress: deliveryAddress))
     }
 }
