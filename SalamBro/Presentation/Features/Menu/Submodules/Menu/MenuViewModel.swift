@@ -12,8 +12,7 @@ import SVProgressHUD
 
 protocol MenuViewModelProtocol {
     var outputs: MenuViewModel.Output { get }
-    var headerViewModels: [ViewModel?] { get }
-    var cellViewModels: [[ViewModel]] { get }
+    var tableSections: [MenuViewModel.Section] { get }
 
     func update()
 }
@@ -27,8 +26,7 @@ final class MenuViewModel: MenuViewModelProtocol {
     private let menuRepository: MenuRepository
     private let defaultStorage: DefaultStorage
 
-    public var headerViewModels: [ViewModel?] = []
-    public var cellViewModels: [[ViewModel]] = []
+    public var tableSections: [Section] = []
 
     init(locationRepository: AddressRepository,
          brandRepository: BrandRepository,
@@ -100,33 +98,42 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func download() {
-        cellViewModels = []
-        headerViewModels = []
+        tableSections.removeAll()
 
         menuRepository.getMenuItems()
     }
 
     private func setPromotions(promotions: [Promotion]) {
         let promotions = promotions.sorted(by: { $0.priority < $1.priority })
-        var topViewModels = [ViewModel]()
-        topViewModels.append(AddressPickCellViewModel(address: locationRepository.getCurrentDeliveryAddress()?.address))
+
+        let addressViewModels = [AddressPickCellViewModel(address: locationRepository.getCurrentDeliveryAddress()?.address)]
+        tableSections.append(.init(type: .address,
+                                   headerViewModel: nil,
+                                   cellViewModels: addressViewModels))
+
         if promotions.count > 0 {
-            topViewModels.append(AdCollectionCellViewModel(promotions: promotions))
+            let promotionsViewModels = [AdCollectionCellViewModel(promotions: promotions)]
+            tableSections.append(.init(type: .promotions,
+                                       headerViewModel: nil,
+                                       cellViewModels: promotionsViewModels))
         }
-        cellViewModels.append(topViewModels)
     }
 
     private func setCategories(categories: [MenuCategory]) {
-        headerViewModels = [
-            nil,
-            CategoriesSectionHeaderViewModel(categories: categories),
-        ]
+        tableSections.append(.init(
+            type: .positions,
+            headerViewModel: CategoriesSectionHeaderViewModel(categories: categories),
+            cellViewModels: []
+        )
+        )
     }
 
     private func setPositions(positions: [MenuPosition]) {
-        cellViewModels.append(positions.map { position in
-            MenuCellViewModel(position: position)
-        })
+        tableSections
+            .first(where: { $0.type == .positions })?
+            .cellViewModels = positions.map { position in
+                MenuCellViewModel(position: position)
+            }
     }
 }
 
@@ -139,5 +146,23 @@ extension MenuViewModel {
         let didEndRequest = PublishRelay<Void>()
         let updateTableView = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
+    }
+
+    class Section {
+        let type: Type
+        let headerViewModel: ViewModel?
+        var cellViewModels: [ViewModel]
+
+        init(type: Type, headerViewModel: ViewModel?, cellViewModels: [ViewModel]) {
+            self.type = type
+            self.headerViewModel = headerViewModel
+            self.cellViewModels = cellViewModels
+        }
+
+        enum `Type` {
+            case address
+            case promotions
+            case positions
+        }
     }
 }
