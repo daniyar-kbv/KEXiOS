@@ -8,7 +8,7 @@
 import Moya
 
 enum OrdersAPI {
-    case apply(dto: OrderApplyDTO)
+    case apply(dto: OrderApplyDTO?)
     case getProducts(leadUUID: String)
     case getProductDetail(leadUUID: String, productUUID: String)
     case getCart(leadUUID: String)

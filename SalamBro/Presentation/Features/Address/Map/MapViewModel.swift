@@ -63,7 +63,7 @@ final class MapViewModel {
         case .creation:
             addressRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
             bindToOrdersOutputs(using: lastAddress)
-            addressRepository.applyOrder()
+            addressRepository.applyOrder(withAddress: true)
         case .change:
             outputs.lastSelectedAddress.accept((lastAddress, commentary))
         }

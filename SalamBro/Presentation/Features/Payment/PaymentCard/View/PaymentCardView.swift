@@ -69,9 +69,9 @@ final class PaymentCardView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        configButtonEnable(false)
         layoutUI()
         configActions()
-        configButtonEnable(false)
     }
 
     @available(*, unavailable)
@@ -80,6 +80,12 @@ final class PaymentCardView: UIView {
     }
 
     private func layoutUI() {
+        cardNumberField.text = "4111 1111 1111 1111"
+        expiryDateField.text = "11/23"
+        cvvCodeField.text = "222"
+        cardholderNameField.text = "TEST TEST"
+        configButtonEnable(true)
+
         backgroundColor = .arcticWhite
 
         [cardStackView, switchButton, saveCardLabel, saveButton].forEach { addSubview($0) }

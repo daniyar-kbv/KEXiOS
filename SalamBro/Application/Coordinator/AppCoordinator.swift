@@ -116,6 +116,17 @@ final class AppCoordinator: BaseCoordinator {
             self?.pagesFactory.makeSBTabbarController().selectedIndex = 0
         }
 
+        cartCoordinator.toOrderHistory = { [weak self] in
+            self?.pagesFactory.makeSBTabbarController().selectedIndex = 1
+
+            guard let serviceComponents = self?.serviceComponents,
+                  let repositoryComponents = self?.repositoryComponents else { return }
+
+            let profileCoordinator = self?.appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+            profileCoordinator?.showOrderHistoryPage()
+        }
+
         preparedViewControllers.append(cartCoordinator.router.getNavigationController())
         add(cartCoordinator)
     }

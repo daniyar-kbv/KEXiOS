@@ -14,6 +14,8 @@ protocol PaymentsService: AnyObject {
     func myCards() -> Single<[MyCard]>
     func createOrder(dto: CreateOrderDTO) -> Single<Void>
     func createPayment(dto: CreatePaymentDTO) -> Single<OrderStatus>
+    func createCardPayment(dto: CardPaymentDTO) -> Single<CardPaymentOrderStatus>
+    func confirm3DSPayment(dto: Create3DSPaymentDTO, paymentUUID: String) -> Single<OrderStatus>
 }
 
 final class PaymentsServiceMoyaImpl: PaymentsService {
@@ -70,6 +72,46 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
     func createPayment(dto: CreatePaymentDTO) -> Single<OrderStatus> {
         return provider.rx
             .request(.createPayment(dto: dto))
+            .map { response in
+                guard let response = try? response.map(CreatePaymentResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = response.error {
+                    throw error
+                }
+
+                guard let status = response.data else {
+                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
+                }
+
+                return status
+            }
+    }
+
+    func createCardPayment(dto: CardPaymentDTO) -> Single<CardPaymentOrderStatus> {
+        return provider.rx
+            .request(.createCardPayment(dto: dto))
+            .map { response in
+                guard let response = try? response.map(CardPaymentResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = response.error {
+                    throw error
+                }
+
+                guard let status = response.data else {
+                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
+                }
+
+                return status
+            }
+    }
+
+    func confirm3DSPayment(dto: Create3DSPaymentDTO, paymentUUID: String) -> Single<OrderStatus> {
+        return provider.rx
+            .request(.confirm3DSPayment(dto: dto, paymentUUID: paymentUUID))
             .map { response in
                 guard let response = try? response.map(CreatePaymentResponse.self) else {
                     throw NetworkError.badMapping

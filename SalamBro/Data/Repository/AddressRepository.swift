@@ -28,7 +28,7 @@ protocol AddressRepository: AnyObject {
     func deleteDeliveryAddress(deliveryAddress: DeliveryAddress)
     func addDeliveryAddress(deliveryAddress: DeliveryAddress)
 
-    func applyOrder()
+    func applyOrder(withAddress: Bool)
 }
 
 final class AddressRepositoryImpl: AddressRepository {
@@ -36,11 +36,10 @@ final class AddressRepositoryImpl: AddressRepository {
 
     private let geoStorage: GeoStorage
     private let brandStorage: BrandStorage
+    private let defaultStorage: DefaultStorage
 
     private let ordersService: OrdersService
     private let notificationsService: PushNotificationsService
-
-    private let defaultStorage: DefaultStorage
 
     private let disposeBag = DisposeBag()
 
@@ -128,31 +127,39 @@ extension AddressRepositoryImpl {
 }
 
 extension AddressRepositoryImpl {
-    func applyOrder() {
-        guard let cityId = getCurrentCity()?.id,
-              let longitude = getCurrentAddress()?.longitude.rounded(to: 8),
-              let latitude = getCurrentAddress()?.latitude.rounded(to: 8),
-              let brandId = brandStorage.brand?.id
-        else { return }
+    func applyOrder(withAddress: Bool = true) {
+        var dto: OrderApplyDTO?
 
-        let dto = OrderApplyDTO(address: OrderApplyDTO.Address(city: cityId,
+        if withAddress {
+            guard let cityId = getCurrentCity()?.id,
+                  let longitude = getCurrentAddress()?.longitude.rounded(to: 8),
+                  let latitude = getCurrentAddress()?.latitude.rounded(to: 8),
+                  let brandId = brandStorage.brand?.id
+            else { return }
+
+            dto = OrderApplyDTO(address: OrderApplyDTO.Address(city: cityId,
                                                                longitude: longitude,
                                                                latitude: latitude),
                                 localBrand: brandId)
+        }
 
         outputs.didStartRequest.accept(())
 
         ordersService.applyOrder(dto: dto)
             .subscribe { [weak self] leadUUID in
+                self?.process(leadUUID: leadUUID)
                 self?.outputs.didEndRequest.accept(())
-                self?.defaultStorage.persist(leadUUID: leadUUID)
-                self?.fcmTokenCreate()
-                self?.outputs.didGetLeadUUID.accept(())
             } onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
                 self?.outputs.didFail.accept(error)
             }.disposed(by: disposeBag)
+    }
+
+    private func process(leadUUID: String) {
+        defaultStorage.persist(leadUUID: leadUUID)
+        outputs.didGetLeadUUID.accept(())
+        fcmTokenCreate()
     }
 }
 

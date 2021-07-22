@@ -28,3 +28,8 @@ struct MyCardsResponse: Decodable {
         let results: [MyCard]
     }
 }
+
+struct CardPaymentResponse: Decodable {
+    let data: CardPaymentOrderStatus?
+    let error: ErrorResponse?
+}

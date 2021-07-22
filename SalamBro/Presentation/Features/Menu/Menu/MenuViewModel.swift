@@ -84,11 +84,6 @@ final class MenuViewModel: MenuViewModelProtocol {
             self?.setPositions(positions: positions)
         }
         .disposed(by: disposeBag)
-
-        menuRepository.outputs.needsLeadUUID
-            .subscribe(onNext: { [weak self] in
-                self?.locationRepository.applyOrder()
-            }).disposed(by: disposeBag)
     }
 
     private func bindAddressRepository() {
