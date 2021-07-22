@@ -137,7 +137,8 @@ extension AddressRepositoryImpl {
 
         let dto = OrderApplyDTO(address: OrderApplyDTO.Address(city: cityId,
                                                                longitude: longitude,
-                                                               latitude: latitude),
+                                                               latitude: latitude,
+                                                               comment: getCurrentAddress()?.commentary),
                                 localBrand: brandId)
 
         outputs.didStartRequest.accept(())
