@@ -28,7 +28,7 @@ final class ChangeLanguageCell: UITableViewCell {
         languageLabel.text = item.type.title
 
         if item.checkmark {
-            accessoryView = Constants.checkmark
+            accessoryView = Constants.Map.checkmark
         } else {
             accessoryView = .none
         }
