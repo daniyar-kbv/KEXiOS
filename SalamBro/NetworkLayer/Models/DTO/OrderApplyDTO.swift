@@ -20,15 +20,6 @@ struct OrderApplyDTO: Encodable {
         let city: Int
         let longitude: Double
         let latitude: Double
-    }
-}
-
-struct OrderIncDecrDTO: Encodable {
-    let leadUUID: String
-    let positionUUID: String
-
-    enum CodingKeys: String, CodingKey {
-        case leadUUID = "lead_uuid"
-        case positionUUID = "position_ uuid"
+        let comment: String?
     }
 }
