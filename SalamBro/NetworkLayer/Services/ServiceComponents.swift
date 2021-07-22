@@ -26,7 +26,7 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
 
     // MARK: Auth Plugin for authorized requests
 
-    private let authPlugin = AuthPlugin()
+    private let authPlugin = AuthPlugin(authTokenStorage: AuthTokenStorageImpl.sharedStorage)
 
     func authService() -> AuthService {
         return shared(AuthServiceMoyaImpl(provider: MoyaProvider<AuthAPI>(plugins: [networkPlugin])))
