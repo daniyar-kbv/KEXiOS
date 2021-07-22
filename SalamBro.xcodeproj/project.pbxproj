@@ -118,6 +118,7 @@
 		E783E4557FDE43D8FF5AAF0DB1817674 /* DropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EEDE8ACCBC6EDCB9938CCD1E2D13FA /* DropDownTextField.swift */; };
 		4689A2E43C9E1832756F31868F0DBF8F /* Formatted+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CA23E645A53D190EF1336A05E81C3 /* Formatted+Extension.swift */; };
 		54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070881AEDB3977B0482B6A6B06A1C201 /* GeoStorage.swift */; };
+		7FF3C00C520DBCFD5B1F801D9F8B482F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */; };
 		10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */; };
 		05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */; };
 		AFE4A9CB1651215078FF7933E0FE1E84 /* LoaderDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B1DD3359C1EF5D60E6A24C6244E9F6 /* LoaderDisplayable.swift */; };
@@ -156,6 +157,7 @@
 		177AF0028831E97AE6808F58EC9E28A8 /* ModifiersDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B003C8FF407B3CB244CA89E3A148F022 /* ModifiersDelegate.swift */; };
 		785013D0C1D14D459781490A2ECDB3B4 /* ModifiersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5A42385A6BCBFBEC9B1A82F5B67D0 /* ModifiersViewModel.swift */; };
 		227F8B52826C191515BA473F7E94906C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BB17D599C2783876EE5593605D27F /* NetworkError.swift */; };
+		EEB1FA3448B5518A7675BC4C43BF1EB0 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B8452F367B43CBFA41136A34C74954 /* Notification.swift */; };
 		CB3E9579C383252AA8CCBA4BF24CB26E /* Numeric+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A54A5125018919B0B33C5B21729892D /* Numeric+Extension.swift */; };
 		F3116F4BEBF91495A40E557521D03DB1 /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38E2192F448823FD497D422E1BA1E07 /* OTPView.swift */; };
 		D846B24773092F2471DFE446C0B4A25D /* OnBoardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9844FEA036C0704AC08700818D6D9E /* OnBoardingCoordinator.swift */; };
@@ -213,6 +215,11 @@
 		B1F8A5468443016E0841FA168F2A448C /* PromotionsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E03E22502B0B1125F7255C0B59B4AFF /* PromotionsAPI.swift */; };
 		91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */; };
 		30A29427B5B0E3A39FA2F9993D28B726 /* PromotionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */; };
+		C14F742DCAFAC7971F7E3C76E7303E05 /* PushNotificationsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */; };
+		AD8CE2AD0CB755170CD5CC960D7D5CDC /* PushNotificationsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */; };
+		3AE7C8AEC851E7B7ED23B3A6F002D941 /* PushNotificationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F178F78BC6BC7A15130B516809ABED08 /* PushNotificationsRepository.swift */; };
+		2E57825538FA6811267451053BBD4F3A /* PushNotificationsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C104E0F72B95CD8995731A35025480 /* PushNotificationsResponse.swift */; };
+		B5E2FBCBB697E4A45394A3E464CABDED /* PushNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F58FDA6067CD76CD218CBA8EECF2EA /* PushNotificationsService.swift */; };
 		285F01ECFBD4DE5188CA3D9D7354D6CD /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7120A99F9624B614E4F4E0E1F245EA7F /* Rate.swift */; };
 		C1E5E55D2DD31456EB78F95E23216B86 /* RateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237BE45C3C3B7D8C2AFB438760AE2926 /* RateAPI.swift */; };
 		F3F6FD51C42ACB19D01CA04641E225AF /* RateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5469540D8F0A3653E52AD2E2084BDFF5 /* RateController.swift */; };
@@ -439,9 +446,10 @@
 		31EEDE8ACCBC6EDCB9938CCD1E2D13FA /* DropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTextField.swift; sourceTree = "<group>"; };
 		CF1CA23E645A53D190EF1336A05E81C3 /* Formatted+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatted+Extension.swift"; sourceTree = "<group>"; };
 		070881AEDB3977B0482B6A6B06A1C201 /* GeoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoStorage.swift; sourceTree = "<group>"; };
+		04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3C6169FACF56887087B2E3B796665DC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		612E966ED830C106DB3057E02A36C798 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82DF8DD4A94962F1A97777FAD3747A32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9C0AD81DF662457ACBFD84D90AF44BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39BA308FCB7A9A775DD5A1463690B68E /* LegacyCartDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyCartDTO.swift; sourceTree = "<group>"; };
@@ -480,6 +488,7 @@
 		B003C8FF407B3CB244CA89E3A148F022 /* ModifiersDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifiersDelegate.swift; sourceTree = "<group>"; };
 		4AD5A42385A6BCBFBEC9B1A82F5B67D0 /* ModifiersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiersViewModel.swift; sourceTree = "<group>"; };
 		5C6BB17D599C2783876EE5593605D27F /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		81B8452F367B43CBFA41136A34C74954 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		8A54A5125018919B0B33C5B21729892D /* Numeric+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numeric+Extension.swift"; sourceTree = "<group>"; };
 		F38E2192F448823FD497D422E1BA1E07 /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
 		FA9844FEA036C0704AC08700818D6D9E /* OnBoardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCoordinator.swift; sourceTree = "<group>"; };
@@ -551,6 +560,11 @@
 		6E03E22502B0B1125F7255C0B59B4AFF /* PromotionsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsAPI.swift; sourceTree = "<group>"; };
 		9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsResponse.swift; sourceTree = "<group>"; };
 		2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsService.swift; sourceTree = "<group>"; };
+		DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsAPI.swift; sourceTree = "<group>"; };
+		13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsDTO.swift; sourceTree = "<group>"; };
+		F178F78BC6BC7A15130B516809ABED08 /* PushNotificationsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsRepository.swift; sourceTree = "<group>"; };
+		84C104E0F72B95CD8995731A35025480 /* PushNotificationsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsResponse.swift; sourceTree = "<group>"; };
+		C9F58FDA6067CD76CD218CBA8EECF2EA /* PushNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsService.swift; sourceTree = "<group>"; };
 		7120A99F9624B614E4F4E0E1F245EA7F /* Rate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rate.swift; sourceTree = "<group>"; };
 		237BE45C3C3B7D8C2AFB438760AE2926 /* RateAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateAPI.swift; sourceTree = "<group>"; };
 		5469540D8F0A3653E52AD2E2084BDFF5 /* RateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateController.swift; sourceTree = "<group>"; };
@@ -695,6 +709,7 @@
 				A2BA954A5E1447AD2E26F21927021FBA /* PaymentsAPI.swift */,
 				1837B6B60911400AFFDA44172683C858 /* ProfileAPI.swift */,
 				6E03E22502B0B1125F7255C0B59B4AFF /* PromotionsAPI.swift */,
+				DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */,
 				237BE45C3C3B7D8C2AFB438760AE2926 /* RateAPI.swift */,
 			);
 			path = API;
@@ -1063,6 +1078,7 @@
 				74F85B9DE17177A68E9F0F235C5677C8 /* PaymentsService.swift */,
 				543FD8B676F68AC8A263E0325C017085 /* ProfileService.swift */,
 				2CA84F8AB6B44EFB165DF098F7421BAB /* PromotionsService.swift */,
+				C9F58FDA6067CD76CD218CBA8EECF2EA /* PushNotificationsService.swift */,
 				BBBD4C20818092EA168A52FBF350C119 /* RateService.swift */,
 				D592E9FBAE65EA1FFBABA684C5ADCB9B /* ServiceComponents.swift */,
 			);
@@ -1139,7 +1155,6 @@
 				E2CFAFECBD802E10974E8B3D87A10EF4 /* NetworkLayer */,
 				6A5A2E05A27203182915B196C5DA6419 /* Presentation */,
 				1F58FEA39DEB7D7466031AF71202F231 /* Resources */,
-				612E966ED830C106DB3057E02A36C798 /* Info.plist */,
 			);
 			path = SalamBro;
 			sourceTree = "<group>";
@@ -1168,6 +1183,8 @@
 			isa = PBXGroup;
 			children = (
 				76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */,
+				04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */,
+				E9C0AD81DF662457ACBFD84D90AF44BB /* Info.plist */,
 				A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */,
 			);
 			path = Constants;
@@ -1417,6 +1434,7 @@
 				57ECEC156A2E051E74B15FA38585B064 /* MenuRepository.swift */,
 				8EC067F6F1B247F196122F606B414058 /* PaymentRepository.swift */,
 				5E98A602622F62821E5144CB1A9C83D1 /* ProfilePageRepository.swift */,
+				F178F78BC6BC7A15130B516809ABED08 /* PushNotificationsRepository.swift */,
 				81451ACA2DD4EA857C11CDCB2BD1552F /* RateOrderRepository.swift */,
 				5DB08FF8057E5534CDF7DE46C58195F2 /* RepositoryComponents.swift */,
 			);
@@ -1497,6 +1515,7 @@
 				BFCA77ACAE98C929BB38F9C19EADFC57 /* CartDTO.swift */,
 				16426AE457FE6F7DF042B7802295013A /* OrderApplyDTO.swift */,
 				EB691109FA8B18E100DAC02D47DAC2C9 /* PaymentsDTO.swift */,
+				13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */,
 				741F81064E76308F846D01C08D7D4967 /* UserInfoDTO.swift */,
 				BCE0DA1FB0DE4E3C8E8D6E842854D9D7 /* UserRateDTO.swift */,
 			);
@@ -1948,6 +1967,7 @@
 				668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */,
 				377BFFB000782A682DF1A6A62AED1BE5 /* MapAddress.swift */,
 				4FF32ADAB2B8FEF982A4A9355E2F96AD /* Menu.swift */,
+				81B8452F367B43CBFA41136A34C74954 /* Notification.swift */,
 				4A1146ECD2C11F607B503E7FDF57A1F2 /* Payment.swift */,
 				DA0E6B290305F0D13A85D6644AAC0735 /* PaymentMethod.swift */,
 				5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */,
@@ -2070,6 +2090,7 @@
 				0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */,
 				E7A1EBB59D9A0B49FABE4EFDD2A2F083 /* PaymentsResponse.swift */,
 				9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */,
+				84C104E0F72B95CD8995731A35025480 /* PushNotificationsResponse.swift */,
 				EA7E6DDB3DF68BE9298E9DEDF1A94117 /* RateResponse.swift */,
 				E91F9684B40F872FD54F252A4DA6EC71 /* UserRateResponse.swift */,
 			);
@@ -2352,6 +2373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24CFCB9971C6D77EBF33A951D09DC20E /* Assets.xcassets in Resources */,
+				7FF3C00C520DBCFD5B1F801D9F8B482F /* GoogleService-Info.plist in Resources */,
 				05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */,
 				49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */,
 				AFE10B4ADDD5D00277E3D3352EFD195B /* SBImages.xcassets in Resources */,
@@ -2679,6 +2701,7 @@
 				177AF0028831E97AE6808F58EC9E28A8 /* ModifiersDelegate.swift in Sources */,
 				785013D0C1D14D459781490A2ECDB3B4 /* ModifiersViewModel.swift in Sources */,
 				227F8B52826C191515BA473F7E94906C /* NetworkError.swift in Sources */,
+				EEB1FA3448B5518A7675BC4C43BF1EB0 /* Notification.swift in Sources */,
 				CB3E9579C383252AA8CCBA4BF24CB26E /* Numeric+Extension.swift in Sources */,
 				F3116F4BEBF91495A40E557521D03DB1 /* OTPView.swift in Sources */,
 				D846B24773092F2471DFE446C0B4A25D /* OnBoardingCoordinator.swift in Sources */,
@@ -2733,6 +2756,11 @@
 				B1F8A5468443016E0841FA168F2A448C /* PromotionsAPI.swift in Sources */,
 				91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */,
 				30A29427B5B0E3A39FA2F9993D28B726 /* PromotionsService.swift in Sources */,
+				C14F742DCAFAC7971F7E3C76E7303E05 /* PushNotificationsAPI.swift in Sources */,
+				AD8CE2AD0CB755170CD5CC960D7D5CDC /* PushNotificationsDTO.swift in Sources */,
+				3AE7C8AEC851E7B7ED23B3A6F002D941 /* PushNotificationsRepository.swift in Sources */,
+				2E57825538FA6811267451053BBD4F3A /* PushNotificationsResponse.swift in Sources */,
+				B5E2FBCBB697E4A45394A3E464CABDED /* PushNotificationsService.swift in Sources */,
 				285F01ECFBD4DE5188CA3D9D7354D6CD /* Rate.swift in Sources */,
 				C1E5E55D2DD31456EB78F95E23216B86 /* RateAPI.swift in Sources */,
 				F3F6FD51C42ACB19D01CA04641E225AF /* RateController.swift in Sources */,
@@ -2978,7 +3006,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = ULVD64ZNV2;
-				INFOPLIST_FILE = SalamBro/Info.plist;
+				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3047,7 +3075,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = ULVD64ZNV2;
-				INFOPLIST_FILE = SalamBro/Info.plist;
+				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

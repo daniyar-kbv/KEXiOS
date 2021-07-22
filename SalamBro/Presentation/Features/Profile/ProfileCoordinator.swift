@@ -92,7 +92,7 @@ final class ProfileCoordinator: BaseCoordinator {
         addressListCoordinator.start()
     }
 
-    private func showOrderHistoryPage() {
+    func showOrderHistoryPage() {
         let orderHistoryCoordinator = coordinatorsFactory.makeOrderCoordinator()
         add(orderHistoryCoordinator)
         orderHistoryCoordinator.didFinish = { [weak self, weak orderHistoryCoordinator] in
