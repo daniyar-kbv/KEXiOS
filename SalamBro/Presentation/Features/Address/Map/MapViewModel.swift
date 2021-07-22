@@ -47,8 +47,8 @@ final class MapViewModel {
         self.brandRepository = brandRepository
 
         self.flow = flow
-        targetLocation = YMKPoint(latitude: address?.latitude ?? Constants.ALA_LAT,
-                                  longitude: address?.longitude ?? Constants.ALA_LON)
+        targetLocation = YMKPoint(latitude: address?.latitude ?? Constants.Map.Coordinates.ALA_LAT,
+                                  longitude: address?.longitude ?? Constants.Map.Coordinates.ALA_LON)
         outputs.selectedAddress
             .onNext(MapAddress(name: address?.name ?? "",
                                formattedAddress: address?.name ?? "",
