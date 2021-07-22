@@ -119,11 +119,9 @@ extension SelectMainInformationViewModel {
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        addressRepository.outputs.didGetLeadUUID.bind {
-            [weak self] in
-            self?.outputs.didSave.accept(())
-        }
-        .disposed(by: disposeBag)
+        addressRepository.outputs.didGetLeadUUID
+            .bind(to: outputs.didSave)
+            .disposed(by: disposeBag)
 
         addressRepository.outputs.didEndRequest
             .bind(to: outputs.didEndRequest)

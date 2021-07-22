@@ -13,11 +13,19 @@ struct Constants {
     static let apiKey = getPlistValue(by: "API_KEY")
     static let cloudpaymentsMerchantId = getPlistValue(by: "CLOUDPAYMENTS_MERCHANT_ID")
 
-    static let checkmark = UIImageView(image: UIImage(named: "checkmark"))
-    static let ZOOM: Float = 18.0
+    enum URLs {
+        static let promotionURL = "/promotions/%@/"
+    }
 
-    static let ALA_LAT: Double = 43.241044
-    static let ALA_LON: Double = 76.927359
+    enum Map {
+        static let checkmark = UIImageView(image: UIImage(named: "checkmark"))
+        static let ZOOM: Float = 18.0
+
+        enum Coordinates {
+            static let ALA_LAT: Double = 43.241044
+            static let ALA_LON: Double = 76.927359
+        }
+    }
 
     enum ErrorCode {
         static let orderAlreadyExists = "order_already_exists"

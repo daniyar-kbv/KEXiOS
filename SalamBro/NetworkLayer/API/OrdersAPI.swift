@@ -7,8 +7,6 @@
 
 import Moya
 
-//  Tech debt: change cart requests
-
 enum OrdersAPI {
     case apply(dto: OrderApplyDTO?)
     case getProducts(leadUUID: String)

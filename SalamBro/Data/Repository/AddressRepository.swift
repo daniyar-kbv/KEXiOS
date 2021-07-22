@@ -39,18 +39,21 @@ final class AddressRepositoryImpl: AddressRepository {
     private let defaultStorage: DefaultStorage
 
     private let ordersService: OrdersService
+    private let notificationsService: PushNotificationsService
 
     private let disposeBag = DisposeBag()
 
     init(storage: GeoStorage,
          brandStorage: BrandStorage,
-         defaultStorage: DefaultStorage,
-         ordersService: OrdersService)
+         ordersService: OrdersService,
+         notificationsService: PushNotificationsService,
+         defaultStorage: DefaultStorage)
     {
         geoStorage = storage
         self.brandStorage = brandStorage
-        self.defaultStorage = defaultStorage
         self.ordersService = ordersService
+        self.notificationsService = notificationsService
+        self.defaultStorage = defaultStorage
     }
 }
 
@@ -144,8 +147,8 @@ extension AddressRepositoryImpl {
 
         ordersService.applyOrder(dto: dto)
             .subscribe { [weak self] leadUUID in
-                self?.outputs.didEndRequest.accept(())
                 self?.process(leadUUID: leadUUID)
+                self?.outputs.didEndRequest.accept(())
             } onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
@@ -156,6 +159,20 @@ extension AddressRepositoryImpl {
     private func process(leadUUID: String) {
         defaultStorage.persist(leadUUID: leadUUID)
         outputs.didGetLeadUUID.accept(())
+        fcmTokenCreate()
+    }
+}
+
+extension AddressRepositoryImpl {
+    private func fcmTokenCreate() {
+        guard let leadUUID = defaultStorage.leadUUID,
+              let fcmToken = defaultStorage.fcmToken else { return }
+
+        let dto = FCMTokenCreateDTO(leadUUID: leadUUID, fcmToken: fcmToken)
+
+        notificationsService.fcmTokenCreate(dto: dto)
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 }
 

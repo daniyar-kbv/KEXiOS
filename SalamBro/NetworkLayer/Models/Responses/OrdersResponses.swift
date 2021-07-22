@@ -13,11 +13,9 @@ struct OrderApplyResponse: Codable {
 
     struct Data: Codable {
         let uuid: String
-        let localBrand: Int
 
         enum CodingKeys: String, CodingKey {
             case uuid
-            case localBrand = "local_brand"
         }
     }
 }

@@ -47,8 +47,8 @@ final class MapViewModel {
         self.brandRepository = brandRepository
 
         self.flow = flow
-        targetLocation = YMKPoint(latitude: address?.latitude ?? Constants.ALA_LAT,
-                                  longitude: address?.longitude ?? Constants.ALA_LON)
+        targetLocation = YMKPoint(latitude: address?.latitude ?? Constants.Map.Coordinates.ALA_LAT,
+                                  longitude: address?.longitude ?? Constants.Map.Coordinates.ALA_LON)
         outputs.selectedAddress
             .onNext(MapAddress(name: address?.name ?? "",
                                formattedAddress: address?.name ?? "",
@@ -119,11 +119,11 @@ extension MapViewModel {
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        addressRepository.outputs.didGetLeadUUID.bind {
-            [weak self] in
-            self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
-        }
-        .disposed(by: disposeBag)
+        addressRepository.outputs.didGetLeadUUID
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
+            })
+            .disposed(by: disposeBag)
 
         addressRepository.outputs.didEndRequest
             .bind(to: outputs.didFinishRequest)
