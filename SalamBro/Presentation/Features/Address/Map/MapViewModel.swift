@@ -49,19 +49,18 @@ final class MapViewModel {
         self.flow = flow
         targetLocation = YMKPoint(latitude: address?.latitude ?? Constants.Map.Coordinates.ALA_LAT,
                                   longitude: address?.longitude ?? Constants.Map.Coordinates.ALA_LON)
-        outputs.selectedAddress
-            .onNext(MapAddress(name: address?.name ?? "",
-                               formattedAddress: address?.name ?? "",
-                               longitude: address?.longitude ?? 0,
-                               latitude: address?.latitude ?? 0))
-        commentary = address?.commentary
+
+        if let address = address {
+            outputs.selectedAddress.onNext(address)
+            commentary = address.comment
+        }
     }
 
     func onActionButtonTapped() {
         guard let lastAddress = try? outputs.selectedAddress.value() else { return }
         switch flow {
         case .creation:
-            addressRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
+            addressRepository.changeCurrentAddress(to: lastAddress)
             bindToOrdersOutputs(using: lastAddress)
             addressRepository.applyOrder()
         case .change:
@@ -97,10 +96,8 @@ final class MapViewModel {
                 guard
                     let name = searchResult.obj?.name
                 else { return }
-                let address = MapAddress(name: name,
-                                         formattedAddress: objMetadata.address.formattedAddress,
-                                         longitude: objMetadata.balloonPoint.longitude,
-                                         latitude: objMetadata.balloonPoint.latitude)
+//                TODO: change
+                let address = Address(id: nil, district: nil, street: nil, building: nil, corpus: nil, flat: nil, comment: nil, country: nil, city: 0, longitude: 0, latitude: 0)
                 outputs.selectedAddress.onNext(address)
 
                 if shouldMoveMap {
@@ -114,7 +111,7 @@ final class MapViewModel {
 }
 
 extension MapViewModel {
-    private func bindToOrdersOutputs(using address: MapAddress) {
+    private func bindToOrdersOutputs(using address: Address) {
         addressRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
@@ -138,8 +135,8 @@ extension MapViewModel {
 extension MapViewModel {
     struct Output {
         let moveMapTo = PublishRelay<YMKPoint>()
-        let selectedAddress = BehaviorSubject<MapAddress>(value: MapAddress(name: "", formattedAddress: "", longitude: 0, latitude: 0))
-        let lastSelectedAddress = PublishRelay<(MapAddress, String?)>()
+        let selectedAddress = BehaviorSubject<Address>(value: .init(id: nil, district: nil, street: nil, building: nil, corpus: nil, flat: nil, comment: nil, country: nil, city: 0, longitude: 0, latitude: 0))
+        let lastSelectedAddress = PublishRelay<(Address, String?)>()
         let updateComment = PublishRelay<String>()
 
         let didGetError = PublishRelay<ErrorPresentable>()

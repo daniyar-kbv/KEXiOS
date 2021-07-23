@@ -50,15 +50,6 @@ final class PaymentSelectionViewController: UIViewController, AlertDisplayable, 
             self?.outputs.close.accept(())
         }
 
-//        let cardCryptogramPacket = Card.makeCardCryptogramPacket(
-//            with: "4111 1111 1111 1111",
-//            expDate: "11/23",
-//            cvv: "111",
-//            merchantPublicID: Constants.cloudpaymentsMerchantId
-//        )
-//
-//        print(cardCryptogramPacket)
-
         bindViewModel()
     }
 

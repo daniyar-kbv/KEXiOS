@@ -183,6 +183,8 @@ extension SelectMainInformationViewModel {
             if let deliveryAddress = deliveryAddress {
                 addressRepository.addDeliveryAddress(deliveryAddress: deliveryAddress)
             }
+//        case .changeAddress, .changeBrand:
+
         default:
             break
         }

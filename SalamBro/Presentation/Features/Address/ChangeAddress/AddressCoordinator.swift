@@ -29,14 +29,14 @@ final class AddressCoordinator: Coordinator {
 
     func start() {
         switch flowType {
-        case let .changeAddress(didSelectAddress):
-            openAddressPicker(didSelectAddress: didSelectAddress)
-        case let .changeBrand(didSave, presentOn):
-            openSelectMainInfo(flowType: .changeBrand, didSave: didSave, presentOn: presentOn)
+        case .changeAddress:
+            openAddressPicker()
+        case let .changeBrand(presentOn):
+            openSelectMainInfo(flowType: .changeBrand, presentOn: presentOn)
         }
     }
 
-    private func openAddressPicker(didSelectAddress: (() -> Void)?) {
+    private func openAddressPicker() {
         let addressPickPage = pagesFactory.makeAddressPickPage()
 
         addressPickPage.outputs.didTerminate.subscribe(onNext: { [weak self] in
@@ -45,18 +45,12 @@ final class AddressCoordinator: Coordinator {
 
         addressPickPage.outputs.didSelectAddress.subscribe(onNext: { [weak self] address in
             self?.openSelectMainInfo(flowType: .changeAddress(address.0),
-                                     didSave: {
-                                         didSelectAddress?()
-                                         address.1()
-                                     }, presentOn: addressPickPage)
+                                     presentOn: addressPickPage)
         }).disposed(by: disposeBag)
 
-        addressPickPage.outputs.didAddTapped.subscribe(onNext: { [weak self] onAdd in
+        addressPickPage.outputs.didAddTapped.subscribe(onNext: { [weak self] _ in
             self?.openSelectMainInfo(flowType: .create,
-                                     didSave: {
-                                         didSelectAddress?()
-                                         onAdd()
-                                     }, presentOn: addressPickPage)
+                                     presentOn: addressPickPage)
         }).disposed(by: disposeBag)
 
         addressPickPage.outputs.close.subscribe(onNext: {
@@ -68,7 +62,6 @@ final class AddressCoordinator: Coordinator {
     }
 
     private func openSelectMainInfo(flowType: SelectMainInformationViewModel.FlowType,
-                                    didSave: (() -> Void)? = nil,
                                     presentOn: UIViewController)
     {
         let selectMainInfoPage = pagesFactory.makeSelectMainInfoPage(flowType: flowType)
@@ -86,7 +79,6 @@ final class AddressCoordinator: Coordinator {
         }).disposed(by: disposeBag)
 
         selectMainInfoPage.outputs.didSave.subscribe(onNext: {
-            didSave?()
             selectMainInfoPage.dismiss(animated: true)
         }).disposed(by: disposeBag)
 
@@ -138,7 +130,7 @@ final class AddressCoordinator: Coordinator {
 
 extension AddressCoordinator {
     enum FlowType {
-        case changeAddress(didSelectAddress: (() -> Void)?)
-        case changeBrand(didSave: (() -> Void)?, presentOn: UIViewController)
+        case changeAddress
+        case changeBrand(presentOn: UIViewController)
     }
 }

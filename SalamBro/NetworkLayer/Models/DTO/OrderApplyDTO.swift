@@ -7,19 +7,12 @@
 
 import Foundation
 
-struct OrderApplyDTO: Encodable {
+struct OrderApplyDTO: Codable {
     let address: Address
     let localBrand: Int
 
     enum CodingKeys: String, CodingKey {
         case address
         case localBrand = "local_brand"
-    }
-
-    struct Address: Encodable {
-        let city: Int
-        let longitude: Double
-        let latitude: Double
-        let comment: String?
     }
 }

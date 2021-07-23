@@ -10,12 +10,17 @@ import Foundation
 protocol MenuCoordinatorsFactory {
     func makeAddressCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents, flowType: AddressCoordinator.FlowType) -> AddressCoordinator
     func makeMenuDetailCoordinator(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents, positionUUID: String) -> MenuDetailCoordinator
+    func makeAuthCoordinator() -> AuthCoordinator
 }
 
 class MenuCoordinatorsFactoryImpl: DependencyFactory, MenuCoordinatorsFactory {
+    private let serviceComponents: ServiceComponents
+    private let repositoryComponents: RepositoryComponents
     private let router: Router
 
-    init(router: Router) {
+    init(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents, router: Router) {
+        self.serviceComponents = serviceComponents
+        self.repositoryComponents = repositoryComponents
         self.router = router
     }
 
@@ -50,5 +55,15 @@ class MenuCoordinatorsFactoryImpl: DependencyFactory, MenuCoordinatorsFactory {
     {
         return scoped(MenuDetailPagesFactoryImpl(serviceComponents: serviceComponents,
                                                  repositoryComponents: repositoryComponents))
+    }
+
+    func makeAuthCoordinator() -> AuthCoordinator {
+        return scoped(.init(router: router,
+                            pagesFactory: makeAuthPagesFactory()))
+    }
+
+    private func makeAuthPagesFactory() -> AuthPagesFactory {
+        return scoped(AuthPagesFactoryImpl(serviceComponents: serviceComponents,
+                                           repositoryComponents: repositoryComponents))
     }
 }

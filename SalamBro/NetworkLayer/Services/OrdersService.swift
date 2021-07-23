@@ -12,6 +12,8 @@ import RxSwift
 
 protocol OrdersService: AnyObject {
     func applyOrder(dto: OrderApplyDTO) -> Single<String>
+    func authorizedApplyOrder() -> Single<String>
+    func authorizedApplyWithAddress(dto: OrderApplyDTO) -> Single<String>
     func getProducts(for leadUUID: String) -> Single<OrderProductResponse.Data>
     func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail>
     func getCart(for leadUUID: String) -> Single<Cart>
@@ -28,6 +30,48 @@ final class OrdersServiceMoyaImpl: OrdersService {
     func applyOrder(dto: OrderApplyDTO) -> Single<String> {
         return provider.rx
             .request(.apply(dto: dto))
+            .map { response in
+
+                guard let applyResponse = try? response.map(OrderApplyResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = applyResponse.error {
+                    throw error
+                }
+
+                guard let leadUUID = applyResponse.data?.uuid else {
+                    throw NetworkError.noData
+                }
+
+                return leadUUID
+            }
+    }
+
+    func authorizedApplyOrder() -> Single<String> {
+        return provider.rx
+            .request(.authorizedApply)
+            .map { response in
+
+                guard let applyResponse = try? response.map(OrderApplyResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = applyResponse.error {
+                    throw error
+                }
+
+                guard let leadUUID = applyResponse.data?.uuid else {
+                    throw NetworkError.noData
+                }
+
+                return leadUUID
+            }
+    }
+
+    func authorizedApplyWithAddress(dto: OrderApplyDTO) -> Single<String> {
+        return provider.rx
+            .request(.authorizedApplyWithAddress(dto: dto))
             .map { response in
 
                 guard let applyResponse = try? response.map(OrderApplyResponse.self) else {

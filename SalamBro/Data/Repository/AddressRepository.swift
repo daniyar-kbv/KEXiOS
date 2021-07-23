@@ -21,12 +21,11 @@ protocol AddressRepository: AnyObject {
     func getCurrentAddress() -> Address?
     func changeCurrentAddress(to address: Address)
 
-    func getDeliveryAddresses() -> [DeliveryAddress]?
-    func setDeliveryAddressses(deliveryAddresses: [DeliveryAddress])
-    func getCurrentDeliveryAddress() -> DeliveryAddress?
-    func setCurrentDeliveryAddress(deliveryAddress: DeliveryAddress)
-    func deleteDeliveryAddress(deliveryAddress: DeliveryAddress)
-    func addDeliveryAddress(deliveryAddress: DeliveryAddress)
+    func getUserAddresses()
+    func getCurrentUserAddress() -> UserAddress?
+    func setCurrentUserAddress(to address: UserAddress)
+    func updateUserAddress(with id: Int, brandId: Int)
+    func deleteUserAddress(with id: Int)
 
     func applyOrder()
 }
@@ -38,6 +37,7 @@ final class AddressRepositoryImpl: AddressRepository {
     private let brandStorage: BrandStorage
 
     private let ordersService: OrdersService
+    private let profileService: ProfileService
     private let notificationsService: PushNotificationsService
 
     private let defaultStorage: DefaultStorage
@@ -47,12 +47,14 @@ final class AddressRepositoryImpl: AddressRepository {
     init(storage: GeoStorage,
          brandStorage: BrandStorage,
          ordersService: OrdersService,
+         profileService: ProfileService,
          notificationsService: PushNotificationsService,
          defaultStorage: DefaultStorage)
     {
         geoStorage = storage
         self.brandStorage = brandStorage
         self.ordersService = ordersService
+        self.profileService = profileService
         self.notificationsService = notificationsService
         self.defaultStorage = defaultStorage
     }
@@ -60,13 +62,13 @@ final class AddressRepositoryImpl: AddressRepository {
 
 extension AddressRepositoryImpl {
     func isAddressComplete() -> Bool {
-        return getCurrentDeliveryAddress()?.isComplete() ?? false
+        return getCurrentUserAddress()?.isComplete() ?? false
     }
 }
 
 extension AddressRepositoryImpl {
     func getCurrentCountry() -> Country? {
-        return getCurrentDeliveryAddress()?.country
+        return getCurrentUserAddress()?.address.country
     }
 }
 
@@ -74,7 +76,7 @@ extension AddressRepositoryImpl {
 
 extension AddressRepositoryImpl {
     func getCurrentCity() -> City? {
-        return getCurrentDeliveryAddress()?.city
+        return getCurrentUserAddress()?.address.city
     }
 }
 
@@ -82,48 +84,72 @@ extension AddressRepositoryImpl {
 
 extension AddressRepositoryImpl {
     func getCurrentAddress() -> Address? {
-        return getCurrentDeliveryAddress()?.address
+        return getCurrentUserAddress()?.address
     }
 
     func changeCurrentAddress(to address: Address) {
-        if let index = geoStorage.currentDeliveryAddressIndex {
-            geoStorage.deliveryAddresses[index].address = address
-        } else {
-            addDeliveryAddress(deliveryAddress: DeliveryAddress(address: address))
-        }
+        guard let index = geoStorage.userAddresses.firstIndex(where: { $0.isCurrent }) else { return }
+        geoStorage.userAddresses[index].address = address
     }
 }
 
-// MARK: DeliveryAddress
+// MARK: UserAddress
 
 extension AddressRepositoryImpl {
-    func getDeliveryAddresses() -> [DeliveryAddress]? {
-        return geoStorage.deliveryAddresses
+    func getUserAddresses() {
+        outputs.didGetUserAddresses.accept(geoStorage.userAddresses)
+        outputs.didStartRequest.accept(())
+        profileService.getAddresses()
+            .subscribe(onSuccess: { [weak self] addresses in
+                self?.outputs.didEndRequest.accept(())
+                self?.geoStorage.userAddresses = addresses
+                self?.outputs.didGetUserAddresses.accept(addresses)
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didFail.accept(error)
+            })
+            .disposed(by: disposeBag)
     }
 
-    func setDeliveryAddressses(deliveryAddresses: [DeliveryAddress]) {
-        geoStorage.deliveryAddresses = deliveryAddresses
+    func getCurrentUserAddress() -> UserAddress? {
+        return geoStorage.userAddresses.first(where: { $0.isCurrent })
     }
 
-    func getCurrentDeliveryAddress() -> DeliveryAddress? {
-        guard let index = geoStorage.currentDeliveryAddressIndex else { return nil }
-        return geoStorage.deliveryAddresses[index]
+    func setCurrentUserAddress(to address: UserAddress) {
+        guard let id = address.id,
+              let brandId = address.brandId else { return }
+        let dto = UpdateAddressDTO(brandId: brandId)
+        profileService.updateAddress(id: id, dto: dto)
+            .subscribe(onSuccess: { [weak self] in
+                self?.changeToCurrent(id: id)
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didFail.accept(error)
+            })
+            .disposed(by: disposeBag)
     }
 
-    func setCurrentDeliveryAddress(deliveryAddress: DeliveryAddress) {
-        geoStorage.currentDeliveryAddressIndex = geoStorage.deliveryAddresses.firstIndex(where: { $0 == deliveryAddress })
+    private func changeToCurrent(id: Int) {
+        geoStorage.userAddresses.forEach { $0.isCurrent = $0.id == id }
     }
 
-    func deleteDeliveryAddress(deliveryAddress: DeliveryAddress) {
-        let wasCurrent = geoStorage.currentDeliveryAddressIndex != nil &&
-            geoStorage.deliveryAddresses[geoStorage.currentDeliveryAddressIndex!] == deliveryAddress
-        geoStorage.deliveryAddresses.removeAll(where: { $0 == deliveryAddress })
-        geoStorage.currentDeliveryAddressIndex = geoStorage.deliveryAddresses.first != nil && wasCurrent ? 0 : nil
+    func updateUserAddress(with id: Int, brandId: Int) {
+        let dto = UpdateAddressDTO(brandId: brandId)
+        profileService.updateAddress(id: id, dto: dto)
+            .subscribe(onSuccess: { [weak self] in
+                self?.changeToCurrent(id: id)
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didFail.accept(error)
+            })
+            .disposed(by: disposeBag)
     }
 
-    func addDeliveryAddress(deliveryAddress: DeliveryAddress) {
-        geoStorage.deliveryAddresses.append(deliveryAddress)
-        geoStorage.currentDeliveryAddressIndex = geoStorage.deliveryAddresses.firstIndex(where: { $0 == deliveryAddress })
+    func deleteUserAddress(with _: Int) {
+//        Tech debt: add logic
     }
 }
 
@@ -172,9 +198,11 @@ extension AddressRepositoryImpl {
 
 extension AddressRepositoryImpl {
     struct Output {
-        let didGetLeadUUID = PublishRelay<Void>()
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
+
+        let didGetLeadUUID = PublishRelay<Void>()
+        let didGetUserAddresses = PublishRelay<[UserAddress]>()
     }
 }

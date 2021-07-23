@@ -9,6 +9,8 @@ import Moya
 
 enum OrdersAPI {
     case apply(dto: OrderApplyDTO)
+    case authorizedApply
+    case authorizedApplyWithAddress(dto: OrderApplyDTO)
     case getProducts(leadUUID: String)
     case getProductDetail(leadUUID: String, productUUID: String)
     case getCart(leadUUID: String)
@@ -23,6 +25,8 @@ extension OrdersAPI: TargetType {
     var path: String {
         switch self {
         case .apply: return "orders/apply/"
+        case .authorizedApply: return "/orders/authorized-apply/"
+        case .authorizedApplyWithAddress: return "/orders/authorized-apply-with-address/"
         case let .getProducts(leadUUID): return "orders/\(leadUUID)/nomenclature/"
         case let .getProductDetail(leadUUID, productUUID): return "orders/\(leadUUID)/nomenclature/\(productUUID)/"
         case let .getCart(leadUUID): return "orders/\(leadUUID)/cart/"
@@ -33,6 +37,8 @@ extension OrdersAPI: TargetType {
     var method: Method {
         switch self {
         case .apply: return .post
+        case .authorizedApply: return .post
+        case .authorizedApplyWithAddress: return .post
         case .getProducts: return .get
         case .getProductDetail: return .get
         case .getCart: return .get
@@ -47,6 +53,8 @@ extension OrdersAPI: TargetType {
     var task: Task {
         switch self {
         case let .apply(dto): return .requestJSONEncodable(dto)
+        case .authorizedApply: return .requestPlain
+        case let .authorizedApplyWithAddress(dto): return .requestJSONEncodable(dto)
         case .getProducts: return .requestPlain
         case .getProductDetail: return .requestPlain
         case .getCart: return .requestPlain

@@ -16,6 +16,8 @@ protocol MenuViewModelProtocol {
     var cellViewModels: [[ViewModel]] { get }
 
     func update()
+    func processToBrand()
+    func processToAddresses()
 }
 
 final class MenuViewModel: MenuViewModelProtocol {
@@ -26,6 +28,7 @@ final class MenuViewModel: MenuViewModelProtocol {
     private let brandRepository: BrandRepository
     private let menuRepository: MenuRepository
     private let defaultStorage: DefaultStorage
+    private let tokenStorage: AuthTokenStorage
 
     public var headerViewModels: [ViewModel?] = []
     public var cellViewModels: [[ViewModel]] = []
@@ -33,22 +36,42 @@ final class MenuViewModel: MenuViewModelProtocol {
     init(locationRepository: AddressRepository,
          brandRepository: BrandRepository,
          menuRepository: MenuRepository,
-         defaultStorage: DefaultStorage)
+         defaultStorage: DefaultStorage,
+         tokenStorage: AuthTokenStorage)
     {
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
         self.menuRepository = menuRepository
         self.defaultStorage = defaultStorage
+        self.tokenStorage = tokenStorage
 
         bindMenuRepository()
         bindAddressRepository()
     }
 
-    public func update() {
+    func update() {
         download()
 
         outputs.brandImage.accept(brandRepository.getCurrentBrand()?.image)
         outputs.brandName.accept(brandRepository.getCurrentBrand()?.name)
+    }
+
+    func processToBrand() {
+        guard tokenStorage.token != nil else {
+            outputs.toAuthChangeBrand.accept(())
+            return
+        }
+
+        outputs.toChangeBrand.accept(())
+    }
+
+    func processToAddresses() {
+        guard tokenStorage.token != nil else {
+            outputs.toAuthChangeAddress.accept(())
+            return
+        }
+
+        outputs.toAddressess.accept(())
     }
 
     private func bindMenuRepository() {
@@ -138,5 +161,10 @@ extension MenuViewModel {
         let didEndRequest = PublishRelay<Void>()
         let updateTableView = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
+
+        let toChangeBrand = PublishRelay<Void>()
+        let toAddressess = PublishRelay<Void>()
+        let toAuthChangeBrand = PublishRelay<Void>()
+        let toAuthChangeAddress = PublishRelay<Void>()
     }
 }

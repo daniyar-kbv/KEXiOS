@@ -100,9 +100,9 @@ extension MapPage: YMKMapCameraListener {
 extension MapPage {
     private func bindViewModel() {
         viewModel.outputs.selectedAddress
-            .subscribe(onNext: { [weak self] mapAddress in
-                self?.mapAddressView.addressTextField.set(text: mapAddress.name)
-                self?.mapAddressView.changeButtonAppearance(based: mapAddress.name)
+            .subscribe(onNext: { [weak self] address in
+                self?.mapAddressView.addressTextField.set(text: address.getName())
+                self?.mapAddressView.changeButtonAppearance(based: address.getName())
             })
             .disposed(by: disposeBag)
 
@@ -113,12 +113,9 @@ extension MapPage {
             .disposed(by: disposeBag)
 
         viewModel.outputs.lastSelectedAddress
-            .subscribe(onNext: { [weak self] address, commentary in
+            .subscribe(onNext: { [weak self] address, _ in
                 self?.handlePageTermination()
-                self?.selectedAddress?(Address(name: address.name,
-                                               longitude: address.longitude,
-                                               latitude: address.latitude,
-                                               commentary: commentary))
+                self?.selectedAddress?(address)
             })
             .disposed(by: disposeBag)
 
