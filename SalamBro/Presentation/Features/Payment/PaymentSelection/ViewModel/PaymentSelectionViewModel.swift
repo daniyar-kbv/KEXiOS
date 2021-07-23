@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PassKit
 import RxCocoa
 import RxSwift
 import WebKit
@@ -15,6 +16,7 @@ protocol PaymentSelectionViewModel: AnyObject {
 
     func set(paymentMethod: PaymentMethod)
     func makePayment()
+    func processApplePay(payment: PKPayment)
 }
 
 final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
@@ -40,18 +42,22 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
     }
 
     func set(paymentMethod: PaymentMethod) {
-        outputs.didSelectPaymentMethod.accept(paymentMethod.title)
+        outputs.didSelectPaymentMethod.accept(paymentMethod)
     }
 
     func makePayment() {
         paymentRepository.makePayment()
     }
 
+    func processApplePay(payment: PKPayment) {
+        paymentRepository.makeApplePayPayment(payment: payment)
+    }
+
     private func bindRepository() {
         paymentRepository.outputs.selectedPaymentMethod
             .subscribe(onNext: { [weak self] selectedPaymentMethod in
                 guard let selectedPaymentMethod = selectedPaymentMethod else { return }
-                self?.outputs.didSelectPaymentMethod.accept(selectedPaymentMethod.title)
+                self?.outputs.didSelectPaymentMethod.accept(selectedPaymentMethod)
             }).disposed(by: disposeBag)
 
         paymentRepository.outputs.didStartPaymentRequest
@@ -78,6 +84,10 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
         paymentRepository.outputs.hide3DS
             .bind(to: outputs.hide3DS)
             .disposed(by: disposeBag)
+
+        paymentRepository.outputs.showApplePay
+            .bind(to: outputs.showApplePay)
+            .disposed(by: disposeBag)
     }
 
     private func finishPayment() {
@@ -94,9 +104,10 @@ extension PaymentSelectionViewModelImpl {
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
 
-        let didSelectPaymentMethod = PublishRelay<String>()
+        let didSelectPaymentMethod = PublishRelay<PaymentMethod>()
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()
+        let showApplePay = PublishRelay<PKPaymentAuthorizationViewController>()
         let didMakePayment = PublishRelay<Void>()
     }
 }

@@ -172,6 +172,7 @@
 "Payment.Selection.orderPayment" = "Оформить заказ";
 "Payment.Selection.paymentMethod" = "Способ оплаты";
 "Payment.Selection.title" = "Оформление заказа";
+"Payment.Selection.applePay" = "Оформить с";
 
 // MARK: - Payment Card
 

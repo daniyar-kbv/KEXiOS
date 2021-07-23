@@ -33,6 +33,12 @@ struct CartItem: Codable, Equatable {
     }
 }
 
+extension CartItem {
+    func getNumericPrice() -> Double {
+        return (position.price ?? 0) * Double(count)
+    }
+}
+
 struct CartPosition: Codable, Equatable {
     var uuid: String
     var name: String

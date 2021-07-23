@@ -7,6 +7,7 @@
 
 import Cloudpayments
 import Foundation
+import PassKit
 import RxCocoa
 import RxSwift
 import WebKit
@@ -18,12 +19,14 @@ protocol PaymentRepository: AnyObject {
     func setSelected(paymentMethod: PaymentMethod)
     func getPaymentMethods()
     func makePayment()
+    func makeApplePayPayment(payment: PKPayment)
 }
 
 final class PaymentRepositoryImpl: PaymentRepository {
     private let disposeBag = DisposeBag()
     private let paymentService: PaymentsService
     private let defaultStorage: DefaultStorage
+    private let cartStorage: CartStorage
 
     private var selectedPaymentMethod: PaymentMethod?
     private var paymentMethods: [PaymentMethod] = []
@@ -34,10 +37,12 @@ final class PaymentRepositoryImpl: PaymentRepository {
     let outputs = Output()
 
     init(paymentService: PaymentsService,
-         defaultStorage: DefaultStorage)
+         defaultStorage: DefaultStorage,
+         cartStorage: CartStorage)
     {
         self.paymentService = paymentService
         self.defaultStorage = defaultStorage
+        self.cartStorage = cartStorage
     }
 
     func setSelected(paymentMethod: PaymentMethod) {
@@ -55,6 +60,12 @@ final class PaymentRepositoryImpl: PaymentRepository {
 
     func getSelectedPaymentMethod() -> PaymentMethod? {
         return selectedPaymentMethod
+    }
+
+    func makeApplePayPayment(payment: PKPayment) {
+        guard let cryptogram = payment.convertToString() else { return }
+        selectedPaymentMethod?.set(value: cryptogram)
+        processApplePay()
     }
 }
 
@@ -83,6 +94,7 @@ extension PaymentRepositoryImpl {
     private func getDefaultPaymentMethods() -> [PaymentMethod] {
         return [
             .init(type: .card),
+            .init(type: .applePay),
             .init(type: .cash),
         ]
     }
@@ -99,6 +111,8 @@ extension PaymentRepositoryImpl {
             createOrder(
                 createPayment
             )
+        case .applePay:
+            processApplePay()
         case .cash:
             break
         default:
@@ -164,6 +178,19 @@ extension PaymentRepositoryImpl {
                 self?.outputs.didGetError.accept(error)
             })
             .disposed(by: disposeBag)
+    }
+
+    private func processApplePay() {
+        let request = PKPaymentRequest()
+        request.merchantIdentifier = Constants.applePayMerchantId
+        request.supportedNetworks = [.visa, .masterCard]
+        request.merchantCapabilities = .capability3DS
+        request.countryCode = "RU"
+        request.currencyCode = "KZT"
+        request.paymentSummaryItems = cartStorage.cart.items.map { .init(label: $0.position.name, amount: NSDecimalNumber(value: $0.getNumericPrice())) }
+        guard let applePayController = PKPaymentAuthorizationViewController(paymentRequest: request)
+        else { return }
+        outputs.showApplePay.accept(applePayController)
     }
 
     private func process(orderStatus: OrderStatusProtocol) {
@@ -239,6 +266,7 @@ extension PaymentRepositoryImpl {
 
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()
+        let showApplePay = PublishRelay<PKPaymentAuthorizationViewController>()
 
         let selectedPaymentMethod = BehaviorRelay<PaymentMethod?>(value: nil)
         let paymentMethods = PublishRelay<[PaymentMethod]>()

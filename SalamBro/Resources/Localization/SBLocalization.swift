@@ -336,6 +336,7 @@ enum PaymentText: UILocalizable {
         case change = "Payment.Selection.change"
         case bill = "Payment.Selection.bill"
         case orderPayment = "Payment.Selection.orderPayment"
+        case applePay = "Payment.Selection.applePay"
 
         var localized: String { rawValue }
     }

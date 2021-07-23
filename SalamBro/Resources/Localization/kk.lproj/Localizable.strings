@@ -171,6 +171,7 @@
 "Payment.Selection.orderPayment" = "KZ Оформить заказ";
 "Payment.Selection.paymentMethod" = "KZ Способ оплаты";
 "Payment.Selection.title" = "KZ Оформление заказа";
+"Payment.Selection.applePay" = "KZ Оформить с";
 
 // MARK: - Payment Card
 

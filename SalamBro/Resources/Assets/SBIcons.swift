@@ -128,6 +128,12 @@ enum CartIcons {
 }
 
 enum PaymentIcons {
+    enum PaymentSelection: String, UIImageGetable {
+        case applePay = "payment_apple_pay"
+
+        var name: String { rawValue }
+    }
+
     enum PaymentMethod: String, UIImageGetable {
         case selected = "payment_method_check_mark"
 

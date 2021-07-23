@@ -5,6 +5,7 @@
 //  Created by Ilyar Mnazhdin on 06.07.2021.
 //
 
+import PassKit
 import RxCocoa
 import RxSwift
 import UIKit
@@ -30,6 +31,14 @@ final class PaymentSelectionContainerView: UIView {
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         return button
+    }()
+
+    private lazy var applePayButton: PKPaymentButton = {
+        let view = PKPaymentButton(paymentButtonType: .plain, paymentButtonStyle: .black)
+        view.layer.cornerRadius = 10
+        view.layer.masksToBounds = true
+        view.isHidden = true
+        return view
     }()
 
     private let billTitleLabel: UILabel = {
@@ -64,17 +73,23 @@ final class PaymentSelectionContainerView: UIView {
 }
 
 extension PaymentSelectionContainerView {
-    func setPaymentMethod(text: String) {
-        paymentSelectionButton.setPaymentMethod(text: text)
-
-        actionButton.backgroundColor = .kexRed
-        actionButton.isEnabled = true
+    func setPaymentMethod(paymentMethod: PaymentMethod) {
+        paymentSelectionButton.setPaymentMethod(text: paymentMethod.title)
+        configActionButton(with: paymentMethod)
     }
 }
 
 extension PaymentSelectionContainerView {
     private func bindViews() {
         actionButton
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] in
+                self?.delegate?.handleSubmitButtonTap()
+            })
+            .disposed(by: disposeBag)
+
+        applePayButton
             .rx
             .tap
             .subscribe(onNext: { [weak self] in
@@ -107,6 +122,14 @@ extension PaymentSelectionContainerView {
             $0.bottom.equalTo(safeAreaLayoutGuide).offset(-16)
         }
 
+        addSubview(applePayButton)
+        applePayButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.height.equalTo(43)
+            $0.bottom.equalTo(safeAreaLayoutGuide).offset(-16)
+        }
+
         addSubview(billTitleLabel)
         billTitleLabel.snp.makeConstraints {
             $0.bottom.equalTo(actionButton.snp.top).offset(-16)
@@ -119,5 +142,10 @@ extension PaymentSelectionContainerView {
             $0.trailing.equalToSuperview().offset(-24)
             $0.leading.equalTo(billTitleLabel.snp.trailing).offset(16)
         }
+    }
+
+    private func configActionButton(with paymentMethod: PaymentMethod) {
+        actionButton.isHidden = paymentMethod.type == .applePay
+        applePayButton.isHidden = paymentMethod.type != .applePay
     }
 }

@@ -56,7 +56,7 @@ final class PaymentMethodVCViewModelImpl: PaymentMethodVCViewModel {
         switch paymentMethod.type {
         case .card, .cash:
             outputs.showPaymentMethod.accept(paymentMethod)
-        case .savedCard:
+        case .savedCard, .applePay:
             paymentRepository.setSelected(paymentMethod: paymentMethod)
             outputs.didSelectPaymentMethod.accept(())
         }
