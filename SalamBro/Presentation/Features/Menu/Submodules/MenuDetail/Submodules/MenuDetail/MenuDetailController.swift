@@ -125,25 +125,11 @@ extension MenuDetailController {
             .subscribe(onNext: { [weak self] isComplete in
                 self?.contentView.setProceedButton(isActive: isComplete)
             }).disposed(by: disposeBag)
-
-        viewModel.outputs.didSelectModifier
-            .subscribe(onNext: { [weak self] modifier, indexPath in
-                self?.updateCell(with: modifier, at: indexPath)
-            }).disposed(by: disposeBag)
     }
 
     private func layoutUI() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
-    }
-
-    private func updateCell(with modifier: Modifier, at indexPath: IndexPath) {
-        let cell = contentView.modifiersTableView.cellForRow(at: indexPath) as! MenuDetailModifierCell
-        cell.set(value: modifier)
-    }
-
-    func set(modifier: Modifier, at indexPath: IndexPath) {
-        viewModel.set(modifier: modifier, at: indexPath)
     }
 }
 
@@ -157,6 +143,7 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.currentModifierGroupIndex = indexPath
         outputs.toModifiers.accept(
             (viewModel.modifierCellViewModels[indexPath.row].getModifierGroup(),
              indexPath)

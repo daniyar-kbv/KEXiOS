@@ -23,10 +23,8 @@ final class MenuDetailModifierCell: UITableViewCell {
 
     private lazy var valueLabel: UILabel = {
         let view = UILabel()
-        view.textColor = .darkGray
         view.font = .systemFont(ofSize: 16, weight: .medium)
-        view.textColor = .mildBlue
-        view.text = SBLocalization.localized(key: MenuText.MenuDetail.choose)
+        view.numberOfLines = 0
         return view
     }()
 
@@ -38,14 +36,7 @@ final class MenuDetailModifierCell: UITableViewCell {
         return view
     }()
 
-    private lazy var bottomStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [valueLabel, selectButton])
-        view.distribution = .equalSpacing
-        view.alignment = .bottom
-        view.axis = .horizontal
-        view.spacing = 8
-        return view
-    }()
+    private var placeholderForValue = ""
 
     init(viewModel: MenuDetailModifierCellViewModel) {
         self.viewModel = viewModel
@@ -61,41 +52,50 @@ final class MenuDetailModifierCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(value: Modifier) {
-        viewModel.set(value: value)
-    }
-
-    func getValue() -> Modifier? {
-        return viewModel.getValue()
-    }
-
     private func bindViewModel() {
         viewModel.outputs.name
             .bind(to: titleLabel.rx.attributedText)
             .disposed(by: disposeBag)
 
+        viewModel.outputs.isRequired
+            .subscribe(onNext: { [weak self] isRequired in
+                if let isRequired = isRequired {
+                    self?.placeholderForValue = isRequired ?
+                        SBLocalization.localized(key: MenuText.MenuDetail.choose) :
+                        SBLocalization.localized(key: MenuText.MenuDetail.chooseAdditional)
+                }
+            }).disposed(by: disposeBag)
+
         viewModel.outputs.value
             .subscribe(onNext: { [weak self] text in
-                self?.valueLabel.text = text != nil ?
-                    text :
-                    SBLocalization.localized(key: MenuText.MenuDetail.choose)
-                self?.valueLabel.textColor = text != nil ? .darkGray : .mildBlue
+                if let text = text {
+                    self?.valueLabel.text = !text.isEmpty ? text : self?.placeholderForValue
+                    self?.valueLabel.textColor = !text.isEmpty ? .darkGray : .mildBlue
+                }
             }).disposed(by: disposeBag)
     }
 
     private func layoutUI() {
         selectionStyle = .none
 
-        [titleLabel, bottomStack].forEach { contentView.addSubview($0) }
+        [titleLabel, valueLabel, selectButton].forEach { contentView.addSubview($0) }
 
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(8)
             $0.left.right.equalToSuperview()
         }
 
-        bottomStack.snp.makeConstraints {
+        valueLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(4)
             $0.bottom.equalToSuperview().offset(-8)
-            $0.left.right.equalToSuperview()
+            $0.left.equalToSuperview()
+        }
+
+        selectButton.snp.makeConstraints {
+            $0.left.equalTo(valueLabel.snp.right).offset(8)
+            $0.right.equalToSuperview()
+            $0.centerY.equalTo(valueLabel.snp.centerY)
+            $0.width.equalTo(70)
         }
     }
 }

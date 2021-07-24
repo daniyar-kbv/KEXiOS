@@ -101,7 +101,9 @@ final class ModifiersController: UIViewController {
     }
 
     @objc private func doneButtonPressed() {
-        outputs.getModifiers.accept(viewModel.modifiers)
+        let selectedChoices = viewModel.modifiers.filter { $0.itemCount > 0 }
+        viewModel.setSelectedModifiers(with: selectedChoices)
+        outputs.close.accept(())
     }
 }
 
@@ -149,6 +151,5 @@ extension ModifiersController: ModifiersCellDelegate {
 extension ModifiersController {
     struct Output {
         let close = PublishRelay<Void>()
-        let getModifiers = PublishRelay<[Modifier]>()
     }
 }

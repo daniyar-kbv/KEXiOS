@@ -13,9 +13,8 @@ protocol MenuDetailModifierCellViewModel {
     var outputs: MenuDetailModifierCellViewModelImpl.Output { get set }
 
     func getModifierGroup() -> ModifierGroup
-    func set(value: Modifier)
     func getValue() -> Modifier?
-    func didSelect() -> Bool
+    func makeValueText()
 }
 
 final class MenuDetailModifierCellViewModelImpl: MenuDetailModifierCellViewModel {
@@ -26,6 +25,7 @@ final class MenuDetailModifierCellViewModelImpl: MenuDetailModifierCellViewModel
 
     init(modifierGroup: ModifierGroup) {
         self.modifierGroup = modifierGroup
+        makeValueText()
     }
 
     @available(*, unavailable)
@@ -37,22 +37,16 @@ final class MenuDetailModifierCellViewModelImpl: MenuDetailModifierCellViewModel
         return modifierGroup
     }
 
-    func set(value: Modifier) {
-        self.value = value
-    }
-
     func getValue() -> Modifier? {
         return value
-    }
-
-    func didSelect() -> Bool {
-        return value != nil
     }
 }
 
 extension MenuDetailModifierCellViewModelImpl {
     private func makeTitle() -> NSAttributedString {
-        let attributedTitle = NSMutableAttributedString(
+        var requiredAmountTitle = NSMutableAttributedString(string: "")
+
+        var attributedTitle = NSMutableAttributedString(
             string: modifierGroup.name,
             attributes: [
                 NSAttributedString.Key.foregroundColor: UIColor.mildBlue,
@@ -60,6 +54,17 @@ extension MenuDetailModifierCellViewModelImpl {
         )
 
         if modifierGroup.isRequired {
+            let amountString = modifierGroup.maxAmount == 1 ?
+                " (\(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.position)))" :
+                " (\(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positions)))"
+
+            requiredAmountTitle = NSMutableAttributedString(
+                string: amountString,
+                attributes: [
+                    NSAttributedString.Key.foregroundColor: UIColor.mildBlue,
+                ]
+            )
+
             let dotString = NSAttributedString(
                 string: " • ",
                 attributes: [
@@ -74,19 +79,41 @@ extension MenuDetailModifierCellViewModelImpl {
                 ]
             )
 
+            attributedTitle.append(requiredAmountTitle)
             attributedTitle.append(dotString)
             attributedTitle.append(requiredString)
+        } else {
+            attributedTitle = NSMutableAttributedString(
+                string: SBLocalization.localized(key: MenuText.MenuDetail.additional),
+                attributes: [
+                    NSAttributedString.Key.foregroundColor: UIColor.mildBlue,
+                ]
+            )
+
+            let amountString = modifierGroup.maxAmount == 1 ?
+                " (\(SBLocalization.localized(key: MenuText.MenuDetail.max)) \(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.position)))" :
+                " (\(SBLocalization.localized(key: MenuText.MenuDetail.max)) \(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positions)))"
+
+            requiredAmountTitle = NSMutableAttributedString(
+                string: amountString,
+                attributes: [
+                    NSAttributedString.Key.foregroundColor: UIColor.mildBlue,
+                ]
+            )
+
+            attributedTitle.append(requiredAmountTitle)
         }
 
         return attributedTitle as NSAttributedString
     }
 
-    private func makeValueText() {
+    func makeValueText() {
         let valueText = modifierGroup
             .selectedModifiers
             .map { $0.name }
             .joined(separator: ", ")
 
+        outputs.isRequired.accept(modifierGroup.isRequired)
         outputs.value.accept(valueText)
     }
 }
@@ -98,6 +125,7 @@ extension MenuDetailModifierCellViewModelImpl {
         }
 
         let name: BehaviorRelay<NSAttributedString>
+        let isRequired = BehaviorRelay<Bool?>(value: nil)
         let value = BehaviorRelay<String?>(value: nil)
     }
 }

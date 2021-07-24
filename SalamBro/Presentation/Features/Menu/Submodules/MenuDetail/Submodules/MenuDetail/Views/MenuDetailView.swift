@@ -48,7 +48,7 @@ final class MenuDetailView: UIView {
         return label
     }()
 
-    lazy var modifiersTableView: UITableView = {
+    private(set) lazy var modifiersTableView: UITableView = {
         let view = UITableView()
         view.register(MenuDetailModifierCell.self, forCellReuseIdentifier: String(describing: MenuDetailModifierCell.self))
         view.isScrollEnabled = false
@@ -191,7 +191,7 @@ extension MenuDetailView {
         delegate?.commentaryViewTapped()
     }
 
-    @objc func proceedButtonTapped() {
+    @objc private func proceedButtonTapped() {
         delegate?.proceedButtonTapped()
     }
 }

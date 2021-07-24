@@ -109,6 +109,11 @@
 "MenuDetail.chooseAdditionalItemButton" = "EN Изменить";
 "MenuDetail.required" = "EN Обязательно";
 "MenuDetail.choose" = "EN Выберите";
+"MenuDetail.position" = "EN позиция";
+"MenuDetail.positions" = "EN позиции";
+"MenuDetail.additional" = "EN Дополнительно";
+"MenuDetail.max" = "EN макс.";
+"MenuDetail.chooseAdditional" = "EN Выберите дополнения";
 
 // MARK: - Support
 "Support.title" = "EN Помощь";

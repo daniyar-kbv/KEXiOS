@@ -17,17 +17,20 @@ protocol ModifiersViewModel: AnyObject {
     func changeModifierCount(at index: Int, with count: Int)
     func decreaseTotalCount()
     func increaseTotalCount()
+    func setSelectedModifiers(with modifiers: [Modifier])
 }
 
 final class ModifiersViewModelImpl: ModifiersViewModel {
     private(set) var outputs: Output
     private(set) var modifiersGroup: ModifierGroup
     private(set) var modifiers: [Modifier]
+    private let menuDetailRepository: MenuDetailRepository
 
-    init(modifierGroup: ModifierGroup) {
+    init(modifierGroup: ModifierGroup, menuDetailRepository: MenuDetailRepository) {
         outputs = .init(modifierGroup: modifierGroup)
         modifiersGroup = modifierGroup
         modifiers = modifierGroup.modifiers
+        self.menuDetailRepository = menuDetailRepository
     }
 
     func getCellStatus(at index: Int) -> (Bool, Bool) {
@@ -62,6 +65,10 @@ final class ModifiersViewModelImpl: ModifiersViewModel {
         if modifiersGroup.totalCount == modifiersGroup.maxAmount {
             outputs.showDoneButton.accept(())
         }
+    }
+
+    func setSelectedModifiers(with modifiers: [Modifier]) {
+        menuDetailRepository.setSelectedModifiers(with: modifiers)
     }
 }
 

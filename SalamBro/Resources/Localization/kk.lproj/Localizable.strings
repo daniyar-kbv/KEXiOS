@@ -109,6 +109,11 @@
 "MenuDetail.chooseAdditionalItemButton" = "KZ Изменить";
 "MenuDetail.required" = "KZ Обязательно";
 "MenuDetail.choose" = "KZ Выберите";
+"MenuDetail.position" = "KZ позиция";
+"MenuDetail.positions" = "KZ позиции";
+"MenuDetail.additional" = "KZ Дополнительно";
+"MenuDetail.max" = "KZ макс.";
+"MenuDetail.chooseAdditional" = "KZ Выберите дополнения";
 
 // MARK: - Support
 "Support.title" = "KZ Помощь";

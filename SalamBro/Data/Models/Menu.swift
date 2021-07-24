@@ -42,7 +42,7 @@ struct MenuPositionDetail: Codable {
     }
 }
 
-struct ModifierGroup: Codable {
+struct ModifierGroup: Codable, Equatable {
     let uuid: String
     let name: String
     let minAmount: Int
@@ -58,6 +58,10 @@ struct ModifierGroup: Codable {
         case minAmount = "min_amount"
         case maxAmount = "max_amount"
         case isRequired = "is_required"
+    }
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.uuid == rhs.uuid
     }
 }
 

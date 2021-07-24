@@ -190,6 +190,11 @@ enum MenuText: UILocalizable {
         case changeButton = "MenuDetail.chooseAdditionalItemButton"
         case required = "MenuDetail.required"
         case choose = "MenuDetail.choose"
+        case position = "MenuDetail.position"
+        case positions = "MenuDetail.positions"
+        case additional = "MenuDetail.additional"
+        case max = "MenuDetail.max"
+        case chooseAdditional = "MenuDetail.chooseAdditional"
 
         var localized: String { rawValue }
     }

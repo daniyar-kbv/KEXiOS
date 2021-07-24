@@ -12,12 +12,12 @@ import RxSwift
 protocol MenuDetailViewModel: AnyObject {
     var outputs: MenuDetailViewModelImpl.Output { get }
     var modifierCellViewModels: [MenuDetailModifierCellViewModel] { get set }
+    var currentModifierGroupIndex: IndexPath? { get set }
 
     func update()
     func proceed()
     func set(comment: String)
     func getComment() -> String?
-    func set(modifier: Modifier, at indexPath: IndexPath)
 }
 
 final class MenuDetailViewModelImpl: MenuDetailViewModel {
@@ -32,6 +32,7 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     private var comment: String?
 
     var modifierCellViewModels: [MenuDetailModifierCellViewModel] = []
+    var currentModifierGroupIndex: IndexPath?
     let outputs = Output()
 
     init(positionUUID: String,
@@ -70,12 +71,6 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     func getComment() -> String? {
         return comment
     }
-
-    func set(modifier: Modifier, at indexPath: IndexPath) {
-        position?.modifierGroups[indexPath.section].set(modifier: modifier, at: indexPath.row)
-        outputs.didSelectModifier.accept((modifier, indexPath))
-        check()
-    }
 }
 
 extension MenuDetailViewModelImpl {
@@ -98,21 +93,31 @@ extension MenuDetailViewModelImpl {
         menuDetailRepository.outputs.didFail
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
+
+        menuDetailRepository.outputs.updateSelectedModifiers.bind {
+            [weak self] modifiers in
+            if let index = self?.currentModifierGroupIndex {
+                self?.position?.modifierGroups[index.row].selectedModifiers = modifiers
+                self?.assignSelectedModifiers()
+            }
+            self?.check()
+            self?.outputs.updateModifiers.accept(())
+        }
+        .disposed(by: disposeBag)
     }
 
     private func download() {
         guard let leadUUID = defaultStorage.leadUUID else { return }
-
         menuDetailRepository.getProductDetail(for: leadUUID, by: positionUUID)
     }
 
     private func process(position: MenuPositionDetail) {
-        self.position = position
-
-        outputs.itemImage.accept(URL(string: position.image ?? ""))
-        outputs.itemTitle.accept(position.name)
-        outputs.itemDescription.accept(position.description)
-        outputs.itemPrice.accept("\(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton)) \(position.price.removeTrailingZeros())")
+//        self.position = position
+//
+//        outputs.itemImage.accept(URL(string: position.image ?? ""))
+//        outputs.itemTitle.accept(position.name)
+//        outputs.itemDescription.accept(position.description)
+//        outputs.itemPrice.accept("\(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton)) \(position.price.removeTrailingZeros())")
 
 //        modifierCellViewModels = position.modifierGroups.map {
 //            MenuDetailModifierCellViewModelImpl(modifierGroup: $0)
@@ -122,11 +127,29 @@ extension MenuDetailViewModelImpl {
             .init(uuid: "1",
                   name: "Выберите напиток",
                   minAmount: 1,
-                  maxAmount: 1,
+                  maxAmount: 10,
                   isRequired: true,
                   modifiers: [
                       .init(name: "Кола",
                             uuid: "1",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Кола2",
+                            uuid: "2",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Кола3",
+                            uuid: "3",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Кола4",
+                            uuid: "4",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Кола5",
+                            uuid: "5",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Кола7",
+                            uuid: "6",
+                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
+                      .init(name: "Кола8",
+                            uuid: "7",
                             image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
                       .init(name: "Спрайт",
                             uuid: "2",
@@ -153,7 +176,7 @@ extension MenuDetailViewModelImpl {
                   ]),
             .init(uuid: "3",
                   name: "Выберите напиток",
-                  minAmount: 0,
+                  minAmount: 2,
                   maxAmount: 3,
                   isRequired: false,
                   modifiers: [
@@ -169,17 +192,45 @@ extension MenuDetailViewModelImpl {
                   ]),
         ]
 
-        modifierCellViewModels = modifierGroups.map {
-            MenuDetailModifierCellViewModelImpl(modifierGroup: $0)
-        }
+        let position = MenuPositionDetail(uuid: "1", name: "Коктейль Попкорн", description: "Ho", image: "", price: 450, categoryUUID: "bd260a51-6552-47be-9c5f-784c00dbea30", modifierGroups: modifierGroups)
+
+        self.position = position
+
+        outputs.itemImage.accept(URL(string: position.image ?? ""))
+        outputs.itemTitle.accept(position.name)
+        outputs.itemDescription.accept(position.description)
+        outputs.itemPrice.accept("\(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton)) \(position.price.removeTrailingZeros())")
+
+        assignSelectedModifiers()
+
+//        modifierCellViewModels = modifierGroups.map {
+//            MenuDetailModifierCellViewModelImpl(modifierGroup: $0)
+//        }
 
         outputs.updateModifiers.accept(())
-        check()
+        outputs.isComplete.accept(false)
+    }
+
+    private func assignSelectedModifiers() {
+        if let position = position {
+            modifierCellViewModels = position.modifierGroups.map {
+                MenuDetailModifierCellViewModelImpl(modifierGroup: $0)
+            }
+        }
     }
 
     private func check() {
-        outputs.isComplete.accept(!modifierCellViewModels
-            .contains(where: { $0.didSelect() == false }))
+        if let position = position {
+            for i in position.modifierGroups {
+                if i.isRequired, i.selectedModifiers.isEmpty { return }
+                if i.isRequired, !i.selectedModifiers.isEmpty {
+                    if i == position.modifierGroups.last {
+                        return
+                    }
+                }
+            }
+            outputs.isComplete.accept(true)
+        }
     }
 
     private func getSelectedModifiers() -> [Modifier] {
@@ -202,7 +253,6 @@ extension MenuDetailViewModelImpl {
         let itemPrice = PublishRelay<String?>()
         let updateModifiers = PublishRelay<Void>()
 
-        let didSelectModifier = PublishRelay<(Modifier, IndexPath)>()
         let didProceed = PublishRelay<Void>()
         let isComplete = PublishRelay<Bool>()
     }

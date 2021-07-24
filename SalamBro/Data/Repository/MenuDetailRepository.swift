@@ -13,6 +13,7 @@ protocol MenuDetailRepository: AnyObject {
     var outputs: MenuDetailRepositoryImpl.Output { get }
 
     func getProductDetail(for leadUUID: String, by positionUUID: String)
+    func setSelectedModifiers(with modifiers: [Modifier])
 }
 
 final class MenuDetailRepositoryImpl: MenuDetailRepository {
@@ -36,6 +37,10 @@ final class MenuDetailRepositoryImpl: MenuDetailRepository {
                 self?.outputs.didFail.accept(error)
             }).disposed(by: disposeBag)
     }
+
+    func setSelectedModifiers(with modifiers: [Modifier]) {
+        outputs.updateSelectedModifiers.accept(modifiers)
+    }
 }
 
 extension MenuDetailRepositoryImpl {
@@ -44,5 +49,6 @@ extension MenuDetailRepositoryImpl {
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
+        let updateSelectedModifiers = PublishRelay<[Modifier]>()
     }
 }

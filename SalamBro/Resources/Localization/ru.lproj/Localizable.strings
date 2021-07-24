@@ -110,6 +110,11 @@
 "MenuDetail.chooseAdditionalItemButton" = "Изменить";
 "MenuDetail.required" = "Обязательно";
 "MenuDetail.choose" = "Выберите";
+"MenuDetail.position" = "позиция";
+"MenuDetail.positions" = "позиции";
+"MenuDetail.additional" = "Дополнительно";
+"MenuDetail.max" = "макс.";
+"MenuDetail.chooseAdditional" = "Выберите дополнения";
 
 // MARK: - Support
 "Support.title" = "Помощь";
