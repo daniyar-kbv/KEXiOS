@@ -176,7 +176,7 @@ extension MenuDetailViewModelImpl {
                   ]),
             .init(uuid: "3",
                   name: "Выберите напиток",
-                  minAmount: 2,
+                  minAmount: 0,
                   maxAmount: 3,
                   isRequired: false,
                   modifiers: [

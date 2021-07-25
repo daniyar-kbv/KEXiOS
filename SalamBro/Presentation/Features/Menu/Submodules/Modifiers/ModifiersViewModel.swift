@@ -62,7 +62,7 @@ final class ModifiersViewModelImpl: ModifiersViewModel {
         let count = modifiersGroup.totalCount + 1
         modifiersGroup.totalCount = count
 
-        if modifiersGroup.totalCount == modifiersGroup.maxAmount {
+        if modifiersGroup.totalCount >= modifiersGroup.minAmount {
             outputs.showDoneButton.accept(())
         }
     }
