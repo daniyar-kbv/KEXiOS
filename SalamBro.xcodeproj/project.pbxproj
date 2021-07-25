@@ -11,6 +11,7 @@
 		05EC0C4395FEAB648184DEE9BFB7CB64 /* AdCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8D162BA2A4CB0BB9D5D7E4AD07715 /* AdCellViewModel.swift */; };
 		96036EC06524D71FE5D60A4ACFD37678 /* AdCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF7CBCD8E222D7B4D4B0D7445FB4EBB /* AdCollectionCell.swift */; };
 		A6A70E1AE134024A6DF47884583D7397 /* AdCollectionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85571C46DE19A07C94EA9DA874A4550 /* AdCollectionCellViewModel.swift */; };
+		7F5D349851BAF79065B61FE3EA4A4D7F /* AddedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04846B172E26A7524173922EB47B03C /* AddedView.swift */; };
 		5F1555008294920DFD5B0578129962B4 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6757429831449DFBC58ECB02F3652B1D /* Address.swift */; };
 		7839C2DD51BE2D4FFEFB40D890AF49EB /* AddressCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564E2D1015131191010694926C1BA384 /* AddressCoordinator.swift */; };
 		3703530134913D0228F75DA6304595F8 /* AddressDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604B6ACAB5A424AECCCB5C2AD89A6E87 /* AddressDetailController.swift */; };
@@ -305,6 +306,7 @@
 		02F8D162BA2A4CB0BB9D5D7E4AD07715 /* AdCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCellViewModel.swift; sourceTree = "<group>"; };
 		9CF7CBCD8E222D7B4D4B0D7445FB4EBB /* AdCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCollectionCell.swift; sourceTree = "<group>"; };
 		E85571C46DE19A07C94EA9DA874A4550 /* AdCollectionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCollectionCellViewModel.swift; sourceTree = "<group>"; };
+		E04846B172E26A7524173922EB47B03C /* AddedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedView.swift; sourceTree = "<group>"; };
 		6757429831449DFBC58ECB02F3652B1D /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		564E2D1015131191010694926C1BA384 /* AddressCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCoordinator.swift; sourceTree = "<group>"; };
 		604B6ACAB5A424AECCCB5C2AD89A6E87 /* AddressDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailController.swift; sourceTree = "<group>"; };
@@ -1561,6 +1563,7 @@
 		8F36741ECEC9337D67F6ED9644E60285 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E04846B172E26A7524173922EB47B03C /* AddedView.swift */,
 				8741CF0DA2EE1EB4751BA5FD9210E49B /* MenuDetailView.swift */,
 			);
 			path = Views;
@@ -2508,6 +2511,7 @@
 				05EC0C4395FEAB648184DEE9BFB7CB64 /* AdCellViewModel.swift in Sources */,
 				96036EC06524D71FE5D60A4ACFD37678 /* AdCollectionCell.swift in Sources */,
 				A6A70E1AE134024A6DF47884583D7397 /* AdCollectionCellViewModel.swift in Sources */,
+				7F5D349851BAF79065B61FE3EA4A4D7F /* AddedView.swift in Sources */,
 				5F1555008294920DFD5B0578129962B4 /* Address.swift in Sources */,
 				7839C2DD51BE2D4FFEFB40D890AF49EB /* AddressCoordinator.swift in Sources */,
 				3703530134913D0228F75DA6304595F8 /* AddressDetailController.swift in Sources */,

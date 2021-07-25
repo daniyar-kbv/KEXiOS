@@ -115,6 +115,7 @@
 "MenuDetail.additional" = "Дополнительно";
 "MenuDetail.max" = "макс.";
 "MenuDetail.chooseAdditional" = "Выберите дополнения";
+"MenuDetail.added" = "Добавлено";
 
 // MARK: - Support
 "Support.title" = "Помощь";

@@ -114,6 +114,7 @@
 "MenuDetail.additional" = "KZ Дополнительно";
 "MenuDetail.max" = "KZ макс.";
 "MenuDetail.chooseAdditional" = "KZ Выберите дополнения";
+"MenuDetail.added" = "KZ Добавлено";
 
 // MARK: - Support
 "Support.title" = "KZ Помощь";

@@ -114,6 +114,7 @@
 "MenuDetail.additional" = "EN Дополнительно";
 "MenuDetail.max" = "EN макс.";
 "MenuDetail.chooseAdditional" = "EN Выберите дополнения";
+"MenuDetail.added" = "EN Добавлено";
 
 // MARK: - Support
 "Support.title" = "EN Помощь";

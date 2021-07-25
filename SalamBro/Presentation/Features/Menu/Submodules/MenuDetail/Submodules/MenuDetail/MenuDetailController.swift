@@ -18,6 +18,7 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
     let outputs = Output()
 
     private lazy var contentView = MenuDetailView(delegate: self)
+    private lazy var addedView = AddedView()
 
     public init(viewModel: MenuDetailViewModel) {
         self.viewModel = viewModel
@@ -118,8 +119,9 @@ extension MenuDetailController {
             .disposed(by: disposeBag)
 
         viewModel.outputs.didProceed
-            .bind(to: outputs.close)
-            .disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] in
+                self?.showAddedView()
+            }).disposed(by: disposeBag)
 
         viewModel.outputs.isComplete
             .subscribe(onNext: { [weak self] isComplete in
@@ -130,6 +132,21 @@ extension MenuDetailController {
     private func layoutUI() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
+    }
+
+    private func showAddedView() {
+        let window = UIApplication.shared.keyWindow!
+        window.addSubview(addedView)
+
+        addedView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(75)
+            $0.left.right.equalToSuperview().inset(24)
+            $0.height.equalTo(50)
+        }
+
+        UIView.animate(withDuration: 0.7, animations: { () -> Void in
+            self.addedView.alpha = 0
+        })
     }
 }
 
@@ -144,10 +161,7 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.currentModifierGroupIndex = indexPath
-        outputs.toModifiers.accept(
-            (viewModel.modifierCellViewModels[indexPath.row].getModifierGroup(),
-             indexPath)
-        )
+        outputs.toModifiers.accept(viewModel.modifierCellViewModels[indexPath.row].getModifierGroup())
     }
 }
 
@@ -181,6 +195,6 @@ extension MenuDetailController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()
-        let toModifiers = PublishRelay<(ModifierGroup, IndexPath)>()
+        let toModifiers = PublishRelay<ModifierGroup>()
     }
 }
