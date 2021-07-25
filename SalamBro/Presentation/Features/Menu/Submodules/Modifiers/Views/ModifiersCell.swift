@@ -77,9 +77,7 @@ final class ModifiersCell: UICollectionViewCell {
         label.font = .systemFont(ofSize: 14, weight: .regular)
         label.textColor = .black
         label.textAlignment = .center
-        label.numberOfLines = 0
         label.backgroundColor = .clear
-        label.text = "0"
         return label
     }()
 
@@ -87,7 +85,7 @@ final class ModifiersCell: UICollectionViewCell {
 
     private var index = 0
 
-    var delegate: ModifiersCellDelegate?
+    weak var delegate: ModifiersCellDelegate?
 
     override init(frame _: CGRect) {
         super.init(frame: .zero)

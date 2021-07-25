@@ -156,12 +156,19 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return MenuDetailModifierCell(viewModel: viewModel.modifierCellViewModels[indexPath.row])
+        return MenuDetailModifierCell(viewModel: viewModel.modifierCellViewModels[indexPath.row], delegate: self,
+                                      index: indexPath.row)
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.currentModifierGroupIndex = indexPath
         outputs.toModifiers.accept(viewModel.modifierCellViewModels[indexPath.row].getModifierGroup())
+    }
+}
+
+extension MenuDetailController: MenuDetailModifierCellDelegate {
+    func changeButtonTapped(at index: Int) {
+        outputs.toModifiers.accept(viewModel.modifierCellViewModels[index].getModifierGroup())
     }
 }
 

@@ -10,7 +10,13 @@ import RxCocoa
 import RxSwift
 import UIKit
 
+protocol MenuDetailModifierCellDelegate: AnyObject {
+    func changeButtonTapped(at index: Int)
+}
+
 final class MenuDetailModifierCell: UITableViewCell {
+    weak var delegate: MenuDetailModifierCellDelegate?
+
     private var viewModel: MenuDetailModifierCellViewModel
 
     private lazy var disposeBag = DisposeBag()
@@ -25,6 +31,7 @@ final class MenuDetailModifierCell: UITableViewCell {
         let view = UILabel()
         view.font = .systemFont(ofSize: 16, weight: .medium)
         view.numberOfLines = 0
+        view.lineBreakMode = .byWordWrapping
         return view
     }()
 
@@ -38,12 +45,17 @@ final class MenuDetailModifierCell: UITableViewCell {
 
     private var placeholderForValue = ""
 
-    init(viewModel: MenuDetailModifierCellViewModel) {
+    private var index: Int?
+
+    init(viewModel: MenuDetailModifierCellViewModel, delegate: MenuDetailModifierCellDelegate, index: Int) {
         self.viewModel = viewModel
+        self.delegate = delegate
+        self.index = index
 
         super.init(style: .default, reuseIdentifier: String(describing: Self.self))
 
         layoutUI()
+        configureActions()
         bindViewModel()
     }
 
@@ -75,6 +87,10 @@ final class MenuDetailModifierCell: UITableViewCell {
             }).disposed(by: disposeBag)
     }
 
+    private func configureActions() {
+        selectButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
+    }
+
     private func layoutUI() {
         selectionStyle = .none
 
@@ -96,6 +112,12 @@ final class MenuDetailModifierCell: UITableViewCell {
             $0.right.equalToSuperview()
             $0.centerY.equalTo(valueLabel.snp.centerY)
             $0.width.equalTo(70)
+        }
+    }
+
+    @objc private func changeButtonTapped() {
+        if let index = index {
+            delegate?.changeButtonTapped(at: index)
         }
     }
 }

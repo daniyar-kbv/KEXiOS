@@ -53,7 +53,7 @@ final class MenuDetailView: UIView {
         view.register(MenuDetailModifierCell.self, forCellReuseIdentifier: String(describing: MenuDetailModifierCell.self))
         view.isScrollEnabled = false
         view.separatorStyle = .none
-        view.rowHeight = 51
+        view.estimatedRowHeight = 51
         return view
     }()
 
@@ -171,7 +171,7 @@ extension MenuDetailView {
         let height = CGFloat((0 ..< modifiersTableView.numberOfSections)
             .map { modifiersTableView.numberOfRows(inSection: $0) }
             .reduce(0, +))
-            * modifiersTableView.rowHeight
+            * modifiersTableView.estimatedRowHeight
 
         modifiersTableView.snp.updateConstraints {
             $0.height.equalTo(height)

@@ -127,7 +127,7 @@ extension MenuDetailViewModelImpl {
             .init(uuid: "1",
                   name: "Выберите напиток",
                   minAmount: 1,
-                  maxAmount: 1,
+                  maxAmount: 7,
                   isRequired: true,
                   modifiers: [
                       .init(name: "Кола",
