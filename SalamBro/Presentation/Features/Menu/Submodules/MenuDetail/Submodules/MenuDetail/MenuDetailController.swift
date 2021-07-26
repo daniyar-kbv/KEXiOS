@@ -49,6 +49,7 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
         super.viewWillLayoutSubviews()
 
         contentView.updateTableViewHeight()
+        view.layoutIfNeeded()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -163,6 +164,10 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.currentModifierGroupIndex = indexPath
         outputs.toModifiers.accept(viewModel.modifierCellViewModels[indexPath.row].getModifierGroup())
+    }
+
+    func tableView(_: UITableView, willDisplay _: UITableViewCell, forRowAt _: IndexPath) {
+        viewWillLayoutSubviews()
     }
 }
 

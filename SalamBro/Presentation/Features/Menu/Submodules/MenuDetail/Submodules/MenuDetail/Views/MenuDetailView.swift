@@ -168,13 +168,8 @@ extension MenuDetailView {
     }
 
     func updateTableViewHeight() {
-        let height = CGFloat((0 ..< modifiersTableView.numberOfSections)
-            .map { modifiersTableView.numberOfRows(inSection: $0) }
-            .reduce(0, +))
-            * modifiersTableView.estimatedRowHeight
-
         modifiersTableView.snp.updateConstraints {
-            $0.height.equalTo(height)
+            $0.height.equalTo(modifiersTableView.contentSize.height)
         }
     }
 
