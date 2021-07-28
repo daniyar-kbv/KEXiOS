@@ -63,9 +63,14 @@ final class PaymentRepositoryImpl: PaymentRepository {
     }
 
     func makeApplePayPayment(payment: PKPayment) {
-        guard let cryptogram = payment.convertToString() else { return }
+        guard let cryptogram = payment.convertToString() else {
+            print("Unable to create cryptogram")
+            return
+        }
         selectedPaymentMethod?.set(value: cryptogram)
-        processApplePay()
+        createOrder(
+            createPayment
+        )
     }
 }
 
