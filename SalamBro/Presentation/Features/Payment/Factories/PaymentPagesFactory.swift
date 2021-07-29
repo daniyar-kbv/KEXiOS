@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import WebKit
 
 protocol PaymentPagesFactory: AnyObject {
     func makePaymentSelectionPage() -> PaymentSelectionViewController
     func makePaymentMethodPage() -> PaymentMethodViewController
     func makePaymentCardPage(paymentMethod: PaymentMethod) -> PaymentCardViewController
     func makePaymentCashPage(paymentMethod: PaymentMethod) -> PaymentCashViewController
+    func makeThreeDSPage(webView: WKWebView) -> ThreeDSViewController
 }
 
 final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
@@ -30,7 +32,7 @@ final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
     private func makePaymentSelectionViewModel() -> PaymentSelectionViewModel {
         return scoped(PaymentSelectionViewModelImpl(
             paymentRepository: repositoryComponents.makePaymentRepository(),
-            menuRepository: repositoryComponents.makeMenuRepository(),
+            addressRepository: repositoryComponents.makeAddressRepository(),
             cartRepository: repositoryComponents.makeCartRepository(),
             defaultStorage: DefaultStorageImpl.sharedStorage
         )
@@ -65,5 +67,9 @@ final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
             paymentRepository: repositoryComponents.makePaymentRepository(),
             paymentMethod: paymentMethod
         ))
+    }
+
+    func makeThreeDSPage(webView: WKWebView) -> ThreeDSViewController {
+        return scoped(ThreeDSViewController(webView: webView))
     }
 }

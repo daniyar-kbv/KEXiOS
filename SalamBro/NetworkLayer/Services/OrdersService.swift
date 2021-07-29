@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol OrdersService: AnyObject {
-    func applyOrder(dto: OrderApplyDTO) -> Single<String>
+    func applyOrder(dto: OrderApplyDTO?) -> Single<String>
     func getProducts(for leadUUID: String) -> Single<OrderProductResponse.Data>
     func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail>
     func getCart(for leadUUID: String) -> Single<Cart>
@@ -25,7 +25,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
         self.provider = provider
     }
 
-    func applyOrder(dto: OrderApplyDTO) -> Single<String> {
+    func applyOrder(dto: OrderApplyDTO? = nil) -> Single<String> {
         return provider.rx
             .request(.apply(dto: dto))
             .map { response in
@@ -39,7 +39,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 guard let leadUUID = applyResponse.data?.uuid else {
-                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
+                    throw NetworkError.noData
                 }
 
                 return leadUUID
@@ -56,7 +56,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 guard let data = orderProductsResponse.data else {
-                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
+                    throw NetworkError.noData
                 }
 
                 return data
@@ -73,7 +73,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 guard let data = orderProductDetailResponse.data else {
-                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
+                    throw NetworkError.noData
                 }
 
                 return data
@@ -90,7 +90,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 guard let cart = cartResponse.data else {
-                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
+                    throw NetworkError.noData
                 }
 
                 return cart
@@ -107,7 +107,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 guard let cart = cartResponse.data else {
-                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
+                    throw NetworkError.noData
                 }
 
                 return cart

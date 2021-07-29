@@ -116,6 +116,17 @@ final class AppCoordinator: BaseCoordinator {
             self?.pagesFactory.makeSBTabbarController().selectedIndex = 0
         }
 
+        cartCoordinator.toOrderHistory = { [weak self] in
+            self?.pagesFactory.makeSBTabbarController().selectedIndex = 1
+
+            guard let serviceComponents = self?.serviceComponents,
+                  let repositoryComponents = self?.repositoryComponents else { return }
+
+            let profileCoordinator = self?.appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+            profileCoordinator?.showOrderHistoryPage()
+        }
+
         preparedViewControllers.append(cartCoordinator.router.getNavigationController())
         add(cartCoordinator)
     }
@@ -150,5 +161,54 @@ final class AppCoordinator: BaseCoordinator {
         pagesFactory.makeSBTabbarController().viewControllers = preparedViewControllers
 
         UIApplication.shared.setRootView(pagesFactory.makeSBTabbarController()) // MARK: Tech debt
+    }
+}
+
+extension AppCoordinator {
+    func handleNotification(pushNotification: PushNotification) {
+        switch pushNotification.pushType {
+        case .info:
+            break
+        case .promotions:
+            openPromotion(pushNotification: pushNotification)
+        case .orderRate:
+            openRateOrder(pushNotification: pushNotification)
+        case .orderStatusUpdate:
+            openOrderHistory()
+        }
+    }
+
+    private func openPromotion(pushNotification: PushNotification) {
+        pagesFactory.makeSBTabbarController().selectedIndex = 0
+        let menuCoordinator = appCoordinatorsFactory.makeMenuCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+        guard let url = URL(
+            string: String(
+                format: Constants.URLs.promotionURL, pushNotification.pushTypeValue
+            )
+        )
+        else { return }
+
+        menuCoordinator.openPromotion(promotionURL: url, name: nil)
+    }
+
+    private func openRateOrder(pushNotification _: PushNotification) {
+        pagesFactory.makeSBTabbarController().selectedIndex = 2
+
+        let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+        profileCoordinator.showOrderHistoryPage()
+
+        let orderHistoryCoordinator = profileCoordinator.childCoordinators.first(where: { $0 is OrderHistoryCoordinator }) as! OrderHistoryCoordinator
+
+        orderHistoryCoordinator.showRateOrderPage()
+    }
+
+    private func openOrderHistory() {
+        pagesFactory.makeSBTabbarController().selectedIndex = 2
+
+        let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+        profileCoordinator.showOrderHistoryPage()
     }
 }

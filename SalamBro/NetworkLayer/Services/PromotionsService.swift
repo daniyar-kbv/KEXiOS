@@ -33,7 +33,7 @@ class PromotionsServiceImpl: PromotionsService {
                 }
 
                 guard let promotions = promotionsResponse.data?.results else {
-                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
+                    throw NetworkError.noData
                 }
 
                 return promotions

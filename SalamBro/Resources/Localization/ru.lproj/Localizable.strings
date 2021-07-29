@@ -193,3 +193,7 @@
 "Payment.Cash.fieldDescription" = "Укажите сумму больше стоимости заказа";
 "Payment.Cash.Button.noChange" = "У меня без сдачи";
 "Payment.Cash.Button.submit" = "Готово";
+
+// MARK: - Alert
+
+"Alert.ok" = "Ок";

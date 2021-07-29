@@ -53,7 +53,8 @@ final class MapViewModel {
         } else if let city = deliveryAddress.city {
             targetLocation = YMKPoint(latitude: city.latitude, longitude: city.longitude)
         } else {
-            targetLocation = YMKPoint(latitude: Constants.ALA_LAT, longitude: Constants.ALA_LON)
+            targetLocation = YMKPoint(latitude: Constants.Map.Coordinates.ALA_LAT,
+                                      longitude: Constants.Map.Coordinates.ALA_LON)
         }
 
         outputs.selectedAddress.onNext(transformToMapAddress(deliveryAddress: deliveryAddress))
@@ -66,7 +67,7 @@ final class MapViewModel {
         case .creation:
             addressRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
             bindToOrdersOutputs(using: lastAddress)
-            addressRepository.applyOrder()
+            addressRepository.applyOrder(withAddress: true)
         case .change:
             outputs.lastSelectedAddress.accept((lastAddress, commentary))
         }
@@ -123,14 +124,17 @@ extension MapViewModel {
         } else if let city = deliveryAddress.city {
             return YMKPoint(latitude: city.latitude, longitude: city.longitude)
         }
-        return YMKPoint(latitude: Constants.ALA_LAT, longitude: Constants.ALA_LON)
+        return YMKPoint(latitude: Constants.Map.Coordinates.ALA_LAT,
+                        longitude: Constants.Map.Coordinates.ALA_LON)
     }
 
     private func transformToMapAddress(deliveryAddress: DeliveryAddress) -> MapAddress {
         return .init(name: deliveryAddress.address?.name ?? "",
                      formattedAddress: deliveryAddress.address?.name ?? "",
-                     longitude: deliveryAddress.address?.longitude ?? Constants.ALA_LON,
-                     latitude: deliveryAddress.address?.latitude ?? Constants.ALA_LAT)
+                     longitude: deliveryAddress.address?.longitude ??
+                         Constants.Map.Coordinates.ALA_LON,
+                     latitude: deliveryAddress.address?.latitude ??
+                         Constants.Map.Coordinates.ALA_LAT)
     }
 
     private func bindToOrdersOutputs(using address: MapAddress) {
@@ -138,12 +142,11 @@ extension MapViewModel {
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        addressRepository.outputs.didGetLeadUUID.bind {
-            [weak self] leadUUID in
-            self?.defaultStorage.persist(leadUUID: leadUUID)
-            self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
-        }
-        .disposed(by: disposeBag)
+        addressRepository.outputs.didGetLeadUUID
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
+            })
+            .disposed(by: disposeBag)
 
         addressRepository.outputs.didEndRequest
             .bind(to: outputs.didFinishRequest)

@@ -7,9 +7,24 @@
 
 import Foundation
 
-struct OrderStatus: Decodable {
+protocol OrderStatusProtocol: AnyObject {
+    var uuid: String { get }
+    var transactionId: String { get }
+    var paReq: String? { get }
+    var acsURL: String? { get }
+    var status: String { get }
+    var statusReason: String? { get }
+}
+
+extension OrderStatusProtocol {
+    func determineStatus() -> OrderStatus.StatusType? {
+        return OrderStatus.StatusType(rawValue: status)
+    }
+}
+
+class OrderStatus: OrderStatusProtocol, Decodable {
     let uuid: String
-    let outerId: String
+    let transactionId: String
     let paReq: String?
     let acsURL: String?
     let status: String
@@ -17,7 +32,7 @@ struct OrderStatus: Decodable {
 
     enum CodingKeys: String, CodingKey {
         case uuid, status
-        case outerId = "outer_id"
+        case transactionId = "outer_id"
         case paReq = "pa_req"
         case acsURL = "acs_url"
         case statusReason = "status_reason"
@@ -25,16 +40,31 @@ struct OrderStatus: Decodable {
 }
 
 extension OrderStatus {
-    func determineStatus() -> StatusType? {
-        return StatusType(rawValue: status)
-    }
-
     enum StatusType: String {
         case new = "NEW"
         case completed = "COMPLETED"
         case canceled = "CANCELLED"
         case declined = "DECLINED"
         case awaitingAuthentication = "AWAITING_AUTHENTICATION"
+    }
+}
+
+class CardPaymentOrderStatus: OrderStatusProtocol, Decodable {
+    let uuid: String
+    let transactionId: String
+    let paReq: String?
+    let acsURL: String?
+    let status: String
+    let statusReason: String?
+    let cardUUID: String
+
+    enum CodingKeys: String, CodingKey {
+        case uuid, status
+        case transactionId = "outer_id"
+        case paReq = "pa_req"
+        case acsURL = "acs_url"
+        case statusReason = "status_reason"
+        case cardUUID = "debit_card"
     }
 }
 

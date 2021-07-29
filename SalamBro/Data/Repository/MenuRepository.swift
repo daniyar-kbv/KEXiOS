@@ -29,10 +29,7 @@ final class MenuRepositoryImpl: MenuRepository {
     }
 
     func getMenuItems() {
-        guard let leadUUID = storage.leadUUID else {
-            outputs.needsLeadUUID.accept(())
-            return
-        }
+        guard let leadUUID = storage.leadUUID else { return }
 
         let promotionsSequence = promotionsService.getPromotions()
         let productsSequence = ordersService.getProducts(for: leadUUID)
@@ -66,8 +63,6 @@ final class MenuRepositoryImpl: MenuRepository {
 
 extension MenuRepositoryImpl {
     struct Output {
-        let needsLeadUUID = PublishRelay<Void>()
-
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()

@@ -40,6 +40,6 @@ extension AnimationViewPresentable where Self: UIViewController {
     }
 
     private func needsPresentation() -> Bool {
-        return !children.contains(where: { $0 is AnimationController })
+        return (presentedViewController as? AnimationController) == nil
     }
 }

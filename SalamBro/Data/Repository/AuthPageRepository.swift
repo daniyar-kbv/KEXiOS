@@ -24,11 +24,19 @@ final class AuthRepositoryImpl: AuthRepository {
     private(set) var outputs: Output = .init()
 
     private let authService: AuthService
+    private let notificationsService: PushNotificationsService
     private let tokenStorage: AuthTokenStorage
+    private let defaultStorage: DefaultStorage
 
-    init(authService: AuthService, tokenStorage: AuthTokenStorage) {
+    init(authService: AuthService,
+         notificationsService: PushNotificationsService,
+         tokenStorage: AuthTokenStorage,
+         defaultStorage: DefaultStorage)
+    {
         self.authService = authService
+        self.notificationsService = notificationsService
         self.tokenStorage = tokenStorage
+        self.defaultStorage = defaultStorage
     }
 
     func sendOTP(with number: String) {
@@ -96,6 +104,14 @@ final class AuthRepositoryImpl: AuthRepository {
         outputs.didEndRequest.accept(())
         tokenStorage.persist(token: accessToken, refreshToken: refreshToken)
         outputs.didVerifyOTP.accept(())
+        tokenLogin()
+    }
+
+    private func tokenLogin() {
+        guard let leadUUID = defaultStorage.leadUUID else { return }
+        notificationsService.fcmTokenLogin(leadUUID: leadUUID)
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 }
 

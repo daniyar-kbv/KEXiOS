@@ -16,6 +16,7 @@ protocol ServiceComponents: AnyObject {
     func documentsService() -> DocumentsService
     func rateService() -> RateService
     func paymentsService() -> PaymentsService
+    func pushNotificationsService() -> PushNotificationsService
 }
 
 final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
@@ -36,7 +37,7 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
     }
 
     func ordersService() -> OrdersService {
-        return shared(OrdersServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin])))
+        return shared(OrdersServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, authPlugin])))
     }
 
     func promotionsService() -> PromotionsService {
@@ -52,7 +53,11 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
     }
 
     func rateService() -> RateService {
-        return shared(RateServiceImpl(provider: MoyaProvider<RateAPI>(plugins: [networkPlugin])))
+        return shared(RateServiceImpl(provider: MoyaProvider<RateAPI>(plugins: [networkPlugin, authPlugin])))
+    }
+
+    func pushNotificationsService() -> PushNotificationsService {
+        return shared(PushNotificationsServiceMoyaImpl(provider: MoyaProvider<PushNotificationsAPI>(plugins: [networkPlugin, authPlugin])))
     }
 
     func paymentsService() -> PaymentsService {
