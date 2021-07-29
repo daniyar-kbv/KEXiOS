@@ -20,6 +20,7 @@ protocol PaymentRepository: AnyObject {
     func getPaymentMethods()
     func makePayment()
     func makeApplePayPayment(payment: PKPayment)
+    func deleteCards(with UUIDs: [String])
 }
 
 final class PaymentRepositoryImpl: PaymentRepository {
@@ -56,31 +57,39 @@ final class PaymentRepositoryImpl: PaymentRepository {
         }
 
         outputs.paymentMethods.accept(paymentMethods)
+
+        let savedCards = paymentMethods
+            .map { card -> MyCard? in
+                guard let myCard: MyCard = card.getValue()
+                else { return nil }
+                return myCard
+            }
+            .compactMap { $0 }
+        outputs.savedCards.accept(savedCards)
     }
 
     func getSelectedPaymentMethod() -> PaymentMethod? {
         return selectedPaymentMethod
     }
 
-    func makeApplePayPayment(payment: PKPayment) {
-        guard let cryptogram = payment.convertToString() else {
-            print("Unable to create cryptogram")
-            return
-        }
-        selectedPaymentMethod?.set(value: cryptogram)
-        createOrder(
-            createPayment
-        )
+    private func getDefaultPaymentMethods() -> [PaymentMethod] {
+        return [
+            .init(type: .card),
+            .init(type: .applePay),
+            .init(type: .cash),
+        ]
     }
 }
 
+//  MARK: - Saved Cards
+
 extension PaymentRepositoryImpl {
     private func fetchSavedCards() {
-        outputs.didStartRequest.accept(())
         paymentService.myCards()
             .subscribe(onSuccess: { [weak self] cards in
                 self?.outputs.didEndRequest.accept(())
                 self?.process(cards: cards)
+                self?.outputs.savedCards.accept(cards)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
@@ -96,14 +105,36 @@ extension PaymentRepositoryImpl {
         outputs.paymentMethods.accept(paymentMethods)
     }
 
-    private func getDefaultPaymentMethods() -> [PaymentMethod] {
-        return [
-            .init(type: .card),
-            .init(type: .applePay),
-            .init(type: .cash),
-        ]
+    func deleteCards(with UUIDs: [String]) {
+        let sequences = paymentMethods
+            .filter { paymentMethod in
+                guard let card: MyCard = paymentMethod.getValue(),
+                      UUIDs.contains(card.uuid)
+                else { return false }
+                return true
+            }
+            .map { paymentMethod -> Single<Void>? in
+                guard let card: MyCard = paymentMethod.getValue() else { return nil }
+                return paymentService.deleteCard(uuid: card.uuid)
+            }
+            .compactMap { $0 }
+
+        outputs.didStartRequest.accept(())
+        Single.zip(sequences,
+                   resultSelector: { _ -> Void in })
+            .subscribe(onSuccess: { [weak self] in
+                self?.paymentMethods.removeAll()
+                self?.getPaymentMethods()
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didGetError.accept(error)
+            })
+            .disposed(by: disposeBag)
     }
 }
+
+// MARK: - Payments
 
 extension PaymentRepositoryImpl {
     func makePayment() {
@@ -114,7 +145,7 @@ extension PaymentRepositoryImpl {
             )
         case .card:
             createOrder(
-                createPayment
+                makeCardPayment
             )
         case .applePay:
             processApplePay()
@@ -145,15 +176,29 @@ extension PaymentRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
-    private func createPayment() {
+    private func makeCardPayment() {
         guard let leadUUID = defaultStorage.leadUUID,
               let card: PaymentCard = selectedPaymentMethod?.getValue(),
               let paymentType = selectedPaymentMethod?.type.apiType else { return }
 
+        createPayment(leadUUID: leadUUID,
+                      paymentType: paymentType,
+                      cryptogram: card.cryptogram,
+                      cardholderName: card.cardholderName,
+                      keepCard: card.keepCard)
+    }
+
+    private func createPayment(leadUUID: String,
+                               paymentType: String,
+                               cryptogram: String,
+                               cardholderName: String,
+                               keepCard: Bool?)
+    {
         let createPaymentDTO = CreatePaymentDTO(leadUUID: leadUUID,
                                                 paymentType: paymentType,
-                                                cryptogram: card.cryptogram,
-                                                cardholderName: card.cardholderName)
+                                                cryptogram: cryptogram,
+                                                cardholderName: cardholderName,
+                                                keepCard: keepCard)
 
         paymentService.createPayment(dto: createPaymentDTO)
             .subscribe(onSuccess: { [weak self] orderStatus in
@@ -185,19 +230,6 @@ extension PaymentRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
-    private func processApplePay() {
-        let request = PKPaymentRequest()
-        request.merchantIdentifier = Constants.applePayMerchantId
-        request.supportedNetworks = [.visa, .masterCard]
-        request.merchantCapabilities = .capability3DS
-        request.countryCode = "RU"
-        request.currencyCode = "KZT"
-        request.paymentSummaryItems = cartStorage.cart.items.map { .init(label: $0.position.name, amount: NSDecimalNumber(value: $0.getNumericPrice())) }
-        guard let applePayController = PKPaymentAuthorizationViewController(paymentRequest: request)
-        else { return }
-        outputs.showApplePay.accept(applePayController)
-    }
-
     private func process(orderStatus: OrderStatusProtocol) {
         switch orderStatus.determineStatus() {
         case .completed:
@@ -210,7 +242,45 @@ extension PaymentRepositoryImpl {
             outputs.didGetError.accept(error)
         }
     }
+}
 
+// MARK: - Apple pay
+
+extension PaymentRepositoryImpl {
+    func makeApplePayPayment(payment: PKPayment) {
+        guard let cryptogram = payment.convertToString() else {
+            print("Unable to create cryptogram")
+            return
+        }
+        selectedPaymentMethod?.set(value: cryptogram)
+        createOrder { [weak self] in
+            guard let leadUUID = self?.defaultStorage.leadUUID,
+                  let paymentType = self?.selectedPaymentMethod?.type.apiType else { return }
+            self?.createPayment(leadUUID: leadUUID,
+                                paymentType: paymentType,
+                                cryptogram: cryptogram,
+                                cardholderName: "",
+                                keepCard: nil)
+        }
+    }
+
+    private func processApplePay() {
+        let request = PKPaymentRequest()
+        request.merchantIdentifier = Constants.applePayMerchantId
+        request.supportedNetworks = [.visa, .masterCard]
+        request.merchantCapabilities = .capability3DS
+        request.countryCode = "RU"
+        request.currencyCode = "KZT"
+        request.paymentSummaryItems = cartStorage.cart.items.map { .init(label: $0.position.name, amount: NSDecimalNumber(value: $0.getNumericPrice())) }
+        guard let applePayController = PKPaymentAuthorizationViewController(paymentRequest: request)
+        else { return }
+        outputs.showApplePay.accept(applePayController)
+    }
+}
+
+//  MARK: - 3DS
+
+extension PaymentRepositoryImpl: ThreeDsDelegate {
     private func show3DS(orderStatus: OrderStatusProtocol) {
         guard let paReq = orderStatus.paReq,
               let acsUrl = orderStatus.acsURL else { return }
@@ -237,9 +307,7 @@ extension PaymentRepositoryImpl {
             })
             .disposed(by: disposeBag)
     }
-}
 
-extension PaymentRepositoryImpl: ThreeDsDelegate {
     func willPresentWebView(_ webView: WKWebView) {
         outputs.show3DS.accept(webView)
     }
@@ -275,6 +343,7 @@ extension PaymentRepositoryImpl {
 
         let selectedPaymentMethod = BehaviorRelay<PaymentMethod?>(value: nil)
         let paymentMethods = PublishRelay<[PaymentMethod]>()
+        let savedCards = PublishRelay<[MyCard]>()
 
         let didMakePayment = PublishRelay<Void>()
     }

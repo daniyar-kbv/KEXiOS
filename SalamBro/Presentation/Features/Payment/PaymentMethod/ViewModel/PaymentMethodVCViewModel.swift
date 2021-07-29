@@ -15,7 +15,7 @@ protocol PaymentMethodVCViewModel: AnyObject {
     func getPaymentMethods()
     func getCountOfPaymentMethods() -> Int
     func getPaymentMethodInfo(for indexPath: IndexPath)
-        -> (paymentMethodTitle: String, isSelected: Bool)
+        -> (paymentMethodTitle: String, isSelected: Bool, isApplePay: Bool)
     func getPaymentMethod(for indexPath: IndexPath) -> PaymentMethod
     func selectPaymentMethod(at indexPath: IndexPath)
 }
@@ -41,10 +41,14 @@ final class PaymentMethodVCViewModelImpl: PaymentMethodVCViewModel {
         return paymentMethods.count
     }
 
-    func getPaymentMethodInfo(for indexPath: IndexPath) -> (paymentMethodTitle: String, isSelected: Bool) {
+    func getPaymentMethodInfo(for indexPath: IndexPath) -> (paymentMethodTitle: String,
+                                                            isSelected: Bool,
+                                                            isApplePay: Bool)
+    {
         let paymentMethod = paymentMethods[indexPath.row]
         return (paymentMethod.title,
-                paymentMethod == paymentRepository.getSelectedPaymentMethod())
+                paymentMethod == paymentRepository.getSelectedPaymentMethod(),
+                paymentMethod.type == .applePay)
     }
 
     func getPaymentMethod(for indexPath: IndexPath) -> PaymentMethod {
@@ -79,6 +83,7 @@ final class PaymentMethodVCViewModelImpl: PaymentMethodVCViewModel {
             .subscribe(onNext: { [weak self] paymentMethods in
                 self?.paymentMethods = paymentMethods
                 self?.outputs.needsUpdate.accept(())
+                self?.outputs.canEdit.accept(paymentMethods.contains(where: { $0.type == .savedCard }))
             }).disposed(by: disposeBag)
     }
 }
@@ -92,5 +97,6 @@ extension PaymentMethodVCViewModelImpl {
         let needsUpdate = PublishRelay<Void>()
         let didSelectPaymentMethod = PublishRelay<Void>()
         let showPaymentMethod = PublishRelay<PaymentMethod>()
+        let canEdit = BehaviorRelay<Bool>(value: false)
     }
 }

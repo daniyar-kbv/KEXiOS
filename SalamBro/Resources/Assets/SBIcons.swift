@@ -136,8 +136,23 @@ enum PaymentIcons {
 
     enum PaymentMethod: String, UIImageGetable {
         case selected = "payment_method_check_mark"
+        case applePay = "payment_method_apple_pay"
+        case edit = "payment_method_edit"
 
         var name: String { rawValue }
+    }
+
+    enum PaymentEdit: String, UIImageGetable {
+        case delete = "payment_edit_trash"
+
+        var name: String { rawValue }
+
+        enum Checkmark: String, UIImageGetable {
+            case empty = "payment_edit_checkmark_empty"
+            case filled = "payment_edit_checkmark_filled"
+
+            var name: String { rawValue }
+        }
     }
 }
 

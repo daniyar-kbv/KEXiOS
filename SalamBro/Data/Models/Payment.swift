@@ -93,7 +93,7 @@ extension MyCard: Equatable {
 struct PaymentCard {
     let cryptogram: String
     let cardholderName: String
-    let needsSave: Bool
+    let keepCard: Bool
 }
 
 extension PaymentCard: Equatable {

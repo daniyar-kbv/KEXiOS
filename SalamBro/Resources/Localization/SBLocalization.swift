@@ -386,6 +386,22 @@ enum PaymentText: UILocalizable {
         }
     }
 
+    enum PaymentEdit: String, UILocalizable {
+        case title = "Payment.Edit.title"
+        case cellTitle = "Payment.Edit.Cell.title"
+
+        var localized: String { rawValue }
+
+        enum Alert: String, UILocalizable {
+            case title = "Payment.Edit.Alert.title"
+            case message = "Payment.Edit.Alert.message"
+            case yes = "Payment.Edit.Alert.yes"
+            case no = "Payment.Edit.Alert.no"
+
+            var localized: String { rawValue }
+        }
+    }
+
     var localized: String { "" }
 }
 

@@ -9,6 +9,7 @@ import Moya
 
 enum PaymentsAPI {
     case myCards
+    case deleteCard(uuid: String)
     case createOrder(dto: CreateOrderDTO)
     case createPayment(dto: CreatePaymentDTO)
     case createCardPayment(dto: CardPaymentDTO)
@@ -23,6 +24,7 @@ extension PaymentsAPI: TargetType {
     var path: String {
         switch self {
         case .myCards: return "/payments/my-cards/"
+        case let .deleteCard(uuid): return "/payments/my-cards/\(uuid)/"
         case .createOrder: return "/orders/create/"
         case .createPayment: return "/payments/create-payment/"
         case .createCardPayment: return "/payments/create-card-payment/"
@@ -33,6 +35,7 @@ extension PaymentsAPI: TargetType {
     var method: Method {
         switch self {
         case .myCards: return .get
+        case .deleteCard: return .delete
         case .createOrder: return .post
         case .createPayment: return .post
         case .createCardPayment: return .post
@@ -47,6 +50,7 @@ extension PaymentsAPI: TargetType {
     var task: Task {
         switch self {
         case .myCards: return .requestPlain
+        case .deleteCard: return .requestPlain
         case let .createOrder(dto): return .requestJSONEncodable(dto)
         case let .createPayment(dto): return .requestJSONEncodable(dto)
         case let .createCardPayment(dto): return .requestJSONEncodable(dto)

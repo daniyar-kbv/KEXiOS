@@ -104,8 +104,27 @@ final class PaymentCoordinator: BaseCoordinator {
                 }
             }).disposed(by: disposeBag)
 
+        paymentMethodVC.outputs.toEdit
+            .subscribe(onNext: { [weak self] in
+                self?.showEditPage(on: paymentMethodVC)
+            })
+            .disposed(by: disposeBag)
+
         let navigationVC = SBNavigationController(rootViewController: paymentMethodVC)
         viewController.present(navigationVC, animated: true)
+    }
+
+    private func showEditPage(on viewController: UIViewController) {
+        let editPage = pagesFactory.makePaymentEditPage()
+
+        editPage.outputs.close
+            .subscribe(onNext: {
+                editPage.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+
+        let nav = SBNavigationController(rootViewController: editPage)
+        viewController.present(nav, animated: true)
     }
 
     private func showCardPage(on viewController: UIViewController,

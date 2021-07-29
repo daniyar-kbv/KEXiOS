@@ -72,7 +72,7 @@ final class PaymentCardViewModelImpl: PaymentCardViewModel {
 
         paymentMethod.set(value: PaymentCard(cryptogram: cardCryptogramPacket,
                                              cardholderName: cardholderName,
-                                             needsSave: needsSave))
+                                             keepCard: needsSave))
         paymentRepository.setSelected(paymentMethod: paymentMethod)
     }
 }

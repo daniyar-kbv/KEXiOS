@@ -194,6 +194,15 @@
 "Payment.Cash.Button.noChange" = "KZ У меня без сдачи";
 "Payment.Cash.Button.submit" = "KZ Готово";
 
+// MARK: - PaymentEdit
+
+"Payment.Edit.title" = "KZ Способ оплаты";
+"Payment.Edit.Cell.title" = "KZ Карта %@";
+"Payment.Edit.Alert.title" = "KZ Вы уверены?";
+"Payment.Edit.Alert.message" = "KZ Вы уверены что хотите удалить данную карту?";
+"Payment.Edit.Alert.yes" = "KZ Да";
+"Payment.Edit.Alert.no" = "KZ Нет";
+
 // MARK: - Alert
 
 "Alert.ok" = "KZ Ок";
