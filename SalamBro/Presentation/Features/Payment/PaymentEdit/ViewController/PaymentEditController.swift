@@ -42,6 +42,8 @@ final class PaymentEditController: UIViewController, AlertDisplayable, LoaderDis
         self.viewModel = viewModel
 
         super.init(nibName: .none, bundle: .none)
+
+        bindViewModel()
     }
 
     @available(*, unavailable)
@@ -58,6 +60,7 @@ final class PaymentEditController: UIViewController, AlertDisplayable, LoaderDis
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = SBLocalization.localized(key: PaymentText.PaymentEdit.title)
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }

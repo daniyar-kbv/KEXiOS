@@ -198,7 +198,7 @@
 // MARK: - PaymentEdit
 
 "Payment.Edit.title" = "Способ оплаты";
-"Payment.Edit.Cell.title" = "Карта %@";
+"Payment.Edit.Cell.title" = "Карта *%@";
 "Payment.Edit.Alert.title" = "Вы уверены?";
 "Payment.Edit.Alert.message" = "Вы уверены что хотите удалить данную карту?";
 "Payment.Edit.Alert.yes" = "Да";

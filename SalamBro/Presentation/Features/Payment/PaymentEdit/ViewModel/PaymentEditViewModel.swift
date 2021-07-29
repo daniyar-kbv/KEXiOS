@@ -29,6 +29,8 @@ final class PaymentEditViewModelImpl: PaymentEditViewModel {
 
     init(paymentRepository: PaymentRepository) {
         self.paymentRepository = paymentRepository
+
+        bindPaymentRepository()
     }
 
     private func bindPaymentRepository() {
@@ -56,8 +58,6 @@ final class PaymentEditViewModelImpl: PaymentEditViewModel {
     }
 
     private func process(cards: [MyCard]) {
-        print(cards)
-
         guard !cards.isEmpty else {
             outputs.needsClose.accept(())
             return

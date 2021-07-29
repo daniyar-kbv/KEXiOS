@@ -38,8 +38,8 @@ class PaymentMethod {
         switch type {
         case .savedCard:
             guard let card = value as? MyCard else { return "" }
-//                Tech debt: change
-            return "Карта \(card.cardMaskedNumber)"
+//                Tech debt: localize
+            return "Карта *\(card.cardMaskedNumber)"
         case .card: return "Картой в приложении"
         case .applePay: return "Apple Pay"
         case .cash: return "Наличными курьеру"

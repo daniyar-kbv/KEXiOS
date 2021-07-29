@@ -31,6 +31,10 @@ struct Constants {
     enum ErrorCode {
         static let orderAlreadyExists = "order_already_exists"
     }
+
+    enum StatusCode {
+        static let noContent = 204
+    }
 }
 
 extension Constants {

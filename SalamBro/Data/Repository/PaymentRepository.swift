@@ -52,8 +52,9 @@ final class PaymentRepositoryImpl: PaymentRepository {
     }
 
     func getPaymentMethods() {
-        if paymentMethods.isEmpty {
+        guard !paymentMethods.isEmpty else {
             fetchSavedCards()
+            return
         }
 
         outputs.paymentMethods.accept(paymentMethods)

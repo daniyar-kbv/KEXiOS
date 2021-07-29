@@ -30,7 +30,6 @@ struct MyCardsResponse: Decodable {
 }
 
 struct DeleteCardResponse: Decodable {
-    let data: MyCard?
     let error: ErrorResponse?
 }
 

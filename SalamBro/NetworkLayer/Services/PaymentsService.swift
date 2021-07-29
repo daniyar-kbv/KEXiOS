@@ -46,10 +46,14 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
             }
     }
 
-    func deleteCard(uuid _: String) -> Single<Void> {
+    func deleteCard(uuid: String) -> Single<Void> {
         return provider.rx
-            .request(.myCards)
+            .request(.deleteCard(uuid: uuid))
             .map { response in
+                if response.response?.statusCode == Constants.StatusCode.noContent {
+                    return ()
+                }
+
                 guard let response = try? response.map(DeleteCardResponse.self) else {
                     throw NetworkError.badMapping
                 }
