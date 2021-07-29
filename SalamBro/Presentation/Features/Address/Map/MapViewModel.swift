@@ -40,7 +40,7 @@ final class MapViewModel {
          addressRepository: AddressRepository,
          brandRepository: BrandRepository,
          flow: MapFlow,
-         address: Address? = nil)
+         deliveryAddress: DeliveryAddress)
     {
         self.defaultStorage = defaultStorage
         self.addressRepository = addressRepository
@@ -50,10 +50,17 @@ final class MapViewModel {
         targetLocation = YMKPoint(latitude: address?.latitude ?? Constants.Map.Coordinates.ALA_LAT,
                                   longitude: address?.longitude ?? Constants.Map.Coordinates.ALA_LON)
 
-        if let address = address {
-            outputs.selectedAddress.onNext(address)
-            commentary = address.comment
+        if let address = deliveryAddress.address {
+            targetLocation = YMKPoint(latitude: address.latitude, longitude: address.longitude)
+        } else if let city = deliveryAddress.city {
+            targetLocation = YMKPoint(latitude: city.latitude, longitude: city.longitude)
+        } else {
+            targetLocation = YMKPoint(latitude: Constants.Map.Coordinates.ALA_LAT,
+                                      longitude: Constants.Map.Coordinates.ALA_LON)
         }
+
+        outputs.selectedAddress.onNext(transformToMapAddress(deliveryAddress: deliveryAddress))
+        commentary = deliveryAddress.address?.commentary
     }
 
     func onActionButtonTapped() {
@@ -62,7 +69,7 @@ final class MapViewModel {
         case .creation:
             addressRepository.changeCurrentAddress(to: lastAddress)
             bindToOrdersOutputs(using: lastAddress)
-            addressRepository.applyOrder()
+            addressRepository.applyOrder(withAddress: true)
         case .change:
             outputs.lastSelectedAddress.accept((lastAddress, commentary))
         }
@@ -111,7 +118,26 @@ final class MapViewModel {
 }
 
 extension MapViewModel {
-    private func bindToOrdersOutputs(using address: Address) {
+    private func getTargetLocation(of deliveryAddress: DeliveryAddress) -> YMKPoint {
+        if let address = deliveryAddress.address {
+            return YMKPoint(latitude: address.latitude, longitude: address.longitude)
+        } else if let city = deliveryAddress.city {
+            return YMKPoint(latitude: city.latitude, longitude: city.longitude)
+        }
+        return YMKPoint(latitude: Constants.Map.Coordinates.ALA_LAT,
+                        longitude: Constants.Map.Coordinates.ALA_LON)
+    }
+
+    private func transformToMapAddress(deliveryAddress: DeliveryAddress) -> MapAddress {
+        return .init(name: deliveryAddress.address?.name ?? "",
+                     formattedAddress: deliveryAddress.address?.name ?? "",
+                     longitude: deliveryAddress.address?.longitude ??
+                         Constants.Map.Coordinates.ALA_LON,
+                     latitude: deliveryAddress.address?.latitude ??
+                         Constants.Map.Coordinates.ALA_LAT)
+    }
+
+    private func bindToOrdersOutputs(using address: MapAddress) {
         addressRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)

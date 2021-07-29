@@ -85,16 +85,18 @@ class CartController: UIViewController, AnimationViewPresentable, LoaderDisplaya
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = SBLocalization.localized(key: CartText.Cart.navigationTitle)
+
         layoutUI()
         bindViewModel()
 
         viewModel.getCart()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
-        setupNavigationBar()
+        configAnimationView()
     }
 
     private func bindViewModel() {
@@ -128,30 +130,21 @@ class CartController: UIViewController, AnimationViewPresentable, LoaderDisplaya
     }
 
     private func update() {
-        guard !viewModel.getIsEmpty() else {
-            showAnimationView(animationType: .emptyBasket, fullScreen: false) { [weak self] in
-                self?.outputs.toMenu.accept(())
-            }
-            return
-        }
-
-        hideAnimationView()
+        configAnimationView()
         itemsTableView.reloadData()
         updateTableViewFooterUI()
         orderButton.setTitle(SBLocalization.localized(key: CartText.Cart.buttonTitle, arguments: viewModel.getTotalPrice()), for: .normal)
     }
 
-    private func setupNavigationBar() {
-//        Texh debt: set nav bar
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = .init()
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: UIColor.black,
-        ]
-        navigationItem.title = SBLocalization.localized(key: CartText.Cart.navigationTitle)
+    private func configAnimationView() {
+        guard viewModel.getIsEmpty() else {
+            hideAnimationView()
+            return
+        }
+
+        showAnimationView(animationType: .emptyBasket, fullScreen: false) { [weak self] in
+            self?.outputs.toMenu.accept(())
+        }
     }
 }
 

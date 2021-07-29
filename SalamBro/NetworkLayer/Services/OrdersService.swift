@@ -27,7 +27,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
         self.provider = provider
     }
 
-    func applyOrder(dto: OrderApplyDTO) -> Single<String> {
+    func applyOrder(dto: OrderApplyDTO? = nil) -> Single<String> {
         return provider.rx
             .request(.apply(dto: dto))
             .map { response in

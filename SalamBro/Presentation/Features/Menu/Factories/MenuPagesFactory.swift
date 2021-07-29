@@ -20,8 +20,7 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
     }
 
     func makeManuPage() -> MenuController {
-        return scoped(.init(viewModel: makeMenuViewModel(),
-                            scrollService: MenuScrollService()))
+        return scoped(.init(viewModel: makeMenuViewModel()))
     }
 
     private func makeMenuViewModel() -> MenuViewModelProtocol {
@@ -29,7 +28,8 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
                                     brandRepository: repositoryComponents.makeBrandRepository(),
                                     menuRepository: repositoryComponents.makeMenuRepository(),
                                     defaultStorage: DefaultStorageImpl.sharedStorage,
-                                    tokenStorage: AuthTokenStorageImpl.sharedStorage))
+                                    tokenStorage: AuthTokenStorageImpl.sharedStorage,
+                                    scrollService: .init()))
     }
 
     func makePromotionsPage(url: URL, name: String?) -> AgreementController {

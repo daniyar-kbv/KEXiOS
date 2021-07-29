@@ -189,7 +189,7 @@ extension SelectMainInformationViewModel {
             break
         }
 
-        addressRepository.applyOrder()
+        addressRepository.applyOrder(withAddress: true)
     }
 
     func checkValues() {

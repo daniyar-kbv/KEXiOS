@@ -268,6 +268,7 @@
 		1A6CF1E7740A835DC95749699A3DF8B5 /* SupportPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087F5CA64D5F4BEBAE757511E31DE61 /* SupportPagesFactory.swift */; };
 		DD83B1969988387C57CA91BAB3AE240A /* SupportSocialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5DBA8E2A0165AD87969E5B46447E5E /* SupportSocialCell.swift */; };
 		753971A97105C4ECC672002CDDB07108 /* SupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A9FC1D73D82D0333421101EF7EE28D /* SupportViewModel.swift */; };
+		85B63C52A00248FAC0B07DAEA8C1D264 /* ThreeDSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB821F9DB01F792DC7A12A2ED875DA5 /* ThreeDSViewController.swift */; };
 		AC48B0075457DA457FF5D8DE42ACAC27 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA30F773A971EA2FDE29848462A2C514 /* UIAlertController+Extension.swift */; };
 		9CADCD2A4842323E78F20A705B98103B /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA266493C6946E18208AAE57CA77AB /* UIApplication+Extension.swift */; };
 		0D5850A82D4E2F59B33A85B051B30792 /* UIBarButtonConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB8EC433C370500268693AEBBE8362 /* UIBarButtonConfigurable.swift */; };
@@ -619,6 +620,7 @@
 		A087F5CA64D5F4BEBAE757511E31DE61 /* SupportPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportPagesFactory.swift; sourceTree = "<group>"; };
 		2B5DBA8E2A0165AD87969E5B46447E5E /* SupportSocialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportSocialCell.swift; sourceTree = "<group>"; };
 		97A9FC1D73D82D0333421101EF7EE28D /* SupportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewModel.swift; sourceTree = "<group>"; };
+		6AB821F9DB01F792DC7A12A2ED875DA5 /* ThreeDSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDSViewController.swift; sourceTree = "<group>"; };
 		AA30F773A971EA2FDE29848462A2C514 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		44AA266493C6946E18208AAE57CA77AB /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		FBAB8EC433C370500268693AEBBE8362 /* UIBarButtonConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonConfigurable.swift; sourceTree = "<group>"; };
@@ -768,6 +770,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		12394A5115DC0311ED41109E4F3DBCA4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5D841210F58CA8DA409C11582DE8C696 /* PaymentCardViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		13778F5B21BBFEA487BE9B55AB68F1A4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -789,6 +799,14 @@
 				A21DBF1D8149DD277ACF2EE07316691C /* SupportCoordinator.swift */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		4B94BF4D11E9C59C8F0FA962D6127C32 /* 3DS */ = {
+			isa = PBXGroup;
+			children = (
+				6AB821F9DB01F792DC7A12A2ED875DA5 /* ThreeDSViewController.swift */,
+			);
+			path = 3DS;
 			sourceTree = "<group>";
 		};
 		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
@@ -1877,6 +1895,7 @@
 		C2CD75D3785746062C8DA6F0B4B16043 /* Payment */ = {
 			isa = PBXGroup;
 			children = (
+				4B94BF4D11E9C59C8F0FA962D6127C32 /* 3DS */,
 				651BA7DE63CAD5825DFC7772F9479F63 /* Factories */,
 				7F929E8FEF2D4EA4F0EC379912F49070 /* PaymentCard */,
 				09D264063E25DD02A33F6B1437B89884 /* PaymentCash */,
@@ -2690,6 +2709,7 @@
 				1A6CF1E7740A835DC95749699A3DF8B5 /* SupportPagesFactory.swift in Sources */,
 				DD83B1969988387C57CA91BAB3AE240A /* SupportSocialCell.swift in Sources */,
 				753971A97105C4ECC672002CDDB07108 /* SupportViewModel.swift in Sources */,
+				85B63C52A00248FAC0B07DAEA8C1D264 /* ThreeDSViewController.swift in Sources */,
 				AC48B0075457DA457FF5D8DE42ACAC27 /* UIAlertController+Extension.swift in Sources */,
 				9CADCD2A4842323E78F20A705B98103B /* UIApplication+Extension.swift in Sources */,
 				0D5850A82D4E2F59B33A85B051B30792 /* UIBarButtonConfigurable.swift in Sources */,

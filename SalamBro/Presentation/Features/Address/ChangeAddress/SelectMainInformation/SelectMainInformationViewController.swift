@@ -242,8 +242,9 @@ extension SelectMainInformationViewController {
         case .address:
             cell.setupCell(type: cellsSequence[indexPath.row],
                            currentValue: viewModel.deliveryAddress?.address?.name) { [weak self] in
+                guard let deliveryAddress = self?.viewModel.deliveryAddress else { return }
                 self?.outputs.toMap
-                    .accept((self?.viewModel.deliveryAddress?.address,
+                    .accept((deliveryAddress,
                              {
                                  [weak self] address in
                                  self?.viewModel.didChange(address: address)
@@ -282,7 +283,7 @@ extension SelectMainInformationViewController {
 extension SelectMainInformationViewController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
-        let toMap = PublishRelay<(Address?, (_ address: Address) -> Void)>()
+        let toMap = PublishRelay<(deliveryAddress: DeliveryAddress, onSelect: (_ address: Address) -> Void)>()
         let toBrands = PublishRelay<(Int, (_ brand: Brand) -> Void)>()
         let didSave = PublishRelay<Void>()
         let close = PublishRelay<Void>()

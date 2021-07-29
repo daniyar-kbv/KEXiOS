@@ -9,6 +9,7 @@ import Cloudpayments
 import RxCocoa
 import RxSwift
 import UIKit
+import WebKit
 
 final class PaymentSelectionViewController: UIViewController, AlertDisplayable, AnimationViewPresentable {
     private let disposeBag = DisposeBag()
@@ -71,6 +72,18 @@ final class PaymentSelectionViewController: UIViewController, AlertDisplayable, 
             .subscribe(onNext: { [weak self] error in
                 self?.showError(error)
             }).disposed(by: disposeBag)
+
+        viewModel.outputs.show3DS
+            .bind(to: outputs.show3DS)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.hide3DS
+            .bind(to: outputs.hide3DS)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didMakePayment
+            .bind(to: outputs.didMakePayment)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -92,5 +105,8 @@ extension PaymentSelectionViewController {
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()
         let onChangePaymentMethod = PublishRelay<Void>()
+        let show3DS = PublishRelay<WKWebView>()
+        let hide3DS = PublishRelay<Void>()
+        let didMakePayment = PublishRelay<Void>()
     }
 }

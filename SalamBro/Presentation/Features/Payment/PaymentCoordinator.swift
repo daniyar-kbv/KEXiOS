@@ -8,14 +8,18 @@
 import RxCocoa
 import RxSwift
 import UIKit
+import WebKit
 
 final class PaymentCoordinator: BaseCoordinator {
     private let disposeBag = DisposeBag()
 
     var didFinish: (() -> Void)?
+    var didMakePayment: (() -> Void)?
 
     private(set) var router: Router
     private let pagesFactory: PaymentPagesFactory
+
+    private var threeDSController: ThreeDSViewController?
 
     init(router: Router, pagesFactory: PaymentPagesFactory) {
         self.router = router
@@ -48,6 +52,21 @@ final class PaymentCoordinator: BaseCoordinator {
         paymentSelectionVC.outputs.didEndRequest
             .subscribe(onNext: { [weak self] in
                 self?.hidePaymentInProcessView(on: paymentSelectionVC)
+            }).disposed(by: disposeBag)
+
+        paymentSelectionVC.outputs.show3DS
+            .subscribe(onNext: { [weak self] webView in
+                self?.show3DS(on: paymentSelectionVC, webView: webView)
+            }).disposed(by: disposeBag)
+
+        paymentSelectionVC.outputs.hide3DS
+            .subscribe(onNext: { [weak self] in
+                self?.hide3DS()
+            }).disposed(by: disposeBag)
+
+        paymentSelectionVC.outputs.didMakePayment
+            .subscribe(onNext: { [weak self] in
+                self?.didMakePayment?()
             }).disposed(by: disposeBag)
 
         let navigationVC = SBNavigationController(rootViewController: paymentSelectionVC)
@@ -131,6 +150,29 @@ final class PaymentCoordinator: BaseCoordinator {
 
         let nav = SBNavigationController(rootViewController: cashPage)
         viewController.present(nav, animated: true)
+    }
+
+    private func show3DS(on viewController: UIViewController, webView: WKWebView) {
+        threeDSController = pagesFactory.makeThreeDSPage(webView: webView)
+
+        threeDSController?.outputs.didTerminate
+            .subscribe(onNext: { [weak self] in
+                self?.threeDSController = nil
+            }).disposed(by: disposeBag)
+
+        threeDSController?.outputs.close
+            .subscribe(onNext: { [weak self] in
+                self?.hide3DS()
+            }).disposed(by: disposeBag)
+
+        guard let threeDSController = threeDSController else { return }
+
+        let nav = SBNavigationController(rootViewController: threeDSController)
+        viewController.present(nav, animated: true)
+    }
+
+    private func hide3DS() {
+        threeDSController?.dismiss(animated: true)
     }
 
     private func showPaymentInProcessView(on viewController: UIViewController & AnimationViewPresentable) {

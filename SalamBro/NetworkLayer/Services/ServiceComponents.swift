@@ -37,7 +37,7 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
     }
 
     func ordersService() -> OrdersService {
-        return shared(OrdersServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin])))
+        return shared(OrdersServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, authPlugin])))
     }
 
     func promotionsService() -> PromotionsService {
