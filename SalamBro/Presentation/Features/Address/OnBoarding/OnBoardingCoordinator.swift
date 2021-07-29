@@ -52,19 +52,23 @@ final class OnBoardingCoordinator: BaseCoordinator {
     private func openBrands(cityId: Int) {
         let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
 
-        brandsPage.outputs.didSelectBrand.subscribe(onNext: { [weak self] _ in
-            self?.openMap()
-        }).disposed(by: disposeBag)
+        brandsPage.outputs.toMap
+            .subscribe(onNext: { [weak self] deliveryAddress in
+                self?.openMap(deliveryAddress: deliveryAddress)
+            })
+            .disposed(by: disposeBag)
 
-        brandsPage.outputs.close.subscribe(onNext: { [weak self] in
-            self?.router.pop(animated: true)
-        }).disposed(by: disposeBag)
+        brandsPage.outputs.close
+            .subscribe(onNext: { [weak self] in
+                self?.router.pop(animated: true)
+            })
+            .disposed(by: disposeBag)
 
         router.push(viewController: brandsPage, animated: true)
     }
 
-    private func openMap() {
-        let mapPage = pagesFactory.makeMapPage()
+    private func openMap(deliveryAddress: DeliveryAddress) {
+        let mapPage = pagesFactory.makeMapPage(deliveryAddress: deliveryAddress)
 
         mapPage.selectedAddress = { [weak self] _ in
             self?.didFinish?()

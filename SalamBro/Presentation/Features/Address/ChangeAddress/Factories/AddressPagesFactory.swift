@@ -10,7 +10,7 @@ import Foundation
 protocol AddressPagesFactory {
     func makeAddressPickPage() -> AddressPickController
     func makeSelectMainInfoPage(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewController
-    func makeMapPage(address: Address?) -> MapPage
+    func makeMapPage(deliveryAddress: DeliveryAddress) -> MapPage
     func makeBrandsPage(cityId: Int) -> BrandsController
 }
 
@@ -42,16 +42,16 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
                             flowType: flowType))
     }
 
-    func makeMapPage(address: Address?) -> MapPage {
-        return scoped(.init(viewModel: makeMapViewModel(address: address)))
+    func makeMapPage(deliveryAddress: DeliveryAddress) -> MapPage {
+        return scoped(.init(viewModel: makeMapViewModel(deliveryAddress: deliveryAddress)))
     }
 
-    private func makeMapViewModel(address: Address?) -> MapViewModel {
+    private func makeMapViewModel(deliveryAddress: DeliveryAddress) -> MapViewModel {
         return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage,
                             addressRepository: repositoryComponents.makeAddressRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
                             flow: .change,
-                            address: address))
+                            deliveryAddress: deliveryAddress))
     }
 
     func makeBrandsPage(cityId: Int) -> BrandsController {
@@ -60,6 +60,8 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
     }
 
     private func makeBrandsViewModel(cityId: Int) -> BrandViewModel {
-        return scoped(.init(brandRepository: repositoryComponents.makeBrandRepository(), cityId: cityId))
+        return scoped(.init(brandsRepository: repositoryComponents.makeBrandRepository(),
+                            addressRepository: repositoryComponents.makeAddressRepository(),
+                            cityId: cityId))
     }
 }
