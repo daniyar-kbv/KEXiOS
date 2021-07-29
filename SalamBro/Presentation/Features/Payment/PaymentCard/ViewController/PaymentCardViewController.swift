@@ -52,13 +52,19 @@ class PaymentCardViewController: UIViewController, AlertDisplayable {
 
     private func bindViewModel() {
         viewModel.outputs.didGetError
-            .subscribe(onNext: { [weak self] error in
-                self?.showError(error)
+            .subscribe(onNext: { [weak self] in
+                self?.showInvalidError()
             }).disposed(by: disposeBag)
 
         viewModel.outputs.onDone
             .bind(to: outputs.onDone)
             .disposed(by: disposeBag)
+    }
+
+    private func showInvalidError() {
+        showAlert(title: SBLocalization.localized(key: PaymentText.PaymentCard.Error.title),
+                  message: SBLocalization.localized(key: PaymentText.PaymentCard.Error.message))
+        contentView.showInvalidFields()
     }
 }
 

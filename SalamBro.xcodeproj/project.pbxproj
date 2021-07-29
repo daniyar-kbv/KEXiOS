@@ -812,30 +812,6 @@
 			path = PaymentEdit;
 			sourceTree = "<group>";
 		};
-		22BBA28991DBAD5AD6B9DC53188B8EF0 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				904CEA50E345537622948F0AAC3978AA /* PaymentEditCell.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		97D0B8DC100A6D12ADDF270854971F65 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				4B04D5A6EDDDFF57651A600BBB81B92D /* PaymentEditController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		544B93C49FF92629CC67CCDE20EF28DD /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D4CCB84206666B11E18EF0336D3A79A7 /* PaymentEditViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -882,6 +858,14 @@
 				5D908F0160906F7C346E463377BC337B /* Localization */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		22BBA28991DBAD5AD6B9DC53188B8EF0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				904CEA50E345537622948F0AAC3978AA /* PaymentEditCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		271D2BC175B1AE5E31BA06AB980E2454 /* Factories */ = {
@@ -1172,14 +1156,6 @@
 			path = CountriesList;
 			sourceTree = "<group>";
 		};
-		51DD97B2BEF7C78308AA2DCE779110A3 /* Payment3DS */ = {
-			isa = PBXGroup;
-			children = (
-				146CAD715D16F7BB5774ACA7FE80AB31 /* ThreeDSViewController.swift */,
-			);
-			path = Payment3DS;
-			sourceTree = "<group>";
-		};
 		4D9B1E855908F046114F499255B605EB /* KeyValueStorage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1215,6 +1191,14 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
+		51DD97B2BEF7C78308AA2DCE779110A3 /* Payment3DS */ = {
+			isa = PBXGroup;
+			children = (
+				146CAD715D16F7BB5774ACA7FE80AB31 /* ThreeDSViewController.swift */,
+			);
+			path = Payment3DS;
+			sourceTree = "<group>";
+		};
 		542581AD1CEBDAE017201B6A7231ED13 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -1224,6 +1208,14 @@
 				A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		544B93C49FF92629CC67CCDE20EF28DD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D4CCB84206666B11E18EF0336D3A79A7 /* PaymentEditViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		5703BDF502114A7D72125B5EE6C3EA75 /* Animations */ = {
@@ -1654,6 +1646,14 @@
 				FBFBFF447EDEBE7F7F92A24AAB70F11D /* SBTabBarViewModel.swift */,
 			);
 			path = SBTabBar;
+			sourceTree = "<group>";
+		};
+		97D0B8DC100A6D12ADDF270854971F65 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4B04D5A6EDDDFF57651A600BBB81B92D /* PaymentEditController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		992BB7DF3025AF848165DD86DF04AFC3 /* ViewModel */ = {
@@ -2951,7 +2951,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2959,7 +2959,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.34;
+				MARKETING_VERSION = 0.0.36;
 				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3021,7 +3021,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3029,7 +3029,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.34;
+				MARKETING_VERSION = 0.0.36;
 				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

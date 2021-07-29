@@ -51,12 +51,12 @@ final class PaymentCardViewModelImpl: PaymentCardViewModel {
               let cardholderName = cardholderName else { return }
 
         guard Card.isCardNumberValid(cardNumber) else {
-            outputs.didGetError.accept(CardError(type: .invalidCardNumber))
+            outputs.didGetError.accept(())
             return
         }
 
         guard Card.isExpDateValid(expiryDate) else {
-            outputs.didGetError.accept(CardError(type: .invalidExiryDate))
+            outputs.didGetError.accept(())
             return
         }
 
@@ -79,29 +79,7 @@ final class PaymentCardViewModelImpl: PaymentCardViewModel {
 
 extension PaymentCardViewModelImpl {
     struct Output {
-        let didGetError = PublishRelay<ErrorPresentable>()
+        let didGetError = PublishRelay<Void>()
         let onDone = PublishRelay<Void>()
-    }
-
-    private enum CardErrorType {
-        case invalidCardNumber
-        case invalidExiryDate
-
-        var title: String {
-            switch self {
-            case .invalidCardNumber:
-                return SBLocalization.localized(key: PaymentText.PaymentCard.Error.invalidCard)
-            case .invalidExiryDate:
-                return SBLocalization.localized(key: PaymentText.PaymentCard.Error.invalidExpiryDate)
-            }
-        }
-    }
-
-    private struct CardError: ErrorPresentable {
-        var presentationDescription: String
-
-        init(type: CardErrorType) {
-            presentationDescription = type.title
-        }
     }
 }

@@ -34,6 +34,8 @@ final class PaymentCardMaskedField: UITextField, MaskedTextFieldDelegateListener
         autocapitalizationType = .allCharacters
         keyboardType = inputType.keyboardType
         delegate = inputType.needMask ? maskedDelegate : self
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.clear.cgColor
     }
 
     func isComplete() -> Bool {

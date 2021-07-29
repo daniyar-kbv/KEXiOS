@@ -181,8 +181,8 @@
 "Payment.Card.expiryDate" = "EN Срок действия";
 "Payment.Card.cardholderName" = "EN Имя Фамилия";
 "Payment.Card.saveButton" = "EN Далее";
-"Payment.Card.Error.invalidCard" = "EN Не валидный номер карты";
-"Payment.Card.Error.invalidExpiryDate" = "EN Не валидный срок дейсвия карты";
+"Payment.Card.Error.title" = "EN Внимание";
+"Payment.Card.Error.message" = "En Некоторые поля заполнены неверно";
 
 // MARK: - Payment Cash
 
