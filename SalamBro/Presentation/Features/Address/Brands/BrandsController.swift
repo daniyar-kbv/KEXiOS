@@ -15,7 +15,7 @@ import UIKit
 final class BrandsController: UIViewController, AlertDisplayable {
     let outputs = Output()
     private let viewModel: BrandViewModelProtocol
-    private let disposeBag: DisposeBag
+    private let disposeBag = DisposeBag()
     private let flowType: FlowType
 
     let animations: [StockAnimation] = [.expand(.moderately), .fadeIn]
@@ -45,7 +45,7 @@ final class BrandsController: UIViewController, AlertDisplayable {
     {
         self.viewModel = viewModel
         self.flowType = flowType
-        disposeBag = DisposeBag()
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -53,6 +53,7 @@ final class BrandsController: UIViewController, AlertDisplayable {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+
         collectionView.spruce.prepare(with: animations)
         setup()
         bind()
@@ -67,19 +68,21 @@ final class BrandsController: UIViewController, AlertDisplayable {
                 self?.collectionView.collectionViewLayout.invalidateLayout()
                 self?.collectionView.collectionViewLayout = StagLayout(widthHeightRatios: ratios,
                                                                        itemSpacing: 0)
-            }.bind(to: collectionView.rx.reload)
+            }
+            .bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
 
         viewModel.outputs.didFail.subscribe(onNext: { [weak self] error in
             self?.showError(error)
         }).disposed(by: disposeBag)
 
-        viewModel.outputs.didSelectBrand.subscribe(onNext: { [weak self] brand in
-            self?.outputs.didSelectBrand.accept(brand)
-            if self?.flowType == .change {
-                self?.dismiss(animated: true)
-            }
-        }).disposed(by: disposeBag)
+        viewModel.outputs.didSelectBrand
+            .bind(to: outputs.didSelectBrand)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.toMap
+            .bind(to: outputs.toMap)
+            .disposed(by: disposeBag)
     }
 
     private func setup() {
@@ -121,7 +124,7 @@ final class BrandsController: UIViewController, AlertDisplayable {
 
 extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate {
     public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.didSelect(index: indexPath.row)
+        viewModel.didSelect(index: indexPath.row, flowType: flowType)
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
@@ -150,6 +153,7 @@ extension BrandsController {
 
     struct Output {
         let didSelectBrand = PublishRelay<Brand>()
+        let toMap = PublishRelay<DeliveryAddress>()
         let close = PublishRelay<Void>()
     }
 }

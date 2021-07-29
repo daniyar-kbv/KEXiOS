@@ -78,7 +78,9 @@ final class AddressCoordinator: Coordinator {
         }).disposed(by: disposeBag)
 
         selectMainInfoPage.outputs.toMap.subscribe(onNext: { [weak self] params in
-            self?.openMap(address: params.0, params.1, presentOn: selectMainInfoPage)
+            self?.openMap(deliveryAddress: params.deliveryAddress,
+                          params.onSelect,
+                          presentOn: selectMainInfoPage)
         }).disposed(by: disposeBag)
 
         selectMainInfoPage.outputs.toBrands.subscribe(onNext: { [weak self] cityId, onSelectBrand in
@@ -98,11 +100,11 @@ final class AddressCoordinator: Coordinator {
         presentOn.present(nav, animated: true)
     }
 
-    private func openMap(address: Address?,
+    private func openMap(deliveryAddress: DeliveryAddress,
                          _ onSelectAddress: @escaping (Address) -> Void,
                          presentOn: UIViewController)
     {
-        let mapPage = pagesFactory.makeMapPage(address: address)
+        let mapPage = pagesFactory.makeMapPage(deliveryAddress: deliveryAddress)
 
         mapPage.selectedAddress = { address in
             onSelectAddress(address)
@@ -121,6 +123,7 @@ final class AddressCoordinator: Coordinator {
 
         brandsPage.outputs.didSelectBrand.subscribe(onNext: { brand in
             onSelectBrand(brand)
+            brandsPage.dismiss(animated: true)
         }).disposed(by: disposeBag)
 
         brandsPage.outputs.close.subscribe(onNext: {

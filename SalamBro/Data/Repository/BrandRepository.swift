@@ -50,6 +50,7 @@ final class BrandRepositoryImpl: BrandRepository {
         locationService.getBrands(for: cityId)
             .subscribe(onSuccess: { [weak self] brandsResponse in
                 self?.outputs.didEndRequest.accept(())
+                self?.setBrands(brands: brandsResponse)
                 self?.outputs.didGetBrands.accept(brandsResponse)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())

@@ -16,7 +16,7 @@ protocol BrandViewModelProtocol: ViewModel {
     var ratios: [(CGFloat, CGFloat)] { get }
 
     func getBrands()
-    func didSelect(index: Int)
+    func didSelect(index: Int, flowType: BrandsController.FlowType)
 }
 
 final class BrandViewModel: BrandViewModelProtocol {
@@ -25,7 +25,8 @@ final class BrandViewModel: BrandViewModelProtocol {
     private let cityId: Int
     private let disposeBag = DisposeBag()
 
-    private let repository: BrandRepository
+    private let brandsRepository: BrandRepository
+    private let addressRepository: AddressRepository
 
     private(set) var brands: [Brand] = [] {
         didSet {
@@ -36,36 +37,56 @@ final class BrandViewModel: BrandViewModelProtocol {
     private var cellSizeSequence: [BrandCellSizeType] = [.square, .horizontalShort, .vertical, .square, .square, .horizontalLong]
     var ratios: [(CGFloat, CGFloat)] = []
 
-    init(brandRepository: BrandRepository, cityId: Int) {
+    init(brandsRepository: BrandRepository,
+         addressRepository: AddressRepository,
+         cityId: Int)
+    {
+        self.brandsRepository = brandsRepository
+        self.addressRepository = addressRepository
         self.cityId = cityId
-        repository = brandRepository
+
         bindOutputs()
     }
 
+    func getBrands() {
+        brandsRepository.fetchBrands(with: cityId)
+    }
+
+    func didSelect(index: Int, flowType: BrandsController.FlowType) {
+        switch flowType {
+        case .change:
+            outputs.didSelectBrand.accept(brands[index])
+        case .create:
+            brandsRepository.changeCurrentBrand(to: brands[index])
+            guard let deliveryAddress = getDeliveryAddress() else { return }
+            outputs.toMap.accept(deliveryAddress)
+        }
+    }
+
+    func getDeliveryAddress() -> DeliveryAddress? {
+        return addressRepository.getCurrentDeliveryAddress()
+    }
+
     private func bindOutputs() {
-        repository.outputs.didStartRequest
+        brandsRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        repository.outputs.didGetBrands.bind {
-            [weak self] brands in
-            self?.brands = brands
-            self?.repository.setBrands(brands: brands)
-            self?.outputs.didGetBrands.accept(())
-        }
-        .disposed(by: disposeBag)
-
-        repository.outputs.didEndRequest
+        brandsRepository.outputs.didEndRequest
             .bind(to: outputs.didEndRequest)
             .disposed(by: disposeBag)
 
-        repository.outputs.didFail
+        brandsRepository.outputs.didFail
             .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
-    }
 
-    func getBrands() {
-        repository.fetchBrands(with: cityId)
+        brandsRepository.outputs.didGetBrands
+            .bind {
+                [weak self] brands in
+                self?.brands = brands
+                self?.outputs.didGetBrands.accept(())
+            }
+            .disposed(by: disposeBag)
     }
 
     private func updateRatio() {
@@ -75,12 +96,6 @@ final class BrandViewModel: BrandViewModelProtocol {
 
         outputs.didGetBrands.accept(())
     }
-
-    func didSelect(index: Int) {
-        let brand = brands[index]
-        repository.changeCurrentBrand(to: brand)
-        outputs.didSelectBrand.accept(brand)
-    }
 }
 
 extension BrandViewModel {
@@ -88,6 +103,7 @@ extension BrandViewModel {
         let didStartRequest = PublishRelay<Void>()
         let didGetBrands = BehaviorRelay<Void>(value: ())
         let didSelectBrand = PublishRelay<Brand>()
+        let toMap = PublishRelay<DeliveryAddress>()
         let didFail = PublishRelay<ErrorPresentable>()
         let didEndRequest = PublishRelay<Void>()
     }
