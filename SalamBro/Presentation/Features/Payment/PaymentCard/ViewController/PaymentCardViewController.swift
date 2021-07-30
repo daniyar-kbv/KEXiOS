@@ -50,6 +50,12 @@ class PaymentCardViewController: UIViewController, AlertDisplayable {
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        contentView.showKeyboard()
+    }
+
     private func bindViewModel() {
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] in

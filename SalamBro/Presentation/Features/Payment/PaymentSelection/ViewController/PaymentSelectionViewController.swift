@@ -91,6 +91,12 @@ final class PaymentSelectionViewController: UIViewController, AlertDisplayable, 
         viewModel.outputs.didMakePayment
             .bind(to: outputs.didMakePayment)
             .disposed(by: disposeBag)
+
+        viewModel.outputs.totalAmount
+            .subscribe(onNext: { [weak self] totalAmount in
+                self?.contentView.set(totalAmount: totalAmount)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

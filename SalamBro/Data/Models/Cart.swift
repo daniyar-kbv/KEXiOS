@@ -15,6 +15,12 @@ struct Cart: Codable {
     }
 }
 
+extension Cart {
+    func getTotalPrice() -> Double {
+        return items.map { Double($0.count) * ($0.position.price ?? 0) }.reduce(0, +)
+    }
+}
+
 struct CartItem: Codable, Equatable {
     var count: Int
     var comment: String

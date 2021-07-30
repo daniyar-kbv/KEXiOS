@@ -86,6 +86,7 @@ final class PaymentRepositoryImpl: PaymentRepository {
 
 extension PaymentRepositoryImpl {
     private func fetchSavedCards() {
+        outputs.didStartRequest.accept(())
         paymentService.myCards()
             .subscribe(onSuccess: { [weak self] cards in
                 self?.outputs.didEndRequest.accept(())
@@ -253,6 +254,7 @@ extension PaymentRepositoryImpl {
             print("Unable to create cryptogram")
             return
         }
+        print("cryptogram:\n\n\(cryptogram)\n\n")
         selectedPaymentMethod?.set(value: cryptogram)
         createOrder { [weak self] in
             guard let leadUUID = self?.defaultStorage.leadUUID,

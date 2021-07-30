@@ -53,7 +53,6 @@ final class PaymentSelectionContainerView: UIView {
     private let billLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "2 870 ₸"
         label.textColor = .darkGray
         label.textAlignment = .right
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -77,6 +76,10 @@ extension PaymentSelectionContainerView {
         paymentSelectionButton.setPaymentMethod(text: paymentMethod.title,
                                                 isApplePay: paymentMethod.type == .applePay)
         configActionButton(with: paymentMethod)
+    }
+
+    func set(totalAmount: String?) {
+        billLabel.text = totalAmount
     }
 }
 

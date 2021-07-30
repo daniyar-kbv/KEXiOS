@@ -39,6 +39,7 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
         self.defaultStorage = defaultStorage
 
         bindRepository()
+        setValues()
     }
 
     func set(paymentMethod: PaymentMethod) {
@@ -51,6 +52,10 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
 
     func processApplePay(payment: PKPayment) {
         paymentRepository.makeApplePayPayment(payment: payment)
+    }
+
+    private func setValues() {
+        outputs.totalAmount.accept("\(cartRepository.getTotalAmount().formattedWithSeparator) ₸")
     }
 
     private func bindRepository() {
@@ -104,6 +109,7 @@ extension PaymentSelectionViewModelImpl {
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
 
+        let totalAmount = BehaviorRelay<String?>(value: nil)
         let didSelectPaymentMethod = PublishRelay<PaymentMethod>()
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()

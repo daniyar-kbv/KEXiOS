@@ -173,4 +173,8 @@ final class PaymentCardView: UIView {
     func showInvalidFields() {
         configInvalidFields(true)
     }
+
+    func showKeyboard() {
+        cardNumberField.becomeFirstResponder()
+    }
 }

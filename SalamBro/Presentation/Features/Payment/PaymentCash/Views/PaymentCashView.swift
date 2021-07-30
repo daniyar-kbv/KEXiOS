@@ -10,7 +10,7 @@ import UIKit
 
 protocol PaymentCashViewDelegate {
     func onSubmit()
-    func textViewDidChange(text: String)
+    func textFieldDidChange(text: String?)
 }
 
 final class PaymentCashView: UIView {
@@ -24,12 +24,19 @@ final class PaymentCashView: UIView {
         return view
     }()
 
-    private lazy var textField: MapTextField = {
-        let view = MapTextField()
+    private lazy var textField: UITextField = {
+        let view = UITextField()
         view.placeholder = SBLocalization.localized(key: PaymentText.PaymentCash.Field.placeholder)
-        view.onChange = fieldDidChange
+        view.delegate = self
         view.keyboardType = .decimalPad
-        view.inputType = .decimal
+        view.cornerRadius = 10
+        view.backgroundColor = .lightGray
+        view.textColor = .darkGray
+        view.font = .systemFont(ofSize: 16, weight: .medium)
+        view.leftView = UIView(frame: .init(x: 0, y: 0, width: 16, height: view.frame.height))
+        view.rightView = UIView(frame: .init(x: 0, y: 0, width: 16, height: view.frame.height))
+        view.leftViewMode = .always
+        view.rightViewMode = .always
         return view
     }()
 
@@ -106,6 +113,10 @@ extension PaymentCashView {
     func set(isChangeLess: Bool) {
         performError(action: isChangeLess ? .show(.changeLess) : .hide)
     }
+
+    func showKeyboard() {
+        textField.becomeFirstResponder()
+    }
 }
 
 extension PaymentCashView {
@@ -131,11 +142,20 @@ extension PaymentCashView {
     }
 }
 
-extension PaymentCashView {
-    private func fieldDidChange() {
-        delegate?.textViewDidChange(text: textField.text)
+extension PaymentCashView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let newText = (textField.text as NSString?)?
+            .replacingCharacters(in: range, with: string)
+            .replacingOccurrences(of: " ", with: ""),
+            let separatedText = Int(newText)?.formattedWithSeparator
+        else { return true }
+        textField.text = separatedText
+        delegate?.textFieldDidChange(text: textField.text)
+        return false
     }
+}
 
+extension PaymentCashView {
     @objc private func handleSubmitButtonAction() {
         delegate?.onSubmit()
     }
