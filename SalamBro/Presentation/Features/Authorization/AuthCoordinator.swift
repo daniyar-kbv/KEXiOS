@@ -13,6 +13,7 @@ final class AuthCoordinator: BaseCoordinator {
     private let disposeBag = DisposeBag()
 
     var didFinish: (() -> Void)?
+    var didAuthorize: (() -> Void)?
 
     private let router: Router
     private let pagesFactory: AuthPagesFactory
@@ -62,6 +63,7 @@ final class AuthCoordinator: BaseCoordinator {
             .subscribe(onNext: { [weak self] in
                 if let _ = DefaultStorageImpl.sharedStorage.userName {
                     self?.handleAuthTermination()
+                    self?.didAuthorize?()
                     return
                 }
 
@@ -77,6 +79,7 @@ final class AuthCoordinator: BaseCoordinator {
 
         nameEnteringPage.didGetEnteredName = { [weak self] _ in
             self?.handleAuthTermination()
+            self?.didAuthorize?()
         }
 
         router.push(viewController: nameEnteringPage, animated: true)

@@ -51,7 +51,9 @@ final class ProfileCoordinator: BaseCoordinator {
 
         profilePage.outputs.onLoginTapped
             .subscribe(onNext: { [weak self] in
-                self?.startAuthCoordinator()
+                profilePage.hideAnimationView { [weak self] in
+                    self?.startAuthCoordinator()
+                }
             })
             .disposed(by: disposeBag)
 
@@ -90,7 +92,7 @@ final class ProfileCoordinator: BaseCoordinator {
         addressListCoordinator.start()
     }
 
-    private func showOrderHistoryPage() {
+    func showOrderHistoryPage() {
         let orderHistoryCoordinator = coordinatorsFactory.makeOrderCoordinator()
         add(orderHistoryCoordinator)
         orderHistoryCoordinator.didFinish = { [weak self, weak orderHistoryCoordinator] in

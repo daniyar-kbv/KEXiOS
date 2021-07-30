@@ -16,6 +16,7 @@ final class CartCoordinator: BaseCoordinator {
     private let coordinatorsFactory: CartCoordinatorsFactory
 
     var toMenu: (() -> Void)?
+    var toOrderHistory: (() -> Void)?
 
     init(router: Router,
          pagesFactory: CartPagesFactory,
@@ -30,7 +31,10 @@ final class CartCoordinator: BaseCoordinator {
         let cartPage = pagesFactory.makeCartPage()
 
         cartPage.outputs.toAuth.subscribe(onNext: { [weak self] in
-//            self?.startAuthCoordinator()
+            self?.startAuthCoordinator()
+        }).disposed(by: disposeBag)
+
+        cartPage.outputs.toPayment.subscribe(onNext: { [weak self] in
             self?.startPaymentCoordinator()
         }).disposed(by: disposeBag)
 
@@ -48,6 +52,9 @@ final class CartCoordinator: BaseCoordinator {
         authCoordinator.didFinish = { [weak self, weak authCoordinator] in
             self?.remove(authCoordinator)
             authCoordinator = nil
+        }
+
+        authCoordinator.didAuthorize = { [weak self] in
             self?.startPaymentCoordinator()
         }
 
@@ -61,6 +68,10 @@ final class CartCoordinator: BaseCoordinator {
         paymentCoordinator.didFinish = { [weak self, weak paymentCoordinator] in
             self?.remove(paymentCoordinator)
             paymentCoordinator = nil
+        }
+
+        paymentCoordinator.didMakePayment = { [weak self] in
+            self?.toOrderHistory?()
         }
 
         paymentCoordinator.start()

@@ -189,6 +189,8 @@
 "Payment.Card.expiryDate" = "EN Срок действия";
 "Payment.Card.cardholderName" = "EN Имя Фамилия";
 "Payment.Card.saveButton" = "EN Далее";
+"Payment.Card.Error.invalidCard" = "EN Не валидный номер карты";
+"Payment.Card.Error.invalidExpiryDate" = "EN Не валидный срок дейсвия карты";
 
 // MARK: - Payment Cash
 
@@ -199,3 +201,7 @@
 "Payment.Cash.fieldDescription" = "EN Укажите сумму больше стоимости заказа";
 "Payment.Cash.Button.noChange" = "EN У меня без сдачи";
 "Payment.Cash.Button.submit" = "EN Готово";
+
+// MARK: - Alert
+
+"Alert.ok" = "EN Ок";

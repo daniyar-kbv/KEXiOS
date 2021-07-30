@@ -13,11 +13,13 @@ protocol ErrorPresentable: Error {
 
 enum NetworkError: ErrorPresentable {
     case badMapping
+    case noData
     case error(String)
 
     var presentationDescription: String {
         switch self {
         case .badMapping: return SBLocalization.localized(key: ErrorText.Network.mappingError)
+        case .noData: return SBLocalization.localized(key: ErrorText.Network.noData)
         case let .error(error): return error
         }
     }
@@ -30,10 +32,8 @@ struct ErrorResponse: Codable, ErrorPresentable {
     var presentationDescription: String {
         #if DEBUG
             return code
+        #else
+            return message
         #endif
-
-        // MARK: Tech debt, before upload to AppStore uncomment this 👇🏻  code and comment ⬆️ code
-
-//        return message
     }
 }

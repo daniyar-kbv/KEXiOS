@@ -10,6 +10,8 @@ import Foundation
 public struct City: Codable {
     let id: Int
     let name: String
+    let latitude: Double
+    let longitude: Double
 }
 
 extension City: Equatable {

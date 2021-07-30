@@ -19,6 +19,9 @@ protocol RepositoryComponents: AnyObject {
     func makeMenuDetailRepository() -> MenuDetailRepository
     func makeDocumentsRepository() -> DocumentsRepository
     func makeRateOrderRepository() -> RateOrderRepository
+    func makePaymentRepository() -> PaymentRepository
+    func makeProfileRepository() -> ProfilePageRepository
+    func makePushNotificationsRepository() -> PushNotificationsRepository
 }
 
 final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponents {
@@ -31,7 +34,9 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     func makeAddressRepository() -> AddressRepository {
         return shared(AddressRepositoryImpl(storage: makeLocalStorage(),
                                             brandStorage: makeLocalStorage(),
-                                            ordersService: serviceComponents.ordersService()))
+                                            ordersService: serviceComponents.ordersService(),
+                                            notificationsService: serviceComponents.pushNotificationsService(),
+                                            defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
     func makeBrandRepository() -> BrandRepository {
@@ -46,7 +51,10 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     }
 
     func makeAuthRepository() -> AuthRepository {
-        return shared(AuthRepositoryImpl(authService: serviceComponents.authService(), tokenStorage: AuthTokenStorageImpl.sharedStorage))
+        return shared(AuthRepositoryImpl(authService: serviceComponents.authService(),
+                                         notificationsService: serviceComponents.pushNotificationsService(),
+                                         tokenStorage: AuthTokenStorageImpl.sharedStorage,
+                                         defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
     func makeChangeUserInfoRepository() -> ChangeUserInfoRepository {
@@ -81,6 +89,25 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
 
     func makeRateOrderRepository() -> RateOrderRepository {
         return shared(RateOrderRepositoryImpl(rateService: serviceComponents.rateService()))
+    }
+
+    func makePaymentRepository() -> PaymentRepository {
+        return weakShared(PaymentRepositoryImpl(paymentService: serviceComponents.paymentsService(),
+                                                defaultStorage: DefaultStorageImpl.sharedStorage))
+    }
+
+    func makeProfileRepository() -> ProfilePageRepository {
+        return shared(ProfilePageRepositoryImpl(profileService: serviceComponents.profileService(),
+                                                authService: serviceComponents.authService(),
+                                                tokenStorage: AuthTokenStorageImpl.sharedStorage))
+    }
+
+    func makePushNotificationsRepository() -> PushNotificationsRepository {
+        return shared(PushNotificationsRepositoryImpl(
+            notificationsService: serviceComponents.pushNotificationsService(),
+            defaultStorage: DefaultStorageImpl.sharedStorage
+        )
+        )
     }
 
     private func makeLocalStorage() -> Storage {

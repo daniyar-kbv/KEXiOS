@@ -44,6 +44,12 @@ enum ErrorText: UILocalizable {
     var localized: String { "" }
 }
 
+enum AlertText: String, UILocalizable {
+    case ok = "Alert.ok"
+
+    var localized: String { rawValue }
+}
+
 enum AddressText: UILocalizable {
     enum Countries: String, UILocalizable {
         case title = "CountriesList.navigation.title"
@@ -352,6 +358,13 @@ enum PaymentText: UILocalizable {
         case saveButton = "Payment.Card.saveButton"
 
         var localized: String { rawValue }
+
+        enum Error: String, UILocalizable {
+            case invalidCard = "Payment.Card.Error.invalidCard"
+            case invalidExpiryDate = "Payment.Card.Error.invalidExpiryDate"
+
+            var localized: String { rawValue }
+        }
     }
 
     enum PaymentCash: String, UILocalizable {

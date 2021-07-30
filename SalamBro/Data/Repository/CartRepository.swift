@@ -17,6 +17,7 @@ protocol CartRepository {
     func removeItem(positionUUID: String)
     func incrementItem(positionUUID: String)
     func decrementItem(positionUUID: String)
+    func cleanUp()
 }
 
 final class CartRepositoryImpl: CartRepository {
@@ -51,38 +52,44 @@ extension CartRepositoryImpl {
         } else {
             cartStorage.cart.items.append(item)
         }
-        outputs.didChange.accept(cartStorage.cart.items)
         updateCart()
     }
 
     func removeItem(positionUUID: String) {
         guard let index = getIndex(of: positionUUID) else { return }
         cartStorage.cart.items.remove(at: index)
-        outputs.didChange.accept(cartStorage.cart.items)
+        updateCart()
     }
 
     func incrementItem(positionUUID: String) {
         guard let index = getIndex(of: positionUUID) else { return }
         cartStorage.cart.items[index].count += 1
-        outputs.didChange.accept(cartStorage.cart.items)
         updateCart()
     }
 
     func decrementItem(positionUUID: String) {
         guard let index = getIndex(of: positionUUID) else { return }
         cartStorage.cart.items[index].count -= 1
-        if cartStorage.cart.items[index].count == 0 {
+        guard cartStorage.cart.items[index].count != 0 else {
             removeItem(positionUUID: positionUUID)
+            return
         }
-        outputs.didChange.accept(cartStorage.cart.items)
         updateCart()
     }
 
+    func cleanUp() {
+        cartStorage.cart.items = []
+        updateCart()
+    }
+}
+
+extension CartRepositoryImpl {
     private func getIndex(of positionUUID: String) -> Int? {
         return cartStorage.cart.items.firstIndex(where: { $0.position.uuid == positionUUID })
     }
 
     private func updateCart() {
+        outputs.didChange.accept(cartStorage.cart.items)
         guard let leadUUID = defaultStorage.leadUUID else { return }
         let dto = cartStorage.cart.toDTO()
         outputs.didStartRequest.accept(())

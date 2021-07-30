@@ -21,7 +21,7 @@ protocol NavigationLogic {
     func sbNavigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController)
 }
 
-final class SBNavigationController: UINavigationController, AnimationViewPresentable {
+final class SBNavigationController: UINavigationController, AnimationViewPresentable, AlertDisplayable {
     private var observers = NSHashTable<SBNavigationControllerDelegate>.weakObjects()
     private var numberOfVCs: Int
 

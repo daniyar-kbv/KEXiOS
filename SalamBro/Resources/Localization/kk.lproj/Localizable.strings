@@ -189,6 +189,8 @@
 "Payment.Card.expiryDate" = "KZ Срок действия";
 "Payment.Card.cardholderName" = "KZ Имя Фамилия";
 "Payment.Card.saveButton" = "KZ Далее";
+"Payment.Card.Error.invalidCard" = "KZ Не валидный номер карты";
+"Payment.Card.Error.invalidExpiryDate" = "KZ Не валидный срок дейсвия карты";
 
 // MARK: - Payment Cash
 
@@ -199,3 +201,7 @@
 "Payment.Cash.fieldDescription" = "KZ Укажите сумму больше стоимости заказа";
 "Payment.Cash.Button.noChange" = "KZ У меня без сдачи";
 "Payment.Cash.Button.submit" = "KZ Готово";
+
+// MARK: - Alert
+
+"Alert.ok" = "KZ Ок";

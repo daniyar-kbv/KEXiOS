@@ -14,7 +14,7 @@ protocol UIImageGetable {
 enum NavigationBar: String, UIImageGetable {
     case back = "navigation_back"
 
-    var name: String { return rawValue }
+    var name: String { rawValue }
 }
 
 enum TabBarIcon: String, UIImageGetable {
@@ -23,14 +23,14 @@ enum TabBarIcon: String, UIImageGetable {
     case support = "tab_support"
     case cart = "tab_cart"
 
-    var name: String { return rawValue }
+    var name: String { rawValue }
 }
 
 enum AuthorizationIcons {
     enum Auth: String, UIImageGetable {
         case arrow = "auth_arrow"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
     }
 }
 
@@ -41,13 +41,13 @@ enum AddressIcons {
         case marker = "map_marker"
         case arrow = "map_arrow"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
     }
 
     enum Suggest: String, UIImageGetable {
         case search = "suggest_search"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
     }
 
     enum AddressPick: String, UIImageGetable {
@@ -55,13 +55,13 @@ enum AddressIcons {
         case checkMarkIcon = "address_pick_check_mark"
         case add = "address_pick_add"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
     }
 
     enum SelectMainInfo: String, UIImageGetable {
         case arrow = "select_main_info_dropdown"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
     }
 }
 
@@ -69,7 +69,7 @@ enum MenuIcons {
     enum Menu: String, UIImageGetable {
         case arrow = "menu_arrow"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
     }
 }
 
@@ -79,14 +79,14 @@ enum ProfileIcons {
         case deliveryAddressIcon = "profile_delivery_address_icon"
         case orderHistoryIcon = "profile_order_history_icon"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
     }
 
     enum AddressList: String, UIImageGetable {
         case addressRemoveIcon = "address_list_remove_icon"
         case addressArrow = "address_list_arrow"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
     }
 
     enum ChangeLanguage: String, UIImageGetable {
@@ -94,14 +94,14 @@ enum ProfileIcons {
         case russianLanguageIcon = "russian_language_icon"
         case englishLanguageIcon = "english_language_icon"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
     }
 
     enum RateOrder: String, UIImageGetable {
         case starFilled = "rate_star_filled"
         case starEmpty = "rate_star_empty"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
     }
 }
 
@@ -113,7 +113,7 @@ enum SupportIcons {
         case tikTokIcon = "tik_tok_icon"
         case vkIcon = "vk_icon"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
     }
 }
 
@@ -123,7 +123,15 @@ enum CartIcons {
         case plusWhite = "cart_plus_white"
         case minus = "cart_minus"
 
-        var name: String { return rawValue }
+        var name: String { rawValue }
+    }
+}
+
+enum PaymentIcons {
+    enum PaymentMethod: String, UIImageGetable {
+        case selected = "payment_method_check_mark"
+
+        var name: String { rawValue }
     }
 }
 

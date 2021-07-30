@@ -10,6 +10,7 @@ import Foundation
 enum DefaultStorageKey: String, StorageKey, Equatable {
     case username
     case leadUUID
+    case fcmToken
     case appLocale
     case isFirstLaunch
 
@@ -19,11 +20,14 @@ enum DefaultStorageKey: String, StorageKey, Equatable {
 protocol DefaultStorage {
     var userName: String? { get }
     var leadUUID: String? { get }
+    var fcmToken: String? { get }
     var appLocale: String? { get }
     var isFirstLaunch: Bool { get }
 
     func persist(name: String)
     func persist(leadUUID: String)
+    func persist(fcmToken: String)
+    func persist(appLocale: String)
 
     func cleanUp(key: DefaultStorageKey)
 }
@@ -39,6 +43,10 @@ final class DefaultStorageImpl: DefaultStorage {
 
     var leadUUID: String? {
         return storageProvider.string(forKey: DefaultStorageKey.leadUUID.value)
+    }
+
+    var fcmToken: String? {
+        return storageProvider.string(forKey: DefaultStorageKey.fcmToken.value)
     }
 
     var isFirstLaunch: Bool {
@@ -61,12 +69,15 @@ final class DefaultStorageImpl: DefaultStorage {
         storageProvider.set(leadUUID, forKey: DefaultStorageKey.leadUUID.value)
     }
 
+    func persist(fcmToken: String) {
+        storageProvider.set(fcmToken, forKey: DefaultStorageKey.fcmToken.value)
+    }
+
     func persist(appLocale: String) {
         storageProvider.set(appLocale, forKey: DefaultStorageKey.appLocale.value)
     }
 
     func cleanUp(key: DefaultStorageKey) {
-        let empty = ""
-        storageProvider.set(empty, forKey: key.value)
+        storageProvider.set(nil, forKey: key.value)
     }
 }
