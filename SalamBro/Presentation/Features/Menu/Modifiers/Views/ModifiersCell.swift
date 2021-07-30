@@ -128,18 +128,30 @@ final class ModifiersCell: UICollectionViewCell {
     func configureUI(with status: (Bool, Bool)) {
         switch status {
         case (true, true):
-            contentView.alpha = 1
-            contentView.isUserInteractionEnabled = true
             increaseButton.alpha = 1
-            increaseButton.isUserInteractionEnabled = true
             itemImageView.alpha = 1
+            descreaseButton.alpha = 1
+            countLabel.alpha = 1
+            itemTitleLabel.alpha = 1
+            itemPriceLabel.alpha = 1
+            increaseButton.isUserInteractionEnabled = true
+            contentView.isUserInteractionEnabled = true
         case (true, false):
+            itemImageView.alpha = 1
+            descreaseButton.alpha = 1
+            countLabel.alpha = 1
+            itemTitleLabel.alpha = 1
+            itemPriceLabel.alpha = 1
             increaseButton.alpha = 0.5
             increaseButton.isUserInteractionEnabled = false
         case (false, false):
-            contentView.alpha = 0.5
-            contentView.isUserInteractionEnabled = false
             itemImageView.alpha = 0.5
+            descreaseButton.alpha = 0.5
+            countLabel.alpha = 0.5
+            increaseButton.alpha = 0.5
+            itemTitleLabel.alpha = 0.5
+            itemPriceLabel.alpha = 0.5
+            contentView.isUserInteractionEnabled = false
         default:
             contentView.alpha = 1
         }
