@@ -31,7 +31,7 @@ final class MenuRepositoryImpl: MenuRepository {
     func getMenuItems() {
         guard let leadUUID = storage.leadUUID else { return }
 
-        let promotionsSequence = promotionsService.getPromotions()
+        let promotionsSequence = promotionsService.getPromotions(leadUUID: leadUUID)
         let productsSequence = ordersService.getProducts(for: leadUUID)
 
 //        let finalSequence = Single.zip(promotionsSequence,
