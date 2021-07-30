@@ -36,6 +36,7 @@ final class AddressRepositoryImpl: AddressRepository {
     private let geoStorage: GeoStorage
     private let brandStorage: BrandStorage
     private let defaultStorage: DefaultStorage
+    private let authTokenStorage: AuthTokenStorage
 
     private let ordersService: OrdersService
     private let profileService: ProfileService
@@ -48,7 +49,8 @@ final class AddressRepositoryImpl: AddressRepository {
          ordersService: OrdersService,
          profileService: ProfileService,
          notificationsService: PushNotificationsService,
-         defaultStorage: DefaultStorage)
+         defaultStorage: DefaultStorage,
+         authTokenStorage: AuthTokenStorage)
     {
         geoStorage = storage
         self.brandStorage = brandStorage
@@ -56,6 +58,7 @@ final class AddressRepositoryImpl: AddressRepository {
         self.profileService = profileService
         self.notificationsService = notificationsService
         self.defaultStorage = defaultStorage
+        self.authTokenStorage = authTokenStorage
     }
 }
 
@@ -157,30 +160,52 @@ extension AddressRepositoryImpl {
         var dto: OrderApplyDTO?
 
         if withAddress {
-            guard let cityId = getCurrentCity()?.id,
+            guard let countryId = getCurrentCountry()?.id,
+                  let cityId = getCurrentCity()?.id,
                   let longitude = getCurrentAddress()?.longitude.rounded(to: 8),
                   let latitude = getCurrentAddress()?.latitude.rounded(to: 8),
                   let brandId = brandStorage.brand?.id
             else { return }
 
-            dto = OrderApplyDTO(address: OrderApplyDTO.Address(city: cityId,
-                                                               longitude: longitude,
-                                                               latitude: latitude,
-                                                               comment: getCurrentAddress()?.commentary),
+            dto = OrderApplyDTO(address: .init(district: nil,
+                                               street: nil,
+                                               building: nil,
+                                               corpus: nil,
+                                               flat: nil,
+                                               comment: getCurrentAddress()?.comment,
+                                               country: countryId,
+                                               city: cityId,
+                                               longitude: longitude,
+                                               latitude: latitude),
                                 localBrand: brandId)
         }
 
+        var request: Single<String>?
+
+        if let dto = dto,
+           withAddress
+        {
+            if authTokenStorage.token != nil {
+                request = ordersService.authorizedApplyWithAddress(dto: dto)
+            } else {
+                request = ordersService.applyOrder(dto: dto)
+            }
+        } else if authTokenStorage.token != nil {
+            request = ordersService.authorizedApplyOrder()
+        }
+
+        guard request != nil else { return }
+
         outputs.didStartRequest.accept(())
 
-        ordersService.applyOrder(dto: dto)
-            .subscribe { [weak self] leadUUID in
-                self?.process(leadUUID: leadUUID)
-                self?.outputs.didEndRequest.accept(())
-            } onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didFail.accept(error)
-            }.disposed(by: disposeBag)
+        request?.subscribe { [weak self] leadUUID in
+            self?.process(leadUUID: leadUUID)
+            self?.outputs.didEndRequest.accept(())
+        } onError: { [weak self] error in
+            self?.outputs.didEndRequest.accept(())
+            guard let error = error as? ErrorPresentable else { return }
+            self?.outputs.didFail.accept(error)
+        }.disposed(by: disposeBag)
     }
 
     private func process(leadUUID: String) {

@@ -92,7 +92,7 @@ final class AddressCoordinator: Coordinator {
         presentOn.present(nav, animated: true)
     }
 
-    private func openMap(deliveryAddress: DeliveryAddress,
+    private func openMap(deliveryAddress: UserAddress,
                          _ onSelectAddress: @escaping (Address) -> Void,
                          presentOn: UIViewController)
     {

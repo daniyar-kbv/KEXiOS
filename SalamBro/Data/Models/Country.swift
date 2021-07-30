@@ -5,7 +5,7 @@
 //  Created by Arystan on 3/13/21.
 //
 
-public struct Country: Codable {
+public struct Country: Decodable {
     let id: Int
     let name: String
     let countryCode: String

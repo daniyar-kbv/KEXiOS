@@ -58,13 +58,13 @@ final class BrandViewModel: BrandViewModelProtocol {
             outputs.didSelectBrand.accept(brands[index])
         case .create:
             brandsRepository.changeCurrentBrand(to: brands[index])
-            guard let deliveryAddress = getDeliveryAddress() else { return }
+            guard let deliveryAddress = getUserAddress() else { return }
             outputs.toMap.accept(deliveryAddress)
         }
     }
 
-    func getDeliveryAddress() -> DeliveryAddress? {
-        return addressRepository.getCurrentDeliveryAddress()
+    private func getUserAddress() -> UserAddress? {
+        return addressRepository.getCurrentUserAddress()
     }
 
     private func bindOutputs() {
@@ -103,7 +103,7 @@ extension BrandViewModel {
         let didStartRequest = PublishRelay<Void>()
         let didGetBrands = BehaviorRelay<Void>(value: ())
         let didSelectBrand = PublishRelay<Brand>()
-        let toMap = PublishRelay<DeliveryAddress>()
+        let toMap = PublishRelay<UserAddress>()
         let didFail = PublishRelay<ErrorPresentable>()
         let didEndRequest = PublishRelay<Void>()
     }

@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AddressPickController: UIViewController {
+final class AddressPickController: UIViewController, LoaderDisplayable, AlertDisplayable {
     private let disposeBag = DisposeBag()
     private let viewModel: AddressPickerViewModelProtocol
     private let tapGesture = UITapGestureRecognizer()
@@ -104,6 +104,12 @@ extension AddressPickController {
         viewModel.outputs.onReload.subscribe(onNext: { [weak self] in
             self?.tableView.reloadData()
         }).disposed(by: disposeBag)
+
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func addTapped() {
@@ -156,7 +162,7 @@ extension AddressPickController: UITableViewDelegate, UITableViewDataSource {
 
 extension AddressPickController {
     struct Output {
-        let didSelectAddress = PublishRelay<(DeliveryAddress, () -> Void)>()
+        let didSelectAddress = PublishRelay<(UserAddress, () -> Void)>()
         let didAddTapped = PublishRelay<() -> Void>()
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()

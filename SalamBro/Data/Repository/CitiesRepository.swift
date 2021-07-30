@@ -59,12 +59,7 @@ final class CitiesRepositoryImpl: CitiesRepository {
     }
 
     func changeCurrentCity(to city: City) {
-        if let index = storage.currentDeliveryAddressIndex {
-            storage.deliveryAddresses[index].city = city
-        } else {
-            storage.deliveryAddresses.append(DeliveryAddress(city: city))
-            storage.currentDeliveryAddressIndex = storage.deliveryAddresses.firstIndex(where: { $0 == DeliveryAddress(city: city) })
-        }
+        storage.userAddresses.first(where: { $0.isCurrent })?.address.city = city
     }
 
     func setCities(cities: [City]) {

@@ -59,11 +59,21 @@ final class CountriesRepositoryImpl: CountriesRepository {
     }
 
     func changeCurrentCountry(to country: Country) {
-        if let index = storage.currentDeliveryAddressIndex {
-            storage.deliveryAddresses[index].country = country
+        if let userAddress = storage.userAddresses.first(where: { $0.isCurrent }) {
+            userAddress.address.country = country
         } else {
-            storage.deliveryAddresses.append(DeliveryAddress(country: country))
-            storage.currentDeliveryAddressIndex = storage.deliveryAddresses.firstIndex(where: { $0 == DeliveryAddress(country: country) })
+            storage.userAddresses.append(.init(address: .init(district: nil,
+                                                              street: nil,
+                                                              building: nil,
+                                                              corpus: nil,
+                                                              flat: nil,
+                                                              comment: nil,
+                                                              country: country,
+                                                              city: nil,
+                                                              longitude: nil,
+                                                              latitude: nil),
+                                               isCurrent: true,
+                                               brandId: nil))
         }
     }
 

@@ -101,8 +101,8 @@ extension MapPage {
     private func bindViewModel() {
         viewModel.outputs.selectedAddress
             .subscribe(onNext: { [weak self] address in
-                self?.mapAddressView.addressTextField.set(text: address.getName())
-                self?.mapAddressView.changeButtonAppearance(based: address.getName())
+                self?.mapAddressView.addressTextField.set(text: address?.getName())
+                self?.mapAddressView.changeButtonAppearance(isEmpty: address?.getName().isEmpty ?? true)
             })
             .disposed(by: disposeBag)
 

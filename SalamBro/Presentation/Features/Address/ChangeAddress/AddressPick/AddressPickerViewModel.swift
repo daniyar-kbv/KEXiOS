@@ -17,37 +17,67 @@ protocol AddressPickerViewModelProtocol: ViewModel {
 }
 
 final class AddressPickerViewModel: AddressPickerViewModelProtocol {
-    private let locationRepository: AddressRepository
-    public var cellViewModels: [AddressPickerCellViewModelProtocol] = []
-    private var addresses: [DeliveryAddress] = []
+    private let disposeBag = DisposeBag()
+    private let addressRepository: AddressRepository
+    private var addresses: [UserAddress] = []
 
+    var cellViewModels: [AddressPickerCellViewModelProtocol] = []
     let outputs = Output()
 
     public func didSelect(index: Int) {
-        let address = addresses[index]
-        locationRepository.setCurrentDeliveryAddress(deliveryAddress: address)
         outputs.didSelectAddress.accept(addresses[index])
     }
 
-    init(locationRepository: AddressRepository) {
-        self.locationRepository = locationRepository
+    init(addressRepository: AddressRepository) {
+        self.addressRepository = addressRepository
 
         reload()
     }
 
-    func reload() {
-        addresses = locationRepository.getDeliveryAddresses() ?? []
-        cellViewModels = addresses.map {
-            AddressPickerCellViewModel(deliveryAddress: $0,
-                                       isSelected: $0 == locationRepository.getCurrentDeliveryAddress())
+    private func bindAddressRepository() {
+        addressRepository.outputs
+            .didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        addressRepository.outputs
+            .didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        addressRepository.outputs
+            .didFail
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+
+        addressRepository.outputs
+            .didGetUserAddresses
+            .subscribe(onNext: { [weak self] addresses in
+                self?.process(userAddresses: addresses)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func process(userAddresses: [UserAddress]) {
+        cellViewModels = userAddresses.map {
+            AddressPickerCellViewModel(userAddress: $0,
+                                       isSelected: $0 == addressRepository.getCurrentUserAddress())
         }
         outputs.onReload.accept(())
+    }
+
+    func reload() {
+        addressRepository.getUserAddresses()
     }
 }
 
 extension AddressPickerViewModel {
     struct Output {
-        let didSelectAddress = PublishRelay<DeliveryAddress>()
+        let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
+        let didGetError = PublishRelay<ErrorPresentable>()
+
+        let didSelectAddress = PublishRelay<UserAddress>()
         let onReload = PublishRelay<Void>()
     }
 }
