@@ -68,6 +68,10 @@ final class SetNameView: UIView {
 }
 
 extension SetNameView {
+    func showKeyboard() {
+        nameField.becomeFirstResponder()
+    }
+
     private func layoutUI() {
         backgroundColor = .arcticWhite
 

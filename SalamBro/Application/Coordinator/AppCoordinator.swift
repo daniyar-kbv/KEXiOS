@@ -28,21 +28,12 @@ final class AppCoordinator: BaseCoordinator {
     }
 
     override func start() {
-        configureLocalization()
-
         configureMenuCoordinator()
         configureProfileCoordinator()
         configureSupportCoordinator()
         configureCartCoordinator()
 
         switchFlows()
-    }
-
-    private func configureLocalization() {
-        guard let _ = DefaultStorageImpl.sharedStorage.appLocale else {
-            DefaultStorageImpl.sharedStorage.persist(appLocale: Locale.current.identifier.components(separatedBy: "_")[0]) // Default system locale
-            return
-        }
     }
 
     private func switchFlows() {

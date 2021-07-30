@@ -21,7 +21,7 @@ protocol DefaultStorage {
     var userName: String? { get }
     var leadUUID: String? { get }
     var fcmToken: String? { get }
-    var appLocale: String? { get }
+    var appLocale: String { get }
     var isFirstLaunch: Bool { get }
 
     func persist(name: String)
@@ -53,8 +53,9 @@ final class DefaultStorageImpl: DefaultStorage {
         return storageProvider.bool(forKey: DefaultStorageKey.isFirstLaunch.value)
     }
 
-    var appLocale: String? {
-        return storageProvider.string(forKey: DefaultStorageKey.appLocale.value)
+    var appLocale: String {
+        return storageProvider.string(forKey: DefaultStorageKey.appLocale.value) ??
+            Constants.Language.russian.rawValue
     }
 
     init(storageProvider: UserDefaults) {

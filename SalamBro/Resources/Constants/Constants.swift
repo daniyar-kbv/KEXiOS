@@ -30,6 +30,12 @@ struct Constants {
     enum ErrorCode {
         static let orderAlreadyExists = "order_already_exists"
     }
+
+    enum Language: String {
+        case russian = "ru"
+        case english = "en"
+        case kazakh = "kk"
+    }
 }
 
 extension Constants {
