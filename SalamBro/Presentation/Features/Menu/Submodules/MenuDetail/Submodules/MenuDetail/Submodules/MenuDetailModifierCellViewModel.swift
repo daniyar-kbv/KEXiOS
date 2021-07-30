@@ -54,9 +54,14 @@ extension MenuDetailModifierCellViewModelImpl {
         )
 
         if modifierGroup.isRequired {
-            let amountString = modifierGroup.maxAmount == 1 ?
-                " (\(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.position)))" :
-                " (\(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positions)))"
+            var amountString = ""
+            if modifierGroup.maxAmount == 1 {
+                amountString = " (\(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.position)))"
+            } else if modifierGroup.maxAmount > 1, modifierGroup.maxAmount <= 4 {
+                amountString = " (\(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positionLessOrEqualFour)))"
+            } else {
+                amountString = " (\(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positionGreaterThanFour)))"
+            }
 
             requiredAmountTitle = NSMutableAttributedString(
                 string: amountString,
@@ -90,9 +95,15 @@ extension MenuDetailModifierCellViewModelImpl {
                 ]
             )
 
-            let amountString = modifierGroup.maxAmount == 1 ?
-                " (\(SBLocalization.localized(key: MenuText.MenuDetail.max)) \(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.position)))" :
-                " (\(SBLocalization.localized(key: MenuText.MenuDetail.max)) \(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positions)))"
+            var amountString = ""
+
+            if modifierGroup.maxAmount == 1 {
+                amountString = " (\(SBLocalization.localized(key: MenuText.MenuDetail.max)) \(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.position)))"
+            } else if modifierGroup.maxAmount > 1, modifierGroup.maxAmount <= 4 {
+                amountString = " (\(SBLocalization.localized(key: MenuText.MenuDetail.max)) \(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positionLessOrEqualFour)))"
+            } else {
+                amountString = " (\(SBLocalization.localized(key: MenuText.MenuDetail.max)) \(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positionGreaterThanFour)))"
+            }
 
             requiredAmountTitle = NSMutableAttributedString(
                 string: amountString,

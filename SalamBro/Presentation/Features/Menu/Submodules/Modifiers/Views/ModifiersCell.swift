@@ -98,6 +98,14 @@ final class ModifiersCell: UICollectionViewCell {
     }
 
     func configure(modifier: Modifier, index: Int) {
+        if let url = modifier.image {
+            if let imageURL = URL(string: url) {
+                itemImageView.setImage(url: imageURL)
+            }
+        } else {
+            itemImageView.image = nil
+        }
+
         itemTitleLabel.text = modifier.name
         countLabel.text = "\(modifier.itemCount)"
         itemCount = modifier.itemCount
@@ -124,12 +132,14 @@ final class ModifiersCell: UICollectionViewCell {
             contentView.isUserInteractionEnabled = true
             increaseButton.alpha = 1
             increaseButton.isUserInteractionEnabled = true
+            itemImageView.alpha = 1
         case (true, false):
             increaseButton.alpha = 0.5
             increaseButton.isUserInteractionEnabled = false
         case (false, false):
             contentView.alpha = 0.5
             contentView.isUserInteractionEnabled = false
+            itemImageView.alpha = 0.5
         default:
             contentView.alpha = 1
         }
@@ -185,8 +195,8 @@ extension ModifiersCell {
     @objc private func decreaseItemCount() {
         if itemCount > 0 {
             itemCount = itemCount - 1
+            delegate?.decreaseQuantity(at: index, with: itemCount)
         }
-        delegate?.decreaseQuantity(at: index, with: itemCount)
     }
 
     @objc private func increaseItemCount() {

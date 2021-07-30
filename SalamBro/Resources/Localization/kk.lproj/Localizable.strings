@@ -110,7 +110,8 @@
 "MenuDetail.required" = "KZ Обязательно";
 "MenuDetail.choose" = "KZ Выберите";
 "MenuDetail.position" = "KZ позиция";
-"MenuDetail.positions" = "KZ позиции";
+"MenuDetail.positionLessOrEqualFour" = "KZ позиции";
+"MenuDetail.positionGreaterThanFour" = "KZ позиций";
 "MenuDetail.additional" = "KZ Дополнительно";
 "MenuDetail.max" = "KZ макс.";
 "MenuDetail.chooseAdditional" = "KZ Выберите дополнения";

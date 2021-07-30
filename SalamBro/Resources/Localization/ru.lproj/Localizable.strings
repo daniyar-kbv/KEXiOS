@@ -111,7 +111,8 @@
 "MenuDetail.required" = "Обязательно";
 "MenuDetail.choose" = "Выберите";
 "MenuDetail.position" = "позиция";
-"MenuDetail.positions" = "позиции";
+"MenuDetail.positionLessOrEqualFour" = "позиции";
+"MenuDetail.positionGreaterThanFour" = "позиций";
 "MenuDetail.additional" = "Дополнительно";
 "MenuDetail.max" = "макс.";
 "MenuDetail.chooseAdditional" = "Выберите дополнения";
