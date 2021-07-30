@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol PromotionsService: AnyObject {
-    func getPromotions() -> Single<[Promotion]>
+    func getPromotions(leadUUID: String) -> Single<[Promotion]>
 }
 
 class PromotionsServiceImpl: PromotionsService {
@@ -21,9 +21,9 @@ class PromotionsServiceImpl: PromotionsService {
         self.provider = provider
     }
 
-    func getPromotions() -> Single<[Promotion]> {
+    func getPromotions(leadUUID: String) -> Single<[Promotion]> {
         return provider.rx
-            .request(.promotions)
+            .request(.promotions(leadUUID: leadUUID))
             .map { response in
 
                 // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
