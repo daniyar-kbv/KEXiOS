@@ -122,6 +122,7 @@ final class MenuCoordinator: BaseCoordinator {
 
     private func startAuthCoordinator(didAuthorize: @escaping () -> Void) {
         let authCoordinator = coordinatorsFactory.makeAuthCoordinator()
+        router.getNavigationController().setNavigationBarHidden(false, animated: true)
 
         add(authCoordinator)
 

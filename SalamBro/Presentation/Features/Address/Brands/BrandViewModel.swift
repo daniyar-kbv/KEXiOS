@@ -58,13 +58,9 @@ final class BrandViewModel: BrandViewModelProtocol {
             outputs.didSelectBrand.accept(brands[index])
         case .create:
             brandsRepository.changeCurrentBrand(to: brands[index])
-            guard let deliveryAddress = getUserAddress() else { return }
+            guard let deliveryAddress = addressRepository.getCurrentUserAddress() else { return }
             outputs.toMap.accept(deliveryAddress)
         }
-    }
-
-    private func getUserAddress() -> UserAddress? {
-        return addressRepository.getCurrentUserAddress()
     }
 
     private func bindOutputs() {

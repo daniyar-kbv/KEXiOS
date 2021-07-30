@@ -770,14 +770,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		12394A5115DC0311ED41109E4F3DBCA4 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				5D841210F58CA8DA409C11582DE8C696 /* PaymentCardViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		13778F5B21BBFEA487BE9B55AB68F1A4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -799,14 +791,6 @@
 				A21DBF1D8149DD277ACF2EE07316691C /* SupportCoordinator.swift */,
 			);
 			path = Support;
-			sourceTree = "<group>";
-		};
-		4B94BF4D11E9C59C8F0FA962D6127C32 /* 3DS */ = {
-			isa = PBXGroup;
-			children = (
-				6AB821F9DB01F792DC7A12A2ED875DA5 /* ThreeDSViewController.swift */,
-			);
-			path = 3DS;
 			sourceTree = "<group>";
 		};
 		16C22B85149778413CCD4C4D8CFA40A0 /* Frameworks */ = {
@@ -1143,6 +1127,14 @@
 				4FFB61219558329CE9344113E33A6734 /* CountriesListViewModel.swift */,
 			);
 			path = CountriesList;
+			sourceTree = "<group>";
+		};
+		4B94BF4D11E9C59C8F0FA962D6127C32 /* 3DS */ = {
+			isa = PBXGroup;
+			children = (
+				6AB821F9DB01F792DC7A12A2ED875DA5 /* ThreeDSViewController.swift */,
+			);
+			path = 3DS;
 			sourceTree = "<group>";
 		};
 		4D9B1E855908F046114F499255B605EB /* KeyValueStorage */ = {

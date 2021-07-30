@@ -19,15 +19,15 @@ protocol AddressRepository: AnyObject {
     func getCurrentCity() -> City?
 
     func getCurrentAddress() -> Address?
-    func changeCurrentAddress(to address: Address)
+    func changeCurrentAddress(district: String?, street: String?, building: String?, corpus: String?, flat: String?, comment: String?, longitude: Double?, latitude: Double?)
 
     func getUserAddresses()
     func getCurrentUserAddress() -> UserAddress?
-    func setCurrentUserAddress(to address: UserAddress)
     func updateUserAddress(with id: Int, brandId: Int)
+    func add(userAddress: UserAddress)
     func deleteUserAddress(with id: Int)
 
-    func applyOrder(withAddress: Bool)
+    func applyOrder(userAddress: UserAddress?, completion: (() -> Void)?)
 }
 
 final class AddressRepositoryImpl: AddressRepository {
@@ -89,9 +89,26 @@ extension AddressRepositoryImpl {
         return getCurrentUserAddress()?.address
     }
 
-    func changeCurrentAddress(to address: Address) {
+    func changeCurrentAddress(district: String?,
+                              street: String?,
+                              building: String?,
+                              corpus: String?,
+                              flat: String?,
+                              comment: String?,
+                              longitude: Double?,
+                              latitude: Double?)
+    {
         guard let index = geoStorage.userAddresses.firstIndex(where: { $0.isCurrent }) else { return }
-        geoStorage.userAddresses[index].address = address
+        let userAddresses = geoStorage.userAddresses
+        userAddresses[index].address.district = district
+        userAddresses[index].address.street = street
+        userAddresses[index].address.building = building
+        userAddresses[index].address.corpus = corpus
+        userAddresses[index].address.flat = flat
+        userAddresses[index].address.comment = comment
+        userAddresses[index].address.longitude = longitude
+        userAddresses[index].address.latitude = latitude
+        geoStorage.userAddresses = userAddresses
     }
 }
 
@@ -103,45 +120,33 @@ extension AddressRepositoryImpl {
         outputs.didStartRequest.accept(())
         profileService.getAddresses()
             .subscribe(onSuccess: { [weak self] addresses in
-                self?.outputs.didEndRequest.accept(())
-                self?.geoStorage.userAddresses = addresses
-                self?.outputs.didGetUserAddresses.accept(addresses)
+                self?.process(userAddresses: addresses)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
                 self?.outputs.didFail.accept(error)
             })
             .disposed(by: disposeBag)
+    }
+
+    private func process(userAddresses: [UserAddress]) {
+        let oldCurrent = getCurrentUserAddress()
+        geoStorage.userAddresses = userAddresses
+        outputs.didGetUserAddresses.accept(userAddresses)
+        if oldCurrent != getCurrentUserAddress() {
+            outputs.needsUpdate.accept(())
+        }
     }
 
     func getCurrentUserAddress() -> UserAddress? {
         return geoStorage.userAddresses.first(where: { $0.isCurrent })
     }
 
-    func setCurrentUserAddress(to address: UserAddress) {
-        guard let id = address.id,
-              let brandId = address.brandId else { return }
-        let dto = UpdateAddressDTO(brandId: brandId)
-        profileService.updateAddress(id: id, dto: dto)
-            .subscribe(onSuccess: { [weak self] in
-                self?.changeToCurrent(id: id)
-            }, onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didFail.accept(error)
-            })
-            .disposed(by: disposeBag)
-    }
-
-    private func changeToCurrent(id: Int) {
-        geoStorage.userAddresses.forEach { $0.isCurrent = $0.id == id }
-    }
-
     func updateUserAddress(with id: Int, brandId: Int) {
         let dto = UpdateAddressDTO(brandId: brandId)
         profileService.updateAddress(id: id, dto: dto)
             .subscribe(onSuccess: { [weak self] in
-                self?.changeToCurrent(id: id)
+                self?.applyOrder(userAddress: nil)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
@@ -150,62 +155,56 @@ extension AddressRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
-    func deleteUserAddress(with _: Int) {
-//        Tech debt: add logic
+    func add(userAddress: UserAddress) {
+        applyOrder(userAddress: userAddress)
+    }
+
+    func deleteUserAddress(with id: Int) {
+        var userAddresses = geoStorage.userAddresses
+        userAddresses.removeAll(where: { $0.id == id })
+        geoStorage.userAddresses = userAddresses
+        outputs.didGetUserAddresses.accept(geoStorage.userAddresses)
+        outputs.didStartRequest.accept(())
+        profileService.deleteAddress(id: id)
+            .subscribe(onSuccess: { [weak self] in
+                self?.outputs.didDeleteUserAddress.accept(())
+                self?.getUserAddresses()
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didFail.accept(error)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 extension AddressRepositoryImpl {
-    func applyOrder(withAddress: Bool = true) {
-        var dto: OrderApplyDTO?
-
-        if withAddress {
-            guard let countryId = getCurrentCountry()?.id,
-                  let cityId = getCurrentCity()?.id,
-                  let longitude = getCurrentAddress()?.longitude.rounded(to: 8),
-                  let latitude = getCurrentAddress()?.latitude.rounded(to: 8),
-                  let brandId = brandStorage.brand?.id
-            else { return }
-
-            dto = OrderApplyDTO(address: .init(district: nil,
-                                               street: nil,
-                                               building: nil,
-                                               corpus: nil,
-                                               flat: nil,
-                                               comment: getCurrentAddress()?.comment,
-                                               country: countryId,
-                                               city: cityId,
-                                               longitude: longitude,
-                                               latitude: latitude),
-                                localBrand: brandId)
-        }
-
-        var request: Single<String>?
-
-        if let dto = dto,
-           withAddress
-        {
-            if authTokenStorage.token != nil {
-                request = ordersService.authorizedApplyWithAddress(dto: dto)
-            } else {
-                request = ordersService.applyOrder(dto: dto)
-            }
-        } else if authTokenStorage.token != nil {
-            request = ordersService.authorizedApplyOrder()
-        }
-
-        guard request != nil else { return }
+    func applyOrder(userAddress: UserAddress? = nil, completion: (() -> Void)? = nil) {
+        guard let request = getRequest(for: userAddress?.toDTO()) else { return }
 
         outputs.didStartRequest.accept(())
-
-        request?.subscribe { [weak self] leadUUID in
+        request.subscribe { [weak self] leadUUID in
             self?.process(leadUUID: leadUUID)
-            self?.outputs.didEndRequest.accept(())
+            self?.getUserAddresses()
+            completion?()
         } onError: { [weak self] error in
             self?.outputs.didEndRequest.accept(())
             guard let error = error as? ErrorPresentable else { return }
             self?.outputs.didFail.accept(error)
         }.disposed(by: disposeBag)
+    }
+
+    private func getRequest(for dto: OrderApplyDTO?) -> Single<String>? {
+        if let dto = dto {
+            if authTokenStorage.token != nil {
+                return ordersService.authorizedApplyWithAddress(dto: dto)
+            } else {
+                return ordersService.applyOrder(dto: dto)
+            }
+        } else if authTokenStorage.token != nil {
+            return ordersService.authorizedApplyOrder()
+        }
+        return nil
     }
 
     private func process(leadUUID: String) {
@@ -236,5 +235,7 @@ extension AddressRepositoryImpl {
 
         let didGetLeadUUID = PublishRelay<Void>()
         let didGetUserAddresses = PublishRelay<[UserAddress]>()
+        let needsUpdate = PublishRelay<Void>()
+        let didDeleteUserAddress = PublishRelay<Void>()
     }
 }

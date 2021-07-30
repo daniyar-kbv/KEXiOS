@@ -10,7 +10,6 @@ import Foundation
 protocol GeoStorage: AnyObject {
     var countries: [Country]? { get set }
     var cities: [City]? { get set }
-
     var userAddresses: [UserAddress] { get set }
 }
 

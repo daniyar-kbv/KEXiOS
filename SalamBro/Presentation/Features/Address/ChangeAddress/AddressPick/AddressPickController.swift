@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AddressPickController: UIViewController, LoaderDisplayable, AlertDisplayable {
+final class AddressPickController: UIViewController, AlertDisplayable {
     private let disposeBag = DisposeBag()
     private let viewModel: AddressPickerViewModelProtocol
     private let tapGesture = UITapGestureRecognizer()
@@ -48,7 +48,12 @@ final class AddressPickController: UIViewController, LoaderDisplayable, AlertDis
 
     init(viewModel: AddressPickerViewModelProtocol) {
         self.viewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
+
+        layoutUI()
+        bind()
+        bindViewModel()
     }
 
     @available(*, unavailable)
@@ -62,18 +67,17 @@ final class AddressPickController: UIViewController, LoaderDisplayable, AlertDis
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        layoutUI()
-        bind()
-        bindViewModel()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
 
         navigationItem.title = SBLocalization.localized(key: ProfileText.AddressList.title)
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        viewModel.reload()
     }
 }
 
@@ -105,9 +109,9 @@ extension AddressPickController {
             self?.tableView.reloadData()
         }).disposed(by: disposeBag)
 
-        viewModel.outputs.didStartRequest
-            .subscribe(onNext: { [weak self] in
-                self?.showLoader()
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
             })
             .disposed(by: disposeBag)
     }

@@ -12,6 +12,7 @@ enum ProfileAPI {
     case editUserInfo(dto: UserInfoDTO)
     case getAddresses
     case updateAddress(id: Int, dto: UpdateAddressDTO)
+    case deleteAddress(id: Int)
 }
 
 extension ProfileAPI: TargetType {
@@ -25,6 +26,7 @@ extension ProfileAPI: TargetType {
         case .editUserInfo: return "users/account-update/"
         case .getAddresses: return "/users/addresses/"
         case let .updateAddress(id, _): return "/users/addresses/\(id)/"
+        case let .deleteAddress(id): return "/users/addresses/\(id)/"
         }
     }
 
@@ -34,6 +36,7 @@ extension ProfileAPI: TargetType {
         case .getUserInfo: return .get
         case .getAddresses: return .get
         case .updateAddress: return .put
+        case .deleteAddress: return .delete
         }
     }
 
@@ -47,6 +50,7 @@ extension ProfileAPI: TargetType {
         case let .editUserInfo(dto): return .requestJSONEncodable(dto)
         case .getAddresses: return .requestPlain
         case let .updateAddress(_, dto): return .requestJSONEncodable(dto)
+        case .deleteAddress: return .requestPlain
         }
     }
 

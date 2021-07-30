@@ -69,9 +69,9 @@ final class MapViewModel {
         guard let lastAddress = try? outputs.selectedAddress.value() else { return }
         switch flow {
         case .creation:
-            addressRepository.changeCurrentAddress(to: lastAddress)
+            addressRepository.changeCurrentAddress(district: lastAddress.district, street: lastAddress.street, building: lastAddress.building, corpus: lastAddress.corpus, flat: lastAddress.flat, comment: commentary, longitude: lastAddress.longitude, latitude: lastAddress.latitude)
             bindToOrdersOutputs(using: lastAddress)
-            addressRepository.applyOrder(withAddress: true)
+            addressRepository.applyOrder(userAddress: addressRepository.getCurrentUserAddress(), completion: nil)
         case .change:
             outputs.lastSelectedAddress.accept((lastAddress, commentary))
         }
@@ -95,26 +95,43 @@ final class MapViewModel {
         searchSession = searchManager.submit(with: point, zoom: zoom, searchOptions: YMKSearchOptions(), responseHandler: responseHandler)
     }
 
-    private func onSearchResponseName(_ response: YMKSearchResponse, shouldMoveMap _: Bool = false) {
+    private func onSearchResponseName(_ response: YMKSearchResponse, shouldMoveMap: Bool = false) {
         for searchResult in response.collection.children {
-            if let _ = searchResult.obj!.geometry.first?.point {
-                guard let objMetadata = response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata else {
-                    continue
-                }
+            guard let _ = searchResult.obj!.geometry.first?.point else { return }
+            guard let objectMetadata = (response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata) else { continue }
+            let addressComponenets = objectMetadata.address.components
 
-                guard
-                    let name = searchResult.obj?.name
-                else { return }
-//                TODO: change
-                let address: Address? = nil
-                outputs.selectedAddress.onNext(address)
+            let district = addressComponenets
+                .first(where: {
+                    $0.kinds.contains(Constants.Map.ComponentsKinds.district)
+                })?
+                .name
+            let street = addressComponenets
+                .first(where: {
+                    $0.kinds.contains(Constants.Map.ComponentsKinds.street)
+                })?
+                .name
+            let building = addressComponenets
+                .first(where: {
+                    $0.kinds.contains(Constants.Map.ComponentsKinds.building)
+                })?
+                .name
 
-//                if shouldMoveMap {
-//                    outputs.moveMapTo.accept(YMKPoint(latitude: address.latitude, longitude: address.longitude))
-//                }
+            let address = Address()
+            address.district = district
+            address.street = street
+            address.building = building
+            address.longitude = objectMetadata.balloonPoint.longitude
+            address.latitude = objectMetadata.balloonPoint.latitude
 
-                return
+            outputs.selectedAddress.onNext(address)
+
+            if shouldMoveMap {
+                outputs.moveMapTo.accept(YMKPoint(latitude: objectMetadata.balloonPoint.longitude,
+                                                  longitude: objectMetadata.balloonPoint.latitude))
             }
+
+            return
         }
     }
 }

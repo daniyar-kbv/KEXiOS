@@ -5,7 +5,7 @@
 //  Created by Arystan on 3/13/21.
 //
 
-public struct Country: Decodable {
+public struct Country: Codable {
     let id: Int
     let name: String
     let countryCode: String
@@ -14,6 +14,12 @@ public struct Country: Decodable {
         case id
         case name
         case countryCode = "country_code"
+    }
+}
+
+extension Country {
+    func getCopy() -> Country {
+        return .init(id: id, name: name, countryCode: countryCode)
     }
 }
 

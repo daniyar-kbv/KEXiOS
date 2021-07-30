@@ -26,13 +26,18 @@ struct UserInfoResponse: Codable {
 }
 
 struct UserAddressesResponse: Decodable {
-    let data: UserAddressesData?
+    let data: Data?
     let error: ErrorResponse?
 
-    struct UserAddressesData: Decodable {
+    struct Data: Decodable {
         let count: Int
         let next: String?
         let previous: String?
         let results: [UserAddress]
     }
+}
+
+struct UpdateUserAddressResponse: Decodable {
+    let data: UpdateAddressDTO?
+    let error: ErrorResponse?
 }

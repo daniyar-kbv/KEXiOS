@@ -58,31 +58,6 @@ final class MenuViewModel: MenuViewModelProtocol {
         bindScrollService()
     }
 
-    func update() {
-        download()
-
-        outputs.brandImage.accept(brandRepository.getCurrentBrand()?.image)
-        outputs.brandName.accept(brandRepository.getCurrentBrand()?.name)
-    }
-
-    func processToBrand() {
-        guard tokenStorage.token != nil else {
-            outputs.toAuthChangeBrand.accept(())
-            return
-        }
-
-        outputs.toChangeBrand.accept(())
-    }
-
-    func processToAddresses() {
-        guard tokenStorage.token != nil else {
-            outputs.toAuthChangeAddress.accept(())
-            return
-        }
-
-        outputs.toAddressess.accept(())
-    }
-
     private func bindMenuRepository() {
         menuRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
@@ -119,7 +94,7 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func bindAddressRepository() {
-        locationRepository.outputs.didGetLeadUUID
+        locationRepository.outputs.needsUpdate
             .subscribe(onNext: { [weak self] in
                 self?.update()
             }).disposed(by: disposeBag)
@@ -143,7 +118,7 @@ final class MenuViewModel: MenuViewModelProtocol {
     private func setPromotions(promotions: [Promotion]) {
         let promotions = promotions.sorted(by: { $0.priority < $1.priority })
 
-        let addressViewModels = [AddressPickCellViewModel(address: locationRepository.getCurrentDeliveryAddress()?.address)]
+        let addressViewModels = [AddressPickCellViewModel(address: locationRepository.getCurrentUserAddress()?.address)]
         tableSections.append(.init(type: .address,
                                    headerViewModel: nil,
                                    cellViewModels: addressViewModels))
@@ -175,6 +150,24 @@ final class MenuViewModel: MenuViewModelProtocol {
 }
 
 extension MenuViewModel {
+    func processToBrand() {
+        guard tokenStorage.token != nil else {
+            outputs.toAuthChangeBrand.accept(())
+            return
+        }
+
+        outputs.toChangeBrand.accept(())
+    }
+
+    func processToAddresses() {
+        guard tokenStorage.token != nil else {
+            outputs.toAuthChangeAddress.accept(())
+            return
+        }
+
+        outputs.toAddressess.accept(())
+    }
+
     func update() {
         download()
 
@@ -251,9 +244,7 @@ extension MenuViewModel {
             else { return }
             outputs.toPositionDetail.accept(cellViewModel.position.uuid)
         case .address:
-            outputs.toAddressess.accept { [weak self] in
-                self?.update()
-            }
+            processToAddresses()
         default:
             break
         }
@@ -324,7 +315,6 @@ extension MenuViewModel {
         let didGetError = PublishRelay<ErrorPresentable?>()
 
         let toPromotion = PublishRelay<(URL, String)>()
-        let toAddressess = PublishRelay<() -> Void>()
         let toPositionDetail = PublishRelay<String>()
 
         let scrollToRowAt = PublishRelay<IndexPath>()

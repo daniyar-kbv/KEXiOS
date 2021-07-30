@@ -7,35 +7,80 @@
 
 import Foundation
 
-class UserAddress: Decodable {
-    var id: Int? = nil
+class UserAddress: Codable {
+    var id: Int?
     var address: Address
-    var createdAt: String? = nil
-    var updatedAt: String? = nil
+    var createdAt: String?
+    var updatedAt: String?
     var isCurrent: Bool
-    var user: Int? = nil
-    var brandId: Int? = nil
+    var user: Int?
+    var brand: Brand?
+
+    init(id: Int?,
+         address: Address,
+         createdAt: String?,
+         updatedAt: String?,
+         isCurrent: Bool,
+         user: Int?,
+         brand: Brand?)
+    {
+        self.id = id
+        self.address = address
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.isCurrent = isCurrent
+        self.user = user
+        self.brand = brand
+    }
 
     init(address: Address,
-         isCurrent: Bool,
-         brandId: Int?)
+         isCurrent: Bool)
     {
         self.address = address
         self.isCurrent = isCurrent
-        self.brandId = brandId
+    }
+
+    init() {
+        address = .init()
+        isCurrent = false
     }
 
     enum CodingKeys: String, CodingKey {
-        case id, address, isCurrent, user
+        case id, address, user
         case createdAt = "created_at"
         case updatedAt = "updated_at"
-        case brandId = "local_brand"
+        case brand = "local_brand"
+        case isCurrent = "is_current"
     }
 }
 
 extension UserAddress {
     func isComplete() -> Bool {
-        return address.isComplete() && brandId != nil
+        return address.isComplete() && brand != nil
+    }
+
+    func getCopy() -> UserAddress {
+        return .init(id: id, address: address, createdAt: createdAt, updatedAt: updatedAt, isCurrent: isCurrent, user: user, brand: brand?.getCopy())
+    }
+
+    func toDTO() -> OrderApplyDTO? {
+        guard let countryId = address.country?.id,
+              let cityId = address.city?.id,
+              let longitude = address.longitude?.rounded(to: 8),
+              let latitude = address.latitude?.rounded(to: 8),
+              let brandId = brand?.id
+        else { return nil }
+        return .init(address: .init(district: address.district,
+                                    street: address.street,
+                                    building: address.building,
+                                    corpus: address.corpus,
+                                    flat: address.flat,
+                                    comment: address.comment,
+                                    country: countryId,
+                                    city: cityId,
+                                    longitude: longitude,
+                                    latitude: latitude),
+                     localBrand: brandId)
     }
 }
 
@@ -50,8 +95,7 @@ extension UserAddress: Equatable {
     }
 }
 
-class Address: Decodable {
-    var id: Int? = nil
+class Address: Codable {
     var district: String?
     var street: String?
     var building: String?
@@ -85,25 +129,47 @@ class Address: Decodable {
         self.longitude = longitude
         self.latitude = latitude
     }
+
+    init() {
+        district = nil
+        street = nil
+        building = nil
+        corpus = nil
+        flat = nil
+        comment = nil
+        country = nil
+        city = nil
+        longitude = nil
+        latitude = nil
+    }
 }
 
 extension Address {
     func getName() -> String {
+        if let district = district, let street = street, let building = building {
+            return "\(district), \(street) \(building)"
+        } else if let district = district, let building = building {
+            return "\(district) \(building)"
+        } else if let street = street, let building = building {
+            return "\(street) \(building)"
+        }
         return ""
     }
 
     func isComplete() -> Bool {
-        return country != nil && city != nil && !getName().isEmpty
+        return country != nil &&
+            city != nil &&
+            (district != nil || street != nil) &&
+            building != nil
+    }
+
+    func getCopy() -> Address {
+        return .init(district: district, street: street, building: building, corpus: corpus, flat: flat, comment: comment, country: country?.getCopy(), city: city?.getCopy(), longitude: longitude, latitude: latitude)
     }
 }
 
 extension Address: Equatable {
     public static func == (lhs: Address, rhs: Address) -> Bool {
-        guard let lhsId = lhs.id,
-              let rhsId = rhs.id
-        else {
-            return lhs.longitude == rhs.longitude && lhs.latitude == rhs.latitude
-        }
-        return lhsId == rhsId
+        return lhs.longitude == rhs.longitude && lhs.latitude == rhs.latitude
     }
 }

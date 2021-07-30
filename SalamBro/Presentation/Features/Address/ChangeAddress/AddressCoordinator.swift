@@ -43,18 +43,18 @@ final class AddressCoordinator: Coordinator {
             self?.didFinish?()
         }).disposed(by: disposeBag)
 
-        addressPickPage.outputs.didSelectAddress.subscribe(onNext: { [weak self] address in
+        addressPickPage.outputs.didSelectAddress.subscribe(onNext: { [weak self, weak addressPickPage] address in
             self?.openSelectMainInfo(flowType: .changeAddress(address.0),
                                      presentOn: addressPickPage)
         }).disposed(by: disposeBag)
 
-        addressPickPage.outputs.didAddTapped.subscribe(onNext: { [weak self] _ in
+        addressPickPage.outputs.didAddTapped.subscribe(onNext: { [weak self, weak addressPickPage] _ in
             self?.openSelectMainInfo(flowType: .create,
                                      presentOn: addressPickPage)
         }).disposed(by: disposeBag)
 
-        addressPickPage.outputs.close.subscribe(onNext: {
-            addressPickPage.dismiss(animated: true)
+        addressPickPage.outputs.close.subscribe(onNext: { [weak addressPickPage] in
+            addressPickPage?.dismiss(animated: true)
         }).disposed(by: disposeBag)
 
         let nav = SBNavigationController(rootViewController: addressPickPage)
@@ -62,7 +62,7 @@ final class AddressCoordinator: Coordinator {
     }
 
     private func openSelectMainInfo(flowType: SelectMainInformationViewModel.FlowType,
-                                    presentOn: UIViewController)
+                                    presentOn: UIViewController?)
     {
         let selectMainInfoPage = pagesFactory.makeSelectMainInfoPage(flowType: flowType)
 
@@ -70,60 +70,60 @@ final class AddressCoordinator: Coordinator {
             self?.didFinish?()
         }).disposed(by: disposeBag)
 
-        selectMainInfoPage.outputs.toMap.subscribe(onNext: { [weak self] params in
-            self?.openMap(deliveryAddress: params.deliveryAddress,
+        selectMainInfoPage.outputs.toMap.subscribe(onNext: { [weak self, weak selectMainInfoPage] params in
+            self?.openMap(userAddress: params.userAddress,
                           params.onSelect,
                           presentOn: selectMainInfoPage)
         }).disposed(by: disposeBag)
 
-        selectMainInfoPage.outputs.toBrands.subscribe(onNext: { [weak self] cityId, onSelectBrand in
+        selectMainInfoPage.outputs.toBrands.subscribe(onNext: { [weak self, weak selectMainInfoPage] cityId, onSelectBrand in
             self?.openBrands(cityId: cityId, onSelectBrand, presentOn: selectMainInfoPage)
         }).disposed(by: disposeBag)
 
-        selectMainInfoPage.outputs.didSave.subscribe(onNext: {
-            selectMainInfoPage.dismiss(animated: true)
+        selectMainInfoPage.outputs.didSave.subscribe(onNext: { [weak selectMainInfoPage] in
+            selectMainInfoPage?.dismiss(animated: true)
         }).disposed(by: disposeBag)
 
-        selectMainInfoPage.outputs.close.subscribe(onNext: {
-            selectMainInfoPage.dismiss(animated: true)
+        selectMainInfoPage.outputs.close.subscribe(onNext: { [weak selectMainInfoPage] in
+            selectMainInfoPage?.dismiss(animated: true)
         }).disposed(by: disposeBag)
 
         let nav = SBNavigationController(rootViewController: selectMainInfoPage)
-        presentOn.present(nav, animated: true)
+        presentOn?.present(nav, animated: true)
     }
 
-    private func openMap(deliveryAddress: UserAddress,
+    private func openMap(userAddress: UserAddress,
                          _ onSelectAddress: @escaping (Address) -> Void,
-                         presentOn: UIViewController)
+                         presentOn: UIViewController?)
     {
-        let mapPage = pagesFactory.makeMapPage(deliveryAddress: deliveryAddress)
+        let mapPage = pagesFactory.makeMapPage(userAddress: userAddress)
 
-        mapPage.selectedAddress = { address in
+        mapPage.selectedAddress = { [weak mapPage] address in
             onSelectAddress(address)
-            mapPage.dismiss(animated: true)
+            mapPage?.dismiss(animated: true)
         }
 
         mapPage.modalPresentationStyle = .fullScreen
-        presentOn.present(mapPage, animated: true)
+        presentOn?.present(mapPage, animated: true)
     }
 
     private func openBrands(cityId: Int,
                             _ onSelectBrand: @escaping (Brand) -> Void,
-                            presentOn: UIViewController)
+                            presentOn: UIViewController?)
     {
         let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
 
-        brandsPage.outputs.didSelectBrand.subscribe(onNext: { brand in
+        brandsPage.outputs.didSelectBrand.subscribe(onNext: { [weak brandsPage] brand in
             onSelectBrand(brand)
-            brandsPage.dismiss(animated: true)
+            brandsPage?.dismiss(animated: true)
         }).disposed(by: disposeBag)
 
-        brandsPage.outputs.close.subscribe(onNext: {
-            brandsPage.dismiss(animated: true)
+        brandsPage.outputs.close.subscribe(onNext: { [weak brandsPage] in
+            brandsPage?.dismiss(animated: true)
         }).disposed(by: disposeBag)
 
         let nav = SBNavigationController(rootViewController: brandsPage)
-        presentOn.present(nav, animated: true)
+        presentOn?.present(nav, animated: true)
     }
 
     func finishFlow(completion: () -> Void) {

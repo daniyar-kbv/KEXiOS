@@ -83,7 +83,7 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
     private func finishPayment() {
         defaultStorage.cleanUp(key: .leadUUID)
         cartRepository.cleanUp()
-        addressRepository.applyOrder(withAddress: false)
+        addressRepository.applyOrder(userAddress: nil, completion: nil)
         outputs.didMakePayment.accept(())
     }
 }

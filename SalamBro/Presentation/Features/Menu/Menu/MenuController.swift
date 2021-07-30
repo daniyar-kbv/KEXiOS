@@ -197,26 +197,6 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
 }
 
 extension MenuController: UITableViewDelegate, UITableViewDataSource {
-    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch viewModel.cellViewModels[indexPath.section][indexPath.row] {
-        case let cellViewModel as MenuCellViewModel:
-            outputs.toPositionDetail.accept(cellViewModel.position.uuid)
-        case _ as AddressPickCellViewModel:
-            viewModel.processToAddresses()
-        default:
-            break
-        }
-    }
-
-    public func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch viewModel.headerViewModels[section] {
-        case is CategoriesSectionHeaderViewModelProtocol:
-            return 44
-        default:
-            return 0
-        }
-    }
-
     func numberOfSections(in _: UITableView) -> Int {
         return viewModel.numberOfSections()
     }
