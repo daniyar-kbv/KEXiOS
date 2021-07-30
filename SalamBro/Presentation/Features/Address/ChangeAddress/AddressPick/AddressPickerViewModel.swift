@@ -16,7 +16,7 @@ protocol AddressPickerViewModelProtocol: ViewModel {
     func reload()
 }
 
-final class AddressPickerViewModel: AddressPickerViewModelProtocol {
+final class AddressPickerViewModel: AddressPickerViewModelProtocol, Reloadable {
     private let locationRepository: AddressRepository
     public var cellViewModels: [AddressPickerCellViewModelProtocol] = []
     private var addresses: [DeliveryAddress] = []

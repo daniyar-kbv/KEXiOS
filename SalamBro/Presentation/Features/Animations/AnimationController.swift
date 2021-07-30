@@ -10,7 +10,7 @@ import UIKit
 
 final class AnimationController: UIViewController {
     private let animationType: LottieAnimationModel
-    private lazy var contenView = AnimationContainerView(animationType: animationType)
+    private(set) lazy var contenView = AnimationContainerView(animationType: animationType)
 
     var action: (() -> Void)?
 
