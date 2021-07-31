@@ -18,6 +18,7 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
     let outputs = Output()
 
     private lazy var contentView = MenuDetailView(delegate: self)
+    private lazy var addedView = AddedView()
 
     public init(viewModel: MenuDetailViewModel) {
         self.viewModel = viewModel
@@ -120,7 +121,7 @@ extension MenuDetailController {
 
         viewModel.outputs.didProceed
             .subscribe(onNext: { [weak self] in
-                self?.contentView.showAddedView()
+                self?.showAddedView()
             }).disposed(by: disposeBag)
 
         viewModel.outputs.isComplete
@@ -132,6 +133,30 @@ extension MenuDetailController {
     private func layoutUI() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
+    }
+
+    private func showAddedView() {
+        let window = UIApplication.shared.keyWindow!
+        window.addSubview(addedView)
+
+        addedView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(75)
+            $0.left.right.equalToSuperview().inset(24)
+            $0.height.equalTo(50)
+        }
+
+        UIView.animate(
+            withDuration: 0.2,
+            delay: 2,
+            options: .curveEaseInOut,
+            animations: {
+                self.addedView.alpha = 0
+            },
+            completion: { completed in
+                guard completed else { return }
+                self.addedView.removeFromSuperview()
+            }
+        )
     }
 }
 
