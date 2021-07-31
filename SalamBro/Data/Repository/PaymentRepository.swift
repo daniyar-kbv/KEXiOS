@@ -254,7 +254,8 @@ extension PaymentRepositoryImpl {
             print("Unable to create cryptogram")
             return
         }
-        print("cryptogram:\n\n\(cryptogram)\n\n")
+//        Tech debt: remove
+        UIPasteboard.general.string = cryptogram
         selectedPaymentMethod?.set(value: cryptogram)
         createOrder { [weak self] in
             guard let leadUUID = self?.defaultStorage.leadUUID,

@@ -70,6 +70,7 @@ class CardPaymentOrderStatus: OrderStatusProtocol, Decodable {
 
 struct MyCard: Decodable {
     let uuid: String
+    let isCurrent: Bool
     let cardHolderName: String
     let cardMaskedNumber: String
     let cardExpirationDate: String
@@ -77,6 +78,7 @@ struct MyCard: Decodable {
 
     enum CodingKeys: String, CodingKey {
         case uuid
+        case isCurrent = "is_current"
         case cardHolderName = "card_holder_name"
         case cardMaskedNumber = "card_masked_number"
         case cardExpirationDate = "card_expiration_date"
