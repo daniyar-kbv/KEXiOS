@@ -18,7 +18,6 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
     let outputs = Output()
 
     private lazy var contentView = MenuDetailView(delegate: self)
-    private lazy var addedView = AddedView()
 
     public init(viewModel: MenuDetailViewModel) {
         self.viewModel = viewModel
@@ -121,7 +120,7 @@ extension MenuDetailController {
 
         viewModel.outputs.didProceed
             .subscribe(onNext: { [weak self] in
-                self?.showAddedView()
+                self?.contentView.showAddedView()
             }).disposed(by: disposeBag)
 
         viewModel.outputs.isComplete
@@ -133,21 +132,6 @@ extension MenuDetailController {
     private func layoutUI() {
         view.backgroundColor = .white
         tabBarController?.tabBar.backgroundColor = .white
-    }
-
-    private func showAddedView() {
-        let window = UIApplication.shared.keyWindow!
-        window.addSubview(addedView)
-
-        addedView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(75)
-            $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(50)
-        }
-
-        UIView.animate(withDuration: 0.7, animations: { () -> Void in
-            self.addedView.alpha = 0
-        })
     }
 }
 
@@ -162,7 +146,6 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.currentModifierGroupIndex = indexPath
         outputs.toModifiers.accept(viewModel.modifierCellViewModels[indexPath.row].getModifierGroup())
     }
 

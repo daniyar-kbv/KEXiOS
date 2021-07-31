@@ -16,6 +16,12 @@ protocol MenuDetailViewDelegate: AnyObject {
 final class MenuDetailView: UIView {
     weak var delegate: MenuDetailViewDelegate?
 
+    private lazy var addedView: AddedView = {
+        let view = AddedView()
+        view.alpha = 0
+        return view
+    }()
+
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: safeAreaInsets.bottom + 75, right: 0)
@@ -156,6 +162,13 @@ extension MenuDetailView {
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(43)
         }
+
+        addSubview(addedView)
+        addedView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(10)
+            $0.left.right.equalToSuperview().inset(24)
+            $0.height.equalTo(50)
+        }
     }
 
     private func setImageViewSize() {
@@ -165,6 +178,31 @@ extension MenuDetailView {
             $0.width.equalTo(width)
             $0.height.equalTo(height)
         }
+    }
+
+    func showAddedView() {
+        contentView.layoutIfNeeded()
+        UIView.animate(
+            withDuration: 0.2,
+            animations: {
+                self.addedView.alpha = 1
+            },
+            completion: { completed in
+                guard completed else { return }
+                UIView.animate(
+                    withDuration: 0.2,
+                    delay: 3,
+                    options: .curveEaseInOut,
+                    animations: {
+                        self.addedView.alpha = 0
+                    },
+                    completion: { completed in
+                        guard completed else { return }
+                        self.addedView.removeFromSuperview()
+                    }
+                )
+            }
+        )
     }
 
     func updateTableViewHeight() {

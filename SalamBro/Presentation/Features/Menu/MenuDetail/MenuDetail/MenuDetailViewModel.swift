@@ -12,7 +12,6 @@ import RxSwift
 protocol MenuDetailViewModel: AnyObject {
     var outputs: MenuDetailViewModelImpl.Output { get }
     var modifierCellViewModels: [MenuDetailModifierCellViewModel] { get set }
-    var currentModifierGroupIndex: IndexPath? { get set }
 
     func update()
     func proceed()
@@ -32,7 +31,6 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     private var comment: String?
 
     var modifierCellViewModels: [MenuDetailModifierCellViewModel] = []
-    var currentModifierGroupIndex: IndexPath?
     let outputs = Output()
 
     init(positionUUID: String,
@@ -95,11 +93,9 @@ extension MenuDetailViewModelImpl {
             .disposed(by: disposeBag)
 
         menuDetailRepository.outputs.updateSelectedModifiers.bind {
-            [weak self] modifiers in
-            if let index = self?.currentModifierGroupIndex {
-                self?.position?.modifierGroups[index.row].selectedModifiers = modifiers
-                self?.assignSelectedModifiers()
-            }
+            [weak self] modifierGroups in
+            self?.position?.modifierGroups = modifierGroups
+            self?.assignSelectedModifiers()
             self?.check()
             self?.outputs.updateModifiers.accept(())
         }
@@ -112,88 +108,6 @@ extension MenuDetailViewModelImpl {
     }
 
     private func process(position: MenuPositionDetail) {
-//        self.position = position
-//
-//        outputs.itemImage.accept(URL(string: position.image ?? ""))
-//        outputs.itemTitle.accept(position.name)
-//        outputs.itemDescription.accept(position.description)
-//        outputs.itemPrice.accept("\(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton)) \(position.price.removeTrailingZeros())")
-
-//        modifierCellViewModels = position.modifierGroups.map {
-//            MenuDetailModifierCellViewModelImpl(modifierGroup: $0)
-//        }
-
-        let modifierGroups: [ModifierGroup] = [
-            .init(uuid: "1",
-                  name: "Выберите напиток",
-                  minAmount: 1,
-                  maxAmount: 7,
-                  isRequired: true,
-                  modifiers: [
-                      .init(name: "Кола",
-                            uuid: "1",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Кола2",
-                            uuid: "2",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Кола3",
-                            uuid: "3",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Кола4",
-                            uuid: "4",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Кола5",
-                            uuid: "5",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Кола7",
-                            uuid: "6",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Кола8",
-                            uuid: "7",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Спрайт",
-                            uuid: "2",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Фанта",
-                            uuid: "3",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                  ]),
-            .init(uuid: "2",
-                  name: "Выберите напиток",
-                  minAmount: 1,
-                  maxAmount: 3,
-                  isRequired: true,
-                  modifiers: [
-                      .init(name: "Кола",
-                            uuid: "4",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Спрайт",
-                            uuid: "5",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Фанта",
-                            uuid: "6",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                  ]),
-            .init(uuid: "3",
-                  name: "Выберите напиток",
-                  minAmount: 0,
-                  maxAmount: 3,
-                  isRequired: false,
-                  modifiers: [
-                      .init(name: "Кола",
-                            uuid: "7",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Спрайт",
-                            uuid: "8",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                      .init(name: "Фанта",
-                            uuid: "9",
-                            image: "https://media.istockphoto.com/photos/coke-picture-id458548157"),
-                  ]),
-        ]
-
-        let position = MenuPositionDetail(uuid: "1", name: "Коктейль Попкорн", description: "Ho", image: "", price: 450, categoryUUID: "bd260a51-6552-47be-9c5f-784c00dbea30", modifierGroups: modifierGroups)
-
         self.position = position
 
         outputs.itemImage.accept(URL(string: position.image ?? ""))
@@ -202,10 +116,6 @@ extension MenuDetailViewModelImpl {
         outputs.itemPrice.accept("\(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton)) \(position.price.removeTrailingZeros())")
 
         assignSelectedModifiers()
-
-//        modifierCellViewModels = modifierGroups.map {
-//            MenuDetailModifierCellViewModelImpl(modifierGroup: $0)
-//        }
 
         outputs.updateModifiers.accept(())
         outputs.isComplete.accept(false)

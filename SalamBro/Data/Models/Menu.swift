@@ -48,7 +48,7 @@ struct ModifierGroup: Codable, Equatable {
     let minAmount: Int
     let maxAmount: Int
     let isRequired: Bool
-    let modifiers: [Modifier]
+    var modifiers: [Modifier]
 
     var selectedModifiers: [Modifier] = []
     var totalCount: Int = 0
@@ -104,8 +104,22 @@ extension MenuPositionDetail {
     }
 }
 
+extension Modifier {
+    mutating func set(itemCount: Int) {
+        self.itemCount = itemCount
+    }
+}
+
 extension ModifierGroup {
-    mutating func set(modifier: Modifier, at index: Int) {
-        selectedModifiers[index] = modifier
+    mutating func set(modifiers: [Modifier]) {
+        self.modifiers = modifiers
+    }
+
+    mutating func set(selectedModifiers: [Modifier]) {
+        self.selectedModifiers = selectedModifiers
+    }
+
+    mutating func set(totalCount: Int) {
+        self.totalCount = totalCount
     }
 }

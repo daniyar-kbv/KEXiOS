@@ -48,7 +48,7 @@ final class ModifiersViewModelImpl: ModifiersViewModel {
     }
 
     func changeModifierCount(at index: Int, with count: Int) {
-        modifiers[index].itemCount = count
+        modifiers[index].set(itemCount: count)
         outputs.update.accept(())
     }
 
@@ -67,8 +67,11 @@ final class ModifiersViewModelImpl: ModifiersViewModel {
         }
     }
 
-    func setSelectedModifiers(with modifiers: [Modifier]) {
-        menuDetailRepository.setSelectedModifiers(with: modifiers)
+    func setSelectedModifiers(with selectedModifiers: [Modifier]) {
+        menuDetailRepository.setSelectedModifiers(for: modifiers,
+                                                  with: selectedModifiers,
+                                                  at: modifiersGroup.uuid,
+                                                  totalCount: modifiersGroup.totalCount)
     }
 }
 
