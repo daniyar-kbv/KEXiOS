@@ -30,7 +30,9 @@ final class PushNotificationsRepositoryImpl: PushNotificationsRepository {
     }
 
     func tokenUpdate(fcmToken: String) {
-        guard let fcmToken = defaultStorage.fcmToken else { return }
+        guard fcmToken != defaultStorage.fcmToken else { return }
+
+        defaultStorage.persist(fcmToken: fcmToken)
 
         let dto = FCMTokenUpdateDTO(fcmToken: fcmToken)
 
