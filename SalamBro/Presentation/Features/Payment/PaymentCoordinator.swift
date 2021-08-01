@@ -181,8 +181,8 @@ final class PaymentCoordinator: BaseCoordinator {
         }
     }
 
-    private func hidePaymentInProcessView(on viewController: UIViewController & AnimationViewPresentable) {
-        viewController.hideAnimationView(completionHandler: nil)
+    private func hidePaymentInProcessView(on viewController: UIViewController) {
+        viewController.dismissAnimationView()
     }
 }
 
