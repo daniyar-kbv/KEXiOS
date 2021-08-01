@@ -95,7 +95,7 @@ extension MenuDetailController {
         viewModel.outputs.itemImage
             .subscribe(onNext: { [weak self] url in
                 guard let url = url else { return }
-                self?.contentView.setImage(url: url)
+                self?.contentView.setImageView(with: url)
             }).disposed(by: disposeBag)
 
         viewModel.outputs.updateModifiers

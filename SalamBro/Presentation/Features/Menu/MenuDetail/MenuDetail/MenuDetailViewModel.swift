@@ -115,10 +115,13 @@ extension MenuDetailViewModelImpl {
         outputs.itemDescription.accept(position.description)
         outputs.itemPrice.accept("\(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton)) \(position.price.removeTrailingZeros()) ₸")
 
-        assignSelectedModifiers()
-
-        outputs.updateModifiers.accept(())
-        outputs.isComplete.accept(false)
+        if position.modifierGroups.isEmpty {
+            outputs.isComplete.accept(true)
+        } else {
+            outputs.isComplete.accept(false)
+            assignSelectedModifiers()
+            outputs.updateModifiers.accept(())
+        }
     }
 
     private func assignSelectedModifiers() {

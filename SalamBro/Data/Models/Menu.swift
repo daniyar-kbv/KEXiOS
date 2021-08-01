@@ -69,7 +69,12 @@ struct Modifier: Codable {
     let name: String
     let uuid: String
     let image: String?
+
     var itemCount: Int = 0
+
+    enum CodingKeys: String, CodingKey {
+        case name, uuid, image
+    }
 }
 
 extension MenuPositionDetail {
