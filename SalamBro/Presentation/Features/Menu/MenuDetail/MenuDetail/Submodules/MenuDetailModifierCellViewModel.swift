@@ -119,10 +119,13 @@ extension MenuDetailModifierCellViewModelImpl {
     }
 
     func makeValueText() {
-        let valueText = modifierGroup
-            .selectedModifiers
-            .map { $0.name }
-            .joined(separator: ", ")
+        var valueText = ""
+
+        for m in modifierGroup.selectedModifiers {
+            for _ in 0 ..< m.itemCount {
+                valueText = valueText.isEmpty ? m.name : valueText + ", " + m.name
+            }
+        }
 
         outputs.isRequired.accept(modifierGroup.isRequired)
         outputs.value.accept(valueText)

@@ -18,7 +18,6 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
     let outputs = Output()
 
     private lazy var contentView = MenuDetailView(delegate: self)
-    private lazy var addedView = AddedView()
 
     public init(viewModel: MenuDetailViewModel) {
         self.viewModel = viewModel
@@ -56,10 +55,6 @@ final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisp
         super.viewWillAppear(animated)
 
         viewModel.update()
-
-        setBackButton { [weak self] in
-            self?.outputs.close.accept(())
-        }
     }
 }
 
@@ -136,6 +131,8 @@ extension MenuDetailController {
     }
 
     private func showAddedView() {
+        let addedView = AddedView()
+
         let window = UIApplication.shared.keyWindow!
         window.addSubview(addedView)
 
@@ -150,11 +147,11 @@ extension MenuDetailController {
             delay: 2,
             options: .curveEaseInOut,
             animations: {
-                self.addedView.alpha = 0
+                addedView.alpha = 0
             },
             completion: { completed in
                 guard completed else { return }
-                self.addedView.removeFromSuperview()
+                addedView.removeFromSuperview()
             }
         )
     }
