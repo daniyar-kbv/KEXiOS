@@ -36,5 +36,13 @@ extension Language {
             case .english: return "English"
             }
         }
+
+        var code: String {
+            switch self {
+            case .russian: return "ru"
+            case .english: return "en"
+            case .kazakh: return "kk"
+            }
+        }
     }
 }

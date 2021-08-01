@@ -49,6 +49,6 @@ final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
     }
 
     private func makeChangeLanguageViewModel() -> ChangeLanguageViewModelImpl {
-        return scoped(ChangeLanguageViewModelImpl())
+        return scoped(ChangeLanguageViewModelImpl(defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 }
