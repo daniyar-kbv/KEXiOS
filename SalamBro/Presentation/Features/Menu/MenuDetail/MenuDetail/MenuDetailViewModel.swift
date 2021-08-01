@@ -120,6 +120,7 @@ extension MenuDetailViewModelImpl {
         } else {
             outputs.isComplete.accept(false)
             assignSelectedModifiers()
+            check()
             outputs.updateModifiers.accept(())
         }
     }

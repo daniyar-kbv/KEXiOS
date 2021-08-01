@@ -66,6 +66,7 @@ final class ModifiersController: UIViewController {
         }
 
         bindViewModel()
+        viewModel.updateCurrentDoneButtonStatus()
     }
 
     private func bindViewModel() {

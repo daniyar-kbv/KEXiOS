@@ -18,6 +18,7 @@ protocol ModifiersViewModel: AnyObject {
     func decreaseTotalCount()
     func increaseTotalCount()
     func setSelectedModifiers(with modifiers: [Modifier])
+    func updateCurrentDoneButtonStatus()
 }
 
 final class ModifiersViewModelImpl: ModifiersViewModel {
@@ -47,6 +48,14 @@ final class ModifiersViewModelImpl: ModifiersViewModel {
         }
     }
 
+    func updateCurrentDoneButtonStatus() {
+        if modifiersGroup.totalCount < modifiersGroup.minAmount {
+            outputs.hideDoneButton.accept(())
+        } else {
+            outputs.showDoneButton.accept(())
+        }
+    }
+
     func changeModifierCount(at index: Int, with count: Int) {
         modifiers[index].set(itemCount: count)
         outputs.update.accept(())
@@ -55,16 +64,15 @@ final class ModifiersViewModelImpl: ModifiersViewModel {
     func decreaseTotalCount() {
         let count = modifiersGroup.totalCount - 1
         modifiersGroup.totalCount = count
-        outputs.hideDoneButton.accept(())
+
+        updateCurrentDoneButtonStatus()
     }
 
     func increaseTotalCount() {
         let count = modifiersGroup.totalCount + 1
         modifiersGroup.totalCount = count
 
-        if modifiersGroup.totalCount >= modifiersGroup.minAmount {
-            outputs.showDoneButton.accept(())
-        }
+        updateCurrentDoneButtonStatus()
     }
 
     func setSelectedModifiers(with selectedModifiers: [Modifier]) {
