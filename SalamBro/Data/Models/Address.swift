@@ -86,12 +86,7 @@ extension UserAddress {
 
 extension UserAddress: Equatable {
     public static func == (lhs: UserAddress, rhs: UserAddress) -> Bool {
-        guard let lhsId = lhs.id,
-              let rhsId = rhs.id
-        else {
-            return lhs.address == rhs.address
-        }
-        return lhsId == rhsId
+        return lhs.id == rhs.id && lhs.brand == rhs.brand
     }
 }
 
@@ -145,7 +140,7 @@ class Address: Codable {
 }
 
 extension Address {
-    func getName() -> String {
+    func getName() -> String? {
         if let district = district, let street = street, let building = building {
             return "\(district), \(street) \(building)"
         } else if let district = district, let building = building {
@@ -153,7 +148,7 @@ extension Address {
         } else if let street = street, let building = building {
             return "\(street) \(building)"
         }
-        return ""
+        return nil
     }
 
     func isComplete() -> Bool {

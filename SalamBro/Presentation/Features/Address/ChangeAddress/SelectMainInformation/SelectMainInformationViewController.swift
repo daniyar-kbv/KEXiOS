@@ -14,6 +14,7 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
     private let cellsSequence: [SelectMainInformationCell.InputType] = [.country, .city, .address, .empty, .brand]
+    private var needRequestCountries = true
 
     let outputs = Output()
 
@@ -48,10 +49,6 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
 
         setup()
         bind()
-
-        if viewModel.flowType == .create {
-            viewModel.getCountries()
-        }
     }
 
     public required init?(coder _: NSCoder) {
@@ -126,6 +123,11 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
         }
 
         viewModel.checkValues()
+
+        if viewModel.flowType == .create, needRequestCountries {
+            viewModel.getCountries()
+            needRequestCountries = false
+        }
     }
 
     deinit {

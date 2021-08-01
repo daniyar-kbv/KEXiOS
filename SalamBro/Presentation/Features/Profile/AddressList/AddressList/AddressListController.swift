@@ -84,7 +84,7 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let addressCell = tableView.dequeueReusableCell(withIdentifier: AddressListCell.reuseIdentifier, for: indexPath) as? AddressListCell else { fatalError() }
-        addressCell.configure(address: viewModel.userAddreses[indexPath.row].address.getName())
+        addressCell.configure(address: viewModel.userAddreses[indexPath.row].address.getName() ?? "")
         return addressCell
     }
 

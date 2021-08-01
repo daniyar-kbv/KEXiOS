@@ -102,7 +102,7 @@ extension MapPage {
         viewModel.outputs.selectedAddress
             .subscribe(onNext: { [weak self] address in
                 self?.mapAddressView.addressTextField.set(text: address?.getName())
-                self?.mapAddressView.changeButtonAppearance(isEmpty: address?.getName().isEmpty ?? true)
+                self?.mapAddressView.changeButtonAppearance(isEmpty: address?.getName()?.isEmpty ?? true)
             })
             .disposed(by: disposeBag)
 

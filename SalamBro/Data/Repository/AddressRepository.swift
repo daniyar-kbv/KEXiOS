@@ -135,6 +135,8 @@ extension AddressRepositoryImpl {
         outputs.didGetUserAddresses.accept(userAddresses)
         if oldCurrent != getCurrentUserAddress() {
             outputs.needsUpdate.accept(())
+        } else {
+            outputs.didEndRequest.accept(())
         }
     }
 
