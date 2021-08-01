@@ -125,16 +125,16 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
     }
 
     private func handleLogoutAction() {
-        //  Tech debt: localize
-        let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+        let yesAction = UIAlertAction(title: SBLocalization.localized(key: ProfileText.Profile.Alert.Action.yes),
+                                      style: .default) { [weak self] _ in
             self?.viewModel.logout()
             self?.showEmptyState()
         }
 
-        let noAction = UIAlertAction(title: "Нет", style: .default, handler: nil)
-        //  Tech debt: localize
-        showAlert(title: "Вы уверены?",
-                  message: "Вы уверены что хотите выйти из аккаунта?",
+        let noAction = UIAlertAction(title: SBLocalization.localized(key: ProfileText.Profile.Alert.Action.no),
+                                     style: .default, handler: nil)
+        showAlert(title: SBLocalization.localized(key: ProfileText.Profile.Alert.title),
+                  message: SBLocalization.localized(key: ProfileText.Profile.Alert.message),
                   actions: [yesAction, noAction])
     }
 

@@ -36,10 +36,9 @@ class PaymentMethod {
         switch type {
         case .savedCard:
             guard let card = value as? MyCard else { return "" }
-//                Tech debt: change
-            return "Карта \(card.cardMaskedNumber)"
-        case .card: return "Картой в приложении"
-        case .cash: return "Наличными курьеру"
+            return SBLocalization.localized(key: PaymentText.PaymentMethod.MethodTitle.savedCard, arguments: card.cardMaskedNumber)
+        case .card: return SBLocalization.localized(key: PaymentText.PaymentMethod.MethodTitle.card)
+        case .cash: return SBLocalization.localized(key: PaymentText.PaymentMethod.MethodTitle.cash)
         }
     }
 
@@ -72,8 +71,7 @@ extension PaymentMethod: Equatable {
 enum PaymentMethodError: ErrorPresentable {
     case incorrectIndexPath
 
-//        Tech debt: localize
     var presentationDescription: String {
-        return "не валидный indexPath"
+        return SBLocalization.localized(key: PaymentText.PaymentMethod.errorDescription)
     }
 }

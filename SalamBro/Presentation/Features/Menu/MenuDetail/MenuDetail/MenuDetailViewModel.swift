@@ -112,8 +112,7 @@ extension MenuDetailViewModelImpl {
         outputs.itemImage.accept(URL(string: position.image ?? ""))
         outputs.itemTitle.accept(position.name)
         outputs.itemDescription.accept(position.description)
-//        Tech debt: add string format to localization
-        outputs.itemPrice.accept("\(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton)) \(position.price.removeTrailingZeros())")
+        outputs.itemPrice.accept(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton, arguments: position.price.removeTrailingZeros()))
 
         modifierCellViewModels = position.modifierGroups.map { modifierGroup in
             (0 ..< modifierGroup.maxAmount).map { _ in

@@ -29,8 +29,7 @@ final class AddressDetailView: UIView {
         view.textColor = .mildBlue
         view.font = .systemFont(ofSize: 10, weight: .medium)
         view.numberOfLines = 0
-//        Tech debt: localize
-        view.text = "Комментарий"
+        view.text = SBLocalization.localized(key: ProfileText.AddressDetail.commentaryTitle)
         return view
     }()
 

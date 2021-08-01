@@ -29,8 +29,8 @@ final class ChangeLanguageViewModelImpl: ChangeLanguageViewModel {
 
     func changeLanguage(at index: Int) {
         configureLanguages(at: index)
-        outputs.didChangeLanguage.accept(())
-        outputs.didEnd.accept(())
+//        outputs.didChangeLanguage.accept(())
+//        outputs.didEnd.accept(())
     }
 
     func getLanguage(at index: Int) -> Language {

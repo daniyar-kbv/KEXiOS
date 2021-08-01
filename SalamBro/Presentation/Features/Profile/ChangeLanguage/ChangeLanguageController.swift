@@ -84,3 +84,9 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
         viewModel.changeLanguage(at: indexPath.row)
     }
 }
+
+extension ChangeLanguageController {
+    struct Output {
+        let
+    }
+}

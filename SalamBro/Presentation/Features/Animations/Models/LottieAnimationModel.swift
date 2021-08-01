@@ -7,7 +7,6 @@
 
 import Lottie
 
-// Tech debt: localize
 enum LottieAnimationModel: String, CaseIterable {
     case orderHistory
     case emptyBasket
@@ -20,29 +19,34 @@ enum LottieAnimationModel: String, CaseIterable {
     var infoText: String {
         switch self {
         case .orderHistory:
-            return "Тут будут Ваши заказы, чтобы сделать заказ перейдите в меню"
+            return SBLocalization.localized(key: AnimationsText.InfoText.orderHistory)
         case .emptyBasket:
-            return "Вы еще ничего не выбрали. Минимальная сумма заказа 1000₸"
+            return SBLocalization.localized(key: AnimationsText.InfoText.emptyBasket)
         case .noInternet:
-            return "Нет связи. Проверьте интернет соединение"
+            return SBLocalization.localized(key: AnimationsText.InfoText.noInternet)
         case .upgrade:
-            return "Мы добавили много новых функций и исправили некоторые баги, чтобы вам было удобнее пользоваться приложением"
+            return SBLocalization.localized(key: AnimationsText.InfoText.upgrade)
         case .overload:
-            return "В данный момент мы принимаем очень много заказов, пожалуйста попробуйте немного позднее"
+            return SBLocalization.localized(key: AnimationsText.InfoText.overload)
         case .payment:
-            return "Проводим оплату"
+            return SBLocalization.localized(key: AnimationsText.InfoText.payment)
         case .profile:
-            return "Вам необходимо авторизоваться, чтобы сделать заказ"
+            return SBLocalization.localized(key: AnimationsText.InfoText.profile)
         }
     }
 
     func getButtonTitle() -> String {
         switch self {
-        case .orderHistory, .emptyBasket: return "Перейти в меню"
-        case .noInternet, .overload: return "Попробовать еще раз"
-        case .upgrade: return "Обновить приложение"
-        case .payment: return "Отменить заказ"
-        case .profile: return "Войти"
+        case .orderHistory, .emptyBasket:
+            return SBLocalization.localized(key: AnimationsText.ButtonTitle.orderHistoryEmptyBasket)
+        case .noInternet, .overload:
+            return SBLocalization.localized(key: AnimationsText.ButtonTitle.noInternetOverload)
+        case .upgrade:
+            return SBLocalization.localized(key: AnimationsText.ButtonTitle.upgrade)
+        case .payment:
+            return SBLocalization.localized(key: AnimationsText.ButtonTitle.payment)
+        case .profile:
+            return SBLocalization.localized(key: AnimationsText.ButtonTitle.profile)
         }
     }
 

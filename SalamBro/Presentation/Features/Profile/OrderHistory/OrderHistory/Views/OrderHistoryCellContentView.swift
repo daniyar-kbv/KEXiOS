@@ -67,8 +67,14 @@ final class OrderHistoryCellContentView: UIView {
 
     private lazy var item1 = OrderHistoryItemView(title: "1x BIG COMBO (Pepsi 0,5)", price: "1 490 ₸")
     private lazy var item2 = OrderHistoryItemView(title: "2x Чизбургер куриный", price: "780 ₸")
-    private lazy var deliveryItem = OrderHistoryItemView(title: "Доставка", price: "500")
-    private lazy var sumItem = OrderHistoryItemView(title: "Итого", price: "2770")
+    private lazy var deliveryItem = OrderHistoryItemView(
+        title: SBLocalization.localized(key: ProfileText.OrderHistory.shipping),
+        price: "500"
+    )
+    private lazy var sumItem = OrderHistoryItemView(
+        title: SBLocalization.localized(key: ProfileText.OrderHistory.sum),
+        price: "2770"
+    )
 
     private lazy var itemStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [
@@ -84,10 +90,18 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
-    // Tech debt: localize
-    private lazy var addressItem = OrderHistoryInfoView(title: "Адрес доставки", info: "мкр. Орбита 1, 41")
-    private lazy var paymentItem = OrderHistoryInfoView(title: "Детали оплаты", info: "Картой в приложении")
-    private lazy var statusItem = OrderHistoryInfoView(title: "Статус заказа", info: "Доставлен")
+    private lazy var addressItem = OrderHistoryInfoView(
+        title: SBLocalization.localized(key: ProfileText.OrderHistory.deliveryAddress),
+        info: "мкр. Орбита 1, 41"
+    )
+    private lazy var paymentItem = OrderHistoryInfoView(
+        title: SBLocalization.localized(key: ProfileText.OrderHistory.paymentDetails),
+        info: "Картой в приложении"
+    )
+    private lazy var statusItem = OrderHistoryInfoView(
+        title: SBLocalization.localized(key: ProfileText.OrderHistory.orderStatus),
+        info: "Доставлен"
+    )
 
     private lazy var infoStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [
@@ -102,10 +116,18 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
-    // Tech debt: localize
-    private lazy var sendCheckButton = OrderHistoryButton(color: .black, titleString: "Отправить чек на почту")
-    private lazy var rateOrderButton = OrderHistoryButton(color: .kexRed, titleString: "Оценить заказ")
-    private lazy var repeatOrderButton = OrderHistoryButton(color: .mildBlue, titleString: "Повторить заказ")
+    private lazy var sendCheckButton = OrderHistoryButton(
+        color: .black,
+        titleString: SBLocalization.localized(key: ProfileText.OrderHistory.sendBill)
+    )
+    private lazy var rateOrderButton = OrderHistoryButton(
+        color: .kexRed,
+        titleString: SBLocalization.localized(key: ProfileText.OrderHistory.rateOrder)
+    )
+    private lazy var repeatOrderButton = OrderHistoryButton(
+        color: .mildBlue,
+        titleString: SBLocalization.localized(key: ProfileText.OrderHistory.repeatOrder)
+    )
 
     private lazy var buttonStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [

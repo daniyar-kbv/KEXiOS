@@ -58,8 +58,8 @@ final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
 extension MapPage: LocationManagerDelegate {
     func askUserForPermission() {
-//        Tech debt: localize
-        showAlert(title: "Location Services are disabled", message: "Please enable Location Services in your Settings")
+        showAlert(title: SBLocalization.localized(key: AddressText.Map.LocationAlert.title),
+                  message: SBLocalization.localized(key: AddressText.Map.LocationAlert.message))
     }
 
     func didChangeLocation(latitude: Double, longtitude: Double) {

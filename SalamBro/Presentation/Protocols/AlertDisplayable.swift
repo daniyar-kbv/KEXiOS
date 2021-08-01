@@ -14,20 +14,24 @@ protocol AlertDisplayable: AnyObject {
     func showAlert(title: String, message: String?, actions: [UIAlertAction])
 }
 
-//  Tech debt: localize
 extension AlertDisplayable where Self: UIViewController {
     func showError(_ error: ErrorPresentable) {
-        //  Tech debt: localize
-        showAlert(title: "Ошибка", message: error.presentationDescription)
+        showAlert(title: SBLocalization.localized(key: AlertText.errorTitle),
+                  message: error.presentationDescription)
     }
 
     func showError(_ error: ErrorPresentable, completion: @escaping () -> Void) {
-        //  Tech debt: localize
-        showAlert(title: "Ошибка", message: error.presentationDescription, submitTitle: "Ок", completion: completion)
+        showAlert(title: SBLocalization.localized(key: AlertText.errorTitle),
+                  message: error.presentationDescription,
+                  submitTitle: SBLocalization.localized(key: AlertText.ok),
+                  completion: completion)
     }
 
-    //  Tech debt: localize
-    func showAlert(title: String, message: String?, submitTitle: String = "Oк", completion: @escaping () -> Void = {}) {
+    func showAlert(title: String,
+                   message: String?,
+                   submitTitle: String = SBLocalization.localized(key: AlertText.ok),
+                   completion: @escaping () -> Void = {})
+    {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: submitTitle, style: .default) { _ in
             completion()
