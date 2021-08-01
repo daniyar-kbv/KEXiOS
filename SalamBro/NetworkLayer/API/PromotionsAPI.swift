@@ -8,7 +8,7 @@
 import Moya
 
 enum PromotionsAPI {
-    case promotions
+    case promotions(leadUUID: String)
 }
 
 extension PromotionsAPI: TargetType {
@@ -18,8 +18,7 @@ extension PromotionsAPI: TargetType {
 
     var path: String {
         switch self {
-        case .promotions:
-            return "/promotions/"
+        case let .promotions(leadUUID): return "/promotions/\(leadUUID)/"
         }
     }
 
