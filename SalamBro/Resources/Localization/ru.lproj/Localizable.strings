@@ -108,6 +108,15 @@
 "MenuDetail.proceedButton" = "В корзину за";
 "MenuDetail.commentaryField" = "Комментарий к блюду";
 "MenuDetail.chooseAdditionalItemButton" = "Изменить";
+"MenuDetail.required" = "Обязательно";
+"MenuDetail.choose" = "Выберите";
+"MenuDetail.position" = "позиция";
+"MenuDetail.positionLessOrEqualFour" = "позиции";
+"MenuDetail.positionGreaterThanFour" = "позиций";
+"MenuDetail.additional" = "Дополнительно";
+"MenuDetail.max" = "макс.";
+"MenuDetail.chooseAdditional" = "Выберите дополнения";
+"MenuDetail.added" = "Добавлено";
 
 // MARK: - Support
 "Support.title" = "Помощь";
