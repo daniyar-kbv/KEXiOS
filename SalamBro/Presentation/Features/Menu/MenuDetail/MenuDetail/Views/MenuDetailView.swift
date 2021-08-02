@@ -48,12 +48,12 @@ final class MenuDetailView: UIView {
         return label
     }()
 
-    lazy var modifiersTableView: UITableView = {
+    private(set) lazy var modifiersTableView: UITableView = {
         let view = UITableView()
         view.register(MenuDetailModifierCell.self, forCellReuseIdentifier: String(describing: MenuDetailModifierCell.self))
         view.isScrollEnabled = false
         view.separatorStyle = .none
-        view.rowHeight = 51
+        view.estimatedRowHeight = 51
         return view
     }()
 
@@ -168,13 +168,8 @@ extension MenuDetailView {
     }
 
     func updateTableViewHeight() {
-        let height = CGFloat((0 ..< modifiersTableView.numberOfSections)
-            .map { modifiersTableView.numberOfRows(inSection: $0) }
-            .reduce(0, +))
-            * modifiersTableView.rowHeight
-
         modifiersTableView.snp.updateConstraints {
-            $0.height.equalTo(height)
+            $0.height.equalTo(modifiersTableView.contentSize.height)
         }
     }
 
@@ -191,7 +186,7 @@ extension MenuDetailView {
         delegate?.commentaryViewTapped()
     }
 
-    @objc func proceedButtonTapped() {
+    @objc private func proceedButtonTapped() {
         delegate?.proceedButtonTapped()
     }
 }

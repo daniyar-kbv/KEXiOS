@@ -113,6 +113,15 @@
 "MenuDetail.proceedButton" = "KZ В корзину за %@ ₸";
 "MenuDetail.commentaryField" = "KZ Комментарий к блюду";
 "MenuDetail.chooseAdditionalItemButton" = "KZ Изменить";
+"MenuDetail.required" = "KZ Обязательно";
+"MenuDetail.choose" = "KZ Выберите";
+"MenuDetail.position" = "KZ позиция";
+"MenuDetail.positionLessOrEqualFour" = "KZ позиции";
+"MenuDetail.positionGreaterThanFour" = "KZ позиций";
+"MenuDetail.additional" = "KZ Дополнительно";
+"MenuDetail.max" = "KZ макс.";
+"MenuDetail.chooseAdditional" = "KZ Выберите дополнения";
+"MenuDetail.added" = "KZ Добавлено";
 
 // MARK: - Support
 "Support.title" = "KZ Помощь";

@@ -11,13 +11,12 @@ import RxSwift
 
 protocol MenuDetailViewModel: AnyObject {
     var outputs: MenuDetailViewModelImpl.Output { get }
-    var modifierCellViewModels: [[MenuDetailModifierCellViewModel]] { get set }
+    var modifierCellViewModels: [MenuDetailModifierCellViewModel] { get set }
 
     func update()
     func proceed()
     func set(comment: String)
     func getComment() -> String?
-    func set(modifier: Modifier, at indexPath: IndexPath)
 }
 
 final class MenuDetailViewModelImpl: MenuDetailViewModel {
@@ -31,7 +30,7 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     private var position: MenuPositionDetail?
     private var comment: String?
 
-    var modifierCellViewModels: [[MenuDetailModifierCellViewModel]] = []
+    var modifierCellViewModels: [MenuDetailModifierCellViewModel] = []
     let outputs = Output()
 
     init(positionUUID: String,
@@ -70,12 +69,6 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     func getComment() -> String? {
         return comment
     }
-
-    func set(modifier: Modifier, at indexPath: IndexPath) {
-        position?.modifierGroups[indexPath.section].set(modifier: modifier, at: indexPath.row)
-        outputs.didSelectModifier.accept((modifier, indexPath))
-        check()
-    }
 }
 
 extension MenuDetailViewModelImpl {
@@ -98,11 +91,19 @@ extension MenuDetailViewModelImpl {
         menuDetailRepository.outputs.didFail
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
+
+        menuDetailRepository.outputs.updateSelectedModifiers.bind {
+            [weak self] modifierGroups in
+            self?.position?.modifierGroups = modifierGroups
+            self?.assignSelectedModifiers()
+            self?.check()
+            self?.outputs.updateModifiers.accept(())
+        }
+        .disposed(by: disposeBag)
     }
 
     private func download() {
         guard let leadUUID = defaultStorage.leadUUID else { return }
-
         menuDetailRepository.getProductDetail(for: leadUUID, by: positionUUID)
     }
 
@@ -114,23 +115,40 @@ extension MenuDetailViewModelImpl {
         outputs.itemDescription.accept(position.description)
         outputs.itemPrice.accept(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton, arguments: position.price.removeTrailingZeros()))
 
-        modifierCellViewModels = position.modifierGroups.map { modifierGroup in
-            (0 ..< modifierGroup.maxAmount).map { _ in
-                MenuDetailModifierCellViewModelImpl(modifierGroup: modifierGroup)
+        if position.modifierGroups.isEmpty {
+            outputs.isComplete.accept(true)
+        } else {
+            outputs.isComplete.accept(false)
+            assignSelectedModifiers()
+            check()
+            outputs.updateModifiers.accept(())
+        }
+    }
+
+    private func assignSelectedModifiers() {
+        if let position = position {
+            modifierCellViewModels = position.modifierGroups.map {
+                MenuDetailModifierCellViewModelImpl(modifierGroup: $0)
             }
         }
-
-        outputs.updateModifiers.accept(())
-        check()
     }
 
     private func check() {
-        outputs.isComplete.accept(!modifierCellViewModels.flatMap { $0 }
-            .contains(where: { $0.didSelect() == false }))
+        if let position = position {
+            for i in position.modifierGroups {
+                if i.isRequired, i.selectedModifiers.isEmpty { return }
+                if i.isRequired, !i.selectedModifiers.isEmpty {
+                    if i == position.modifierGroups.last {
+                        return
+                    }
+                }
+            }
+            outputs.isComplete.accept(true)
+        }
     }
 
     private func getSelectedModifiers() -> [Modifier] {
-        return modifierCellViewModels.flatMap { $0 }
+        return modifierCellViewModels
             .map { $0.getValue() }
             .filter { $0 != nil } as! [Modifier]
     }
@@ -149,7 +167,6 @@ extension MenuDetailViewModelImpl {
         let itemPrice = PublishRelay<String?>()
         let updateModifiers = PublishRelay<Void>()
 
-        let didSelectModifier = PublishRelay<(Modifier, IndexPath)>()
         let didProceed = PublishRelay<Void>()
         let isComplete = PublishRelay<Bool>()
     }
