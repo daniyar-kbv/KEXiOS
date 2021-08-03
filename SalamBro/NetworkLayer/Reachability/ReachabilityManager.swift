@@ -19,6 +19,7 @@ protocol ReachabilityManager: AnyObject {
 
 final class ReachabilityManagerImpl: ReachabilityManager {
     private let reachability = try! Reachability()
+    private lazy var lastReachability = getReachability()
 
     static let shared = ReachabilityManagerImpl()
 
@@ -60,7 +61,9 @@ final class ReachabilityManagerImpl: ReachabilityManager {
     }
 
     private func onReachabilityChange(_ isReachable: Bool?) {
-        guard let isReachable = isReachable else { return }
+        guard let isReachable = isReachable,
+              lastReachability != isReachable else { return }
+        lastReachability = isReachable
         outputs.connectionDidChange.accept(isReachable)
         configNoInternetView(isReachable: isReachable)
     }

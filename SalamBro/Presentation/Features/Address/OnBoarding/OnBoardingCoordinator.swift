@@ -53,8 +53,8 @@ final class OnBoardingCoordinator: BaseCoordinator {
         let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
 
         brandsPage.outputs.toMap
-            .subscribe(onNext: { [weak self] deliveryAddress in
-                self?.openMap(deliveryAddress: deliveryAddress)
+            .subscribe(onNext: { [weak self] userAddress in
+                self?.openMap(userAddress: userAddress)
             })
             .disposed(by: disposeBag)
 
@@ -67,8 +67,8 @@ final class OnBoardingCoordinator: BaseCoordinator {
         router.push(viewController: brandsPage, animated: true)
     }
 
-    private func openMap(deliveryAddress: DeliveryAddress) {
-        let mapPage = pagesFactory.makeMapPage(deliveryAddress: deliveryAddress)
+    private func openMap(userAddress: UserAddress) {
+        let mapPage = pagesFactory.makeMapPage(userAddress: userAddress)
 
         mapPage.selectedAddress = { [weak self] _ in
             self?.didFinish?()

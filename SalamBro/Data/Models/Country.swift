@@ -17,6 +17,12 @@ public struct Country: Codable {
     }
 }
 
+extension Country {
+    func getCopy() -> Country {
+        return .init(id: id, name: name, countryCode: countryCode)
+    }
+}
+
 extension Country: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id

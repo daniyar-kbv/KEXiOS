@@ -194,6 +194,15 @@ enum MenuText: UILocalizable {
         case proceedButton = "MenuDetail.proceedButton"
         case commentPlaceholder = "MenuDetail.commentaryField"
         case changeButton = "MenuDetail.chooseAdditionalItemButton"
+        case required = "MenuDetail.required"
+        case choose = "MenuDetail.choose"
+        case position = "MenuDetail.position"
+        case positionLessOrEqualFour = "MenuDetail.positionLessOrEqualFour"
+        case positionGreaterThanFour = "MenuDetail.positionGreaterThanFour"
+        case additional = "MenuDetail.additional"
+        case max = "MenuDetail.max"
+        case chooseAdditional = "MenuDetail.chooseAdditional"
+        case added = "MenuDetail.added"
 
         var localized: String { rawValue }
     }
@@ -390,10 +399,8 @@ enum PaymentText: UILocalizable {
 
 enum SBLocalization {
     static func localized(key: UILocalizable) -> String {
-        guard
-            let language = DefaultStorageImpl.sharedStorage.appLocale,
-            let path = Bundle.main.path(forResource: language, ofType: "lproj"),
-            let bundle = Bundle(path: path)
+        guard let path = Bundle.main.path(forResource: DefaultStorageImpl.sharedStorage.appLocale, ofType: "lproj"),
+              let bundle = Bundle(path: path)
         else {
             return NSLocalizedString(key.localized, tableName: "Localizable", comment: "")
         }

@@ -17,18 +17,15 @@ struct OrderApplyDTO: Encodable {
     }
 
     struct Address: Encodable {
-        let city: Int
-        let longitude: Double
-        let latitude: Double
-    }
-}
-
-struct OrderIncDecrDTO: Encodable {
-    let leadUUID: String
-    let positionUUID: String
-
-    enum CodingKeys: String, CodingKey {
-        case leadUUID = "lead_uuid"
-        case positionUUID = "position_ uuid"
+        var district: String?
+        var street: String?
+        var building: String?
+        var corpus: String?
+        var flat: String?
+        var comment: String?
+        var country: Int
+        var city: Int
+        var longitude: Double
+        var latitude: Double
     }
 }

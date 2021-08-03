@@ -35,9 +35,9 @@ final class MapAddressView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func changeButtonAppearance(based text: String) {
-        actionButton.isEnabled = !text.isEmpty
-        actionButton.backgroundColor = text.isEmpty ? .calmGray : .kexRed
+    func changeButtonAppearance(isEmpty: Bool) {
+        actionButton.isEnabled = !isEmpty
+        actionButton.backgroundColor = isEmpty ? .calmGray : .kexRed
     }
 }
 
