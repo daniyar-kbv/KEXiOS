@@ -154,4 +154,8 @@ extension VerificationView {
         else { return }
         delegate?.verificationViewDelegate(self, enteredCode: code)
     }
+
+    func showKeyboard() {
+        otpField.becomeFirstResponder()
+    }
 }

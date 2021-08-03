@@ -82,6 +82,7 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
         super.viewWillAppear(animated)
 
         viewModel.getDocuments()
+        numberView?.showKeyboard()
     }
 
     override func viewDidAppear(_ animated: Bool) {
