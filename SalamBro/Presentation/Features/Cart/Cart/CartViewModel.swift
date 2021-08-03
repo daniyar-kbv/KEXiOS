@@ -28,16 +28,16 @@ protocol CartViewModel {
 final class CartViewModelImpl: CartViewModel {
     private let disposeBag = DisposeBag()
     private let cartRepository: CartRepository
-    private let profileRepository: ProfilePageRepository
+    private let tokenStorage: AuthTokenStorage
 
     var items: [CartItem] = []
     let outputs = Output()
 
     init(cartRepository: CartRepository,
-         profileRepository: ProfilePageRepository)
+         tokenStorage: AuthTokenStorage)
     {
         self.cartRepository = cartRepository
-        self.profileRepository = profileRepository
+        self.tokenStorage = tokenStorage
 
         bind()
     }
@@ -80,7 +80,7 @@ final class CartViewModelImpl: CartViewModel {
     }
 
     func proceedButtonTapped() {
-        guard profileRepository.userDidAuthenticate() else {
+        guard tokenStorage.token != nil else {
             outputs.toAuth.accept(())
             return
         }

@@ -31,19 +31,18 @@ final class AddressListCoordinator: BaseCoordinator {
             self?.didFinish?()
         }).disposed(by: disposeBag)
 
-        listPage.outputs.didSelectAddress.subscribe(onNext: { [weak self] params in
-            self?.openDetail(deliveryAddress: params.0, onUpdate: params.1)
+        listPage.outputs.didSelectAddress.subscribe(onNext: { [weak self] userAddress in
+            self?.openDetail(userAddress: userAddress)
         }).disposed(by: disposeBag)
 
         listPage.hidesBottomBarWhenPushed = true
         router.push(viewController: listPage, animated: true)
     }
 
-    func openDetail(deliveryAddress: DeliveryAddress, onUpdate: @escaping () -> Void) {
-        let detailPage = pagesFactory.makeAddressDetailPage(deliveryAddress: deliveryAddress)
+    func openDetail(userAddress: UserAddress) {
+        let detailPage = pagesFactory.makeAddressDetailPage(userAddress: userAddress)
 
         detailPage.outputs.didDeleteAddress.subscribe(onNext: { [weak self] in
-            onUpdate()
             self?.router.pop(animated: true)
         }).disposed(by: disposeBag)
 

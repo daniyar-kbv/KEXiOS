@@ -9,15 +9,12 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-// Tech debt: change logic to properly change/save addresses
-
 protocol SelectMainInformationViewModelProtocol {
     var flowType: SelectMainInformationViewModel.FlowType { get }
     var countries: [Country] { get }
     var cities: [City] { get }
     var brands: [Brand] { get }
-    var brand: Brand? { get set }
-    var deliveryAddress: DeliveryAddress? { get }
+    var userAddress: UserAddress? { get }
     var outputs: SelectMainInformationViewModel.Output { get set }
 
     func getCountries()
@@ -40,11 +37,9 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
 
     public lazy var countries: [Country] = countriesRepository.getCountries() ?? []
     public lazy var cities: [City] = citiesRepository.getCities() ?? []
-
     public lazy var brands: [Brand] = brandRepository.getBrands() ?? []
 
-    lazy var brand: Brand? = brandRepository.getCurrentBrand()
-    var deliveryAddress: DeliveryAddress?
+    var userAddress: UserAddress?
 
     var outputs = Output()
     private let disposeBag = DisposeBag()
@@ -64,12 +59,12 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
         self.flowType = flowType
 
         switch flowType {
-        case let .changeAddress(deliveryAddress):
-            self.deliveryAddress = deliveryAddress
+        case let .changeAddress(userAddress):
+            self.userAddress = userAddress
         case .changeBrand:
-            deliveryAddress = addressRepository.getCurrentDeliveryAddress()
+            userAddress = addressRepository.getCurrentUserAddress()?.getCopy()
         case .create:
-            deliveryAddress = DeliveryAddress()
+            userAddress = .init()
         }
 
         bindOutputs()
@@ -133,9 +128,9 @@ extension SelectMainInformationViewModel {
     }
 
     func didChange(country index: Int) {
-        guard deliveryAddress?.country != countries[index] else { return }
-        deliveryAddress?.country = countries[index]
-        outputs.didSelectCountry.accept(deliveryAddress?.country?.name)
+        guard userAddress?.address.country != countries[index] else { return }
+        userAddress?.address.country = countries[index]
+        outputs.didSelectCountry.accept(userAddress?.address.country?.name)
         checkValues()
         getCities()
 
@@ -146,15 +141,15 @@ extension SelectMainInformationViewModel {
 
     func didChange(city index: Int?) {
         guard let index = index else {
-            deliveryAddress?.city = nil
-            outputs.didSelectCity.accept(deliveryAddress?.city?.name)
+            userAddress?.address.city = nil
+            outputs.didSelectCity.accept(userAddress?.address.city?.name)
             checkValues()
             return
         }
-        guard deliveryAddress?.city != cities[index] else { return }
+        guard userAddress?.address.city != cities[index] else { return }
         let city = cities[index]
-        deliveryAddress?.city = city
-        outputs.didSelectCity.accept(deliveryAddress?.city?.name)
+        userAddress?.address.city = city
+        outputs.didSelectCity.accept(userAddress?.address.city?.name)
         checkValues()
 
         didChange(address: nil)
@@ -162,36 +157,40 @@ extension SelectMainInformationViewModel {
     }
 
     func didChange(address: Address?) {
-        deliveryAddress?.address = address
-        outputs.didSelectAddress.accept(address?.name)
+        guard let address = address else { return }
+        let oldAddress = userAddress?.address
+        userAddress?.address = address
+        userAddress?.address.country = oldAddress?.country
+        userAddress?.address.city = oldAddress?.city
+        outputs.didSelectAddress.accept(address.getName())
         checkValues()
     }
 
     func didChange(brand: Brand?) {
-        self.brand = brand
+        userAddress?.brand = brand
         outputs.didSelectBrand.accept(brand?.name)
         checkValues()
     }
 
     func didSave() {
-        if let brand = brand {
+        if let brand = userAddress?.brand {
             brandRepository.changeCurrentBrand(to: brand)
         }
 
         switch flowType {
         case .create:
-            if let deliveryAddress = deliveryAddress {
-                addressRepository.addDeliveryAddress(deliveryAddress: deliveryAddress)
-            }
-        default:
-            break
+            guard let userAddress = userAddress else { return }
+            addressRepository.add(userAddress: userAddress)
+        case .changeAddress, .changeBrand:
+            guard let id = userAddress?.id,
+                  let brandId = userAddress?.brand?.id
+            else { return }
+            addressRepository.updateUserAddress(with: id, brandId: brandId)
         }
-
-        addressRepository.applyOrder(withAddress: true)
     }
 
     func checkValues() {
-        outputs.checkResult.accept((deliveryAddress?.isComplete() ?? false) && brand != nil)
+        outputs.checkResult.accept(userAddress?.isComplete() ?? false)
     }
 }
 
@@ -230,7 +229,7 @@ extension SelectMainInformationViewModel {
 
 extension SelectMainInformationViewModel {
     private func getCities() {
-        guard let countryId = deliveryAddress?.country?.id else { return }
+        guard let countryId = userAddress?.address.country?.id else { return }
         citiesRepository.fetchCities(with: countryId)
     }
 
@@ -243,7 +242,7 @@ extension SelectMainInformationViewModel {
 extension SelectMainInformationViewModel {
     enum FlowType: Equatable {
         case create
-        case changeAddress(_ address: DeliveryAddress)
+        case changeAddress(_ address: UserAddress)
         case changeBrand
     }
 

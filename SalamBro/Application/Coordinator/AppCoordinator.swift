@@ -46,13 +46,8 @@ final class AppCoordinator: BaseCoordinator {
     }
 
     private func switchFlows() {
-        let locationRepository = repositoryComponents.makeAddressRepository()
-        let brandRepository = repositoryComponents.makeBrandRepository()
-
-        guard
-            locationRepository.isAddressComplete(),
-            brandRepository.getCurrentBrand() != nil
-        else {
+        guard DefaultStorageImpl.sharedStorage.notFirstLaunch else {
+            AuthTokenStorageImpl.sharedStorage.cleanUp()
             startOnboardingFlow()
             return
         }
@@ -160,7 +155,7 @@ final class AppCoordinator: BaseCoordinator {
     private func showTabBarController() {
         pagesFactory.makeSBTabbarController().viewControllers = preparedViewControllers
 
-        UIApplication.shared.setRootView(pagesFactory.makeSBTabbarController()) // MARK: Tech debt
+        UIApplication.shared.setRootView(pagesFactory.makeSBTabbarController())
     }
 }
 

@@ -84,6 +84,12 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
         viewModel.getDocuments()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        numberView?.becomeFirstResponder()
+    }
+
     private func bindViewModel() {
         viewModel.outputs.didStartRequest
             .subscribe(onNext: { [weak self] in

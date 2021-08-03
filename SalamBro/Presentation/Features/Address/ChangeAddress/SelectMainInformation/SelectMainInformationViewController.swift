@@ -14,6 +14,7 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
     private let cellsSequence: [SelectMainInformationCell.InputType] = [.country, .city, .address, .empty, .brand]
+    private var needRequestCountries = true
 
     let outputs = Output()
 
@@ -48,10 +49,6 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
 
         setup()
         bind()
-
-        if viewModel.flowType == .create {
-            viewModel.getCountries()
-        }
     }
 
     public required init?(coder _: NSCoder) {
@@ -126,6 +123,11 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
         }
 
         viewModel.checkValues()
+
+        if viewModel.flowType == .create, needRequestCountries {
+            viewModel.getCountries()
+            needRequestCountries = false
+        }
     }
 
     deinit {
@@ -235,16 +237,16 @@ extension SelectMainInformationViewController {
         switch cellsSequence[indexPath.row] {
         case .country:
             cell.setupCell(type: cellsSequence[indexPath.row],
-                           currentValue: viewModel.deliveryAddress?.country?.name)
+                           currentValue: viewModel.userAddress?.address.country?.name)
         case .city:
             cell.setupCell(type: cellsSequence[indexPath.row],
-                           currentValue: viewModel.deliveryAddress?.city?.name)
+                           currentValue: viewModel.userAddress?.address.city?.name)
         case .address:
             cell.setupCell(type: cellsSequence[indexPath.row],
-                           currentValue: viewModel.deliveryAddress?.address?.name) { [weak self] in
-                guard let deliveryAddress = self?.viewModel.deliveryAddress else { return }
+                           currentValue: viewModel.userAddress?.address.getName()) { [weak self] in
+                guard let userAddress = self?.viewModel.userAddress else { return }
                 self?.outputs.toMap
-                    .accept((deliveryAddress,
+                    .accept((userAddress,
                              {
                                  [weak self] address in
                                  self?.viewModel.didChange(address: address)
@@ -252,8 +254,8 @@ extension SelectMainInformationViewController {
             }
         case .brand:
             cell.setupCell(type: cellsSequence[indexPath.row],
-                           currentValue: viewModel.flowType == .create ? nil : viewModel.brand?.name) { [weak self] in
-                guard let cityid = self?.viewModel.deliveryAddress?.city?.id else { return }
+                           currentValue: viewModel.flowType == .create ? nil : viewModel.userAddress?.brand?.name) { [weak self] in
+                guard let cityid = self?.viewModel.userAddress?.address.city?.id else { return }
                 self?.outputs.toBrands
                     .accept((cityid,
                              {
@@ -283,7 +285,7 @@ extension SelectMainInformationViewController {
 extension SelectMainInformationViewController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
-        let toMap = PublishRelay<(deliveryAddress: DeliveryAddress, onSelect: (_ address: Address) -> Void)>()
+        let toMap = PublishRelay<(userAddress: UserAddress, onSelect: (_ address: Address) -> Void)>()
         let toBrands = PublishRelay<(Int, (_ brand: Brand) -> Void)>()
         let didSave = PublishRelay<Void>()
         let close = PublishRelay<Void>()
