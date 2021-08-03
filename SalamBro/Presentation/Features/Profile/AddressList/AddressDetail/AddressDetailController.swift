@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AddressDetailController: UIViewController {
+final class AddressDetailController: UIViewController, LoaderDisplayable, AlertDisplayable {
     let outputs = Output()
 
     private let viewModel: AddressDetailViewModel
@@ -48,6 +48,24 @@ final class AddressDetailController: UIViewController {
     }
 
     func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            })
+            .disposed(by: disposeBag)
+
         viewModel.outputs.addressName
             .subscribe(onNext: { [weak self] addressName in
                 guard let addressName = addressName else { return }

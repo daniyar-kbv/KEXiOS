@@ -125,8 +125,20 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
             .bind(to: outputs.toPromotion)
             .disposed(by: disposeBag)
 
+        viewModel.outputs.toChangeBrand
+            .bind(to: outputs.toChangeBrand)
+            .disposed(by: disposeBag)
+
         viewModel.outputs.toAddressess
             .bind(to: outputs.toAddressess)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.toAuthChangeBrand
+            .bind(to: outputs.toAuthChangeBrand)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.toAuthChangeAddress
+            .bind(to: outputs.toAuthChangeAddress)
             .disposed(by: disposeBag)
 
         viewModel.outputs.toPositionDetail
@@ -180,9 +192,7 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
     }
 
     @objc private func handleChangeBrandButtonAction(_: UIButton) {
-        outputs.toChangeBrand.accept { [weak self] in
-            self?.viewModel.update()
-        }
+        viewModel.processToBrand()
     }
 }
 
@@ -231,8 +241,10 @@ extension MenuController: Reloadable {
 extension MenuController {
     struct Output {
         let toPromotion = PublishRelay<(URL, String)>()
-        let toChangeBrand = PublishRelay<() -> Void>()
-        let toAddressess = PublishRelay<() -> Void>()
+        let toChangeBrand = PublishRelay<Void>()
+        let toAddressess = PublishRelay<Void>()
         let toPositionDetail = PublishRelay<String>()
+        let toAuthChangeBrand = PublishRelay<Void>()
+        let toAuthChangeAddress = PublishRelay<Void>()
     }
 }

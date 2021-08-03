@@ -12,7 +12,7 @@ import RxSwift
 protocol PaymentCashViewModel: AnyObject {
     var outputs: PaymentCashViewModelImpl.Output { get }
 
-    func set(change: String)
+    func set(change: String?)
     func submit()
 }
 
@@ -41,8 +41,10 @@ final class PaymentCashViewModelImpl: PaymentCashViewModel {
             }).disposed(by: disposeBag)
     }
 
-    func set(change: String) {
-        guard let change = Int(change.replacingOccurrences(of: " ", with: "")) else {
+    func set(change: String?) {
+        guard let changeStr = change?.replacingOccurrences(of: " ", with: ""),
+              let change = Int(changeStr)
+        else {
             self.change = 0
             outputs.needChange.accept(false)
             outputs.isLessThanPrice.accept(false)

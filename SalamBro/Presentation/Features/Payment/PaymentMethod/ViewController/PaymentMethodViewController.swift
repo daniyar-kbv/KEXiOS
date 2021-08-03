@@ -14,6 +14,14 @@ final class PaymentMethodViewController: UIViewController, LoaderDisplayable, Al
     private let viewModel: PaymentMethodVCViewModel
     private lazy var contentView = PaymentMethodView()
 
+    private lazy var editButton: UIButton = {
+        let view = UIButton()
+        view.tintColor = .kexRed
+        view.setImage(SBImageResource.getIcon(for: PaymentIcons.PaymentMethod.edit), for: .normal)
+        view.addTarget(self, action: #selector(editAction), for: .touchUpInside)
+        return view
+    }()
+
     let outputs = Output()
 
     init(viewModel: PaymentMethodVCViewModel) {
@@ -42,7 +50,12 @@ final class PaymentMethodViewController: UIViewController, LoaderDisplayable, Al
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }
+
         contentView.setTableViewDelegate(self)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
         viewModel.getPaymentMethods()
     }
@@ -76,6 +89,19 @@ extension PaymentMethodViewController {
         viewModel.outputs.showPaymentMethod
             .bind(to: outputs.showPaymentMethod)
             .disposed(by: disposeBag)
+
+        viewModel.outputs.canEdit
+            .subscribe(onNext: { [weak self] canEdit in
+                guard let editButton = self?.editButton else { return }
+                self?.navigationItem.rightBarButtonItem = canEdit ?
+                    .init(customView: editButton) :
+                    .init()
+            })
+            .disposed(by: disposeBag)
+    }
+
+    @objc private func editAction() {
+        outputs.toEdit.accept(())
     }
 }
 
@@ -88,7 +114,8 @@ extension PaymentMethodViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PaymentMethodCell.self), for: indexPath) as! PaymentMethodCell
         let paymentMethodInfo = viewModel.getPaymentMethodInfo(for: indexPath)
         cell.configure(title: paymentMethodInfo.paymentMethodTitle,
-                       isSelected: paymentMethodInfo.isSelected)
+                       isSelected: paymentMethodInfo.isSelected,
+                       isApplePay: paymentMethodInfo.isApplePay)
         return cell
     }
 
@@ -102,5 +129,6 @@ extension PaymentMethodViewController {
         let close = PublishRelay<Void>()
         let didSelectPaymentMethod = PublishRelay<Void>()
         let showPaymentMethod = PublishRelay<PaymentMethod>()
+        let toEdit = PublishRelay<Void>()
     }
 }

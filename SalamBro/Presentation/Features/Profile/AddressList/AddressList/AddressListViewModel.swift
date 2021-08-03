@@ -11,25 +11,36 @@ import RxSwift
 
 protocol AddressListViewModel {
     var outputs: AddressListViewModelImpl.Output { get }
-    var deliveryAddresses: [DeliveryAddress] { get set }
+    var userAddreses: [UserAddress] { get set }
 
     func getAddresses()
 }
 
 final class AddressListViewModelImpl: AddressListViewModel {
-    private let locationRepository: AddressRepository
+    private let disposeBag = DisposeBag()
+    private let addressRepository: AddressRepository
 
     let outputs = Output()
 
-    var deliveryAddresses = [DeliveryAddress]()
+    var userAddreses = [UserAddress]()
 
-    init(locationRepository: AddressRepository) {
-        self.locationRepository = locationRepository
+    init(addressRepository: AddressRepository) {
+        self.addressRepository = addressRepository
+
+        bindRepository()
+    }
+
+    private func bindRepository() {
+        addressRepository.outputs.didGetUserAddresses
+            .subscribe(onNext: { [weak self] userAddresses in
+                self?.userAddreses = userAddresses
+                self?.outputs.reload.accept(())
+            })
+            .disposed(by: disposeBag)
     }
 
     func getAddresses() {
-        deliveryAddresses = locationRepository.getDeliveryAddresses() ?? []
-        outputs.reload.accept(())
+        addressRepository.getUserAddresses()
     }
 }
 

@@ -16,6 +16,13 @@ final class PaymentSelectionButton: UIButton {
         return label
     }()
 
+    private lazy var applePayImage: UIImageView = {
+        let view = UIImageView()
+        view.image = SBImageResource.getIcon(for: PaymentIcons.PaymentMethod.applePay)
+        view.isHidden = true
+        return view
+    }()
+
     private let choosePaymentMethodLabel: UILabel = {
         let label = UILabel()
         label.textColor = .mildBlue
@@ -24,13 +31,23 @@ final class PaymentSelectionButton: UIButton {
         return label
     }()
 
+    private lazy var leftBottomStack: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [applePayImage, choosePaymentMethodLabel])
+        view.axis = .horizontal
+        view.distribution = .fill
+        view.alignment = .center
+        view.spacing = 10
+        return view
+    }()
+
     private lazy var leftStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [paymentMethodLabel, choosePaymentMethodLabel])
+        let view = UIStackView(arrangedSubviews: [paymentMethodLabel, leftBottomStack])
         view.axis = .vertical
         view.distribution = .equalSpacing
         view.alignment = .fill
         view.spacing = 3
         view.isUserInteractionEnabled = false
+        view.setContentHuggingPriority(.defaultLow, for: .horizontal)
         return view
     }()
 
@@ -57,15 +74,20 @@ final class PaymentSelectionButton: UIButton {
 }
 
 extension PaymentSelectionButton {
-    func setPaymentMethod(text: String) {
+    func setPaymentMethod(text: String, isApplePay: Bool) {
         choosePaymentMethodLabel.text = text
         choosePaymentMethodLabel.textColor = .darkGray
+        applePayImage.isHidden = !isApplePay
     }
 }
 
 extension PaymentSelectionButton {
     private func configure() {
         [changeLabel, leftStack].forEach { addSubview($0) }
+
+        applePayImage.snp.makeConstraints {
+            $0.size.equalTo(30)
+        }
 
         changeLabel.snp.makeConstraints {
             $0.right.equalToSuperview().offset(-24)

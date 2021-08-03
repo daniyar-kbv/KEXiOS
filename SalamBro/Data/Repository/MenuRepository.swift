@@ -34,25 +34,36 @@ final class MenuRepositoryImpl: MenuRepository {
         let promotionsSequence = promotionsService.getPromotions(leadUUID: leadUUID)
         let productsSequence = ordersService.getProducts(for: leadUUID)
 
-        let finalSequence = Single.zip(promotionsSequence,
-                                       productsSequence,
-                                       resultSelector: {
-                                           promotions, productsData ->
-                                               ([Promotion],
-                                                [MenuCategory],
-                                                [MenuPosition]) in
-                                           (
-                                               promotions,
-                                               productsData.categories,
-                                               productsData.positions
-                                           )
-                                       })
-        outputs.didStartRequest.accept(())
-        finalSequence.subscribe(onSuccess: {
-            [weak self] promotions, categories, positions in
-            self?.outputs.didGetPromotions.accept(promotions)
-            self?.outputs.didGetCategories.accept(categories)
-            self?.outputs.didGetPositions.accept(positions)
+//        let finalSequence = Single.zip(promotionsSequence,
+//                                       productsSequence,
+//                                       resultSelector: {
+//                                           promotions, productsData ->
+//                                               ([Promotion],
+//                                                [MenuCategory],
+//                                                [MenuPosition]) in
+//                                           (
+//                                               promotions,
+//                                               productsData.categories,
+//                                               productsData.positions
+//                                           )
+//                                       })
+//        outputs.didStartRequest.accept(())
+//        finalSequence.subscribe(onSuccess: {
+//            [weak self] promotions, categories, positions in
+//            self?.outputs.didGetPromotions.accept(promotions)
+//            self?.outputs.didGetCategories.accept(categories)
+//            self?.outputs.didGetPositions.accept(positions)
+//            self?.outputs.didEndRequest.accept(())
+//        }, onError: { [weak self] error in
+//            self?.outputs.didEndRequest.accept(())
+//            self?.outputs.didGetError.accept(error as? ErrorPresentable)
+//        }).disposed(by: disposeBag)
+
+        productsSequence.subscribe(onSuccess: {
+            [weak self] positionsData in
+            self?.outputs.didGetPromotions.accept([])
+            self?.outputs.didGetCategories.accept(positionsData.categories)
+            self?.outputs.didGetPositions.accept(positionsData.positions)
             self?.outputs.didEndRequest.accept(())
         }, onError: { [weak self] error in
             self?.outputs.didEndRequest.accept(())

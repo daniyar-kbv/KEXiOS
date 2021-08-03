@@ -40,22 +40,22 @@ final class PaymentCoordinator: BaseCoordinator {
             }).disposed(by: disposeBag)
 
         paymentSelectionVC.outputs.onChangePaymentMethod
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: { [weak self, weak paymentSelectionVC] in
                 self?.showChangePaymentVC(on: paymentSelectionVC)
             }).disposed(by: disposeBag)
 
         paymentSelectionVC.outputs.didStartRequest
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: { [weak self, weak paymentSelectionVC] in
                 self?.showPaymentInProcessView(on: paymentSelectionVC)
             }).disposed(by: disposeBag)
 
         paymentSelectionVC.outputs.didEndRequest
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: { [weak self, weak paymentSelectionVC] in
                 self?.hidePaymentInProcessView(on: paymentSelectionVC)
             }).disposed(by: disposeBag)
 
         paymentSelectionVC.outputs.show3DS
-            .subscribe(onNext: { [weak self] webView in
+            .subscribe(onNext: { [weak self, weak paymentSelectionVC] webView in
                 self?.show3DS(on: paymentSelectionVC, webView: webView)
             }).disposed(by: disposeBag)
 
@@ -73,42 +73,61 @@ final class PaymentCoordinator: BaseCoordinator {
         router.present(navigationVC, animated: true, completion: nil)
     }
 
-    private func showChangePaymentVC(on viewController: UIViewController) {
+    private func showChangePaymentVC(on viewController: UIViewController?) {
         let paymentMethodVC = pagesFactory.makePaymentMethodPage()
 
         paymentMethodVC.outputs.close
-            .subscribe(onNext: {
-                paymentMethodVC.dismiss(animated: true)
+            .subscribe(onNext: { [weak paymentMethodVC] in
+                paymentMethodVC?.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
         paymentMethodVC.outputs.didSelectPaymentMethod
-            .subscribe(onNext: {
-                paymentMethodVC.dismiss(animated: true)
+            .subscribe(onNext: { [weak paymentMethodVC] in
+                paymentMethodVC?.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
         paymentMethodVC.outputs.showPaymentMethod
-            .subscribe(onNext: { [weak self] paymentMethod in
+            .subscribe(onNext: { [weak self, weak paymentMethodVC] paymentMethod in
                 switch paymentMethod.type {
                 case .card:
                     self?.showCardPage(on: paymentMethodVC,
                                        paymentMethod: paymentMethod) {
-                        paymentMethodVC.dismiss(animated: true)
+                        paymentMethodVC?.dismiss(animated: true)
                     }
                 case .cash:
                     self?.showCashPage(on: paymentMethodVC,
                                        paymentMethod: paymentMethod) {
-                        paymentMethodVC.dismiss(animated: true)
+                        paymentMethodVC?.dismiss(animated: true)
                     }
                 default:
                     break
                 }
             }).disposed(by: disposeBag)
 
+        paymentMethodVC.outputs.toEdit
+            .subscribe(onNext: { [weak self, weak paymentMethodVC] in
+                self?.showEditPage(on: paymentMethodVC)
+            })
+            .disposed(by: disposeBag)
+
         let navigationVC = SBNavigationController(rootViewController: paymentMethodVC)
-        viewController.present(navigationVC, animated: true)
+        viewController?.present(navigationVC, animated: true)
     }
 
-    private func showCardPage(on viewController: UIViewController,
+    private func showEditPage(on viewController: UIViewController?) {
+        let editPage = pagesFactory.makePaymentEditPage()
+
+        editPage.outputs.close
+            .subscribe(onNext: {
+                editPage.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+
+        let nav = SBNavigationController(rootViewController: editPage)
+        viewController?.present(nav, animated: true)
+    }
+
+    private func showCardPage(on viewController: UIViewController?,
                               paymentMethod: PaymentMethod,
                               _ onDone: @escaping () -> Void)
     {
@@ -127,10 +146,10 @@ final class PaymentCoordinator: BaseCoordinator {
             }).disposed(by: disposeBag)
 
         let nav = SBNavigationController(rootViewController: cardPage)
-        viewController.present(nav, animated: true)
+        viewController?.present(nav, animated: true)
     }
 
-    private func showCashPage(on viewController: UIViewController,
+    private func showCashPage(on viewController: UIViewController?,
                               paymentMethod: PaymentMethod,
                               _ onDone: @escaping () -> Void)
     {
@@ -149,10 +168,10 @@ final class PaymentCoordinator: BaseCoordinator {
             }).disposed(by: disposeBag)
 
         let nav = SBNavigationController(rootViewController: cashPage)
-        viewController.present(nav, animated: true)
+        viewController?.present(nav, animated: true)
     }
 
-    private func show3DS(on viewController: UIViewController, webView: WKWebView) {
+    private func show3DS(on viewController: UIViewController?, webView: WKWebView) {
         threeDSController = pagesFactory.makeThreeDSPage(webView: webView)
 
         threeDSController?.outputs.didTerminate
@@ -168,21 +187,21 @@ final class PaymentCoordinator: BaseCoordinator {
         guard let threeDSController = threeDSController else { return }
 
         let nav = SBNavigationController(rootViewController: threeDSController)
-        viewController.present(nav, animated: true)
+        viewController?.present(nav, animated: true)
     }
 
     private func hide3DS() {
         threeDSController?.dismiss(animated: true)
     }
 
-    private func showPaymentInProcessView(on viewController: UIViewController & AnimationViewPresentable) {
-        viewController.showAnimationView(animationType: .payment, fullScreen: true) {
+    private func showPaymentInProcessView(on viewController: UIViewController?) {
+        viewController?.presentAnimationView(animationType: .payment) {
 //            Tech debt
         }
     }
 
-    private func hidePaymentInProcessView(on viewController: UIViewController & AnimationViewPresentable) {
-        viewController.hideAnimationView()
+    private func hidePaymentInProcessView(on viewController: UIViewController?) {
+        viewController?.dismissAnimationView()
     }
 }
 

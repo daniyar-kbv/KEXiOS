@@ -5,6 +5,7 @@
 //  Created by Ilyar Mnazhdin on 06.07.2021.
 //
 
+import PassKit
 import RxCocoa
 import RxSwift
 import UIKit
@@ -32,6 +33,14 @@ final class PaymentSelectionContainerView: UIView {
         return button
     }()
 
+    private lazy var applePayButton: PKPaymentButton = {
+        let view = PKPaymentButton(paymentButtonType: .buy, paymentButtonStyle: .black)
+        view.layer.cornerRadius = 10
+        view.layer.masksToBounds = true
+        view.isHidden = true
+        return view
+    }()
+
     private let billTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
@@ -44,7 +53,6 @@ final class PaymentSelectionContainerView: UIView {
     private let billLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "2 870 ₸"
         label.textColor = .darkGray
         label.textAlignment = .right
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -64,17 +72,28 @@ final class PaymentSelectionContainerView: UIView {
 }
 
 extension PaymentSelectionContainerView {
-    func setPaymentMethod(text: String) {
-        paymentSelectionButton.setPaymentMethod(text: text)
+    func setPaymentMethod(paymentMethod: PaymentMethod) {
+        paymentSelectionButton.setPaymentMethod(text: paymentMethod.title,
+                                                isApplePay: paymentMethod.type == .applePay)
+        configActionButton(with: paymentMethod)
+    }
 
-        actionButton.backgroundColor = .kexRed
-        actionButton.isEnabled = true
+    func set(totalAmount: String?) {
+        billLabel.text = totalAmount
     }
 }
 
 extension PaymentSelectionContainerView {
     private func bindViews() {
         actionButton
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] in
+                self?.delegate?.handleSubmitButtonTap()
+            })
+            .disposed(by: disposeBag)
+
+        applePayButton
             .rx
             .tap
             .subscribe(onNext: { [weak self] in
@@ -107,6 +126,14 @@ extension PaymentSelectionContainerView {
             $0.bottom.equalTo(safeAreaLayoutGuide).offset(-16)
         }
 
+        addSubview(applePayButton)
+        applePayButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.height.equalTo(43)
+            $0.bottom.equalTo(safeAreaLayoutGuide).offset(-16)
+        }
+
         addSubview(billTitleLabel)
         billTitleLabel.snp.makeConstraints {
             $0.bottom.equalTo(actionButton.snp.top).offset(-16)
@@ -119,5 +146,12 @@ extension PaymentSelectionContainerView {
             $0.trailing.equalToSuperview().offset(-24)
             $0.leading.equalTo(billTitleLabel.snp.trailing).offset(16)
         }
+    }
+
+    private func configActionButton(with paymentMethod: PaymentMethod) {
+        actionButton.backgroundColor = .kexRed
+        actionButton.isEnabled = true
+        actionButton.isHidden = paymentMethod.type == .applePay
+        applePayButton.isHidden = paymentMethod.type != .applePay
     }
 }

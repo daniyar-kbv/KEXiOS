@@ -28,7 +28,7 @@ final class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
         return .init(router: router,
                      serviceComponents: serviceComponents, repositoryComponents: repositoryComponents,
                      pagesFactory: makeMenuPagesFactory(repositoryComponents: repositoryComponents),
-                     coordinatorsFactory: makeMenuCoordinatorsFactory(router: router))
+                     coordinatorsFactory: makeMenuCoordinatorsFactory(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, router: router))
     }
 
     private func makeMenuPagesFactory(repositoryComponents: RepositoryComponents) -> MenuPagesFactory
@@ -36,8 +36,8 @@ final class AppCoordinatorsModulesBuilderImpl: AppCoordinatorsModulesBuilder {
         return MenuPagesFactoryIml(repositoryComponents: repositoryComponents)
     }
 
-    private func makeMenuCoordinatorsFactory(router: Router) -> MenuCoordinatorsFactory {
-        return MenuCoordinatorsFactoryImpl(router: router)
+    private func makeMenuCoordinatorsFactory(serviceComponents: ServiceComponents, repositoryComponents: RepositoryComponents, router: Router) -> MenuCoordinatorsFactory {
+        return MenuCoordinatorsFactoryImpl(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, router: router)
     }
 
     func buildOnboardingCoordinator(repositoryComponents: RepositoryComponents) -> OnBoardingCoordinator {

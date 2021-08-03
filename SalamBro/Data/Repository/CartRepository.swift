@@ -18,6 +18,8 @@ protocol CartRepository {
     func incrementItem(positionUUID: String)
     func decrementItem(positionUUID: String)
     func cleanUp()
+
+    func getTotalAmount() -> Double
 }
 
 final class CartRepositoryImpl: CartRepository {
@@ -80,6 +82,10 @@ extension CartRepositoryImpl {
     func cleanUp() {
         cartStorage.cart.items = []
         updateCart()
+    }
+
+    func getTotalAmount() -> Double {
+        return cartStorage.cart.getTotalPrice()
     }
 }
 

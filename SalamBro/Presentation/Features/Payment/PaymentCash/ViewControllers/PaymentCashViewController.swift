@@ -49,6 +49,12 @@ class PaymentCashViewController: UIViewController {
         bindViewModel()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        contentView.showKeyboard()
+    }
+
     private func bindViewModel() {
         viewModel.outputs.price
             .subscribe(onNext: { [weak self] price in
@@ -83,7 +89,7 @@ extension PaymentCashViewController: PaymentCashViewDelegate {
         viewModel.submit()
     }
 
-    func textViewDidChange(text: String) {
+    func textFieldDidChange(text: String?) {
         viewModel.set(change: text)
     }
 }

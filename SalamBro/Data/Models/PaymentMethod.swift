@@ -10,12 +10,14 @@ import Foundation
 enum PaymentMethodType {
     case savedCard
     case card
+    case applePay
     case cash
 
     var apiType: String {
         switch self {
         case .savedCard: return ""
         case .card: return "DEBIT_CARD"
+        case .applePay: return "APPLE_PAY"
         case .cash: return ""
         }
     }
@@ -38,6 +40,7 @@ class PaymentMethod {
             guard let card = value as? MyCard else { return "" }
             return SBLocalization.localized(key: PaymentText.PaymentMethod.MethodTitle.savedCard, arguments: card.cardMaskedNumber)
         case .card: return SBLocalization.localized(key: PaymentText.PaymentMethod.MethodTitle.card)
+        case .applePay: return "Apple Pay"
         case .cash: return SBLocalization.localized(key: PaymentText.PaymentMethod.MethodTitle.cash)
         }
     }
@@ -62,6 +65,8 @@ extension PaymentMethod: Equatable {
             return lhs.value as? MyCard == rhs.value as? MyCard
         case .card:
             return lhs.value as? PaymentCard == rhs.value as? PaymentCard
+        case .applePay:
+            return lhs.value as? String == rhs.value as? String
         case .cash:
             return lhs.value as? Int == rhs.value as? Int
         }
