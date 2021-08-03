@@ -39,6 +39,6 @@ class MenuDetailPagesFactoryImpl: DependencyFactory, MenuDetailPagesFactory {
     }
 
     private func makeModifiersViewModel(modifierGroup: ModifierGroup) -> ModifiersViewModel {
-        return scoped(ModifiersViewModelImpl(modifierGroup: modifierGroup))
+        return scoped(ModifiersViewModelImpl(modifierGroup: modifierGroup, menuDetailRepository: repositoryComponents.makeMenuDetailRepository()))
     }
 }

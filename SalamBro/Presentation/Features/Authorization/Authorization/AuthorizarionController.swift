@@ -85,6 +85,12 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
         numberView?.showKeyboard()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        numberView?.becomeFirstResponder()
+    }
+
     private func bindViewModel() {
         viewModel.outputs.didStartRequest
             .subscribe(onNext: { [weak self] in

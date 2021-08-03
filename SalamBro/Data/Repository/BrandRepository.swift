@@ -20,29 +20,30 @@ protocol BrandRepository: AnyObject {
 }
 
 final class BrandRepositoryImpl: BrandRepository {
-    private let storage: BrandStorage
+    private let brandStorage: BrandStorage
+    private let geoStorage: GeoStorage
 
     private let disposeBag = DisposeBag()
     private(set) var outputs: Output = .init()
     private let locationService: LocationService
 
-    init(locationService: LocationService, storage: BrandStorage) {
+    init(locationService: LocationService,
+         brandStorage: BrandStorage,
+         geoStorage: GeoStorage)
+    {
         self.locationService = locationService
-        self.storage = storage
+        self.brandStorage = brandStorage
+        self.geoStorage = geoStorage
     }
 
     func getBrands() -> [Brand]? {
         guard
-            let brands = storage.brands,
+            let brands = brandStorage.brands,
             brands != []
         else {
             return nil
         }
         return brands
-    }
-
-    func getCurrentBrand() -> Brand? {
-        return storage.brand
     }
 
     func fetchBrands(with cityId: Int) {
@@ -63,12 +64,19 @@ final class BrandRepositoryImpl: BrandRepository {
             .disposed(by: disposeBag)
     }
 
-    func changeCurrentBrand(to brand: Brand) {
-        storage.brand = brand
+    func setBrands(brands: [Brand]) {
+        brandStorage.brands = brands
     }
 
-    func setBrands(brands: [Brand]) {
-        storage.brands = brands
+    func getCurrentBrand() -> Brand? {
+        return geoStorage.userAddresses.first(where: { $0.isCurrent })?.brand
+    }
+
+    func changeCurrentBrand(to brand: Brand) {
+        guard let index = geoStorage.userAddresses.firstIndex(where: { $0.isCurrent }) else { return }
+        let userAddresses = geoStorage.userAddresses
+        userAddresses[index].brand = brand
+        geoStorage.userAddresses = userAddresses
     }
 }
 

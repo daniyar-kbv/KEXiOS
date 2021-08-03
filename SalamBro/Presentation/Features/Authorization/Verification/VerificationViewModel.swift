@@ -15,14 +15,17 @@ final class VerificationViewModel {
     let outputs = Output()
 
     private let authRepository: AuthRepository
+    private let addressRepository: AddressRepository
     private let notificationsRepository: PushNotificationsRepository
     private(set) var phoneNumber: String
 
     init(authRepository: AuthRepository,
+         addressRepository: AddressRepository,
          notificationsRepository: PushNotificationsRepository,
          phoneNumber: String)
     {
         self.authRepository = authRepository
+        self.addressRepository = addressRepository
         self.notificationsRepository = notificationsRepository
         self.phoneNumber = phoneNumber
         bindOutputs()
@@ -34,7 +37,11 @@ final class VerificationViewModel {
             .disposed(by: disposeBag)
 
         authRepository.outputs.didVerifyOTP
-            .bind(to: outputs.didVerifyOTP)
+            .subscribe(onNext: { [weak self] in
+                self?.addressRepository.applyOrder(userAddress: self?.addressRepository.getCurrentUserAddress()) {
+                    self?.outputs.didVerifyOTP.accept(())
+                }
+            })
             .disposed(by: disposeBag)
 
         authRepository.outputs.didResendOTP

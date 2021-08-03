@@ -37,5 +37,6 @@ final class SBTabBarController: UITabBarController, AnimationViewPresentable, Al
 
         viewModel.getDocuments()
         viewModel.refreshToken()
+        viewModel.setFirstLauch()
     }
 }

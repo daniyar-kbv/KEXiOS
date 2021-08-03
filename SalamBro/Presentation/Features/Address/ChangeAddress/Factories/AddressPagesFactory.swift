@@ -10,7 +10,7 @@ import Foundation
 protocol AddressPagesFactory {
     func makeAddressPickPage() -> AddressPickController
     func makeSelectMainInfoPage(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewController
-    func makeMapPage(deliveryAddress: DeliveryAddress) -> MapPage
+    func makeMapPage(userAddress: UserAddress) -> MapPage
     func makeBrandsPage(cityId: Int) -> BrandsController
 }
 
@@ -26,7 +26,7 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
     }
 
     private func makeAddressPickViewModel() -> AddressPickerViewModel {
-        return scoped(.init(locationRepository: repositoryComponents.makeAddressRepository()))
+        return scoped(.init(addressRepository: repositoryComponents.makeAddressRepository()))
     }
 
     func makeSelectMainInfoPage(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewController {
@@ -42,16 +42,16 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
                             flowType: flowType))
     }
 
-    func makeMapPage(deliveryAddress: DeliveryAddress) -> MapPage {
-        return scoped(.init(viewModel: makeMapViewModel(deliveryAddress: deliveryAddress)))
+    func makeMapPage(userAddress: UserAddress) -> MapPage {
+        return scoped(.init(viewModel: makeMapViewModel(userAddress: userAddress)))
     }
 
-    private func makeMapViewModel(deliveryAddress: DeliveryAddress) -> MapViewModel {
+    private func makeMapViewModel(userAddress: UserAddress) -> MapViewModel {
         return scoped(.init(defaultStorage: DefaultStorageImpl.sharedStorage,
                             addressRepository: repositoryComponents.makeAddressRepository(),
                             brandRepository: repositoryComponents.makeBrandRepository(),
                             flow: .change,
-                            deliveryAddress: deliveryAddress))
+                            userAddress: userAddress))
     }
 
     func makeBrandsPage(cityId: Int) -> BrandsController {

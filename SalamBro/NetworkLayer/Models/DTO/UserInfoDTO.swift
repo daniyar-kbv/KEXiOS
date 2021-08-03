@@ -18,20 +18,10 @@ struct UserInfoDTO: Encodable {
     }
 }
 
-struct UserInfoResponseContainer: Codable {
-    let data: UserInfoResponse?
-    let error: ErrorResponse?
-}
-
-struct UserInfoResponse: Codable {
-    let name: String?
-    let email: String?
-    let mobilePhone: String?
-    let error: ErrorResponse?
+struct UpdateAddressDTO: Codable {
+    let brandId: Int
 
     enum CodingKeys: String, CodingKey {
-        case name, email
-        case mobilePhone = "mobile_phone"
-        case error
+        case brandId = "local_brand"
     }
 }

@@ -13,24 +13,19 @@ protocol MenuDetailModifierCellViewModel {
     var outputs: MenuDetailModifierCellViewModelImpl.Output { get set }
 
     func getModifierGroup() -> ModifierGroup
-    func set(value: Modifier)
     func getValue() -> Modifier?
-    func didSelect() -> Bool
+    func makeValueText()
 }
 
 final class MenuDetailModifierCellViewModelImpl: MenuDetailModifierCellViewModel {
-    private let modifierGroup: ModifierGroup
-    private var value: Modifier? {
-        didSet {
-            outputs.value.accept(value?.name)
-        }
-    }
+    private var modifierGroup: ModifierGroup
+    private var value: Modifier?
 
-    var outputs: Output
+    lazy var outputs = Output(name: makeTitle())
 
     init(modifierGroup: ModifierGroup) {
         self.modifierGroup = modifierGroup
-        outputs = Output(modifierGroup: modifierGroup)
+        makeValueText()
     }
 
     @available(*, unavailable)
@@ -42,28 +37,109 @@ final class MenuDetailModifierCellViewModelImpl: MenuDetailModifierCellViewModel
         return modifierGroup
     }
 
-    func set(value: Modifier) {
-        self.value = value
-    }
-
     func getValue() -> Modifier? {
         return value
     }
+}
 
-    func didSelect() -> Bool {
-        return value != nil
+extension MenuDetailModifierCellViewModelImpl {
+    private func makeTitle() -> NSAttributedString {
+        var requiredAmountTitle = NSMutableAttributedString(string: "")
+
+        var attributedTitle = NSMutableAttributedString(
+            string: modifierGroup.name,
+            attributes: [
+                NSAttributedString.Key.foregroundColor: UIColor.mildBlue,
+            ]
+        )
+
+        if modifierGroup.isRequired {
+            var amountString = ""
+            if modifierGroup.maxAmount == 1 {
+                amountString = " (\(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.position)))"
+            } else if modifierGroup.maxAmount > 1, modifierGroup.maxAmount <= 4 {
+                amountString = " (\(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positionLessOrEqualFour)))"
+            } else {
+                amountString = " (\(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positionGreaterThanFour)))"
+            }
+
+            requiredAmountTitle = NSMutableAttributedString(
+                string: amountString,
+                attributes: [
+                    NSAttributedString.Key.foregroundColor: UIColor.mildBlue,
+                ]
+            )
+
+            let dotString = NSAttributedString(
+                string: " • ",
+                attributes: [
+                    NSAttributedString.Key.foregroundColor: UIColor.mildBlue,
+                ]
+            )
+
+            let requiredString = NSAttributedString(
+                string: SBLocalization.localized(key: MenuText.MenuDetail.required),
+                attributes: [
+                    NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+                ]
+            )
+
+            attributedTitle.append(requiredAmountTitle)
+            attributedTitle.append(dotString)
+            attributedTitle.append(requiredString)
+        } else {
+            attributedTitle = NSMutableAttributedString(
+                string: SBLocalization.localized(key: MenuText.MenuDetail.additional),
+                attributes: [
+                    NSAttributedString.Key.foregroundColor: UIColor.mildBlue,
+                ]
+            )
+
+            var amountString = ""
+
+            if modifierGroup.maxAmount == 1 {
+                amountString = " (\(SBLocalization.localized(key: MenuText.MenuDetail.max)) \(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.position)))"
+            } else if modifierGroup.maxAmount > 1, modifierGroup.maxAmount <= 4 {
+                amountString = " (\(SBLocalization.localized(key: MenuText.MenuDetail.max)) \(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positionLessOrEqualFour)))"
+            } else {
+                amountString = " (\(SBLocalization.localized(key: MenuText.MenuDetail.max)) \(modifierGroup.maxAmount) \(SBLocalization.localized(key: MenuText.MenuDetail.positionGreaterThanFour)))"
+            }
+
+            requiredAmountTitle = NSMutableAttributedString(
+                string: amountString,
+                attributes: [
+                    NSAttributedString.Key.foregroundColor: UIColor.mildBlue,
+                ]
+            )
+
+            attributedTitle.append(requiredAmountTitle)
+        }
+
+        return attributedTitle as NSAttributedString
+    }
+
+    func makeValueText() {
+        var valueText = ""
+
+        for m in modifierGroup.selectedModifiers {
+            for _ in 0 ..< m.itemCount {
+                valueText = valueText.isEmpty ? m.name : valueText + ", " + m.name
+            }
+        }
+
+        outputs.isRequired.accept(modifierGroup.isRequired)
+        outputs.value.accept(valueText)
     }
 }
 
 extension MenuDetailModifierCellViewModelImpl {
     struct Output {
-        private let modifierGroup: ModifierGroup
-
-        init(modifierGroup: ModifierGroup) {
-            self.modifierGroup = modifierGroup
+        init(name: NSAttributedString) {
+            self.name = .init(value: name)
         }
 
-        lazy var name = BehaviorRelay<String>(value: self.modifierGroup.name)
-        lazy var value = BehaviorRelay<String?>(value: nil)
+        let name: BehaviorRelay<NSAttributedString>
+        let isRequired = BehaviorRelay<Bool?>(value: nil)
+        let value = BehaviorRelay<String?>(value: nil)
     }
 }

@@ -25,9 +25,6 @@ class PromotionsServiceImpl: PromotionsService {
         return provider.rx
             .request(.promotions(leadUUID: leadUUID))
             .map { response in
-
-                // MARK: Tech debt, в данный момент в swagger-е не прописаны ошибки для этого запроса, только success case
-
                 guard let promotionsResponse = try? response.map(PromotionsResponse.self) else {
                     throw NetworkError.badMapping
                 }

@@ -153,7 +153,7 @@ extension BrandsController {
 
     struct Output {
         let didSelectBrand = PublishRelay<Brand>()
-        let toMap = PublishRelay<DeliveryAddress>()
+        let toMap = PublishRelay<UserAddress>()
         let close = PublishRelay<Void>()
     }
 }

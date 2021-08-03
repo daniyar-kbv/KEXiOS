@@ -62,7 +62,11 @@ final class MapTextField: UITextView {
     }
 
     func set(text: String?) {
-        guard text?.isEmpty == false else { return }
+        guard !(text?.isEmpty ?? true) else {
+            self.text = placeholder
+            isEmpty = true
+            return
+        }
         self.text = text
         isEmpty = false
     }
