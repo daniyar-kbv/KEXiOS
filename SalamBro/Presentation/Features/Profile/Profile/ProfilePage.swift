@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, AnimationViewPresentable {
+final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
     let outputs = Output()
 
     private let disposeBag = DisposeBag()
@@ -163,7 +163,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
             .subscribe(onNext: { [weak self] userInfo in
                 self?.layoutUI()
                 self?.updateViews(with: userInfo)
-                self?.hideAnimationView()
+                self?.hideAnimationView(completionHandler: nil)
             })
             .disposed(by: disposeBag)
     }
@@ -177,7 +177,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable, 
     }
 
     private func showEmptyState() {
-        showAnimationView(animationType: .profile, fullScreen: false) { [weak self] in
+        showAnimationView(animationType: .profile) { [weak self] in
             self?.outputs.onLoginTapped.accept(())
         }
     }

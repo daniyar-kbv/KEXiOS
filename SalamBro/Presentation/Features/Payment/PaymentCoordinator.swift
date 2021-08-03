@@ -194,14 +194,14 @@ final class PaymentCoordinator: BaseCoordinator {
         threeDSController?.dismiss(animated: true)
     }
 
-    private func showPaymentInProcessView(on viewController: (UIViewController & AnimationViewPresentable)?) {
-        viewController?.showAnimationView(animationType: .payment, fullScreen: true) {
+    private func showPaymentInProcessView(on viewController: UIViewController?) {
+        viewController?.presentAnimationView(animationType: .payment) {
 //            Tech debt
         }
     }
 
-    private func hidePaymentInProcessView(on viewController: (UIViewController & AnimationViewPresentable)?) {
-        viewController?.hideAnimationView()
+    private func hidePaymentInProcessView(on viewController: UIViewController?) {
+        viewController?.dismissAnimationView()
     }
 }
 

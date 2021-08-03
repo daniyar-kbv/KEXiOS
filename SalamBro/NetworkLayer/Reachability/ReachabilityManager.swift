@@ -19,6 +19,7 @@ protocol ReachabilityManager: AnyObject {
 
 final class ReachabilityManagerImpl: ReachabilityManager {
     private let reachability = try! Reachability()
+    private lazy var lastReachability = getReachability()
 
     static let shared = ReachabilityManagerImpl()
 
@@ -60,20 +61,27 @@ final class ReachabilityManagerImpl: ReachabilityManager {
     }
 
     private func onReachabilityChange(_ isReachable: Bool?) {
-        guard let isReachable = isReachable else { return }
+        guard let isReachable = isReachable,
+              lastReachability != isReachable else { return }
+        lastReachability = isReachable
         outputs.connectionDidChange.accept(isReachable)
         configNoInternetView(isReachable: isReachable)
     }
 
     private func configNoInternetView(isReachable: Bool) {
-        guard let viewController = UIApplication.shared.keyWindow?.rootViewController as? UIViewController & AnimationViewPresentable else { return }
-
         if isReachable {
-            viewController.hideAnimationView {
+            guard let topViewController = UIApplication.topViewController() as? AnimationController
+            else {
+                UIApplication.topViewController()?.dismissAnimationView {
+                    self.reloadTopViewController()
+                }
+                return
+            }
+            topViewController.presentingViewController?.dismissAnimationView {
                 self.reloadTopViewController()
             }
         } else {
-            viewController.showAnimationView(animationType: .noInternet, fullScreen: true) { [weak self] in
+            UIApplication.topViewController()?.presentAnimationView(animationType: .noInternet) { [weak self] in
                 self?.reloadTopViewController()
             }
         }

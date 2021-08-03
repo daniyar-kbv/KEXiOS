@@ -59,6 +59,10 @@ final class AuthNumberView: UIView {
 }
 
 extension AuthNumberView {
+    func showKeyboard() {
+        numberField.becomeFirstResponder()
+    }
+
     func configureButtonTitle(with buttonTitle: String) {
         countryCodeButton.setTitle(buttonTitle, for: .normal)
     }

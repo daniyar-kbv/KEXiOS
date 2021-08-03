@@ -36,6 +36,12 @@ final class SetNameController: UIViewController, AlertDisplayable, LoaderDisplay
         bindViewModel()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        rootView.showKeyboard()
+    }
+
     private func bindViewModel() {
         viewModel.outputs.didStartRequest
             .bind { [weak self] in

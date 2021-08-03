@@ -9,19 +9,12 @@ import Cache
 import Foundation
 
 protocol BrandStorage: AnyObject {
-    var brand: Brand? { get set }
     var brands: [Brand]? { get set }
 }
 
 extension Storage: BrandStorage {
     private enum Key: String {
-        case brand
         case brands
-    }
-
-    var brand: Brand? {
-        get { get(key: Key.brand.rawValue) }
-        set { save(key: Key.brand.rawValue, object: newValue) }
     }
 
     var brands: [Brand]? {

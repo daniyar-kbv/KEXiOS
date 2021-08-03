@@ -14,7 +14,7 @@ protocol CartViewDelegate {
 }
 
 // FIXME: Refactor
-class CartController: UIViewController, AnimationViewPresentable, LoaderDisplayable, AlertDisplayable {
+class CartController: UIViewController, LoaderDisplayable, AlertDisplayable {
     private let viewModel: CartViewModel
     private let disposeBag = DisposeBag()
 
@@ -138,11 +138,11 @@ class CartController: UIViewController, AnimationViewPresentable, LoaderDisplaya
 
     private func configAnimationView() {
         guard viewModel.getIsEmpty() else {
-            hideAnimationView()
+            hideAnimationView(completionHandler: nil)
             return
         }
 
-        showAnimationView(animationType: .emptyBasket, fullScreen: false) { [weak self] in
+        showAnimationView(animationType: .emptyBasket) { [weak self] in
             self?.outputs.toMenu.accept(())
         }
     }

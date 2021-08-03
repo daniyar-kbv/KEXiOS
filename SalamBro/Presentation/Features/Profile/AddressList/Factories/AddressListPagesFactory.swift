@@ -9,7 +9,7 @@ import Foundation
 
 protocol AddressListPagesFactory {
     func makeAddressListPage() -> AddressListController
-    func makeAddressDetailPage(deliveryAddress: DeliveryAddress) -> AddressDetailController
+    func makeAddressDetailPage(userAddress: UserAddress) -> AddressDetailController
 }
 
 final class AddressListPagesFactoryImpl: DependencyFactory, AddressListPagesFactory {
@@ -24,14 +24,14 @@ final class AddressListPagesFactoryImpl: DependencyFactory, AddressListPagesFact
     }
 
     private func makeAddressListViewModel() -> AddressListViewModel {
-        return scoped(AddressListViewModelImpl(locationRepository: repositoryComponents.makeAddressRepository()))
+        return scoped(AddressListViewModelImpl(addressRepository: repositoryComponents.makeAddressRepository()))
     }
 
-    func makeAddressDetailPage(deliveryAddress: DeliveryAddress) -> AddressDetailController {
-        return scoped(.init(viewModel: makeAddressDetailViewModel(deliveryAddress: deliveryAddress)))
+    func makeAddressDetailPage(userAddress: UserAddress) -> AddressDetailController {
+        return scoped(.init(viewModel: makeAddressDetailViewModel(userAddress: userAddress)))
     }
 
-    private func makeAddressDetailViewModel(deliveryAddress: DeliveryAddress) -> AddressDetailViewModel {
-        return scoped(AddressDetailViewModelImpl(deliveryAddress: deliveryAddress, locationRepository: repositoryComponents.makeAddressRepository()))
+    private func makeAddressDetailViewModel(userAddress: UserAddress) -> AddressDetailViewModel {
+        return scoped(AddressDetailViewModelImpl(userAddress: userAddress, addressRepository: repositoryComponents.makeAddressRepository()))
     }
 }

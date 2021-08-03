@@ -28,6 +28,7 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
                                     brandRepository: repositoryComponents.makeBrandRepository(),
                                     menuRepository: repositoryComponents.makeMenuRepository(),
                                     defaultStorage: DefaultStorageImpl.sharedStorage,
+                                    tokenStorage: AuthTokenStorageImpl.sharedStorage,
                                     scrollService: .init()))
     }
 

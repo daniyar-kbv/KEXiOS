@@ -40,7 +40,7 @@ final class MapViewModel {
          addressRepository: AddressRepository,
          brandRepository: BrandRepository,
          flow: MapFlow,
-         deliveryAddress: DeliveryAddress)
+         userAddress: UserAddress)
     {
         self.defaultStorage = defaultStorage
         self.addressRepository = addressRepository
@@ -48,26 +48,30 @@ final class MapViewModel {
 
         self.flow = flow
 
-        if let address = deliveryAddress.address {
-            targetLocation = YMKPoint(latitude: address.latitude, longitude: address.longitude)
-        } else if let city = deliveryAddress.city {
-            targetLocation = YMKPoint(latitude: city.latitude, longitude: city.longitude)
+        if let addressLatitude = userAddress.address.latitude,
+           let addressLongitude = userAddress.address.longitude
+        {
+            targetLocation = YMKPoint(latitude: addressLatitude,
+                                      longitude: addressLongitude)
+        } else if let city = userAddress.address.city {
+            targetLocation = YMKPoint(latitude: city.latitude,
+                                      longitude: city.longitude)
         } else {
             targetLocation = YMKPoint(latitude: Constants.Map.Coordinates.ALA_LAT,
                                       longitude: Constants.Map.Coordinates.ALA_LON)
         }
 
-        outputs.selectedAddress.onNext(transformToMapAddress(deliveryAddress: deliveryAddress))
-        commentary = deliveryAddress.address?.commentary
+        outputs.selectedAddress.onNext(userAddress.address)
+        commentary = userAddress.address.comment
     }
 
     func onActionButtonTapped() {
         guard let lastAddress = try? outputs.selectedAddress.value() else { return }
         switch flow {
         case .creation:
-            addressRepository.changeCurrentAddress(to: Address(name: lastAddress.name, longitude: lastAddress.longitude, latitude: lastAddress.latitude))
+            addressRepository.changeCurrentAddress(district: lastAddress.district, street: lastAddress.street, building: lastAddress.building, corpus: lastAddress.corpus, flat: lastAddress.flat, comment: commentary, longitude: lastAddress.longitude, latitude: lastAddress.latitude)
             bindToOrdersOutputs(using: lastAddress)
-            addressRepository.applyOrder(withAddress: true)
+            addressRepository.applyOrder(userAddress: addressRepository.getCurrentUserAddress(), completion: nil)
         case .change:
             outputs.lastSelectedAddress.accept((lastAddress, commentary))
         }
@@ -93,51 +97,47 @@ final class MapViewModel {
 
     private func onSearchResponseName(_ response: YMKSearchResponse, shouldMoveMap: Bool = false) {
         for searchResult in response.collection.children {
-            if let _ = searchResult.obj!.geometry.first?.point {
-                guard let objMetadata = response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata else {
-                    continue
-                }
+            guard let _ = searchResult.obj!.geometry.first?.point else { return }
+            guard let objectMetadata = (response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata) else { continue }
+            let addressComponenets = objectMetadata.address.components
 
-                guard
-                    let name = searchResult.obj?.name
-                else { return }
-                let address = MapAddress(name: name,
-                                         formattedAddress: objMetadata.address.formattedAddress,
-                                         longitude: objMetadata.balloonPoint.longitude,
-                                         latitude: objMetadata.balloonPoint.latitude)
-                outputs.selectedAddress.onNext(address)
+            let district = addressComponenets
+                .first(where: {
+                    $0.kinds.contains(Constants.Map.ComponentsKinds.district)
+                })?
+                .name
+            let street = addressComponenets
+                .first(where: {
+                    $0.kinds.contains(Constants.Map.ComponentsKinds.street)
+                })?
+                .name
+            let building = addressComponenets
+                .first(where: {
+                    $0.kinds.contains(Constants.Map.ComponentsKinds.building)
+                })?
+                .name
 
-                if shouldMoveMap {
-                    outputs.moveMapTo.accept(YMKPoint(latitude: address.latitude, longitude: address.longitude))
-                }
+            let address = Address()
+            address.district = district
+            address.street = street
+            address.building = building
+            address.longitude = objectMetadata.balloonPoint.longitude
+            address.latitude = objectMetadata.balloonPoint.latitude
 
-                return
+            outputs.selectedAddress.onNext(address)
+
+            if shouldMoveMap {
+                outputs.moveMapTo.accept(YMKPoint(latitude: objectMetadata.balloonPoint.longitude,
+                                                  longitude: objectMetadata.balloonPoint.latitude))
             }
+
+            return
         }
     }
 }
 
 extension MapViewModel {
-    private func getTargetLocation(of deliveryAddress: DeliveryAddress) -> YMKPoint {
-        if let address = deliveryAddress.address {
-            return YMKPoint(latitude: address.latitude, longitude: address.longitude)
-        } else if let city = deliveryAddress.city {
-            return YMKPoint(latitude: city.latitude, longitude: city.longitude)
-        }
-        return YMKPoint(latitude: Constants.Map.Coordinates.ALA_LAT,
-                        longitude: Constants.Map.Coordinates.ALA_LON)
-    }
-
-    private func transformToMapAddress(deliveryAddress: DeliveryAddress) -> MapAddress {
-        return .init(name: deliveryAddress.address?.name ?? "",
-                     formattedAddress: deliveryAddress.address?.name ?? "",
-                     longitude: deliveryAddress.address?.longitude ??
-                         Constants.Map.Coordinates.ALA_LON,
-                     latitude: deliveryAddress.address?.latitude ??
-                         Constants.Map.Coordinates.ALA_LAT)
-    }
-
-    private func bindToOrdersOutputs(using address: MapAddress) {
+    private func bindToOrdersOutputs(using address: Address) {
         addressRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
@@ -161,8 +161,8 @@ extension MapViewModel {
 extension MapViewModel {
     struct Output {
         let moveMapTo = PublishRelay<YMKPoint>()
-        let selectedAddress = BehaviorSubject<MapAddress>(value: MapAddress(name: "", formattedAddress: "", longitude: 0, latitude: 0))
-        let lastSelectedAddress = PublishRelay<(MapAddress, String?)>()
+        let selectedAddress = BehaviorSubject<Address?>(value: nil)
+        let lastSelectedAddress = PublishRelay<(Address, String?)>()
         let updateComment = PublishRelay<String>()
 
         let didGetError = PublishRelay<ErrorPresentable>()

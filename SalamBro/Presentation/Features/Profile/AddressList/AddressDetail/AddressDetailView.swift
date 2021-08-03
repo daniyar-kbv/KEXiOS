@@ -31,6 +31,7 @@ final class AddressDetailView: UIView {
         view.numberOfLines = 0
 //        Tech debt: localize
         view.text = "Комментарий"
+        view.isHidden = true
         return view
     }()
 
@@ -39,6 +40,7 @@ final class AddressDetailView: UIView {
         view.font = .systemFont(ofSize: 14)
         view.numberOfLines = 0
         view.textColor = .darkGray
+        view.isHidden = true
         return view
     }()
 
@@ -59,6 +61,8 @@ extension AddressDetailView {
     }
 
     public func configureCommentary(commentary: String) {
+        commentaryTitleLabel.isHidden = false
+        commentaryLabel.isHidden = false
         commentaryLabel.text = commentary
     }
 

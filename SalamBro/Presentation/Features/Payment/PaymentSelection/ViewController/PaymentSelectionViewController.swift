@@ -12,7 +12,7 @@ import RxSwift
 import UIKit
 import WebKit
 
-final class PaymentSelectionViewController: UIViewController, AlertDisplayable, AnimationViewPresentable {
+final class PaymentSelectionViewController: UIViewController, AlertDisplayable {
     private let disposeBag = DisposeBag()
     private let viewModel: PaymentSelectionViewModel
     private lazy var contentView: PaymentSelectionContainerView = {

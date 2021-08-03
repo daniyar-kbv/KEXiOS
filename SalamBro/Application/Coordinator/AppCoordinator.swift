@@ -28,8 +28,6 @@ final class AppCoordinator: BaseCoordinator {
     }
 
     override func start() {
-        configureLocalization()
-
         configureMenuCoordinator()
         configureProfileCoordinator()
         configureSupportCoordinator()
@@ -38,21 +36,9 @@ final class AppCoordinator: BaseCoordinator {
         switchFlows()
     }
 
-    private func configureLocalization() {
-        guard let _ = DefaultStorageImpl.sharedStorage.appLocale else {
-            DefaultStorageImpl.sharedStorage.persist(appLocale: Locale.current.identifier.components(separatedBy: "_")[0]) // Default system locale
-            return
-        }
-    }
-
     private func switchFlows() {
-        let locationRepository = repositoryComponents.makeAddressRepository()
-        let brandRepository = repositoryComponents.makeBrandRepository()
-
-        guard
-            locationRepository.isAddressComplete(),
-            brandRepository.getCurrentBrand() != nil
-        else {
+        guard DefaultStorageImpl.sharedStorage.notFirstLaunch else {
+            AuthTokenStorageImpl.sharedStorage.cleanUp()
             startOnboardingFlow()
             return
         }
@@ -160,7 +146,7 @@ final class AppCoordinator: BaseCoordinator {
     private func showTabBarController() {
         pagesFactory.makeSBTabbarController().viewControllers = preparedViewControllers
 
-        UIApplication.shared.setRootView(pagesFactory.makeSBTabbarController()) // MARK: Tech debt
+        UIApplication.shared.setRootView(pagesFactory.makeSBTabbarController())
     }
 }
 
