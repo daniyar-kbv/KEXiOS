@@ -181,6 +181,7 @@
 "Payment.Selection.orderPayment" = "Оформить заказ";
 "Payment.Selection.paymentMethod" = "Способ оплаты";
 "Payment.Selection.title" = "Оформление заказа";
+"Payment.Selection.applePay" = "Оформить с";
 
 // MARK: - Payment Card
 
@@ -190,8 +191,8 @@
 "Payment.Card.expiryDate" = "Срок действия";
 "Payment.Card.cardholderName" = "Имя Фамилия";
 "Payment.Card.saveButton" = "Далее";
-"Payment.Card.Error.invalidCard" = "Не валидный номер карты";
-"Payment.Card.Error.invalidExpiryDate" = "Не валидный срок дейсвия карты";
+"Payment.Card.Error.title" = "Внимание";
+"Payment.Card.Error.message" = "Некоторые поля заполнены неверно";
 
 // MARK: - Payment Cash
 
@@ -202,6 +203,15 @@
 "Payment.Cash.fieldDescription" = "Укажите сумму больше стоимости заказа";
 "Payment.Cash.Button.noChange" = "У меня без сдачи";
 "Payment.Cash.Button.submit" = "Готово";
+
+// MARK: - PaymentEdit
+
+"Payment.Edit.title" = "Способ оплаты";
+"Payment.Edit.Cell.title" = "Карта *%@";
+"Payment.Edit.Alert.title" = "Вы уверены?";
+"Payment.Edit.Alert.message" = "Вы уверены что хотите удалить данную карту?";
+"Payment.Edit.Alert.yes" = "Да";
+"Payment.Edit.Alert.no" = "Нет";
 
 // MARK: - Alert
 

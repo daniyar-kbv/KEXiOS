@@ -20,12 +20,14 @@ struct CreatePaymentDTO: Encodable {
     let paymentType: String
     let cryptogram: String
     let cardholderName: String
+    let keepCard: Bool?
 
     enum CodingKeys: String, CodingKey {
         case leadUUID = "lead"
         case paymentType = "payment_type"
         case cryptogram
         case cardholderName = "card_holder_name"
+        case keepCard = "keep_card"
     }
 }
 

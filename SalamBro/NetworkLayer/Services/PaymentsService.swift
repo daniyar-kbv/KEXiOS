@@ -12,6 +12,7 @@ import RxSwift
 
 protocol PaymentsService: AnyObject {
     func myCards() -> Single<[MyCard]>
+    func deleteCard(uuid: String) -> Single<Void>
     func createOrder(dto: CreateOrderDTO) -> Single<Void>
     func createPayment(dto: CreatePaymentDTO) -> Single<OrderStatus>
     func createCardPayment(dto: CardPaymentDTO) -> Single<CardPaymentOrderStatus>
@@ -42,6 +43,26 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
                 }
 
                 return myCards
+            }
+    }
+
+    func deleteCard(uuid: String) -> Single<Void> {
+        return provider.rx
+            .request(.deleteCard(uuid: uuid))
+            .map { response in
+                if response.response?.statusCode == Constants.StatusCode.noContent {
+                    return ()
+                }
+
+                guard let response = try? response.map(DeleteCardResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = response.error {
+                    throw error
+                }
+
+                return ()
             }
     }
 

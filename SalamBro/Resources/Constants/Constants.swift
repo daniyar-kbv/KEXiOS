@@ -12,6 +12,7 @@ struct Constants {
 
     static let apiKey = getPlistValue(by: "API_KEY")
     static let cloudpaymentsMerchantId = getPlistValue(by: "CLOUDPAYMENTS_MERCHANT_ID")
+    static let applePayMerchantId = getPlistValue(by: "APPLE_PAY_MERCHANT_ID")
 
     enum URLs {
         static let promotionURL = "/promotions/%@/"
@@ -38,6 +39,10 @@ struct Constants {
 
     enum ErrorCode {
         static let orderAlreadyExists = "order_already_exists"
+    }
+
+    enum StatusCode {
+        static let noContent = 204
     }
 
     enum Language: String {

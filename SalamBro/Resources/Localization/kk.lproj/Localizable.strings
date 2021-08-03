@@ -180,6 +180,7 @@
 "Payment.Selection.orderPayment" = "KZ Оформить заказ";
 "Payment.Selection.paymentMethod" = "KZ Способ оплаты";
 "Payment.Selection.title" = "KZ Оформление заказа";
+"Payment.Selection.applePay" = "KZ Оформить с";
 
 // MARK: - Payment Card
 
@@ -189,8 +190,8 @@
 "Payment.Card.expiryDate" = "KZ Срок действия";
 "Payment.Card.cardholderName" = "KZ Имя Фамилия";
 "Payment.Card.saveButton" = "KZ Далее";
-"Payment.Card.Error.invalidCard" = "KZ Не валидный номер карты";
-"Payment.Card.Error.invalidExpiryDate" = "KZ Не валидный срок дейсвия карты";
+"Payment.Card.Error.title" = "KZ Внимание";
+"Payment.Card.Error.message" = "KZ Некоторые поля заполнены неверно";
 
 // MARK: - Payment Cash
 
@@ -201,6 +202,15 @@
 "Payment.Cash.fieldDescription" = "KZ Укажите сумму больше стоимости заказа";
 "Payment.Cash.Button.noChange" = "KZ У меня без сдачи";
 "Payment.Cash.Button.submit" = "KZ Готово";
+
+// MARK: - PaymentEdit
+
+"Payment.Edit.title" = "KZ Способ оплаты";
+"Payment.Edit.Cell.title" = "KZ Карта *%@";
+"Payment.Edit.Alert.title" = "KZ Вы уверены?";
+"Payment.Edit.Alert.message" = "KZ Вы уверены что хотите удалить данную карту?";
+"Payment.Edit.Alert.yes" = "KZ Да";
+"Payment.Edit.Alert.no" = "KZ Нет";
 
 // MARK: - Alert
 

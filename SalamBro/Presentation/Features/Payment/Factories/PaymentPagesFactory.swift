@@ -14,6 +14,7 @@ protocol PaymentPagesFactory: AnyObject {
     func makePaymentCardPage(paymentMethod: PaymentMethod) -> PaymentCardViewController
     func makePaymentCashPage(paymentMethod: PaymentMethod) -> PaymentCashViewController
     func makeThreeDSPage(webView: WKWebView) -> ThreeDSViewController
+    func makePaymentEditPage() -> PaymentEditController
 }
 
 final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
@@ -71,5 +72,13 @@ final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
 
     func makeThreeDSPage(webView: WKWebView) -> ThreeDSViewController {
         return scoped(ThreeDSViewController(webView: webView))
+    }
+
+    func makePaymentEditPage() -> PaymentEditController {
+        return scoped(.init(viewModel: makePaymentEditViewModel()))
+    }
+
+    private func makePaymentEditViewModel() -> PaymentEditViewModel {
+        return scoped(PaymentEditViewModelImpl(paymentRepository: repositoryComponents.makePaymentRepository()))
     }
 }

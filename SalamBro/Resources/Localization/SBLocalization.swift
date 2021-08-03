@@ -345,6 +345,7 @@ enum PaymentText: UILocalizable {
         case change = "Payment.Selection.change"
         case bill = "Payment.Selection.bill"
         case orderPayment = "Payment.Selection.orderPayment"
+        case applePay = "Payment.Selection.applePay"
 
         var localized: String { rawValue }
     }
@@ -360,8 +361,8 @@ enum PaymentText: UILocalizable {
         var localized: String { rawValue }
 
         enum Error: String, UILocalizable {
-            case invalidCard = "Payment.Card.Error.invalidCard"
-            case invalidExpiryDate = "Payment.Card.Error.invalidExpiryDate"
+            case title = "Payment.Card.Error.title"
+            case message = "Payment.Card.Error.message"
 
             var localized: String { rawValue }
         }
@@ -389,6 +390,22 @@ enum PaymentText: UILocalizable {
         enum Button: String, UILocalizable {
             case noChange = "Payment.Cash.Button.noChange"
             case submit = "Payment.Cash.Button.submit"
+
+            var localized: String { rawValue }
+        }
+    }
+
+    enum PaymentEdit: String, UILocalizable {
+        case title = "Payment.Edit.title"
+        case cellTitle = "Payment.Edit.Cell.title"
+
+        var localized: String { rawValue }
+
+        enum Alert: String, UILocalizable {
+            case title = "Payment.Edit.Alert.title"
+            case message = "Payment.Edit.Alert.message"
+            case yes = "Payment.Edit.Alert.yes"
+            case no = "Payment.Edit.Alert.no"
 
             var localized: String { rawValue }
         }
