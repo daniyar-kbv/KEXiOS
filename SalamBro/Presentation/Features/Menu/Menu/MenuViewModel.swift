@@ -275,6 +275,7 @@ extension MenuViewModel: AddCollectionCellDelegate {
     private func didScrollToItem(at position: Int) {
         guard isNotEmpty(),
               let positionsIndex = getSectionIndex(of: .positions),
+              tableSections[positionsIndex].cellViewModels.count > position,
               let cellViewModel = tableSections[positionsIndex]
               .cellViewModels[position]
               as? MenuCellViewModelProtocol,
