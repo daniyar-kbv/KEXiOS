@@ -36,6 +36,7 @@ extension CartProductViewModelImpl {
     }
 
     struct Output {
+        let itemImage: BehaviorRelay<URL?>
         let itemTitle: BehaviorRelay<String>
         let modifiersTitles: BehaviorRelay<String>
         let comment: BehaviorRelay<String>
@@ -44,6 +45,7 @@ extension CartProductViewModelImpl {
         let isAvailable: BehaviorRelay<Bool>
 
         init(item: CartItem) {
+            itemImage = .init(value: URL(string: item.position.image ?? ""))
             itemTitle = .init(value: item.position.name)
             modifiersTitles = .init(value: item.modifierGroups
                 .flatMap { $0.modifiers }

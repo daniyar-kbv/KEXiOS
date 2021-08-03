@@ -139,8 +139,7 @@ extension CartProductCell {
         productImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(12)
             $0.left.equalToSuperview().offset(24)
-            $0.width.equalTo(40)
-            $0.height.equalTo(40)
+            $0.size.equalTo(40)
         }
 
         productTitleLabel.snp.makeConstraints {
@@ -227,6 +226,13 @@ extension CartProductCell {
     }
 
     private func bindViewModel() {
+        viewModel.outputs.itemImage
+            .bind(onNext: { [weak self] url in
+                guard let url = url else { return }
+                self?.productImageView.setImage(url: url)
+            })
+            .disposed(by: disposeBag)
+
         viewModel.outputs.itemTitle
             .bind(to: productTitleLabel.rx.text)
             .disposed(by: disposeBag)

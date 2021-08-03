@@ -12,7 +12,6 @@ protocol RepositoryComponents: AnyObject {
     func makeBrandRepository() -> BrandRepository
     func makeCartRepository() -> CartRepository
     func makeAuthRepository() -> AuthRepository
-    func makeChangeUserInfoRepository() -> ChangeUserInfoRepository
     func makeCountriesRepository() -> CountriesRepository
     func makeCitiesRepository() -> CitiesRepository
     func makeMenuRepository() -> MenuRepository
@@ -20,7 +19,7 @@ protocol RepositoryComponents: AnyObject {
     func makeDocumentsRepository() -> DocumentsRepository
     func makeRateOrderRepository() -> RateOrderRepository
     func makePaymentRepository() -> PaymentRepository
-    func makeProfileRepository() -> ProfilePageRepository
+    func makeProfileRepository() -> ProfileRepository
     func makePushNotificationsRepository() -> PushNotificationsRepository
 }
 
@@ -60,11 +59,6 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
                                          defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
-    func makeChangeUserInfoRepository() -> ChangeUserInfoRepository {
-        return shared(ChangeUserInfoRepositoryImpl(service: serviceComponents.profileService(),
-                                                   defaultStorage: DefaultStorageImpl.sharedStorage))
-    }
-
     func makeCountriesRepository() -> CountriesRepository {
         return shared(CountriesRepositoryImpl(locationService: serviceComponents.locationService(),
                                               storage: makeLocalStorage()))
@@ -100,10 +94,10 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
                                                 cartStorage: makeLocalStorage()))
     }
 
-    func makeProfileRepository() -> ProfilePageRepository {
-        return shared(ProfilePageRepositoryImpl(profileService: serviceComponents.profileService(),
-                                                authService: serviceComponents.authService(),
-                                                tokenStorage: AuthTokenStorageImpl.sharedStorage))
+    func makeProfileRepository() -> ProfileRepository {
+        return shared(ProfileRepositoryImpl(profileService: serviceComponents.profileService(),
+                                            authService: serviceComponents.authService(),
+                                            tokenStorage: AuthTokenStorageImpl.sharedStorage))
     }
 
     func makePushNotificationsRepository() -> PushNotificationsRepository {

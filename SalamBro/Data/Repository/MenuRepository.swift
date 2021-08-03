@@ -59,6 +59,7 @@ final class MenuRepositoryImpl: MenuRepository {
 //            self?.outputs.didGetError.accept(error as? ErrorPresentable)
 //        }).disposed(by: disposeBag)
 
+        outputs.didStartRequest.accept(())
         productsSequence.subscribe(onSuccess: {
             [weak self] positionsData in
             self?.outputs.didGetPromotions.accept([])

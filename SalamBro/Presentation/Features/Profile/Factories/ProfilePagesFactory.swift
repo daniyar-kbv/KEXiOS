@@ -27,13 +27,13 @@ final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
     }
 
     private func makeProfileViewModel() -> ProfileViewModel {
-        return scoped(ProfileViewModelImpl(repository: makeProfilePageRepository()))
+        return scoped(ProfileViewModelImpl(repository: makeProfileRepository()))
     }
 
-    private func makeProfilePageRepository() -> ProfilePageRepository {
-        return scoped(ProfilePageRepositoryImpl(profileService: serviceComponents.profileService(),
-                                                authService: serviceComponents.authService(),
-                                                tokenStorage: AuthTokenStorageImpl.sharedStorage))
+    private func makeProfileRepository() -> ProfileRepository {
+        return scoped(ProfileRepositoryImpl(profileService: serviceComponents.profileService(),
+                                            authService: serviceComponents.authService(),
+                                            tokenStorage: AuthTokenStorageImpl.sharedStorage))
     }
 
     func makeChangeUserInfoPage(userInfo: UserInfoResponse) -> ChangeNameController {
@@ -41,7 +41,7 @@ final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
     }
 
     private func makeChangeUserInfoViewModel(userInfo: UserInfoResponse) -> ChangeNameViewModel {
-        return scoped(ChangeNameViewModelImpl(repository: repositoryComponents.makeChangeUserInfoRepository(), userInfo: userInfo))
+        return scoped(ChangeNameViewModelImpl(repository: repositoryComponents.makeProfileRepository(), userInfo: userInfo))
     }
 
     func makeChangeLanguagePage() -> ChangeLanguageController {

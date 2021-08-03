@@ -23,7 +23,6 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = DefaultStorageImpl.sharedStorage.userName ?? ""
         label.font = .systemFont(ofSize: 32, weight: .semibold)
         label.textAlignment = .left
         return label
@@ -100,10 +99,6 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         }
 
         viewModel.fetchUserInfo()
-    }
-
-    func set(userInfo: UserInfoResponse) {
-        viewModel.set(userInfo: userInfo)
     }
 
     private func bindViews() {

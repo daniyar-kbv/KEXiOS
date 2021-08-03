@@ -31,9 +31,9 @@ final class ProfileViewModelImpl: ProfileViewModel {
     private(set) var outputs: Output = .init()
     private(set) var currentUserInfo: UserInfoResponse?
 
-    private let repository: ProfilePageRepository
+    private let repository: ProfileRepository
 
-    init(repository: ProfilePageRepository) {
+    init(repository: ProfileRepository) {
         self.repository = repository
         bindOutputs()
     }
