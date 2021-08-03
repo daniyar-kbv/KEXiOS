@@ -78,12 +78,7 @@ final class MenuViewModel: MenuViewModelProtocol {
         menuRepository.outputs.didGetCategories.bind {
             [weak self] categories in
             self?.setCategories(categories: categories)
-        }
-        .disposed(by: disposeBag)
-
-        menuRepository.outputs.didGetPositions.bind {
-            [weak self] positions in
-            self?.setPositions(positions: positions)
+            self?.setPositions(of: categories)
         }
         .disposed(by: disposeBag)
     }
@@ -135,12 +130,14 @@ final class MenuViewModel: MenuViewModelProtocol {
         )
     }
 
-    private func setPositions(positions: [MenuPosition]) {
-        tableSections
-            .first(where: { $0.type == .positions })?
-            .cellViewModels = positions.map { position in
-                MenuCellViewModel(position: position)
+    private func setPositions(of categories: [MenuCategory]) {
+        for c in 0 ..< categories.count {
+            for p in 0 ..< categories[c].positions.count {
+                tableSections
+                    .first(where: { $0.type == .positions })?
+                    .cellViewModels.append(MenuCellViewModel(position: categories[c].positions[p]))
             }
+        }
     }
 }
 

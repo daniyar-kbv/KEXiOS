@@ -10,6 +10,7 @@ import Foundation
 struct MenuCategory: Codable {
     let name: String
     let uuid: String
+    let positions: [MenuPosition]
 }
 
 struct MenuPosition: Codable {

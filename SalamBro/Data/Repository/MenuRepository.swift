@@ -39,20 +39,17 @@ final class MenuRepositoryImpl: MenuRepository {
                                        resultSelector: {
                                            promotions, productsData ->
                                                ([Promotion],
-                                                [MenuCategory],
-                                                [MenuPosition]) in
+                                                [MenuCategory]) in
                                            (
                                                promotions,
-                                               productsData.categories,
-                                               productsData.positions
+                                               productsData.categories
                                            )
                                        })
         outputs.didStartRequest.accept(())
         finalSequence.subscribe(onSuccess: {
-            [weak self] promotions, categories, positions in
+            [weak self] promotions, categories in
             self?.outputs.didGetPromotions.accept(promotions)
             self?.outputs.didGetCategories.accept(categories)
-            self?.outputs.didGetPositions.accept(positions)
             self?.outputs.didEndRequest.accept(())
         }, onError: { [weak self] error in
             self?.outputs.didEndRequest.accept(())
