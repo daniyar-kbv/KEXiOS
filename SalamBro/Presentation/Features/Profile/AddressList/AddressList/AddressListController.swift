@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class AddressListController: UIViewController {
+final class AddressListController: UIViewController, Reloadable {
     let outputs = Output()
 
     private let viewModel: AddressListViewModel
@@ -49,13 +49,17 @@ final class AddressListController: UIViewController {
 
         layoutUI()
         bindViewModel()
-        viewModel.getAddresses()
+        reload()
     }
 
     private func bindViewModel() {
         viewModel.outputs.reload
             .bind(to: citiesTableView.rx.reload)
             .disposed(by: disposeBag)
+    }
+
+    func reload() {
+        viewModel.getAddresses()
     }
 
     deinit {

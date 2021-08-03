@@ -17,7 +17,7 @@ protocol AddressPickerViewModelProtocol: ViewModel {
     func reload()
 }
 
-final class AddressPickerViewModel: AddressPickerViewModelProtocol {
+final class AddressPickerViewModel: AddressPickerViewModelProtocol, Reloadable {
     private let disposeBag = DisposeBag()
     private let addressRepository: AddressRepository
     private var addresses: [UserAddress] = []

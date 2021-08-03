@@ -69,14 +69,19 @@ final class ReachabilityManagerImpl: ReachabilityManager {
     }
 
     private func configNoInternetView(isReachable: Bool) {
-        guard let viewController = UIApplication.shared.keyWindow?.rootViewController as? UIViewController & AnimationViewPresentable else { return }
-
         if isReachable {
-            viewController.hideAnimationView {
+            guard let topViewController = UIApplication.topViewController() as? AnimationController
+            else {
+                UIApplication.topViewController()?.dismissAnimationView {
+                    self.reloadTopViewController()
+                }
+                return
+            }
+            topViewController.presentingViewController?.dismissAnimationView {
                 self.reloadTopViewController()
             }
         } else {
-            viewController.showAnimationView(animationType: .noInternet, fullScreen: true) { [weak self] in
+            UIApplication.topViewController()?.presentAnimationView(animationType: .noInternet) { [weak self] in
                 self?.reloadTopViewController()
             }
         }
