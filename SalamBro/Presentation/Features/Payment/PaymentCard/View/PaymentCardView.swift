@@ -126,6 +126,7 @@ final class PaymentCardView: UIView {
     }
 
     private func checkFields() {
+        configInvalidFields(false)
         configButtonEnable(!fields.map { $0.isComplete() }.contains(false))
     }
 
@@ -141,6 +142,12 @@ final class PaymentCardView: UIView {
             .subscribe(onNext: { [weak self] in
                 self?.delegate?.onSaveTap()
             }).disposed(by: disposeBag)
+    }
+
+    private func configInvalidFields(_ isInvalid: Bool) {
+        cardNumberField.layer.borderColor = isInvalid ? UIColor.kexRed.cgColor : UIColor.clear.cgColor
+        expiryDateField.layer.borderColor = isInvalid ? UIColor.kexRed.cgColor : UIColor.clear.cgColor
+        cvvCodeField.layer.borderColor = isInvalid ? UIColor.kexRed.cgColor : UIColor.clear.cgColor
     }
 
     func getCardNumber() -> String? {
@@ -161,5 +168,13 @@ final class PaymentCardView: UIView {
 
     func getNeedsSave() -> Bool {
         return switchButton.isOn
+    }
+
+    func showInvalidFields() {
+        configInvalidFields(true)
+    }
+
+    func showKeyboard() {
+        cardNumberField.becomeFirstResponder()
     }
 }

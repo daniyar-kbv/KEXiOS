@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SBTabBarController: UITabBarController, AnimationViewPresentable, AlertDisplayable {
+final class SBTabBarController: UITabBarController, AlertDisplayable {
     private let viewModel: SBTabBarViewModel
 
     init(viewModel: SBTabBarViewModel) {
@@ -37,5 +37,6 @@ final class SBTabBarController: UITabBarController, AnimationViewPresentable, Al
 
         viewModel.getDocuments()
         viewModel.refreshToken()
+        viewModel.setFirstLauch()
     }
 }

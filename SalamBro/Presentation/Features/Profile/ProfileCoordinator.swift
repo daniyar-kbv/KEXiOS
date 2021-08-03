@@ -18,6 +18,8 @@ final class ProfileCoordinator: BaseCoordinator {
 
     private var reloadProfilePage: (() -> Void)?
 
+    var onLanguageChange: (() -> Void)?
+
     init(router: Router, pagesFactory: ProfilePagesFactory, coordinatorsFactory: ProfileChildCoordinatorsFactory) {
         self.router = router
         self.pagesFactory = pagesFactory
@@ -25,6 +27,18 @@ final class ProfileCoordinator: BaseCoordinator {
     }
 
     override func start() {
+        let profilePage = makeProfilePage()
+
+        router.set(navigationController: SBNavigationController(rootViewController: profilePage))
+    }
+
+    func restart() {
+        let profilePage = makeProfilePage()
+
+        router.getNavigationController().setViewControllers([profilePage], animated: false)
+    }
+
+    private func makeProfilePage() -> ProfilePage {
         let profilePage = pagesFactory.makeProfilePage()
 
         profilePage.outputs.onChangeUserInfo
@@ -51,13 +65,11 @@ final class ProfileCoordinator: BaseCoordinator {
 
         profilePage.outputs.onLoginTapped
             .subscribe(onNext: { [weak self] in
-                profilePage.hideAnimationView { [weak self] in
-                    self?.startAuthCoordinator()
-                }
+                self?.startAuthCoordinator()
             })
             .disposed(by: disposeBag)
 
-        router.set(navigationController: SBNavigationController(rootViewController: profilePage))
+        return profilePage
     }
 
     private func showChangeUserInfoPage(userInfo: UserInfoResponse, completion: ((UserInfoResponse) -> Void)?) {
@@ -76,6 +88,14 @@ final class ProfileCoordinator: BaseCoordinator {
 
     private func showChangeLanguagePage() {
         let changeLanguagePage = pagesFactory.makeChangeLanguagePage()
+
+        changeLanguagePage.outputs.restart
+            .subscribe(onNext: { [weak self] in
+                self?.router.pop(animated: true)
+                self?.onLanguageChange?()
+            })
+            .disposed(by: disposeBag)
+
         changeLanguagePage.hidesBottomBarWhenPushed = true
         router.push(viewController: changeLanguagePage, animated: true)
     }

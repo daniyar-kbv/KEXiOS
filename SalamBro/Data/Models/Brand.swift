@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Brand: Codable {
+class Brand: Codable {
     let id: Int
     let name: String
     let image: String
-    let isAvailable: Bool
+    var isAvailable: Bool?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -19,10 +19,23 @@ struct Brand: Codable {
         case image
         case isAvailable = "is_available"
     }
+
+    init(id: Int, name: String, image: String, isAvailable: Bool?) {
+        self.id = id
+        self.name = name
+        self.image = image
+        self.isAvailable = isAvailable
+    }
+}
+
+extension Brand {
+    func getCopy() -> Brand {
+        return .init(id: id, name: name, image: image, isAvailable: isAvailable)
+    }
 }
 
 extension Brand: Equatable {
-    static func == (lhs: Self, rhs: Self) -> Bool {
+    static func == (lhs: Brand, rhs: Brand) -> Bool {
         lhs.id == rhs.id && lhs.name == rhs.name
     }
 }

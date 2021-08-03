@@ -93,6 +93,7 @@ enum ProfileIcons {
         case kazakhLanguageIcon = "kazakh_language_icon"
         case russianLanguageIcon = "russian_language_icon"
         case englishLanguageIcon = "english_language_icon"
+        case chackMark = "change_language_check_mark"
 
         var name: String { rawValue }
     }
@@ -128,10 +129,31 @@ enum CartIcons {
 }
 
 enum PaymentIcons {
-    enum PaymentMethod: String, UIImageGetable {
-        case selected = "payment_method_check_mark"
+    enum PaymentSelection: String, UIImageGetable {
+        case applePay = "payment_apple_pay"
 
         var name: String { rawValue }
+    }
+
+    enum PaymentMethod: String, UIImageGetable {
+        case selected = "payment_method_check_mark"
+        case applePay = "payment_method_apple_pay"
+        case edit = "payment_method_edit"
+
+        var name: String { rawValue }
+    }
+
+    enum PaymentEdit: String, UIImageGetable {
+        case delete = "payment_edit_trash"
+
+        var name: String { rawValue }
+
+        enum Checkmark: String, UIImageGetable {
+            case empty = "payment_edit_checkmark_empty"
+            case filled = "payment_edit_checkmark_filled"
+
+            var name: String { rawValue }
+        }
     }
 }
 

@@ -23,6 +23,18 @@ final class SupportCoordinator: BaseCoordinator {
     }
 
     override func start() {
+        let supportPage = makeSupportPage()
+
+        router.set(navigationController: SBNavigationController(rootViewController: supportPage))
+    }
+
+    func restart() {
+        let supportPage = pagesFactory.makeSupportPage()
+
+        router.getNavigationController().setViewControllers([supportPage], animated: false)
+    }
+
+    private func makeSupportPage() -> SupportController {
         let supportPage = pagesFactory.makeSupportPage()
 
         supportPage.outputs.openDocument
@@ -30,7 +42,7 @@ final class SupportCoordinator: BaseCoordinator {
                 self?.showAgreementPage(url: url, name: name)
             }).disposed(by: disposeBag)
 
-        router.set(navigationController: SBNavigationController(rootViewController: supportPage))
+        return supportPage
     }
 
     private func showAgreementPage(url: URL, name: String) {

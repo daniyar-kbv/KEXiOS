@@ -12,7 +12,7 @@ enum DefaultStorageKey: String, StorageKey, Equatable {
     case leadUUID
     case fcmToken
     case appLocale
-    case isFirstLaunch
+    case notFirstLaunch
 
     var value: String { return rawValue }
 }
@@ -21,13 +21,14 @@ protocol DefaultStorage {
     var userName: String? { get }
     var leadUUID: String? { get }
     var fcmToken: String? { get }
-    var appLocale: String? { get }
-    var isFirstLaunch: Bool { get }
+    var appLocale: String { get }
+    var notFirstLaunch: Bool { get }
 
     func persist(name: String)
     func persist(leadUUID: String)
     func persist(fcmToken: String)
-    func persist(appLocale: String)
+    func persist(appLocale: Language.LanguageTableItem)
+    func persist(notFirstLaunch: Bool)
 
     func cleanUp(key: DefaultStorageKey)
 }
@@ -49,12 +50,12 @@ final class DefaultStorageImpl: DefaultStorage {
         return storageProvider.string(forKey: DefaultStorageKey.fcmToken.value)
     }
 
-    var isFirstLaunch: Bool {
-        return storageProvider.bool(forKey: DefaultStorageKey.isFirstLaunch.value)
+    var notFirstLaunch: Bool {
+        return storageProvider.bool(forKey: DefaultStorageKey.notFirstLaunch.value)
     }
 
-    var appLocale: String? {
-        return storageProvider.string(forKey: DefaultStorageKey.appLocale.value)
+    var appLocale: String {
+        return storageProvider.string(forKey: DefaultStorageKey.appLocale.value) ?? Language.LanguageTableItem.russian.code
     }
 
     init(storageProvider: UserDefaults) {
@@ -73,8 +74,12 @@ final class DefaultStorageImpl: DefaultStorage {
         storageProvider.set(fcmToken, forKey: DefaultStorageKey.fcmToken.value)
     }
 
-    func persist(appLocale: String) {
-        storageProvider.set(appLocale, forKey: DefaultStorageKey.appLocale.value)
+    func persist(appLocale: Language.LanguageTableItem) {
+        storageProvider.set(appLocale.code, forKey: DefaultStorageKey.appLocale.value)
+    }
+
+    func persist(notFirstLaunch: Bool) {
+        storageProvider.set(notFirstLaunch, forKey: DefaultStorageKey.notFirstLaunch.value)
     }
 
     func cleanUp(key: DefaultStorageKey) {

@@ -58,8 +58,8 @@ final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
 extension MapPage: LocationManagerDelegate {
     func askUserForPermission() {
-//        Tech debt: localize
-        showAlert(title: "Location Services are disabled", message: "Please enable Location Services in your Settings")
+        showAlert(title: SBLocalization.localized(key: AddressText.Map.LocationAlert.title),
+                  message: SBLocalization.localized(key: AddressText.Map.LocationAlert.message))
     }
 
     func didChangeLocation(latitude: Double, longtitude: Double) {
@@ -100,9 +100,9 @@ extension MapPage: YMKMapCameraListener {
 extension MapPage {
     private func bindViewModel() {
         viewModel.outputs.selectedAddress
-            .subscribe(onNext: { [weak self] mapAddress in
-                self?.mapAddressView.addressTextField.set(text: mapAddress.name)
-                self?.mapAddressView.changeButtonAppearance(based: mapAddress.name)
+            .subscribe(onNext: { [weak self] address in
+                self?.mapAddressView.addressTextField.set(text: address?.getName())
+                self?.mapAddressView.changeButtonAppearance(isEmpty: address?.getName()?.isEmpty ?? true)
             })
             .disposed(by: disposeBag)
 
@@ -113,12 +113,9 @@ extension MapPage {
             .disposed(by: disposeBag)
 
         viewModel.outputs.lastSelectedAddress
-            .subscribe(onNext: { [weak self] address, commentary in
+            .subscribe(onNext: { [weak self] address, _ in
                 self?.handlePageTermination()
-                self?.selectedAddress?(Address(name: address.name,
-                                               longitude: address.longitude,
-                                               latitude: address.latitude,
-                                               commentary: commentary))
+                self?.selectedAddress?(address)
             })
             .disposed(by: disposeBag)
 

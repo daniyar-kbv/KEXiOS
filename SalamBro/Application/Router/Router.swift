@@ -93,7 +93,7 @@ final class MainRouter: Router {
 
 extension MainRouter: SBNavigationControllerDelegate {
     func sbNavigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController) {
-        let willPush: Bool = totalNumberOfPages <= navigationController.viewControllers.count
+        let willPush: Bool = totalNumberOfPages < navigationController.viewControllers.count
 
         if willPush {
             let configuration = navigationLogic.configure(viewController: viewController, in: navigationController)
@@ -120,6 +120,7 @@ extension MainRouter: SBNavigationControllerDelegate {
     private func setConfiguration(_ configuration: BarButtonConfiguration, for viewController: UIViewController) {
         switch configuration {
         case .withBackButton:
+            print(viewController)
             viewController.setBackButton(completion: didTapOnBack)
             navigationController.interactivePopGestureRecognizer?.delegate = viewController as? UIGestureRecognizerDelegate
         case .none:

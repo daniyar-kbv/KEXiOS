@@ -113,7 +113,7 @@ extension MenuDetailViewModelImpl {
         outputs.itemImage.accept(URL(string: position.image ?? ""))
         outputs.itemTitle.accept(position.name)
         outputs.itemDescription.accept(position.description)
-        outputs.itemPrice.accept("\(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton)) \(position.price.removeTrailingZeros()) ₸")
+        outputs.itemPrice.accept(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton, arguments: position.price.removeTrailingZeros()))
 
         if position.modifierGroups.isEmpty {
             outputs.isComplete.accept(true)

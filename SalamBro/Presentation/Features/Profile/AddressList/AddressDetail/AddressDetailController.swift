@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AddressDetailController: UIViewController {
+final class AddressDetailController: UIViewController, LoaderDisplayable, AlertDisplayable {
     let outputs = Output()
 
     private let viewModel: AddressDetailViewModel
@@ -48,6 +48,24 @@ final class AddressDetailController: UIViewController {
     }
 
     func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            })
+            .disposed(by: disposeBag)
+
         viewModel.outputs.addressName
             .subscribe(onNext: { [weak self] addressName in
                 guard let addressName = addressName else { return }
@@ -84,13 +102,23 @@ extension AddressDetailController {
     }
 
     @objc private func deleteAction() {
-//        Tech debt: localize
-        let alert = UIAlertController(title: "Вы уверены?", message: "Вы уверены что хотите удалить адрес доставки?", preferredStyle: .alert)
+        let alert = UIAlertController(title: SBLocalization.localized(key: ProfileText.AddressDetail.Alert.title),
+                                      message: SBLocalization.localized(
+                                          key: ProfileText.AddressDetail.Alert.message
+                                      ),
+                                      preferredStyle: .alert)
         alert.view.tintColor = .kexRed
-        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] _ in
-            self?.viewModel.delete()
-        }))
-        alert.addAction(UIAlertAction(title: "Нет", style: .default))
+        alert.addAction(UIAlertAction(title: SBLocalization.localized(
+                key: ProfileText.AddressDetail.Alert.Action.yes
+            ),
+            style: .default,
+            handler: { [weak self] _ in
+                self?.viewModel.delete()
+            }))
+        alert.addAction(UIAlertAction(title: SBLocalization.localized(
+                key: ProfileText.AddressDetail.Alert.Action.no
+            ),
+            style: .default))
         present(alert, animated: true, completion: nil)
     }
 }

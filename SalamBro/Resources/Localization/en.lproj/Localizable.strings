@@ -71,6 +71,10 @@
 "Profile.changeLanguage" = "EN Сменить язык приложения";
 "Profile.logoutButton.title" = "EN Выйти из аккаунта";
 "Profile.deliveryAddress" = "EN Адреса доставки";
+"Profile.Alert.title" = "EN Вы уверены?";
+"Profile.Alert.message" = "EN Вы уверены что хотите выйти из аккаунта?";
+"Profile.Alert.Action.yes" = "EN Да";
+"Profile.Alert.Action.no" = "EN Нет";
 
 // MARK: - ChangeName
 "ChangeName.navigationBar.title" = "EN Изменить";
@@ -83,6 +87,8 @@
 "MapView.addressField.title" = "EN Адрес доставки";
 "MapView.commentaryLabel.title" = "EN Комментарий (квартира, подъезд, ...)";
 "MapView.proceedButton.title" = "EN Перейти к заказу";
+"MapView.LocationAlert.title" = "EN Службы определения местоположения отключены";
+"MapView.LocationAlert.message" = "EN Пожалуйста, включите Службы определения местоположения в своих настройках";
 
 // MARK: - Suggest
 "Suggest.addressField.title" = "EN Введите адрес";
@@ -104,7 +110,7 @@
 "AddressPickCell.deliverLabel" = "EN Доставим на:";
 
 // MARK: - MenuDetail
-"MenuDetail.proceedButton" = "EN В корзину за";
+"MenuDetail.proceedButton" = "EN В корзину за %@ ₸";
 "MenuDetail.commentaryField" = "EN Комментарий к блюду";
 "MenuDetail.chooseAdditionalItemButton" = "EN Изменить";
 "MenuDetail.required" = "EN Обязательно";
@@ -129,6 +135,14 @@
 
 // MARK: - OrderHistory
 "OrderHistory.title" = "EN История заказов";
+"OrderHistory.shipping" = "EN Доставка";
+"OrderHistory.sum" = "EN Итого";
+"OrderHistory.deliveryAddress" = "EN Адрес доставки";
+"OrderHistory.paymentDetails" = "EN Детали оплаты";
+"OrderHistory.orderStatus" = "EN Статус заказа";
+"OrderHistory.sendBill" = "EN Отправить чек на почту";
+"OrderHistory.rateOrder" = "EN Оценить заказ";
+"OrderHistory.repeatOrder" = "EN Повторить заказ";
 
 // MARK: - Select Main Info
 "select_main_info.country" = "EN Страна";
@@ -156,6 +170,11 @@
 
 // MARK: - AddressDetail
 "address_picker.titleOne" = "EN Адрес доставки";
+"AddressDetail.commentaryTitleLabel" = "EN Комментарий";
+"AddressDetail.Alert.title" = "EN Вы уверены?";
+"AddressDetail.Alert.message" = "EN Вы уверены что хотите удалить адрес доставки?";
+"AddressDetail.Alert.Action.yes" = "EN Да";
+"AddressDetail.Alert.Action.no" = "EN Нет";
 
 // MARK: - ShareOrder
 "ShareOrder.submitButton" = "EN Опубликовать";
@@ -180,6 +199,15 @@
 "Payment.Selection.orderPayment" = "EN Оформить заказ";
 "Payment.Selection.paymentMethod" = "EN Способ оплаты";
 "Payment.Selection.title" = "EN Оформление заказа";
+"Payment.Selection.applePay" = "EN Оформить с";
+
+// MARK: - Payment Method
+
+"Payment.Method.PaymentMethod.title" = "EN Способ оплаты";
+"Payment.Method.PaymentMethodError.description" = "EN Не валидный indexPath";
+"Payment.Method.PaymentMethod.Title.savedCard" = "EN Карта *%@";
+"Payment.Method.PaymentMethod.Title.card" = "EN Картой в приложении";
+"Payment.Method.PaymentMethod.Title.cash" = "EN Наличными курьеру";
 
 // MARK: - Payment Card
 
@@ -189,8 +217,8 @@
 "Payment.Card.expiryDate" = "EN Срок действия";
 "Payment.Card.cardholderName" = "EN Имя Фамилия";
 "Payment.Card.saveButton" = "EN Далее";
-"Payment.Card.Error.invalidCard" = "EN Не валидный номер карты";
-"Payment.Card.Error.invalidExpiryDate" = "EN Не валидный срок дейсвия карты";
+"Payment.Card.Error.title" = "EN Внимание";
+"Payment.Card.Error.message" = "En Некоторые поля заполнены неверно";
 
 // MARK: - Payment Cash
 
@@ -202,6 +230,31 @@
 "Payment.Cash.Button.noChange" = "EN У меня без сдачи";
 "Payment.Cash.Button.submit" = "EN Готово";
 
+// MARK: - PaymentEdit
+
+"Payment.Edit.title" = "EN Способ оплаты";
+"Payment.Edit.Cell.title" = "EN Карта *%@";
+"Payment.Edit.Alert.title" = "EN Вы уверены?";
+"Payment.Edit.Alert.message" = "EN Вы уверены что хотите удалить данную карту?";
+"Payment.Edit.Alert.yes" = "EN Да";
+"Payment.Edit.Alert.no" = "EN Нет";
+
 // MARK: - Alert
 
 "Alert.ok" = "EN Ок";
+"Alert.Error.title" = "EN Ошибка";
+
+// MARK: - Animations
+
+"Animation.InfoText.orderHistory" = "EN Тут будут Ваши заказы, чтобы сделать заказ перейдите в меню";
+"Animation.InfoText.emptyBasket" = "EN Вы еще ничего не выбрали. Минимальная сумма заказа 1000₸";
+"Animation.InfoText.noInternet" = "EN Нет связи. Проверьте интернет соединение";
+"Animation.InfoText.upgrade" = "EN Мы добавили много новых функций и исправили некоторые баги, чтобы вам было удобнее пользоваться приложением";
+"Animation.InfoText.overload" = "EN В данный момент мы принимаем очень много заказов, пожалуйста попробуйте немного позднее";
+"Animation.InfoText.payment" = "EN Проводим оплату";
+"Animation.InfoText.profile" = "EN Вам необходимо авторизоваться, чтобы сделать заказ";
+"Animation.ButtonTitle.orderHistory.emptyBasket" = "EN Перейти в меню";
+"Animation.ButtonTitle.noInternet.overload" = "EN Попробовать еще раз";
+"Animation.ButtonTitle.upgrade" = "EN Обновить приложение";
+"Animation.ButtonTitle.payment" = "EN Отменить заказ";
+"Animation.ButtonTitleprofile" = "EN Войти";

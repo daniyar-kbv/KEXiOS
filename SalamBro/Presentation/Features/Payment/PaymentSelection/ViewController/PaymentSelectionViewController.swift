@@ -6,12 +6,13 @@
 //
 
 import Cloudpayments
+import PassKit
 import RxCocoa
 import RxSwift
 import UIKit
 import WebKit
 
-final class PaymentSelectionViewController: UIViewController, AlertDisplayable, AnimationViewPresentable {
+final class PaymentSelectionViewController: UIViewController, AlertDisplayable {
     private let disposeBag = DisposeBag()
     private let viewModel: PaymentSelectionViewModel
     private lazy var contentView: PaymentSelectionContainerView = {
@@ -56,8 +57,8 @@ final class PaymentSelectionViewController: UIViewController, AlertDisplayable, 
 
     private func bindViewModel() {
         viewModel.outputs.didSelectPaymentMethod
-            .subscribe(onNext: { [weak self] text in
-                self?.contentView.setPaymentMethod(text: text)
+            .subscribe(onNext: { [weak self] paymentMethod in
+                self?.contentView.setPaymentMethod(paymentMethod: paymentMethod)
             }).disposed(by: disposeBag)
 
         viewModel.outputs.didStartRequest
@@ -81,8 +82,20 @@ final class PaymentSelectionViewController: UIViewController, AlertDisplayable, 
             .bind(to: outputs.hide3DS)
             .disposed(by: disposeBag)
 
+        viewModel.outputs.showApplePay
+            .subscribe(onNext: { [weak self] controller in
+                self?.show(controller: controller)
+            })
+            .disposed(by: disposeBag)
+
         viewModel.outputs.didMakePayment
             .bind(to: outputs.didMakePayment)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.totalAmount
+            .subscribe(onNext: { [weak self] totalAmount in
+                self?.contentView.set(totalAmount: totalAmount)
+            })
             .disposed(by: disposeBag)
     }
 }
@@ -94,6 +107,23 @@ extension PaymentSelectionViewController: PaymentSelectionContainerViewDelegate 
 
     func handleSubmitButtonTap() {
         viewModel.makePayment()
+    }
+}
+
+extension PaymentSelectionViewController: PKPaymentAuthorizationViewControllerDelegate {
+    private func show(controller: PKPaymentAuthorizationViewController) {
+        controller.delegate = self
+        present(controller, animated: true)
+    }
+
+    func paymentAuthorizationViewController(_: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping ((PKPaymentAuthorizationStatus) -> Void)) {
+        completion(PKPaymentAuthorizationStatus.success)
+
+        viewModel.processApplePay(payment: payment)
+    }
+
+    func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        controller.dismiss(animated: true)
     }
 }
 

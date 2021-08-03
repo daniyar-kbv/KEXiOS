@@ -34,33 +34,65 @@ final class MenuCoordinator: BaseCoordinator {
     }
 
     override func start() {
-        let menuPage = pagesFactory.makeManuPage()
-
-        menuPage.outputs.toChangeBrand
-            .subscribe(onNext: { [weak self] didSave in
-                self?.openChangeBrand(didSave: didSave)
-            }).disposed(by: disposeBag)
-
-        menuPage.outputs.toAddressess
-            .subscribe(onNext: { [weak self] didSave in
-                self?.openChangeAddress(didSelectAddress: didSave)
-            }).disposed(by: disposeBag)
-
-        menuPage.outputs.toPromotion
-            .subscribe(onNext: { [weak self] promotionURL, name in
-                self?.openPromotion(promotionURL: promotionURL, name: name)
-            }).disposed(by: disposeBag)
-
-        menuPage.outputs.toPositionDetail
-            .subscribe(onNext: { [weak self] positionUUID in
-                self?.openDetail(positionUUID: positionUUID)
-            }).disposed(by: disposeBag)
+        let menuPage = makeMenuPage()
 
         router.set(navigationController: SBNavigationController(rootViewController: menuPage))
     }
 
-    private func openChangeBrand(didSave: (() -> Void)? = nil) {
-        let addressCoordinator = coordinatorsFactory.makeAddressCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, flowType: .changeBrand(didSave: didSave, presentOn: router.getNavigationController()))
+    func restart() {
+        let menuPage = makeMenuPage()
+
+        router.getNavigationController().setViewControllers([menuPage], animated: true)
+    }
+
+    private func makeMenuPage() -> MenuController {
+        let menuPage = pagesFactory.makeManuPage()
+
+        menuPage.outputs.toChangeBrand
+            .subscribe(onNext: { [weak self] in
+                self?.openChangeBrand()
+            })
+            .disposed(by: disposeBag)
+
+        menuPage.outputs.toAddressess
+            .subscribe(onNext: { [weak self] in
+                self?.openChangeAddress()
+            })
+            .disposed(by: disposeBag)
+
+        menuPage.outputs.toPromotion
+            .subscribe(onNext: { [weak self] promotionURL, name in
+                self?.openPromotion(promotionURL: promotionURL, name: name)
+            })
+            .disposed(by: disposeBag)
+
+        menuPage.outputs.toPositionDetail
+            .subscribe(onNext: { [weak self] positionUUID in
+                self?.openDetail(positionUUID: positionUUID)
+            })
+            .disposed(by: disposeBag)
+
+        menuPage.outputs.toAuthChangeBrand
+            .subscribe(onNext: { [weak self] in
+                self?.startAuthCoordinator {
+                    self?.openChangeBrand()
+                }
+            })
+            .disposed(by: disposeBag)
+
+        menuPage.outputs.toAuthChangeAddress
+            .subscribe(onNext: { [weak self] in
+                self?.startAuthCoordinator {
+                    self?.openChangeAddress()
+                }
+            })
+            .disposed(by: disposeBag)
+
+        return menuPage
+    }
+
+    private func openChangeBrand() {
+        let addressCoordinator = coordinatorsFactory.makeAddressCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, flowType: .changeBrand(presentOn: router.getNavigationController()))
         add(addressCoordinator)
 
         addressCoordinator.didFinish = { [weak self] in
@@ -70,8 +102,8 @@ final class MenuCoordinator: BaseCoordinator {
         addressCoordinator.start()
     }
 
-    private func openChangeAddress(didSelectAddress: (() -> Void)? = nil) {
-        let addressCoordinator = coordinatorsFactory.makeAddressCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, flowType: .changeAddress(didSelectAddress: didSelectAddress))
+    private func openChangeAddress() {
+        let addressCoordinator = coordinatorsFactory.makeAddressCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, flowType: .changeAddress)
         add(addressCoordinator)
 
         addressCoordinator.didFinish = { [weak self] in
@@ -98,6 +130,21 @@ final class MenuCoordinator: BaseCoordinator {
         }
 
         menuDetailCoordinator.start()
+    }
+
+    private func startAuthCoordinator(didAuthorize: @escaping () -> Void) {
+        let authCoordinator = coordinatorsFactory.makeAuthCoordinator()
+        router.getNavigationController().setNavigationBarHidden(false, animated: true)
+
+        add(authCoordinator)
+
+        authCoordinator.didFinish = { [weak self, weak authCoordinator] in
+            self?.remove(authCoordinator)
+        }
+
+        authCoordinator.didAuthorize = didAuthorize
+
+        authCoordinator.start()
     }
 
     func didFinish() {}

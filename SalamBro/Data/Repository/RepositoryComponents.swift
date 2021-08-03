@@ -35,13 +35,16 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
         return shared(AddressRepositoryImpl(storage: makeLocalStorage(),
                                             brandStorage: makeLocalStorage(),
                                             ordersService: serviceComponents.ordersService(),
+                                            profileService: serviceComponents.profileService(),
                                             notificationsService: serviceComponents.pushNotificationsService(),
-                                            defaultStorage: DefaultStorageImpl.sharedStorage))
+                                            defaultStorage: DefaultStorageImpl.sharedStorage,
+                                            authTokenStorage: AuthTokenStorageImpl.sharedStorage))
     }
 
     func makeBrandRepository() -> BrandRepository {
         return shared(BrandRepositoryImpl(locationService: serviceComponents.locationService(),
-                                          storage: makeLocalStorage()))
+                                          brandStorage: makeLocalStorage(),
+                                          geoStorage: makeLocalStorage()))
     }
 
     func makeCartRepository() -> CartRepository {
@@ -93,7 +96,8 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
 
     func makePaymentRepository() -> PaymentRepository {
         return weakShared(PaymentRepositoryImpl(paymentService: serviceComponents.paymentsService(),
-                                                defaultStorage: DefaultStorageImpl.sharedStorage))
+                                                defaultStorage: DefaultStorageImpl.sharedStorage,
+                                                cartStorage: makeLocalStorage()))
     }
 
     func makeProfileRepository() -> ProfilePageRepository {
