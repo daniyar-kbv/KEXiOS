@@ -93,6 +93,7 @@ enum ProfileIcons {
         case kazakhLanguageIcon = "kazakh_language_icon"
         case russianLanguageIcon = "russian_language_icon"
         case englishLanguageIcon = "english_language_icon"
+        case chackMark = "change_language_check_mark"
 
         var name: String { rawValue }
     }

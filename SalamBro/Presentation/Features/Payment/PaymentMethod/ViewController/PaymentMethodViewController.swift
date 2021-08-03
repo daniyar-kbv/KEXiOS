@@ -46,8 +46,7 @@ final class PaymentMethodViewController: UIViewController, LoaderDisplayable, Al
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        Tech debt: localize
-        title = "Способ оплаты"
+        title = SBLocalization.localized(key: PaymentText.PaymentMethod.title)
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }

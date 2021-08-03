@@ -63,6 +63,10 @@ final class AppCoordinator: BaseCoordinator {
     private func configureProfileCoordinator() {
         let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
+        profileCoordinator.onLanguageChange = { [weak self] in
+            self?.restartApp()
+        }
+
         profileCoordinator.start()
         profileCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(
             title: SBLocalization.localized(key: TabBarText.profileTitle),
@@ -149,6 +153,43 @@ final class AppCoordinator: BaseCoordinator {
         UIApplication.shared.setRootView(pagesFactory.makeSBTabbarController())
     }
 }
+
+// MARK: - App Restart
+
+extension AppCoordinator {
+    func restartApp() {
+        restartMenuCoordinator()
+        restartProfileCoordinator()
+        restartSupportCoordinator()
+        restartCartCoordinator()
+    }
+
+    private func restartMenuCoordinator() {
+        let menuCoordinator = appCoordinatorsFactory.makeMenuCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+        menuCoordinator.restart()
+    }
+
+    private func restartProfileCoordinator() {
+        let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+        profileCoordinator.restart()
+    }
+
+    private func restartSupportCoordinator() {
+        let supportCoordinator = appCoordinatorsFactory.makeSupportCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+        supportCoordinator.restart()
+    }
+
+    private func restartCartCoordinator() {
+        let cartCoordinator = appCoordinatorsFactory.makeCartCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+        cartCoordinator.restart()
+    }
+}
+
+// MARK: - Notifications handling
 
 extension AppCoordinator {
     func handleNotification(pushNotification: PushNotification) {

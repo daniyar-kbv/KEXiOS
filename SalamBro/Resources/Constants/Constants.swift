@@ -19,7 +19,6 @@ struct Constants {
     }
 
     enum Map {
-        static let checkmark = UIImageView(image: UIImage(named: "checkmark"))
         static let ZOOM: Float = 18.0
 
         enum Coordinates {
@@ -43,12 +42,6 @@ struct Constants {
 
     enum StatusCode {
         static let noContent = 204
-    }
-
-    enum Language: String {
-        case russian = "ru"
-        case english = "en"
-        case kazakh = "kk"
     }
 }
 

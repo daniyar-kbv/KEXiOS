@@ -27,7 +27,7 @@ protocol DefaultStorage {
     func persist(name: String)
     func persist(leadUUID: String)
     func persist(fcmToken: String)
-    func persist(appLocale: String)
+    func persist(appLocale: Language.LanguageTableItem)
     func persist(notFirstLaunch: Bool)
 
     func cleanUp(key: DefaultStorageKey)
@@ -55,8 +55,7 @@ final class DefaultStorageImpl: DefaultStorage {
     }
 
     var appLocale: String {
-        return storageProvider.string(forKey: DefaultStorageKey.appLocale.value) ??
-            Constants.Language.russian.rawValue
+        return storageProvider.string(forKey: DefaultStorageKey.appLocale.value) ?? Language.LanguageTableItem.russian.code
     }
 
     init(storageProvider: UserDefaults) {
@@ -75,8 +74,8 @@ final class DefaultStorageImpl: DefaultStorage {
         storageProvider.set(fcmToken, forKey: DefaultStorageKey.fcmToken.value)
     }
 
-    func persist(appLocale: String) {
-        storageProvider.set(appLocale, forKey: DefaultStorageKey.appLocale.value)
+    func persist(appLocale: Language.LanguageTableItem) {
+        storageProvider.set(appLocale.code, forKey: DefaultStorageKey.appLocale.value)
     }
 
     func persist(notFirstLaunch: Bool) {

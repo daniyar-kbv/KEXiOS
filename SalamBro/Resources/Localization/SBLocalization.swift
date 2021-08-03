@@ -46,8 +46,35 @@ enum ErrorText: UILocalizable {
 
 enum AlertText: String, UILocalizable {
     case ok = "Alert.ok"
+    case errorTitle = "Alert.Error.title"
 
     var localized: String { rawValue }
+}
+
+enum AnimationsText: UILocalizable {
+    enum InfoText: String, UILocalizable {
+        case orderHistory = "Animation.InfoText.orderHistory"
+        case emptyBasket = "Animation.InfoText.emptyBasket"
+        case noInternet = "Animation.InfoText.noInternet"
+        case upgrade = "Animation.InfoText.upgrade"
+        case overload = "Animation.InfoText.overload"
+        case payment = "Animation.InfoText.payment"
+        case profile = "Animation.InfoText.profile"
+
+        var localized: String { rawValue }
+    }
+
+    enum ButtonTitle: String, UILocalizable {
+        case orderHistoryEmptyBasket = "Animation.ButtonTitle.orderHistory.emptyBasket"
+        case noInternetOverload = "Animation.ButtonTitle.noInternet.overload"
+        case upgrade = "Animation.ButtonTitle.upgrade"
+        case payment = "Animation.ButtonTitle.payment"
+        case profile = "Animation.ButtonTitleprofile"
+
+        var localized: String { rawValue }
+    }
+
+    var localized: String { "" }
 }
 
 enum AddressText: UILocalizable {
@@ -68,13 +95,20 @@ enum AddressText: UILocalizable {
         case commentaryField = "MapView.commentaryLabel.title"
         case proceedButton = "MapView.proceedButton.title"
 
+        var localized: String { rawValue }
+
         enum Commentary: String, UILocalizable {
             case placeholder = "Commentary.addressField.title"
 
             var localized: String { rawValue }
         }
 
-        var localized: String { rawValue }
+        enum LocationAlert: String, UILocalizable {
+            case title = "MapView.LocationAlert.title"
+            case message = "MapView.LocationAlert.message"
+
+            var localized: String { rawValue }
+        }
     }
 
     enum Suggest: String, UILocalizable {
@@ -220,6 +254,20 @@ enum ProfileText: UILocalizable {
         case logoutButton = "Profile.logoutButton.title"
 
         var localized: String { rawValue }
+
+        enum Alert: String, UILocalizable {
+            case title = "Profile.Alert.title"
+            case message = "Profile.Alert.message"
+
+            var localized: String { rawValue }
+
+            enum Action: String, UILocalizable {
+                case yes = "Profile.Alert.Action.yes"
+                case no = "Profile.Alert.Action.no"
+
+                var localized: String { rawValue }
+            }
+        }
     }
 
     enum ChangeName: String, UILocalizable {
@@ -249,12 +297,35 @@ enum ProfileText: UILocalizable {
 
     enum AddressDetail: String, UILocalizable {
         case title = "address_picker.titleOne"
+        case commentaryTitle = "AddressDetail.commentaryTitleLabel"
 
         var localized: String { rawValue }
+
+        enum Alert: String, UILocalizable {
+            case title = "AddressDetail.Alert.title"
+            case message = "AddressDetail.Alert.message"
+
+            var localized: String { rawValue }
+
+            enum Action: String, UILocalizable {
+                case yes = "AddressDetail.Alert.Action.yes"
+                case no = "AddressDetail.Alert.Action.no"
+
+                var localized: String { rawValue }
+            }
+        }
     }
 
     enum OrderHistory: String, UILocalizable {
         case title = "OrderHistory.title"
+        case shipping = "OrderHistory.shipping"
+        case sum = "OrderHistory.sum"
+        case deliveryAddress = "OrderHistory.deliveryAddress"
+        case paymentDetails = "OrderHistory.paymentDetails"
+        case orderStatus = "OrderHistory.orderStatus"
+        case sendBill = "OrderHistory.sendBill"
+        case rateOrder = "OrderHistory.rateOrder"
+        case repeatOrder = "OrderHistory.repeatOrder"
 
         var localized: String { rawValue }
     }
@@ -348,6 +419,21 @@ enum PaymentText: UILocalizable {
         case applePay = "Payment.Selection.applePay"
 
         var localized: String { rawValue }
+    }
+
+    enum PaymentMethod: String, UILocalizable {
+        case title = "Payment.Method.PaymentMethod.title"
+        case errorDescription = "Payment.Method.PaymentMethodError.description"
+
+        var localized: String { rawValue }
+
+        enum MethodTitle: String, UILocalizable {
+            case savedCard = "Payment.Method.PaymentMethod.Title.savedCard"
+            case card = "Payment.Method.PaymentMethod.Title.card"
+            case cash = "Payment.Method.PaymentMethod.Title.cash"
+
+            var localized: String { rawValue }
+        }
     }
 
     enum PaymentCard: String, UILocalizable {

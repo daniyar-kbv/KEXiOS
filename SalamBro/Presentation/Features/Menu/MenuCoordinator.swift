@@ -34,6 +34,18 @@ final class MenuCoordinator: BaseCoordinator {
     }
 
     override func start() {
+        let menuPage = makeMenuPage()
+
+        router.set(navigationController: SBNavigationController(rootViewController: menuPage))
+    }
+
+    func restart() {
+        let menuPage = makeMenuPage()
+
+        router.getNavigationController().setViewControllers([menuPage], animated: true)
+    }
+
+    private func makeMenuPage() -> MenuController {
         let menuPage = pagesFactory.makeManuPage()
 
         menuPage.outputs.toChangeBrand
@@ -76,7 +88,7 @@ final class MenuCoordinator: BaseCoordinator {
             })
             .disposed(by: disposeBag)
 
-        router.set(navigationController: SBNavigationController(rootViewController: menuPage))
+        return menuPage
     }
 
     private func openChangeBrand() {
