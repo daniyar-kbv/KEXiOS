@@ -17,18 +17,23 @@ final class VerificationViewModel {
     private let authRepository: AuthRepository
     private let addressRepository: AddressRepository
     private let notificationsRepository: PushNotificationsRepository
+    private let profileRepository: ProfileRepository
     private(set) var phoneNumber: String
 
     init(authRepository: AuthRepository,
          addressRepository: AddressRepository,
          notificationsRepository: PushNotificationsRepository,
+         profileRepository: ProfileRepository,
          phoneNumber: String)
     {
         self.authRepository = authRepository
         self.addressRepository = addressRepository
         self.notificationsRepository = notificationsRepository
+        self.profileRepository = profileRepository
         self.phoneNumber = phoneNumber
+
         bindOutputs()
+        bindProfileRepository()
     }
 
     private func bindOutputs() {
@@ -39,7 +44,7 @@ final class VerificationViewModel {
         authRepository.outputs.didVerifyOTP
             .subscribe(onNext: { [weak self] in
                 self?.addressRepository.applyOrder(userAddress: self?.addressRepository.getCurrentUserAddress()) {
-                    self?.outputs.didVerifyOTP.accept(())
+                    self?.profileRepository.fetchUserInfo()
                 }
             })
             .disposed(by: disposeBag)
@@ -53,6 +58,22 @@ final class VerificationViewModel {
             .disposed(by: disposeBag)
 
         authRepository.outputs.didFail
+            .bind(to: outputs.didFail)
+            .disposed(by: disposeBag)
+    }
+
+    private func bindProfileRepository() {
+        profileRepository.outputs.didGetUserInfo
+            .subscribe(onNext: { [weak self] userInfo in
+                self?.outputs.didFinish.accept(userInfo.name != nil)
+            })
+            .disposed(by: disposeBag)
+
+        profileRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        profileRepository.outputs.didFail
             .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
     }
@@ -71,7 +92,7 @@ extension VerificationViewModel {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didFail = PublishRelay<ErrorPresentable>()
-        let didVerifyOTP = PublishRelay<Void>()
+        let didFinish = PublishRelay<Bool>()
         let didResendOTP = PublishRelay<Void>()
     }
 }

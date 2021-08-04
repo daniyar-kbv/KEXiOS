@@ -19,15 +19,15 @@ final class SetNameViewModelImpl: SetNameViewModel {
 
     private let disposeBag = DisposeBag()
 
-    private let repository: ChangeUserInfoRepository
+    private let repository: ProfileRepository
 
-    init(repository: ChangeUserInfoRepository) {
+    init(repository: ProfileRepository) {
         self.repository = repository
         bindOutputs()
     }
 
     func persist(name: String) {
-        repository.saveUserName(with: name)
+        repository.changeUserInfo(name: name, email: nil)
     }
 
     private func bindOutputs() {
@@ -43,9 +43,9 @@ final class SetNameViewModelImpl: SetNameViewModel {
             .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
 
-        repository.outputs.didSaveUserName
-            .bind { [weak self] userInfo in
-                self?.outputs.didSaveUserName.accept(userInfo)
+        repository.outputs.didGetUserInfo
+            .bind { [weak self] _ in
+                self?.outputs.didSaveUserName.accept(())
             }
             .disposed(by: disposeBag)
     }
@@ -56,6 +56,6 @@ extension SetNameViewModelImpl {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didFail = PublishRelay<ErrorPresentable>()
-        let didSaveUserName = PublishRelay<UserInfoResponse>()
+        let didSaveUserName = PublishRelay<Void>()
     }
 }

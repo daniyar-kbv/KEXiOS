@@ -43,9 +43,7 @@ final class ProfileCoordinator: BaseCoordinator {
 
         profilePage.outputs.onChangeUserInfo
             .subscribe(onNext: { [weak self, weak profilePage] userInfo in
-                self?.showChangeUserInfoPage(userInfo: userInfo, completion: { newUserInfo in
-                    profilePage?.set(userInfo: newUserInfo)
-                })
+                self?.showChangeUserInfoPage(userInfo: userInfo)
             })
             .disposed(by: disposeBag)
 
@@ -72,13 +70,12 @@ final class ProfileCoordinator: BaseCoordinator {
         return profilePage
     }
 
-    private func showChangeUserInfoPage(userInfo: UserInfoResponse, completion: ((UserInfoResponse) -> Void)?) {
+    private func showChangeUserInfoPage(userInfo: UserInfoResponse) {
         let changeUserInfoPage = pagesFactory.makeChangeUserInfoPage(userInfo: userInfo)
         changeUserInfoPage.hidesBottomBarWhenPushed = true
 
         changeUserInfoPage.outputs.didGetUserInfo
-            .subscribe(onNext: { [weak self] newUserInfo in
-                completion?(newUserInfo)
+            .subscribe(onNext: { [weak self] in
                 self?.router.pop(animated: true)
             })
             .disposed(by: disposeBag)

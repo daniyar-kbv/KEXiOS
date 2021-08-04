@@ -8,7 +8,6 @@
 import Foundation
 
 enum DefaultStorageKey: String, StorageKey, Equatable {
-    case username
     case leadUUID
     case fcmToken
     case appLocale
@@ -18,13 +17,11 @@ enum DefaultStorageKey: String, StorageKey, Equatable {
 }
 
 protocol DefaultStorage {
-    var userName: String? { get }
     var leadUUID: String? { get }
     var fcmToken: String? { get }
     var appLocale: Language { get }
     var notFirstLaunch: Bool { get }
 
-    func persist(name: String)
     func persist(leadUUID: String)
     func persist(fcmToken: String)
     func persist(appLocale: Language)
@@ -37,10 +34,6 @@ final class DefaultStorageImpl: DefaultStorage {
     static let sharedStorage = DefaultStorageImpl(storageProvider: UserDefaults.standard)
 
     private let storageProvider: UserDefaults
-
-    var userName: String? {
-        return storageProvider.string(forKey: DefaultStorageKey.username.value)
-    }
 
     var leadUUID: String? {
         return storageProvider.string(forKey: DefaultStorageKey.leadUUID.value)
@@ -60,10 +53,6 @@ final class DefaultStorageImpl: DefaultStorage {
 
     init(storageProvider: UserDefaults) {
         self.storageProvider = storageProvider
-    }
-
-    func persist(name: String) {
-        storageProvider.set(name, forKey: DefaultStorageKey.username.value)
     }
 
     func persist(leadUUID: String) {

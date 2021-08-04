@@ -74,7 +74,7 @@ extension ChangeNameController {
     }
 
     struct Output {
-        let didGetUserInfo = PublishRelay<UserInfoResponse>()
+        let didGetUserInfo = PublishRelay<Void>()
     }
 }
 

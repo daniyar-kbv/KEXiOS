@@ -12,7 +12,7 @@ import UIKit
 final class SetNameController: UIViewController, AlertDisplayable, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
-    var didGetEnteredName: ((String) -> Void)?
+    var didGetEnteredName: (() -> Void)?
 
     private lazy var rootView = SetNameView(delegate: self)
     private let viewModel: SetNameViewModel
@@ -62,9 +62,8 @@ final class SetNameController: UIViewController, AlertDisplayable, LoaderDisplay
             .disposed(by: disposeBag)
 
         viewModel.outputs.didSaveUserName
-            .bind { [weak self] userInfo in
-                guard let name = userInfo.name else { return }
-                self?.didGetEnteredName?(name)
+            .bind { [weak self] in
+                self?.didGetEnteredName?()
             }
             .disposed(by: disposeBag)
     }
