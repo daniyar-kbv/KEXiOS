@@ -26,6 +26,7 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
     init(repository: ProfileRepository, userInfo: UserInfoResponse) {
         self.repository = repository
         oldUserInfo = userInfo
+
         bindOutputs()
     }
 

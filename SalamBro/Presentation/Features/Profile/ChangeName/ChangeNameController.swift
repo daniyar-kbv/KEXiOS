@@ -36,6 +36,7 @@ final class ChangeNameController: UIViewController, AlertDisplayable, LoaderDisp
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         configureViews()
         bindViewModel()
     }
@@ -44,9 +45,8 @@ final class ChangeNameController: UIViewController, AlertDisplayable, LoaderDisp
 extension ChangeNameController {
     private func configureViews() {
         navigationItem.title = SBLocalization.localized(key: ProfileText.ChangeName.title)
-        if let name = viewModel.oldUserInfo.name, let email = viewModel.oldUserInfo.email {
-            contentView?.configureTextFields(name: name, email: email)
-        }
+        contentView?.configureTextFields(name: viewModel.oldUserInfo.name,
+                                         email: viewModel.oldUserInfo.email)
     }
 
     private func bindViewModel() {

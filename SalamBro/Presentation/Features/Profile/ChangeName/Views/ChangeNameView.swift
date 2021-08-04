@@ -71,6 +71,7 @@ final class ChangeNameView: UIView {
     init(delegate: ChangeNameViewDelegate) {
         super.init(frame: .zero)
         self.delegate = delegate
+
         layoutUI()
         configureActions()
     }
@@ -88,7 +89,7 @@ extension ChangeNameView {
         saveButton.addTarget(self, action: #selector(saveName), for: .touchUpInside)
     }
 
-    func configureTextFields(name: String, email: String) {
+    func configureTextFields(name: String?, email: String?) {
         nameTextField.text = name
         emailTextField.text = email
         saveButton.isEnabled = !(nameTextField.text?.isEmpty ?? true)

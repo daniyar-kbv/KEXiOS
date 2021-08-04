@@ -68,13 +68,14 @@ final class ProfileViewModelImpl: ProfileViewModel {
             .disposed(by: disposeBag)
 
         repository.outputs.didGetUserInfo
-            .bind(to: outputs.didGetUserInfo)
+            .subscribe(onNext: { [weak self] userInfo in
+                self?.currentUserInfo = userInfo
+                self?.outputs.didGetUserInfo.accept(userInfo)
+            })
             .disposed(by: disposeBag)
 
-        repository.outputs.didGetUserInfo
-            .bind { [weak self] userInfo in
-                self?.currentUserInfo = userInfo
-            }
+        repository.outputs.didLogout
+            .bind(to: outputs.didLogout)
             .disposed(by: disposeBag)
     }
 }
@@ -85,5 +86,6 @@ extension ProfileViewModelImpl {
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
+        let didLogout = PublishRelay<Void>()
     }
 }

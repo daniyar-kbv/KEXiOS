@@ -123,7 +123,6 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         let yesAction = UIAlertAction(title: SBLocalization.localized(key: ProfileText.Profile.Alert.Action.yes),
                                       style: .default) { [weak self] _ in
             self?.viewModel.logout()
-            self?.showEmptyState()
         }
 
         let noAction = UIAlertAction(title: SBLocalization.localized(key: ProfileText.Profile.Alert.Action.no),
@@ -159,6 +158,12 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
                 self?.layoutUI()
                 self?.updateViews(with: userInfo)
                 self?.hideAnimationView(completionHandler: nil)
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didLogout
+            .subscribe(onNext: { [weak self] in
+                self?.showEmptyState()
             })
             .disposed(by: disposeBag)
     }
