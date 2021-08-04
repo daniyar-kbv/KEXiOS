@@ -86,6 +86,7 @@
 // MARK: - Map
 "MapView.addressField.title" = "KZ Адрес доставки";
 "MapView.commentaryLabel.title" = "KZ Комментарий (квартира, подъезд, ...)";
+"Commentary.addressField.title" =" Комментарий (квартира, подъезд, ...)";
 "MapView.proceedButton.title" = "KZ Перейти к заказу";
 "MapView.LocationAlert.title" = "KZ Службы определения местоположения отключены";
 "MapView.LocationAlert.message" = "KZ Пожалуйста, включите Службы определения местоположения в своих настройках";
