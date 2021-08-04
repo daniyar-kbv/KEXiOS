@@ -35,10 +35,10 @@ final class ChangeLanguageCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with item: Language) {
-        languageImageView.image = item.type.icon
-        languageLabel.text = item.type.title
-        rightImage.isHidden = !item.checkmark
+    func configure(with language: Language, isCurrent: Bool) {
+        languageImageView.image = language.icon
+        languageLabel.text = language.title
+        rightImage.isHidden = !isCurrent
     }
 
     private func layoutUI() {

@@ -68,8 +68,8 @@ final class VerificationController: UIViewController, LoaderDisplayable, AlertDi
             })
             .disposed(by: disposeBag)
 
-        viewModel.outputs.didVerifyOTP
-            .bind(to: outputs.didGetToken)
+        viewModel.outputs.didFinish
+            .bind(to: outputs.didFinish)
             .disposed(by: disposeBag)
 
         viewModel.outputs.didResendOTP
@@ -96,6 +96,6 @@ extension VerificationController: VerificationViewDelegate {
 
 extension VerificationController {
     struct Output {
-        let didGetToken = PublishRelay<Void>()
+        let didFinish = PublishRelay<Bool>()
     }
 }

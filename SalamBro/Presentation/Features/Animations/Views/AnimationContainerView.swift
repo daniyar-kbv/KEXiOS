@@ -12,8 +12,7 @@ import UIKit
 final class AnimationContainerView: UIView {
     private lazy var lottieAnimationView: AnimationView = {
         let view = AnimationView()
-        view.frame = CGRect(x: 0, y: 0, width: 272, height: 200)
-        view.loopMode = .loop
+        view.contentMode = .scaleAspectFill
         return view
     }()
 
@@ -35,9 +34,12 @@ final class AnimationContainerView: UIView {
         return view
     }()
 
+    private var animationType: LottieAnimationModel?
+
     init(animationType: LottieAnimationModel) {
         super.init(frame: .zero)
 
+        self.animationType = animationType
         configureViews(with: animationType)
         layoutUI()
     }
@@ -55,6 +57,7 @@ final class AnimationContainerView: UIView {
         actionButton.setTitle(type.getButtonTitle(), for: .normal)
 
         lottieAnimationView.animation = type.getAnimation()
+        lottieAnimationView.loopMode = type == .profile ? .playOnce : .loop
     }
 
     private func setState(with style: LottieAnimationModel) {
@@ -68,6 +71,18 @@ final class AnimationContainerView: UIView {
 
     private func layoutUI() {
         backgroundColor = .white
+
+        if animationType == .profile {
+            lottieAnimationView.snp.makeConstraints {
+                $0.width.equalTo(736)
+                $0.height.equalTo(200)
+            }
+        } else {
+            lottieAnimationView.snp.makeConstraints {
+                $0.width.equalTo(272)
+                $0.height.equalTo(200)
+            }
+        }
 
         infoLabel.snp.makeConstraints {
             $0.width.equalTo(UIScreen.main.bounds.width - 48)

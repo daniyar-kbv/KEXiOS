@@ -20,10 +20,10 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
 
     private(set) var outputs: Output = .init()
 
-    private let repository: ChangeUserInfoRepository
+    private let repository: ProfileRepository
     private(set) var oldUserInfo: UserInfoResponse
 
-    init(repository: ChangeUserInfoRepository, userInfo: UserInfoResponse) {
+    init(repository: ProfileRepository, userInfo: UserInfoResponse) {
         self.repository = repository
         oldUserInfo = userInfo
         bindOutputs()
@@ -47,8 +47,8 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
             .disposed(by: disposeBag)
 
         repository.outputs.didGetUserInfo
-            .bind { [weak self] userInfo in
-                self?.outputs.didGetUserInfo.accept(userInfo)
+            .bind { [weak self] _ in
+                self?.outputs.didGetUserInfo.accept(())
             }
             .disposed(by: disposeBag)
     }
@@ -56,7 +56,7 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
 
 extension ChangeNameViewModelImpl {
     struct Output {
-        let didGetUserInfo = PublishRelay<UserInfoResponse>()
+        let didGetUserInfo = PublishRelay<Void>()
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()

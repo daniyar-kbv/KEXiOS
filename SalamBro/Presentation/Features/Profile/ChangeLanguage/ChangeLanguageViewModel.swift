@@ -14,38 +14,28 @@ protocol ChangeLanguageViewModel: AnyObject {
 
     var languages: [Language] { get }
 
-    func getLanguage(at index: Int) -> Language
+    func getLanguage(at index: Int) -> (language: Language, isCurrent: Bool)
     func changeLanguage(at index: Int)
 }
 
 final class ChangeLanguageViewModelImpl: ChangeLanguageViewModel {
     private let defaultStorage: DefaultStorage
-    private let languageTypes: [Language.LanguageTableItem] = [.russian, .kazakh, .english]
-
     private(set) var outputs: Output = .init()
-    private(set) var languages: [Language]
+
+    let languages: [Language] = [.russian, .kazakh, .english]
 
     init(defaultStorage: DefaultStorage) {
         self.defaultStorage = defaultStorage
+    }
 
-        languages = languageTypes
-            .map { Language(type: $0, checkmark: defaultStorage.appLocale == $0.code) }
+    func getLanguage(at index: Int) -> (language: Language, isCurrent: Bool) {
+        return (languages[index], languages[index] == defaultStorage.appLocale)
     }
 
     func changeLanguage(at index: Int) {
-        configureLanguages(at: index)
-        defaultStorage.persist(appLocale: languages[index].type)
+        defaultStorage.persist(appLocale: languages[index])
         outputs.didChangeLanguage.accept(())
         outputs.didEnd.accept(())
-    }
-
-    func getLanguage(at index: Int) -> Language {
-        return languages[index]
-    }
-
-    private func configureLanguages(at index: Int) {
-        for i in 0 ..< languages.count { languages[i].checkmark = false }
-        languages[index].checkmark = true
     }
 }
 

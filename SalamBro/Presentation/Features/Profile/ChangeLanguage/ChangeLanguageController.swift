@@ -79,7 +79,8 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: ChangeLanguageCell.self)
-        cell.configure(with: viewModel.getLanguage(at: indexPath.row))
+        let languageInfo = viewModel.getLanguage(at: indexPath.row)
+        cell.configure(with: languageInfo.language, isCurrent: languageInfo.isCurrent)
         return cell
     }
 
