@@ -27,7 +27,6 @@ struct OrderProductResponse: Codable {
     struct Data: Codable {
         let uuid: String
         let categories: [MenuCategory]
-        let positions: [MenuPosition]
     }
 }
 
