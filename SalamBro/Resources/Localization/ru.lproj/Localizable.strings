@@ -87,6 +87,7 @@
 // MARK: - Map
 "MapView.addressField.title" = "Адрес доставки";
 "MapView.commentaryLabel.title" = "Комментарий (квартира, подъезд, ...)";
+"Commentary.addressField.title" =" Комментарий (квартира, подъезд, ...)";
 "MapView.proceedButton.title" = "Перейти к заказу";
 "MapView.LocationAlert.title" = "Службы определения местоположения отключены";
 "MapView.LocationAlert.message" = "Пожалуйста, включите Службы определения местоположения в своих настройках";
@@ -100,7 +101,6 @@
 
 // MARK: - RateOrder
 "RateOrder.title" = "Оцените заказ";
-
 "RateOrder.submitButton.title" = "Отправить";
 "RateOrder.commentaryField.placeholder" = "Добавить комментарий";
 "RateOrder.title" = "Оцените заказ";

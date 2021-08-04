@@ -50,7 +50,7 @@
 		608C6BCCE52903074322BA9A4E7A6B9B /* AuthNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5108A279D42395CC7029EC913C8FB214 /* AuthNumberView.swift */; };
 		DDF3EAE5AE212626973802EEF8E14A79 /* AuthPageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C4A6324F1B80720096C1538EB8C08E /* AuthPageRepository.swift */; };
 		FD00D6036336AF940B33267DD9E7EA10 /* AuthPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51611B63B0B19907E7A004B6CCB5AEE7 /* AuthPagesFactory.swift */; };
-		7F8481914A895DB69E52D3023DE3A76B /* AuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD383E5BF4292064140F6007E953627A /* AuthPlugin.swift */; };
+		048421C0D97BF52230309EDB37A2BAEA /* AuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6040B6D620DF2D89D9D6F170DA7189 /* AuthPlugin.swift */; };
 		9E32C42A4DC649912ECF49A5933D49C3 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3AF9D13BF4B313867EF77DE0893FBE /* AuthResponse.swift */; };
 		1E73DB28D0EACDE311620B99B5686660 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1536E5A224DB94A51B38553CA32315BA /* AuthService.swift */; };
 		9F9566BD48DA1818E48D5EEA247BDBE5 /* AuthTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51813FF52308773DA686BE31A8ED0B2 /* AuthTokenStorage.swift */; };
@@ -119,6 +119,7 @@
 		54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070881AEDB3977B0482B6A6B06A1C201 /* GeoStorage.swift */; };
 		7FF3C00C520DBCFD5B1F801D9F8B482F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */; };
 		10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */; };
+		2C3E677691E3DAE38B0D168AE032D58A /* LanguagePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFEA9695FCF2EA57210330515725F4B /* LanguagePlugin.swift */; };
 		05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */; };
 		AFE4A9CB1651215078FF7933E0FE1E84 /* LoaderDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B1DD3359C1EF5D60E6A24C6244E9F6 /* LoaderDisplayable.swift */; };
 		49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0CD4620DB0111EEE4B4AF43B25022AE /* Localizable.strings */; };
@@ -362,7 +363,7 @@
 		5108A279D42395CC7029EC913C8FB214 /* AuthNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumberView.swift; sourceTree = "<group>"; };
 		E9C4A6324F1B80720096C1538EB8C08E /* AuthPageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPageRepository.swift; sourceTree = "<group>"; };
 		51611B63B0B19907E7A004B6CCB5AEE7 /* AuthPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPagesFactory.swift; sourceTree = "<group>"; };
-		FD383E5BF4292064140F6007E953627A /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
+		2F6040B6D620DF2D89D9D6F170DA7189 /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
 		2E3AF9D13BF4B313867EF77DE0893FBE /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		1536E5A224DB94A51B38553CA32315BA /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		D51813FF52308773DA686BE31A8ED0B2 /* AuthTokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenStorage.swift; sourceTree = "<group>"; };
@@ -454,6 +455,7 @@
 		82DF8DD4A94962F1A97777FAD3747A32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9C0AD81DF662457ACBFD84D90AF44BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		5FFEA9695FCF2EA57210330515725F4B /* LanguagePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePlugin.swift; sourceTree = "<group>"; };
 		118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		39BA308FCB7A9A775DD5A1463690B68E /* LegacyCartDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyCartDTO.swift; sourceTree = "<group>"; };
 		54B1DD3359C1EF5D60E6A24C6244E9F6 /* LoaderDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderDisplayable.swift; sourceTree = "<group>"; };
@@ -709,7 +711,6 @@
 			isa = PBXGroup;
 			children = (
 				023469A21886A61C75CD417CABA3C84F /* AuthAPI.swift */,
-				FD383E5BF4292064140F6007E953627A /* AuthPlugin.swift */,
 				8FED63A6F3CE5610BD846408A62A6488 /* DocumentsAPI.swift */,
 				E7C3B50E240D07EAF8B30062626C6FA1 /* LocationAPI.swift */,
 				DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */,
@@ -799,6 +800,15 @@
 				A21DBF1D8149DD277ACF2EE07316691C /* SupportCoordinator.swift */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		227D6DAD7D62C5363788DBE64FC2C84F /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				2F6040B6D620DF2D89D9D6F170DA7189 /* AuthPlugin.swift */,
+				5FFEA9695FCF2EA57210330515725F4B /* LanguagePlugin.swift */,
+			);
+			path = Plugins;
 			sourceTree = "<group>";
 		};
 		15BA1BB3C138589E5ECE03C5EE7747F5 /* PaymentEdit */ = {
@@ -2118,6 +2128,7 @@
 			children = (
 				064730B27BC86F67D4AB452AD6B1ADCD /* API */,
 				279AA3A874C8577F3E428C1484D108AF /* Models */,
+				227D6DAD7D62C5363788DBE64FC2C84F /* Plugins */,
 				0468679815381CE82D58B4CA3763772E /* Reachability */,
 				45788FC689A0515A94F86B6FC9172D75 /* Services */,
 			);
@@ -2530,7 +2541,7 @@
 				608C6BCCE52903074322BA9A4E7A6B9B /* AuthNumberView.swift in Sources */,
 				DDF3EAE5AE212626973802EEF8E14A79 /* AuthPageRepository.swift in Sources */,
 				FD00D6036336AF940B33267DD9E7EA10 /* AuthPagesFactory.swift in Sources */,
-				7F8481914A895DB69E52D3023DE3A76B /* AuthPlugin.swift in Sources */,
+				048421C0D97BF52230309EDB37A2BAEA /* AuthPlugin.swift in Sources */,
 				9E32C42A4DC649912ECF49A5933D49C3 /* AuthResponse.swift in Sources */,
 				1E73DB28D0EACDE311620B99B5686660 /* AuthService.swift in Sources */,
 				9F9566BD48DA1818E48D5EEA247BDBE5 /* AuthTokenStorage.swift in Sources */,
@@ -2598,6 +2609,7 @@
 				4689A2E43C9E1832756F31868F0DBF8F /* Formatted+Extension.swift in Sources */,
 				54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */,
 				10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */,
+				2C3E677691E3DAE38B0D168AE032D58A /* LanguagePlugin.swift in Sources */,
 				AFE4A9CB1651215078FF7933E0FE1E84 /* LoaderDisplayable.swift in Sources */,
 				11A54FF839FE6A0CBA870EEB511B5D87 /* LocationAPI.swift in Sources */,
 				49AF67A310FC70B7B6034AC3E43C404F /* LocationManager.swift in Sources */,
