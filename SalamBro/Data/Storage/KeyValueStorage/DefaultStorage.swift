@@ -21,13 +21,13 @@ protocol DefaultStorage {
     var userName: String? { get }
     var leadUUID: String? { get }
     var fcmToken: String? { get }
-    var appLocale: String { get }
+    var appLocale: Language { get }
     var notFirstLaunch: Bool { get }
 
     func persist(name: String)
     func persist(leadUUID: String)
     func persist(fcmToken: String)
-    func persist(appLocale: Language.LanguageTableItem)
+    func persist(appLocale: Language)
     func persist(notFirstLaunch: Bool)
 
     func cleanUp(key: DefaultStorageKey)
@@ -54,8 +54,8 @@ final class DefaultStorageImpl: DefaultStorage {
         return storageProvider.bool(forKey: DefaultStorageKey.notFirstLaunch.value)
     }
 
-    var appLocale: String {
-        return storageProvider.string(forKey: DefaultStorageKey.appLocale.value) ?? Language.LanguageTableItem.russian.code
+    var appLocale: Language {
+        return Language.get(by: storageProvider.string(forKey: DefaultStorageKey.appLocale.value))
     }
 
     init(storageProvider: UserDefaults) {
@@ -74,7 +74,7 @@ final class DefaultStorageImpl: DefaultStorage {
         storageProvider.set(fcmToken, forKey: DefaultStorageKey.fcmToken.value)
     }
 
-    func persist(appLocale: Language.LanguageTableItem) {
+    func persist(appLocale: Language) {
         storageProvider.set(appLocale.code, forKey: DefaultStorageKey.appLocale.value)
     }
 

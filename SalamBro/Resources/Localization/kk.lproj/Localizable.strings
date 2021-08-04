@@ -99,7 +99,6 @@
 
 // MARK: - RateOrder
 "RateOrder.title" = "KZ Оцените заказ";
-
 "RateOrder.submitButton.title" = "KZ Отправить";
 "RateOrder.commentaryField.placeholder" = "KZ Добавить комментарий";
 "RateOrder.title" = "KZ Оцените заказ";

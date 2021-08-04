@@ -502,7 +502,7 @@ enum PaymentText: UILocalizable {
 
 enum SBLocalization {
     static func localized(key: UILocalizable) -> String {
-        guard let path = Bundle.main.path(forResource: DefaultStorageImpl.sharedStorage.appLocale, ofType: "lproj"),
+        guard let path = Bundle.main.path(forResource: DefaultStorageImpl.sharedStorage.appLocale.code, ofType: "lproj"),
               let bundle = Bundle(path: path)
         else {
             return NSLocalizedString(key.localized, tableName: "Localizable", comment: "")

@@ -100,7 +100,6 @@
 
 // MARK: - RateOrder
 "RateOrder.title" = "Оцените заказ";
-
 "RateOrder.submitButton.title" = "Отправить";
 "RateOrder.commentaryField.placeholder" = "Добавить комментарий";
 "RateOrder.title" = "Оцените заказ";
