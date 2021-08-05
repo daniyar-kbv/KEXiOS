@@ -17,10 +17,9 @@ final class MapTextField: UITextView {
         }
     }
 
-    private var isEmpty: Bool = true {
+    private(set) var isEmpty: Bool = true {
         didSet {
             textColor = isEmpty ? .mildBlue : .darkGray
-            autocapitalizationType = isEmpty ? .words : .sentences
         }
     }
 
@@ -54,21 +53,10 @@ final class MapTextField: UITextView {
         font = .systemFont(ofSize: 16, weight: .medium)
         isScrollEnabled = false
         textContainerInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        autocapitalizationType = .words
 
         delegate = self
 
         set(image: image)
-    }
-
-    func set(text: String?) {
-        guard !(text?.isEmpty ?? true) else {
-            self.text = placeholder
-            isEmpty = true
-            return
-        }
-        self.text = text
-        isEmpty = false
     }
 
     private func set(image: UIImage?) {
@@ -91,6 +79,22 @@ final class MapTextField: UITextView {
     }
 }
 
+extension MapTextField {
+    func getText() -> String {
+        return isEmpty ? "" : text
+    }
+
+    func set(text: String?) {
+        guard !(text?.isEmpty ?? true) else {
+            self.text = placeholder
+            isEmpty = true
+            return
+        }
+        self.text = text
+        isEmpty = false
+    }
+}
+
 extension MapTextField: UITextViewDelegate {
     func textViewShouldBeginEditing(_: UITextView) -> Bool {
         guard let onShouldBeginEditing = onShouldBeginEditing else {
@@ -109,30 +113,23 @@ extension MapTextField: UITextViewDelegate {
         text = placeholder
     }
 
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-
-        if isEmpty, text != "" {
-            textView.text = text
-            textColor = .darkGray
-            isEmpty = false
-            onChange?()
-            formatText()
-            return false
+    func textViewDidChange(_ textView: UITextView) {
+        if isEmpty {
+            if textView.text.count - placeholder.count == 1 {
+                textView.text = "\(text.last ?? String.Element(""))".capitalized
+                isEmpty = false
+            } else {
+                textView.text = placeholder
+            }
         }
 
-        if !isEmpty, newText == "" {
+        if !isEmpty, textView.text == "" {
             textView.text = placeholder
             isEmpty = true
-            onChange?()
-            formatText()
-            return false
         }
 
-        textView.text = newText
         onChange?()
         formatText()
-        return false
     }
 }
 

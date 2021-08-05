@@ -131,7 +131,7 @@
 		5BFD908E02873E49D1C84E58F7C5C198 /* MapAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12BC349D5DDAC599F57CA5E4CC1EC13 /* MapAddressView.swift */; };
 		4B358247ED78930DC4E1A0F59CC837D7 /* MapCommentaryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6F90C9E2DABAC29F09DB0CA1FE652 /* MapCommentaryPage.swift */; };
 		885E60EAE88F9D254A82778681E88CAE /* MapPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6EFAD3D69DC689F23C7E0EE0CCCDB5 /* MapPage.swift */; };
-		00052DD08F7CD0B6DE698D57358954AC /* MapTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A79F96E3D90CDD367B85D86E329B2 /* MapTextField.swift */; };
+		F4DE4A75ACAE8901AA64F5FFBA09F755 /* MapTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBC46D9C510FD1F6AFB5B16AE05D65 /* MapTextField.swift */; };
 		8AE471B056397E7B60BC55B5EB33CE58 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7685E6308BE49DDBA9235A51DDA1588 /* MapViewModel.swift */; };
 		52BD459AE899D26400B40736B775C290 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF32ADAB2B8FEF982A4A9355E2F96AD /* Menu.swift */; };
 		44BB876327C952575660F81915BDBB1E /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5374FE5CCE3D71FA2D99246F8BFB9D9 /* MenuCell.swift */; };
@@ -468,7 +468,7 @@
 		F12BC349D5DDAC599F57CA5E4CC1EC13 /* MapAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAddressView.swift; sourceTree = "<group>"; };
 		55B6F90C9E2DABAC29F09DB0CA1FE652 /* MapCommentaryPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCommentaryPage.swift; sourceTree = "<group>"; };
 		4E6EFAD3D69DC689F23C7E0EE0CCCDB5 /* MapPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPage.swift; sourceTree = "<group>"; };
-		9B9A79F96E3D90CDD367B85D86E329B2 /* MapTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTextField.swift; sourceTree = "<group>"; };
+		D7DBC46D9C510FD1F6AFB5B16AE05D65 /* MapTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTextField.swift; sourceTree = "<group>"; };
 		F7685E6308BE49DDBA9235A51DDA1588 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		4FF32ADAB2B8FEF982A4A9355E2F96AD /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		E5374FE5CCE3D71FA2D99246F8BFB9D9 /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
@@ -747,6 +747,7 @@
 				839AFAA5E34C8F0ECF1CFB2549D53586 /* StagLayout */,
 				9E42260DDA4C991D080DF7EA32BE6956 /* BasicLoaderView.swift */,
 				55B6F90C9E2DABAC29F09DB0CA1FE652 /* MapCommentaryPage.swift */,
+				D7DBC46D9C510FD1F6AFB5B16AE05D65 /* MapTextField.swift */,
 				CCC34446C40A3150982B893B4A326286 /* SeparatorView.swift */,
 			);
 			path = View;
@@ -776,7 +777,6 @@
 			children = (
 				2810BD383ABBD1F055D845629C026D5E /* MapActionButton.swift */,
 				F12BC349D5DDAC599F57CA5E4CC1EC13 /* MapAddressView.swift */,
-				9B9A79F96E3D90CDD367B85D86E329B2 /* MapTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2623,7 +2623,7 @@
 				5BFD908E02873E49D1C84E58F7C5C198 /* MapAddressView.swift in Sources */,
 				4B358247ED78930DC4E1A0F59CC837D7 /* MapCommentaryPage.swift in Sources */,
 				885E60EAE88F9D254A82778681E88CAE /* MapPage.swift in Sources */,
-				00052DD08F7CD0B6DE698D57358954AC /* MapTextField.swift in Sources */,
+				F4DE4A75ACAE8901AA64F5FFBA09F755 /* MapTextField.swift in Sources */,
 				8AE471B056397E7B60BC55B5EB33CE58 /* MapViewModel.swift in Sources */,
 				52BD459AE899D26400B40736B775C290 /* Menu.swift in Sources */,
 				44BB876327C952575660F81915BDBB1E /* MenuCell.swift in Sources */,
@@ -2957,7 +2957,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 36;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2965,7 +2965,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.36;
+				MARKETING_VERSION = 0.0.38;
 				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3027,7 +3027,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 36;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3035,7 +3035,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.36;
+				MARKETING_VERSION = 0.0.38;
 				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
