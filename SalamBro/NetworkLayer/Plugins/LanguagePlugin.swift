@@ -18,7 +18,7 @@ struct LanguagePlugin: PluginType {
     func prepare(_ request: URLRequest, target _: TargetType) -> URLRequest {
         var request = request
 
-        request.addValue(defaultStorage.appLocale.code, forHTTPHeaderField: "Accept-Language")
+        request.addValue(defaultStorage.appLocale.code, forHTTPHeaderField: "language")
 
         return request
     }

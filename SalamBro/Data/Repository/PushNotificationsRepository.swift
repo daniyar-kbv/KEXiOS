@@ -19,18 +19,23 @@ final class PushNotificationsRepositoryImpl: PushNotificationsRepository {
     private let disposeBag = DisposeBag()
     private let notificationsService: PushNotificationsService
     private let defaultStorage: DefaultStorage
+    private let authTokenStorage: AuthTokenStorage
 
     let outputs = Output()
 
     init(notificationsService: PushNotificationsService,
-         defaultStorage: DefaultStorage)
+         defaultStorage: DefaultStorage,
+         authTokenStorage: AuthTokenStorage)
     {
         self.notificationsService = notificationsService
         self.defaultStorage = defaultStorage
+        self.authTokenStorage = authTokenStorage
     }
 
     func tokenUpdate(fcmToken: String) {
-        guard fcmToken != defaultStorage.fcmToken else { return }
+        guard fcmToken != defaultStorage.fcmToken,
+              authTokenStorage.token != nil
+        else { return }
 
         defaultStorage.persist(fcmToken: fcmToken)
 

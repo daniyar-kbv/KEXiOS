@@ -103,6 +103,7 @@ extension AppDelegate {
     func userNotificationCenter(_: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler _: @escaping (UNNotificationPresentationOptions) -> Void) {
         let userInfo = notification.request.content.userInfo
         guard let pushNotification = PushNotification(dictionary: userInfo) else { return }
+
         showNotificationAlert(pushNotification: pushNotification)
     }
 

@@ -103,9 +103,9 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     func makePushNotificationsRepository() -> PushNotificationsRepository {
         return shared(PushNotificationsRepositoryImpl(
             notificationsService: serviceComponents.pushNotificationsService(),
-            defaultStorage: DefaultStorageImpl.sharedStorage
-        )
-        )
+            defaultStorage: DefaultStorageImpl.sharedStorage,
+            authTokenStorage: AuthTokenStorageImpl.sharedStorage
+        ))
     }
 
     private func makeLocalStorage() -> Storage {
