@@ -52,6 +52,7 @@ final class ProfileRepositoryImpl: ProfileRepository {
 
     func logout() {
         tokenStorage.cleanUp()
+        outputs.didLogout.accept(())
     }
 
     func set(userInfo: UserInfoResponse) {
@@ -85,5 +86,6 @@ extension ProfileRepositoryImpl {
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
+        let didLogout = PublishRelay<Void>()
     }
 }

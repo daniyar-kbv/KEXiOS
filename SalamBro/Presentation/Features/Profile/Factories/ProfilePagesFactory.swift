@@ -27,13 +27,7 @@ final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
     }
 
     private func makeProfileViewModel() -> ProfileViewModel {
-        return scoped(ProfileViewModelImpl(repository: makeProfileRepository()))
-    }
-
-    private func makeProfileRepository() -> ProfileRepository {
-        return scoped(ProfileRepositoryImpl(profileService: serviceComponents.profileService(),
-                                            authService: serviceComponents.authService(),
-                                            tokenStorage: AuthTokenStorageImpl.sharedStorage))
+        return scoped(ProfileViewModelImpl(repository: repositoryComponents.makeProfileRepository()))
     }
 
     func makeChangeUserInfoPage(userInfo: UserInfoResponse) -> ChangeNameController {

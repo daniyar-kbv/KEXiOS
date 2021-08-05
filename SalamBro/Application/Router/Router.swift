@@ -120,7 +120,6 @@ extension MainRouter: SBNavigationControllerDelegate {
     private func setConfiguration(_ configuration: BarButtonConfiguration, for viewController: UIViewController) {
         switch configuration {
         case .withBackButton:
-            print(viewController)
             viewController.setBackButton(completion: didTapOnBack)
             navigationController.interactivePopGestureRecognizer?.delegate = viewController as? UIGestureRecognizerDelegate
         case .none:

@@ -82,8 +82,7 @@ final class MapCommentaryPage: UIViewController {
 
         actionButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                guard let text = self?.commentaryTextField.text else { return }
-                self?.output.didProceed.accept(text)
+                self?.output.didProceed.accept(self?.commentaryTextField.getText())
                 self?.finish()
             })
             .disposed(by: disposeBag)

@@ -31,12 +31,14 @@ extension UIViewController: AnimationViewPresentable {
         animationController.didMove(toParent: self)
     }
 
-    func hideAnimationView(completionHandler _: (() -> Void)?) {
+    func hideAnimationView(completionHandler: (() -> Void)?) {
         let animationController = children.first(where: { $0 is AnimationController }) as? AnimationController
 
         animationController?.willMove(toParent: nil)
         animationController?.view.removeFromSuperview()
         animationController?.removeFromParent()
+
+        completionHandler?()
     }
 
     private func needsShow() -> Bool {
