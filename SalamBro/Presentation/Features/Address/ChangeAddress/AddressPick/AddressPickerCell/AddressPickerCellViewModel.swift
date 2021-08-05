@@ -9,19 +9,19 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-public protocol AddressPickerCellViewModelProtocol: AnyObject {
+protocol AddressPickerCellViewModelProtocol: AnyObject {
     var name: BehaviorRelay<String?> { get }
     var isSelected: BehaviorRelay<Bool> { get }
 }
 
-public final class AddressPickerCellViewModel: AddressPickerCellViewModelProtocol {
+final class AddressPickerCellViewModel: AddressPickerCellViewModelProtocol {
     public var name: BehaviorRelay<String?>
     public var isSelected: BehaviorRelay<Bool>
 
-    public init(deliveryAddress: DeliveryAddress,
-                isSelected: Bool)
+    init(userAddress: UserAddress,
+         isSelected: Bool)
     {
-        name = .init(value: deliveryAddress.address?.name)
+        name = .init(value: userAddress.address.getName())
         self.isSelected = .init(value: isSelected)
     }
 }

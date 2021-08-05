@@ -18,6 +18,8 @@ protocol CartRepository {
     func incrementItem(positionUUID: String)
     func decrementItem(positionUUID: String)
     func cleanUp()
+
+    func getTotalAmount() -> Double
 }
 
 final class CartRepositoryImpl: CartRepository {
@@ -26,6 +28,9 @@ final class CartRepositoryImpl: CartRepository {
     private let defaultStorage: DefaultStorage
 
     private let disposeBag = DisposeBag()
+
+    private let evokeDebouncedUpdateCart = PublishRelay<Void>()
+    private let evokeUpdateCart = PublishRelay<Void>()
 
     let outputs = Output()
 
@@ -36,6 +41,8 @@ final class CartRepositoryImpl: CartRepository {
         self.cartStorage = cartStorage
         self.ordersService = ordersService
         self.defaultStorage = defaultStorage
+
+        bindActions()
     }
 }
 
@@ -52,47 +59,77 @@ extension CartRepositoryImpl {
         } else {
             cartStorage.cart.items.append(item)
         }
-        updateCart()
+        outputs.didChange.accept(cartStorage.cart.items)
+        evokeUpdateCart.accept(())
     }
 
     func removeItem(positionUUID: String) {
         guard let index = getIndex(of: positionUUID) else { return }
         cartStorage.cart.items.remove(at: index)
-        updateCart()
+        outputs.didChange.accept(cartStorage.cart.items)
+        evokeUpdateCart.accept(())
     }
 
     func incrementItem(positionUUID: String) {
         guard let index = getIndex(of: positionUUID) else { return }
         cartStorage.cart.items[index].count += 1
-        updateCart()
+        outputs.didChange.accept(cartStorage.cart.items)
+        evokeDebouncedUpdateCart.accept(())
     }
 
     func decrementItem(positionUUID: String) {
         guard let index = getIndex(of: positionUUID) else { return }
         cartStorage.cart.items[index].count -= 1
-        guard cartStorage.cart.items[index].count != 0 else {
-            removeItem(positionUUID: positionUUID)
-            return
+        if cartStorage.cart.items[index].count == 0,
+           let index = getIndex(of: positionUUID)
+        {
+            cartStorage.cart.items.remove(at: index)
         }
-        updateCart()
+        outputs.didChange.accept(cartStorage.cart.items)
+        evokeDebouncedUpdateCart.accept(())
     }
 
     func cleanUp() {
         cartStorage.cart.items = []
-        updateCart()
+        outputs.didChange.accept(cartStorage.cart.items)
+        evokeUpdateCart.accept(())
+    }
+
+    func getTotalAmount() -> Double {
+        return cartStorage.cart.getTotalPrice()
     }
 }
 
 extension CartRepositoryImpl {
+    private func bindActions() {
+        evokeUpdateCart
+            .asObservable()
+            .subscribe(onNext: { [weak self] in
+                self?.updateCart(withLoader: true)
+            })
+            .disposed(by: disposeBag)
+
+        evokeDebouncedUpdateCart
+            .asObservable()
+            .debounce(.seconds(2), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.updateCart(withLoader: false)
+            })
+            .disposed(by: disposeBag)
+    }
+
     private func getIndex(of positionUUID: String) -> Int? {
         return cartStorage.cart.items.firstIndex(where: { $0.position.uuid == positionUUID })
     }
 
-    private func updateCart() {
-        outputs.didChange.accept(cartStorage.cart.items)
+    private func updateCart(withLoader: Bool = true) {
         guard let leadUUID = defaultStorage.leadUUID else { return }
         let dto = cartStorage.cart.toDTO()
-        outputs.didStartRequest.accept(())
+
+        if withLoader {
+            outputs.didStartRequest.accept(())
+        }
+
         ordersService.updateCart(for: leadUUID, dto: dto)
             .subscribe(onSuccess: { [weak self] cart in
                 self?.outputs.didEndRequest.accept(())

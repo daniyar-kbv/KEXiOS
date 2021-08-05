@@ -59,15 +59,14 @@ final class AuthCoordinator: BaseCoordinator {
     private func showOTPConfirmationPage(phoneNumber: String) {
         let verificationPage = pagesFactory.makeVerificationPage(phoneNumber: phoneNumber)
 
-        verificationPage.outputs.didGetToken
-            .subscribe(onNext: { [weak self] in
-                if let _ = DefaultStorageImpl.sharedStorage.userName {
-                    self?.handleAuthTermination()
-                    self?.didAuthorize?()
+        verificationPage.outputs.didFinish
+            .subscribe(onNext: { [weak self] hasEnteredName in
+                guard hasEnteredName else {
+                    self?.showNameEnteringPage()
                     return
                 }
-
-                self?.showNameEnteringPage()
+                self?.handleAuthTermination()
+                self?.didAuthorize?()
             })
             .disposed(by: disposeBag)
 
@@ -77,7 +76,7 @@ final class AuthCoordinator: BaseCoordinator {
     private func showNameEnteringPage() {
         let nameEnteringPage = pagesFactory.makeNameEnteringPage()
 
-        nameEnteringPage.didGetEnteredName = { [weak self] _ in
+        nameEnteringPage.didGetEnteredName = { [weak self] in
             self?.handleAuthTermination()
             self?.didAuthorize?()
         }

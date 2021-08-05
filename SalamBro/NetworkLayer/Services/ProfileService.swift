@@ -13,6 +13,9 @@ import RxSwift
 protocol ProfileService: AnyObject {
     func getUserInfo() -> Single<UserInfoResponse>
     func updateUserInfo(with dto: UserInfoDTO) -> Single<UserInfoResponse>
+    func getAddresses() -> Single<[UserAddress]>
+    func updateAddress(id: Int, dto: UpdateAddressDTO) -> Single<Void>
+    func deleteAddress(id: Int) -> Single<Void>
 }
 
 final class ProfileServiceMoyaImpl: ProfileService {
@@ -63,6 +66,61 @@ final class ProfileServiceMoyaImpl: ProfileService {
                 }
 
                 return userInfo
+            }
+    }
+
+    func getAddresses() -> Single<[UserAddress]> {
+        return provider.rx
+            .request(.getAddresses)
+            .map { response in
+                guard let response = try? response.map(UserAddressesResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = response.error {
+                    throw error
+                }
+
+                guard let addresses = response.data?.results else {
+                    throw NetworkError.noData
+                }
+
+                return addresses
+            }
+    }
+
+    func updateAddress(id: Int, dto: UpdateAddressDTO) -> Single<Void> {
+        provider.rx
+            .request(.updateAddress(id: id, dto: dto))
+            .map { response in
+                guard let response = try? response.map(UpdateUserAddressResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = response.error {
+                    throw error
+                }
+
+                return ()
+            }
+    }
+
+    func deleteAddress(id: Int) -> Single<Void> {
+        provider.rx
+            .request(.deleteAddress(id: id))
+            .map { response in
+                guard response.response?.statusCode == 204 else {
+                    guard let response = try? response.map(UpdateUserAddressResponse.self) else {
+                        throw NetworkError.badMapping
+                    }
+
+                    if let error = response.error {
+                        throw error
+                    }
+                    return
+                }
+
+                return ()
             }
     }
 }

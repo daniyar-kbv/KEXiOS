@@ -71,6 +71,10 @@
 "Profile.changeLanguage" = "KZ Сменить язык приложения";
 "Profile.logoutButton.title" = "KZ Выйти из аккаунта";
 "Profile.deliveryAddress" = "KZ Адреса доставки";
+"Profile.Alert.title" = "KZ Вы уверены?";
+"Profile.Alert.message" = "KZ Вы уверены что хотите выйти из аккаунта?";
+"Profile.Alert.Action.yes" = "KZ Да";
+"Profile.Alert.Action.no" = "KZ Нет";
 
 // MARK: - ChangeName
 "ChangeName.navigationBar.title" = "KZ Изменить";
@@ -82,7 +86,10 @@
 // MARK: - Map
 "MapView.addressField.title" = "KZ Адрес доставки";
 "MapView.commentaryLabel.title" = "KZ Комментарий (квартира, подъезд, ...)";
+"Commentary.addressField.title" =" Комментарий (квартира, подъезд, ...)";
 "MapView.proceedButton.title" = "KZ Перейти к заказу";
+"MapView.LocationAlert.title" = "KZ Службы определения местоположения отключены";
+"MapView.LocationAlert.message" = "KZ Пожалуйста, включите Службы определения местоположения в своих настройках";
 
 // MARK: - Suggest
 "Suggest.addressField.title" = "KZ Введите адрес";
@@ -93,7 +100,6 @@
 
 // MARK: - RateOrder
 "RateOrder.title" = "KZ Оцените заказ";
-
 "RateOrder.submitButton.title" = "KZ Отправить";
 "RateOrder.commentaryField.placeholder" = "KZ Добавить комментарий";
 "RateOrder.title" = "KZ Оцените заказ";
@@ -104,9 +110,18 @@
 "AddressPickCell.deliverLabel" = "KZ Доставим на:";
 
 // MARK: - MenuDetail
-"MenuDetail.proceedButton" = "KZ В корзину за";
+"MenuDetail.proceedButton" = "KZ В корзину за %@ ₸";
 "MenuDetail.commentaryField" = "KZ Комментарий к блюду";
 "MenuDetail.chooseAdditionalItemButton" = "KZ Изменить";
+"MenuDetail.required" = "KZ Обязательно";
+"MenuDetail.choose" = "KZ Выберите";
+"MenuDetail.position" = "KZ позиция";
+"MenuDetail.positionLessOrEqualFour" = "KZ позиции";
+"MenuDetail.positionGreaterThanFour" = "KZ позиций";
+"MenuDetail.additional" = "KZ Дополнительно";
+"MenuDetail.max" = "KZ макс.";
+"MenuDetail.chooseAdditional" = "KZ Выберите дополнения";
+"MenuDetail.added" = "KZ Добавлено";
 
 // MARK: - Support
 "Support.title" = "KZ Помощь";
@@ -120,6 +135,14 @@
 
 // MARK: - OrderHistory
 "OrderHistory.title" = "KZ История заказов";
+"OrderHistory.shipping" = "KZ Доставка";
+"OrderHistory.sum" = "KZ Итого";
+"OrderHistory.deliveryAddress" = "KZ Адрес доставки";
+"OrderHistory.paymentDetails" = "KZ Детали оплаты";
+"OrderHistory.orderStatus" = "KZ Статус заказа";
+"OrderHistory.sendBill" = "KZ Отправить чек на почту";
+"OrderHistory.rateOrder" = "KZ Оценить заказ";
+"OrderHistory.repeatOrder" = "KZ Повторить заказ";
 
 // MARK: - Select Main Info
 "select_main_info.country" = "KZ Страна";
@@ -147,6 +170,11 @@
 
 // MARK: - AddressDetail
 "address_picker.titleOne" = "KZ Адрес доставки";
+"AddressDetail.commentaryTitleLabel" = "KZ Комментарий";
+"AddressDetail.Alert.title" = "KZ Вы уверены?";
+"AddressDetail.Alert.message" = "KZ Вы уверены что хотите удалить адрес доставки?";
+"AddressDetail.Alert.Action.yes" = "KZ Да";
+"AddressDetail.Alert.Action.no" = "KZ Нет";
 
 // MARK: - ShareOrder
 "ShareOrder.submitButton" = "KZ Опубликовать";
@@ -171,6 +199,15 @@
 "Payment.Selection.orderPayment" = "KZ Оформить заказ";
 "Payment.Selection.paymentMethod" = "KZ Способ оплаты";
 "Payment.Selection.title" = "KZ Оформление заказа";
+"Payment.Selection.applePay" = "KZ Оформить с";
+
+// MARK: - Payment Method
+
+"Payment.Method.PaymentMethod.title" = "KZ Способ оплаты";
+"Payment.Method.PaymentMethodError.description" = "KZ Не валидный indexPath";
+"Payment.Method.PaymentMethod.Title.savedCard" = "KZ Карта *%@";
+"Payment.Method.PaymentMethod.Title.card" = "KZ Картой в приложении";
+"Payment.Method.PaymentMethod.Title.cash" = "KZ Наличными курьеру";
 
 // MARK: - Payment Card
 
@@ -180,8 +217,8 @@
 "Payment.Card.expiryDate" = "KZ Срок действия";
 "Payment.Card.cardholderName" = "KZ Имя Фамилия";
 "Payment.Card.saveButton" = "KZ Далее";
-"Payment.Card.Error.invalidCard" = "KZ Не валидный номер карты";
-"Payment.Card.Error.invalidExpiryDate" = "KZ Не валидный срок дейсвия карты";
+"Payment.Card.Error.title" = "KZ Внимание";
+"Payment.Card.Error.message" = "KZ Некоторые поля заполнены неверно";
 
 // MARK: - Payment Cash
 
@@ -193,6 +230,31 @@
 "Payment.Cash.Button.noChange" = "KZ У меня без сдачи";
 "Payment.Cash.Button.submit" = "KZ Готово";
 
+// MARK: - PaymentEdit
+
+"Payment.Edit.title" = "KZ Способ оплаты";
+"Payment.Edit.Cell.title" = "KZ Карта *%@";
+"Payment.Edit.Alert.title" = "KZ Вы уверены?";
+"Payment.Edit.Alert.message" = "KZ Вы уверены что хотите удалить данную карту?";
+"Payment.Edit.Alert.yes" = "KZ Да";
+"Payment.Edit.Alert.no" = "KZ Нет";
+
 // MARK: - Alert
 
 "Alert.ok" = "KZ Ок";
+"Alert.Error.title" = "KZ Ошибка";
+
+// MARK: - Animations
+
+"Animation.InfoText.orderHistory" = "KZ Тут будут Ваши заказы, чтобы сделать заказ перейдите в меню";
+"Animation.InfoText.emptyBasket" = "KZ Вы еще ничего не выбрали. Минимальная сумма заказа 1000₸";
+"Animation.InfoText.noInternet" = "KZ Нет связи. Проверьте интернет соединение";
+"Animation.InfoText.upgrade" = "KZ Мы добавили много новых функций и исправили некоторые баги, чтобы вам было удобнее пользоваться приложением";
+"Animation.InfoText.overload" = "KZ В данный момент мы принимаем очень много заказов, пожалуйста попробуйте немного позднее";
+"Animation.InfoText.payment" = "KZ Проводим оплату";
+"Animation.InfoText.profile" = "KZ Вам необходимо авторизоваться, чтобы сделать заказ";
+"Animation.ButtonTitle.orderHistory.emptyBasket" = "KZ Перейти в меню";
+"Animation.ButtonTitle.noInternet.overload" = "KZ Попробовать еще раз";
+"Animation.ButtonTitle.upgrade" = "KZ Обновить приложение";
+"Animation.ButtonTitle.payment" = "KZ Отменить заказ";
+"Animation.ButtonTitleprofile" = "KZ Войти";

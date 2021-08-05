@@ -28,6 +28,18 @@ final class CartCoordinator: BaseCoordinator {
     }
 
     override func start() {
+        let cartPage = makeCartPage()
+
+        router.set(navigationController: SBNavigationController(rootViewController: cartPage))
+    }
+
+    func restart() {
+        let cartPage = makeCartPage()
+
+        router.getNavigationController().setViewControllers([cartPage], animated: true)
+    }
+
+    private func makeCartPage() -> CartController {
         let cartPage = pagesFactory.makeCartPage()
 
         cartPage.outputs.toAuth.subscribe(onNext: { [weak self] in
@@ -42,7 +54,7 @@ final class CartCoordinator: BaseCoordinator {
             self?.toMenu?()
         }).disposed(by: disposeBag)
 
-        router.set(navigationController: SBNavigationController(rootViewController: cartPage))
+        return cartPage
     }
 
     private func startAuthCoordinator() {

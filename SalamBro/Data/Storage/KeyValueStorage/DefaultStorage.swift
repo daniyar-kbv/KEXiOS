@@ -8,26 +8,24 @@
 import Foundation
 
 enum DefaultStorageKey: String, StorageKey, Equatable {
-    case username
     case leadUUID
     case fcmToken
     case appLocale
-    case isFirstLaunch
+    case notFirstLaunch
 
     var value: String { return rawValue }
 }
 
 protocol DefaultStorage {
-    var userName: String? { get }
     var leadUUID: String? { get }
     var fcmToken: String? { get }
-    var appLocale: String? { get }
-    var isFirstLaunch: Bool { get }
+    var appLocale: Language { get }
+    var notFirstLaunch: Bool { get }
 
-    func persist(name: String)
     func persist(leadUUID: String)
     func persist(fcmToken: String)
-    func persist(appLocale: String)
+    func persist(appLocale: Language)
+    func persist(notFirstLaunch: Bool)
 
     func cleanUp(key: DefaultStorageKey)
 }
@@ -37,10 +35,6 @@ final class DefaultStorageImpl: DefaultStorage {
 
     private let storageProvider: UserDefaults
 
-    var userName: String? {
-        return storageProvider.string(forKey: DefaultStorageKey.username.value)
-    }
-
     var leadUUID: String? {
         return storageProvider.string(forKey: DefaultStorageKey.leadUUID.value)
     }
@@ -49,20 +43,16 @@ final class DefaultStorageImpl: DefaultStorage {
         return storageProvider.string(forKey: DefaultStorageKey.fcmToken.value)
     }
 
-    var isFirstLaunch: Bool {
-        return storageProvider.bool(forKey: DefaultStorageKey.isFirstLaunch.value)
+    var notFirstLaunch: Bool {
+        return storageProvider.bool(forKey: DefaultStorageKey.notFirstLaunch.value)
     }
 
-    var appLocale: String? {
-        return storageProvider.string(forKey: DefaultStorageKey.appLocale.value)
+    var appLocale: Language {
+        return Language.get(by: storageProvider.string(forKey: DefaultStorageKey.appLocale.value))
     }
 
     init(storageProvider: UserDefaults) {
         self.storageProvider = storageProvider
-    }
-
-    func persist(name: String) {
-        storageProvider.set(name, forKey: DefaultStorageKey.username.value)
     }
 
     func persist(leadUUID: String) {
@@ -73,8 +63,12 @@ final class DefaultStorageImpl: DefaultStorage {
         storageProvider.set(fcmToken, forKey: DefaultStorageKey.fcmToken.value)
     }
 
-    func persist(appLocale: String) {
-        storageProvider.set(appLocale, forKey: DefaultStorageKey.appLocale.value)
+    func persist(appLocale: Language) {
+        storageProvider.set(appLocale.code, forKey: DefaultStorageKey.appLocale.value)
+    }
+
+    func persist(notFirstLaunch: Bool) {
+        storageProvider.set(notFirstLaunch, forKey: DefaultStorageKey.notFirstLaunch.value)
     }
 
     func cleanUp(key: DefaultStorageKey) {

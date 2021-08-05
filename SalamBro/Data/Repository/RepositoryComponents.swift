@@ -12,7 +12,6 @@ protocol RepositoryComponents: AnyObject {
     func makeBrandRepository() -> BrandRepository
     func makeCartRepository() -> CartRepository
     func makeAuthRepository() -> AuthRepository
-    func makeChangeUserInfoRepository() -> ChangeUserInfoRepository
     func makeCountriesRepository() -> CountriesRepository
     func makeCitiesRepository() -> CitiesRepository
     func makeMenuRepository() -> MenuRepository
@@ -20,7 +19,7 @@ protocol RepositoryComponents: AnyObject {
     func makeDocumentsRepository() -> DocumentsRepository
     func makeRateOrderRepository() -> RateOrderRepository
     func makePaymentRepository() -> PaymentRepository
-    func makeProfileRepository() -> ProfilePageRepository
+    func makeProfileRepository() -> ProfileRepository
     func makePushNotificationsRepository() -> PushNotificationsRepository
 }
 
@@ -35,13 +34,16 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
         return shared(AddressRepositoryImpl(storage: makeLocalStorage(),
                                             brandStorage: makeLocalStorage(),
                                             ordersService: serviceComponents.ordersService(),
+                                            profileService: serviceComponents.profileService(),
                                             notificationsService: serviceComponents.pushNotificationsService(),
-                                            defaultStorage: DefaultStorageImpl.sharedStorage))
+                                            defaultStorage: DefaultStorageImpl.sharedStorage,
+                                            authTokenStorage: AuthTokenStorageImpl.sharedStorage))
     }
 
     func makeBrandRepository() -> BrandRepository {
         return shared(BrandRepositoryImpl(locationService: serviceComponents.locationService(),
-                                          storage: makeLocalStorage()))
+                                          brandStorage: makeLocalStorage(),
+                                          geoStorage: makeLocalStorage()))
     }
 
     func makeCartRepository() -> CartRepository {
@@ -55,11 +57,6 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
                                          notificationsService: serviceComponents.pushNotificationsService(),
                                          tokenStorage: AuthTokenStorageImpl.sharedStorage,
                                          defaultStorage: DefaultStorageImpl.sharedStorage))
-    }
-
-    func makeChangeUserInfoRepository() -> ChangeUserInfoRepository {
-        return shared(ChangeUserInfoRepositoryImpl(service: serviceComponents.profileService(),
-                                                   defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
     func makeCountriesRepository() -> CountriesRepository {
@@ -93,13 +90,14 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
 
     func makePaymentRepository() -> PaymentRepository {
         return weakShared(PaymentRepositoryImpl(paymentService: serviceComponents.paymentsService(),
-                                                defaultStorage: DefaultStorageImpl.sharedStorage))
+                                                defaultStorage: DefaultStorageImpl.sharedStorage,
+                                                cartStorage: makeLocalStorage()))
     }
 
-    func makeProfileRepository() -> ProfilePageRepository {
-        return shared(ProfilePageRepositoryImpl(profileService: serviceComponents.profileService(),
-                                                authService: serviceComponents.authService(),
-                                                tokenStorage: AuthTokenStorageImpl.sharedStorage))
+    func makeProfileRepository() -> ProfileRepository {
+        return shared(ProfileRepositoryImpl(profileService: serviceComponents.profileService(),
+                                            authService: serviceComponents.authService(),
+                                            tokenStorage: AuthTokenStorageImpl.sharedStorage))
     }
 
     func makePushNotificationsRepository() -> PushNotificationsRepository {

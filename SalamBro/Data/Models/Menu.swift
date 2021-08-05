@@ -10,6 +10,7 @@ import Foundation
 struct MenuCategory: Codable {
     let name: String
     let uuid: String
+    let positions: [MenuPosition]
 }
 
 struct MenuPosition: Codable {
@@ -42,15 +43,16 @@ struct MenuPositionDetail: Codable {
     }
 }
 
-struct ModifierGroup: Codable {
+struct ModifierGroup: Codable, Equatable {
     let uuid: String
     let name: String
     let minAmount: Int
     let maxAmount: Int
     let isRequired: Bool
-    let modifiers: [Modifier]
+    var modifiers: [Modifier]
 
-    lazy var selectedModifiers: [Modifier?] = (0 ..< maxAmount).map { _ in nil }
+    var selectedModifiers: [Modifier] = []
+    var totalCount: Int = 0
 
     enum CodingKeys: String, CodingKey {
         case uuid, name, modifiers
@@ -58,12 +60,22 @@ struct ModifierGroup: Codable {
         case maxAmount = "max_amount"
         case isRequired = "is_required"
     }
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.uuid == rhs.uuid
+    }
 }
 
 struct Modifier: Codable {
     let name: String
     let uuid: String
     let image: String?
+
+    var itemCount: Int = 0
+
+    enum CodingKeys: String, CodingKey {
+        case name, uuid, image
+    }
 }
 
 extension MenuPositionDetail {
@@ -79,7 +91,7 @@ extension MenuPositionDetail {
                 categoryUUID: categoryUUID
             ),
             modifierGroups: modifierGroups.map { modifierGroup in
-                var modifierGroup = modifierGroup
+                let modifierGroup = modifierGroup
                 return .init(
                     uuid: modifierGroup.uuid,
                     modifiers: modifierGroup.selectedModifiers.compactMap { $0 }.map { modifier in
@@ -98,8 +110,22 @@ extension MenuPositionDetail {
     }
 }
 
+extension Modifier {
+    mutating func set(itemCount: Int) {
+        self.itemCount = itemCount
+    }
+}
+
 extension ModifierGroup {
-    mutating func set(modifier: Modifier, at index: Int) {
-        selectedModifiers[index] = modifier
+    mutating func set(modifiers: [Modifier]) {
+        self.modifiers = modifiers
+    }
+
+    mutating func set(selectedModifiers: [Modifier]) {
+        self.selectedModifiers = selectedModifiers
+    }
+
+    mutating func set(totalCount: Int) {
+        self.totalCount = totalCount
     }
 }

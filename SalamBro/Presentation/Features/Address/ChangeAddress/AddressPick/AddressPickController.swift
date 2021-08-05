@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AddressPickController: UIViewController {
+final class AddressPickController: UIViewController, AlertDisplayable {
     private let disposeBag = DisposeBag()
     private let viewModel: AddressPickerViewModelProtocol
     private let tapGesture = UITapGestureRecognizer()
@@ -48,7 +48,12 @@ final class AddressPickController: UIViewController {
 
     init(viewModel: AddressPickerViewModelProtocol) {
         self.viewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
+
+        layoutUI()
+        bind()
+        bindViewModel()
     }
 
     @available(*, unavailable)
@@ -62,18 +67,17 @@ final class AddressPickController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        layoutUI()
-        bind()
-        bindViewModel()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
 
         navigationItem.title = SBLocalization.localized(key: ProfileText.AddressList.title)
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        viewModel.reload()
     }
 }
 
@@ -104,6 +108,12 @@ extension AddressPickController {
         viewModel.outputs.onReload.subscribe(onNext: { [weak self] in
             self?.tableView.reloadData()
         }).disposed(by: disposeBag)
+
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func addTapped() {
@@ -156,7 +166,7 @@ extension AddressPickController: UITableViewDelegate, UITableViewDataSource {
 
 extension AddressPickController {
     struct Output {
-        let didSelectAddress = PublishRelay<(DeliveryAddress, () -> Void)>()
+        let didSelectAddress = PublishRelay<(UserAddress, () -> Void)>()
         let didAddTapped = PublishRelay<() -> Void>()
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()

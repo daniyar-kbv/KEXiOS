@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class AddressListController: UIViewController {
+final class AddressListController: UIViewController, Reloadable {
     let outputs = Output()
 
     private let viewModel: AddressListViewModel
@@ -49,18 +49,17 @@ final class AddressListController: UIViewController {
 
         layoutUI()
         bindViewModel()
-        viewModel.getAddresses()
+        reload()
     }
 
     private func bindViewModel() {
         viewModel.outputs.reload
-            .subscribe(onNext: { [weak self] in
-                self?.reload()
-            }).disposed(by: disposeBag)
+            .bind(to: citiesTableView.rx.reload)
+            .disposed(by: disposeBag)
     }
 
-    private func reload() {
-        citiesTableView.reloadData()
+    func reload() {
+        viewModel.getAddresses()
     }
 
     deinit {
@@ -84,17 +83,17 @@ extension AddressListController {
 
 extension AddressListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return viewModel.deliveryAddresses.count
+        return viewModel.userAddreses.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let addressCell = tableView.dequeueReusableCell(withIdentifier: AddressListCell.reuseIdentifier, for: indexPath) as? AddressListCell else { fatalError() }
-        addressCell.configure(address: viewModel.deliveryAddresses[indexPath.row].address?.name ?? "")
+        addressCell.configure(address: viewModel.userAddreses[indexPath.row].address.getName() ?? "")
         return addressCell
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        outputs.didSelectAddress.accept((viewModel.deliveryAddresses[indexPath.row], reload))
+        outputs.didSelectAddress.accept(viewModel.userAddreses[indexPath.row])
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
@@ -105,6 +104,6 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
 extension AddressListController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
-        let didSelectAddress = PublishRelay<(DeliveryAddress, () -> Void)>()
+        let didSelectAddress = PublishRelay<UserAddress>()
     }
 }

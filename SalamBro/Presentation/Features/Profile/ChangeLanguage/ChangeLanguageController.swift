@@ -29,6 +29,8 @@ final class ChangeLanguageController: UIViewController {
         return table
     }()
 
+    let outputs = Output()
+
     init(viewModel: ChangeLanguageViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -57,11 +59,12 @@ extension ChangeLanguageController {
         viewModel.outputs.didChangeLanguage
             .subscribe(onNext: { [weak self] in
                 self?.languagesTableView.reloadData()
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
 
-        viewModel.outputs.didEnd.subscribe(onNext: { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }).disposed(by: disposeBag)
+        viewModel.outputs.didEnd
+            .bind(to: outputs.restart)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -76,11 +79,18 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: ChangeLanguageCell.self)
-        cell.configure(with: viewModel.getLanguage(at: indexPath.row))
+        let languageInfo = viewModel.getLanguage(at: indexPath.row)
+        cell.configure(with: languageInfo.language, isCurrent: languageInfo.isCurrent)
         return cell
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.changeLanguage(at: indexPath.row)
+    }
+}
+
+extension ChangeLanguageController {
+    struct Output {
+        let restart = PublishRelay<Void>()
     }
 }

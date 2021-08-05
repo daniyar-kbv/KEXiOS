@@ -72,6 +72,10 @@
 "Profile.changeLanguage" = "Сменить язык приложения";
 "Profile.logoutButton.title" = "Выйти из аккаунта";
 "Profile.deliveryAddress" = "Адреса доставки";
+"Profile.Alert.title" = "Вы уверены?";
+"Profile.Alert.message" = "Вы уверены что хотите выйти из аккаунта?";
+"Profile.Alert.Action.yes" = "Да";
+"Profile.Alert.Action.no" = "Нет";
 
 // MARK: - ChangeName
 "ChangeName.navigationBar.title" = "Изменить";
@@ -83,7 +87,10 @@
 // MARK: - Map
 "MapView.addressField.title" = "Адрес доставки";
 "MapView.commentaryLabel.title" = "Комментарий (квартира, подъезд, ...)";
+"Commentary.addressField.title" =" Комментарий (квартира, подъезд, ...)";
 "MapView.proceedButton.title" = "Перейти к заказу";
+"MapView.LocationAlert.title" = "Службы определения местоположения отключены";
+"MapView.LocationAlert.message" = "Пожалуйста, включите Службы определения местоположения в своих настройках";
 
 // MARK: - Suggest
 "Suggest.addressField.title" = "Введите адрес";
@@ -94,7 +101,6 @@
 
 // MARK: - RateOrder
 "RateOrder.title" = "Оцените заказ";
-
 "RateOrder.submitButton.title" = "Отправить";
 "RateOrder.commentaryField.placeholder" = "Добавить комментарий";
 "RateOrder.title" = "Оцените заказ";
@@ -105,9 +111,18 @@
 "AddressPickCell.deliverLabel" = "Доставим на:";
 
 // MARK: - MenuDetail
-"MenuDetail.proceedButton" = "В корзину за";
+"MenuDetail.proceedButton" = "В корзину за %@ ₸";
 "MenuDetail.commentaryField" = "Комментарий к блюду";
 "MenuDetail.chooseAdditionalItemButton" = "Изменить";
+"MenuDetail.required" = "Обязательно";
+"MenuDetail.choose" = "Выберите";
+"MenuDetail.position" = "позиция";
+"MenuDetail.positionLessOrEqualFour" = "позиции";
+"MenuDetail.positionGreaterThanFour" = "позиций";
+"MenuDetail.additional" = "Дополнительно";
+"MenuDetail.max" = "макс.";
+"MenuDetail.chooseAdditional" = "Выберите дополнения";
+"MenuDetail.added" = "Добавлено";
 
 // MARK: - Support
 "Support.title" = "Помощь";
@@ -121,6 +136,14 @@
 
 // MARK: - OrderHistory
 "OrderHistory.title" = "История заказов";
+"OrderHistory.shipping" = "Доставка";
+"OrderHistory.sum" = "Итого";
+"OrderHistory.deliveryAddress" = "Адрес доставки";
+"OrderHistory.paymentDetails" = "Детали оплаты";
+"OrderHistory.orderStatus" = "Статус заказа";
+"OrderHistory.sendBill" = "Отправить чек на почту";
+"OrderHistory.rateOrder" = "Оценить заказ";
+"OrderHistory.repeatOrder" = "Повторить заказ";
 
 // MARK: - Select Main Info
 "select_main_info.country" = "Страна";
@@ -148,6 +171,11 @@
 
 // MARK: - AddressDetail
 "address_picker.titleOne" = "Адрес доставки";
+"AddressDetail.commentaryTitleLabel" = "Комментарий";
+"AddressDetail.Alert.title" = "Вы уверены?";
+"AddressDetail.Alert.message" = "Вы уверены что хотите удалить адрес доставки?";
+"AddressDetail.Alert.Action.yes" = "Да";
+"AddressDetail.Alert.Action.no" = "Нет";
 
 // MARK: - ShareOrder
 "ShareOrder.submitButton" = "Опубликовать";
@@ -172,6 +200,15 @@
 "Payment.Selection.orderPayment" = "Оформить заказ";
 "Payment.Selection.paymentMethod" = "Способ оплаты";
 "Payment.Selection.title" = "Оформление заказа";
+"Payment.Selection.applePay" = "Оформить с";
+
+// MARK: - Payment Method
+
+"Payment.Method.PaymentMethod.title" = "Способ оплаты";
+"Payment.Method.PaymentMethodError.description" = "Не валидный indexPath";
+"Payment.Method.PaymentMethod.Title.savedCard" = "Карта *%@";
+"Payment.Method.PaymentMethod.Title.card" = "Картой в приложении";
+"Payment.Method.PaymentMethod.Title.cash" = "Наличными курьеру";
 
 // MARK: - Payment Card
 
@@ -181,8 +218,8 @@
 "Payment.Card.expiryDate" = "Срок действия";
 "Payment.Card.cardholderName" = "Имя Фамилия";
 "Payment.Card.saveButton" = "Далее";
-"Payment.Card.Error.invalidCard" = "Не валидный номер карты";
-"Payment.Card.Error.invalidExpiryDate" = "Не валидный срок дейсвия карты";
+"Payment.Card.Error.title" = "Внимание";
+"Payment.Card.Error.message" = "Некоторые поля заполнены неверно";
 
 // MARK: - Payment Cash
 
@@ -194,6 +231,32 @@
 "Payment.Cash.Button.noChange" = "У меня без сдачи";
 "Payment.Cash.Button.submit" = "Готово";
 
+// MARK: - PaymentEdit
+
+"Payment.Edit.title" = "Способ оплаты";
+"Payment.Edit.Cell.title" = "Карта *%@";
+"Payment.Edit.Alert.title" = "Вы уверены?";
+"Payment.Edit.Alert.message" = "Вы уверены что хотите удалить данную карту?";
+"Payment.Edit.Alert.yes" = "Да";
+"Payment.Edit.Alert.no" = "Нет";
+
 // MARK: - Alert
 
 "Alert.ok" = "Ок";
+"Alert.Error.title" = "Ошибка";
+
+// MARK: - Animations
+
+"Animation.InfoText.orderHistory" = "Тут будут Ваши заказы, чтобы сделать заказ перейдите в меню";
+"Animation.InfoText.emptyBasket" = "Вы еще ничего не выбрали. Минимальная сумма заказа 1000₸";
+"Animation.InfoText.noInternet" = "Нет связи. Проверьте интернет соединение";
+"Animation.InfoText.upgrade" = "Мы добавили много новых функций и исправили некоторые баги, чтобы вам было удобнее пользоваться приложением";
+"Animation.InfoText.overload" = "В данный момент мы принимаем очень много заказов, пожалуйста попробуйте немного позднее";
+"Animation.InfoText.payment" = "Проводим оплату";
+"Animation.InfoText.profile" = "Вам необходимо авторизоваться, чтобы сделать заказ";
+"Animation.ButtonTitle.orderHistory.emptyBasket" = "Перейти в меню";
+"Animation.ButtonTitle.noInternet.overload" = "Попробовать еще раз";
+"Animation.ButtonTitle.upgrade" = "Обновить приложение";
+"Animation.ButtonTitle.payment" = "Отменить заказ";
+"Animation.ButtonTitleprofile" = "Войти";
+

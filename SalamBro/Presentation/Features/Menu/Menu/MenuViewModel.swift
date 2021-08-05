@@ -14,6 +14,8 @@ protocol MenuViewModelProtocol {
     var outputs: MenuViewModel.Output { get }
 
     func update()
+    func processToBrand()
+    func processToAddresses()
     func numberOfSections() -> Int
     func numberOfRows(in section: Int) -> Int
     func heightForHeader(in section: Int) -> CGFloat
@@ -32,6 +34,7 @@ final class MenuViewModel: MenuViewModelProtocol {
     private let brandRepository: BrandRepository
     private let menuRepository: MenuRepository
     private let defaultStorage: DefaultStorage
+    private let tokenStorage: AuthTokenStorage
 
     private var tableSections: [Section] = []
     private var scrollService: MenuScrollService
@@ -40,12 +43,14 @@ final class MenuViewModel: MenuViewModelProtocol {
          brandRepository: BrandRepository,
          menuRepository: MenuRepository,
          defaultStorage: DefaultStorage,
+         tokenStorage: AuthTokenStorage,
          scrollService: MenuScrollService)
     {
         self.locationRepository = locationRepository
         self.brandRepository = brandRepository
         self.menuRepository = menuRepository
         self.defaultStorage = defaultStorage
+        self.tokenStorage = tokenStorage
         self.scrollService = scrollService
 
         bindMenuRepository()
@@ -78,18 +83,13 @@ final class MenuViewModel: MenuViewModelProtocol {
         menuRepository.outputs.didGetCategories.bind {
             [weak self] categories in
             self?.setCategories(categories: categories)
-        }
-        .disposed(by: disposeBag)
-
-        menuRepository.outputs.didGetPositions.bind {
-            [weak self] positions in
-            self?.setPositions(positions: positions)
+            self?.setPositions(of: categories)
         }
         .disposed(by: disposeBag)
     }
 
     private func bindAddressRepository() {
-        locationRepository.outputs.didGetLeadUUID
+        locationRepository.outputs.needsUpdate
             .subscribe(onNext: { [weak self] in
                 self?.update()
             }).disposed(by: disposeBag)
@@ -113,7 +113,7 @@ final class MenuViewModel: MenuViewModelProtocol {
     private func setPromotions(promotions: [Promotion]) {
         let promotions = promotions.sorted(by: { $0.priority < $1.priority })
 
-        let addressViewModels = [AddressPickCellViewModel(address: locationRepository.getCurrentDeliveryAddress()?.address)]
+        let addressViewModels = [AddressPickCellViewModel(address: locationRepository.getCurrentUserAddress()?.address)]
         tableSections.append(.init(type: .address,
                                    headerViewModel: nil,
                                    cellViewModels: addressViewModels))
@@ -135,16 +135,36 @@ final class MenuViewModel: MenuViewModelProtocol {
         )
     }
 
-    private func setPositions(positions: [MenuPosition]) {
-        tableSections
-            .first(where: { $0.type == .positions })?
-            .cellViewModels = positions.map { position in
-                MenuCellViewModel(position: position)
+    private func setPositions(of categories: [MenuCategory]) {
+        for c in 0 ..< categories.count {
+            for p in 0 ..< categories[c].positions.count {
+                tableSections
+                    .first(where: { $0.type == .positions })?
+                    .cellViewModels.append(MenuCellViewModel(position: categories[c].positions[p]))
             }
+        }
     }
 }
 
 extension MenuViewModel {
+    func processToBrand() {
+        guard tokenStorage.token != nil else {
+            outputs.toAuthChangeBrand.accept(())
+            return
+        }
+
+        outputs.toChangeBrand.accept(())
+    }
+
+    func processToAddresses() {
+        guard tokenStorage.token != nil else {
+            outputs.toAuthChangeAddress.accept(())
+            return
+        }
+
+        outputs.toAddressess.accept(())
+    }
+
     func update() {
         download()
 
@@ -221,9 +241,7 @@ extension MenuViewModel {
             else { return }
             outputs.toPositionDetail.accept(cellViewModel.position.uuid)
         case .address:
-            outputs.toAddressess.accept { [weak self] in
-                self?.update()
-            }
+            processToAddresses()
         default:
             break
         }
@@ -257,6 +275,7 @@ extension MenuViewModel: AddCollectionCellDelegate {
     private func didScrollToItem(at position: Int) {
         guard isNotEmpty(),
               let positionsIndex = getSectionIndex(of: .positions),
+              tableSections[positionsIndex].cellViewModels.count > position,
               let cellViewModel = tableSections[positionsIndex]
               .cellViewModels[position]
               as? MenuCellViewModelProtocol,
@@ -294,10 +313,14 @@ extension MenuViewModel {
         let didGetError = PublishRelay<ErrorPresentable?>()
 
         let toPromotion = PublishRelay<(URL, String)>()
-        let toAddressess = PublishRelay<() -> Void>()
         let toPositionDetail = PublishRelay<String>()
 
         let scrollToRowAt = PublishRelay<IndexPath>()
+
+        let toChangeBrand = PublishRelay<Void>()
+        let toAddressess = PublishRelay<Void>()
+        let toAuthChangeBrand = PublishRelay<Void>()
+        let toAuthChangeAddress = PublishRelay<Void>()
     }
 
     class Section {
