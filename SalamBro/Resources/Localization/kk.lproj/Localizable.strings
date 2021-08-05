@@ -253,8 +253,9 @@
 "Animation.InfoText.overload" = "KZ В данный момент мы принимаем очень много заказов, пожалуйста попробуйте немного позднее";
 "Animation.InfoText.payment" = "KZ Проводим оплату";
 "Animation.InfoText.profile" = "KZ Вам необходимо авторизоваться, чтобы сделать заказ";
+"Animation.InfoText.closed" = "KZ Заведение закрыто";
 "Animation.ButtonTitle.orderHistory.emptyBasket" = "KZ Перейти в меню";
 "Animation.ButtonTitle.noInternet.overload" = "KZ Попробовать еще раз";
 "Animation.ButtonTitle.upgrade" = "KZ Обновить приложение";
 "Animation.ButtonTitle.payment" = "KZ Отменить заказ";
-"Animation.ButtonTitleprofile" = "KZ Войти";
+"Animation.ButtonTitle.profile" = "KZ Войти";

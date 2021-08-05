@@ -254,9 +254,10 @@
 "Animation.InfoText.overload" = "В данный момент мы принимаем очень много заказов, пожалуйста попробуйте немного позднее";
 "Animation.InfoText.payment" = "Проводим оплату";
 "Animation.InfoText.profile" = "Вам необходимо авторизоваться, чтобы сделать заказ";
+"Animation.InfoText.closed" = "Заведение закрыто";
 "Animation.ButtonTitle.orderHistory.emptyBasket" = "Перейти в меню";
 "Animation.ButtonTitle.noInternet.overload" = "Попробовать еще раз";
 "Animation.ButtonTitle.upgrade" = "Обновить приложение";
 "Animation.ButtonTitle.payment" = "Отменить заказ";
-"Animation.ButtonTitleprofile" = "Войти";
+"Animation.ButtonTitle.profile" = "Войти";
 

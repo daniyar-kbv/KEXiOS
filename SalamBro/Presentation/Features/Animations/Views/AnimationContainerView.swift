@@ -57,7 +57,7 @@ final class AnimationContainerView: UIView {
         actionButton.setTitle(type.getButtonTitle(), for: .normal)
 
         lottieAnimationView.animation = type.getAnimation()
-        lottieAnimationView.loopMode = type == .profile ? .playOnce : .loop
+        lottieAnimationView.loopMode = (type == .profile || type == .closed) ? .playOnce : .loop
     }
 
     private func setState(with style: LottieAnimationModel) {
@@ -89,12 +89,15 @@ final class AnimationContainerView: UIView {
             $0.height.lessThanOrEqualTo(64)
         }
 
-        actionButton.snp.makeConstraints {
-            $0.width.equalTo(UIScreen.main.bounds.width - 48)
-            $0.height.equalTo(43)
+        if animationType != .closed {
+            actionButton.snp.makeConstraints {
+                $0.width.equalTo(UIScreen.main.bounds.width - 48)
+                $0.height.equalTo(43)
+            }
         }
 
-        let verticalStackView = UIStackView(arrangedSubviews: [lottieAnimationView, infoLabel, actionButton])
+        let verticalStackView = animationType == .closed ? UIStackView(arrangedSubviews: [lottieAnimationView, infoLabel]) : UIStackView(arrangedSubviews: [lottieAnimationView, infoLabel, actionButton])
+
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 32
         verticalStackView.distribution = .equalSpacing

@@ -15,6 +15,7 @@ enum LottieAnimationModel: String, CaseIterable {
     case overload
     case payment
     case profile
+    case closed
 
     var infoText: String {
         switch self {
@@ -32,6 +33,8 @@ enum LottieAnimationModel: String, CaseIterable {
             return SBLocalization.localized(key: AnimationsText.InfoText.payment)
         case .profile:
             return SBLocalization.localized(key: AnimationsText.InfoText.profile)
+        case .closed:
+            return SBLocalization.localized(key: AnimationsText.InfoText.closed)
         }
     }
 
@@ -47,6 +50,8 @@ enum LottieAnimationModel: String, CaseIterable {
             return SBLocalization.localized(key: AnimationsText.ButtonTitle.payment)
         case .profile:
             return SBLocalization.localized(key: AnimationsText.ButtonTitle.profile)
+        default:
+            return ""
         }
     }
 
@@ -62,6 +67,8 @@ enum LottieAnimationModel: String, CaseIterable {
             return false
         case .orderHistory, .emptyBasket, .noInternet, .overload, .upgrade, .profile:
             return true
+        default:
+            return false
         }
     }
 }

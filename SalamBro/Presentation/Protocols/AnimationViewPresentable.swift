@@ -10,6 +10,7 @@ import UIKit
 
 protocol AnimationViewPresentable {
     func showAnimationView(animationType: LottieAnimationModel, action: (() -> Void)?)
+    func getAnimationView(animationType: LottieAnimationModel) -> UIView
     func hideAnimationView(completionHandler: (() -> Void)?)
 
     func presentAnimationView(animationType: LottieAnimationModel, action: (() -> Void)?)
@@ -29,6 +30,12 @@ extension UIViewController: AnimationViewPresentable {
             $0.edges.equalToSuperview()
         }
         animationController.didMove(toParent: self)
+    }
+
+    func getAnimationView(animationType: LottieAnimationModel) -> UIView {
+        let animationView = AnimationContainerView(animationType: animationType)
+        animationView.animationPlay()
+        return animationView
     }
 
     func hideAnimationView(completionHandler _: (() -> Void)?) {
