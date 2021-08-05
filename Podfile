@@ -44,10 +44,10 @@ target 'SalamBro' do
   pod 'Cloudpayments', :git =>  "https://github.com/cloudpayments/CloudPayments-SDK-iOS", :branch => "master"
   pod 'CloudpaymentsNetworking', :git =>  "https://github.com/cloudpayments/CloudPayments-SDK-iOS", :branch => "master"
 
-
   # Firebase
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'
+  pod 'Firebase/Crashlytics'
 
   target 'SalamBroTests' do
     inherit! :search_paths
