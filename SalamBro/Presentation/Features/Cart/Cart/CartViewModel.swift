@@ -49,8 +49,7 @@ final class CartViewModelImpl: CartViewModel {
 
 extension CartViewModelImpl {
     func getCart() {
-        items = cartRepository.getItems()
-        outputs.update.accept(())
+        process(items: cartRepository.getItems())
     }
 
     func getTotalCount() -> Int {
@@ -73,7 +72,35 @@ extension CartViewModelImpl {
 
         outputs.toPayment.accept(())
     }
+}
 
+extension CartViewModelImpl {
+    private func bind() {
+        cartRepository.outputs.didChange
+            .subscribe(onNext: { [weak self] items in
+                self?.process(items: items)
+            }).disposed(by: disposeBag)
+
+        cartRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        cartRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        cartRepository.outputs.didGetError
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+    }
+
+    private func process(items: [CartItem]) {
+        self.items = items
+        outputs.update.accept(())
+    }
+}
+
+extension CartViewModelImpl {
     func increment(postitonUUID: String) {
         cartRepository.incrementItem(positionUUID: postitonUUID)
     }

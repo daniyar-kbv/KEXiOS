@@ -84,7 +84,6 @@ final class MenuViewModel: MenuViewModelProtocol {
         menuRepository.outputs.didGetCategories.bind {
             [weak self] categories in
             self?.setCategories(categories: categories)
-            self?.setPositions(of: categories)
             self?.configureAnimation()
         }
         .disposed(by: disposeBag)
@@ -129,22 +128,14 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func setCategories(categories: [MenuCategory]) {
+        let categories = categories.filter { !$0.positions.isEmpty }
         tableSections.append(.init(
             type: .positions,
             headerViewModel: CategoriesSectionHeaderViewModel(categories: categories),
-            cellViewModels: []
-        )
-        )
-    }
-
-    private func setPositions(of categories: [MenuCategory]) {
-        for c in 0 ..< categories.count {
-            for p in 0 ..< categories[c].positions.count {
-                tableSections
-                    .first(where: { $0.type == .positions })?
-                    .cellViewModels.append(MenuCellViewModel(position: categories[c].positions[p]))
-            }
-        }
+            cellViewModels: categories
+                .map { $0.positions.map { MenuCellViewModel(position: $0) } }
+                .flatMap { $0 }
+        ))
     }
 
     func configureAnimation() {}
