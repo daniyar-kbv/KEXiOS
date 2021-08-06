@@ -221,6 +221,16 @@ extension AddressRepositoryImpl {
         let dto = FCMTokenCreateDTO(leadUUID: leadUUID, fcmToken: fcmToken)
 
         notificationsService.fcmTokenCreate(dto: dto)
+            .subscribe(onSuccess: { [weak self] in
+                self?.fcmTokenLogin()
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func fcmTokenLogin() {
+        guard let leadUUID = defaultStorage.leadUUID,
+              authTokenStorage.token != nil else { return }
+        notificationsService.fcmTokenLogin(leadUUID: leadUUID)
             .subscribe()
             .disposed(by: disposeBag)
     }
