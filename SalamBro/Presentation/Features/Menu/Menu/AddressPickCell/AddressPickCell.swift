@@ -11,11 +11,6 @@ import RxSwift
 import UIKit
 
 final class AddressPickCell: UITableViewCell {
-    private lazy var containerView: UIView = {
-        let view = UIView()
-        return view
-    }()
-
     public lazy var deliveryLabel: UILabel = {
         let label = UILabel()
         label.text = SBLocalization.localized(key: MenuText.Menu.Address.addressTitle)
@@ -32,6 +27,7 @@ final class AddressPickCell: UITableViewCell {
         label.textColor = .darkGray
         label.baselineAdjustment = .alignBaselines
         label.lineBreakMode = .byTruncatingTail
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
 
@@ -45,11 +41,23 @@ final class AddressPickCell: UITableViewCell {
         button.adjustsImageWhenHighlighted = true
         button.adjustsImageWhenDisabled = true
         button.isUserInteractionEnabled = false
+        button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         return button
     }()
 
+    private lazy var bottomStack: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [addressLabel, changeButton])
+        view.axis = .horizontal
+        view.distribution = .equalSpacing
+        view.alignment = .fill
+        view.spacing = 24
+        return view
+    }()
+
     private var viewModel: AddressPickCellViewModelProtocol! {
-        didSet { bind() }
+        didSet {
+            bind()
+        }
     }
 
     private var disposeBag = DisposeBag()
@@ -68,6 +76,7 @@ final class AddressPickCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+
         disposeBag = DisposeBag()
     }
 
@@ -84,31 +93,19 @@ final class AddressPickCell: UITableViewCell {
 
 extension AddressPickCell {
     private func layoutUI() {
-        [deliveryLabel, addressLabel, changeButton].forEach {
-            containerView.addSubview($0)
+        [deliveryLabel, bottomStack].forEach {
+            contentView.addSubview($0)
         }
-
-        contentView.addSubview(containerView)
 
         deliveryLabel.snp.makeConstraints {
-            $0.top.left.equalToSuperview()
-        }
-
-        addressLabel.snp.makeConstraints {
-            $0.top.equalTo(deliveryLabel.snp.bottom).offset(3)
-            $0.left.equalToSuperview()
-        }
-
-        changeButton.snp.makeConstraints {
-            $0.right.equalToSuperview()
-            $0.centerY.equalTo(addressLabel.snp.centerY)
-        }
-
-        containerView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(8)
-            $0.bottom.equalToSuperview().offset(-15)
             $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(35)
+        }
+
+        bottomStack.snp.makeConstraints {
+            $0.top.equalTo(deliveryLabel.snp.bottom)
+            $0.left.right.equalToSuperview().inset(24)
+            $0.bottom.equalToSuperview().offset(-11)
         }
     }
 }

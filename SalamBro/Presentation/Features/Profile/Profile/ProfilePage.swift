@@ -14,68 +14,16 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
     private let disposeBag = DisposeBag()
 
-    private lazy var phoneTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .semibold)
-        label.textColor = .mildBlue
-        return label
-    }()
-
-    private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 32, weight: .semibold)
-        label.textAlignment = .left
-        return label
-    }()
-
-    private lazy var emailLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
-        label.textAlignment = .left
-        return label
-    }()
-
-    private lazy var changeNameButton: UIButton = {
-        let label = UIButton()
-        label.setTitle(SBLocalization.localized(key: ProfileText.Profile.editButton), for: .normal)
-        label.setTitleColor(.kexRed, for: .normal)
-        label.titleLabel?.font = .systemFont(ofSize: 12)
-        label.isUserInteractionEnabled = true
-        return label
-    }()
-
-    private lazy var tableView: UITableView = {
-        let table = UITableView()
-        table.separatorColor = .mildBlue
-        table.addTableHeaderViewLine()
-        table.tableFooterView = UIView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        table.showsVerticalScrollIndicator = false
-        table.isScrollEnabled = false
-        table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
-        table.rowHeight = 50
-        return table
-    }()
-
-    private lazy var logoutButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(SBLocalization.localized(key: ProfileText.Profile.logoutButton), for: .normal)
-        button.setTitleColor(.mildBlue, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
-        button.borderWidth = 1
-        button.borderColor = .mildBlue
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
-        return button
-    }()
-
     private let viewModel: ProfileViewModel
-
-    private var needsLayoutUI = true
+    private let contentView = ProfileView()
 
     init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
+
+        bindViews()
+        bindViewModel()
     }
 
     @available(*, unavailable)
@@ -83,13 +31,18 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func loadView() {
+        super.loadView()
+
+        view = contentView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        bindViews()
-        bindViewModel()
-
         reloadPage()
+
+        navigationItem.title = SBLocalization.localized(key: ProfileText.Profile.title)
     }
 
     func reloadPage() {
@@ -102,17 +55,17 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
     }
 
     private func bindViews() {
-        tableView.delegate = self
-        tableView.dataSource = self
+        contentView.tableView.delegate = self
+        contentView.tableView.dataSource = self
 
-        changeNameButton.rx.tap
+        contentView.changeNameButton.rx.tap
             .bind { [weak self] in
                 guard let userInfo = self?.viewModel.currentUserInfo else { return }
                 self?.outputs.onChangeUserInfo.accept(userInfo)
             }
             .disposed(by: disposeBag)
 
-        logoutButton.rx.tap
+        contentView.logoutButton.rx.tap
             .bind { [weak self] in
                 self?.handleLogoutAction()
             }
@@ -155,7 +108,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
         viewModel.outputs.didGetUserInfo
             .subscribe(onNext: { [weak self] userInfo in
-                self?.layoutUI()
+                self?.contentView.layoutUI()
                 self?.updateViews(with: userInfo)
                 self?.hideAnimationView(completionHandler: nil)
             })
@@ -170,66 +123,15 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
     private func updateViews(with model: UserInfoResponse) {
         if let phoneNumber = model.mobilePhone {
-            phoneTitleLabel.text = phoneNumber
+            contentView.phoneTitleLabel.text = phoneNumber
         }
-        nameLabel.text = model.name
-        emailLabel.text = model.email
+        contentView.nameLabel.text = model.name
+        contentView.emailLabel.text = model.email
     }
 
     private func showEmptyState() {
         showAnimationView(animationType: .profile) { [weak self] in
             self?.outputs.onLoginTapped.accept(())
-        }
-    }
-
-    private func layoutUI() {
-        guard needsLayoutUI else { return }
-        needsLayoutUI = false
-
-        navigationItem.title = SBLocalization.localized(key: ProfileText.Profile.title)
-        view.backgroundColor = .arcticWhite
-
-        view.addSubview(phoneTitleLabel)
-        phoneTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
-            $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(21)
-        }
-
-        view.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
-            $0.top.equalTo(phoneTitleLabel.snp.bottom).offset(8)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-24)
-        }
-
-        view.addSubview(changeNameButton)
-        changeNameButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-24)
-            $0.height.equalTo(16)
-            $0.width.lessThanOrEqualTo(64)
-            $0.centerY.equalTo(nameLabel)
-        }
-
-        view.addSubview(emailLabel)
-        emailLabel.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom)
-            $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(14)
-        }
-
-        view.addSubview(logoutButton)
-        logoutButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-24)
-            $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(43)
-        }
-
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints {
-            $0.top.equalTo(emailLabel.snp.bottom).offset(19)
-            $0.left.right.equalToSuperview()
-            $0.bottom.equalTo(logoutButton.snp.top).offset(-8)
         }
     }
 }

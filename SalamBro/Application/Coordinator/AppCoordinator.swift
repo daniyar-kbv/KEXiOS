@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 import UIKit
 
 final class AppCoordinator: BaseCoordinator {
@@ -15,6 +17,8 @@ final class AppCoordinator: BaseCoordinator {
     private let repositoryComponents: RepositoryComponents
     private let appCoordinatorsFactory: ApplicationCoordinatorFactory
     private let pagesFactory: ApplicationPagesFactory
+
+    private let disposeBag = DisposeBag()
 
     init(serviceComponents: ServiceComponents,
          repositoryComponents: RepositoryComponents,
@@ -102,6 +106,8 @@ final class AppCoordinator: BaseCoordinator {
             selectedImage: SBImageResource.getIcon(for: TabBarIcon.cart)
         )
 
+        configCartTabBarItem(cartCoordinator: cartCoordinator)
+
         cartCoordinator.toMenu = { [weak self] in
             self?.pagesFactory.makeSBTabbarController().selectedIndex = 0
         }
@@ -119,6 +125,19 @@ final class AppCoordinator: BaseCoordinator {
 
         preparedViewControllers.append(cartCoordinator.router.getNavigationController())
         add(cartCoordinator)
+    }
+
+    private func configCartTabBarItem(cartCoordinator: CartCoordinator) {
+        let cartRepository = repositoryComponents.makeCartRepository()
+
+        cartCoordinator.router.getNavigationController().tabBarItem.badgeColor = .kexRed
+        cartCoordinator.router.getNavigationController().tabBarItem.badgeValue = cartRepository.getItems().getBadgeCount()
+
+        cartRepository.outputs.didChange
+            .subscribe(onNext: { [weak cartCoordinator] items in
+                cartCoordinator?.router.getNavigationController().tabBarItem.badgeValue = items.getBadgeCount()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func startAuthCoordinator() {

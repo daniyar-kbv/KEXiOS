@@ -42,17 +42,23 @@ final class CartCoordinator: BaseCoordinator {
     private func makeCartPage() -> CartController {
         let cartPage = pagesFactory.makeCartPage()
 
-        cartPage.outputs.toAuth.subscribe(onNext: { [weak self] in
-            self?.startAuthCoordinator()
-        }).disposed(by: disposeBag)
+        cartPage.outputs.toAuth
+            .subscribe(onNext: { [weak self] in
+                self?.startAuthCoordinator()
+            })
+            .disposed(by: disposeBag)
 
-        cartPage.outputs.toPayment.subscribe(onNext: { [weak self] in
-            self?.startPaymentCoordinator()
-        }).disposed(by: disposeBag)
+        cartPage.outputs.toPayment
+            .subscribe(onNext: { [weak self] in
+                self?.startPaymentCoordinator()
+            })
+            .disposed(by: disposeBag)
 
-        cartPage.outputs.toMenu.subscribe(onNext: { [weak self] in
-            self?.toMenu?()
-        }).disposed(by: disposeBag)
+        cartPage.outputs.toMenu
+            .subscribe(onNext: { [weak self] in
+                self?.toMenu?()
+            })
+            .disposed(by: disposeBag)
 
         return cartPage
     }

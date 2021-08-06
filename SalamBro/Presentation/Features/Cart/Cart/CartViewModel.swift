@@ -41,30 +41,11 @@ final class CartViewModelImpl: CartViewModel {
 
         bind()
     }
+}
 
-    private func bind() {
-        cartRepository.outputs.didChange
-            .subscribe(onNext: { [weak self] items in
-                self?.items = items
-                self?.outputs.update.accept(())
-            }).disposed(by: disposeBag)
-
-        cartRepository.outputs.didStartRequest
-            .bind(to: outputs.didStartRequest)
-            .disposed(by: disposeBag)
-
-        cartRepository.outputs.didEndRequest
-            .bind(to: outputs.didEndRequest)
-            .disposed(by: disposeBag)
-
-        cartRepository.outputs.didGetError
-            .bind(to: outputs.didGetError)
-            .disposed(by: disposeBag)
-    }
-
+extension CartViewModelImpl {
     func getCart() {
-        items = cartRepository.getItems()
-        outputs.update.accept(())
+        process(items: cartRepository.getItems())
     }
 
     func getTotalCount() -> Int {
@@ -86,6 +67,32 @@ final class CartViewModelImpl: CartViewModel {
         }
 
         outputs.toPayment.accept(())
+    }
+}
+
+extension CartViewModelImpl {
+    private func bind() {
+        cartRepository.outputs.didChange
+            .subscribe(onNext: { [weak self] items in
+                self?.process(items: items)
+            }).disposed(by: disposeBag)
+
+        cartRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        cartRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        cartRepository.outputs.didGetError
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+    }
+
+    private func process(items: [CartItem]) {
+        self.items = items
+        outputs.update.accept(())
     }
 }
 

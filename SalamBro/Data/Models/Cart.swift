@@ -21,7 +21,7 @@ extension Cart {
     }
 }
 
-struct CartItem: Codable, Equatable {
+struct CartItem: Codable {
     var count: Int
     var comment: String
     var position: CartPosition
@@ -31,7 +31,9 @@ struct CartItem: Codable, Equatable {
         case count, comment, position
         case modifierGroups = "modifier_groups"
     }
+}
 
+extension CartItem: Equatable {
     static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.comment == rhs.comment &&
             lhs.position == rhs.position &&
@@ -42,6 +44,12 @@ struct CartItem: Codable, Equatable {
 extension CartItem {
     func getNumericPrice() -> Double {
         return (position.price ?? 0) * Double(count)
+    }
+}
+
+extension Array where Element == CartItem {
+    func getBadgeCount() -> String? {
+        return isEmpty ? nil : String(count)
     }
 }
 

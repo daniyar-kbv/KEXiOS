@@ -212,6 +212,7 @@
 		C9634F50F6FF77B3344B91D78C4B68D8 /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D39AAD1678381A66B1917D529F2F98 /* ProfileRepository.swift */; };
 		41404C142B2C63D1DA1DB9BA5B006992 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543FD8B676F68AC8A263E0325C017085 /* ProfileService.swift */; };
 		B5BF57AC3BEB1D09059C85AE2B144C58 /* ProfileTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C3F5515CED26AAFE9F25EAD6E685EF /* ProfileTableItem.swift */; };
+		21807B12E240E562183E2B50696F3B84 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65D3828B5559C1ED18869BD170DCF82 /* ProfileView.swift */; };
 		DECC145D34DF9A9CF304518D6DC750B4 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AEEBFF13E8AF5A9697ED87BA76D308 /* ProfileViewModel.swift */; };
 		E82C0C971A2D81F1DB77B8B3DB283825 /* Promotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */; };
 		B1F8A5468443016E0841FA168F2A448C /* PromotionsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E03E22502B0B1125F7255C0B59B4AFF /* PromotionsAPI.swift */; };
@@ -562,6 +563,7 @@
 		B93F28819D6426E68A7AA959468063A6 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		7618C15B31053C2B7ED1FB427EB14CFF /* ProfileTableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableItem.swift; sourceTree = "<group>"; };
 		89C3F5515CED26AAFE9F25EAD6E685EF /* ProfileTableItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableItem.swift; sourceTree = "<group>"; };
+		C65D3828B5559C1ED18869BD170DCF82 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		68D9A0638F9A4B3FC669490FE918FBD6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		A2AEEBFF13E8AF5A9697ED87BA76D308 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promotion.swift; sourceTree = "<group>"; };
@@ -1782,6 +1784,7 @@
 			children = (
 				8CADB991358DE4B46166CB56BADD1527 /* Models */,
 				95208CD4BB729B867C7AFF3AD12C0FDA /* ProfilePage.swift */,
+				C65D3828B5559C1ED18869BD170DCF82 /* ProfileView.swift */,
 				A2AEEBFF13E8AF5A9697ED87BA76D308 /* ProfileViewModel.swift */,
 			);
 			path = Profile;
@@ -2722,6 +2725,7 @@
 				C9634F50F6FF77B3344B91D78C4B68D8 /* ProfileRepository.swift in Sources */,
 				41404C142B2C63D1DA1DB9BA5B006992 /* ProfileService.swift in Sources */,
 				B5BF57AC3BEB1D09059C85AE2B144C58 /* ProfileTableItem.swift in Sources */,
+				21807B12E240E562183E2B50696F3B84 /* ProfileView.swift in Sources */,
 				DECC145D34DF9A9CF304518D6DC750B4 /* ProfileViewModel.swift in Sources */,
 				E82C0C971A2D81F1DB77B8B3DB283825 /* Promotion.swift in Sources */,
 				B1F8A5468443016E0841FA168F2A448C /* PromotionsAPI.swift in Sources */,
