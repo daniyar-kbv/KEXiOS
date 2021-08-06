@@ -71,7 +71,8 @@ final class MapViewModel {
         case .creation:
             addressRepository.changeCurrentAddress(district: lastAddress.district, street: lastAddress.street, building: lastAddress.building, corpus: lastAddress.corpus, flat: lastAddress.flat, comment: commentary, longitude: lastAddress.longitude, latitude: lastAddress.latitude)
             bindToOrdersOutputs(using: lastAddress)
-            addressRepository.applyOrder(userAddress: addressRepository.getCurrentUserAddress(), completion: nil)
+            guard let dto = addressRepository.getCurrentUserAddress()?.toDTO() else { return }
+            addressRepository.applyOrder(flow: .create(dto: dto), completion: nil)
         case .change:
             outputs.lastSelectedAddress.accept((lastAddress, commentary))
         }

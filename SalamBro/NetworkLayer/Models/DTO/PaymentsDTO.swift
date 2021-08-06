@@ -18,8 +18,8 @@ struct CreateOrderDTO: Codable {
 struct CreatePaymentDTO: Encodable {
     let leadUUID: String
     let paymentType: String
-    let cryptogram: String
-    let cardholderName: String
+    let cryptogram: String?
+    let cardholderName: String?
     let keepCard: Bool?
 
     enum CodingKeys: String, CodingKey {

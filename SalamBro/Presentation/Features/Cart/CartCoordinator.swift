@@ -63,7 +63,6 @@ final class CartCoordinator: BaseCoordinator {
 
         authCoordinator.didFinish = { [weak self, weak authCoordinator] in
             self?.remove(authCoordinator)
-            authCoordinator = nil
         }
 
         authCoordinator.didAuthorize = { [weak self] in

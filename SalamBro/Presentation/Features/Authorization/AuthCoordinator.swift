@@ -65,8 +65,9 @@ final class AuthCoordinator: BaseCoordinator {
                     self?.showNameEnteringPage()
                     return
                 }
-                self?.handleAuthTermination()
-                self?.didAuthorize?()
+                self?.handleAuthTermination {
+                    self?.didAuthorize?()
+                }
             })
             .disposed(by: disposeBag)
 
@@ -77,8 +78,9 @@ final class AuthCoordinator: BaseCoordinator {
         let nameEnteringPage = pagesFactory.makeNameEnteringPage()
 
         nameEnteringPage.didGetEnteredName = { [weak self] in
-            self?.handleAuthTermination()
-            self?.didAuthorize?()
+            self?.handleAuthTermination {
+                self?.didAuthorize?()
+            }
         }
 
         router.push(viewController: nameEnteringPage, animated: true)
@@ -111,8 +113,9 @@ final class AuthCoordinator: BaseCoordinator {
 }
 
 extension AuthCoordinator {
-    private func handleAuthTermination() {
+    private func handleAuthTermination(completion: (() -> Void)? = nil) {
         router.popToRootViewController(animated: true)
         didFinish?()
+        completion?()
     }
 }

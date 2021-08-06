@@ -14,6 +14,7 @@ import WebKit
 protocol PaymentSelectionViewModel: AnyObject {
     var outputs: PaymentSelectionViewModelImpl.Output { get }
 
+    func getPaymentMethods()
     func set(paymentMethod: PaymentMethod)
     func makePayment()
     func processApplePay(payment: PKPayment)
@@ -25,6 +26,8 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
     private let addressRepository: AddressRepository
     private let cartRepository: CartRepository
     private let defaultStorage: DefaultStorage
+
+    private var needsGetPaymentMethods = true
 
     let outputs = Output()
 
@@ -41,6 +44,14 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
         bindRepository()
         setValues()
     }
+}
+
+extension PaymentSelectionViewModelImpl {
+    func getPaymentMethods() {
+        guard needsGetPaymentMethods else { return }
+        needsGetPaymentMethods = false
+        paymentRepository.getPaymentMethods()
+    }
 
     func set(paymentMethod: PaymentMethod) {
         outputs.didSelectPaymentMethod.accept(paymentMethod)
@@ -53,7 +64,9 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
     func processApplePay(payment: PKPayment) {
         paymentRepository.makeApplePayPayment(payment: payment)
     }
+}
 
+extension PaymentSelectionViewModelImpl {
     private func setValues() {
         outputs.totalAmount.accept("\(cartRepository.getTotalAmount().formattedWithSeparator) ₸")
     }
@@ -65,12 +78,20 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
                 self?.outputs.didSelectPaymentMethod.accept(selectedPaymentMethod)
             }).disposed(by: disposeBag)
 
-        paymentRepository.outputs.didStartPaymentRequest
+        paymentRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        paymentRepository.outputs.didEndPaymentRequest
+        paymentRepository.outputs.didEndRequest
             .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        paymentRepository.outputs.didStartPaymentRequest
+            .bind(to: outputs.didStartPaymentRequest)
+            .disposed(by: disposeBag)
+
+        paymentRepository.outputs.didEndPaymentRequest
+            .bind(to: outputs.didEndPaymentRequest)
             .disposed(by: disposeBag)
 
         paymentRepository.outputs.didGetError
@@ -93,12 +114,26 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
         paymentRepository.outputs.showApplePay
             .bind(to: outputs.showApplePay)
             .disposed(by: disposeBag)
+
+        paymentRepository.outputs.paymentMethods
+            .subscribe(onNext: { [weak self] paymentMethods in
+                self?.process(paymentMethods: paymentMethods)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func process(paymentMethods: [PaymentMethod]) {
+        guard let currentPaymentMethod = paymentMethods.first(where: { paymentMethod in
+            guard let savedCard: MyCard = paymentMethod.getValue() else { return false }
+            return savedCard.isCurrent
+        }) else { return }
+        paymentRepository.setSelected(paymentMethod: currentPaymentMethod)
     }
 
     private func finishPayment() {
         defaultStorage.cleanUp(key: .leadUUID)
         cartRepository.cleanUp()
-        addressRepository.applyOrder(userAddress: nil, completion: nil)
+        addressRepository.applyOrder(flow: .withCurrentAddress, completion: nil)
         outputs.didMakePayment.accept(())
     }
 }
@@ -107,6 +142,10 @@ extension PaymentSelectionViewModelImpl {
     struct Output {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
+
+        let didStartPaymentRequest = PublishRelay<Void>()
+        let didEndPaymentRequest = PublishRelay<Void>()
+
         let didGetError = PublishRelay<ErrorPresentable>()
 
         let totalAmount = BehaviorRelay<String?>(value: nil)

@@ -44,12 +44,12 @@ final class PaymentCoordinator: BaseCoordinator {
                 self?.showChangePaymentVC(on: paymentSelectionVC)
             }).disposed(by: disposeBag)
 
-        paymentSelectionVC.outputs.didStartRequest
+        paymentSelectionVC.outputs.didStartPaymentRequest
             .subscribe(onNext: { [weak self, weak paymentSelectionVC] in
                 self?.showPaymentInProcessView(on: paymentSelectionVC)
             }).disposed(by: disposeBag)
 
-        paymentSelectionVC.outputs.didEndRequest
+        paymentSelectionVC.outputs.didEndPaymentRequest
             .subscribe(onNext: { [weak self, weak paymentSelectionVC] in
                 self?.hidePaymentInProcessView(on: paymentSelectionVC)
             }).disposed(by: disposeBag)
@@ -65,8 +65,10 @@ final class PaymentCoordinator: BaseCoordinator {
             }).disposed(by: disposeBag)
 
         paymentSelectionVC.outputs.didMakePayment
-            .subscribe(onNext: { [weak self] in
-                self?.didMakePayment?()
+            .subscribe(onNext: { [weak self, weak paymentSelectionVC] in
+                paymentSelectionVC?.dismiss(animated: true, completion: {
+                    self?.didMakePayment?()
+                })
             }).disposed(by: disposeBag)
 
         let navigationVC = SBNavigationController(rootViewController: paymentSelectionVC)
@@ -174,11 +176,6 @@ final class PaymentCoordinator: BaseCoordinator {
     private func show3DS(on viewController: UIViewController?, webView: WKWebView) {
         threeDSController = pagesFactory.makeThreeDSPage(webView: webView)
 
-        threeDSController?.outputs.didTerminate
-            .subscribe(onNext: { [weak self] in
-                self?.threeDSController = nil
-            }).disposed(by: disposeBag)
-
         threeDSController?.outputs.close
             .subscribe(onNext: { [weak self] in
                 self?.hide3DS()
@@ -187,11 +184,15 @@ final class PaymentCoordinator: BaseCoordinator {
         guard let threeDSController = threeDSController else { return }
 
         let nav = SBNavigationController(rootViewController: threeDSController)
-        viewController?.present(nav, animated: true)
+        nav.modalPresentationStyle = .fullScreen
+
+        viewController?.present(nav, animated: false)
     }
 
     private func hide3DS() {
-        threeDSController?.dismiss(animated: true)
+        threeDSController?.dismiss(animated: false) { [weak self] in
+            self?.threeDSController = nil
+        }
     }
 
     private func showPaymentInProcessView(on viewController: UIViewController?) {
