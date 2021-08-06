@@ -60,6 +60,7 @@ enum AnimationsText: UILocalizable {
         case overload = "Animation.InfoText.overload"
         case payment = "Animation.InfoText.payment"
         case profile = "Animation.InfoText.profile"
+        case closed = "Animation.InfoText.closed"
 
         var localized: String { rawValue }
     }
@@ -69,7 +70,7 @@ enum AnimationsText: UILocalizable {
         case noInternetOverload = "Animation.ButtonTitle.noInternet.overload"
         case upgrade = "Animation.ButtonTitle.upgrade"
         case payment = "Animation.ButtonTitle.payment"
-        case profile = "Animation.ButtonTitleprofile"
+        case profile = "Animation.ButtonTitle.profile"
 
         var localized: String { rawValue }
     }

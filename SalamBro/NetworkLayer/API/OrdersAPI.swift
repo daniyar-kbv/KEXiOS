@@ -25,7 +25,7 @@ extension OrdersAPI: TargetType {
     var path: String {
         switch self {
         case .apply: return "orders/apply/"
-        case let .getProducts(leadUUID): return "orders/\(leadUUID)/nomenclature-new/"
+        case let .getProducts(leadUUID): return "orders/\(leadUUID)/nomenclature/"
         case .authorizedApply: return "/orders/authorized-apply/"
         case .authorizedApplyWithAddress: return "/orders/authorized-apply-with-address/"
         case let .getProductDetail(leadUUID, productUUID): return "orders/\(leadUUID)/nomenclature/\(productUUID)/"
