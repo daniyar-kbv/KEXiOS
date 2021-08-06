@@ -293,6 +293,7 @@
 		0725B222B63E50ED12230E074A98771C /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BB62014044728D18B26D86AC5A00E3 /* VerificationView.swift */; };
 		AA1338C81836575329A3D697EC26FBA5 /* VerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD78B6277861BDF6F586D4ACF62DBB94 /* VerificationViewModel.swift */; };
 		CDA770E8B2BA1C940497F99A7DDC9EBF /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D518B65F82AAFDA5E793620A6E128C /* ViewModel.swift */; };
+		2DD1F648F81BC8C4BE171637F779E537 /* closed.json in Resources */ = {isa = PBXBuildFile; fileRef = FA7660C751DC6F3962B5F84392948913 /* closed.json */; };
 		F694560D11CB08F2FE1D2F7E86B4167B /* emptyBasket.json in Resources */ = {isa = PBXBuildFile; fileRef = 152E0B4CE8AF22894D63204432A36E24 /* emptyBasket.json */; };
 		4B9B1575E958577624E23D440A6EE8FE /* noInternet.json in Resources */ = {isa = PBXBuildFile; fileRef = EF9C1FF18C8E321A84DEE7D3443789AC /* noInternet.json */; };
 		6EB02CFDCF2436983516764335FFD92E /* orderHistory.json in Resources */ = {isa = PBXBuildFile; fileRef = BC5AB56A17481ED5A69EAA3D5FAAA62B /* orderHistory.json */; };
@@ -653,6 +654,7 @@
 		67BB62014044728D18B26D86AC5A00E3 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
 		DD78B6277861BDF6F586D4ACF62DBB94 /* VerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewModel.swift; sourceTree = "<group>"; };
 		90D518B65F82AAFDA5E793620A6E128C /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		FA7660C751DC6F3962B5F84392948913 /* closed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = closed.json; path = ../../../../../closed.json; sourceTree = "<group>"; };
 		152E0B4CE8AF22894D63204432A36E24 /* emptyBasket.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emptyBasket.json; sourceTree = "<group>"; };
 		47B2A04B8AFBC530EABCB13720C0890B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7F0636439F4E355D12571AC1DC930454 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -660,7 +662,7 @@
 		BC5AB56A17481ED5A69EAA3D5FAAA62B /* orderHistory.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orderHistory.json; sourceTree = "<group>"; };
 		6C6885B2573DEDF8A77F034C3C45EC7D /* overload.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = overload.json; sourceTree = "<group>"; };
 		8A940AE47640539DC4609500407E228B /* payment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = payment.json; sourceTree = "<group>"; };
-		929D0FEE425AAEC63BCEEA89D7C401BD /* profile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = profile.json; sourceTree = "<group>"; };
+		929D0FEE425AAEC63BCEEA89D7C401BD /* profile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = profile.json; path = ../../../../../profile.json; sourceTree = "<group>"; };
 		0D05FA7FD15F93546CFA4B4E3DE67462 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CC3FD6837D8EED154A27E94EAD7B8B6A /* upgrade.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = upgrade.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1831,6 +1833,7 @@
 		B18F499CA55B40414AFC03FEA03D7E31 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				FA7660C751DC6F3962B5F84392948913 /* closed.json */,
 				152E0B4CE8AF22894D63204432A36E24 /* emptyBasket.json */,
 				EF9C1FF18C8E321A84DEE7D3443789AC /* noInternet.json */,
 				BC5AB56A17481ED5A69EAA3D5FAAA62B /* orderHistory.json */,
@@ -2234,6 +2237,7 @@
 				4C7EAF6205E790C561FC9532C28380B4 /* Resources */,
 				8AF21AEFE17B7B2D0FE8A5822920D1B5 /* [CP] Embed Pods Frameworks */,
 				9661D946FD185ADB45999E3C99B320DA /* [CP] Copy Pods Resources */,
+				ABB979D377D0D354E3F2CB42CBB92EBE /* Crashlytics dSYM files upload */,
 			);
 			buildRules = (
 			);
@@ -2325,6 +2329,7 @@
 				49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */,
 				AFE10B4ADDD5D00277E3D3352EFD195B /* SBImages.xcassets in Resources */,
 				164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */,
+				2DD1F648F81BC8C4BE171637F779E537 /* closed.json in Resources */,
 				F694560D11CB08F2FE1D2F7E86B4167B /* emptyBasket.json in Resources */,
 				4B9B1575E958577624E23D440A6EE8FE /* noInternet.json in Resources */,
 				6EB02CFDCF2436983516764335FFD92E /* orderHistory.json in Resources */,
@@ -2366,6 +2371,26 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		ABB979D377D0D354E3F2CB42CBB92EBE /* Crashlytics dSYM files upload */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Crashlytics dSYM files upload";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		6AD09E5E35A3DEB76BC248E09C267F82 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3028,6 +3053,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 38;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

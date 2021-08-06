@@ -13,6 +13,9 @@ PODS:
     - FirebaseAnalytics (~> 8.1.0)
   - Firebase/CoreOnly (8.1.0):
     - FirebaseCore (= 8.1.0)
+  - Firebase/Crashlytics (8.1.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 8.1.0)
   - Firebase/Messaging (8.1.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 8.1.0)
@@ -52,6 +55,12 @@ PODS:
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
     - nanopb (~> 2.30908.0)
+  - FirebaseCrashlytics (8.1.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleDataTransport (~> 9.0)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (~> 1.2)
   - FirebaseInstallations (8.1.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
@@ -147,6 +156,7 @@ DEPENDENCIES:
   - Cosmos
   - DropDown
   - Firebase/Analytics
+  - Firebase/Crashlytics
   - Firebase/Messaging
   - Imaginary
   - InputMask
@@ -174,6 +184,7 @@ SPEC REPOS:
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseCoreDiagnostics
+    - FirebaseCrashlytics
     - FirebaseInstallations
     - FirebaseMessaging
     - GoogleAppMeasurement
@@ -226,6 +237,7 @@ SPEC CHECKSUMS:
   FirebaseAnalytics: e812eaae316ba8914b1ef06bef18f11efc1f56c6
   FirebaseCore: 389c4ce9a7cce4a7e25eb22326b4bee0050557b2
   FirebaseCoreDiagnostics: 3e249cee3de5c5f9cfd6cc2a19997231286fec11
+  FirebaseCrashlytics: 1b55b3a718f9e20d59d96db46a4652d95a8ba1d2
   FirebaseInstallations: 7f31798a8198c354eadcb87176d2090b62edc187
   FirebaseMessaging: c8871b0907dcf4e76de81241eb6a62be6d657d2f
   GoogleAppMeasurement: 9ff7b9e23cced93a5a41736c09bdeb5b5b7fb111
@@ -251,6 +263,6 @@ SPEC CHECKSUMS:
   YandexMapKitSearch: 9d658009a11ce4973e5b1c59aacb72c3f63c808a
   YandexRuntime: 2547d72a3ce4757f16ad188cfbe8a124ae13d806
 
-PODFILE CHECKSUM: 44c7ce761d31e58b767d0c11060ce3fceaab7f0a
+PODFILE CHECKSUM: 5c317264b59cbd5034afd9edaea40e55efb2be91
 
 COCOAPODS: 1.10.1

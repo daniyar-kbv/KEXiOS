@@ -88,6 +88,8 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
         super.viewWillAppear(animated)
 
         navigationController?.setNavigationBarHidden(true, animated: true)
+
+        viewModel.configureAnimation()
     }
 
     private func bindViewModel() {
@@ -104,6 +106,16 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
         viewModel.outputs.updateTableView
             .bind(to: itemTableView.rx.reload)
             .disposed(by: disposeBag)
+
+        viewModel.outputs.showAnimation
+            .subscribe(onNext: { [weak self] animationType in
+                self?.itemTableView.backgroundView = self?.getAnimationView(animationType: animationType, action: nil)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.hideAnimation
+            .subscribe(onNext: { [weak self] in
+                self?.itemTableView.backgroundView = nil
+            }).disposed(by: disposeBag)
 
         viewModel.outputs.didStartRequest
             .subscribe(onNext: { [weak self] in

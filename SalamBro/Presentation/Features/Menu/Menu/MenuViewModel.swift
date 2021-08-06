@@ -24,6 +24,7 @@ protocol MenuViewModelProtocol {
     func didSelectRow(at indexPath: IndexPath)
     func finishedScrolling()
     func willDisplayRow(at indexPath: IndexPath)
+    func configureAnimation()
 }
 
 final class MenuViewModel: MenuViewModelProtocol {
@@ -83,6 +84,8 @@ final class MenuViewModel: MenuViewModelProtocol {
         menuRepository.outputs.didGetCategories.bind {
             [weak self] categories in
             self?.setCategories(categories: categories)
+            self?.setPositions(of: categories)
+            self?.configureAnimation()
         }
         .disposed(by: disposeBag)
     }
@@ -135,6 +138,8 @@ final class MenuViewModel: MenuViewModelProtocol {
                 .flatMap { $0 }
         ))
     }
+
+    func configureAnimation() {}
 }
 
 extension MenuViewModel {
@@ -302,6 +307,9 @@ extension MenuViewModel {
         let didEndRequest = PublishRelay<Void>()
         let updateTableView = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
+
+        let showAnimation = PublishRelay<LottieAnimationModel>()
+        let hideAnimation = PublishRelay<Void>()
 
         let toPromotion = PublishRelay<(URL, String)>()
         let toPositionDetail = PublishRelay<String>()

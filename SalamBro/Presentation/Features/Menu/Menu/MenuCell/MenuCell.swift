@@ -55,7 +55,7 @@ final class MenuCell: UITableViewCell, Reusable {
         ])
         view.spacing = 4
         view.alignment = .leading
-        view.distribution = .fill
+        view.distribution = .equalSpacing
         view.axis = .vertical
         return view
     }()

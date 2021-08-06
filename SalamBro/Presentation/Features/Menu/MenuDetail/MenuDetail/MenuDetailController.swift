@@ -116,6 +116,7 @@ extension MenuDetailController {
 
         viewModel.outputs.didProceed
             .subscribe(onNext: { [weak self] in
+                self?.outputs.close.accept(())
                 self?.showAddedView()
             }).disposed(by: disposeBag)
 
