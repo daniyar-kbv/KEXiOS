@@ -27,7 +27,7 @@ protocol AddressRepository: AnyObject {
     func add(userAddress: UserAddress)
     func deleteUserAddress(with id: Int)
 
-    func applyOrder(userAddress: UserAddress?, completion: (() -> Void)?)
+    func applyOrder(flow: AddressRepositoryImpl.OrderApplyFlow, completion: (() -> Void)?)
 }
 
 final class AddressRepositoryImpl: AddressRepository {
@@ -148,7 +148,7 @@ extension AddressRepositoryImpl {
         let dto = UpdateAddressDTO(brandId: brandId)
         profileService.updateAddress(id: id, dto: dto)
             .subscribe(onSuccess: { [weak self] in
-                self?.applyOrder(userAddress: nil)
+                self?.applyOrder(flow: .withCurrentAddress)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
@@ -158,7 +158,8 @@ extension AddressRepositoryImpl {
     }
 
     func add(userAddress: UserAddress) {
-        applyOrder(userAddress: userAddress)
+        guard let dto = userAddress.toDTO() else { return }
+        applyOrder(flow: .newAddress(dto: dto))
     }
 
     func deleteUserAddress(with id: Int) {
@@ -181,12 +182,12 @@ extension AddressRepositoryImpl {
 }
 
 extension AddressRepositoryImpl {
-    func applyOrder(userAddress: UserAddress? = nil, completion: (() -> Void)? = nil) {
-        guard let request = getRequest(for: userAddress?.toDTO()) else { return }
+    func applyOrder(flow: OrderApplyFlow, completion: (() -> Void)? = nil) {
+        guard let request = getRequest(for: flow) else { return }
 
         outputs.didStartRequest.accept(())
         request.subscribe { [weak self] leadUUID in
-            self?.process(leadUUID: leadUUID)
+            self?.process(leadUUID: leadUUID, flow: flow)
             self?.getUserAddresses()
             completion?()
         } onError: { [weak self] error in
@@ -196,22 +197,18 @@ extension AddressRepositoryImpl {
         }.disposed(by: disposeBag)
     }
 
-    private func getRequest(for dto: OrderApplyDTO?) -> Single<String>? {
-        if let dto = dto {
-            if authTokenStorage.token != nil {
-                return ordersService.authorizedApplyWithAddress(dto: dto)
-            } else {
-                return ordersService.applyOrder(dto: dto)
-            }
-        } else if authTokenStorage.token != nil {
-            return ordersService.authorizedApplyOrder()
+    private func getRequest(for flow: OrderApplyFlow) -> Single<String>? {
+        switch flow {
+        case let .create(dto): return ordersService.applyOrder(dto: dto)
+        case let .newAddress(dto): return ordersService.authorizedApplyWithAddress(dto: dto)
+        case .withCurrentAddress: return ordersService.authorizedApplyOrder()
         }
-        return nil
     }
 
-    private func process(leadUUID: String) {
+    private func process(leadUUID: String, flow: OrderApplyFlow) {
         defaultStorage.persist(leadUUID: leadUUID)
         outputs.didGetLeadUUID.accept(())
+        outputs.needsClearCart.accept(flow != .withCurrentAddress)
         fcmTokenCreate()
     }
 }
@@ -230,6 +227,21 @@ extension AddressRepositoryImpl {
 }
 
 extension AddressRepositoryImpl {
+    enum OrderApplyFlow: Equatable {
+        case create(dto: OrderApplyDTO)
+        case newAddress(dto: OrderApplyDTO)
+        case withCurrentAddress
+
+        static func == (lhs: AddressRepositoryImpl.OrderApplyFlow, rhs: AddressRepositoryImpl.OrderApplyFlow) -> Bool {
+            switch (lhs, rhs) {
+            case (.create(_), create(_)): return true
+            case (.newAddress(_), newAddress(_)): return true
+            case (.withCurrentAddress, .withCurrentAddress): return true
+            default: return false
+            }
+        }
+    }
+
     struct Output {
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
@@ -239,5 +251,7 @@ extension AddressRepositoryImpl {
         let didGetUserAddresses = PublishRelay<[UserAddress]>()
         let needsUpdate = PublishRelay<Void>()
         let didDeleteUserAddress = PublishRelay<Void>()
+
+        let needsClearCart = PublishRelay<Bool>()
     }
 }

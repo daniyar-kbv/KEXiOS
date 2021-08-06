@@ -152,7 +152,9 @@ extension PaymentRepositoryImpl {
         case .applePay:
             processApplePay()
         case .cash:
-            break
+            createOrder(
+                createCashPayment
+            )
         default:
             break
         }
@@ -190,11 +192,19 @@ extension PaymentRepositoryImpl {
                       keepCard: card.keepCard)
     }
 
+    private func createCashPayment() {
+        guard let leadUUID = defaultStorage.leadUUID,
+              let paymentType = selectedPaymentMethod?.type.apiType else { return }
+
+        createPayment(leadUUID: leadUUID,
+                      paymentType: paymentType)
+    }
+
     private func createPayment(leadUUID: String,
                                paymentType: String,
-                               cryptogram: String,
-                               cardholderName: String,
-                               keepCard: Bool?)
+                               cryptogram: String? = nil,
+                               cardholderName: String? = nil,
+                               keepCard: Bool? = nil)
     {
         let createPaymentDTO = CreatePaymentDTO(leadUUID: leadUUID,
                                                 paymentType: paymentType,
@@ -254,8 +264,6 @@ extension PaymentRepositoryImpl {
             print("Unable to create cryptogram")
             return
         }
-//        Tech debt: remove
-        UIPasteboard.general.string = cryptogram
         selectedPaymentMethod?.set(value: cryptogram)
         createOrder { [weak self] in
             guard let leadUUID = self?.defaultStorage.leadUUID,

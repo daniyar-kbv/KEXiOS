@@ -84,7 +84,6 @@ final class MenuViewModel: MenuViewModelProtocol {
         menuRepository.outputs.didGetCategories.bind {
             [weak self] categories in
             self?.setCategories(categories: categories)
-            self?.setPositions(of: categories)
             self?.configureAnimation()
         }
         .disposed(by: disposeBag)

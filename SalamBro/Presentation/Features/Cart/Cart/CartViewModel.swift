@@ -28,18 +28,22 @@ protocol CartViewModel {
 final class CartViewModelImpl: CartViewModel {
     private let disposeBag = DisposeBag()
     private let cartRepository: CartRepository
+    private let addressRepository: AddressRepository
     private let tokenStorage: AuthTokenStorage
 
     var items: [CartItem] = []
     let outputs = Output()
 
     init(cartRepository: CartRepository,
+         addressRepository: AddressRepository,
          tokenStorage: AuthTokenStorage)
     {
         self.cartRepository = cartRepository
+        self.addressRepository = addressRepository
         self.tokenStorage = tokenStorage
 
-        bind()
+        bindCartRepository()
+        bindAddressRepository()
     }
 }
 
@@ -107,6 +111,38 @@ extension CartViewModelImpl {
 
     func delete(postitonUUID: String) {
         cartRepository.removeItem(positionUUID: postitonUUID)
+    }
+}
+
+extension CartViewModelImpl {
+    private func bindCartRepository() {
+        cartRepository.outputs.didChange
+            .subscribe(onNext: { [weak self] items in
+                self?.items = items
+                self?.outputs.update.accept(())
+            }).disposed(by: disposeBag)
+
+        cartRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        cartRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        cartRepository.outputs.didGetError
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+    }
+
+    private func bindAddressRepository() {
+        addressRepository.outputs.needsClearCart
+            .subscribe(onNext: { [weak self] need in
+                need ?
+                    self?.cartRepository.cleanUp() :
+                    self?.cartRepository.update()
+            })
+            .disposed(by: disposeBag)
     }
 }
 

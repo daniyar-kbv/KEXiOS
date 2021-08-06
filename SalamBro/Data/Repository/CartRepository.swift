@@ -18,6 +18,7 @@ protocol CartRepository {
     func incrementItem(positionUUID: String)
     func decrementItem(positionUUID: String)
     func cleanUp()
+    func update()
 
     func getTotalAmount() -> Double
 }
@@ -92,6 +93,10 @@ extension CartRepositoryImpl {
     func cleanUp() {
         cartStorage.cart.items = []
         outputs.didChange.accept(cartStorage.cart.items)
+        evokeUpdateCart.accept(())
+    }
+
+    func update() {
         evokeUpdateCart.accept(())
     }
 

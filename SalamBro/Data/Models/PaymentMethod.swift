@@ -18,7 +18,7 @@ enum PaymentMethodType {
         case .savedCard: return ""
         case .card: return "DEBIT_CARD"
         case .applePay: return "APPLE_PAY"
-        case .cash: return ""
+        case .cash: return "CASH"
         }
     }
 }

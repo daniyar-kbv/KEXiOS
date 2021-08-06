@@ -12,7 +12,7 @@ import RxSwift
 import UIKit
 import WebKit
 
-final class PaymentSelectionViewController: UIViewController, AlertDisplayable {
+final class PaymentSelectionViewController: UIViewController, AlertDisplayable, LoaderDisplayable {
     private let disposeBag = DisposeBag()
     private let viewModel: PaymentSelectionViewModel
     private lazy var contentView: PaymentSelectionContainerView = {
@@ -55,6 +55,12 @@ final class PaymentSelectionViewController: UIViewController, AlertDisplayable {
         bindViewModel()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        viewModel.getPaymentMethods()
+    }
+
     private func bindViewModel() {
         viewModel.outputs.didSelectPaymentMethod
             .subscribe(onNext: { [weak self] paymentMethod in
@@ -62,11 +68,23 @@ final class PaymentSelectionViewController: UIViewController, AlertDisplayable {
             }).disposed(by: disposeBag)
 
         viewModel.outputs.didStartRequest
-            .bind(to: outputs.didStartRequest)
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            })
             .disposed(by: disposeBag)
 
         viewModel.outputs.didEndRequest
-            .bind(to: outputs.didEndRequest)
+            .subscribe(onNext: { [weak self] in
+                self?.hideLoader()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didStartPaymentRequest
+            .bind(to: outputs.didStartPaymentRequest)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didEndPaymentRequest
+            .bind(to: outputs.didEndPaymentRequest)
             .disposed(by: disposeBag)
 
         viewModel.outputs.didGetError
@@ -129,8 +147,8 @@ extension PaymentSelectionViewController: PKPaymentAuthorizationViewControllerDe
 
 extension PaymentSelectionViewController {
     struct Output {
-        let didStartRequest = PublishRelay<Void>()
-        let didEndRequest = PublishRelay<Void>()
+        let didStartPaymentRequest = PublishRelay<Void>()
+        let didEndPaymentRequest = PublishRelay<Void>()
 
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()
