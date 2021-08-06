@@ -108,8 +108,8 @@ final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayabl
             .disposed(by: disposeBag)
 
         viewModel.outputs.showAnimation
-            .subscribe(onNext: { [weak self] in
-                self?.itemTableView.backgroundView = self?.getAnimationView(animationType: .closed)
+            .subscribe(onNext: { [weak self] animationType in
+                self?.itemTableView.backgroundView = self?.getAnimationView(animationType: animationType, action: nil)
             }).disposed(by: disposeBag)
 
         viewModel.outputs.hideAnimation

@@ -38,6 +38,42 @@ enum LottieAnimationModel: String, CaseIterable {
         }
     }
 
+    var isActive: Bool {
+        switch self {
+        case .payment, .closed:
+            return false
+        case .orderHistory, .emptyBasket, .noInternet, .overload, .upgrade, .profile:
+            return true
+        }
+    }
+
+    var animationLoopMode: LottieLoopMode {
+        switch self {
+        case .orderHistory, .emptyBasket, .noInternet, .upgrade, .overload, .payment:
+            return .loop
+        case .profile, .closed:
+            return .playOnce
+        }
+    }
+
+    var animationSize: CGSize {
+        switch self {
+        case .orderHistory, .emptyBasket, .noInternet, .upgrade, .overload, .payment, .closed:
+            return CGSize(width: 272, height: 200)
+        case .profile:
+            return CGSize(width: 736, height: 200)
+        }
+    }
+
+    var withButton: Bool {
+        switch self {
+        case .orderHistory, .emptyBasket, .noInternet, .upgrade, .overload, .payment, .profile:
+            return true
+        case .closed:
+            return false
+        }
+    }
+
     func getButtonTitle() -> String {
         switch self {
         case .orderHistory, .emptyBasket:
@@ -57,18 +93,5 @@ enum LottieAnimationModel: String, CaseIterable {
 
     func getAnimation() -> Animation? {
         return Animation.named(rawValue)
-    }
-
-    // MARK: Change when actions are implemented, should send action types
-
-    var isActive: Bool {
-        switch self {
-        case .payment:
-            return false
-        case .orderHistory, .emptyBasket, .noInternet, .overload, .upgrade, .profile:
-            return true
-        default:
-            return false
-        }
     }
 }

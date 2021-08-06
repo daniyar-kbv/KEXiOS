@@ -316,7 +316,7 @@ extension MenuViewModel {
         let updateTableView = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
 
-        let showAnimation = PublishRelay<Void>()
+        let showAnimation = PublishRelay<LottieAnimationModel>()
         let hideAnimation = PublishRelay<Void>()
 
         let toPromotion = PublishRelay<(URL, String)>()

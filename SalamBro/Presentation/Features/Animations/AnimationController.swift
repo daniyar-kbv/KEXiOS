@@ -12,8 +12,6 @@ final class AnimationController: UIViewController {
     private let animationType: LottieAnimationModel
     private(set) lazy var contenView = AnimationContainerView(animationType: animationType)
 
-    var action: (() -> Void)?
-
     init(animationType: LottieAnimationModel) {
         self.animationType = animationType
 
@@ -31,23 +29,9 @@ final class AnimationController: UIViewController {
         view = contenView
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        configActions()
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         contenView.animationPlay()
-    }
-
-    private func configActions() {
-        contenView.actionButton.addTarget(self, action: #selector(performAction), for: .touchUpInside)
-    }
-
-    @objc private func performAction() {
-        action?()
     }
 }

@@ -31,17 +31,26 @@ final class AnimationContainerView: UIView {
         view.cornerRadius = 10
         view.borderWidth = 1
         view.titleLabel?.textAlignment = .center
+        view.addTarget(self, action: #selector(performAction), for: .touchUpInside)
         return view
     }()
 
-    private var animationType: LottieAnimationModel?
+    private lazy var verticalStackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [lottieAnimationView, infoLabel])
+        view.axis = .vertical
+        view.spacing = 32
+        view.distribution = .equalSpacing
+        view.alignment = .center
+        return view
+    }()
+
+    var action: (() -> Void)?
 
     init(animationType: LottieAnimationModel) {
         super.init(frame: .zero)
 
-        self.animationType = animationType
         configureViews(with: animationType)
-        layoutUI()
+        layoutUI(with: animationType)
     }
 
     @available(*, unavailable)
@@ -57,31 +66,21 @@ final class AnimationContainerView: UIView {
         actionButton.setTitle(type.getButtonTitle(), for: .normal)
 
         lottieAnimationView.animation = type.getAnimation()
-        lottieAnimationView.loopMode = (type == .profile || type == .closed) ? .playOnce : .loop
+        lottieAnimationView.loopMode = type.animationLoopMode
     }
 
     private func setState(with style: LottieAnimationModel) {
-        actionButton.borderColor = style.isActive ? .kexRed : .mildBlue
-        if style.isActive {
-            actionButton.setTitleColor(.kexRed, for: .normal)
-        } else {
-            actionButton.setTitleColor(.mildBlue, for: .normal)
-        }
+        let textColor: UIColor = style.isActive ? .kexRed : .mildBlue
+        actionButton.borderColor = textColor
+        actionButton.setTitleColor(textColor, for: .normal)
     }
 
-    private func layoutUI() {
-        backgroundColor = .white
+    private func layoutUI(with animationType: LottieAnimationModel) {
+        backgroundColor = .arcticWhite
 
-        if animationType == .profile {
-            lottieAnimationView.snp.makeConstraints {
-                $0.width.equalTo(736)
-                $0.height.equalTo(200)
-            }
-        } else {
-            lottieAnimationView.snp.makeConstraints {
-                $0.width.equalTo(272)
-                $0.height.equalTo(200)
-            }
+        lottieAnimationView.snp.makeConstraints {
+            $0.width.equalTo(animationType.animationSize.width)
+            $0.height.equalTo(animationType.animationSize.height)
         }
 
         infoLabel.snp.makeConstraints {
@@ -89,19 +88,14 @@ final class AnimationContainerView: UIView {
             $0.height.lessThanOrEqualTo(64)
         }
 
-        if animationType != .closed {
+        if animationType.withButton {
+            verticalStackView.addArrangedSubview(actionButton)
             actionButton.snp.makeConstraints {
                 $0.width.equalTo(UIScreen.main.bounds.width - 48)
                 $0.height.equalTo(43)
             }
         }
 
-        let verticalStackView = animationType == .closed ? UIStackView(arrangedSubviews: [lottieAnimationView, infoLabel]) : UIStackView(arrangedSubviews: [lottieAnimationView, infoLabel, actionButton])
-
-        verticalStackView.axis = .vertical
-        verticalStackView.spacing = 32
-        verticalStackView.distribution = .equalSpacing
-        verticalStackView.alignment = .center
         addSubview(verticalStackView)
 
         verticalStackView.snp.makeConstraints {
@@ -112,5 +106,9 @@ final class AnimationContainerView: UIView {
 
     func animationPlay() {
         lottieAnimationView.play()
+    }
+
+    @objc private func performAction() {
+        action?()
     }
 }
