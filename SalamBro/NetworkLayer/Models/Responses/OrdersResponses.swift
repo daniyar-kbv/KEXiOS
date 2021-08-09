@@ -35,6 +35,18 @@ struct OrderProductDetailResponse: Codable {
     let error: ErrorResponse?
 }
 
+struct AdditionalNomenclatureResponse: Decodable {
+    let data: Data?
+    let error: ErrorResponse?
+
+    struct Data: Decodable {
+        let count: Int
+        let next: String?
+        let previous: String?
+        let results: [MenuPosition]
+    }
+}
+
 struct OrderUpdateCartResponse: Codable {
     let data: Cart?
     let error: ErrorResponse?

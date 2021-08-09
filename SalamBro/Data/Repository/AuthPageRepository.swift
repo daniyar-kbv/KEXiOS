@@ -104,14 +104,6 @@ final class AuthRepositoryImpl: AuthRepository {
         outputs.didEndRequest.accept(())
         tokenStorage.persist(token: accessToken, refreshToken: refreshToken)
         outputs.didVerifyOTP.accept(())
-        tokenLogin()
-    }
-
-    private func tokenLogin() {
-        guard let leadUUID = defaultStorage.leadUUID else { return }
-        notificationsService.fcmTokenLogin(leadUUID: leadUUID)
-            .subscribe()
-            .disposed(by: disposeBag)
     }
 }
 

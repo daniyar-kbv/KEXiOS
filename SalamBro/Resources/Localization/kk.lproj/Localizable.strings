@@ -46,6 +46,7 @@
 // MARK: - Cart
 "Cart.section0.title" = "KZ %@ товаров на %@ ₸";
 "Cart.section1.title" = "KZ Дополнительные покупки";
+"Cart.section2.title" = "KZ Промокод: %@";
 "Cart.orderButton.title" = "KZ Оформить заказ на %@ ₸";
 "Cart.title" = "KZ Корзина";
 

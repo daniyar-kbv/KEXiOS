@@ -9,6 +9,8 @@ import RxCocoa
 import RxSwift
 import UIKit
 
+// Tech debt: add types
+
 final class MapCommentaryPage: UIViewController {
     var cachedCommentary: String? {
         didSet {
@@ -107,6 +109,10 @@ final class MapCommentaryPage: UIViewController {
 
     public func configureTextField(placeholder: String) {
         commentaryTextField.placeholder = placeholder
+    }
+
+    public func configureTextField(autocapitalizationType: UITextAutocapitalizationType) {
+        commentaryTextField.autocapitalizationType = autocapitalizationType
     }
 
     public func configureButton(title: String) {

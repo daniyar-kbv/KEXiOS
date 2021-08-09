@@ -368,8 +368,9 @@ enum SupportText: UILocalizable {
 enum CartText: UILocalizable {
     enum Cart: String, UILocalizable {
         case navigationTitle = "Cart.title"
-        case titleFirst = "Cart.section0.title"
-        case titleSecond = "Cart.section1.title"
+        case titlePositions = "Cart.section0.title"
+        case titleAdditional = "Cart.section1.title"
+        case titlePromocode = "Cart.section2.title"
         case buttonTitle = "Cart.orderButton.title"
 
         var localized: String { rawValue }

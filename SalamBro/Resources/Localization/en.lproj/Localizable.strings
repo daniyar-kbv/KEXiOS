@@ -46,6 +46,7 @@
 // MARK: - Cart
 "Cart.section0.title" = "EN %@ товаров на %@ ₸";
 "Cart.section1.title" = "EN Дополнительные покупки";
+"Cart.section2.title" = "EN Промокод: %@";
 "Cart.orderButton.title" = "EN Оформить заказ на %@ ₸";
 "Cart.title" = "EN Корзина";
 

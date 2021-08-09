@@ -102,6 +102,11 @@ final class MapViewModel {
             guard let objectMetadata = (response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata) else { continue }
             let addressComponenets = objectMetadata.address.components
 
+//            Tech debt: process addresses without street or district
+            print(addressComponenets.map {
+                ($0.kinds, $0.name)
+            })
+
             let district = addressComponenets
                 .first(where: {
                     $0.kinds.contains(Constants.Map.ComponentsKinds.district)
