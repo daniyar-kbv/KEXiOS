@@ -5,7 +5,8 @@
 //  Created by Meruyert Tastandiyeva on 6/17/21.
 //
 
-import Reusable
+import RxCocoa
+import RxSwift
 import UIKit
 
 protocol CartAdditinalProductCellDelegate: AnyObject {
@@ -88,12 +89,22 @@ final class CartAdditionalProductCell: UITableViewCell {
         return label
     }()
 
-    private var product: CartAdditionalProduct?
-    private var counter: Int = 0
+    private lazy var bottomSeparator: UIView = {
+        let view = UIView()
+        view.backgroundColor = .mildBlue
+        return view
+    }()
+
+    private let disposeBag = DisposeBag()
+    private let viewModel: CartAdditionalProductViewModel
+
     var delegate: CartAdditinalProductCellDelegate?
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    init(viewModel: CartAdditionalProductViewModel) {
+        self.viewModel = viewModel
+
+        super.init(style: .default, reuseIdentifier: .none)
+
         layoutUI()
     }
 
@@ -104,8 +115,29 @@ final class CartAdditionalProductCell: UITableViewCell {
 }
 
 extension CartAdditionalProductCell {
+    private func bindViewModel() {
+        viewModel.outputs.itemImage
+            .bind(onNext: { [weak self] url in
+                guard let url = url else { return }
+                self?.productImageView.setImage(url: url)
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.itemTitle
+            .bind(to: productTitleLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.price
+            .bind(to: priceLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.count
+            .bind(to: countLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+
     private func layoutUI() {
-        [productImageView, productTitleLabel, priceLabel, unavailableLabel, containerView].forEach {
+        [productImageView, productTitleLabel, priceLabel, unavailableLabel, containerView, bottomSeparator].forEach {
             contentView.addSubview($0)
         }
 
@@ -167,69 +199,21 @@ extension CartAdditionalProductCell {
             $0.right.equalToSuperview().offset(-24)
             $0.bottom.equalToSuperview().offset(-10)
         }
+
+        bottomSeparator.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.left.right.equalToSuperview().inset(24)
+            $0.height.equalTo(0.24)
+        }
     }
 }
 
 extension CartAdditionalProductCell {
-    func configure(item: CartAdditionalProduct) {
-        product = item
-        if let count = product?.count, let price = product?.price, let isAvailable = product?.available {
-            productTitleLabel.text = product?.name
-
-            priceLabel.text = "\(count * price) ₸"
-            countLabel.text = "\(count)"
-            counter = count
-
-            if isAvailable {
-                unavailableLabel.text = ""
-            } else {
-                unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.AdditionalCell.availability)
-                productTitleLabel.alpha = 0.5
-                priceLabel.alpha = 0.5
-                productImageView.alpha = 0.5
-            }
-
-            countLabel.text = "\(counter)"
-        }
-    }
-
-    func configureIncreaseButton() {
-        if counter == 0 {
-            increaseButton.backgroundColor = .clear
-            increaseButton.borderWidth = 1
-            increaseButton.borderColor = .mildBlue
-            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusGray), for: .normal)
-        } else {
-            increaseButton.backgroundColor = .kexRed
-            increaseButton.borderWidth = 0
-            increaseButton.borderColor = .none
-            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusWhite), for: .normal)
-        }
-        counter = product!.count
-        countLabel.text = "\(counter)"
-    }
-
-    //  Tech debt: uncomment when modifiers stabilize
     @objc private func decreaseItemCount(_: UIButton) {
-        //    if counter > 0 {
-        //        counter -= 1
-        //       if let id = product?.id, let price = product?.price {
-        //           delegate?.changeItemCount(id: id, isIncrease: false, isAdditional: true)
-        //         priceLabel.text = "\(counter * price) T"
-        //     }
-        //     countLabel.text = "\(counter)"
-        // }
+        delegate?.decrement(positionUUID: viewModel.getPositionUUID(), isAdditional: true)
     }
 
     @objc private func increaseItemButton(_: UIButton) {
-        //   if counter < 999 {
-        //  counter += 1
-        //  if let id = product?.id, let price = product?.price {
-        //      delegate?.changeItemCount(id: id, isIncrease: true, isAdditional: true)
-        //      priceLabel.text = "\(counter * price) T"
-        //  }
-        //  countLabel.text = "\(counter)"
+        delegate?.increment(positionUUID: viewModel.getPositionUUID(), isAdditional: true)
     }
 }
-
-extension CartAdditionalProductCell: Reusable {}

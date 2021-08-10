@@ -19,6 +19,27 @@ extension Cart {
     func getTotalPrice() -> Double {
         return items.map { Double($0.count) * ($0.position.price ?? 0) }.reduce(0, +)
     }
+
+    func toDTO() -> CartDTO {
+        return .init(items: items.map { item in
+            .init(
+                positionUUID: item.position.uuid,
+                count: item.count,
+                comment: item.comment,
+                modifierGroups: item.modifierGroups.map { modifierGroup in
+                    .init(
+                        uuid: modifierGroup.uuid,
+                        modifiers: modifierGroup.modifiers.map { modifier in
+                            .init(
+                                positionUUID: modifier.position.uuid,
+                                count: modifier.count
+                            )
+                        }
+                    )
+                }
+            )
+        })
+    }
 }
 
 struct CartItem: Codable {
@@ -95,28 +116,5 @@ struct CartModifier: Codable, Equatable {
 
     static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.position == rhs.position
-    }
-}
-
-extension Cart {
-    func toDTO() -> CartDTO {
-        return .init(items: items.map { item in
-            .init(
-                positionUUID: item.position.uuid,
-                count: item.count,
-                comment: item.comment,
-                modifierGroups: item.modifierGroups.map { modifierGroup in
-                    .init(
-                        uuid: modifierGroup.uuid,
-                        modifiers: modifierGroup.modifiers.map { modifier in
-                            .init(
-                                positionUUID: modifier.position.uuid,
-                                count: modifier.count
-                            )
-                        }
-                    )
-                }
-            )
-        })
     }
 }

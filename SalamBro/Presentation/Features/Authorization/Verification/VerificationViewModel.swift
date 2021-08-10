@@ -43,7 +43,8 @@ final class VerificationViewModel {
 
         authRepository.outputs.didVerifyOTP
             .subscribe(onNext: { [weak self] in
-                self?.addressRepository.applyOrder(flow: .withCurrentAddress) {
+                guard let dto = self?.addressRepository.getCurrentUserAddress()?.toDTO() else { return }
+                self?.addressRepository.applyOrder(flow: .newAddress(dto: dto)) {
                     self?.profileRepository.fetchUserInfo()
                 }
             })

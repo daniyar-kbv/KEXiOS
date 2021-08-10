@@ -9,7 +9,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-protocol CartProductViewModel: AnyObject {
+protocol CartProductViewModel: CartCellViewModel {
     var inputs: CartProductViewModelImpl.Input { get }
     var outputs: CartProductViewModelImpl.Output { get }
 
@@ -52,7 +52,7 @@ extension CartProductViewModelImpl {
                 .map { $0.position.name }
                 .joined(separator: ", "))
             comment = .init(value: item.comment)
-            price = .init(value: "\(((item.position.price ?? 0) * Double(item.count)).removeTrailingZeros()) ₸")
+            price = .init(value: "\((item.position.price ?? 0).formattedWithSeparator) ₸")
             count = .init(value: String(item.count))
             isAvailable = .init(value: true)
         }

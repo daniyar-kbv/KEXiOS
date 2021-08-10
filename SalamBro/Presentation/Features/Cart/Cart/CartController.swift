@@ -20,52 +20,34 @@ class CartController: UIViewController, LoaderDisplayable, AlertDisplayable {
 
     let outputs = Output()
 
-    private lazy var tableViewFooter: CartFooter = {
-        let view = CartFooter()
-        view.delegate = self
-        return view
-    }()
-
     private lazy var itemsTableView: UITableView = {
         let table = UITableView()
         table.allowsSelection = false
-        table.separatorColor = .mildBlue
-        table.register(cellType: CartProductCell.self)
-        table.register(cellType: CartAdditionalProductCell.self)
-        table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         table.dataSource = self
         table.delegate = self
-        // hidden header fix, usually default headers of section in tableview is sticky
-        let dummyViewHeight = CGFloat(56)
-        table.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: table.bounds.size.width, height: dummyViewHeight))
-        table.contentInset = UIEdgeInsets(top: -dummyViewHeight, left: 0, bottom: 0, right: 0)
-        tableViewFooter.frame = CGRect(x: 0, y: 0, width: table.frame.width, height: 160)
-        table.tableFooterView = tableViewFooter
-        table.translatesAutoresizingMaskIntoConstraints = false
+        table.estimatedSectionHeaderHeight = UITableView.automaticDimension
+        table.estimatedSectionFooterHeight = UITableView.automaticDimension
+        table.separatorStyle = .none
         return table
     }()
 
     private lazy var divider: UIView = {
         let view = UIView()
         view.backgroundColor = .mildBlue
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     private lazy var footerView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     private lazy var orderButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .kexRed
-        button.layer.masksToBounds = true
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -127,12 +109,17 @@ class CartController: UIViewController, LoaderDisplayable, AlertDisplayable {
         viewModel.outputs.toPayment
             .bind(to: outputs.toPayment)
             .disposed(by: disposeBag)
+
+        viewModel.outputs.showPromocode
+            .subscribe(onNext: { [weak self] in
+                self?.openPromocode()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func update() {
         configAnimationView()
         itemsTableView.reloadData()
-        updateTableViewFooterUI()
         orderButton.setTitle(SBLocalization.localized(key: CartText.Cart.buttonTitle, arguments: viewModel.getTotalPrice()), for: .normal)
     }
 
@@ -186,105 +173,53 @@ extension CartController {
         }
     }
 
-    func updateTableViewFooterUI() {
-        tableViewFooter.productsLabel.text = SBLocalization.localized(key: CartText.Cart.Footer.productsCount, arguments: String(viewModel.getTotalCount()))
-        tableViewFooter.productsPriceLabel.text = SBLocalization.localized(key: CartText.Cart.Footer.productsPrice, arguments: String(viewModel.getTotalPrice()))
-    }
-
     @objc func buttonAction() {
         viewModel.proceedButtonTapped()
     }
-}
 
-extension CartController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
-        return 56
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            let content = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 56))
-            let label = UILabel(frame: CGRect(x: 16, y: 24, width: tableView.frame.size.width, height: 24))
-            label.font = .boldSystemFont(ofSize: 18)
-            label.text = SBLocalization.localized(key: CartText.Cart.titleFirst, arguments: String(viewModel.getTotalCount()), String(viewModel.getTotalPrice()))
-            content.addSubview(label)
-            content.backgroundColor = .arcticWhite
-            return content
-        } else {
-            let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 56))
-            let label = UILabel(frame: CGRect(x: 16, y: 24, width: tableView.frame.size.width, height: 21))
-            let separator = UIView(frame: CGRect(x: 24, y: 0, width: tableView.frame.width - 48, height: 0.5))
-            separator.backgroundColor = .mildBlue
-            label.font = .boldSystemFont(ofSize: 16)
-            label.text = SBLocalization.localized(key: CartText.Cart.titleSecond)
-            view.addSubview(label)
-            view.addSubview(separator)
-            view.backgroundColor = .arcticWhite
-            return view
-        }
-    }
-
-    func numberOfSections(in _: UITableView) -> Int {
-//        Tech debt: change to 2 when modifiers stabilize
-        1
-    }
-
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-//        Tech debt: uncomment when modifiers stabilize
-//        if section == 0 {
-        return viewModel.getTotalCount()
-//        }
-//        else {
-//            return cartViewModel.cart.productsAdditional.count
-//        }
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        Tech debt: uncomment when modifiers stabilize
-        //      if indexPath.section == 0 {
-        let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CartProductCell.self)
-        cell.delegate = self
-        cell.configure(with: viewModel.items[indexPath.row])
-        return cell
-        //    } else {
-        //      let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CartAdditionalProductCell.self)
-        //  cell.delegate = self
-        // cell.configure(item: cartViewModel.cart.productsAdditional[indexPath.row])
-        //   cell.configureIncreaseButton()
-        //     return cell
-        // }
-    }
-}
-
-extension CartController: CartAdditinalProductCellDelegate {
-    func increment(positionUUID: String?, isAdditional _: Bool) {
-        guard let positionUUID = positionUUID else { return }
-        viewModel.increment(postitonUUID: positionUUID)
-    }
-
-    func decrement(positionUUID: String?, isAdditional _: Bool) {
-        guard let positionUUID = positionUUID else { return }
-        viewModel.decrement(postitonUUID: positionUUID)
-    }
-
-    func delete(positionUUID: String?, isAdditional _: Bool) {
-        guard let positionUUID = positionUUID else { return }
-        viewModel.delete(postitonUUID: positionUUID)
-    }
-}
-
-extension CartController: CartFooterDelegate {
     func openPromocode() {
         let commentaryPage = MapCommentaryPage()
 
         commentaryPage.configureTextField(placeholder: SBLocalization.localized(key: CartText.Cart.Promocode.placeholder))
         commentaryPage.configureButton(title: SBLocalization.localized(key: CartText.Cart.Promocode.button))
+        commentaryPage.configureTextField(autocapitalizationType: .allCharacters)
 
-        commentaryPage.output.didProceed.subscribe(onNext: { _ in
-
-        }).disposed(by: disposeBag)
+        commentaryPage.output.didProceed
+            .subscribe(onNext: { [weak self] promocode in
+                self?.viewModel.applyPromocode(promocode: promocode)
+            }).disposed(by: disposeBag)
 
         commentaryPage.openTransitionSheet(on: self)
+    }
+}
+
+extension CartController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in _: UITableView) -> Int {
+        return viewModel.numberOfSections()
+    }
+
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfRows(in: section)
+    }
+
+    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        viewModel.headerView(for: section)
+    }
+
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return viewModel.cell(for: indexPath)
+    }
+
+    func tableView(_: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return viewModel.footerView(for: section)
+    }
+
+    func tableView(_: UITableView, estimatedHeightForHeaderInSection _: Int) -> CGFloat {
+        return 56
+    }
+
+    func tableView(_: UITableView, estimatedHeightForFooterInSection _: Int) -> CGFloat {
+        return 56
     }
 }
 

@@ -114,13 +114,23 @@ final class CartProductCell: UITableViewCell {
         return button
     }()
 
-    private var viewModel: CartProductViewModel!
+    private lazy var bottomSeparator: UIView = {
+        let view = UIView()
+        view.backgroundColor = .mildBlue
+        return view
+    }()
+
+    private let viewModel: CartProductViewModel
     private let disposeBag = DisposeBag()
 
     var delegate: CartAdditinalProductCellDelegate?
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    init(viewModel: CartProductViewModel) {
+        self.viewModel = viewModel
+
+        super.init(style: .default, reuseIdentifier: .none)
+
+        bindViewModel()
         layoutUI()
     }
 
@@ -132,7 +142,7 @@ final class CartProductCell: UITableViewCell {
 
 extension CartProductCell {
     private func layoutUI() {
-        [productImageView, productTitleLabel, subitemLabel, commentLabel, priceLabel, unavailableLabel, containerView].forEach {
+        [productImageView, productTitleLabel, subitemLabel, commentLabel, priceLabel, unavailableLabel, containerView, bottomSeparator].forEach {
             contentView.addSubview($0)
         }
 
@@ -215,16 +225,16 @@ extension CartProductCell {
             $0.height.equalTo(30)
             $0.width.equalTo(90)
         }
+
+        bottomSeparator.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.left.right.equalToSuperview().inset(24)
+            $0.height.equalTo(0.24)
+        }
     }
 }
 
 extension CartProductCell {
-    func configure(with item: CartItem) {
-        viewModel = CartProductViewModelImpl(inputs: .init(item: item))
-
-        bindViewModel()
-    }
-
     private func bindViewModel() {
         viewModel.outputs.itemImage
             .bind(onNext: { [weak self] url in
@@ -286,5 +296,3 @@ extension CartProductCell {
         delegate?.delete(positionUUID: viewModel.getPositionUUID(), isAdditional: false)
     }
 }
-
-extension CartProductCell: Reusable {}

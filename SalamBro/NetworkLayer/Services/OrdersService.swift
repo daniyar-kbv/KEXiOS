@@ -16,8 +16,10 @@ protocol OrdersService: AnyObject {
     func authorizedApplyWithAddress(dto: OrderApplyDTO) -> Single<String>
     func getProducts(for leadUUID: String) -> Single<OrderProductResponse.Data>
     func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail>
+    func getAdditionalProducts(for leadUUID: String) -> Single<[MenuPosition]>
     func getCart(for leadUUID: String) -> Single<Cart>
     func updateCart(for leadUUID: String, dto: CartDTO) -> Single<Cart>
+    func applyPromocode(promocode: String) -> Single<Promocode>
 }
 
 final class OrdersServiceMoyaImpl: OrdersService {
@@ -124,6 +126,23 @@ final class OrdersServiceMoyaImpl: OrdersService {
             }
     }
 
+    func getAdditionalProducts(for leadUUID: String) -> Single<[MenuPosition]> {
+        return provider.rx
+            .request(.additionalNomenclature(leadUUID: leadUUID))
+            .map { response in
+
+                guard let orderProductsResponse = try? response.map(AdditionalNomenclatureResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                guard let data = orderProductsResponse.data?.results else {
+                    throw NetworkError.noData
+                }
+
+                return data
+            }
+    }
+
     func getCart(for leadUUID: String) -> Single<Cart> {
         return provider.rx
             .request(.getCart(leadUUID: leadUUID))
@@ -158,6 +177,26 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 return cart
+            }
+    }
+
+    func applyPromocode(promocode: String) -> Single<Promocode> {
+        return provider.rx
+            .request(.applyPromocode(promocode: promocode))
+            .map { response in
+                guard let promocodeResponse = try? response.map(PromocodeResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = promocodeResponse.error {
+                    throw error
+                }
+
+                guard let promocode = promocodeResponse.data else {
+                    throw NetworkError.noData
+                }
+
+                return promocode
             }
     }
 }
