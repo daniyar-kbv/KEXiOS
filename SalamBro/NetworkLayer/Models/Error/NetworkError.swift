@@ -11,15 +11,17 @@ protocol ErrorPresentable: Error {
     var presentationDescription: String { get }
 }
 
-enum NetworkError: ErrorPresentable {
+enum NetworkError: ErrorPresentable, Equatable {
     case badMapping
     case noData
+    case unauthorized
     case error(String)
 
     var presentationDescription: String {
         switch self {
         case .badMapping: return SBLocalization.localized(key: ErrorText.Network.mappingError)
         case .noData: return SBLocalization.localized(key: ErrorText.Network.noData)
+        case .unauthorized: return SBLocalization.localized(key: ErrorText.Network.unauthorized)
         case let .error(error): return error
         }
     }

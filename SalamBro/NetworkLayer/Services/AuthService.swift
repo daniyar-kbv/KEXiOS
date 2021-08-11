@@ -14,7 +14,6 @@ protocol AuthService: AnyObject {
     func authorize(with dto: SendOTPDTO) -> Single<Void>
     func verifyOTP(with dto: OTPVerifyDTO) -> Single<AccessToken>
     func resendOTP(with dto: SendOTPDTO) -> Single<Void>
-    func refreshToken(with dto: RefreshDTO) -> Single<RefreshTokenResponse>
 }
 
 final class AuthServiceMoyaImpl: AuthService {
@@ -69,18 +68,6 @@ final class AuthServiceMoyaImpl: AuthService {
                 if let error = authResponse.error {
                     throw error
                 }
-            }
-    }
-
-    func refreshToken(with dto: RefreshDTO) -> Single<RefreshTokenResponse> {
-        return provider.rx
-            .request(.refreshToken(dto: dto))
-            .map { response in
-                guard let refreshResponse = try? response.map(RefreshTokenResponse.self) else {
-                    throw NetworkError.badMapping
-                }
-
-                return refreshResponse
             }
     }
 }

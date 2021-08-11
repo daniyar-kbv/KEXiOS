@@ -7,11 +7,13 @@
 
 import Moya
 
-enum PromotionsAPI {
+enum MenuAPI {
     case promotions(leadUUID: String)
+    case products(leadUUID: String)
+    case productDetail(leadUUID: String, productUUID: String)
 }
 
-extension PromotionsAPI: TargetType {
+extension MenuAPI: TargetType {
     var baseURL: URL {
         return devBaseUrl
     }
@@ -19,12 +21,17 @@ extension PromotionsAPI: TargetType {
     var path: String {
         switch self {
         case let .promotions(leadUUID): return "/promotions/\(leadUUID)/"
+        case let .products(leadUUID): return "orders/\(leadUUID)/nomenclature/"
+        case let .productDetail(leadUUID, productUUID): return
+            "orders/\(leadUUID)/nomenclature/\(productUUID)/"
         }
     }
 
     var method: Method {
         switch self {
         case .promotions: return .get
+        case .products: return .get
+        case .productDetail: return .get
         }
     }
 
@@ -35,6 +42,8 @@ extension PromotionsAPI: TargetType {
     var task: Task {
         switch self {
         case .promotions: return .requestPlain
+        case .products: return .requestPlain
+        case .productDetail: return .requestPlain
         }
     }
 

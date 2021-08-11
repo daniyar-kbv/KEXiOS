@@ -17,6 +17,7 @@ protocol PaymentRepository: AnyObject {
 
     func getSelectedPaymentMethod() -> PaymentMethod?
     func setSelected(paymentMethod: PaymentMethod)
+    func fetchSavedCards()
     func getPaymentMethods()
     func makePayment()
     func makeApplePayPayment(payment: PKPayment)
@@ -26,10 +27,12 @@ protocol PaymentRepository: AnyObject {
 final class PaymentRepositoryImpl: PaymentRepository {
     private let disposeBag = DisposeBag()
     private let paymentService: PaymentsService
+    private let authorizedApplyService: AuthorizedApplyService
     private let defaultStorage: DefaultStorage
     private let cartStorage: CartStorage
 
     private var selectedPaymentMethod: PaymentMethod?
+    private var localPaymentMethods: [PaymentMethod] = [.init(type: .card), .init(type: .applePay), .init(type: .cash)]
     private var paymentMethods: [PaymentMethod] = []
 
     private var threeDsProcessor: ThreeDsProcessor?
@@ -38,10 +41,12 @@ final class PaymentRepositoryImpl: PaymentRepository {
     let outputs = Output()
 
     init(paymentService: PaymentsService,
+         authorizedApplyService: AuthorizedApplyService,
          defaultStorage: DefaultStorage,
          cartStorage: CartStorage)
     {
         self.paymentService = paymentService
+        self.authorizedApplyService = authorizedApplyService
         self.defaultStorage = defaultStorage
         self.cartStorage = cartStorage
     }
@@ -52,11 +57,6 @@ final class PaymentRepositoryImpl: PaymentRepository {
     }
 
     func getPaymentMethods() {
-        guard !paymentMethods.isEmpty else {
-            fetchSavedCards()
-            return
-        }
-
         outputs.paymentMethods.accept(paymentMethods)
 
         let savedCards = paymentMethods
@@ -72,26 +72,18 @@ final class PaymentRepositoryImpl: PaymentRepository {
     func getSelectedPaymentMethod() -> PaymentMethod? {
         return selectedPaymentMethod
     }
-
-    private func getDefaultPaymentMethods() -> [PaymentMethod] {
-        return [
-            .init(type: .card),
-            .init(type: .applePay),
-            .init(type: .cash),
-        ]
-    }
 }
 
 //  MARK: - Saved Cards
 
 extension PaymentRepositoryImpl {
-    private func fetchSavedCards() {
+    func fetchSavedCards() {
         outputs.didStartRequest.accept(())
         paymentService.myCards()
+            .retryWhenUnautharized()
             .subscribe(onSuccess: { [weak self] cards in
-                self?.outputs.didEndRequest.accept(())
                 self?.process(cards: cards)
-                self?.outputs.savedCards.accept(cards)
+                self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
@@ -101,10 +93,10 @@ extension PaymentRepositoryImpl {
     }
 
     private func process(cards: [MyCard]) {
-        paymentMethods = cards.map { .init(type: .savedCard, value: $0) }
-        paymentMethods.append(contentsOf: getDefaultPaymentMethods())
-
-        outputs.paymentMethods.accept(paymentMethods)
+        paymentMethods.removeAll()
+        paymentMethods.append(contentsOf: cards.map { .init(type: .savedCard, value: $0) })
+        paymentMethods.append(contentsOf: localPaymentMethods)
+        getPaymentMethods()
     }
 
     func deleteCards(with UUIDs: [String]) {
@@ -122,11 +114,14 @@ extension PaymentRepositoryImpl {
             .compactMap { $0 }
 
         outputs.didStartRequest.accept(())
-        Single.zip(sequences,
-                   resultSelector: { _ -> Void in })
-            .subscribe(onSuccess: { [weak self] in
-                self?.paymentMethods.removeAll()
-                self?.getPaymentMethods()
+        Single.zip(sequences)
+            .flatMap { [unowned self] _ in
+                paymentService.myCards()
+            }
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: { [weak self] cards in
+                self?.process(cards: cards)
+                self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
@@ -142,117 +137,109 @@ extension PaymentRepositoryImpl {
     func makePayment() {
         switch selectedPaymentMethod?.type {
         case .savedCard:
-            createOrder(
-                createCardPayment
-            )
+            makeSavedCardPayment()
         case .card:
-            createOrder(
-                makeCardPayment
-            )
+            makeAppCardPayment()
         case .applePay:
             processApplePay()
         case .cash:
-            createOrder(
-                createCashPayment
-            )
+            createCashPayment()
         default:
             break
         }
     }
 
-    private func createOrder(_ completionHandler: (() -> Void)? = nil) {
-        guard let leadUUID = defaultStorage.leadUUID else { return }
+    private func makeSavedCardPayment() {
+        guard let leadUUID = defaultStorage.leadUUID,
+              let card: MyCard = selectedPaymentMethod?.getValue()
+        else { return }
+
         let createOrderDTO = CreateOrderDTO(leadUUID: leadUUID)
+        let createPaymentDTO = CardPaymentDTO(leadUUID: leadUUID, cardUUID: card.uuid)
 
         outputs.didStartPaymentRequest.accept(())
         paymentService.createOrder(dto: createOrderDTO)
-            .subscribe(onSuccess: { [weak self] in
-                guard let completionHandler = completionHandler else {
-                    self?.outputs.didEndPaymentRequest.accept(())
-                    return
-                }
-                completionHandler()
-            }, onError: { [weak self] error in
-                self?.outputs.didEndPaymentRequest.accept(())
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didGetError.accept(error)
-            })
+            .flatMap { [unowned self] in paymentService.createCardPayment(dto: createPaymentDTO) }
+            .flatMap(orderStatusFlatMapClosure(_:))
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: paymentOnSuccess(_:),
+                       onError: paymentOnFailure(_:))
             .disposed(by: disposeBag)
     }
 
-    private func makeCardPayment() {
+    private func makeAppCardPayment() {
         guard let leadUUID = defaultStorage.leadUUID,
               let card: PaymentCard = selectedPaymentMethod?.getValue(),
               let paymentType = selectedPaymentMethod?.type.apiType else { return }
 
-        createPayment(leadUUID: leadUUID,
-                      paymentType: paymentType,
-                      cryptogram: card.cryptogram,
-                      cardholderName: card.cardholderName,
-                      keepCard: card.keepCard)
+        let createOrderDTO = CreateOrderDTO(leadUUID: leadUUID)
+        let createPaymentDTO = CreatePaymentDTO(leadUUID: leadUUID,
+                                                paymentType: paymentType,
+                                                cryptogram: card.cryptogram,
+                                                cardholderName: card.cardholderName,
+                                                keepCard: card.keepCard)
+
+        outputs.didStartPaymentRequest.accept(())
+        paymentService.createOrder(dto: createOrderDTO)
+            .flatMap { [unowned self] in paymentService.createPayment(dto: createPaymentDTO) }
+            .flatMap(orderStatusFlatMapClosure(_:))
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: paymentOnSuccess(_:),
+                       onError: paymentOnFailure(_:))
+            .disposed(by: disposeBag)
     }
 
     private func createCashPayment() {
         guard let leadUUID = defaultStorage.leadUUID,
               let paymentType = selectedPaymentMethod?.type.apiType else { return }
 
-        createPayment(leadUUID: leadUUID,
-                      paymentType: paymentType)
-    }
-
-    private func createPayment(leadUUID: String,
-                               paymentType: String,
-                               cryptogram: String? = nil,
-                               cardholderName: String? = nil,
-                               keepCard: Bool? = nil)
-    {
+        let createOrderDTO = CreateOrderDTO(leadUUID: leadUUID)
         let createPaymentDTO = CreatePaymentDTO(leadUUID: leadUUID,
                                                 paymentType: paymentType,
-                                                cryptogram: cryptogram,
-                                                cardholderName: cardholderName,
-                                                keepCard: keepCard)
+                                                cryptogram: nil,
+                                                cardholderName: nil,
+                                                keepCard: nil)
 
-        paymentService.createPayment(dto: createPaymentDTO)
-            .subscribe(onSuccess: { [weak self] orderStatus in
-                self?.outputs.didEndPaymentRequest.accept(())
-                self?.process(orderStatus: orderStatus)
-            }, onError: { [weak self] error in
-                self?.outputs.didEndPaymentRequest.accept(())
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didGetError.accept(error)
-            })
+        outputs.didStartPaymentRequest.accept(())
+        paymentService.createOrder(dto: createOrderDTO)
+            .flatMap { [unowned self] in paymentService.createPayment(dto: createPaymentDTO) }
+            .flatMap(orderStatusFlatMapClosure(_:))
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: paymentOnSuccess(_:),
+                       onError: paymentOnFailure(_:))
             .disposed(by: disposeBag)
     }
 
-    private func createCardPayment() {
-        guard let leadUUID = defaultStorage.leadUUID,
-              let card: MyCard = selectedPaymentMethod?.getValue() else { return }
-
-        let dto = CardPaymentDTO(leadUUID: leadUUID, cardUUID: card.uuid)
-
-        paymentService.createCardPayment(dto: dto)
-            .subscribe(onSuccess: { [weak self] orderStatus in
-                self?.outputs.didEndPaymentRequest.accept(())
-                self?.process(orderStatus: orderStatus)
-            }, onError: { [weak self] error in
-                self?.outputs.didEndPaymentRequest.accept(())
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didGetError.accept(error)
-            })
-            .disposed(by: disposeBag)
-    }
-
-    private func process(orderStatus: OrderStatusProtocol) {
+    private func orderStatusFlatMapClosure(_ orderStatus: OrderStatusProtocol) -> Single<String> {
         switch orderStatus.determineStatus() {
         case .completed:
-            outputs.didMakePayment.accept(())
+            return authorizedApplyService.authorizedApplyOrder()
         case .awaitingAuthentication:
             show3DS(orderStatus: orderStatus)
+            outputs.didEndPaymentRequest.accept(())
+            return .never()
         default:
-            guard let statusReason = orderStatus.statusReason else { return }
+            outputs.didEndPaymentRequest.accept(())
+            guard let statusReason = orderStatus.statusReason else { return .never() }
             let error = ErrorResponse(code: orderStatus.status, message: statusReason)
             outputs.didGetError.accept(error)
+            return .never()
         }
+    }
+
+    private func paymentOnSuccess(_ leadUUID: String) {
+        NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
+                                        object: leadUUID)
+        NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
+                                        object: ())
+        outputs.didEndPaymentRequest.accept(())
+        outputs.didMakePayment.accept(())
+    }
+
+    private func paymentOnFailure(_ error: Error) {
+        outputs.didEndPaymentRequest.accept(())
+        guard let error = error as? ErrorPresentable else { return }
+        outputs.didGetError.accept(error)
     }
 }
 
@@ -264,16 +251,24 @@ extension PaymentRepositoryImpl {
             print("Unable to create cryptogram")
             return
         }
-        selectedPaymentMethod?.set(value: cryptogram)
-        createOrder { [weak self] in
-            guard let leadUUID = self?.defaultStorage.leadUUID,
-                  let paymentType = self?.selectedPaymentMethod?.type.apiType else { return }
-            self?.createPayment(leadUUID: leadUUID,
-                                paymentType: paymentType,
-                                cryptogram: cryptogram,
-                                cardholderName: "",
-                                keepCard: nil)
-        }
+
+        guard let leadUUID = defaultStorage.leadUUID,
+              let paymentType = selectedPaymentMethod?.type.apiType
+        else { return }
+        let createOrderDTO = CreateOrderDTO(leadUUID: leadUUID)
+        let createPaymentDTO = CreatePaymentDTO(leadUUID: leadUUID,
+                                                paymentType: paymentType,
+                                                cryptogram: cryptogram,
+                                                cardholderName: "",
+                                                keepCard: nil)
+        outputs.didStartPaymentRequest.accept(())
+        paymentService.createOrder(dto: createOrderDTO)
+            .flatMap { [unowned self] in paymentService.createPayment(dto: createPaymentDTO) }
+            .flatMap(orderStatusFlatMapClosure(_:))
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: paymentOnSuccess(_:),
+                       onError: paymentOnFailure(_:))
+            .disposed(by: disposeBag)
     }
 
     private func processApplePay() {
@@ -309,14 +304,10 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
 
         outputs.didStartPaymentRequest.accept(())
         paymentService.confirm3DSPayment(dto: dto, paymentUUID: paymentUUID)
-            .subscribe(onSuccess: { [weak self] orderStatus in
-                self?.outputs.didEndPaymentRequest.accept(())
-                self?.process(orderStatus: orderStatus)
-            }, onError: { [weak self] error in
-                self?.outputs.didEndPaymentRequest.accept(())
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didGetError.accept(error)
-            })
+            .flatMap(orderStatusFlatMapClosure(_:))
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: paymentOnSuccess(_:),
+                       onError: paymentOnFailure(_:))
             .disposed(by: disposeBag)
     }
 

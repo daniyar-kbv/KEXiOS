@@ -6,12 +6,14 @@
 //
 
 import Moya
+import RxSwift
 
 protocol ServiceComponents: AnyObject {
     func authService() -> AuthService
     func locationService() -> LocationService
     func ordersService() -> OrdersService
-    func promotionsService() -> PromotionsService
+    func authorizedApplyService() -> AuthorizedApplyService
+    func menuService() -> MenuService
     func profileService() -> ProfileService
     func documentsService() -> DocumentsService
     func rateService() -> RateService
@@ -32,8 +34,16 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
 
     private let languagePlugin = LanguagePlugin(defaultStorage: DefaultStorageImpl.sharedStorage)
 
+    private lazy var authProvider = MoyaProvider<AuthAPI>(plugins: [networkPlugin, languagePlugin])
+
+    override init() {
+        super.init()
+
+        Single<Any>.authProvider = authProvider
+    }
+
     func authService() -> AuthService {
-        return shared(AuthServiceMoyaImpl(provider: MoyaProvider<AuthAPI>(plugins: [networkPlugin, languagePlugin])))
+        return shared(AuthServiceMoyaImpl(provider: authProvider))
     }
 
     func locationService() -> LocationService {
@@ -41,11 +51,15 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
     }
 
     func ordersService() -> OrdersService {
-        return shared(OrdersServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, languagePlugin, authPlugin])))
+        return shared(OrdersServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, languagePlugin])))
     }
 
-    func promotionsService() -> PromotionsService {
-        return shared(PromotionsServiceImpl(provider: MoyaProvider<PromotionsAPI>(plugins: [networkPlugin, languagePlugin])))
+    func authorizedApplyService() -> AuthorizedApplyService {
+        return shared(AuthorizedApplyServiceImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, languagePlugin, authPlugin])))
+    }
+
+    func menuService() -> MenuService {
+        return shared(MenuServiceImpl(provider: MoyaProvider<MenuAPI>(plugins: [networkPlugin, languagePlugin])))
     }
 
     func profileService() -> ProfileService {
@@ -68,3 +82,38 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
         return shared(PaymentsServiceMoyaImpl(provider: MoyaProvider<PaymentsAPI>(plugins: [networkPlugin, languagePlugin, authPlugin])))
     }
 }
+
+/* Request sequences:
+ * Update nomenclature DONE
+    promotions
+    nomenclature
+ * Create address DONE
+    authorized apply with address (needs auth)
+    get user addresses (needs auth)
+ * Change address DONE
+    change user address (needs auth)
+    authorized apply (needs auth)
+    get user addresses (needs auth)
+ * Authorization DONE
+    otp verify
+    get account info (needs auth)
+    authorized apply with address (needs auth)
+    update cart
+    get user addresses (needs auth)
+ * Delete address DONE
+    delete address (needs auth)
+    get addresses (needs auth)
+ * Delete card DONE
+    delete card (needs auth)
+    get cards (needs auth)
+ * Payment success DONE
+    create order (needs auth)
+    create payment (needs auth)
+    authorized apply (needs auth)
+ * Payment 3ds DONE
+    create order (needs auth)
+    create payment (needs auth)
+    ------------------------
+    confirm payment (needs auth)
+    authorized apply (needs auth)
+ */

@@ -31,21 +31,21 @@ final class ProfileRepositoryImpl: ProfileRepository {
         self.profileService = profileService
         self.authService = authService
         self.tokenStorage = tokenStorage
+
+        bindNotifications()
     }
 
     func fetchUserInfo() {
         outputs.didStartRequest.accept(())
         profileService.getUserInfo()
+            .retryWhenUnautharized()
             .subscribe(onSuccess: { [weak self] userResponse in
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didGetUserInfo.accept(userResponse)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFail.accept(error)
-                    return
-                }
-                self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didFail.accept(error)
             })
             .disposed(by: disposeBag)
     }
@@ -62,6 +62,7 @@ final class ProfileRepositoryImpl: ProfileRepository {
     func changeUserInfo(name: String?, email: String?) {
         outputs.didStartRequest.accept(())
         profileService.updateUserInfo(with: UserInfoDTO(name: name, email: email, mobilePhone: nil))
+            .retryWhenUnautharized()
             .subscribe(onSuccess: { [weak self] userInfo in
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didGetUserInfo.accept(userInfo)
@@ -77,6 +78,18 @@ final class ProfileRepositoryImpl: ProfileRepository {
     func userDidAuthenticate() -> Bool {
         guard let _ = tokenStorage.token else { return false }
         return true
+    }
+}
+
+extension ProfileRepositoryImpl {
+    private func bindNotifications() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.userInfo.name)
+            .subscribe(onNext: { [weak self] in
+                guard let userInfo = $0.object as? UserInfoResponse else { return }
+                self?.outputs.didGetUserInfo.accept(userInfo)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

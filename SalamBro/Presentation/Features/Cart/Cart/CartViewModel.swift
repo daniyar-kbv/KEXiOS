@@ -29,7 +29,6 @@ protocol CartViewModel {
 final class CartViewModelImpl: CartViewModel {
     private let disposeBag = DisposeBag()
     private let cartRepository: CartRepository
-    private let addressRepository: AddressRepository
     private let tokenStorage: AuthTokenStorage
 
     private var cartItems: [CartItem] = []
@@ -39,15 +38,12 @@ final class CartViewModelImpl: CartViewModel {
     let outputs = Output()
 
     init(cartRepository: CartRepository,
-         addressRepository: AddressRepository,
          tokenStorage: AuthTokenStorage)
     {
         self.cartRepository = cartRepository
-        self.addressRepository = addressRepository
         self.tokenStorage = tokenStorage
 
         bindCartRepository()
-        bindAddressRepository()
     }
 }
 
@@ -177,16 +173,6 @@ extension CartViewModelImpl {
         cartRepository.outputs.promocode
             .subscribe(onNext: { [weak self] promocode in
                 self?.process(promocode: promocode)
-            })
-            .disposed(by: disposeBag)
-    }
-
-    private func bindAddressRepository() {
-        addressRepository.outputs.needsClearCart
-            .subscribe(onNext: { [weak self] need in
-                need ?
-                    self?.cartRepository.cleanUp() :
-                    self?.cartRepository.update()
             })
             .disposed(by: disposeBag)
     }

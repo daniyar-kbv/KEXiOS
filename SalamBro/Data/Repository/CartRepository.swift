@@ -50,6 +50,7 @@ final class CartRepositoryImpl: CartRepository {
         self.defaultStorage = defaultStorage
 
         bindActions()
+        bindNotifications()
     }
 }
 
@@ -97,7 +98,7 @@ extension CartRepositoryImpl {
 
     func cleanUp() {
         cartStorage.cart.items = []
-        sendNewCart(withDebounce: false)
+        sendItems()
     }
 
     func update() {
@@ -188,6 +189,23 @@ extension CartRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
+    private func bindNotifications() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.clearCart.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.cleanUp()
+            })
+            .disposed(by: disposeBag)
+
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.cart.name)
+            .subscribe(onNext: { [weak self] in
+                guard let cart = $0.object as? Cart else { return }
+                self?.process(cart: cart)
+            })
+            .disposed(by: disposeBag)
+    }
+
     private func getIndex(of positionUUID: String) -> Int? {
         return cartStorage.cart.items.firstIndex(where: { $0.position.uuid == positionUUID })
     }
@@ -202,15 +220,19 @@ extension CartRepositoryImpl {
 
         ordersService.updateCart(for: leadUUID, dto: dto)
             .subscribe(onSuccess: { [weak self] cart in
+                self?.process(cart: cart)
                 self?.outputs.didEndRequest.accept(())
-                self?.cartStorage.cart = cart
-                self?.sendItems()
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
                 self?.outputs.didGetError.accept(error)
             })
             .disposed(by: disposeBag)
+    }
+
+    private func process(cart: Cart) {
+        cartStorage.cart = cart
+        sendItems()
     }
 }
 

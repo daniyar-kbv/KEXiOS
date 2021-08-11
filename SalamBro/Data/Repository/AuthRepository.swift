@@ -15,7 +15,6 @@ protocol AuthRepository: AnyObject {
     func sendOTP(with number: String)
     func verifyOTP(code: String, number: String)
     func resendOTP(with number: String)
-    func refreshToken()
 }
 
 final class AuthRepositoryImpl: AuthRepository {
@@ -24,17 +23,29 @@ final class AuthRepositoryImpl: AuthRepository {
     private(set) var outputs: Output = .init()
 
     private let authService: AuthService
+    private let profileService: ProfileService
+    private let ordersService: OrdersService
+    private let authorizedApplyService: AuthorizedApplyService
     private let notificationsService: PushNotificationsService
+    private let cartStorage: CartStorage
     private let tokenStorage: AuthTokenStorage
     private let defaultStorage: DefaultStorage
 
     init(authService: AuthService,
+         profileService: ProfileService,
+         ordersService: OrdersService,
+         authorizedApplyService: AuthorizedApplyService,
          notificationsService: PushNotificationsService,
+         cartStorage: CartStorage,
          tokenStorage: AuthTokenStorage,
          defaultStorage: DefaultStorage)
     {
         self.authService = authService
+        self.profileService = profileService
+        self.ordersService = ordersService
+        self.authorizedApplyService = authorizedApplyService
         self.notificationsService = notificationsService
+        self.cartStorage = cartStorage
         self.tokenStorage = tokenStorage
         self.defaultStorage = defaultStorage
     }
@@ -60,9 +71,32 @@ final class AuthRepositoryImpl: AuthRepository {
 
     func verifyOTP(code: String, number: String) {
         outputs.didStartRequest.accept(())
-        authService.verifyOTP(with: OTPVerifyDTO(code: code, phoneNumber: number))
-            .subscribe { [weak self] accessToken in
-                self?.handleTokenResponse(accessToken: accessToken.access, refreshToken: accessToken.refresh)
+
+        authService.verifyOTP(with: .init(code: code, phoneNumber: number))
+            .flatMap { [unowned self] accessToken -> Single<UserInfoResponse> in
+                self.tokenStorage.persist(token: accessToken.access, refreshToken: accessToken.refresh)
+                return profileService.getUserInfo()
+            }
+            .flatMap { [unowned self] userInfo -> Single<String> in
+                NotificationCenter.default.post(name: Constants.InternalNotification.userInfo.name,
+                                                object: userInfo)
+                return authorizedApplyService.authorizedApplyOrder()
+            }
+            .flatMap { [unowned self] leadUUID -> Single<Cart> in
+                NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
+                                                object: leadUUID)
+                return ordersService.updateCart(for: leadUUID, dto: cartStorage.cart.toDTO())
+            }
+            .flatMap { [unowned self] cart -> Single<[UserAddress]> in
+                NotificationCenter.default.post(name: Constants.InternalNotification.cart.name,
+                                                object: cart)
+                return profileService.getAddresses()
+            }
+            .retryWhenUnautharized()
+            .subscribe { [weak self] userAddresses in
+                NotificationCenter.default.post(name: Constants.InternalNotification.userAddresses.name,
+                                                object: userAddresses)
+                self?.outputs.didEndRequest.accept(())
             } onError: { [weak self] error in
                 self?.handleErrorResponse(error: error)
             }
@@ -81,17 +115,6 @@ final class AuthRepositoryImpl: AuthRepository {
             .disposed(by: disposeBag)
     }
 
-    func refreshToken() {
-        guard let refreshToken = tokenStorage.refreshToken else { return }
-        authService.refreshToken(with: .init(refresh: refreshToken))
-            .subscribe(onSuccess: { [weak self] refreshTokenResponse in
-                self?.handleTokenResponse(accessToken: refreshTokenResponse.access, refreshToken: refreshTokenResponse.refresh)
-            }, onError: { [weak self] error in
-                self?.handleErrorResponse(error: error)
-            })
-            .disposed(by: disposeBag)
-    }
-
     private func handleErrorResponse(error: Error?) {
         outputs.didEndRequest.accept(())
         if let error = error as? ErrorPresentable {
@@ -99,18 +122,11 @@ final class AuthRepositoryImpl: AuthRepository {
             return
         }
     }
-
-    private func handleTokenResponse(accessToken: String, refreshToken: String) {
-        outputs.didEndRequest.accept(())
-        tokenStorage.persist(token: accessToken, refreshToken: refreshToken)
-        outputs.didVerifyOTP.accept(())
-    }
 }
 
 extension AuthRepositoryImpl {
     struct Output {
         let didSendOTP = PublishRelay<String>()
-        let didVerifyOTP = PublishRelay<Void>()
         let didResendOTP = PublishRelay<Void>()
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()

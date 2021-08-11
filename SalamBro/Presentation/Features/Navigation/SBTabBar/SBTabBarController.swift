@@ -36,7 +36,6 @@ final class SBTabBarController: UITabBarController, AlertDisplayable {
         super.viewDidLoad()
 
         viewModel.getDocuments()
-        viewModel.refreshToken()
         viewModel.setFirstLauch()
     }
 }

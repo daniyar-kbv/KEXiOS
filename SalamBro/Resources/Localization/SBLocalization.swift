@@ -37,6 +37,7 @@ enum ErrorText: UILocalizable {
     enum Network: String, UILocalizable {
         case mappingError = "Error.mappingError"
         case noData = "Error.noData"
+        case unauthorized = "Error.unauthorized"
 
         var localized: String { rawValue }
     }

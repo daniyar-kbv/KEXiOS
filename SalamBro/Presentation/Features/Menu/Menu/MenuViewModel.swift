@@ -55,7 +55,6 @@ final class MenuViewModel: MenuViewModelProtocol {
         self.scrollService = scrollService
 
         bindMenuRepository()
-        bindAddressRepository()
         bindScrollService()
     }
 
@@ -87,13 +86,6 @@ final class MenuViewModel: MenuViewModelProtocol {
             self?.configureAnimation()
         }
         .disposed(by: disposeBag)
-    }
-
-    private func bindAddressRepository() {
-        locationRepository.outputs.needsUpdate
-            .subscribe(onNext: { [weak self] in
-                self?.update()
-            }).disposed(by: disposeBag)
     }
 
     private func bindScrollService() {

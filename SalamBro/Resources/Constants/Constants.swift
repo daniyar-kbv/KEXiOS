@@ -42,6 +42,29 @@ struct Constants {
 
     enum StatusCode {
         static let noContent = 204
+        static let unauthorized = 401
+    }
+
+    enum InternalNotification {
+        case unauthorize
+        case userInfo
+        case leadUUID
+        case updateMenu
+        case clearCart
+        case cart
+        case userAddresses
+
+        var name: Notification.Name {
+            switch self {
+            case .unauthorize: return .init("Unauthorize")
+            case .userInfo: return .init("UserInfo")
+            case .leadUUID: return .init("LeadUUID")
+            case .updateMenu: return .init("UpdateMenu")
+            case .clearCart: return .init("ClearCart")
+            case .cart: return .init("Cart")
+            case .userAddresses: return .init("UserAddresses")
+            }
+        }
     }
 }
 

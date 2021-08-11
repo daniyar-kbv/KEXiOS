@@ -18,21 +18,21 @@ protocol MenuRepository: AnyObject {
 final class MenuRepositoryImpl: MenuRepository {
     private(set) var outputs: Output = .init()
     private let disposeBag = DisposeBag()
-    private let ordersService: OrdersService
-    private let promotionsService: PromotionsService
+    private let menuService: MenuService
     private let storage: DefaultStorage
 
-    init(ordersService: OrdersService, promotionsService: PromotionsService, storage: DefaultStorage) {
-        self.ordersService = ordersService
-        self.promotionsService = promotionsService
+    init(menuService: MenuService, storage: DefaultStorage) {
+        self.menuService = menuService
         self.storage = storage
+
+        bindNotifications()
     }
 
     func getMenuItems() {
         guard let leadUUID = storage.leadUUID else { return }
 
-        let promotionsSequence = promotionsService.getPromotions(leadUUID: leadUUID)
-        let productsSequence = ordersService.getProducts(for: leadUUID)
+        let promotionsSequence = menuService.getPromotions(leadUUID: leadUUID)
+        let productsSequence = menuService.getProducts(for: leadUUID)
 
         let finalSequence = Single.zip(promotionsSequence,
                                        productsSequence,
@@ -42,7 +42,7 @@ final class MenuRepositoryImpl: MenuRepository {
                                                 [MenuCategory]) in
                                            (
                                                promotions,
-                                               productsData.categories
+                                               productsData
                                            )
                                        })
         outputs.didStartRequest.accept(())
@@ -55,6 +55,17 @@ final class MenuRepositoryImpl: MenuRepository {
             self?.outputs.didEndRequest.accept(())
             self?.outputs.didGetError.accept(error as? ErrorPresentable)
         }).disposed(by: disposeBag)
+    }
+}
+
+extension MenuRepositoryImpl {
+    private func bindNotifications() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.updateMenu.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.getMenuItems()
+            })
+            .disposed(by: disposeBag)
     }
 }
 
