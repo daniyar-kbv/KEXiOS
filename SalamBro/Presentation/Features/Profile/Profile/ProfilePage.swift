@@ -24,6 +24,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
         bindViews()
         bindViewModel()
+        bindNotifications()
     }
 
     @available(*, unavailable)
@@ -117,6 +118,15 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         viewModel.outputs.didLogout
             .subscribe(onNext: { [weak self] in
                 self?.showEmptyState()
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func bindNotifications() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.unauthorize.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.reloadPage()
             })
             .disposed(by: disposeBag)
     }

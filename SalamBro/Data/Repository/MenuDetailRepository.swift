@@ -19,16 +19,16 @@ protocol MenuDetailRepository: AnyObject {
 final class MenuDetailRepositoryImpl: MenuDetailRepository {
     private let disposeBag = DisposeBag()
     private(set) var outputs: Output = .init()
-    private let ordersService: OrdersService
+    private let menuService: MenuService
     private var modifierGroups: [ModifierGroup] = []
 
-    init(ordersService: OrdersService) {
-        self.ordersService = ordersService
+    init(menuService: MenuService) {
+        self.menuService = menuService
     }
 
     func getProductDetail(for leadUUID: String, by positionUUID: String) {
         outputs.didStartRequest.accept(())
-        ordersService.getProductDetail(for: leadUUID, by: positionUUID)
+        menuService.getProductDetail(for: leadUUID, by: positionUUID)
             .subscribe(onSuccess: { [weak self] position in
                 self?.outputs.didEndRequest.accept(())
                 self?.modifierGroups = position.modifierGroups

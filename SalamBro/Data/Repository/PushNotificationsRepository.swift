@@ -11,8 +11,6 @@ import RxSwift
 
 protocol PushNotificationsRepository: AnyObject {
     var outputs: PushNotificationsRepositoryImpl.Output { get }
-
-    func tokenUpdate(fcmToken: String)
 }
 
 final class PushNotificationsRepositoryImpl: PushNotificationsRepository {
@@ -30,20 +28,6 @@ final class PushNotificationsRepositoryImpl: PushNotificationsRepository {
         self.notificationsService = notificationsService
         self.defaultStorage = defaultStorage
         self.authTokenStorage = authTokenStorage
-    }
-
-    func tokenUpdate(fcmToken: String) {
-        guard fcmToken != defaultStorage.fcmToken else { return }
-
-        defaultStorage.persist(fcmToken: fcmToken)
-
-        guard authTokenStorage.token != nil else { return }
-
-        let dto = FCMTokenUpdateDTO(fcmToken: fcmToken)
-
-        notificationsService.fcmTokenUpdate(dto: dto)
-            .subscribe()
-            .disposed(by: disposeBag)
     }
 }
 

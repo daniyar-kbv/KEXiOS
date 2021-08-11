@@ -191,6 +191,7 @@
 // MARK: - Error
 "Error.mappingError" = "EN Неудалось обработать ответ";
 "Error.noData" = "EN Нет данных";
+"Error.unauthorized" = "EN Вам необходимо снова авторизоваться";
 
 // MARK: - Payment Selection
 

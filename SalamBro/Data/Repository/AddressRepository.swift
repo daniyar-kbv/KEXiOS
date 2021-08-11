@@ -23,42 +23,66 @@ protocol AddressRepository: AnyObject {
 
     func getUserAddresses()
     func getCurrentUserAddress() -> UserAddress?
+    func setInitial(userAddress: UserAddress)
+    func create(userAddress: UserAddress)
     func updateUserAddress(with id: Int, brandId: Int)
-    func add(userAddress: UserAddress)
     func deleteUserAddress(with id: Int)
-
-    func applyOrder(flow: AddressRepositoryImpl.OrderApplyFlow, completion: (() -> Void)?)
 }
 
 final class AddressRepositoryImpl: AddressRepository {
     private(set) var outputs: Output = .init()
 
     private let geoStorage: GeoStorage
+    private let authService: AuthService
     private let brandStorage: BrandStorage
     private let defaultStorage: DefaultStorage
     private let authTokenStorage: AuthTokenStorage
 
     private let ordersService: OrdersService
+    private let authorizedApplyService: AuthorizedApplyService
     private let profileService: ProfileService
-    private let notificationsService: PushNotificationsService
 
     private let disposeBag = DisposeBag()
 
     init(storage: GeoStorage,
+         authService: AuthService,
          brandStorage: BrandStorage,
          ordersService: OrdersService,
+         authorizedApplyService: AuthorizedApplyService,
          profileService: ProfileService,
-         notificationsService: PushNotificationsService,
          defaultStorage: DefaultStorage,
          authTokenStorage: AuthTokenStorage)
     {
         geoStorage = storage
+        self.authService = authService
         self.brandStorage = brandStorage
         self.ordersService = ordersService
+        self.authorizedApplyService = authorizedApplyService
         self.profileService = profileService
-        self.notificationsService = notificationsService
         self.defaultStorage = defaultStorage
         self.authTokenStorage = authTokenStorage
+
+        bindNotifications()
+    }
+}
+
+extension AddressRepositoryImpl {
+    private func bindNotifications() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.leadUUID.name)
+            .subscribe(onNext: { [weak self] in
+                guard let leadUUID = $0.object as? String else { return }
+                self?.process(leadUUID: leadUUID)
+            })
+            .disposed(by: disposeBag)
+
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.userAddresses.name)
+            .subscribe(onNext: { [weak self] in
+                guard let userAddresses = $0.object as? [UserAddress] else { return }
+                self?.process(userAddresses: userAddresses)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -119,8 +143,10 @@ extension AddressRepositoryImpl {
         outputs.didGetUserAddresses.accept(geoStorage.userAddresses)
         outputs.didStartRequest.accept(())
         profileService.getAddresses()
+            .retryWhenUnautharized()
             .subscribe(onSuccess: { [weak self] addresses in
                 self?.process(userAddresses: addresses)
+                self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
@@ -130,25 +156,22 @@ extension AddressRepositoryImpl {
     }
 
     private func process(userAddresses: [UserAddress]) {
-        let oldCurrent = getCurrentUserAddress()
         geoStorage.userAddresses = userAddresses
         outputs.didGetUserAddresses.accept(userAddresses)
-        if oldCurrent != getCurrentUserAddress() {
-            outputs.needsUpdate.accept(())
-        } else {
-            outputs.didEndRequest.accept(())
-        }
     }
 
     func getCurrentUserAddress() -> UserAddress? {
         return geoStorage.userAddresses.first(where: { $0.isCurrent })
     }
 
-    func updateUserAddress(with id: Int, brandId: Int) {
-        let dto = UpdateAddressDTO(brandId: brandId)
-        profileService.updateAddress(id: id, dto: dto)
-            .subscribe(onSuccess: { [weak self] in
-                self?.applyOrder(flow: .withCurrentAddress)
+    func setInitial(userAddress: UserAddress) {
+        guard let dto = userAddress.toDTO() else { return }
+        outputs.didStartRequest.accept(())
+        ordersService.applyOrder(dto: dto)
+            .subscribe(onSuccess: { [weak self] leadUUID in
+                self?.process(leadUUID: leadUUID)
+                self?.outputs.didSaveUserAddress.accept(())
+                self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
@@ -157,9 +180,51 @@ extension AddressRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
-    func add(userAddress: UserAddress) {
+    func create(userAddress: UserAddress) {
         guard let dto = userAddress.toDTO() else { return }
-        applyOrder(flow: .newAddress(dto: dto))
+        outputs.didStartRequest.accept(())
+        authorizedApplyService.authorizedApplyWithAddress(dto: dto)
+            .flatMap { [unowned self] leadUUID -> Single<[UserAddress]> in
+                self.process(leadUUID: leadUUID)
+                return profileService.getAddresses()
+            }
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: { [weak self] addresses in
+                self?.process(userAddresses: addresses)
+                self?.sendClearCartNotification()
+                self?.outputs.didSaveUserAddress.accept(())
+                self?.outputs.didEndRequest.accept(())
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didFail.accept(error)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    func updateUserAddress(with id: Int, brandId: Int) {
+        let dto = UpdateAddressDTO(brandId: brandId)
+        outputs.didStartRequest.accept(())
+        profileService.updateAddress(id: id, dto: dto)
+            .flatMap { [unowned self] _ -> Single<String> in
+                authorizedApplyService.authorizedApplyOrder()
+            }
+            .flatMap { [unowned self] leadUUID -> Single<[UserAddress]> in
+                self.process(leadUUID: leadUUID)
+                return profileService.getAddresses()
+            }
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: { [weak self] addresses in
+                self?.process(userAddresses: addresses)
+                self?.sendClearCartNotification()
+                self?.outputs.didSaveUserAddress.accept(())
+                self?.outputs.didEndRequest.accept(())
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didFail.accept(error)
+            })
+            .disposed(by: disposeBag)
     }
 
     func deleteUserAddress(with id: Int) {
@@ -169,9 +234,14 @@ extension AddressRepositoryImpl {
         outputs.didGetUserAddresses.accept(geoStorage.userAddresses)
         outputs.didStartRequest.accept(())
         profileService.deleteAddress(id: id)
-            .subscribe(onSuccess: { [weak self] in
+            .flatMap { [unowned self] in
+                profileService.getAddresses()
+            }
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: { [weak self] userAddresses in
+                self?.process(userAddresses: userAddresses)
                 self?.outputs.didDeleteUserAddress.accept(())
-                self?.getUserAddresses()
+                self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
@@ -179,60 +249,14 @@ extension AddressRepositoryImpl {
             })
             .disposed(by: disposeBag)
     }
-}
 
-extension AddressRepositoryImpl {
-    func applyOrder(flow: OrderApplyFlow, completion: (() -> Void)? = nil) {
-        guard let request = getRequest(for: flow) else { return }
-
-        outputs.didStartRequest.accept(())
-        request.subscribe { [weak self] leadUUID in
-            self?.process(leadUUID: leadUUID, flow: flow)
-            self?.getUserAddresses()
-            completion?()
-        } onError: { [weak self] error in
-            self?.outputs.didEndRequest.accept(())
-            guard let error = error as? ErrorPresentable else { return }
-            self?.outputs.didFail.accept(error)
-        }.disposed(by: disposeBag)
-    }
-
-    private func getRequest(for flow: OrderApplyFlow) -> Single<String>? {
-        switch flow {
-        case let .create(dto): return ordersService.applyOrder(dto: dto)
-        case let .newAddress(dto): return ordersService.authorizedApplyWithAddress(dto: dto)
-        case .withCurrentAddress: return ordersService.authorizedApplyOrder()
-        }
-    }
-
-    private func process(leadUUID: String, flow: OrderApplyFlow) {
+    private func process(leadUUID: String) {
         defaultStorage.persist(leadUUID: leadUUID)
-        outputs.didGetLeadUUID.accept(())
-        outputs.needsClearCart.accept(flow != .withCurrentAddress)
-        fcmTokenCreate()
-    }
-}
-
-extension AddressRepositoryImpl {
-    private func fcmTokenCreate() {
-        guard let leadUUID = defaultStorage.leadUUID,
-              let fcmToken = defaultStorage.fcmToken else { return }
-
-        let dto = FCMTokenCreateDTO(leadUUID: leadUUID, fcmToken: fcmToken)
-
-        notificationsService.fcmTokenCreate(dto: dto)
-            .subscribe(onSuccess: { [weak self] in
-                self?.fcmTokenLogin()
-            })
-            .disposed(by: disposeBag)
+        NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
     }
 
-    private func fcmTokenLogin() {
-        guard let leadUUID = defaultStorage.leadUUID,
-              authTokenStorage.token != nil else { return }
-        notificationsService.fcmTokenLogin(leadUUID: leadUUID)
-            .subscribe()
-            .disposed(by: disposeBag)
+    private func sendClearCartNotification() {
+        NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name, object: nil)
     }
 }
 
@@ -257,11 +281,8 @@ extension AddressRepositoryImpl {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
 
-        let didGetLeadUUID = PublishRelay<Void>()
+        let didSaveUserAddress = PublishRelay<Void>()
         let didGetUserAddresses = PublishRelay<[UserAddress]>()
-        let needsUpdate = PublishRelay<Void>()
         let didDeleteUserAddress = PublishRelay<Void>()
-
-        let needsClearCart = PublishRelay<Bool>()
     }
 }

@@ -41,7 +41,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     private func makeVerificationViewModel(phoneNumber: String) -> VerificationViewModel {
         return scoped(.init(authRepository: repositoryComponents.makeAuthRepository(),
                             addressRepository: repositoryComponents.makeAddressRepository(),
-                            notificationsRepository: repositoryComponents.makePushNotificationsRepository(), profileRepository: repositoryComponents.makeProfileRepository(),
+                            profileRepository: repositoryComponents.makeProfileRepository(),
                             phoneNumber: phoneNumber))
     }
 

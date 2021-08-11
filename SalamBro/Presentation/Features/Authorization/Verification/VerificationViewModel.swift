@@ -16,19 +16,16 @@ final class VerificationViewModel {
 
     private let authRepository: AuthRepository
     private let addressRepository: AddressRepository
-    private let notificationsRepository: PushNotificationsRepository
     private let profileRepository: ProfileRepository
     private(set) var phoneNumber: String
 
     init(authRepository: AuthRepository,
          addressRepository: AddressRepository,
-         notificationsRepository: PushNotificationsRepository,
          profileRepository: ProfileRepository,
          phoneNumber: String)
     {
         self.authRepository = authRepository
         self.addressRepository = addressRepository
-        self.notificationsRepository = notificationsRepository
         self.profileRepository = profileRepository
         self.phoneNumber = phoneNumber
 
@@ -39,15 +36,6 @@ final class VerificationViewModel {
     private func bindOutputs() {
         authRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
-            .disposed(by: disposeBag)
-
-        authRepository.outputs.didVerifyOTP
-            .subscribe(onNext: { [weak self] in
-                guard let dto = self?.addressRepository.getCurrentUserAddress()?.toDTO() else { return }
-                self?.addressRepository.applyOrder(flow: .newAddress(dto: dto)) {
-                    self?.profileRepository.fetchUserInfo()
-                }
-            })
             .disposed(by: disposeBag)
 
         authRepository.outputs.didResendOTP

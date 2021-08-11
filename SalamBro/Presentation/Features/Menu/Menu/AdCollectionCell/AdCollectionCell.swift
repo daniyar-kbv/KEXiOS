@@ -71,7 +71,7 @@ extension AdCollectionCell {
 
 extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let promotionURL = URL(string: viewModel.cellViewModels[indexPath.item].promotion.link) else { return }
+        guard let promotionURL = URL(string: viewModel.cellViewModels[indexPath.item].promotion.link ?? "") else { return }
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         delegate?.goToRating(promotionURL: promotionURL,
                              name: viewModel.cellViewModels[indexPath.item].promotion.name)

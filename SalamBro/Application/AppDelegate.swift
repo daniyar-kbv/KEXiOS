@@ -90,7 +90,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
         guard let fcmToken = fcmToken else { return }
 
         let notificationsRepository = repositoryComponents.makePushNotificationsRepository()
-        notificationsRepository.tokenUpdate(fcmToken: fcmToken)
 
         let dataDict: [String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)

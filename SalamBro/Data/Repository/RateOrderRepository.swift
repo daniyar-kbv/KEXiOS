@@ -29,6 +29,7 @@ final class RateOrderRepositoryImpl: RateOrderRepository {
     func fetchRates() {
         outputs.didStartRequest.accept(())
         rateService.getRates()
+            .retryWhenUnautharized()
             .subscribe(onSuccess: { [weak self] rateResponse in
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didGetRates.accept(rateResponse)
@@ -46,6 +47,7 @@ final class RateOrderRepositoryImpl: RateOrderRepository {
     func set(stars: Int, order: Int, comment: String, samples: [Int]) {
         outputs.didStartRequest.accept(())
         rateService.setUserRate(with: UserRateDTO(star: stars, order: order, comment: comment, sample: samples))
+            .retryWhenUnautharized()
             .subscribe(onSuccess: { [weak self] _ in
                 self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in

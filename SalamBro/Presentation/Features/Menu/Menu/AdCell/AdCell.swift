@@ -45,8 +45,6 @@ final class AdCell: UICollectionViewCell, Reusable {
     private func bind() {
         viewModel.promotionImageURL.bind(onNext: { [weak self] urlString in
             guard let url = URL(string: urlString ?? "") else { return }
-            print(urlString)
-            print(url)
             self?.adImageView.setImage(url: url)
         }).disposed(by: disposeBag)
     }

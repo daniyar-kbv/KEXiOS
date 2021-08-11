@@ -50,7 +50,7 @@ extension PaymentSelectionViewModelImpl {
     func getPaymentMethods() {
         guard needsGetPaymentMethods else { return }
         needsGetPaymentMethods = false
-        paymentRepository.getPaymentMethods()
+        paymentRepository.fetchSavedCards()
     }
 
     func set(paymentMethod: PaymentMethod) {
@@ -99,9 +99,8 @@ extension PaymentSelectionViewModelImpl {
             .disposed(by: disposeBag)
 
         paymentRepository.outputs.didMakePayment
-            .subscribe(onNext: { [weak self] in
-                self?.finishPayment()
-            }).disposed(by: disposeBag)
+            .bind(to: outputs.didMakePayment)
+            .disposed(by: disposeBag)
 
         paymentRepository.outputs.show3DS
             .bind(to: outputs.show3DS)
@@ -128,13 +127,6 @@ extension PaymentSelectionViewModelImpl {
             return savedCard.isCurrent
         }) else { return }
         paymentRepository.setSelected(paymentMethod: currentPaymentMethod)
-    }
-
-    private func finishPayment() {
-        defaultStorage.cleanUp(key: .leadUUID)
-        cartRepository.cleanUp()
-        addressRepository.applyOrder(flow: .withCurrentAddress, completion: nil)
-        outputs.didMakePayment.accept(())
     }
 }
 

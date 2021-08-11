@@ -191,6 +191,7 @@
 // MARK: - Error
 "Error.mappingError" = "KZ Неудалось обработать ответ";
 "Error.noData" = "KZ Нет данных";
+"Error.unauthorized" = "KZ Вам необходимо снова авторизоваться";
 
 // MARK: - Payment Selection
 

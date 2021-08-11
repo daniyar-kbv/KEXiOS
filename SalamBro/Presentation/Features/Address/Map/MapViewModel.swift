@@ -71,8 +71,8 @@ final class MapViewModel {
         case .creation:
             addressRepository.changeCurrentAddress(district: lastAddress.district, street: lastAddress.street, building: lastAddress.building, corpus: lastAddress.corpus, flat: lastAddress.flat, comment: commentary, longitude: lastAddress.longitude, latitude: lastAddress.latitude)
             bindToOrdersOutputs(using: lastAddress)
-            guard let dto = addressRepository.getCurrentUserAddress()?.toDTO() else { return }
-            addressRepository.applyOrder(flow: .create(dto: dto), completion: nil)
+            guard let userAddress = addressRepository.getCurrentUserAddress() else { return }
+            addressRepository.setInitial(userAddress: userAddress)
         case .change:
             outputs.lastSelectedAddress.accept((lastAddress, commentary))
         }
@@ -103,9 +103,7 @@ final class MapViewModel {
             let addressComponenets = objectMetadata.address.components
 
 //            Tech debt: process addresses without street or district
-            print(addressComponenets.map {
-                ($0.kinds, $0.name)
-            })
+//            YMKSearchComponentKind.house
 
             let district = addressComponenets
                 .first(where: {
@@ -148,7 +146,7 @@ extension MapViewModel {
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        addressRepository.outputs.didGetLeadUUID
+        addressRepository.outputs.didSaveUserAddress
             .subscribe(onNext: { [weak self] in
                 self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
             })

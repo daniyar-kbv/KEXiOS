@@ -73,7 +73,6 @@ final class CartPromocodeCell: UITableViewCell {
     }
 
     private func process(state: CartPromocodeViewModelImpl.State) {
-        print("state: \(state)")
         switch state {
         case let .set(description):
             promocodeButton.isHidden = true

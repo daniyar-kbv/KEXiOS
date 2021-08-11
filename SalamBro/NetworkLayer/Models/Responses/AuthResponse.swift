@@ -22,7 +22,7 @@ struct RefreshTokenResponse: Codable {
 }
 
 struct AccessToken: Codable {
-    let secretKey: String
+    let secretKey: String?
     let refresh: String
     let access: String
 

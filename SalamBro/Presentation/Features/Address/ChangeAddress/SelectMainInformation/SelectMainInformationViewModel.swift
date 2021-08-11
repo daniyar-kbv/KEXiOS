@@ -114,7 +114,7 @@ extension SelectMainInformationViewModel {
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        addressRepository.outputs.didGetLeadUUID
+        addressRepository.outputs.didSaveUserAddress
             .bind(to: outputs.didSave)
             .disposed(by: disposeBag)
 
@@ -180,7 +180,7 @@ extension SelectMainInformationViewModel {
         switch flowType {
         case .create:
             guard let userAddress = userAddress else { return }
-            addressRepository.add(userAddress: userAddress)
+            addressRepository.create(userAddress: userAddress)
         case .changeAddress, .changeBrand:
             guard let id = userAddress?.id,
                   let brandId = userAddress?.brand?.id

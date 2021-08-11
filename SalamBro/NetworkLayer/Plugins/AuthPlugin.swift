@@ -25,10 +25,11 @@ struct AuthPlugin: PluginType {
     }
 
     func process(_ result: Result<Response, MoyaError>, target _: TargetType) -> Result<Response, MoyaError> {
-        if (try? result.get().response?.statusCode == 401) ?? false {
-            authTokenStorage.cleanUp()
+        guard (try? result.get().response?.statusCode) != Constants.StatusCode.unauthorized
+        else {
+            return Result.failure(.statusCode(.init(statusCode: Constants.StatusCode.unauthorized,
+                                                    data: .init())))
         }
-
         return result
     }
 }
