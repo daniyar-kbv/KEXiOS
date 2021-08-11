@@ -9,8 +9,6 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-//  Tech debt: change file name
-
 protocol AuthRepository: AnyObject {
     var outputs: AuthRepositoryImpl.Output { get }
 

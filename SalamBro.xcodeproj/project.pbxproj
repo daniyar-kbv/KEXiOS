@@ -48,9 +48,9 @@
 		D31E2FEA0D37EB9DD418BFA70C1F6E51 /* AuthDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271993661A630A7B6361573B6E862B2F /* AuthDTO.swift */; };
 		7C632CF88E940ED849FD41282C64F36F /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820E8227051E824BE14AB9E9FE0A5E7F /* AuthHeaderView.swift */; };
 		608C6BCCE52903074322BA9A4E7A6B9B /* AuthNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5108A279D42395CC7029EC913C8FB214 /* AuthNumberView.swift */; };
-		DDF3EAE5AE212626973802EEF8E14A79 /* AuthPageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C4A6324F1B80720096C1538EB8C08E /* AuthPageRepository.swift */; };
 		FD00D6036336AF940B33267DD9E7EA10 /* AuthPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51611B63B0B19907E7A004B6CCB5AEE7 /* AuthPagesFactory.swift */; };
 		048421C0D97BF52230309EDB37A2BAEA /* AuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6040B6D620DF2D89D9D6F170DA7189 /* AuthPlugin.swift */; };
+		44360BD487D0484441875A65570508C8 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB12DEA78CD21FDDD6AF0CCA69BEF5F0 /* AuthRepository.swift */; };
 		9E32C42A4DC649912ECF49A5933D49C3 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3AF9D13BF4B313867EF77DE0893FBE /* AuthResponse.swift */; };
 		1E73DB28D0EACDE311620B99B5686660 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1536E5A224DB94A51B38553CA32315BA /* AuthService.swift */; };
 		9F9566BD48DA1818E48D5EEA247BDBE5 /* AuthTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51813FF52308773DA686BE31A8ED0B2 /* AuthTokenStorage.swift */; };
@@ -373,9 +373,9 @@
 		271993661A630A7B6361573B6E862B2F /* AuthDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDTO.swift; sourceTree = "<group>"; };
 		820E8227051E824BE14AB9E9FE0A5E7F /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
 		5108A279D42395CC7029EC913C8FB214 /* AuthNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumberView.swift; sourceTree = "<group>"; };
-		E9C4A6324F1B80720096C1538EB8C08E /* AuthPageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPageRepository.swift; sourceTree = "<group>"; };
 		51611B63B0B19907E7A004B6CCB5AEE7 /* AuthPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPagesFactory.swift; sourceTree = "<group>"; };
 		2F6040B6D620DF2D89D9D6F170DA7189 /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
+		EB12DEA78CD21FDDD6AF0CCA69BEF5F0 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		2E3AF9D13BF4B313867EF77DE0893FBE /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		1536E5A224DB94A51B38553CA32315BA /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		D51813FF52308773DA686BE31A8ED0B2 /* AuthTokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenStorage.swift; sourceTree = "<group>"; };
@@ -834,14 +834,6 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		39BEA5E4B359C8CD4925A4B8D4445605 /* UnauthorizedErrorHandling */ = {
-			isa = PBXGroup;
-			children = (
-				166E2881406AB2024E5ADF46370F6D88 /* SingleExtension.swift */,
-			);
-			path = UnauthorizedErrorHandling;
-			sourceTree = "<group>";
-		};
 		15BA1BB3C138589E5ECE03C5EE7747F5 /* PaymentEdit */ = {
 			isa = PBXGroup;
 			children = (
@@ -1064,6 +1056,14 @@
 				ED0D734666913DB588648DF8BC069C08 /* CountryCodePickerViewModel.swift */,
 			);
 			path = CountryCodePicker;
+			sourceTree = "<group>";
+		};
+		39BEA5E4B359C8CD4925A4B8D4445605 /* UnauthorizedErrorHandling */ = {
+			isa = PBXGroup;
+			children = (
+				166E2881406AB2024E5ADF46370F6D88 /* SingleExtension.swift */,
+			);
+			path = UnauthorizedErrorHandling;
 			sourceTree = "<group>";
 		};
 		3C00459B7F8AF0133672E4FF859E015B /* Views */ = {
@@ -1485,7 +1485,7 @@
 			isa = PBXGroup;
 			children = (
 				7C257C01396E6904F264D7BD5A87F661 /* AddressRepository.swift */,
-				E9C4A6324F1B80720096C1538EB8C08E /* AuthPageRepository.swift */,
+				EB12DEA78CD21FDDD6AF0CCA69BEF5F0 /* AuthRepository.swift */,
 				26E67FC3EFB7B8C495F08CE05C78897F /* BrandRepository.swift */,
 				BA1D767B2B1F70796D02742709EA0BDD /* CartRepository.swift */,
 				F5F9B00C87EC9410D224F0BF4AE07C2E /* CitiesRepository.swift */,
@@ -2629,9 +2629,9 @@
 				D31E2FEA0D37EB9DD418BFA70C1F6E51 /* AuthDTO.swift in Sources */,
 				7C632CF88E940ED849FD41282C64F36F /* AuthHeaderView.swift in Sources */,
 				608C6BCCE52903074322BA9A4E7A6B9B /* AuthNumberView.swift in Sources */,
-				DDF3EAE5AE212626973802EEF8E14A79 /* AuthPageRepository.swift in Sources */,
 				FD00D6036336AF940B33267DD9E7EA10 /* AuthPagesFactory.swift in Sources */,
 				048421C0D97BF52230309EDB37A2BAEA /* AuthPlugin.swift in Sources */,
+				44360BD487D0484441875A65570508C8 /* AuthRepository.swift in Sources */,
 				9E32C42A4DC649912ECF49A5933D49C3 /* AuthResponse.swift in Sources */,
 				1E73DB28D0EACDE311620B99B5686660 /* AuthService.swift in Sources */,
 				9F9566BD48DA1818E48D5EEA247BDBE5 /* AuthTokenStorage.swift in Sources */,
