@@ -73,7 +73,8 @@ final class AuthRepositoryImpl: AuthRepository {
     }
 
     func verifyOTP(code: String, number: String) {
-        guard let applyDTO = geoStorage.userAddresses.first(where: { $0.isCurrent })?.toDTO() else { return }
+        guard let applyDTO = geoStorage.userAddresses.first(where: { $0.isCurrent })?.toDTO(),
+              let fcmToken = defaultStorage.fcmToken else { return }
 
         outputs.didStartRequest.accept(())
         authService.verifyOTP(with: .init(code: code, phoneNumber: number))
@@ -96,10 +97,13 @@ final class AuthRepositoryImpl: AuthRepository {
                                                 object: cart)
                 return profileService.getAddresses()
             }
-            .retryWhenUnautharized()
-            .subscribe { [weak self] userAddresses in
+            .flatMap { [unowned self] userAddresses in
                 NotificationCenter.default.post(name: Constants.InternalNotification.userAddresses.name,
                                                 object: userAddresses)
+                return notificationsService.fcmTokenSave(dto: .init(fcmToken: fcmToken))
+            }
+            .retryWhenUnautharized()
+            .subscribe { [weak self] in
                 self?.outputs.didEndRequest.accept(())
             } onError: { [weak self] error in
                 self?.handleErrorResponse(error: error)

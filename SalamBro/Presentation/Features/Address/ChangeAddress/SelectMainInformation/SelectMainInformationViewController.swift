@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class SelectMainInformationViewController: UIViewController, LoaderDisplayable, AlertDisplayable {
+final class SelectMainInformationViewController: UIViewController, LoaderDisplayable {
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
     private let cellsSequence: [SelectMainInformationCell.InputType] = [.country, .city, .address, .empty, .brand]

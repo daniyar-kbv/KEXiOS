@@ -12,7 +12,7 @@ import SnapKit
 import Spruce
 import UIKit
 
-final class BrandsController: UIViewController, AlertDisplayable {
+final class BrandsController: UIViewController {
     let outputs = Output()
     private let viewModel: BrandViewModelProtocol
     private let disposeBag = DisposeBag()

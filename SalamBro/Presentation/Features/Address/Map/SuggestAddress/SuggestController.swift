@@ -13,7 +13,7 @@ protocol SuggestControllerDelegate: AnyObject {
     func reverseGeocoding(searchQuery: String, title: String)
 }
 
-final class SuggestController: UIViewController, AlertDisplayable {
+final class SuggestController: UIViewController {
     private let disposeBag = DisposeBag()
 
     private let viewModel: SuggestViewModel

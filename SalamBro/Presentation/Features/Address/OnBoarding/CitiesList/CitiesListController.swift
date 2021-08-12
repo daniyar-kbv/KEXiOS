@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class CitiesListController: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class CitiesListController: UIViewController, LoaderDisplayable {
     let outputs = Output()
     private let disposeBag = DisposeBag()
 

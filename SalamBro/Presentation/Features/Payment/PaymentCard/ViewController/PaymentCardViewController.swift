@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-class PaymentCardViewController: UIViewController, AlertDisplayable {
+class PaymentCardViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: PaymentCardViewModel
 

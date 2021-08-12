@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class VerificationController: UIViewController, LoaderDisplayable, AlertDisplayable {
+final class VerificationController: UIViewController, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()

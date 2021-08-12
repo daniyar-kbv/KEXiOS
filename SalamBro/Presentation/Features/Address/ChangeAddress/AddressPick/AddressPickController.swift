@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AddressPickController: UIViewController, AlertDisplayable {
+final class AddressPickController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: AddressPickerViewModelProtocol
     private let tapGesture = UITapGestureRecognizer()

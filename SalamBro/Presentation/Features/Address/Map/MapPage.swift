@@ -10,7 +10,7 @@ import RxSwift
 import UIKit
 import YandexMapKit
 
-final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class MapPage: UIViewController, LoaderDisplayable {
     var selectedAddress: ((Address) -> Void)?
 
     private let disposeBag = DisposeBag()

@@ -162,7 +162,6 @@ extension SelectMainInformationViewModel {
         userAddress?.address = address
         userAddress?.address.country = oldAddress?.country
         userAddress?.address.city = oldAddress?.city
-        print(userAddress?.address.comment)
         outputs.didSelectAddress.accept(address.getName())
         checkValues()
     }

@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class ProfilePage: UIViewController, LoaderDisplayable {
     let outputs = Output()
 
     private let disposeBag = DisposeBag()

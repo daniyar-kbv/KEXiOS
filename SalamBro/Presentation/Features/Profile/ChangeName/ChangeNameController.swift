@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class ChangeNameController: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class ChangeNameController: UIViewController, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()

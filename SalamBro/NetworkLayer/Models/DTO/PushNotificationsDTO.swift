@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FCMTokenUpdateDTO: Encodable {
+struct FCMTokenSaveDTO: Codable {
     let fcmToken: String
 
     enum CodingKeys: String, CodingKey {
@@ -15,12 +15,12 @@ struct FCMTokenUpdateDTO: Encodable {
     }
 }
 
-struct FCMTokenCreateDTO: Encodable {
-    let leadUUID: String
-    let fcmToken: String
+struct FCMTokenUpdateDTO: Codable {
+    let oldFCMToken: String
+    let newFCMToken: String
 
     enum CodingKeys: String, CodingKey {
-        case fcmToken = "firebase_token"
-        case leadUUID = "lead_uuid"
+        case oldFCMToken = "old_firebase_token"
+        case newFCMToken = "new_firebase_token"
     }
 }

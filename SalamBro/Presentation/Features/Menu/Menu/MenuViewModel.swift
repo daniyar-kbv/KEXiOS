@@ -86,6 +86,12 @@ final class MenuViewModel: MenuViewModelProtocol {
             self?.configureAnimation()
         }
         .disposed(by: disposeBag)
+
+        menuRepository.outputs.openPromotion
+            .subscribe(onNext: { [weak self] promotion in
+                self?.openPromotion(promotionURL: promotion.url, name: promotion.name)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func bindScrollService() {
@@ -243,7 +249,7 @@ extension MenuViewModel {
     }
 }
 
-extension MenuViewModel: AddCollectionCellDelegate {
+extension MenuViewModel {
     private func scroll(to categoryUUID: String) {
         guard isNotEmpty(),
               let positionsIndex = getSectionIndex(of: .positions),
@@ -283,8 +289,10 @@ extension MenuViewModel: AddCollectionCellDelegate {
     private func getSectionIndex(of type: Section.`Type`) -> Int? {
         return tableSections.firstIndex(where: { $0.type == type })
     }
+}
 
-    public func goToRating(promotionURL: URL, name: String) {
+extension MenuViewModel: AddCollectionCellDelegate {
+    func openPromotion(promotionURL: URL, name: String) {
         outputs.toPromotion.accept((promotionURL, name))
     }
 }

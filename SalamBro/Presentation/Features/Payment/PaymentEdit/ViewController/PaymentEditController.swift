@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class PaymentEditController: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class PaymentEditController: UIViewController, LoaderDisplayable {
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.register(PaymentEditCell.self, forCellReuseIdentifier: String(describing: PaymentEditCell.self))

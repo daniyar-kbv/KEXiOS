@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class SupportController: UIViewController, LoaderDisplayable, AlertDisplayable {
+final class SupportController: UIViewController, LoaderDisplayable {
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
