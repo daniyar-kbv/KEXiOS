@@ -181,6 +181,7 @@
 		BB4F1D7E799841C387D596E8E8F94D92 /* OrderHistoryPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A912B1EDA727A908FBFAFE7EB4E611 /* OrderHistoryPagesFactory.swift */; };
 		B3A3E93B228331E45C5230E16903E253 /* OrderHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152F7DD8B948579CCF07A0CD9A0C7CA5 /* OrderHistoryViewModel.swift */; };
 		2D4CFF98D59AD7A51A19D37476E30C0E /* OrdersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */; };
+		77A4075051671B3E7BB279AB53A87EAF /* OrdersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3F3AC10C70D2FE354E5F5546C50811 /* OrdersList.swift */; };
 		099A87777B0098C8CC9353085E7723C9 /* OrdersResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */; };
 		233AEC182BE1BE8A729C9E18E9244FFE /* OrdersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DBCD36CB1C2C7E3069476CE83EACA /* OrdersService.swift */; };
 		F91579DAC68C59A68B687B0BB1568CCB /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1146ECD2C11F607B503E7FDF57A1F2 /* Payment.swift */; };
@@ -529,6 +530,7 @@
 		16A912B1EDA727A908FBFAFE7EB4E611 /* OrderHistoryPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryPagesFactory.swift; sourceTree = "<group>"; };
 		152F7DD8B948579CCF07A0CD9A0C7CA5 /* OrderHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryViewModel.swift; sourceTree = "<group>"; };
 		DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersAPI.swift; sourceTree = "<group>"; };
+		5E3F3AC10C70D2FE354E5F5546C50811 /* OrdersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersList.swift; sourceTree = "<group>"; };
 		0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersResponses.swift; sourceTree = "<group>"; };
 		3A4DBCD36CB1C2C7E3069476CE83EACA /* OrdersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersService.swift; sourceTree = "<group>"; };
 		4A1146ECD2C11F607B503E7FDF57A1F2 /* Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payment.swift; sourceTree = "<group>"; };
@@ -2013,6 +2015,7 @@
 				668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */,
 				4FF32ADAB2B8FEF982A4A9355E2F96AD /* Menu.swift */,
 				81B8452F367B43CBFA41136A34C74954 /* Notification.swift */,
+				5E3F3AC10C70D2FE354E5F5546C50811 /* OrdersList.swift */,
 				4A1146ECD2C11F607B503E7FDF57A1F2 /* Payment.swift */,
 				DA0E6B290305F0D13A85D6644AAC0735 /* PaymentMethod.swift */,
 				3AC704D5ACC15F44FDC980B1A4D6337D /* Promocode.swift */,
@@ -2759,6 +2762,7 @@
 				BB4F1D7E799841C387D596E8E8F94D92 /* OrderHistoryPagesFactory.swift in Sources */,
 				B3A3E93B228331E45C5230E16903E253 /* OrderHistoryViewModel.swift in Sources */,
 				2D4CFF98D59AD7A51A19D37476E30C0E /* OrdersAPI.swift in Sources */,
+				77A4075051671B3E7BB279AB53A87EAF /* OrdersList.swift in Sources */,
 				099A87777B0098C8CC9353085E7723C9 /* OrdersResponses.swift in Sources */,
 				233AEC182BE1BE8A729C9E18E9244FFE /* OrdersService.swift in Sources */,
 				F91579DAC68C59A68B687B0BB1568CCB /* Payment.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PaymentMethodType {
+enum PaymentMethodType: String, Codable {
     case savedCard
     case card
     case applePay
