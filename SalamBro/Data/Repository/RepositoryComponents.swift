@@ -60,6 +60,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
                                          authorizedApplyService: serviceComponents.authorizedApplyService(),
                                          notificationsService: serviceComponents.pushNotificationsService(),
                                          cartStorage: makeLocalStorage(),
+                                         geoStorage: makeLocalStorage(),
                                          tokenStorage: AuthTokenStorageImpl.sharedStorage,
                                          defaultStorage: DefaultStorageImpl.sharedStorage))
     }
@@ -108,8 +109,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     func makePushNotificationsRepository() -> PushNotificationsRepository {
         return shared(PushNotificationsRepositoryImpl(
             notificationsService: serviceComponents.pushNotificationsService(),
-            defaultStorage: DefaultStorageImpl.sharedStorage,
-            authTokenStorage: AuthTokenStorageImpl.sharedStorage
+            defaultStorage: DefaultStorageImpl.sharedStorage
         ))
     }
 

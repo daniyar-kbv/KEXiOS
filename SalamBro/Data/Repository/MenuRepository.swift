@@ -13,6 +13,7 @@ protocol MenuRepository: AnyObject {
     var outputs: MenuRepositoryImpl.Output { get }
 
     func getMenuItems()
+    func openPromotion(by id: Int)
 }
 
 final class MenuRepositoryImpl: MenuRepository {
@@ -21,7 +22,9 @@ final class MenuRepositoryImpl: MenuRepository {
     private let menuService: MenuService
     private let storage: DefaultStorage
 
-    init(menuService: MenuService, storage: DefaultStorage) {
+    init(menuService: MenuService,
+         storage: DefaultStorage)
+    {
         self.menuService = menuService
         self.storage = storage
 
@@ -56,6 +59,21 @@ final class MenuRepositoryImpl: MenuRepository {
             self?.outputs.didGetError.accept(error as? ErrorPresentable)
         }).disposed(by: disposeBag)
     }
+
+    func openPromotion(by id: Int) {
+        guard let leadUUID = storage.leadUUID else { return }
+
+        outputs.didStartRequest.accept(())
+        menuService.getPromotionDetail(for: leadUUID, by: id)
+            .subscribe { [weak self] promotion in
+                self?.process(promotion: promotion)
+                self?.outputs.didEndRequest.accept(())
+            } onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                self?.outputs.didGetError.accept(error as? ErrorPresentable)
+            }
+            .disposed(by: disposeBag)
+    }
 }
 
 extension MenuRepositoryImpl {
@@ -66,6 +84,11 @@ extension MenuRepositoryImpl {
                 self?.getMenuItems()
             })
             .disposed(by: disposeBag)
+    }
+
+    private func process(promotion: Promotion) {
+        guard let url = URL(string: promotion.link ?? "") else { return }
+        outputs.openPromotion.accept((url, promotion.name))
     }
 }
 
@@ -78,5 +101,6 @@ extension MenuRepositoryImpl {
         let didGetPromotions = PublishRelay<[Promotion]>()
         let didGetCategories = PublishRelay<[MenuCategory]>()
         let didGetPositions = PublishRelay<[MenuPosition]>()
+        let openPromotion = PublishRelay<(url: URL, name: String)>()
     }
 }

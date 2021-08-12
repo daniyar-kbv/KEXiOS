@@ -88,8 +88,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
 
     func messaging(_: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         guard let fcmToken = fcmToken else { return }
+        print("Received FCM Token: \(fcmToken)")
 
         let notificationsRepository = repositoryComponents.makePushNotificationsRepository()
+        notificationsRepository.process(fcmToken: fcmToken)
 
         let dataDict: [String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
@@ -101,6 +103,7 @@ extension AppDelegate {
 
     func userNotificationCenter(_: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler _: @escaping (UNNotificationPresentationOptions) -> Void) {
         let userInfo = notification.request.content.userInfo
+        print(userInfo)
         guard let pushNotification = PushNotification(dictionary: userInfo) else { return }
 
         showNotificationAlert(pushNotification: pushNotification)
@@ -116,11 +119,9 @@ extension AppDelegate {
     }
 
     func showNotificationAlert(pushNotification: PushNotification) {
-        guard let rootViewController = window?.rootViewController as? AlertDisplayable else { return }
-
-        rootViewController.showAlert(title: pushNotification.aps.alert.title,
-                                     message: pushNotification.aps.alert.body,
-                                     submitTitle: SBLocalization.localized(key: AlertText.ok)) { [weak self] in
+        UIApplication.topViewController()?.showAlert(title: pushNotification.aps.alert.title,
+                                                     message: pushNotification.aps.alert.body,
+                                                     submitTitle: SBLocalization.localized(key: AlertText.ok)) { [weak self] in
             self?.appCoordinator?.handleNotification(pushNotification: pushNotification)
         }
     }

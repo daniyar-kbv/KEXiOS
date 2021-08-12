@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener, AlertDisplayable, LoaderDisplayable {
+final class AuthorizationController: UIViewController, MaskedTextFieldDelegateListener, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()

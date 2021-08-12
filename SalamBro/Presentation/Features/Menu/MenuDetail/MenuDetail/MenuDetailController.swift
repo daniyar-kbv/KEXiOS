@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class MenuDetailController: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class MenuDetailController: UIViewController, LoaderDisplayable {
     private var viewModel: MenuDetailViewModel
 
     private let disposeBag = DisposeBag()

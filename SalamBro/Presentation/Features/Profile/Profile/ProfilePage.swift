@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class ProfilePage: UIViewController, LoaderDisplayable {
     let outputs = Output()
 
     private let disposeBag = DisposeBag()
@@ -102,7 +102,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         viewModel.outputs.didFail
             .subscribe(onNext: { [weak self] error in
                 self?.showError(error, completion: {
-                    self?.showEmptyState()
+                    self?.reloadPage()
                 })
             })
             .disposed(by: disposeBag)

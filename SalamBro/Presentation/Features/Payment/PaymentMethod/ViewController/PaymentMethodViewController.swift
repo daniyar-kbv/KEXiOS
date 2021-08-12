@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class PaymentMethodViewController: UIViewController, LoaderDisplayable, AlertDisplayable {
+final class PaymentMethodViewController: UIViewController, LoaderDisplayable {
     private let disposeBag = DisposeBag()
     private let viewModel: PaymentMethodVCViewModel
     private lazy var contentView = PaymentMethodView()

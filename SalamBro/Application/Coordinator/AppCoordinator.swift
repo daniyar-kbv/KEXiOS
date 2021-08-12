@@ -11,6 +11,7 @@ import RxSwift
 import UIKit
 
 final class AppCoordinator: BaseCoordinator {
+    private let tabBarBarTypes: [SBTabBarType] = [.menu, .profile, .support, .cart]
     private var preparedViewControllers: [UIViewController] = []
 
     private let serviceComponents: ServiceComponents
@@ -32,11 +33,7 @@ final class AppCoordinator: BaseCoordinator {
     }
 
     override func start() {
-        configureMenuCoordinator()
-        configureProfileCoordinator()
-        configureSupportCoordinator()
-        configureCartCoordinator()
-
+        configureCoordinators()
         switchFlows()
     }
 
@@ -50,21 +47,28 @@ final class AppCoordinator: BaseCoordinator {
         showTabBarController()
     }
 
-    private func configureMenuCoordinator() {
+    private func configureCoordinators() {
+        tabBarBarTypes.forEach { type in
+            switch type {
+            case .menu: configureMenuCoordinator(tabBarItem: type.tabBarItem)
+            case .profile: configureProfileCoordinator(tabBarItem: type.tabBarItem)
+            case .support: configureSupportCoordinator(tabBarItem: type.tabBarItem)
+            case .cart: configureCartCoordinator(tabBarItem: type.tabBarItem)
+            }
+        }
+    }
+
+    private func configureMenuCoordinator(tabBarItem: UITabBarItem) {
         let menuCoordinator = appCoordinatorsFactory.makeMenuCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
         menuCoordinator.start()
-        menuCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(
-            title: SBLocalization.localized(key: TabBarText.menuTitle),
-            image: SBImageResource.getIcon(for: TabBarIcon.menu),
-            selectedImage: SBImageResource.getIcon(for: TabBarIcon.menu)
-        )
+        menuCoordinator.router.getNavigationController().tabBarItem = tabBarItem
 
         preparedViewControllers.append(menuCoordinator.router.getNavigationController())
         add(menuCoordinator)
     }
 
-    private func configureProfileCoordinator() {
+    private func configureProfileCoordinator(tabBarItem: UITabBarItem) {
         let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
         profileCoordinator.onLanguageChange = { [weak self] in
@@ -72,56 +76,36 @@ final class AppCoordinator: BaseCoordinator {
         }
 
         profileCoordinator.start()
-        profileCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(
-            title: SBLocalization.localized(key: TabBarText.profileTitle),
-            image: SBImageResource.getIcon(for: TabBarIcon.profile),
-            selectedImage: SBImageResource.getIcon(for: TabBarIcon.profile)
-        )
+        profileCoordinator.router.getNavigationController().tabBarItem = tabBarItem
 
         preparedViewControllers.append(profileCoordinator.router.getNavigationController())
         add(profileCoordinator)
     }
 
-    private func configureSupportCoordinator() {
+    private func configureSupportCoordinator(tabBarItem: UITabBarItem) {
         let supportCoordinator = appCoordinatorsFactory.makeSupportCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
         supportCoordinator.start()
-        supportCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(
-            title: SBLocalization.localized(key: TabBarText.supportTitle),
-            image: SBImageResource.getIcon(for: TabBarIcon.support),
-            selectedImage: SBImageResource.getIcon(for: TabBarIcon.support)
-        )
+        supportCoordinator.router.getNavigationController().tabBarItem = tabBarItem
 
         preparedViewControllers.append(supportCoordinator.router.getNavigationController())
         add(supportCoordinator)
     }
 
-    private func configureCartCoordinator() {
+    private func configureCartCoordinator(tabBarItem: UITabBarItem) {
         let cartCoordinator = appCoordinatorsFactory.makeCartCoordinator(serviceComponents: serviceComponents,
                                                                          repositoryComponents: repositoryComponents)
         cartCoordinator.start()
-        cartCoordinator.router.getNavigationController().tabBarItem = UITabBarItem(
-            title: SBLocalization.localized(key: TabBarText.cartTitle),
-            image: SBImageResource.getIcon(for: TabBarIcon.cart),
-            selectedImage: SBImageResource.getIcon(for: TabBarIcon.cart)
-        )
+        cartCoordinator.router.getNavigationController().tabBarItem = tabBarItem
 
         configCartTabBarItem(cartCoordinator: cartCoordinator)
 
         cartCoordinator.toMenu = { [weak self] in
-            self?.pagesFactory.makeSBTabbarController().selectedIndex = 0
+            guard let tabIndex = self?.tabBarBarTypes.firstIndex(of: .menu) else { return }
+            self?.pagesFactory.makeSBTabbarController().selectedIndex = tabIndex
         }
 
-        cartCoordinator.toOrderHistory = { [weak self] in
-            self?.pagesFactory.makeSBTabbarController().selectedIndex = 1
-
-            guard let serviceComponents = self?.serviceComponents,
-                  let repositoryComponents = self?.repositoryComponents else { return }
-
-            let profileCoordinator = self?.appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
-
-            profileCoordinator?.showOrderHistoryPage()
-        }
+        cartCoordinator.toOrderHistory = openOrderHistory
 
         preparedViewControllers.append(cartCoordinator.router.getNavigationController())
         add(cartCoordinator)
@@ -212,46 +196,68 @@ extension AppCoordinator {
 
 extension AppCoordinator {
     func handleNotification(pushNotification: PushNotification) {
-        switch pushNotification.pushType {
-        case .info:
-            break
-        case .promotions:
-            openPromotion(pushNotification: pushNotification)
-        case .orderRate:
-            openRateOrder(pushNotification: pushNotification)
-        case .orderStatusUpdate:
-            openOrderHistory()
+        guard DefaultStorageImpl.sharedStorage.notFirstLaunch else { return }
+        popToTabBar { [weak self] in
+            switch pushNotification.pushType {
+            case .info:
+                break
+            case .promotions:
+                self?.openPromotion(pushNotification: pushNotification)
+            case .orderRate:
+                self?.openRateOrder(pushNotification: pushNotification)
+            case .orderStatusUpdate:
+                self?.openOrderHistory()
+            }
         }
     }
 
+    private func popToTabBar(completion: @escaping () -> Void) {
+        var topViewController = UIApplication.topViewController()
+
+        guard topViewController?.navigationController?.viewControllers.count == 1 else {
+            CATransaction.begin()
+            CATransaction.setCompletionBlock(completion)
+            topViewController?.navigationController?.popViewController(animated: true)
+            CATransaction.commit()
+            return
+        }
+
+        guard topViewController?.presentingViewController == nil else {
+            while topViewController?.presentingViewController != nil {
+                topViewController = topViewController?.presentingViewController
+                let last = topViewController?.presentingViewController == nil
+                topViewController?.dismiss(
+                    animated: last,
+                    completion: last ? completion : nil
+                )
+            }
+            return
+        }
+
+        completion()
+    }
+
     private func openPromotion(pushNotification: PushNotification) {
-        pagesFactory.makeSBTabbarController().selectedIndex = 0
-        let menuCoordinator = appCoordinatorsFactory.makeMenuCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+        guard let promotionId = Int(pushNotification.pushTypeValue),
+              let tabIndex = tabBarBarTypes.firstIndex(of: .menu) else { return }
 
-        guard let url = URL(
-            string: String(
-                format: Constants.URLs.promotionURL, pushNotification.pushTypeValue
-            )
-        )
-        else { return }
-
-        menuCoordinator.openPromotion(promotionURL: url, name: nil)
+        pagesFactory.makeSBTabbarController().selectedIndex = tabIndex
+        let menuRepository = repositoryComponents.makeMenuRepository()
+        menuRepository.openPromotion(by: promotionId)
     }
 
     private func openRateOrder(pushNotification _: PushNotification) {
-        pagesFactory.makeSBTabbarController().selectedIndex = 2
+        openOrderHistory()
 
         let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
-
-        profileCoordinator.showOrderHistoryPage()
-
         let orderHistoryCoordinator = profileCoordinator.childCoordinators.first(where: { $0 is OrderHistoryCoordinator }) as! OrderHistoryCoordinator
 
         orderHistoryCoordinator.showRateOrderPage()
     }
 
     private func openOrderHistory() {
-        pagesFactory.makeSBTabbarController().selectedIndex = 2
+        guard let tabIndex = tabBarBarTypes.firstIndex(of: .profile) else { return }
+        pagesFactory.makeSBTabbarController().selectedIndex = tabIndex
 
         let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 

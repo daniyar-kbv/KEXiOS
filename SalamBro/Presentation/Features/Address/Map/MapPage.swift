@@ -10,7 +10,7 @@ import RxSwift
 import UIKit
 import YandexMapKit
 
-final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class MapPage: UIViewController, LoaderDisplayable {
     var selectedAddress: ((Address) -> Void)?
 
     private let disposeBag = DisposeBag()
@@ -113,7 +113,7 @@ extension MapPage {
             .disposed(by: disposeBag)
 
         viewModel.outputs.lastSelectedAddress
-            .subscribe(onNext: { [weak self] address, _ in
+            .subscribe(onNext: { [weak self] address in
                 self?.handlePageTermination()
                 self?.selectedAddress?(address)
             })

@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class ChangeNameController: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class ChangeNameController: UIViewController, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()
@@ -89,6 +89,7 @@ extension ChangeNameController: ChangeNameViewDelegate {
     }
 
     func saveButtonTapped() {
-        viewModel.change(name: contentView?.nameTextField.text, email: contentView?.emailTextField.text)
+        viewModel.change(name: contentView?.nameTextField.text,
+                         email: (contentView?.emailTextField.text?.isEmpty ?? true) ? nil : contentView?.emailTextField.text)
     }
 }

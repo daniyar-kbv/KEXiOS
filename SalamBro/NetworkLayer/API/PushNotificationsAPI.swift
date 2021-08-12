@@ -8,9 +8,8 @@
 import Moya
 
 enum PushNotificationsAPI {
+    case fcmTokenSave(dto: FCMTokenSaveDTO)
     case fcmTokenUpdate(dto: FCMTokenUpdateDTO)
-    case fcmTokenLogin(leadUUID: String)
-    case fcmTokenCreate(dto: FCMTokenCreateDTO)
 }
 
 extension PushNotificationsAPI: TargetType {
@@ -20,17 +19,15 @@ extension PushNotificationsAPI: TargetType {
 
     var path: String {
         switch self {
-        case .fcmTokenUpdate: return "/notifications/fbtoken-update/"
-        case let .fcmTokenLogin(leadUUID): return "/notifications/fbtoken-login/\(leadUUID)/"
-        case .fcmTokenCreate: return "/notifications/fbtoken-create/"
+        case .fcmTokenSave: return "/notifications/fbtoken/save/"
+        case .fcmTokenUpdate: return "/notifications/fbtoken/update/"
         }
     }
 
     var method: Method {
         switch self {
+        case .fcmTokenSave: return .post
         case .fcmTokenUpdate: return .put
-        case .fcmTokenLogin: return .put
-        case .fcmTokenCreate: return .post
         }
     }
 
@@ -40,9 +37,8 @@ extension PushNotificationsAPI: TargetType {
 
     var task: Task {
         switch self {
+        case let .fcmTokenSave(dto): return .requestJSONEncodable(dto)
         case let .fcmTokenUpdate(dto): return .requestJSONEncodable(dto)
-        case .fcmTokenLogin: return .requestPlain
-        case let .fcmTokenCreate(dto): return .requestJSONEncodable(dto)
         }
     }
 

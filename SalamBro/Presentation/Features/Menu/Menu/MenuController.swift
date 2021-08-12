@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class MenuController: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class MenuController: UIViewController, LoaderDisplayable {
     let outputs = Output()
 
     private let viewModel: MenuViewModelProtocol

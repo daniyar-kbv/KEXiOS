@@ -10,27 +10,49 @@ import RxCocoa
 import RxSwift
 
 protocol PushNotificationsRepository: AnyObject {
-    var outputs: PushNotificationsRepositoryImpl.Output { get }
+    func process(fcmToken: String)
 }
 
 final class PushNotificationsRepositoryImpl: PushNotificationsRepository {
     private let disposeBag = DisposeBag()
     private let notificationsService: PushNotificationsService
     private let defaultStorage: DefaultStorage
-    private let authTokenStorage: AuthTokenStorage
-
-    let outputs = Output()
 
     init(notificationsService: PushNotificationsService,
-         defaultStorage: DefaultStorage,
-         authTokenStorage: AuthTokenStorage)
+         defaultStorage: DefaultStorage)
     {
         self.notificationsService = notificationsService
         self.defaultStorage = defaultStorage
-        self.authTokenStorage = authTokenStorage
     }
-}
 
-extension PushNotificationsRepositoryImpl {
-    struct Output {}
+    func process(fcmToken: String) {
+        guard let oldFcmToken = defaultStorage.fcmToken
+        else {
+            defaultStorage.persist(fcmToken: fcmToken)
+            fcmTokenSave(fcmToken: fcmToken)
+            return
+        }
+
+        guard oldFcmToken != fcmToken else { return }
+
+        fcmTokenUpdate(newToken: fcmToken)
+    }
+
+    private func fcmTokenSave(fcmToken: String) {
+        notificationsService
+            .fcmTokenSave(dto: .init(fcmToken: fcmToken))
+            .retryWhenUnautharized()
+            .subscribe()
+            .disposed(by: disposeBag)
+    }
+
+    private func fcmTokenUpdate(newToken: String) {
+        guard let oldFcmToken = defaultStorage.fcmToken else { return }
+        defaultStorage.persist(fcmToken: newToken)
+        notificationsService
+            .fcmTokenUpdate(dto: .init(oldFCMToken: oldFcmToken, newFCMToken: newToken))
+            .retryWhenUnautharized()
+            .subscribe()
+            .disposed(by: disposeBag)
+    }
 }

@@ -11,9 +11,8 @@ import RxCocoa
 import RxSwift
 
 protocol PushNotificationsService: AnyObject {
+    func fcmTokenSave(dto: FCMTokenSaveDTO) -> Single<Void>
     func fcmTokenUpdate(dto: FCMTokenUpdateDTO) -> Single<Void>
-    func fcmTokenLogin(leadUUID: String) -> Single<Void>
-    func fcmTokenCreate(dto: FCMTokenCreateDTO) -> Single<Void>
 }
 
 final class PushNotificationsServiceMoyaImpl: PushNotificationsService {
@@ -25,11 +24,31 @@ final class PushNotificationsServiceMoyaImpl: PushNotificationsService {
         self.provider = provider
     }
 
+    func fcmTokenSave(dto: FCMTokenSaveDTO) -> Single<Void> {
+        return provider.rx
+            .request(.fcmTokenSave(dto: dto))
+            .map { response in
+                guard let response = try? response.map(FCMTokenSaveResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = response.error {
+                    throw error
+                }
+
+                guard response.data != nil else {
+                    throw NetworkError.noData
+                }
+
+                return ()
+            }
+    }
+
     func fcmTokenUpdate(dto: FCMTokenUpdateDTO) -> Single<Void> {
         return provider.rx
             .request(.fcmTokenUpdate(dto: dto))
             .map { response in
-                guard let response = try? response.map(PushNotificationsFCMTokenUpdateResponse.self) else {
+                guard let response = try? response.map(FCMTokenUpdateResponse.self) else {
                     throw NetworkError.badMapping
                 }
 
@@ -37,47 +56,7 @@ final class PushNotificationsServiceMoyaImpl: PushNotificationsService {
                     throw error
                 }
 
-                guard let _ = response.data else {
-                    throw NetworkError.noData
-                }
-
-                return ()
-            }
-    }
-
-    func fcmTokenLogin(leadUUID: String) -> Single<Void> {
-        return provider.rx
-            .request(.fcmTokenLogin(leadUUID: leadUUID))
-            .map { response in
-                guard let response = try? response.map(PushNotificationsFCMTokenLoginResponse.self) else {
-                    throw NetworkError.badMapping
-                }
-
-                if let error = response.error {
-                    throw error
-                }
-
-                guard let _ = response.data else {
-                    throw NetworkError.noData
-                }
-
-                return ()
-            }
-    }
-
-    func fcmTokenCreate(dto: FCMTokenCreateDTO) -> Single<Void> {
-        return provider.rx
-            .request(.fcmTokenCreate(dto: dto))
-            .map { response in
-                guard let response = try? response.map(PushNotificationsFCMTokenCreateResponse.self) else {
-                    throw NetworkError.badMapping
-                }
-
-                if let error = response.error {
-                    throw error
-                }
-
-                guard let _ = response.data else {
+                guard response.data != nil else {
                     throw NetworkError.noData
                 }
 

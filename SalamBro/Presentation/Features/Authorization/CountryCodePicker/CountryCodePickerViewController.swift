@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class CountryCodePickerViewController: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class CountryCodePickerViewController: UIViewController, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()

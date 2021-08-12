@@ -27,6 +27,8 @@ final class MapViewModel {
     var commentary: String? {
         didSet {
             guard let comment = commentary else { return }
+            let lastAddress = try? outputs.selectedAddress.value()
+            lastAddress?.comment = comment
             outputs.updateComment.accept(comment)
         }
     }
@@ -74,7 +76,7 @@ final class MapViewModel {
             guard let userAddress = addressRepository.getCurrentUserAddress() else { return }
             addressRepository.setInitial(userAddress: userAddress)
         case .change:
-            outputs.lastSelectedAddress.accept((lastAddress, commentary))
+            outputs.lastSelectedAddress.accept(lastAddress)
         }
     }
 
@@ -148,7 +150,7 @@ extension MapViewModel {
 
         addressRepository.outputs.didSaveUserAddress
             .subscribe(onNext: { [weak self] in
-                self?.outputs.lastSelectedAddress.accept((address, self?.commentary))
+                self?.outputs.lastSelectedAddress.accept(address)
             })
             .disposed(by: disposeBag)
 
@@ -166,7 +168,7 @@ extension MapViewModel {
     struct Output {
         let moveMapTo = PublishRelay<YMKPoint>()
         let selectedAddress = BehaviorSubject<Address?>(value: nil)
-        let lastSelectedAddress = PublishRelay<(Address, String?)>()
+        let lastSelectedAddress = PublishRelay<Address>()
         let updateComment = PublishRelay<String>()
 
         let didGetError = PublishRelay<ErrorPresentable>()
