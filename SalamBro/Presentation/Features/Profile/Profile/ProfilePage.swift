@@ -102,7 +102,7 @@ final class ProfilePage: UIViewController, AlertDisplayable, LoaderDisplayable {
         viewModel.outputs.didFail
             .subscribe(onNext: { [weak self] error in
                 self?.showError(error, completion: {
-                    self?.showEmptyState()
+                    self?.reloadPage()
                 })
             })
             .disposed(by: disposeBag)

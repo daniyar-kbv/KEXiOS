@@ -60,6 +60,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
                                          authorizedApplyService: serviceComponents.authorizedApplyService(),
                                          notificationsService: serviceComponents.pushNotificationsService(),
                                          cartStorage: makeLocalStorage(),
+                                         geoStorage: makeLocalStorage(),
                                          tokenStorage: AuthTokenStorageImpl.sharedStorage,
                                          defaultStorage: DefaultStorageImpl.sharedStorage))
     }

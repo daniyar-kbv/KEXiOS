@@ -55,6 +55,9 @@ final class ChangeNameView: UIView {
 
     private(set) lazy var emailTextField: UITextField = {
         let field = UITextField()
+        field.keyboardType = .emailAddress
+        field.textContentType = .emailAddress
+        field.autocapitalizationType = .none
         return field
     }()
 
@@ -93,6 +96,7 @@ extension ChangeNameView {
         nameTextField.text = name
         emailTextField.text = email
         saveButton.isEnabled = !(nameTextField.text?.isEmpty ?? true)
+        configureButton(isEnabled: !(nameTextField.text?.isEmpty ?? true))
     }
 
     func configureButton(isEnabled: Bool) {

@@ -113,7 +113,7 @@ extension MapPage {
             .disposed(by: disposeBag)
 
         viewModel.outputs.lastSelectedAddress
-            .subscribe(onNext: { [weak self] address, _ in
+            .subscribe(onNext: { [weak self] address in
                 self?.handlePageTermination()
                 self?.selectedAddress?(address)
             })
