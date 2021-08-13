@@ -59,8 +59,8 @@ final class MapViewModel {
             targetLocation = YMKPoint(latitude: city.latitude,
                                       longitude: city.longitude)
         } else {
-            targetLocation = YMKPoint(latitude: Constants.Map.Coordinates.ALA_LAT,
-                                      longitude: Constants.Map.Coordinates.ALA_LON)
+            targetLocation = YMKPoint(latitude: Constants.Map.Coordinates.ALALatitude,
+                                      longitude: Constants.Map.Coordinates.ALALongitude)
         }
 
         outputs.selectedAddress.onNext(userAddress.address)
@@ -81,64 +81,83 @@ final class MapViewModel {
     }
 
     func reverseGeoCoding(searchQuery: String, title _: String) {
-        let responseHandler = { [weak self] (searchResponse: YMKSearchResponse?, _: Error?) -> Void in
-            guard let response = searchResponse else { return }
+        let responseHandler: (_ searchResponse: YMKSearchResponse?, _: Error?) -> Void = { [weak self] response, _ in
+            guard let response = response else { return }
             self?.onSearchResponseName(response, shouldMoveMap: true)
         }
-
-        searchSession = searchManager.submit(withText: searchQuery, geometry: YMKGeometry(point: targetLocation), searchOptions: YMKSearchOptions(), responseHandler: responseHandler)
+        searchSession = searchManager.submit(withText: searchQuery,
+                                             geometry: YMKGeometry(point: targetLocation),
+                                             searchOptions: YMKSearchOptions(),
+                                             responseHandler: responseHandler)
     }
 
     func getName(point: YMKPoint, zoom: NSNumber) {
-        let responseHandler = { (searchResponse: YMKSearchResponse?, _: Error?) -> Void in
-            if let response = searchResponse {
-                self.onSearchResponseName(response)
-            }
+        let responseHandler: (_ searchResponse: YMKSearchResponse?, _: Error?) -> Void = { [weak self] response, _ in
+            guard let response = response else { return }
+            self?.onSearchResponseName(response, shouldMoveMap: false)
         }
-        searchSession = searchManager.submit(with: point, zoom: zoom, searchOptions: YMKSearchOptions(), responseHandler: responseHandler)
+        searchSession = searchManager.submit(with: point,
+                                             zoom: zoom,
+                                             searchOptions: YMKSearchOptions(),
+                                             responseHandler: responseHandler)
     }
 
     private func onSearchResponseName(_ response: YMKSearchResponse, shouldMoveMap: Bool = false) {
         for searchResult in response.collection.children {
-            guard let _ = searchResult.obj!.geometry.first?.point else { return }
+            guard let point = searchResult.obj!.geometry.first?.point else { return }
             guard let objectMetadata = (response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata) else { continue }
             let addressComponenets = objectMetadata.address.components
 
-//            Tech debt: process addresses without street or district
-//            YMKSearchComponentKind.house
+            let locality = addressComponenets
+                .last(where: { $0.kinds.contains(where: { resolveKind(of: $0) == .locality }) })?
+                .name
 
             let district = addressComponenets
-                .first(where: {
-                    $0.kinds.contains(Constants.Map.ComponentsKinds.district)
-                })?
+                .last(where: { $0.kinds.contains(where: { resolveKind(of: $0) == .district }) })?
                 .name
+
             let street = addressComponenets
-                .first(where: {
-                    $0.kinds.contains(Constants.Map.ComponentsKinds.street)
-                })?
+                .last(where: { $0.kinds.contains(where: { resolveKind(of: $0) == .street }) })?
                 .name
+
             let building = addressComponenets
-                .first(where: {
-                    $0.kinds.contains(Constants.Map.ComponentsKinds.building)
-                })?
+                .last(where: { $0.kinds.contains(where: { resolveKind(of: $0) == .house }) })?
                 .name
 
             let address = Address()
-            address.district = district
-            address.street = street
+
+            guard building != nil else { return }
             address.building = building
-            address.longitude = objectMetadata.balloonPoint.longitude
-            address.latitude = objectMetadata.balloonPoint.latitude
+
+            if street != nil {
+                address.street = street
+                if district != nil {
+                    address.district = district
+                }
+            } else if district != nil {
+                address.district = district
+            } else if locality != nil {
+                address.district = locality
+            } else {
+                return
+            }
+
+            address.longitude = point.longitude
+            address.latitude = point.latitude
 
             outputs.selectedAddress.onNext(address)
 
             if shouldMoveMap {
-                outputs.moveMapTo.accept(YMKPoint(latitude: objectMetadata.balloonPoint.longitude,
-                                                  longitude: objectMetadata.balloonPoint.latitude))
+                outputs.moveMapTo.accept(YMKPoint(latitude: point.latitude,
+                                                  longitude: point.longitude))
             }
 
             return
         }
+    }
+
+    private func resolveKind(of kind: NSNumber) -> YMKSearchComponentKind {
+        return YMKSearchComponentKind(rawValue: .init(truncating: kind)) ?? .unknown
     }
 }
 

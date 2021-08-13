@@ -82,13 +82,12 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
         super.viewWillAppear(animated)
 
         viewModel.getDocuments()
-        numberView?.showKeyboard()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        numberView?.becomeFirstResponder()
+        numberView?.showKeyboard()
     }
 
     private func bindViewModel() {
@@ -132,6 +131,7 @@ extension AuthorizationController {
 extension AuthorizationController {
     @objc private func handleGetButtonAction() {
         viewModel.sendOTP()
+//        numberView?.resignFirstResponder()
     }
 
     @objc private func dismissVC() {

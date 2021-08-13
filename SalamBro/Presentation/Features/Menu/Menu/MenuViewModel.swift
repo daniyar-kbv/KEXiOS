@@ -63,15 +63,18 @@ final class MenuViewModel: MenuViewModelProtocol {
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        menuRepository.outputs.didEndRequest.bind {
-            [weak self] _ in
-            self?.outputs.didEndRequest.accept(())
-            self?.outputs.updateTableView.accept(())
-        }
-        .disposed(by: disposeBag)
+        menuRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
 
         menuRepository.outputs.didGetError
             .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+
+        menuRepository.outputs.didStartDataProcessing
+            .subscribe(onNext: { [weak self] in
+                self?.tableSections.removeAll()
+            })
             .disposed(by: disposeBag)
 
         menuRepository.outputs.didGetPromotions.bind {
@@ -86,6 +89,12 @@ final class MenuViewModel: MenuViewModelProtocol {
             self?.configureAnimation()
         }
         .disposed(by: disposeBag)
+
+        menuRepository.outputs.didEndDataProcessing
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.updateTableView.accept(())
+            })
+            .disposed(by: disposeBag)
 
         menuRepository.outputs.openPromotion
             .subscribe(onNext: { [weak self] promotion in
@@ -104,8 +113,6 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func download() {
-        tableSections.removeAll()
-
         menuRepository.getMenuItems()
     }
 

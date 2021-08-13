@@ -51,8 +51,10 @@ final class MenuRepositoryImpl: MenuRepository {
         outputs.didStartRequest.accept(())
         finalSequence.subscribe(onSuccess: {
             [weak self] promotions, categories in
+            self?.outputs.didStartDataProcessing.accept(())
             self?.outputs.didGetPromotions.accept(promotions)
             self?.outputs.didGetCategories.accept(categories)
+            self?.outputs.didEndDataProcessing.accept(())
             self?.outputs.didEndRequest.accept(())
         }, onError: { [weak self] error in
             self?.outputs.didEndRequest.accept(())
@@ -98,9 +100,12 @@ extension MenuRepositoryImpl {
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
 
+        let didStartDataProcessing = PublishRelay<Void>()
         let didGetPromotions = PublishRelay<[Promotion]>()
         let didGetCategories = PublishRelay<[MenuCategory]>()
         let didGetPositions = PublishRelay<[MenuPosition]>()
+        let didEndDataProcessing = PublishRelay<Void>()
+
         let openPromotion = PublishRelay<(url: URL, name: String)>()
     }
 }
