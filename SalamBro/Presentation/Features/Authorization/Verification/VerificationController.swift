@@ -39,6 +39,11 @@ final class VerificationController: UIViewController, LoaderDisplayable {
 
     override func viewWillAppear(_: Bool) {
         rootView?.startTimer()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
         rootView?.showKeyboard()
     }
 

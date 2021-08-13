@@ -29,7 +29,7 @@ final class SupportCoordinator: BaseCoordinator {
     }
 
     func restart() {
-        let supportPage = pagesFactory.makeSupportPage()
+        let supportPage = makeSupportPage()
 
         router.getNavigationController().setViewControllers([supportPage], animated: false)
     }
