@@ -34,24 +34,20 @@ final class MenuRepositoryImpl: MenuRepository {
     func getMenuItems() {
         guard let leadUUID = storage.leadUUID else { return }
 
+        let addressSequence = menuService.getAddressInfo(for: leadUUID)
         let promotionsSequence = menuService.getPromotions(leadUUID: leadUUID)
         let productsSequence = menuService.getProducts(for: leadUUID)
 
-        let finalSequence = Single.zip(promotionsSequence,
+        let finalSequence = Single.zip(addressSequence,
+                                       promotionsSequence,
                                        productsSequence,
-                                       resultSelector: {
-                                           promotions, productsData ->
-                                               ([Promotion],
-                                                [MenuCategory]) in
-                                           (
-                                               promotions,
-                                               productsData
-                                           )
-                                       })
+                                       resultSelector: { ($0, $1, $2) })
+
         outputs.didStartRequest.accept(())
         finalSequence.subscribe(onSuccess: {
-            [weak self] promotions, categories in
+            [weak self] addressInfo, promotions, categories in
             self?.outputs.didStartDataProcessing.accept(())
+            self?.outputs.didGetAddressInfo.accept(addressInfo)
             self?.outputs.didGetPromotions.accept(promotions)
             self?.outputs.didGetCategories.accept(categories)
             self?.outputs.didEndDataProcessing.accept(())
@@ -101,6 +97,7 @@ extension MenuRepositoryImpl {
         let didGetError = PublishRelay<ErrorPresentable?>()
 
         let didStartDataProcessing = PublishRelay<Void>()
+        let didGetAddressInfo = PublishRelay<AddressInfo>()
         let didGetPromotions = PublishRelay<[Promotion]>()
         let didGetCategories = PublishRelay<[MenuCategory]>()
         let didGetPositions = PublishRelay<[MenuPosition]>()

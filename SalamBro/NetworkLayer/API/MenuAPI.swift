@@ -8,6 +8,7 @@
 import Moya
 
 enum MenuAPI {
+    case addressInfo(leadUUID: String)
     case products(leadUUID: String)
     case productDetail(leadUUID: String, productUUID: String)
     case promotions(leadUUID: String)
@@ -21,6 +22,7 @@ extension MenuAPI: TargetType {
 
     var path: String {
         switch self {
+        case let .addressInfo(leadUUID): return "/orders/\(leadUUID)/show/"
         case let .products(leadUUID): return "orders/\(leadUUID)/nomenclature/"
         case let .productDetail(leadUUID, productUUID): return
             "orders/\(leadUUID)/nomenclature/\(productUUID)/"
@@ -31,6 +33,7 @@ extension MenuAPI: TargetType {
 
     var method: Method {
         switch self {
+        case .addressInfo: return .get
         case .products: return .get
         case .productDetail: return .get
         case .promotions: return .get
@@ -44,6 +47,7 @@ extension MenuAPI: TargetType {
 
     var task: Task {
         switch self {
+        case .addressInfo: return .requestPlain
         case .products: return .requestPlain
         case .productDetail: return .requestPlain
         case .promotions: return .requestPlain

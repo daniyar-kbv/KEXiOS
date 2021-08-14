@@ -11,6 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol MenuService: AnyObject {
+    func getAddressInfo(for leadUUID: String) -> Single<AddressInfo>
     func getProducts(for leadUUID: String) -> Single<[MenuCategory]>
     func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail>
     func getPromotions(leadUUID: String) -> Single<[Promotion]>
@@ -22,6 +23,27 @@ class MenuServiceImpl: MenuService {
 
     init(provider: MoyaProvider<MenuAPI>) {
         self.provider = provider
+    }
+
+    func getAddressInfo(for leadUUID: String) -> Single<AddressInfo> {
+        return provider.rx
+            .request(.addressInfo(leadUUID: leadUUID))
+            .map { response in
+
+                guard let orderProductsResponse = try? response.map(OrdersShowResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = orderProductsResponse.error {
+                    throw error
+                }
+
+                guard let data = orderProductsResponse.data else {
+                    throw NetworkError.noData
+                }
+
+                return data
+            }
     }
 
     func getProducts(for leadUUID: String) -> Single<[MenuCategory]> {
