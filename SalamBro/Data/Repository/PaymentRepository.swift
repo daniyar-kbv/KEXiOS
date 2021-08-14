@@ -16,7 +16,7 @@ protocol PaymentRepository: AnyObject {
     var outputs: PaymentRepositoryImpl.Output { get }
 
     func getSelectedPaymentMethod() -> PaymentMethod?
-    func setSelected(paymentMethod: PaymentMethod)
+    func setSelected(paymentMethod: PaymentMethod?)
     func fetchSavedCards()
     func getPaymentMethods()
     func makePayment()
@@ -38,6 +38,8 @@ final class PaymentRepositoryImpl: PaymentRepository {
     private var threeDsProcessor: ThreeDsProcessor?
     private var paymentUUID: String?
 
+    private var needSetDefaultPaymentMethod = true
+
     let outputs = Output()
 
     init(paymentService: PaymentsService,
@@ -51,7 +53,7 @@ final class PaymentRepositoryImpl: PaymentRepository {
         self.cartStorage = cartStorage
     }
 
-    func setSelected(paymentMethod: PaymentMethod) {
+    func setSelected(paymentMethod: PaymentMethod?) {
         selectedPaymentMethod = paymentMethod
         outputs.selectedPaymentMethod.accept(paymentMethod)
     }
@@ -96,7 +98,24 @@ extension PaymentRepositoryImpl {
         paymentMethods.removeAll()
         paymentMethods.append(contentsOf: cards.map { .init(type: .savedCard, value: $0) })
         paymentMethods.append(contentsOf: localPaymentMethods)
+
         getPaymentMethods()
+
+        if let selectedPaymentMethod = selectedPaymentMethod,
+           !paymentMethods.contains(selectedPaymentMethod)
+        {
+            setSelected(paymentMethod: nil)
+        }
+
+        if needSetDefaultPaymentMethod,
+           let defaultPaymentMethod = paymentMethods.first(where: {
+               guard let card: MyCard = $0.getValue() else { return false }
+               return card.isCurrent
+           })
+        {
+            needSetDefaultPaymentMethod = false
+            setSelected(paymentMethod: defaultPaymentMethod)
+        }
     }
 
     func deleteCards(with UUIDs: [String]) {
@@ -344,7 +363,7 @@ extension PaymentRepositoryImpl {
         let hide3DS = PublishRelay<Void>()
         let showApplePay = PublishRelay<PKPaymentAuthorizationViewController>()
 
-        let selectedPaymentMethod = BehaviorRelay<PaymentMethod?>(value: nil)
+        let selectedPaymentMethod = PublishRelay<PaymentMethod?>()
         let paymentMethods = PublishRelay<[PaymentMethod]>()
         let savedCards = PublishRelay<[MyCard]>()
 

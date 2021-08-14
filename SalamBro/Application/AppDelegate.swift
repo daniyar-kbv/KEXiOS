@@ -103,7 +103,6 @@ extension AppDelegate {
 
     func userNotificationCenter(_: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler _: @escaping (UNNotificationPresentationOptions) -> Void) {
         let userInfo = notification.request.content.userInfo
-        print(userInfo)
         guard let pushNotification = PushNotification(dictionary: userInfo) else { return }
 
         showNotificationAlert(pushNotification: pushNotification)
@@ -119,6 +118,7 @@ extension AppDelegate {
     }
 
     func showNotificationAlert(pushNotification: PushNotification) {
+//        Tech debt: not show alert while payment process
         UIApplication.topViewController()?.showAlert(title: pushNotification.aps.alert.title,
                                                      message: pushNotification.aps.alert.body,
                                                      submitTitle: SBLocalization.localized(key: AlertText.ok)) { [weak self] in

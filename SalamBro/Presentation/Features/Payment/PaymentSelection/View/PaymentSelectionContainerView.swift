@@ -72,9 +72,9 @@ final class PaymentSelectionContainerView: UIView {
 }
 
 extension PaymentSelectionContainerView {
-    func setPaymentMethod(paymentMethod: PaymentMethod) {
-        paymentSelectionButton.setPaymentMethod(text: paymentMethod.title,
-                                                isApplePay: paymentMethod.type == .applePay)
+    func setPaymentMethod(paymentMethod: PaymentMethod?) {
+        paymentSelectionButton.setPaymentMethod(text: paymentMethod?.title,
+                                                isApplePay: paymentMethod?.type == .applePay)
         configActionButton(with: paymentMethod)
     }
 
@@ -148,10 +148,10 @@ extension PaymentSelectionContainerView {
         }
     }
 
-    private func configActionButton(with paymentMethod: PaymentMethod) {
-        actionButton.backgroundColor = .kexRed
-        actionButton.isEnabled = true
-        actionButton.isHidden = paymentMethod.type == .applePay
-        applePayButton.isHidden = paymentMethod.type != .applePay
+    private func configActionButton(with paymentMethod: PaymentMethod?) {
+        actionButton.backgroundColor = paymentMethod != nil ? .kexRed : .calmGray
+        actionButton.isEnabled = paymentMethod != nil
+        actionButton.isHidden = paymentMethod?.type == .applePay
+        applePayButton.isHidden = paymentMethod?.type != .applePay
     }
 }

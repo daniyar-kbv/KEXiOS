@@ -11,7 +11,7 @@ import RxSwift
 import UIKit
 
 final class AdCollectionCell: UITableViewCell {
-    public var delegate: AddCollectionCellDelegate?
+    weak var delegate: AddCollectionCellDelegate?
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
@@ -96,6 +96,6 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
 
 extension AdCollectionCell: Reusable {}
 
-public protocol AddCollectionCellDelegate {
+public protocol AddCollectionCellDelegate: AnyObject {
     func openPromotion(promotionURL: URL, name: String)
 }

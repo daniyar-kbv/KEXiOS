@@ -74,7 +74,6 @@ extension PaymentSelectionViewModelImpl {
     private func bindRepository() {
         paymentRepository.outputs.selectedPaymentMethod
             .subscribe(onNext: { [weak self] selectedPaymentMethod in
-                guard let selectedPaymentMethod = selectedPaymentMethod else { return }
                 self?.outputs.didSelectPaymentMethod.accept(selectedPaymentMethod)
             }).disposed(by: disposeBag)
 
@@ -113,20 +112,6 @@ extension PaymentSelectionViewModelImpl {
         paymentRepository.outputs.showApplePay
             .bind(to: outputs.showApplePay)
             .disposed(by: disposeBag)
-
-        paymentRepository.outputs.paymentMethods
-            .subscribe(onNext: { [weak self] paymentMethods in
-                self?.process(paymentMethods: paymentMethods)
-            })
-            .disposed(by: disposeBag)
-    }
-
-    private func process(paymentMethods: [PaymentMethod]) {
-        guard let currentPaymentMethod = paymentMethods.first(where: { paymentMethod in
-            guard let savedCard: MyCard = paymentMethod.getValue() else { return false }
-            return savedCard.isCurrent
-        }) else { return }
-        paymentRepository.setSelected(paymentMethod: currentPaymentMethod)
     }
 }
 
@@ -141,7 +126,7 @@ extension PaymentSelectionViewModelImpl {
         let didGetError = PublishRelay<ErrorPresentable>()
 
         let totalAmount = BehaviorRelay<String?>(value: nil)
-        let didSelectPaymentMethod = PublishRelay<PaymentMethod>()
+        let didSelectPaymentMethod = PublishRelay<PaymentMethod?>()
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()
         let showApplePay = PublishRelay<PKPaymentAuthorizationViewController>()
