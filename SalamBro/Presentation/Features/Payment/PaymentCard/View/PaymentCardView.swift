@@ -80,11 +80,11 @@ final class PaymentCardView: UIView {
     }
 
     private func layoutUI() {
-        cardNumberField.text = "4012 8888 8888 1881"
-        expiryDateField.text = "11/23"
-        cvvCodeField.text = "222"
-        cardholderNameField.text = "TEST TEST"
-        configButtonEnable(true)
+//        cardNumberField.text = "4012 8888 8888 1881"
+//        expiryDateField.text = "11/23"
+//        cvvCodeField.text = "222"
+//        cardholderNameField.text = "TEST TEST"
+//        configButtonEnable(true)
 
         backgroundColor = .arcticWhite
 

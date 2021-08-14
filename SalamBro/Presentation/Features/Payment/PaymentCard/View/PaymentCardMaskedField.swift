@@ -32,10 +32,12 @@ final class PaymentCardMaskedField: UITextField, MaskedTextFieldDelegateListener
         textColor = .darkGray
         font = .systemFont(ofSize: 16, weight: .medium)
         autocapitalizationType = .allCharacters
-        keyboardType = inputType.keyboardType
-        delegate = inputType.needMask ? maskedDelegate : self
         layer.borderWidth = 1
         layer.borderColor = UIColor.clear.cgColor
+        autocorrectionType = .no
+        keyboardType = inputType.keyboardType
+        delegate = inputType.needMask ? maskedDelegate : self
+        textContentType = inputType.textContentType
     }
 
     func isComplete() -> Bool {
@@ -112,7 +114,14 @@ extension PaymentCardMaskedField {
         var keyboardType: UIKeyboardType {
             switch self {
             case .cardNumber, .expiryDate, .CVV: return .decimalPad
-            case .cardhodlerName: return .default
+            case .cardhodlerName: return .asciiCapable
+            }
+        }
+
+        var textContentType: UITextContentType? {
+            switch self {
+            case .cardNumber: return .creditCardNumber
+            default: return nil
             }
         }
 

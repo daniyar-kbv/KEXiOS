@@ -150,7 +150,8 @@ final class DropDownTextField: UIView {
 
     private func setupConstraints() {
         titleLabel.snp.makeConstraints {
-            $0.top.left.equalToSuperview()
+            $0.top.equalToSuperview().offset(12)
+            $0.left.equalToSuperview()
             $0.right.lessThanOrEqualToSuperview()
         }
 

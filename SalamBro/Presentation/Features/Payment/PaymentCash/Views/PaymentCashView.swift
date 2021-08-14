@@ -8,13 +8,13 @@
 import Foundation
 import UIKit
 
-protocol PaymentCashViewDelegate {
+protocol PaymentCashViewDelegate: AnyObject {
     func onSubmit()
     func textFieldDidChange(text: String?)
 }
 
 final class PaymentCashView: UIView {
-    var delegate: PaymentCashViewDelegate?
+    weak var delegate: PaymentCashViewDelegate?
 
     private lazy var topLabel: UILabel = {
         let view = UILabel()
