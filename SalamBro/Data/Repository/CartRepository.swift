@@ -12,6 +12,7 @@ import RxSwift
 protocol CartRepository {
     var outputs: CartRepositoryImpl.Output { get }
 
+    func reload()
     func getItems()
     func addItem(item: CartItem)
     func removeItem(positionUUID: String)
@@ -55,6 +56,21 @@ final class CartRepositoryImpl: CartRepository {
 }
 
 extension CartRepositoryImpl {
+    func reload() {
+        guard let leadUUID = defaultStorage.leadUUID else { return }
+        outputs.didStartRequest.accept(())
+        ordersService.getCart(for: leadUUID)
+            .subscribe { [weak self] cart in
+                self?.process(cart: cart)
+                self?.outputs.didEndRequest.accept(())
+            } onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didGetError.accept(error)
+            }
+            .disposed(by: disposeBag)
+    }
+
     func getItems() {
 //        getAdditionalPositions() { [weak self] in
 //            self?.sendItems()

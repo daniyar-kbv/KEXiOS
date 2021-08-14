@@ -12,6 +12,7 @@ import RxSwift
 protocol CartViewModel {
     var outputs: CartViewModelImpl.Output { get }
 
+    func reload()
     func getCart()
     func getTotalPrice() -> String
     func getIsEmpty() -> Bool
@@ -48,6 +49,10 @@ final class CartViewModelImpl: CartViewModel {
 }
 
 extension CartViewModelImpl {
+    func reload() {
+        cartRepository.reload()
+    }
+
     func getCart() {
         cartRepository.getItems()
     }

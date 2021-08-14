@@ -14,7 +14,7 @@ protocol CartViewDelegate {
 }
 
 // FIXME: Refactor
-class CartController: UIViewController, LoaderDisplayable {
+class CartController: UIViewController, LoaderDisplayable, Reloadable {
     private let viewModel: CartViewModel
     private let disposeBag = DisposeBag()
 
@@ -28,7 +28,14 @@ class CartController: UIViewController, LoaderDisplayable {
         table.estimatedSectionHeaderHeight = UITableView.automaticDimension
         table.estimatedSectionFooterHeight = UITableView.automaticDimension
         table.separatorStyle = .none
+        table.refreshControl = refreshControl
         return table
+    }()
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let view = UIRefreshControl()
+        view.addTarget(self, action: #selector(reload), for: .valueChanged)
+        return view
     }()
 
     private lazy var divider: UIView = {
@@ -75,10 +82,80 @@ class CartController: UIViewController, LoaderDisplayable {
         viewModel.getCart()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        reload()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         configAnimationView()
+    }
+}
+
+extension CartController {
+    @objc func reload() {
+        viewModel.reload()
+    }
+
+    @objc func buttonAction() {
+        viewModel.proceedButtonTapped()
+    }
+
+    func openPromocode() {
+        let commentaryPage = MapCommentaryPage()
+
+        commentaryPage.configureTextField(placeholder: SBLocalization.localized(key: CartText.Cart.Promocode.placeholder))
+        commentaryPage.configureButton(title: SBLocalization.localized(key: CartText.Cart.Promocode.button))
+        commentaryPage.configureTextField(autocapitalizationType: .allCharacters)
+
+        commentaryPage.output.didProceed
+            .subscribe(onNext: { [weak self] promocode in
+                self?.viewModel.applyPromocode(promocode: promocode)
+            }).disposed(by: disposeBag)
+
+        commentaryPage.openTransitionSheet(on: self)
+    }
+}
+
+extension CartController {
+    private func layoutUI() {
+        view.backgroundColor = .arcticWhite
+
+        [divider, orderButton].forEach {
+            footerView.addSubview($0)
+        }
+        [itemsTableView, footerView].forEach {
+            view.addSubview($0)
+        }
+
+        divider.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.width.equalTo(footerView.snp.width)
+        }
+
+        orderButton.snp.makeConstraints {
+            $0.left.equalTo(footerView.snp.left).offset(24)
+            $0.right.equalTo(footerView.snp.right).offset(-24)
+            $0.centerY.equalTo(footerView.snp.centerY)
+            $0.height.equalTo(43)
+        }
+
+        footerView.snp.makeConstraints {
+            $0.left.equalTo(view.safeAreaLayoutGuide.snp.left)
+            $0.right.equalTo(view.safeAreaLayoutGuide.snp.right)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.height.equalTo(75)
+        }
+
+        itemsTableView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.left.equalTo(view.safeAreaLayoutGuide.snp.left)
+            $0.right.equalTo(view.safeAreaLayoutGuide.snp.right)
+            $0.bottom.equalTo(footerView.snp.top)
+        }
     }
 
     private func bindViewModel() {
@@ -132,64 +209,6 @@ class CartController: UIViewController, LoaderDisplayable {
         showAnimationView(animationType: .emptyBasket) { [weak self] in
             self?.outputs.toMenu.accept(())
         }
-    }
-}
-
-extension CartController {
-    private func layoutUI() {
-        view.backgroundColor = .arcticWhite
-
-        [divider, orderButton].forEach {
-            footerView.addSubview($0)
-        }
-        [itemsTableView, footerView].forEach {
-            view.addSubview($0)
-        }
-
-        divider.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.width.equalTo(footerView.snp.width)
-        }
-
-        orderButton.snp.makeConstraints {
-            $0.left.equalTo(footerView.snp.left).offset(24)
-            $0.right.equalTo(footerView.snp.right).offset(-24)
-            $0.centerY.equalTo(footerView.snp.centerY)
-            $0.height.equalTo(43)
-        }
-
-        footerView.snp.makeConstraints {
-            $0.left.equalTo(view.safeAreaLayoutGuide.snp.left)
-            $0.right.equalTo(view.safeAreaLayoutGuide.snp.right)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-            $0.height.equalTo(75)
-        }
-
-        itemsTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.left.equalTo(view.safeAreaLayoutGuide.snp.left)
-            $0.right.equalTo(view.safeAreaLayoutGuide.snp.right)
-            $0.bottom.equalTo(footerView.snp.top)
-        }
-    }
-
-    @objc func buttonAction() {
-        viewModel.proceedButtonTapped()
-    }
-
-    func openPromocode() {
-        let commentaryPage = MapCommentaryPage()
-
-        commentaryPage.configureTextField(placeholder: SBLocalization.localized(key: CartText.Cart.Promocode.placeholder))
-        commentaryPage.configureButton(title: SBLocalization.localized(key: CartText.Cart.Promocode.button))
-        commentaryPage.configureTextField(autocapitalizationType: .allCharacters)
-
-        commentaryPage.output.didProceed
-            .subscribe(onNext: { [weak self] promocode in
-                self?.viewModel.applyPromocode(promocode: promocode)
-            }).disposed(by: disposeBag)
-
-        commentaryPage.openTransitionSheet(on: self)
     }
 }
 
