@@ -17,6 +17,7 @@
 		34F50081FA11A3BFE63D92F75D7B04B2 /* AddressDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B4ED81B591594B4EA61D5769FBA015 /* AddressDetailController.swift */; };
 		8F1FC1916920ACE81D43E57FB594F151 /* AddressDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B79444155AD798DB9732E93D09FCD89 /* AddressDetailView.swift */; };
 		3BFF35826D9F5684C481F56451D4BBA2 /* AddressDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F983FD8141707762204B9B17E9622D /* AddressDetailViewModel.swift */; };
+		78B3927B0444AD69C15309C37B09C675 /* AddressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5774A1E370C07AB83058095D3475B /* AddressInfo.swift */; };
 		55AAE4C69E922BD6AAFCD15098FB4D6E /* AddressListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC258D5FA8D8EF7BDDAF1F198E5ABF /* AddressListCell.swift */; };
 		ABE6730CD043D232FC892A9736CADFB5 /* AddressListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEA59E57B9F71221E8F8848AAFF1428 /* AddressListController.swift */; };
 		2565B7D79EBC8E77234BF93A4C8D6408 /* AddressListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F68A9740483B99500A15ADB6B65D43 /* AddressListCoordinator.swift */; };
@@ -343,6 +344,7 @@
 		50B4ED81B591594B4EA61D5769FBA015 /* AddressDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailController.swift; sourceTree = "<group>"; };
 		9B79444155AD798DB9732E93D09FCD89 /* AddressDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailView.swift; sourceTree = "<group>"; };
 		10F983FD8141707762204B9B17E9622D /* AddressDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailViewModel.swift; sourceTree = "<group>"; };
+		A8E5774A1E370C07AB83058095D3475B /* AddressInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressInfo.swift; sourceTree = "<group>"; };
 		68EC258D5FA8D8EF7BDDAF1F198E5ABF /* AddressListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressListCell.swift; sourceTree = "<group>"; };
 		0BEA59E57B9F71221E8F8848AAFF1428 /* AddressListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListController.swift; sourceTree = "<group>"; };
 		58F68A9740483B99500A15ADB6B65D43 /* AddressListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListCoordinator.swift; sourceTree = "<group>"; };
@@ -2006,6 +2008,7 @@
 			isa = PBXGroup;
 			children = (
 				6757429831449DFBC58ECB02F3652B1D /* Address.swift */,
+				A8E5774A1E370C07AB83058095D3475B /* AddressInfo.swift */,
 				B083A8F562C53C044488D56E70C438B4 /* Brand.swift */,
 				202DFE04A433AE571BDB5680922EF6E1 /* Cart.swift */,
 				E609F646EB5F5F152EE1646827E15615 /* CartAdditionalProduct.swift */,
@@ -2602,6 +2605,7 @@
 				34F50081FA11A3BFE63D92F75D7B04B2 /* AddressDetailController.swift in Sources */,
 				8F1FC1916920ACE81D43E57FB594F151 /* AddressDetailView.swift in Sources */,
 				3BFF35826D9F5684C481F56451D4BBA2 /* AddressDetailViewModel.swift in Sources */,
+				78B3927B0444AD69C15309C37B09C675 /* AddressInfo.swift in Sources */,
 				55AAE4C69E922BD6AAFCD15098FB4D6E /* AddressListCell.swift in Sources */,
 				ABE6730CD043D232FC892A9736CADFB5 /* AddressListController.swift in Sources */,
 				2565B7D79EBC8E77234BF93A4C8D6408 /* AddressListCoordinator.swift in Sources */,

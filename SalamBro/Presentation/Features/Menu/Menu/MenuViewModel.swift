@@ -77,18 +77,24 @@ final class MenuViewModel: MenuViewModelProtocol {
             })
             .disposed(by: disposeBag)
 
-        menuRepository.outputs.didGetPromotions.bind {
-            [weak self] promotions in
-            self?.setPromotions(promotions: promotions)
-        }
-        .disposed(by: disposeBag)
+        menuRepository.outputs.didGetAddressInfo
+            .subscribe(onNext: { [weak self] addressInfo in
+                self?.set(addressInfo: addressInfo)
+            })
+            .disposed(by: disposeBag)
 
-        menuRepository.outputs.didGetCategories.bind {
-            [weak self] categories in
-            self?.setCategories(categories: categories)
-            self?.configureAnimation()
-        }
-        .disposed(by: disposeBag)
+        menuRepository.outputs.didGetPromotions
+            .bind { [weak self] promotions in
+                self?.set(promotions: promotions)
+            }
+            .disposed(by: disposeBag)
+
+        menuRepository.outputs.didGetCategories
+            .bind { [weak self] categories in
+                self?.set(categories: categories)
+                self?.configureAnimation()
+            }
+            .disposed(by: disposeBag)
 
         menuRepository.outputs.didEndDataProcessing
             .subscribe(onNext: { [weak self] in
@@ -112,35 +118,39 @@ final class MenuViewModel: MenuViewModelProtocol {
             .disposed(by: disposeBag)
     }
 
-    private func download() {
-        menuRepository.getMenuItems()
+    private func set(addressInfo: AddressInfo) {
+        outputs.brandImage.accept(addressInfo.brandImage)
+        outputs.brandName.accept(addressInfo.brandName)
+        let addressViewModels = [AddressPickCellViewModel(address: addressInfo.address.toAddress())]
+        let section = Section(type: .address,
+                              headerViewModel: nil,
+                              cellViewModels: addressViewModels)
+        tableSections.insert(section, at: 0)
     }
 
-    private func setPromotions(promotions: [Promotion]) {
-        let promotions = promotions.sorted(by: { $0.priority < $1.priority })
+    private func set(promotions: [Promotion]) {
+        guard !promotions.isEmpty else { return }
 
-        let addressViewModels = [AddressPickCellViewModel(address: locationRepository.getCurrentUserAddress()?.address)]
-        tableSections.append(.init(type: .address,
+        let promotionsViewModels = [AdCollectionCellViewModel(
+            promotions: promotions.sorted(by: { $0.priority < $1.priority })
+        )]
+
+        tableSections.insert(.init(type: .promotions,
                                    headerViewModel: nil,
-                                   cellViewModels: addressViewModels))
-
-        if promotions.count > 0 {
-            let promotionsViewModels = [AdCollectionCellViewModel(promotions: promotions)]
-            tableSections.append(.init(type: .promotions,
-                                       headerViewModel: nil,
-                                       cellViewModels: promotionsViewModels))
-        }
+                                   cellViewModels: promotionsViewModels),
+                             at: 1)
     }
 
-    private func setCategories(categories: [MenuCategory]) {
+    private func set(categories: [MenuCategory]) {
         let categories = categories.filter { !$0.positions.isEmpty }
-        tableSections.append(.init(
-            type: .positions,
-            headerViewModel: CategoriesSectionHeaderViewModel(categories: categories),
-            cellViewModels: categories
-                .map { $0.positions.map { MenuCellViewModel(position: $0) } }
-                .flatMap { $0 }
-        ))
+        tableSections.insert(
+            .init(type: .positions,
+                  headerViewModel: CategoriesSectionHeaderViewModel(categories: categories),
+                  cellViewModels: categories
+                      .map { $0.positions.map { MenuCellViewModel(position: $0) } }
+                      .flatMap { $0 }),
+            at: 2
+        )
     }
 
     func configureAnimation() {}
@@ -166,10 +176,7 @@ extension MenuViewModel {
     }
 
     func update() {
-        download()
-
-        outputs.brandImage.accept(brandRepository.getCurrentBrand()?.image)
-        outputs.brandName.accept(brandRepository.getCurrentBrand()?.name)
+        menuRepository.getMenuItems()
     }
 
     func numberOfSections() -> Int {
