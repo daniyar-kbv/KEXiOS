@@ -13,8 +13,8 @@ struct OrdersListResponse: Codable {
 
     struct Data: Codable {
         let count: Int
-        let next: String
-        let previous: String
+        let next: String?
+        let previous: String?
         let results: [OrdersList]
 
         enum CodingKeys: String, CodingKey {

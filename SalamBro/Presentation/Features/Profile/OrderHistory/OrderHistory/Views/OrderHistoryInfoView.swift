@@ -23,10 +23,9 @@ final class OrderHistoryInfoView: UIView {
         return view
     }()
 
-    init(title: String, info: String) {
+    init(title: String) {
         super.init(frame: .zero)
         itemLabel.text = title
-        infoLabel.text = info
         layoutUI()
     }
 
@@ -48,5 +47,9 @@ final class OrderHistoryInfoView: UIView {
             $0.left.equalToSuperview()
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
+    }
+
+    func configure(with info: String) {
+        infoLabel.text = info
     }
 }

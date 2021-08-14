@@ -22,7 +22,6 @@ final class OrderHistoryButton: UIButton {
     }
 
     private func layoutUI() {
-        frame.size.height = 43.0
         backgroundColor = .arcticWhite
         borderWidth = 1
         titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)

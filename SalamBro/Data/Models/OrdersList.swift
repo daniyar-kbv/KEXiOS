@@ -14,9 +14,9 @@ struct OrdersList: Codable {
     let cart: Cart
     let price: String
     let createdDate: String
-    let status: OrderedFoodStatus
-    let paymentType: PaymentMethodType
-    let statusReason: String
+    let status: String
+    let paymentType: String
+    let statusReason: String?
     let leadID: String
 
     enum CodingKeys: String, CodingKey {
@@ -35,4 +35,21 @@ enum OrderedFoodStatus: String, Codable {
     case inDelivery = "IN_DELIVERY"
     case issued = "ISSUED"
     case failure = "FAILURE"
+
+    var title: String {
+        switch self {
+        case .new:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.new)
+        case .paid:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.paid)
+        case .cooking:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.cooking)
+        case .inDelivery:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.inDelivery)
+        case .issued:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.issued)
+        case .failure:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.failure)
+        }
+    }
 }

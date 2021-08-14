@@ -145,6 +145,12 @@
 "OrderHistory.sendBill" = "Отправить чек на почту";
 "OrderHistory.rateOrder" = "Оценить заказ";
 "OrderHistory.repeatOrder" = "Повторить заказ";
+"OrderHistory.new" = "Новый";
+"OrderHistory.paid" = "Оплачен";
+"OrderHistory.cooking" = "Готовится";
+"OrderHistory.inDelivery" = "В пути";
+"OrderHistory.issued" = "Доставлен";
+"OrderHistory.failure" = "Отменен";
 
 // MARK: - Select Main Info
 "select_main_info.country" = "Страна";

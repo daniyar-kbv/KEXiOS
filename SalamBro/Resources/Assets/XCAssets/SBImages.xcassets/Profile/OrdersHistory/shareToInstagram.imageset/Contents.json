@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Group 7174.pdf",
+      "filename" : "shareToInstagram@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "shareToInstagram@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "shareToInstagram@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -12,16 +12,23 @@ final class OrderHistoryItemView: UIView {
     private var itemLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .left
+        view.numberOfLines = 0
         return view
     }()
 
     private var priceLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .right
+        view.numberOfLines = 1
         return view
     }()
 
-    init(title: String, price: String) {
+    init() {
+        super.init(frame: .zero)
+        layoutUI()
+    }
+
+    init(with title: String, and price: String) {
         super.init(frame: .zero)
         itemLabel.text = title
         priceLabel.text = price
@@ -43,7 +50,13 @@ final class OrderHistoryItemView: UIView {
         }
         priceLabel.snp.makeConstraints {
             $0.top.bottom.equalTo(safeAreaLayoutGuide)
+            $0.left.equalTo(itemLabel.snp.right).offset(4)
             $0.right.equalToSuperview()
         }
+    }
+
+    func configure(with title: String, and price: String) {
+        itemLabel.text = title
+        priceLabel.text = price
     }
 }

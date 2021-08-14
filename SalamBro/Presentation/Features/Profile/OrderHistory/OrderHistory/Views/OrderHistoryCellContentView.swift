@@ -10,7 +10,7 @@ import UIKit
 
 protocol OrderHistoryViewDelegate: AnyObject {
     func shareToInstagramTapped()
-    func rateOrderTapped()
+    func rateOrder(at orderNumber: Int)
 }
 
 final class OrderHistoryCellContentView: UIView {
@@ -18,20 +18,17 @@ final class OrderHistoryCellContentView: UIView {
 
     private lazy var logoView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "SalamBro4")
         return view
     }()
 
     private lazy var titleLabel: UILabel = {
         let view = UILabel()
-        view.text = "Salam Bro"
         view.font = .systemFont(ofSize: 14)
         return view
     }()
 
     private lazy var dateLabel: UILabel = {
         let view = UILabel()
-        view.text = "02.03.21, 17:30"
         view.textColor = .mildBlue
         view.font = .systemFont(ofSize: 14)
         return view
@@ -39,7 +36,6 @@ final class OrderHistoryCellContentView: UIView {
 
     private lazy var checkNumberLabel: UILabel = {
         let view = UILabel()
-        view.text = "№53150756"
         view.font = .systemFont(ofSize: 10, weight: .medium)
         view.textColor = .mildBlue
         return view
@@ -60,29 +56,15 @@ final class OrderHistoryCellContentView: UIView {
 
     private lazy var shareToInstagramButton: UIButton = {
         let view = UIButton()
-//        Tech debt: change
-        view.setImage(UIImage(named: "shareToInstagram"), for: .normal)
+        view.setImage(SBImageResource.getIcon(for: ProfileIcons.OrdersHistory.shareToInstagram), for: .normal)
         return view
     }()
 
-    private lazy var item1 = OrderHistoryItemView(title: "1x BIG COMBO (Pepsi 0,5)", price: "1 490 ₸")
-    private lazy var item2 = OrderHistoryItemView(title: "2x Чизбургер куриный", price: "780 ₸")
-    private lazy var deliveryItem = OrderHistoryItemView(
-        title: SBLocalization.localized(key: ProfileText.OrderHistory.shipping),
-        price: "500"
-    )
-    private lazy var sumItem = OrderHistoryItemView(
-        title: SBLocalization.localized(key: ProfileText.OrderHistory.sum),
-        price: "2770"
-    )
+    private lazy var deliveryItem = OrderHistoryItemView()
+    private lazy var sumItem = OrderHistoryItemView()
 
     private lazy var itemStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [
-            item1,
-            item2,
-            deliveryItem,
-            sumItem,
-        ])
+        let view = UIStackView()
         view.axis = .vertical
         view.alignment = .fill
         view.distribution = .fill
@@ -91,17 +73,13 @@ final class OrderHistoryCellContentView: UIView {
     }()
 
     private lazy var addressItem = OrderHistoryInfoView(
-        title: SBLocalization.localized(key: ProfileText.OrderHistory.deliveryAddress),
-        info: "мкр. Орбита 1, 41"
-    )
+        title: SBLocalization.localized(key: ProfileText.OrderHistory.deliveryAddress))
+
     private lazy var paymentItem = OrderHistoryInfoView(
-        title: SBLocalization.localized(key: ProfileText.OrderHistory.paymentDetails),
-        info: "Картой в приложении"
-    )
+        title: SBLocalization.localized(key: ProfileText.OrderHistory.paymentDetails))
+
     private lazy var statusItem = OrderHistoryInfoView(
-        title: SBLocalization.localized(key: ProfileText.OrderHistory.orderStatus),
-        info: "Доставлен"
-    )
+        title: SBLocalization.localized(key: ProfileText.OrderHistory.orderStatus))
 
     private lazy var infoStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [
@@ -130,17 +108,19 @@ final class OrderHistoryCellContentView: UIView {
     )
 
     private lazy var buttonStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [
-            sendCheckButton,
-            rateOrderButton,
-            repeatOrderButton,
-        ])
+        let view = UIStackView()
         view.axis = .vertical
         view.alignment = .fill
         view.distribution = .fillEqually
         view.spacing = 16
         return view
     }()
+
+    private var orderedItems: [OrderHistoryItemView]?
+
+    private var orderStatus: OrderedFoodStatus?
+
+    private var orderNumber: Int?
 
     init(delegate: OrderHistoryViewDelegate) {
         super.init(frame: .zero)
@@ -190,19 +170,142 @@ final class OrderHistoryCellContentView: UIView {
         infoStack.snp.makeConstraints {
             $0.top.equalTo(itemStack.snp.bottom).offset(16)
             $0.left.right.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
         }
 
-        addSubview(buttonStack)
-        buttonStack.snp.makeConstraints {
-            $0.top.equalTo(infoStack.snp.bottom).offset(16)
-            $0.left.right.equalToSuperview()
-            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
-            $0.height.equalTo(161)
+        if orderStatus != .paid || orderStatus != .cooking || orderStatus != .inDelivery {
+            var height = 43
+            switch orderStatus {
+            case .new:
+                repeatOrderButton.setTitle("Отменить заказ", for: .normal)
+                buttonStack.addArrangedSubview(repeatOrderButton)
+            case .failure:
+                buttonStack.addArrangedSubview(repeatOrderButton)
+            case .issued:
+                buttonStack.addArrangedSubview(sendCheckButton)
+                buttonStack.addArrangedSubview(rateOrderButton)
+                buttonStack.addArrangedSubview(repeatOrderButton)
+                height = 161
+            default:
+                return
+            }
+
+            infoStack.snp.remakeConstraints {
+                $0.top.equalTo(itemStack.snp.bottom).offset(16)
+                $0.left.right.equalToSuperview()
+            }
+
+            addSubview(buttonStack)
+            buttonStack.snp.makeConstraints {
+                $0.top.equalTo(infoStack.snp.bottom).offset(16)
+                $0.left.right.equalToSuperview()
+                $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
+                $0.height.equalTo(height)
+            }
         }
     }
 
+    func configure(with item: OrdersList) {
+        if let imageURL = URL(string: item.brand.image) {
+            logoView.setImage(url: imageURL)
+        }
+
+        titleLabel.text = item.brand.name
+        dateLabel.text = getConvertedDate(of: item.createdDate)
+        checkNumberLabel.text = "№\(item.id)"
+
+        if let deliveryPrice = Double("500.0"), let totalSum = Double(item.price) {
+            configureItems(with: item.cart.items, deliveryPrice: deliveryPrice, totalSum: totalSum)
+        }
+
+        addressItem.configure(with: configureAddress(of: item.address))
+
+        if let paymentType = PaymentMethodType(rawValue: item.paymentType),
+           let orderStatus = OrderedFoodStatus(rawValue: item.status)
+        {
+            paymentItem.configure(with: PaymentMethod(type: paymentType).title)
+            statusItem.configure(with: orderStatus.title)
+            self.orderStatus = orderStatus
+        }
+
+        orderNumber = item.id
+
+        layoutUI()
+    }
+
+    private func configureItems(with items: [CartItem], deliveryPrice: Double, totalSum: Double) {
+        if itemStack.arrangedSubviews.isEmpty {
+            var modifiersText = ""
+
+            for item in items {
+                if let price = item.position.price {
+                    if !item.modifierGroups.isEmpty {
+                        for m in item.modifierGroups {
+                            for i in m.modifiers {
+                                modifiersText = modifiersText.isEmpty ? i.position.name : modifiersText + ", " + i.position.name
+                            }
+                        }
+
+                        itemStack.addArrangedSubview(OrderHistoryItemView(
+                            with: "\(item.count)x \(item.position.name) (\(modifiersText))",
+                            and: "\(Int(price)) ₸"
+                        ))
+                    } else {
+                        itemStack.addArrangedSubview(OrderHistoryItemView(
+                            with: "\(item.count)x \(item.position.name)",
+                            and: "\(Int(price)) ₸"
+                        ))
+                    }
+                }
+            }
+
+            deliveryItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.shipping), and: "\(Int(deliveryPrice)) ₸")
+            sumItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.sum), and: "\(Int(totalSum)) ₸")
+
+            itemStack.addArrangedSubview(deliveryItem)
+            itemStack.addArrangedSubview(sumItem)
+        }
+    }
+
+    private func getConvertedDate(of date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+        let convertedDate = dateFormatter.date(from: date)
+
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "dd.MM.yyyy, HH:mm"
+
+        if let convertedDate = convertedDate {
+            return dateFormatterPrint.string(from: convertedDate)
+        } else {
+            return ""
+        }
+    }
+
+    private func configureAddress(of address: Address) -> String {
+        var displayAddress = ""
+        if let district = address.district {
+            displayAddress.append(district)
+        }
+        if let street = address.street {
+            displayAddress = displayAddress.isEmpty ? street : displayAddress + ", " + street
+        }
+        if let building = address.building {
+            displayAddress = displayAddress.isEmpty ? building : displayAddress + ", " + building
+        }
+        if let corpus = address.corpus {
+            displayAddress = displayAddress.isEmpty ? corpus : displayAddress + ", " + corpus
+        }
+        if let flat = address.flat {
+            displayAddress = displayAddress.isEmpty ? flat : displayAddress + ", " + flat
+        }
+        return displayAddress
+    }
+
     @objc private func rateOrder() {
-        delegate?.rateOrderTapped()
+        guard let orderNumber = orderNumber else { return }
+        delegate?.rateOrder(at: orderNumber)
     }
 
     @objc private func shareToInstagram() {
