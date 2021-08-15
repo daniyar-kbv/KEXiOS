@@ -230,10 +230,6 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
         return viewModel.cell(for: indexPath)
     }
 
-    func tableView(_: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return viewModel.footerView(for: section)
-    }
-
     func tableView(_: UITableView, estimatedHeightForHeaderInSection _: Int) -> CGFloat {
         return 56
     }

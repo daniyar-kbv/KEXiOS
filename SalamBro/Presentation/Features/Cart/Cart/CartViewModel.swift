@@ -22,7 +22,6 @@ protocol CartViewModel {
     func numberOfRows(in section: Int) -> Int
     func headerView(for section: Int) -> UIView
     func cell(for indexPath: IndexPath) -> UITableViewCell
-    func footerView(for section: Int) -> UIView
 
     func proceedButtonTapped()
 }
@@ -111,6 +110,12 @@ extension CartViewModelImpl {
             }
             let viewModel = CartHeaderViewModelImpl(type: .promocode(promocode: promocode.promocode))
             return CartHeader(viewModel: viewModel)
+        case .footer:
+            let view = UIView()
+            view.snp.makeConstraints {
+                $0.height.equalTo(0)
+            }
+            return view
         }
     }
 
@@ -136,23 +141,12 @@ extension CartViewModelImpl {
             let cell = CartPromocodeCell(viewModel: viewModel)
             cell.delegate = self
             return cell
+        case .footer:
+            guard let viewModel = viewModel as? CartFooterViewModel
+            else { return UITableViewCell() }
+            let cell = CartFooterCell(viewModel: viewModel)
+            return cell
         }
-    }
-
-    func footerView(for section: Int) -> UIView {
-        guard section == tableSections.count - 1 else {
-            let view = UIView()
-            view.snp.makeConstraints {
-                $0.height.equalTo(0)
-            }
-            return view
-        }
-        let viewModel = CartFooterViewModelImpl(input: .init(
-            count: getCartItemsCount() + getAdditionalItemsCount(),
-            productsPrice: getCartItemsPrice() + getAdditionalItemsPrice(),
-            delivaryPrice: 500
-        ))
-        return CartFooter(viewModel: viewModel)
     }
 }
 
@@ -208,6 +202,18 @@ extension CartViewModelImpl {
             headerViewModel: nil,
             cellViewModels: [CartPromocodeViewModelImpl(promocode: promocode)],
             type: .promocode
+        ))
+
+        let footerViewModel = CartFooterViewModelImpl(input: .init(
+            count: getCartItemsCount() + getAdditionalItemsCount(),
+            productsPrice: getCartItemsPrice() + getAdditionalItemsPrice(),
+            delivaryPrice: 500
+        ))
+
+        tableSections.append(.init(
+            headerViewModel: nil,
+            cellViewModels: [footerViewModel],
+            type: .footer
         ))
 
         outputs.update.accept(())
@@ -273,6 +279,7 @@ extension CartViewModelImpl {
             case products
             case additional
             case promocode
+            case footer
         }
     }
 

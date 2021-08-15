@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class CartFooter: UIView {
+final class CartFooterCell: UITableViewCell {
     private lazy var countLabel: UILabel = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 18, weight: .semibold)
@@ -72,7 +72,7 @@ final class CartFooter: UIView {
     init(viewModel: CartFooterViewModel) {
         self.viewModel = viewModel
 
-        super.init(frame: .zero)
+        super.init(style: .default, reuseIdentifier: .none)
 
         bindViewModel()
         layoutUI()
@@ -100,7 +100,8 @@ final class CartFooter: UIView {
     private func layoutUI() {
         addSubview(mainStackView)
         mainStackView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-9)
             $0.left.right.equalToSuperview().inset(24)
         }
     }

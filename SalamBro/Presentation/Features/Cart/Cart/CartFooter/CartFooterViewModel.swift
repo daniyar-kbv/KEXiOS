@@ -13,7 +13,7 @@ protocol CartFooterViewModel {
     var outputs: CartFooterViewModelImpl.Output { get }
 }
 
-final class CartFooterViewModelImpl: CartFooterViewModel {
+final class CartFooterViewModelImpl: CartFooterViewModel, CartCellViewModel {
     let outputs: Output
 
     init(input: Input) {
