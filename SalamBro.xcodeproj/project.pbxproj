@@ -17,7 +17,6 @@
 		34F50081FA11A3BFE63D92F75D7B04B2 /* AddressDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B4ED81B591594B4EA61D5769FBA015 /* AddressDetailController.swift */; };
 		8F1FC1916920ACE81D43E57FB594F151 /* AddressDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B79444155AD798DB9732E93D09FCD89 /* AddressDetailView.swift */; };
 		3BFF35826D9F5684C481F56451D4BBA2 /* AddressDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F983FD8141707762204B9B17E9622D /* AddressDetailViewModel.swift */; };
-		78B3927B0444AD69C15309C37B09C675 /* AddressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5774A1E370C07AB83058095D3475B /* AddressInfo.swift */; };
 		55AAE4C69E922BD6AAFCD15098FB4D6E /* AddressListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC258D5FA8D8EF7BDDAF1F198E5ABF /* AddressListCell.swift */; };
 		ABE6730CD043D232FC892A9736CADFB5 /* AddressListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEA59E57B9F71221E8F8848AAFF1428 /* AddressListController.swift */; };
 		2565B7D79EBC8E77234BF93A4C8D6408 /* AddressListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F68A9740483B99500A15ADB6B65D43 /* AddressListCoordinator.swift */; };
@@ -129,6 +128,7 @@
 		10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */; };
 		2C3E677691E3DAE38B0D168AE032D58A /* LanguagePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFEA9695FCF2EA57210330515725F4B /* LanguagePlugin.swift */; };
 		05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */; };
+		A5C9B7AD6C8EB31158EB6C4FBD444C18 /* LeadInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6080B52F0FEB50CD00ABE2FFDB49B4CD /* LeadInfo.swift */; };
 		AFE4A9CB1651215078FF7933E0FE1E84 /* LoaderDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B1DD3359C1EF5D60E6A24C6244E9F6 /* LoaderDisplayable.swift */; };
 		49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0CD4620DB0111EEE4B4AF43B25022AE /* Localizable.strings */; };
 		11A54FF839FE6A0CBA870EEB511B5D87 /* LocationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C3B50E240D07EAF8B30062626C6FA1 /* LocationAPI.swift */; };
@@ -344,7 +344,6 @@
 		50B4ED81B591594B4EA61D5769FBA015 /* AddressDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailController.swift; sourceTree = "<group>"; };
 		9B79444155AD798DB9732E93D09FCD89 /* AddressDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailView.swift; sourceTree = "<group>"; };
 		10F983FD8141707762204B9B17E9622D /* AddressDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailViewModel.swift; sourceTree = "<group>"; };
-		A8E5774A1E370C07AB83058095D3475B /* AddressInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressInfo.swift; sourceTree = "<group>"; };
 		68EC258D5FA8D8EF7BDDAF1F198E5ABF /* AddressListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressListCell.swift; sourceTree = "<group>"; };
 		0BEA59E57B9F71221E8F8848AAFF1428 /* AddressListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListController.swift; sourceTree = "<group>"; };
 		58F68A9740483B99500A15ADB6B65D43 /* AddressListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListCoordinator.swift; sourceTree = "<group>"; };
@@ -479,6 +478,7 @@
 		668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		5FFEA9695FCF2EA57210330515725F4B /* LanguagePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePlugin.swift; sourceTree = "<group>"; };
 		118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6080B52F0FEB50CD00ABE2FFDB49B4CD /* LeadInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadInfo.swift; sourceTree = "<group>"; };
 		39BA308FCB7A9A775DD5A1463690B68E /* LegacyCartDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyCartDTO.swift; sourceTree = "<group>"; };
 		54B1DD3359C1EF5D60E6A24C6244E9F6 /* LoaderDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderDisplayable.swift; sourceTree = "<group>"; };
 		E7C3B50E240D07EAF8B30062626C6FA1 /* LocationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPI.swift; sourceTree = "<group>"; };
@@ -2008,7 +2008,6 @@
 			isa = PBXGroup;
 			children = (
 				6757429831449DFBC58ECB02F3652B1D /* Address.swift */,
-				A8E5774A1E370C07AB83058095D3475B /* AddressInfo.swift */,
 				B083A8F562C53C044488D56E70C438B4 /* Brand.swift */,
 				202DFE04A433AE571BDB5680922EF6E1 /* Cart.swift */,
 				E609F646EB5F5F152EE1646827E15615 /* CartAdditionalProduct.swift */,
@@ -2017,6 +2016,7 @@
 				E529FB36B2ACFCCE647F95DC5E371274 /* Country.swift */,
 				F54D26BD0FE939E99AE5326265196D7D /* Document.swift */,
 				668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */,
+				6080B52F0FEB50CD00ABE2FFDB49B4CD /* LeadInfo.swift */,
 				4FF32ADAB2B8FEF982A4A9355E2F96AD /* Menu.swift */,
 				81B8452F367B43CBFA41136A34C74954 /* Notification.swift */,
 				4A1146ECD2C11F607B503E7FDF57A1F2 /* Payment.swift */,
@@ -2605,7 +2605,6 @@
 				34F50081FA11A3BFE63D92F75D7B04B2 /* AddressDetailController.swift in Sources */,
 				8F1FC1916920ACE81D43E57FB594F151 /* AddressDetailView.swift in Sources */,
 				3BFF35826D9F5684C481F56451D4BBA2 /* AddressDetailViewModel.swift in Sources */,
-				78B3927B0444AD69C15309C37B09C675 /* AddressInfo.swift in Sources */,
 				55AAE4C69E922BD6AAFCD15098FB4D6E /* AddressListCell.swift in Sources */,
 				ABE6730CD043D232FC892A9736CADFB5 /* AddressListController.swift in Sources */,
 				2565B7D79EBC8E77234BF93A4C8D6408 /* AddressListCoordinator.swift in Sources */,
@@ -2714,6 +2713,7 @@
 				54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */,
 				10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */,
 				2C3E677691E3DAE38B0D168AE032D58A /* LanguagePlugin.swift in Sources */,
+				A5C9B7AD6C8EB31158EB6C4FBD444C18 /* LeadInfo.swift in Sources */,
 				AFE4A9CB1651215078FF7933E0FE1E84 /* LoaderDisplayable.swift in Sources */,
 				11A54FF839FE6A0CBA870EEB511B5D87 /* LocationAPI.swift in Sources */,
 				49AF67A310FC70B7B6034AC3E43C404F /* LocationManager.swift in Sources */,

@@ -14,6 +14,7 @@ protocol DocumentsRepository: AnyObject {
 
     func getDocuments()
     func getUserAgreement()
+    func fetchDocuments(completion: @escaping (_: [Document], _: [Contact]) -> Void)
 }
 
 final class DocumentsRepositoryImpl: DocumentsRepository {
@@ -58,7 +59,7 @@ final class DocumentsRepositoryImpl: DocumentsRepository {
         outputs.didGetUserAgreement.accept(userAgreement)
     }
 
-    private func fetchDocuments(completion: @escaping (_: [Document], _: [Contact]) -> Void) {
+    func fetchDocuments(completion: @escaping (_: [Document], _: [Contact]) -> Void) {
         let sequence = Single.zip(service.getDocuments(),
                                   service.getContacts())
 

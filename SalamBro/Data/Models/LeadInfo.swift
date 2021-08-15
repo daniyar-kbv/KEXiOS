@@ -7,13 +7,14 @@
 
 import Foundation
 
-struct AddressInfo: Decodable {
+struct LeadInfo: Decodable {
+    let cart: Cart
     let address: Address
     let brandImage: String
     let brandName: String
 
     enum CodingKeys: String, CodingKey {
-        case address
+        case cart, address
         case brandImage = "brand_image"
         case brandName = "brand_name"
     }
@@ -31,7 +32,7 @@ struct AddressInfo: Decodable {
     }
 }
 
-extension AddressInfo.Address {
+extension LeadInfo.Address {
     func toAddress() -> Address {
         return .init(district: district, street: street, building: building, corpus: corpus, flat: flat, comment: comment, country: nil, city: nil, longitude: longitude, latitude: latitude)
     }

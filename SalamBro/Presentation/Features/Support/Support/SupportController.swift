@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class SupportController: UIViewController, LoaderDisplayable {
+final class SupportController: UIViewController, LoaderDisplayable, Reloadable {
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.separatorColor = .mildBlue
@@ -24,6 +24,13 @@ final class SupportController: UIViewController, LoaderDisplayable {
         view.dataSource = self
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 186, right: 0)
+        view.refreshControl = refreshControl
+        return view
+    }()
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let view = UIRefreshControl()
+        view.addTarget(self, action: #selector(reload), for: .valueChanged)
         return view
     }()
 
@@ -74,6 +81,13 @@ final class SupportController: UIViewController, LoaderDisplayable {
         viewModel.getData()
 
         navigationItem.title = SBLocalization.localized(key: SupportText.Support.title)
+    }
+}
+
+extension SupportController {
+    @objc func reload() {
+        refreshControl.endRefreshing()
+        viewModel.fetchData()
     }
 
     private func bindViewModel() {

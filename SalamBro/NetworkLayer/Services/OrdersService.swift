@@ -13,9 +13,9 @@ import RxSwift
 protocol OrdersService: AnyObject {
     func applyOrder(dto: OrderApplyDTO) -> Single<String>
     func getAdditionalProducts(for leadUUID: String) -> Single<[MenuPosition]>
-    func getCart(for leadUUID: String) -> Single<Cart>
     func updateCart(for leadUUID: String, dto: CartDTO) -> Single<Cart>
     func applyPromocode(promocode: String) -> Single<Promocode>
+    func getLeadInfo(for leadUUID: String) -> Single<LeadInfo>
 }
 
 final class OrdersServiceMoyaImpl: OrdersService {
@@ -63,23 +63,6 @@ final class OrdersServiceMoyaImpl: OrdersService {
             }
     }
 
-    func getCart(for leadUUID: String) -> Single<Cart> {
-        return provider.rx
-            .request(.getCart(leadUUID: leadUUID))
-            .map { response in
-
-                guard let cartResponse = try? response.map(OrderUpdateCartResponse.self) else {
-                    throw NetworkError.badMapping
-                }
-
-                guard let cart = cartResponse.data else {
-                    throw NetworkError.noData
-                }
-
-                return cart
-            }
-    }
-
     func updateCart(for leadUUID: String, dto: CartDTO) -> Single<Cart> {
         return provider.rx
             .request(.updateCart(leadUUID: leadUUID, dto: dto))
@@ -117,6 +100,27 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 return promocode
+            }
+    }
+
+    func getLeadInfo(for leadUUID: String) -> Single<LeadInfo> {
+        return provider.rx
+            .request(.leadInfo(leadUUID: leadUUID))
+            .map { response in
+
+                guard let orderProductsResponse = try? response.map(OrdersShowResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = orderProductsResponse.error {
+                    throw error
+                }
+
+                guard let data = orderProductsResponse.data else {
+                    throw NetworkError.noData
+                }
+
+                return data
             }
     }
 }

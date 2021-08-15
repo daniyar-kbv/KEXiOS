@@ -58,13 +58,10 @@ final class CartRepositoryImpl: CartRepository {
 extension CartRepositoryImpl {
     func reload() {
         guard let leadUUID = defaultStorage.leadUUID else { return }
-        outputs.didStartRequest.accept(())
-        ordersService.getCart(for: leadUUID)
-            .subscribe { [weak self] cart in
-                self?.process(cart: cart)
-                self?.outputs.didEndRequest.accept(())
+        ordersService.getLeadInfo(for: leadUUID)
+            .subscribe { [weak self] leadInfo in
+                self?.process(cart: leadInfo.cart)
             } onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
                 self?.outputs.didGetError.accept(error)
             }

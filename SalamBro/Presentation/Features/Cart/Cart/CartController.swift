@@ -161,6 +161,7 @@ extension CartController {
     private func bindViewModel() {
         viewModel.outputs.update
             .subscribe(onNext: { [weak self] in
+                self?.refreshControl.endRefreshing()
                 self?.update()
             }).disposed(by: disposeBag)
 

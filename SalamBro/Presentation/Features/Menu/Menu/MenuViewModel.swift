@@ -78,8 +78,8 @@ final class MenuViewModel: MenuViewModelProtocol {
             .disposed(by: disposeBag)
 
         menuRepository.outputs.didGetAddressInfo
-            .subscribe(onNext: { [weak self] addressInfo in
-                self?.set(addressInfo: addressInfo)
+            .subscribe(onNext: { [weak self] leadInfo in
+                self?.set(leadInfo: leadInfo)
             })
             .disposed(by: disposeBag)
 
@@ -118,10 +118,10 @@ final class MenuViewModel: MenuViewModelProtocol {
             .disposed(by: disposeBag)
     }
 
-    private func set(addressInfo: AddressInfo) {
-        outputs.brandImage.accept(addressInfo.brandImage)
-        outputs.brandName.accept(addressInfo.brandName)
-        let addressViewModels = [AddressPickCellViewModel(address: addressInfo.address.toAddress())]
+    private func set(leadInfo: LeadInfo) {
+        outputs.brandImage.accept(leadInfo.brandImage)
+        outputs.brandName.accept(leadInfo.brandName)
+        let addressViewModels = [AddressPickCellViewModel(address: leadInfo.address.toAddress())]
         let section = Section(type: .address,
                               headerViewModel: nil,
                               cellViewModels: addressViewModels)

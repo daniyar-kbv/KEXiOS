@@ -77,6 +77,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
 
     func makeMenuRepository() -> MenuRepository {
         return shared(MenuRepositoryImpl(menuService: serviceComponents.menuService(),
+                                         ordersService: serviceComponents.ordersService(),
                                          storage: DefaultStorageImpl.sharedStorage))
     }
 

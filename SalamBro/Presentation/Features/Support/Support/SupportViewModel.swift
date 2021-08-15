@@ -16,6 +16,7 @@ protocol SupportViewModel: AnyObject {
     var contacts: [Contact] { get set }
 
     func getData()
+    func fetchData()
     func getSocialContacts() -> [Contact]
     func getContact(of type: Contact.`Type`) -> Contact?
 }
@@ -37,6 +38,12 @@ final class SupportViewModelImpl: SupportViewModel {
 
     func getData() {
         documentsRepository.getDocuments()
+    }
+
+    func fetchData() {
+        documentsRepository.fetchDocuments { [weak self] documents, contacts in
+            self?.process(documents: documents, contacts: contacts)
+        }
     }
 
     func getSocialContacts() -> [Contact] {
@@ -62,10 +69,14 @@ final class SupportViewModelImpl: SupportViewModel {
 
         documentsRepository.outputs.didGetDocuments
             .subscribe(onNext: { [weak self] documents, contacts in
-                self?.documents = documents
-                self?.contacts = contacts
-                self?.outputs.update.accept(())
+                self?.process(documents: documents, contacts: contacts)
             }).disposed(by: disposeBag)
+    }
+
+    private func process(documents: [Document], contacts: [Contact]) {
+        self.documents = documents
+        self.contacts = contacts
+        outputs.update.accept(())
     }
 }
 

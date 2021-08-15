@@ -53,6 +53,6 @@ struct OrderUpdateCartResponse: Decodable {
 }
 
 struct OrdersShowResponse: Decodable {
-    let data: AddressInfo?
+    let data: LeadInfo?
     let error: ErrorResponse?
 }
