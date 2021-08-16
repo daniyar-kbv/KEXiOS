@@ -9,11 +9,9 @@ import Reusable
 import SnapKit
 import UIKit
 
-// MARK: - add viewModel logic
-
 protocol OrderTestCellDelegate: AnyObject {
     func share()
-    func rate()
+    func rate(at orderNumber: Int)
 }
 
 final class OrderTestCell: UITableViewCell, Reusable {
@@ -48,6 +46,10 @@ extension OrderTestCell {
             $0.edges.equalToSuperview()
         }
     }
+
+    func configure(with item: OrdersList) {
+        orderView?.configure(with: item)
+    }
 }
 
 extension OrderTestCell: OrderHistoryViewDelegate {
@@ -55,7 +57,7 @@ extension OrderTestCell: OrderHistoryViewDelegate {
         delegate?.share()
     }
 
-    func rateOrderTapped() {
-        delegate?.rate()
+    func rateOrder(at orderNumber: Int) {
+        delegate?.rate(at: orderNumber)
     }
 }

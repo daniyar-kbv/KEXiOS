@@ -7,6 +7,22 @@
 
 import Foundation
 
+struct OrdersListResponse: Codable {
+    let data: Data?
+    let error: ErrorResponse?
+
+    struct Data: Codable {
+        let count: Int
+        let next: String?
+        let previous: String?
+        let results: [OrdersList]
+
+        enum CodingKeys: String, CodingKey {
+            case count, next, previous, results
+        }
+    }
+}
+
 struct OrderApplyResponse: Codable {
     let data: Data?
     let error: ErrorResponse?

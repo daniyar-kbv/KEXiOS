@@ -7,20 +7,11 @@
 
 import Foundation
 
-enum PaymentMethodType {
-    case savedCard
-    case card
-    case applePay
-    case cash
-
-    var apiType: String {
-        switch self {
-        case .savedCard: return ""
-        case .card: return "DEBIT_CARD"
-        case .applePay: return "APPLE_PAY"
-        case .cash: return "CASH"
-        }
-    }
+enum PaymentMethodType: String, Codable {
+    case savedCard = ""
+    case card = "DEBIT_CARD"
+    case applePay = "APPLE_PAY"
+    case cash = "CASH"
 }
 
 class PaymentMethod {

@@ -17,6 +17,7 @@ protocol RateViewModel: AnyObject {
     func getRateItem(at index: Int) -> RateItem
     func changeDataSet(by rating: Int)
     func configureDataSet(at index: Int)
+    func setOrderNumber(with orderNumber: Int)
     func sendUserRate(stars: Int, comment: String)
 }
 
@@ -29,6 +30,8 @@ final class RateViewModelImpl: RateViewModel {
     private var selectedChoices: [RateItem] = []
 
     private let repository: RateOrderRepository
+
+    private var orderNumber: Int?
 
     init(repository: RateOrderRepository) {
         self.repository = repository
@@ -66,6 +69,10 @@ final class RateViewModelImpl: RateViewModel {
         }
     }
 
+    func setOrderNumber(with orderNumber: Int) {
+        self.orderNumber = orderNumber
+    }
+
     private func bindOutputs() {
         repository.outputs.didEndRequest
             .bind(to: outputs.didEndRequest)
@@ -88,7 +95,8 @@ final class RateViewModelImpl: RateViewModel {
 
     func sendUserRate(stars: Int, comment: String) {
         let samples = selectedChoices.filter { currentChoices.contains($0) }.map { $0.sample.id }
-        repository.set(stars: stars, order: 5, comment: comment, samples: samples)
+        guard let orderNumber = orderNumber else { return }
+        repository.set(stars: stars, order: orderNumber, comment: comment, samples: samples)
     }
 }
 

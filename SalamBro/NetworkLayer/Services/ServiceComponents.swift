@@ -19,6 +19,7 @@ protocol ServiceComponents: AnyObject {
     func rateService() -> RateService
     func paymentsService() -> PaymentsService
     func pushNotificationsService() -> PushNotificationsService
+    func ordersHistoryService() -> OrdersHistoryService
 }
 
 final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
@@ -80,6 +81,10 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
 
     func paymentsService() -> PaymentsService {
         return shared(PaymentsServiceMoyaImpl(provider: MoyaProvider<PaymentsAPI>(plugins: [networkPlugin, languagePlugin, authPlugin])))
+    }
+
+    func ordersHistoryService() -> OrdersHistoryService {
+        return shared(OrdersHistoryServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, authPlugin])))
     }
 }
 
