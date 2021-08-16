@@ -24,8 +24,8 @@ final class OrderHistoryCoordinator: BaseCoordinator {
     override func start() {
         let orderHistoryPage = pagesFactory.makeOrderHistoryPage()
 
-        orderHistoryPage.onRateTapped = { [weak self] in
-            self?.showRateOrderPage()
+        orderHistoryPage.onRateTapped = { [weak self] orderNumber in
+            self?.showRateOrderPage(of: orderNumber)
         }
 
         orderHistoryPage.onShareTapped = { [weak self] in
@@ -40,8 +40,10 @@ final class OrderHistoryCoordinator: BaseCoordinator {
         router.push(viewController: orderHistoryPage, animated: true)
     }
 
-    func showRateOrderPage() {
+    func showRateOrderPage(of orderNumber: Int = 0) {
         let rateOrderPage = pagesFactory.makeRateOrderPage()
+
+        rateOrderPage.setOrderNumber(with: orderNumber)
 
         rateOrderPage.outputs.close
             .subscribe(onNext: {

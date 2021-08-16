@@ -8,6 +8,7 @@
 import Moya
 
 enum OrdersAPI {
+    case getAllOrders
     case apply(dto: OrderApplyDTO)
     case authorizedApply
     case authorizedApplyWithAddress(dto: OrderApplyDTO)
@@ -24,6 +25,7 @@ extension OrdersAPI: TargetType {
 
     var path: String {
         switch self {
+        case .getAllOrders: return "orders/"
         case .apply: return "orders/apply/"
         case .authorizedApply: return "/orders/authorized-apply/"
         case .authorizedApplyWithAddress: return "/orders/authorized-apply-with-address/"
@@ -36,6 +38,7 @@ extension OrdersAPI: TargetType {
 
     var method: Method {
         switch self {
+        case .getAllOrders: return .get
         case .apply: return .post
         case .authorizedApply: return .post
         case .authorizedApplyWithAddress: return .post
@@ -52,6 +55,7 @@ extension OrdersAPI: TargetType {
 
     var task: Task {
         switch self {
+        case .getAllOrders: return .requestPlain
         case let .apply(dto): return .requestJSONEncodable(dto)
         case .authorizedApply: return .requestPlain
         case let .authorizedApplyWithAddress(dto): return .requestJSONEncodable(dto)

@@ -21,6 +21,7 @@ protocol RepositoryComponents: AnyObject {
     func makePaymentRepository() -> PaymentRepository
     func makeProfileRepository() -> ProfileRepository
     func makePushNotificationsRepository() -> PushNotificationsRepository
+    func makeOrdersHistoryRepository() -> OrdersHistoryRepository
 }
 
 final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponents {
@@ -112,6 +113,10 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
             notificationsService: serviceComponents.pushNotificationsService(),
             defaultStorage: DefaultStorageImpl.sharedStorage
         ))
+    }
+
+    func makeOrdersHistoryRepository() -> OrdersHistoryRepository {
+        return shared(OrdersHistoryRepositoryImpl(ordersHistoryService: serviceComponents.ordersHistoryService()))
     }
 
     private func makeLocalStorage() -> Storage {

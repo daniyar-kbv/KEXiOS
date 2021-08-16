@@ -189,7 +189,7 @@ extension PaymentRepositoryImpl {
     private func makeAppCardPayment() {
         guard let leadUUID = defaultStorage.leadUUID,
               let card: PaymentCard = selectedPaymentMethod?.getValue(),
-              let paymentType = selectedPaymentMethod?.type.apiType else { return }
+              let paymentType = selectedPaymentMethod?.type.rawValue else { return }
 
         let createOrderDTO = CreateOrderDTO(leadUUID: leadUUID)
         let createPaymentDTO = CreatePaymentDTO(leadUUID: leadUUID,
@@ -210,7 +210,7 @@ extension PaymentRepositoryImpl {
 
     private func createCashPayment() {
         guard let leadUUID = defaultStorage.leadUUID,
-              let paymentType = selectedPaymentMethod?.type.apiType else { return }
+              let paymentType = selectedPaymentMethod?.type.rawValue else { return }
 
         let createOrderDTO = CreateOrderDTO(leadUUID: leadUUID)
         let createPaymentDTO = CreatePaymentDTO(leadUUID: leadUUID,
@@ -272,7 +272,7 @@ extension PaymentRepositoryImpl {
         }
 
         guard let leadUUID = defaultStorage.leadUUID,
-              let paymentType = selectedPaymentMethod?.type.apiType
+              let paymentType = selectedPaymentMethod?.type.rawValue
         else { return }
         let createOrderDTO = CreateOrderDTO(leadUUID: leadUUID)
         let createPaymentDTO = CreatePaymentDTO(leadUUID: leadUUID,

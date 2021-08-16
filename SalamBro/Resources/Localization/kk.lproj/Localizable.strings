@@ -144,6 +144,12 @@
 "OrderHistory.sendBill" = "KZ Отправить чек на почту";
 "OrderHistory.rateOrder" = "KZ Оценить заказ";
 "OrderHistory.repeatOrder" = "KZ Повторить заказ";
+"OrderHistory.new" = "KZ Новый";
+"OrderHistory.paid" = "KZ Оплачен";
+"OrderHistory.cooking" = "KZ Готовится";
+"OrderHistory.inDelivery" = "KZ В пути";
+"OrderHistory.issued" = "KZ Доставлен";
+"OrderHistory.failure" = "KZ Отменен";
 
 // MARK: - Select Main Info
 "select_main_info.country" = "KZ Страна";

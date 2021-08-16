@@ -104,6 +104,12 @@ enum ProfileIcons {
 
         var name: String { rawValue }
     }
+
+    enum OrdersHistory: String, UIImageGetable {
+        case shareToInstagram
+
+        var name: String { rawValue }
+    }
 }
 
 enum SupportIcons {
