@@ -121,6 +121,12 @@ extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension OrderHistoryController: Reloadable {
+    func reload() {
+        viewModel.update()
+    }
+}
+
 extension OrderHistoryController: OrderTestCellDelegate {
     func share() {
         onShareTapped?()
