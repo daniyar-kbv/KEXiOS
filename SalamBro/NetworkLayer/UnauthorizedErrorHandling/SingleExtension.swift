@@ -42,11 +42,19 @@ extension Single {
                     throw NetworkError.unauthorized
                 }
 
-                guard let refreshResponse = try? response.map(RefreshTokenResponse.self) else {
+                guard let refreshResponse = try? response.map(AccessTokenResponse.self) else {
                     throw NetworkError.badMapping
                 }
 
-                authTokenStorage.persist(token: refreshResponse.access, refreshToken: refreshResponse.refresh)
+                if let error = refreshResponse.error {
+                    throw error
+                }
+
+                guard let accessToken = refreshResponse.data else {
+                    throw NetworkError.noData
+                }
+
+                authTokenStorage.persist(token: accessToken.access, refreshToken: accessToken.refresh)
 
                 return ()
             }

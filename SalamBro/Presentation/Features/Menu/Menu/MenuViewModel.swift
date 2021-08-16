@@ -121,7 +121,7 @@ final class MenuViewModel: MenuViewModelProtocol {
     private func set(leadInfo: LeadInfo) {
         outputs.brandImage.accept(leadInfo.brandImage)
         outputs.brandName.accept(leadInfo.brandName)
-        let addressViewModels = [AddressPickCellViewModel(address: leadInfo.address.toAddress())]
+        let addressViewModels = [AddressPickCellViewModel(address: leadInfo.address)]
         let section = Section(type: .address,
                               headerViewModel: nil,
                               cellViewModels: addressViewModels)

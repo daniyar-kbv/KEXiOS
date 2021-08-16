@@ -12,28 +12,13 @@ struct LeadInfo: Decodable {
     let address: Address
     let brandImage: String
     let brandName: String
+    let price: Double
+    let positionsCount: Int
 
     enum CodingKeys: String, CodingKey {
-        case cart, address
+        case cart, address, price
         case brandImage = "brand_image"
         case brandName = "brand_name"
-    }
-
-    struct Address: Decodable {
-        let city: Int
-        let longitude: Double
-        let latitude: Double
-        let district: String?
-        let street: String?
-        let building: String?
-        let corpus: String?
-        let flat: String?
-        let comment: String?
-    }
-}
-
-extension LeadInfo.Address {
-    func toAddress() -> Address {
-        return .init(district: district, street: street, building: building, corpus: corpus, flat: flat, comment: comment, country: nil, city: nil, longitude: longitude, latitude: latitude)
+        case positionsCount = "positions_count"
     }
 }
