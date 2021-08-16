@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class OrderHistoryController: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class OrderHistoryController: UIViewController, LoaderDisplayable {
     private let disposeBag = DisposeBag()
     private let viewModel: OrderHistoryViewModel
 
