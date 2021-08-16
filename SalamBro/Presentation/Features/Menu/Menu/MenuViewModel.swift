@@ -63,15 +63,18 @@ final class MenuViewModel: MenuViewModelProtocol {
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        menuRepository.outputs.didEndRequest.bind {
-            [weak self] _ in
-            self?.outputs.didEndRequest.accept(())
-            self?.outputs.updateTableView.accept(())
-        }
-        .disposed(by: disposeBag)
+        menuRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
 
         menuRepository.outputs.didGetError
             .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
+
+        menuRepository.outputs.didStartDataProcessing
+            .subscribe(onNext: { [weak self] in
+                self?.tableSections.removeAll()
+            })
             .disposed(by: disposeBag)
 
         menuRepository.outputs.didGetPromotions.bind {
@@ -86,6 +89,18 @@ final class MenuViewModel: MenuViewModelProtocol {
             self?.configureAnimation()
         }
         .disposed(by: disposeBag)
+
+        menuRepository.outputs.didEndDataProcessing
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.updateTableView.accept(())
+            })
+            .disposed(by: disposeBag)
+
+        menuRepository.outputs.openPromotion
+            .subscribe(onNext: { [weak self] promotion in
+                self?.openPromotion(promotionURL: promotion.url, name: promotion.name)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func bindScrollService() {
@@ -98,8 +113,6 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func download() {
-        tableSections.removeAll()
-
         menuRepository.getMenuItems()
     }
 
@@ -243,7 +256,7 @@ extension MenuViewModel {
     }
 }
 
-extension MenuViewModel: AddCollectionCellDelegate {
+extension MenuViewModel {
     private func scroll(to categoryUUID: String) {
         guard isNotEmpty(),
               let positionsIndex = getSectionIndex(of: .positions),
@@ -283,8 +296,10 @@ extension MenuViewModel: AddCollectionCellDelegate {
     private func getSectionIndex(of type: Section.`Type`) -> Int? {
         return tableSections.firstIndex(where: { $0.type == type })
     }
+}
 
-    public func goToRating(promotionURL: URL, name: String) {
+extension MenuViewModel: AddCollectionCellDelegate {
+    func openPromotion(promotionURL: URL, name: String) {
         outputs.toPromotion.accept((promotionURL, name))
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SBTabBarController: UITabBarController, AlertDisplayable {
+final class SBTabBarController: UITabBarController {
     private let viewModel: SBTabBarViewModel
 
     init(viewModel: SBTabBarViewModel) {
@@ -37,5 +37,11 @@ final class SBTabBarController: UITabBarController, AlertDisplayable {
 
         viewModel.getDocuments()
         viewModel.setFirstLauch()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        tabBar.isHidden = false
     }
 }

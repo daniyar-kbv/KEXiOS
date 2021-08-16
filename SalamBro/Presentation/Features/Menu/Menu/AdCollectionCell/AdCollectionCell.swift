@@ -11,7 +11,7 @@ import RxSwift
 import UIKit
 
 final class AdCollectionCell: UITableViewCell {
-    public var delegate: AddCollectionCellDelegate?
+    weak var delegate: AddCollectionCellDelegate?
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
@@ -73,8 +73,8 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let promotionURL = URL(string: viewModel.cellViewModels[indexPath.item].promotion.link ?? "") else { return }
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        delegate?.goToRating(promotionURL: promotionURL,
-                             name: viewModel.cellViewModels[indexPath.item].promotion.name)
+        delegate?.openPromotion(promotionURL: promotionURL,
+                                name: viewModel.cellViewModels[indexPath.item].promotion.name)
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
@@ -96,6 +96,6 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
 
 extension AdCollectionCell: Reusable {}
 
-public protocol AddCollectionCellDelegate {
-    func goToRating(promotionURL: URL, name: String)
+public protocol AddCollectionCellDelegate: AnyObject {
+    func openPromotion(promotionURL: URL, name: String)
 }

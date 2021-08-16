@@ -98,7 +98,7 @@ final class CartAdditionalProductCell: UITableViewCell {
     private let disposeBag = DisposeBag()
     private let viewModel: CartAdditionalProductViewModel
 
-    var delegate: CartAdditinalProductCellDelegate?
+    weak var delegate: CartAdditinalProductCellDelegate?
 
     init(viewModel: CartAdditionalProductViewModel) {
         self.viewModel = viewModel

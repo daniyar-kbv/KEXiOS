@@ -28,6 +28,7 @@ final class AuthRepositoryImpl: AuthRepository {
     private let authorizedApplyService: AuthorizedApplyService
     private let notificationsService: PushNotificationsService
     private let cartStorage: CartStorage
+    private let geoStorage: GeoStorage
     private let tokenStorage: AuthTokenStorage
     private let defaultStorage: DefaultStorage
 
@@ -37,6 +38,7 @@ final class AuthRepositoryImpl: AuthRepository {
          authorizedApplyService: AuthorizedApplyService,
          notificationsService: PushNotificationsService,
          cartStorage: CartStorage,
+         geoStorage: GeoStorage,
          tokenStorage: AuthTokenStorage,
          defaultStorage: DefaultStorage)
     {
@@ -46,6 +48,7 @@ final class AuthRepositoryImpl: AuthRepository {
         self.authorizedApplyService = authorizedApplyService
         self.notificationsService = notificationsService
         self.cartStorage = cartStorage
+        self.geoStorage = geoStorage
         self.tokenStorage = tokenStorage
         self.defaultStorage = defaultStorage
     }
@@ -70,8 +73,10 @@ final class AuthRepositoryImpl: AuthRepository {
     }
 
     func verifyOTP(code: String, number: String) {
-        outputs.didStartRequest.accept(())
+        guard let applyDTO = geoStorage.userAddresses.first(where: { $0.isCurrent })?.toDTO(),
+              let fcmToken = defaultStorage.fcmToken else { return }
 
+        outputs.didStartRequest.accept(())
         authService.verifyOTP(with: .init(code: code, phoneNumber: number))
             .flatMap { [unowned self] accessToken -> Single<UserInfoResponse> in
                 self.tokenStorage.persist(token: accessToken.access, refreshToken: accessToken.refresh)
@@ -80,7 +85,7 @@ final class AuthRepositoryImpl: AuthRepository {
             .flatMap { [unowned self] userInfo -> Single<String> in
                 NotificationCenter.default.post(name: Constants.InternalNotification.userInfo.name,
                                                 object: userInfo)
-                return authorizedApplyService.authorizedApplyOrder()
+                return authorizedApplyService.authorizedApplyWithAddress(dto: applyDTO)
             }
             .flatMap { [unowned self] leadUUID -> Single<Cart> in
                 NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
@@ -92,10 +97,13 @@ final class AuthRepositoryImpl: AuthRepository {
                                                 object: cart)
                 return profileService.getAddresses()
             }
-            .retryWhenUnautharized()
-            .subscribe { [weak self] userAddresses in
+            .flatMap { [unowned self] userAddresses in
                 NotificationCenter.default.post(name: Constants.InternalNotification.userAddresses.name,
                                                 object: userAddresses)
+                return notificationsService.fcmTokenSave(dto: .init(fcmToken: fcmToken))
+            }
+            .retryWhenUnautharized()
+            .subscribe { [weak self] in
                 self?.outputs.didEndRequest.accept(())
             } onError: { [weak self] error in
                 self?.handleErrorResponse(error: error)

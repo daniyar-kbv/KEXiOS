@@ -7,31 +7,12 @@
 
 import Foundation
 
-struct PushNotificationsFCMTokenLoginResponse: Decodable {
-    let data: Data?
+struct FCMTokenSaveResponse: Decodable {
+    let data: FCMTokenSaveDTO?
     let error: ErrorResponse?
-
-    struct Data: Decodable {}
 }
 
-struct PushNotificationsFCMTokenUpdateResponse: Decodable {
-    let data: Data?
+struct FCMTokenUpdateResponse: Decodable {
+    let data: FCMTokenUpdateDTO?
     let error: ErrorResponse?
-
-    struct Data: Decodable {}
-}
-
-struct PushNotificationsFCMTokenCreateResponse: Decodable {
-    let data: Data?
-    let error: ErrorResponse?
-
-    struct Data: Decodable {
-        let leadUUID: String
-        let fcmToken: String
-
-        enum CodingKeys: String, CodingKey {
-            case leadUUID = "lead_uuid"
-            case fcmToken = "firebase_token"
-        }
-    }
 }

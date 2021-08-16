@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class RateController: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class RateController: UIViewController, LoaderDisplayable {
     private let viewModel: RateViewModel
 
     private let disposeBag = DisposeBag()

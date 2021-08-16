@@ -120,8 +120,8 @@ final class PaymentCoordinator: BaseCoordinator {
         let editPage = pagesFactory.makePaymentEditPage()
 
         editPage.outputs.close
-            .subscribe(onNext: {
-                editPage.dismiss(animated: true)
+            .subscribe(onNext: { [weak editPage] in
+                editPage?.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
 
@@ -136,15 +136,15 @@ final class PaymentCoordinator: BaseCoordinator {
         let cardPage = pagesFactory.makePaymentCardPage(paymentMethod: paymentMethod)
 
         cardPage.outputs.onDone
-            .subscribe(onNext: { _ in
-                cardPage.dismiss(animated: false, completion: {
+            .subscribe(onNext: { [weak cardPage] _ in
+                cardPage?.dismiss(animated: false, completion: {
                     onDone()
                 })
             }).disposed(by: disposeBag)
 
         cardPage.outputs.close
-            .subscribe(onNext: {
-                cardPage.dismiss(animated: true)
+            .subscribe(onNext: { [weak cardPage] in
+                cardPage?.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
         let nav = SBNavigationController(rootViewController: cardPage)
@@ -153,20 +153,20 @@ final class PaymentCoordinator: BaseCoordinator {
 
     private func showCashPage(on viewController: UIViewController?,
                               paymentMethod: PaymentMethod,
-                              _ onDone: @escaping () -> Void)
+                              _ onDone: (() -> Void)?)
     {
         let cashPage = pagesFactory.makePaymentCashPage(paymentMethod: paymentMethod)
 
         cashPage.outputs.onDone
-            .subscribe(onNext: { _ in
-                cashPage.dismiss(animated: false, completion: {
-                    onDone()
+            .subscribe(onNext: { [weak cashPage] _ in
+                cashPage?.dismiss(animated: false, completion: {
+                    onDone?()
                 })
             }).disposed(by: disposeBag)
 
         cashPage.outputs.close
-            .subscribe(onNext: {
-                cashPage.dismiss(animated: true)
+            .subscribe(onNext: { [weak cashPage] in
+                cashPage?.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
         let nav = SBNavigationController(rootViewController: cashPage)

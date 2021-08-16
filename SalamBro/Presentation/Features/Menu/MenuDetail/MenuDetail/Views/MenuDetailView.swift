@@ -83,12 +83,6 @@ final class MenuDetailView: UIView {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        setImageViewSize()
-    }
 }
 
 extension MenuDetailView {
@@ -122,13 +116,13 @@ extension MenuDetailView {
 
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(40)
-            $0.width.equalTo(0)
-            $0.height.equalTo(0)
+            $0.left.right.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(snp.width).multipliedBy(298 / 217)
         }
 
         itemTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(27)
+            $0.top.equalTo(imageView.snp.bottom)
             $0.left.right.equalToSuperview().inset(24)
         }
 
@@ -155,15 +149,6 @@ extension MenuDetailView {
             $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(43)
-        }
-    }
-
-    private func setImageViewSize() {
-        let width = frame.width - 76
-        let height = width * 0.725
-        imageView.snp.updateConstraints {
-            $0.width.equalTo(width)
-            $0.height.equalTo(height)
         }
     }
 

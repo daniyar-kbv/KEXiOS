@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class VerificationController: UIViewController, LoaderDisplayable, AlertDisplayable {
+final class VerificationController: UIViewController, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     let outputs = Output()
@@ -39,6 +39,11 @@ final class VerificationController: UIViewController, LoaderDisplayable, AlertDi
 
     override func viewWillAppear(_: Bool) {
         rootView?.startTimer()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
         rootView?.showKeyboard()
     }
 

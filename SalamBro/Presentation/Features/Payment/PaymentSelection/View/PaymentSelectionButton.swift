@@ -74,9 +74,11 @@ final class PaymentSelectionButton: UIButton {
 }
 
 extension PaymentSelectionButton {
-    func setPaymentMethod(text: String, isApplePay: Bool) {
-        choosePaymentMethodLabel.text = text
-        choosePaymentMethodLabel.textColor = .darkGray
+    func setPaymentMethod(text: String?, isApplePay: Bool) {
+        choosePaymentMethodLabel.text = text != nil ?
+            text :
+            SBLocalization.localized(key: PaymentText.PaymentSelection.choosePaymentMethod)
+        choosePaymentMethodLabel.textColor = text != nil ? .darkGray : .mildBlue
         applePayImage.isHidden = !isApplePay
     }
 }

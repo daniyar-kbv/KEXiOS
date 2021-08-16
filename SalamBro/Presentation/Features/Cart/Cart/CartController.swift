@@ -14,7 +14,7 @@ protocol CartViewDelegate {
 }
 
 // FIXME: Refactor
-class CartController: UIViewController, LoaderDisplayable, AlertDisplayable {
+class CartController: UIViewController, LoaderDisplayable {
     private let viewModel: CartViewModel
     private let disposeBag = DisposeBag()
 

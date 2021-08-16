@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-protocol CartPromocodeCellDelegate {
+protocol CartPromocodeCellDelegate: AnyObject {
     func promocodeTapped()
 }
 
@@ -47,7 +47,7 @@ final class CartPromocodeCell: UITableViewCell {
     private let disposeBag = DisposeBag()
     private let viewModel: CartPromocodeViewModel
 
-    var delegate: CartPromocodeCellDelegate?
+    weak var delegate: CartPromocodeCellDelegate?
 
     init(viewModel: CartPromocodeViewModel) {
         self.viewModel = viewModel

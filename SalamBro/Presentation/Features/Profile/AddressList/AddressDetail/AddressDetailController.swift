@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class AddressDetailController: UIViewController, LoaderDisplayable, AlertDisplayable {
+final class AddressDetailController: UIViewController, LoaderDisplayable {
     let outputs = Output()
 
     private let viewModel: AddressDetailViewModel

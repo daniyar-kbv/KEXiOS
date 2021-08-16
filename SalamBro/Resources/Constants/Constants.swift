@@ -15,24 +15,18 @@ struct Constants {
     static let applePayMerchantId = getPlistValue(by: "APPLE_PAY_MERCHANT_ID")
 
     enum URLs {
-        static let promotionURL = "/promotions/%@/"
+        static let promotionURL = devBaseUrl.absoluteString + "/promotions/%@/"
     }
 
     enum Map {
-        static let ZOOM: Float = 18.0
-
-        enum Coordinates {
-            static let ALA_LAT: Double = 43.241044
-            static let ALA_LON: Double = 76.927359
+        enum Zoom {
+            static let initial: Float = 13.0
+            static let move: Float = 17.0
         }
 
-        enum ComponentsKinds {
-            static let country: NSNumber = 1
-            static let state: NSNumber = 3
-            static let city: NSNumber = 5
-            static let district: NSNumber = 6
-            static let street: NSNumber = 7
-            static let building: NSNumber = 8
+        enum Coordinates {
+            static let ALALatitude: Double = 43.241044
+            static let ALALongitude: Double = 76.927359
         }
     }
 

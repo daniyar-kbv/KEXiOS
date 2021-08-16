@@ -256,6 +256,7 @@
 		6390DB6C1CBC219D0CDAF1C5F2C58609 /* SBLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDF4C9EE88852C22ECA6E35607FA66 /* SBLocalization.swift */; };
 		662168E57B2C545F1879444F345732A7 /* SBNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F7907A61A66E9CEA660C77C6B23428 /* SBNavigationController.swift */; };
 		A73528BC44A05EB4815D46A1AC296647 /* SBTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC309BD440BECC27202E38140297F527 /* SBTabBarController.swift */; };
+		310190B06EB6F96D433DD4BA5EEB4A30 /* SBTabBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9649613AFC2BB94FDC1188326DFC6C14 /* SBTabBarType.swift */; };
 		9D579853029C4C56AC4530FAE166939D /* SBTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFBFF447EDEBE7F7F92A24AAB70F11D /* SBTabBarViewModel.swift */; };
 		164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */; };
 		6382A29270DC95FE20964786BA382045 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */; };
@@ -625,6 +626,7 @@
 		80F7907A61A66E9CEA660C77C6B23428 /* SBNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBNavigationController.swift; sourceTree = "<group>"; };
 		A012B6069CF37EAF9A7D520208298845 /* SBNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBNavigationController.swift; sourceTree = "<group>"; };
 		DC309BD440BECC27202E38140297F527 /* SBTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBTabBarController.swift; sourceTree = "<group>"; };
+		9649613AFC2BB94FDC1188326DFC6C14 /* SBTabBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBTabBarType.swift; sourceTree = "<group>"; };
 		FBFBFF447EDEBE7F7F92A24AAB70F11D /* SBTabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBTabBarViewModel.swift; sourceTree = "<group>"; };
 		A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
 		E109EA25F926DD19FBD62E082F1EA9E0 /* SalamBro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalamBro.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1684,6 +1686,7 @@
 			isa = PBXGroup;
 			children = (
 				DC309BD440BECC27202E38140297F527 /* SBTabBarController.swift */,
+				9649613AFC2BB94FDC1188326DFC6C14 /* SBTabBarType.swift */,
 				FBFBFF447EDEBE7F7F92A24AAB70F11D /* SBTabBarViewModel.swift */,
 			);
 			path = SBTabBar;
@@ -2839,6 +2842,7 @@
 				6390DB6C1CBC219D0CDAF1C5F2C58609 /* SBLocalization.swift in Sources */,
 				662168E57B2C545F1879444F345732A7 /* SBNavigationController.swift in Sources */,
 				A73528BC44A05EB4815D46A1AC296647 /* SBTabBarController.swift in Sources */,
+				310190B06EB6F96D433DD4BA5EEB4A30 /* SBTabBarType.swift in Sources */,
 				9D579853029C4C56AC4530FAE166939D /* SBTabBarViewModel.swift in Sources */,
 				5752366203812F015BDB9D8A4A70F94B /* SecureStorageProvider.swift in Sources */,
 				4F8B480599740562799CF3FB740F85E4 /* SelectMainInformationCell.swift in Sources */,
@@ -3066,7 +3070,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 40;
 				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3074,7 +3078,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.39;
+				MARKETING_VERSION = 0.0.40;
 				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3136,7 +3140,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 40;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ULVD64ZNV2;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
@@ -3145,7 +3149,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.39;
+				MARKETING_VERSION = 0.0.40;
 				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

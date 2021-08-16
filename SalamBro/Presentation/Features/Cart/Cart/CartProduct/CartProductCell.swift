@@ -123,7 +123,7 @@ final class CartProductCell: UITableViewCell {
     private let viewModel: CartProductViewModel
     private let disposeBag = DisposeBag()
 
-    var delegate: CartAdditinalProductCellDelegate?
+    weak var delegate: CartAdditinalProductCellDelegate?
 
     init(viewModel: CartProductViewModel) {
         self.viewModel = viewModel

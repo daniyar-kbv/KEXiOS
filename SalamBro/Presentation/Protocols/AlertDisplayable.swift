@@ -14,7 +14,7 @@ protocol AlertDisplayable: AnyObject {
     func showAlert(title: String, message: String?, actions: [UIAlertAction])
 }
 
-extension AlertDisplayable where Self: UIViewController {
+extension UIViewController: AlertDisplayable {
     func showError(_ error: ErrorPresentable) {
         showAlert(title: SBLocalization.localized(key: AlertText.errorTitle),
                   message: error.presentationDescription)

@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class SelectMainInformationViewController: UIViewController, LoaderDisplayable, AlertDisplayable {
+final class SelectMainInformationViewController: UIViewController, LoaderDisplayable {
     private let viewModel: SelectMainInformationViewModelProtocol
     private let disposeBag = DisposeBag()
     private let cellsSequence: [SelectMainInformationCell.InputType] = [.country, .city, .address, .empty, .brand]
@@ -24,7 +24,7 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
         view.dataSource = self
         view.estimatedRowHeight = UITableView.automaticDimension
         view.tableFooterView = UIView()
-        view.rowHeight = 64
+        view.estimatedRowHeight = 64
         view.separatorColor = .white
         view.isScrollEnabled = false
         view.register(SelectMainInformationCell.self, forCellReuseIdentifier: String(describing: SelectMainInformationCell.self))

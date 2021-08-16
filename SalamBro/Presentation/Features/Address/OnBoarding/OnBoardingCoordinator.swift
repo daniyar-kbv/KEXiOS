@@ -74,6 +74,7 @@ final class OnBoardingCoordinator: BaseCoordinator {
             self?.didFinish?()
             self?.router.getNavigationController().viewControllers.removeAll()
         }
+
         router.push(viewController: mapPage, animated: true)
     }
 }

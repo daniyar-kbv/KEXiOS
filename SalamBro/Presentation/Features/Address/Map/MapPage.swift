@@ -10,7 +10,7 @@ import RxSwift
 import UIKit
 import YandexMapKit
 
-final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class MapPage: UIViewController, LoaderDisplayable {
     var selectedAddress: ((Address) -> Void)?
 
     private let disposeBag = DisposeBag()
@@ -52,6 +52,7 @@ final class MapPage: UIViewController, AlertDisplayable, LoaderDisplayable {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
 }
@@ -65,7 +66,7 @@ extension MapPage: LocationManagerDelegate {
     func didChangeLocation(latitude: Double, longtitude: Double) {
         viewModel.currentLocation = YMKPoint(latitude: latitude, longitude: longtitude)
         guard let position = viewModel.currentLocation else { return }
-        yandexMapView.mapWindow.map.move(with: YMKCameraPosition(target: position, zoom: Constants.Map.ZOOM, azimuth: 0, tilt: 0))
+        yandexMapView.mapWindow.map.move(with: YMKCameraPosition(target: position, zoom: Constants.Map.Zoom.move, azimuth: 0, tilt: 0))
     }
 }
 
@@ -73,7 +74,7 @@ extension MapPage: LocationManagerDelegate {
 
 extension MapPage: YMKMapCameraListener {
     private func configureMap() {
-        moveMap(to: viewModel.targetLocation)
+        moveMap(to: viewModel.targetLocation, zoom: Constants.Map.Zoom.initial)
         yandexMapView.mapWindow.map.addCameraListener(with: self)
         yandexMapView.mapWindow.map.isRotateGesturesEnabled = false
     }
@@ -85,9 +86,9 @@ extension MapPage: YMKMapCameraListener {
         viewModel.getName(point: point, zoom: zoom)
     }
 
-    private func moveMap(to point: YMKPoint) {
+    private func moveMap(to point: YMKPoint, zoom: Float = Constants.Map.Zoom.move) {
         yandexMapView.mapWindow.map.move(with: YMKCameraPosition(target: point,
-                                                                 zoom: Constants.Map.ZOOM,
+                                                                 zoom: zoom,
                                                                  azimuth: 0,
                                                                  tilt: 0),
                                          animationType: YMKAnimation(type: .smooth, duration: 0),
@@ -113,7 +114,7 @@ extension MapPage {
             .disposed(by: disposeBag)
 
         viewModel.outputs.lastSelectedAddress
-            .subscribe(onNext: { [weak self] address, _ in
+            .subscribe(onNext: { [weak self] address in
                 self?.handlePageTermination()
                 self?.selectedAddress?(address)
             })
@@ -171,8 +172,11 @@ extension MapPage {
 
     private func handlePageTermination() {
         switch viewModel.flow {
-        case .change: dismiss(animated: true, completion: nil)
-        case .creation: navigationController?.popViewController(animated: true)
+        case .change:
+            dismiss(animated: true, completion: nil)
+        case .creation:
+            navigationController?.popViewController(animated: true)
+            navigationController?.setNavigationBarHidden(false, animated: true)
         }
     }
 }

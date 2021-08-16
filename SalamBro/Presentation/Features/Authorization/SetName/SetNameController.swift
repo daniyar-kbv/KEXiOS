@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class SetNameController: UIViewController, AlertDisplayable, LoaderDisplayable {
+final class SetNameController: UIViewController, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     var didGetEnteredName: (() -> Void)?
