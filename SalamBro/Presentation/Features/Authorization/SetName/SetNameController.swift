@@ -36,8 +36,8 @@ final class SetNameController: UIViewController, LoaderDisplayable {
         bindViewModel()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
         rootView.showKeyboard()
     }

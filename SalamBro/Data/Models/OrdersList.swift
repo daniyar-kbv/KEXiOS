@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OrdersList: Codable {
+struct OrdersList: Decodable {
     let id: Int
     let brand: Brand
     let address: Address

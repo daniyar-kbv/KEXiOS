@@ -115,11 +115,11 @@ final class AppCoordinator: BaseCoordinator {
         let cartRepository = repositoryComponents.makeCartRepository()
 
         cartCoordinator.router.getNavigationController().tabBarItem.badgeColor = .kexRed
-        cartCoordinator.router.getNavigationController().tabBarItem.badgeValue = cartRepository.getLocalItems().getBadgeCount()
+        cartCoordinator.router.getNavigationController().tabBarItem.badgeValue = cartRepository.getLocalCart().getBadgeCount()
 
         cartRepository.outputs.didChange
-            .subscribe(onNext: { [weak cartCoordinator] items in
-                cartCoordinator?.router.getNavigationController().tabBarItem.badgeValue = items.positions.getBadgeCount()
+            .subscribe(onNext: { [weak cartCoordinator] cartInfo in
+                cartCoordinator?.router.getNavigationController().tabBarItem.badgeValue = cartInfo.cart.getBadgeCount()
             })
             .disposed(by: disposeBag)
     }

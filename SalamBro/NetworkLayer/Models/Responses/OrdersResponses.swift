@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct OrdersListResponse: Codable {
+struct OrdersListResponse: Decodable {
     let data: Data?
     let error: ErrorResponse?
 
-    struct Data: Codable {
+    struct Data: Decodable {
         let count: Int
         let next: String?
         let previous: String?
@@ -23,11 +23,11 @@ struct OrdersListResponse: Codable {
     }
 }
 
-struct OrderApplyResponse: Codable {
+struct OrderApplyResponse: Decodable {
     let data: Data?
     let error: ErrorResponse?
 
-    struct Data: Codable {
+    struct Data: Decodable {
         let uuid: String
 
         enum CodingKeys: String, CodingKey {
@@ -36,17 +36,17 @@ struct OrderApplyResponse: Codable {
     }
 }
 
-struct OrderProductResponse: Codable {
+struct OrderProductResponse: Decodable {
     let data: Data?
     let error: ErrorResponse?
 
-    struct Data: Codable {
+    struct Data: Decodable {
         let uuid: String
         let categories: [MenuCategory]
     }
 }
 
-struct OrderProductDetailResponse: Codable {
+struct OrderProductDetailResponse: Decodable {
     let data: MenuPositionDetail?
     let error: ErrorResponse?
 }
@@ -63,7 +63,12 @@ struct AdditionalNomenclatureResponse: Decodable {
     }
 }
 
-struct OrderUpdateCartResponse: Codable {
+struct OrderUpdateCartResponse: Decodable {
     let data: Cart?
+    let error: ErrorResponse?
+}
+
+struct OrdersShowResponse: Decodable {
+    let data: LeadInfo?
     let error: ErrorResponse?
 }

@@ -20,12 +20,15 @@ final class MenuRepositoryImpl: MenuRepository {
     private(set) var outputs: Output = .init()
     private let disposeBag = DisposeBag()
     private let menuService: MenuService
+    private let ordersService: OrdersService
     private let storage: DefaultStorage
 
     init(menuService: MenuService,
+         ordersService: OrdersService,
          storage: DefaultStorage)
     {
         self.menuService = menuService
+        self.ordersService = ordersService
         self.storage = storage
 
         bindNotifications()
@@ -34,24 +37,20 @@ final class MenuRepositoryImpl: MenuRepository {
     func getMenuItems() {
         guard let leadUUID = storage.leadUUID else { return }
 
+        let leadInfoSequence = ordersService.getLeadInfo(for: leadUUID)
         let promotionsSequence = menuService.getPromotions(leadUUID: leadUUID)
         let productsSequence = menuService.getProducts(for: leadUUID)
 
-        let finalSequence = Single.zip(promotionsSequence,
+        let finalSequence = Single.zip(leadInfoSequence,
+                                       promotionsSequence,
                                        productsSequence,
-                                       resultSelector: {
-                                           promotions, productsData ->
-                                               ([Promotion],
-                                                [MenuCategory]) in
-                                           (
-                                               promotions,
-                                               productsData
-                                           )
-                                       })
+                                       resultSelector: { ($0, $1, $2) })
+
         outputs.didStartRequest.accept(())
         finalSequence.subscribe(onSuccess: {
-            [weak self] promotions, categories in
+            [weak self] leadInfo, promotions, categories in
             self?.outputs.didStartDataProcessing.accept(())
+            self?.outputs.didGetAddressInfo.accept(leadInfo)
             self?.outputs.didGetPromotions.accept(promotions)
             self?.outputs.didGetCategories.accept(categories)
             self?.outputs.didEndDataProcessing.accept(())
@@ -101,6 +100,7 @@ extension MenuRepositoryImpl {
         let didGetError = PublishRelay<ErrorPresentable?>()
 
         let didStartDataProcessing = PublishRelay<Void>()
+        let didGetAddressInfo = PublishRelay<LeadInfo>()
         let didGetPromotions = PublishRelay<[Promotion]>()
         let didGetCategories = PublishRelay<[MenuCategory]>()
         let didGetPositions = PublishRelay<[MenuPosition]>()

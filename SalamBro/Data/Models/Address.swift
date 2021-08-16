@@ -101,6 +101,7 @@ class Address: Codable {
     var city: City?
     var longitude: Double?
     var latitude: Double?
+    var fullAddress: String?
 
     init(district: String?,
          street: String?,
@@ -111,7 +112,8 @@ class Address: Codable {
          country: Country?,
          city: City?,
          longitude: Double?,
-         latitude: Double?)
+         latitude: Double?,
+         fullAddress: String?)
     {
         self.district = district
         self.street = street
@@ -123,6 +125,7 @@ class Address: Codable {
         self.city = city
         self.longitude = longitude
         self.latitude = latitude
+        self.fullAddress = fullAddress
     }
 
     init() {
@@ -136,12 +139,20 @@ class Address: Codable {
         city = nil
         longitude = nil
         latitude = nil
+        fullAddress = nil
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case district, street, building, corpus, flat, comment, country, city, longitude, latitude
+        case fullAddress = "full_address"
     }
 }
 
 extension Address {
     func getName() -> String? {
-        if let district = district, let street = street, let building = building {
+        if let fullAddress = fullAddress {
+            return fullAddress
+        } else if let district = district, let street = street, let building = building {
             return "\(district), \(street) \(building)"
         } else if let district = district, let building = building {
             return "\(district) \(building)"
@@ -159,7 +170,7 @@ extension Address {
     }
 
     func getCopy() -> Address {
-        return .init(district: district, street: street, building: building, corpus: corpus, flat: flat, comment: comment, country: country?.getCopy(), city: city?.getCopy(), longitude: longitude, latitude: latitude)
+        return .init(district: district, street: street, building: building, corpus: corpus, flat: flat, comment: comment, country: country?.getCopy(), city: city?.getCopy(), longitude: longitude, latitude: latitude, fullAddress: fullAddress)
     }
 }
 

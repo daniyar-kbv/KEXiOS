@@ -12,6 +12,7 @@ import RxSwift
 protocol CartRepository {
     var outputs: CartRepositoryImpl.Output { get }
 
+    func reload()
     func getItems()
     func addItem(item: CartItem)
     func removeItem(positionUUID: String)
@@ -22,7 +23,7 @@ protocol CartRepository {
     func getIsEmpty() -> Bool
 
     func getTotalAmount() -> Double
-    func getLocalItems() -> [CartItem]
+    func getLocalCart() -> Cart
 
     func applyPromocode(_ promocode: String)
 }
@@ -55,6 +56,18 @@ final class CartRepositoryImpl: CartRepository {
 }
 
 extension CartRepositoryImpl {
+    func reload() {
+        guard let leadUUID = defaultStorage.leadUUID else { return }
+        ordersService.getLeadInfo(for: leadUUID)
+            .subscribe { [weak self] leadInfo in
+                self?.process(cart: leadInfo.cart)
+            } onError: { [weak self] error in
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didGetError.accept(error)
+            }
+            .disposed(by: disposeBag)
+    }
+
     func getItems() {
 //        getAdditionalPositions() { [weak self] in
 //            self?.sendItems()
@@ -110,11 +123,11 @@ extension CartRepositoryImpl {
     }
 
     func getTotalAmount() -> Double {
-        return cartStorage.cart.getTotalPrice()
+        return cartStorage.cart.price
     }
 
-    func getLocalItems() -> [CartItem] {
-        return cartStorage.cart.items
+    func getLocalCart() -> Cart {
+        return cartStorage.cart
     }
 
     func applyPromocode(_ promocode: String) {
@@ -157,19 +170,20 @@ extension CartRepositoryImpl {
     }
 
     private func sendItems() {
-        let cartItems = cartStorage.cart.items
-            .filter {
-                !additionalPositions
-                    .map { $0.uuid }
-                    .contains($0.position.uuid)
-            }
+//        Tech debt: change
+//        let cartItems = cartStorage.cart
+//            .filter {
+//                !additionalPositions
+//                    .map { $0.uuid }
+//                    .contains($0.position.uuid)
+//            }
         let additionalItems = cartStorage.cart.items
             .filter {
                 additionalPositions
                     .map { $0.uuid }
                     .contains($0.position.uuid)
             }
-        outputs.didChange.accept((cartItems, additionalItems))
+        outputs.didChange.accept((cartStorage.cart, additionalItems))
     }
 
     private func bindActions() {
@@ -182,7 +196,7 @@ extension CartRepositoryImpl {
 
         evokeDebouncedUpdateCart
             .asObservable()
-            .debounce(.seconds(2), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(400), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
                 self?.updateCart(withLoader: false)
             })
@@ -238,7 +252,7 @@ extension CartRepositoryImpl {
 
 extension CartRepositoryImpl {
     struct Output {
-        let didChange = PublishRelay<(positions: [CartItem], additional: [CartItem])>()
+        let didChange = PublishRelay<(cart: Cart, additional: [CartItem])>()
 
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()

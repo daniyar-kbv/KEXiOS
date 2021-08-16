@@ -12,6 +12,7 @@ import RxSwift
 protocol CartViewModel {
     var outputs: CartViewModelImpl.Output { get }
 
+    func reload()
     func getCart()
     func getTotalPrice() -> String
     func getIsEmpty() -> Bool
@@ -21,7 +22,6 @@ protocol CartViewModel {
     func numberOfRows(in section: Int) -> Int
     func headerView(for section: Int) -> UIView
     func cell(for indexPath: IndexPath) -> UITableViewCell
-    func footerView(for section: Int) -> UIView
 
     func proceedButtonTapped()
 }
@@ -31,7 +31,7 @@ final class CartViewModelImpl: CartViewModel {
     private let cartRepository: CartRepository
     private let tokenStorage: AuthTokenStorage
 
-    private var cartItems: [CartItem] = []
+    private var cart: Cart = .init(items: [], price: 0, positionsCount: 0)
     private var additionalItems: [CartItem] = []
     private var tableSections: [TableSection] = []
     private var promocode: Promocode?
@@ -48,16 +48,20 @@ final class CartViewModelImpl: CartViewModel {
 }
 
 extension CartViewModelImpl {
+    func reload() {
+        cartRepository.reload()
+    }
+
     func getCart() {
         cartRepository.getItems()
     }
 
     func getTotalPrice() -> String {
-        return (getCartItemsPrice() + getAdditionalItemsPrice()).removeTrailingZeros()
+        return cart.price.formattedWithSeparator
     }
 
     func getIsEmpty() -> Bool {
-        return cartItems.isEmpty
+        return cart.items.isEmpty
     }
 
     func proceedButtonTapped() {
@@ -89,8 +93,8 @@ extension CartViewModelImpl {
         switch tableSections[section].type {
         case .products:
             let viewModel = CartHeaderViewModelImpl(type: .positions(
-                count: getCartItemsCount() + getAdditionalItemsCount(),
-                sum: getCartItemsPrice() + getAdditionalItemsPrice()
+                count: cart.positionsCount,
+                sum: cart.price
             ))
             return CartHeader(viewModel: viewModel)
         case .additional:
@@ -106,6 +110,12 @@ extension CartViewModelImpl {
             }
             let viewModel = CartHeaderViewModelImpl(type: .promocode(promocode: promocode.promocode))
             return CartHeader(viewModel: viewModel)
+        case .footer:
+            let view = UIView()
+            view.snp.makeConstraints {
+                $0.height.equalTo(0)
+            }
+            return view
         }
     }
 
@@ -131,31 +141,20 @@ extension CartViewModelImpl {
             let cell = CartPromocodeCell(viewModel: viewModel)
             cell.delegate = self
             return cell
+        case .footer:
+            guard let viewModel = viewModel as? CartFooterViewModel
+            else { return UITableViewCell() }
+            let cell = CartFooterCell(viewModel: viewModel)
+            return cell
         }
-    }
-
-    func footerView(for section: Int) -> UIView {
-        guard section == tableSections.count - 1 else {
-            let view = UIView()
-            view.snp.makeConstraints {
-                $0.height.equalTo(0)
-            }
-            return view
-        }
-        let viewModel = CartFooterViewModelImpl(input: .init(
-            count: getCartItemsCount() + getAdditionalItemsCount(),
-            productsPrice: getCartItemsPrice() + getAdditionalItemsPrice(),
-            delivaryPrice: 500
-        ))
-        return CartFooter(viewModel: viewModel)
     }
 }
 
 extension CartViewModelImpl {
     private func bindCartRepository() {
         cartRepository.outputs.didChange
-            .subscribe(onNext: { [weak self] items in
-                self?.process(cartItems: items.positions, additionalItems: items.additional)
+            .subscribe(onNext: { [weak self] cartInfo in
+                self?.process(cart: cartInfo.cart, additionalItems: cartInfo.additional)
             }).disposed(by: disposeBag)
 
         cartRepository.outputs.didStartRequest
@@ -177,17 +176,17 @@ extension CartViewModelImpl {
             .disposed(by: disposeBag)
     }
 
-    private func process(cartItems: [CartItem], additionalItems: [CartItem]) {
-        self.cartItems = cartItems
+    private func process(cart: Cart, additionalItems: [CartItem]) {
+        self.cart = cart
         self.additionalItems = additionalItems
 
         tableSections = []
         tableSections.append(.init(
             headerViewModel: CartHeaderViewModelImpl(type: .positions(
-                count: cartItems.count,
-                sum: cartItems.map { ($0.position.price ?? 0) * Double($0.count) }.reduce(0, +)
+                count: cart.positionsCount,
+                sum: cart.price
             )),
-            cellViewModels: cartItems.map { CartProductViewModelImpl(inputs: .init(item: $0)) },
+            cellViewModels: cart.items.map { CartProductViewModelImpl(inputs: .init(item: $0)) },
             type: .products
         ))
 
@@ -205,6 +204,18 @@ extension CartViewModelImpl {
             type: .promocode
         ))
 
+        let footerViewModel = CartFooterViewModelImpl(input: .init(
+            count: cart.positionsCount,
+            productsPrice: cart.price,
+            delivaryPrice: 500
+        ))
+
+        tableSections.append(.init(
+            headerViewModel: nil,
+            cellViewModels: [footerViewModel],
+            type: .footer
+        ))
+
         outputs.update.accept(())
     }
 
@@ -216,22 +227,6 @@ extension CartViewModelImpl {
             viewModel.set(state: .set(description: promocode.description))
         }
         outputs.update.accept(())
-    }
-
-    private func getCartItemsCount() -> Int {
-        return cartItems.map { $0.count }.reduce(0, +)
-    }
-
-    private func getAdditionalItemsCount() -> Int {
-        return additionalItems.map { $0.count }.reduce(0, +)
-    }
-
-    private func getCartItemsPrice() -> Double {
-        return cartItems.map { ($0.position.price ?? 0) * Double($0.count) }.reduce(0, +)
-    }
-
-    private func getAdditionalItemsPrice() -> Double {
-        return additionalItems.map { ($0.position.price ?? 0) * Double($0.count) }.reduce(0, +)
     }
 }
 
@@ -268,6 +263,7 @@ extension CartViewModelImpl {
             case products
             case additional
             case promocode
+            case footer
         }
     }
 
