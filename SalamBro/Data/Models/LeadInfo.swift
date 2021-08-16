@@ -12,13 +12,10 @@ struct LeadInfo: Decodable {
     let address: Address
     let brandImage: String
     let brandName: String
-    let price: Double
-    let positionsCount: Int
 
     enum CodingKeys: String, CodingKey {
-        case cart, address, price
+        case cart, address
         case brandImage = "brand_image"
         case brandName = "brand_name"
-        case positionsCount = "positions_count"
     }
 }

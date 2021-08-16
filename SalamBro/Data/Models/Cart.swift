@@ -9,15 +9,19 @@ import Foundation
 
 struct Cart: Codable {
     var items: [CartItem]
+    let price: Double
+    let positionsCount: Int
 
     enum CodingKeys: String, CodingKey {
+        case price
         case items = "positions"
+        case positionsCount = "positions_count"
     }
 }
 
 extension Cart {
-    func getTotalPrice() -> Double {
-        return items.map { Double($0.count) * ($0.position.price ?? 0) }.reduce(0, +)
+    func getBadgeCount() -> String? {
+        return positionsCount == 0 ? nil : String(positionsCount)
     }
 
     func toDTO() -> CartDTO {
@@ -65,12 +69,6 @@ extension CartItem: Equatable {
 extension CartItem {
     func getNumericPrice() -> Double {
         return (position.price ?? 0) * Double(count)
-    }
-}
-
-extension Array where Element == CartItem {
-    func getBadgeCount() -> String? {
-        return isEmpty ? nil : String(count)
     }
 }
 

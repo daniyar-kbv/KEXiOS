@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct OrdersListResponse: Codable {
+struct OrdersListResponse: Decodable {
     let data: Data?
     let error: ErrorResponse?
 
-    struct Data: Codable {
+    struct Data: Decodable {
         let count: Int
         let next: String?
         let previous: String?
