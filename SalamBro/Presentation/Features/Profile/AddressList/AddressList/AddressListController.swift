@@ -30,7 +30,14 @@ final class AddressListController: UIViewController, Reloadable {
         tv.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 24, right: 0)
         tv.separatorInsetReference = .fromCellEdges
         tv.separatorStyle = .singleLine
+        tv.refreshControl = refreshControll
         return tv
+    }()
+
+    private lazy var refreshControll: UIRefreshControl = {
+        let view = UIRefreshControl()
+        view.addTarget(self, action: #selector(reload), for: .valueChanged)
+        return view
     }()
 
     init(viewModel: AddressListViewModel) {
@@ -58,7 +65,8 @@ final class AddressListController: UIViewController, Reloadable {
             .disposed(by: disposeBag)
     }
 
-    func reload() {
+    @objc func reload() {
+        refreshControll.endRefreshing()
         viewModel.getAddresses()
     }
 
