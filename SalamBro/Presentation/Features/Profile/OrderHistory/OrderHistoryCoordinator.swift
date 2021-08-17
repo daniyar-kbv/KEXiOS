@@ -11,6 +11,7 @@ import UIKit
 
 final class OrderHistoryCoordinator: BaseCoordinator {
     var didFinish: (() -> Void)?
+    var toMenu: (() -> Void)?
 
     private let router: Router
     private let pagesFactory: OrderHistoryPagesFactory
@@ -34,6 +35,10 @@ final class OrderHistoryCoordinator: BaseCoordinator {
 
         orderHistoryPage.onTerminate = { [weak self] in
             self?.didFinish?()
+        }
+
+        orderHistoryPage.toMenu = { [weak self] in
+            self?.toMenu?()
         }
 
         orderHistoryPage.hidesBottomBarWhenPushed = true

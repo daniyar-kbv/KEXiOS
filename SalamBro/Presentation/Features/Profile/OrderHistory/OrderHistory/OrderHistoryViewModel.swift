@@ -14,6 +14,7 @@ protocol OrderHistoryViewModel: AnyObject {
     var orders: [OrdersList] { get }
 
     func update()
+    func ordersEmpty() -> Bool
 }
 
 final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
@@ -30,6 +31,10 @@ final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
 
     func update() {
         ordersRepository.getOrders()
+    }
+
+    func ordersEmpty() -> Bool {
+        return orders.isEmpty
     }
 
     private func bindOutputs() {
