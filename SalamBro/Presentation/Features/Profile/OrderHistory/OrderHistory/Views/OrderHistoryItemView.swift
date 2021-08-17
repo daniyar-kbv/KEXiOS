@@ -19,7 +19,7 @@ final class OrderHistoryItemView: UIView {
     private var priceLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .right
-        view.numberOfLines = 1
+        view.numberOfLines = 0
         return view
     }()
 
@@ -47,6 +47,7 @@ final class OrderHistoryItemView: UIView {
         itemLabel.snp.makeConstraints {
             $0.top.bottom.equalTo(safeAreaLayoutGuide)
             $0.left.equalToSuperview()
+            $0.width.lessThanOrEqualTo(220)
         }
         priceLabel.snp.makeConstraints {
             $0.top.bottom.equalTo(safeAreaLayoutGuide)

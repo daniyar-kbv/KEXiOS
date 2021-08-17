@@ -24,6 +24,7 @@ final class OrderHistoryCellContentView: UIView {
     private lazy var titleLabel: UILabel = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 14)
+        view.adjustsFontSizeToFitWidth = true
         return view
     }()
 
@@ -31,6 +32,7 @@ final class OrderHistoryCellContentView: UIView {
         let view = UILabel()
         view.textColor = .mildBlue
         view.font = .systemFont(ofSize: 14)
+        view.adjustsFontSizeToFitWidth = true
         return view
     }()
 
@@ -38,6 +40,7 @@ final class OrderHistoryCellContentView: UIView {
         let view = UILabel()
         view.font = .systemFont(ofSize: 10, weight: .medium)
         view.textColor = .mildBlue
+        view.adjustsFontSizeToFitWidth = true
         return view
     }()
 
@@ -152,6 +155,7 @@ final class OrderHistoryCellContentView: UIView {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(24)
             $0.left.equalTo(logoView.snp.right).offset(16)
             $0.right.equalTo(shareToInstagramButton.snp.left).offset(-16)
+            $0.height.equalTo(48)
         }
         shareToInstagramButton.snp.makeConstraints {
             $0.right.equalToSuperview()
