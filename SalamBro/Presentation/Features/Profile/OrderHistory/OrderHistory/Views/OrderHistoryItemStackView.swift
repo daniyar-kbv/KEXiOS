@@ -8,52 +8,51 @@
 import SnapKit
 import UIKit
 
-final class OrderHistoryItemView: UIView {
-    private var itemLabel: UILabel = {
+final class OrderHistoryItemStackView: UIStackView {
+    private lazy var itemLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .left
         view.numberOfLines = 0
+        view.font = .systemFont(ofSize: 14)
+        view.textColor = .darkGray
+        view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         return view
     }()
 
-    private var priceLabel: UILabel = {
+    private lazy var priceLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .right
         view.numberOfLines = 0
+        view.font = .systemFont(ofSize: 14)
+        view.textColor = .darkGray
+        view.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return view
     }()
 
     init() {
         super.init(frame: .zero)
-        layoutUI()
+        configureUI()
     }
 
     init(with title: String, and price: String) {
         super.init(frame: .zero)
         itemLabel.text = title
         priceLabel.text = price
-        layoutUI()
+        configureUI()
     }
 
     @available(*, unavailable)
-    required init?(coder _: NSCoder) {
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func layoutUI() {
-        [itemLabel, priceLabel].forEach {
-            addSubview($0)
-        }
-        itemLabel.snp.makeConstraints {
-            $0.top.bottom.equalTo(safeAreaLayoutGuide)
-            $0.left.equalToSuperview()
-            $0.width.lessThanOrEqualTo(220)
-        }
-        priceLabel.snp.makeConstraints {
-            $0.top.bottom.equalTo(safeAreaLayoutGuide)
-            $0.left.equalTo(itemLabel.snp.right).offset(4)
-            $0.right.equalToSuperview()
-        }
+    private func configureUI() {
+        axis = .horizontal
+        alignment = .center
+        spacing = 8
+
+        addArrangedSubview(itemLabel)
+        addArrangedSubview(priceLabel)
     }
 
     func configure(with title: String, and price: String) {

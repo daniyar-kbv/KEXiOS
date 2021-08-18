@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-final class OrderHistoryInfoView: UIView {
+final class OrderHistoryInfoStackView: UIStackView {
     private var itemLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .left
@@ -20,33 +20,29 @@ final class OrderHistoryInfoView: UIView {
     private var infoLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .left
+        view.font = .systemFont(ofSize: 14)
+        view.textColor = .darkGray
         return view
     }()
 
     init(title: String) {
         super.init(frame: .zero)
         itemLabel.text = title
-        layoutUI()
+        configureUI()
     }
 
     @available(*, unavailable)
-    required init?(coder _: NSCoder) {
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func layoutUI() {
-        [itemLabel, infoLabel].forEach {
-            addSubview($0)
-        }
-        itemLabel.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
-            $0.left.equalToSuperview()
-        }
-        infoLabel.snp.makeConstraints {
-            $0.top.equalTo(itemLabel.snp.bottom).offset(4)
-            $0.left.equalToSuperview()
-            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
-        }
+    private func configureUI() {
+        axis = .vertical
+        alignment = .fill
+        spacing = 4
+
+        addArrangedSubview(itemLabel)
+        addArrangedSubview(infoLabel)
     }
 
     func configure(with info: String) {

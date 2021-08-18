@@ -44,7 +44,6 @@ final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
 
         ordersRepository.outputs.didGetOrders.bind {
             [weak self] orders in
-            self?.outputs.didEndRequest.accept(())
             self?.orders = orders
             self?.outputs.didGetOrders.accept(())
         }

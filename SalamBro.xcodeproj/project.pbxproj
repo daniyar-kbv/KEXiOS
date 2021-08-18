@@ -177,8 +177,8 @@
 		05112FC227A1546DB01A33FD94C6EFC8 /* OrderHistoryCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35212C0C3A652476D0B304AEB4929141 /* OrderHistoryCellContentView.swift */; };
 		4EB5659CFFFCD83ECA602A6D83057017 /* OrderHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03C1FA0BF655A8743C53F3CFBF40D7 /* OrderHistoryController.swift */; };
 		D2552CCF453B42C116F0BD350871F535 /* OrderHistoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD86C83506E14C7A735E676963ECFABA /* OrderHistoryCoordinator.swift */; };
-		AF31134F30C3CD70FFDA6027699FA1FD /* OrderHistoryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F33191807B5CFE3A6983E401A567EA /* OrderHistoryInfoView.swift */; };
-		05AF5AFC9D35CB52F9B25D527998EA59 /* OrderHistoryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689E95C6186D230F11B1C71D354BD714 /* OrderHistoryItemView.swift */; };
+		27E3CC671F108FBD0AE3953AC5661B65 /* OrderHistoryInfoStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396FA2D5A059F0D21641796429255D11 /* OrderHistoryInfoStackView.swift */; };
+		254D2E402973E43B23CFFF76C4BD562D /* OrderHistoryItemStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35FC6459CEA790593E0EC11C3DF91E8 /* OrderHistoryItemStackView.swift */; };
 		BB4F1D7E799841C387D596E8E8F94D92 /* OrderHistoryPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A912B1EDA727A908FBFAFE7EB4E611 /* OrderHistoryPagesFactory.swift */; };
 		B3A3E93B228331E45C5230E16903E253 /* OrderHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152F7DD8B948579CCF07A0CD9A0C7CA5 /* OrderHistoryViewModel.swift */; };
 		2D4CFF98D59AD7A51A19D37476E30C0E /* OrdersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */; };
@@ -530,8 +530,8 @@
 		35212C0C3A652476D0B304AEB4929141 /* OrderHistoryCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryCellContentView.swift; sourceTree = "<group>"; };
 		BB03C1FA0BF655A8743C53F3CFBF40D7 /* OrderHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryController.swift; sourceTree = "<group>"; };
 		AD86C83506E14C7A735E676963ECFABA /* OrderHistoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryCoordinator.swift; sourceTree = "<group>"; };
-		62F33191807B5CFE3A6983E401A567EA /* OrderHistoryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryInfoView.swift; sourceTree = "<group>"; };
-		689E95C6186D230F11B1C71D354BD714 /* OrderHistoryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryItemView.swift; sourceTree = "<group>"; };
+		396FA2D5A059F0D21641796429255D11 /* OrderHistoryInfoStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryInfoStackView.swift; sourceTree = "<group>"; };
+		C35FC6459CEA790593E0EC11C3DF91E8 /* OrderHistoryItemStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryItemStackView.swift; sourceTree = "<group>"; };
 		16A912B1EDA727A908FBFAFE7EB4E611 /* OrderHistoryPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryPagesFactory.swift; sourceTree = "<group>"; };
 		152F7DD8B948579CCF07A0CD9A0C7CA5 /* OrderHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryViewModel.swift; sourceTree = "<group>"; };
 		DA4BE0B1D83339767B9871AEEC3C767E /* OrdersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersAPI.swift; sourceTree = "<group>"; };
@@ -1817,8 +1817,8 @@
 				785851054718D35A4F8D5A2AEEAEB635 /* OrderHistoryButton.swift */,
 				A39D14BEFFA7748C1668B738C82D0AE1 /* OrderHistoryCell.swift */,
 				35212C0C3A652476D0B304AEB4929141 /* OrderHistoryCellContentView.swift */,
-				62F33191807B5CFE3A6983E401A567EA /* OrderHistoryInfoView.swift */,
-				689E95C6186D230F11B1C71D354BD714 /* OrderHistoryItemView.swift */,
+				396FA2D5A059F0D21641796429255D11 /* OrderHistoryInfoStackView.swift */,
+				C35FC6459CEA790593E0EC11C3DF91E8 /* OrderHistoryItemStackView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2770,8 +2770,8 @@
 				05112FC227A1546DB01A33FD94C6EFC8 /* OrderHistoryCellContentView.swift in Sources */,
 				4EB5659CFFFCD83ECA602A6D83057017 /* OrderHistoryController.swift in Sources */,
 				D2552CCF453B42C116F0BD350871F535 /* OrderHistoryCoordinator.swift in Sources */,
-				AF31134F30C3CD70FFDA6027699FA1FD /* OrderHistoryInfoView.swift in Sources */,
-				05AF5AFC9D35CB52F9B25D527998EA59 /* OrderHistoryItemView.swift in Sources */,
+				27E3CC671F108FBD0AE3953AC5661B65 /* OrderHistoryInfoStackView.swift in Sources */,
+				254D2E402973E43B23CFFF76C4BD562D /* OrderHistoryItemStackView.swift in Sources */,
 				BB4F1D7E799841C387D596E8E8F94D92 /* OrderHistoryPagesFactory.swift in Sources */,
 				B3A3E93B228331E45C5230E16903E253 /* OrderHistoryViewModel.swift in Sources */,
 				2D4CFF98D59AD7A51A19D37476E30C0E /* OrdersAPI.swift in Sources */,

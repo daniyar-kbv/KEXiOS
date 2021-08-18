@@ -38,7 +38,7 @@ final class OrderHistoryCellContentView: UIView {
 
     private lazy var checkNumberLabel: UILabel = {
         let view = UILabel()
-        view.font = .systemFont(ofSize: 10, weight: .medium)
+        view.font = .systemFont(ofSize: 10)
         view.textColor = .mildBlue
         view.adjustsFontSizeToFitWidth = true
         return view
@@ -63,8 +63,8 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
-    private lazy var deliveryItem = OrderHistoryItemView()
-    private lazy var sumItem = OrderHistoryItemView()
+    private lazy var deliveryItem = OrderHistoryItemStackView()
+    private lazy var sumItem = OrderHistoryItemStackView()
 
     private lazy var itemStack: UIStackView = {
         let view = UIStackView()
@@ -75,13 +75,11 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
-    private lazy var addressItem = OrderHistoryInfoView(
+    private lazy var addressItem = OrderHistoryInfoStackView(
         title: SBLocalization.localized(key: ProfileText.OrderHistory.deliveryAddress))
-
-    private lazy var paymentItem = OrderHistoryInfoView(
+    private lazy var paymentItem = OrderHistoryInfoStackView(
         title: SBLocalization.localized(key: ProfileText.OrderHistory.paymentDetails))
-
-    private lazy var statusItem = OrderHistoryInfoView(
+    private lazy var statusItem = OrderHistoryInfoStackView(
         title: SBLocalization.localized(key: ProfileText.OrderHistory.orderStatus))
 
     private lazy var infoStack: UIStackView = {
@@ -109,9 +107,14 @@ final class OrderHistoryCellContentView: UIView {
         color: .mildBlue,
         titleString: SBLocalization.localized(key: ProfileText.OrderHistory.repeatOrder)
     )
+    private lazy var cancelOrderButton = OrderHistoryButton(
+        color: .mildBlue,
+        titleString: SBLocalization.localized(key: ProfileText.OrderHistory.cancelOrder)
+    )
 
     private lazy var buttonStack: UIStackView = {
-        let view = UIStackView()
+        let view = UIStackView(arrangedSubviews: [sendCheckButton,
+                                                  rateOrderButton, repeatOrderButton, cancelOrderButton])
         view.axis = .vertical
         view.alignment = .fill
         view.distribution = .fillEqually
@@ -119,7 +122,7 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
-    private var orderedItems: [OrderHistoryItemView]?
+    private var orderedItems: [OrderHistoryItemStackView]?
 
     private var orderStatus: OrderedFoodStatus?
 
@@ -177,19 +180,18 @@ final class OrderHistoryCellContentView: UIView {
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
         }
 
-        if orderStatus != .paid || orderStatus != .cooking || orderStatus != .inDelivery {
-            var height = 43
+        if orderStatus == .paid || orderStatus != .cooking || orderStatus != .inDelivery {
             switch orderStatus {
             case .new:
-                repeatOrderButton.setTitle("Отменить заказ", for: .normal)
-                buttonStack.addArrangedSubview(repeatOrderButton)
+                sendCheckButton.isHidden = true
+                repeatOrderButton.isHidden = true
+                rateOrderButton.isHidden = true
             case .failure:
-                buttonStack.addArrangedSubview(repeatOrderButton)
-            case .issued:
-                buttonStack.addArrangedSubview(sendCheckButton)
-                buttonStack.addArrangedSubview(rateOrderButton)
-                buttonStack.addArrangedSubview(repeatOrderButton)
-                height = 161
+                sendCheckButton.isHidden = true
+                cancelOrderButton.isHidden = true
+                rateOrderButton.isHidden = true
+            case .paid:
+                cancelOrderButton.isHidden = true
             default:
                 return
             }
@@ -204,7 +206,6 @@ final class OrderHistoryCellContentView: UIView {
                 $0.top.equalTo(infoStack.snp.bottom).offset(16)
                 $0.left.right.equalToSuperview()
                 $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
-                $0.height.equalTo(height)
             }
         }
     }
@@ -222,7 +223,9 @@ final class OrderHistoryCellContentView: UIView {
             configureItems(with: item.cart.items, deliveryPrice: deliveryPrice, totalSum: totalSum)
         }
 
-        addressItem.configure(with: configureAddress(of: item.address))
+        if let address = item.address.getName() {
+            addressItem.configure(with: address)
+        }
 
         if let paymentType = PaymentMethodType(rawValue: item.paymentType),
            let orderStatus = OrderedFoodStatus(rawValue: item.status)
@@ -238,37 +241,27 @@ final class OrderHistoryCellContentView: UIView {
     }
 
     private func configureItems(with items: [CartItem], deliveryPrice: Double, totalSum: Double) {
-        if itemStack.arrangedSubviews.isEmpty {
-            var modifiersText = ""
+        guard itemStack.arrangedSubviews.isEmpty else { return }
 
-            for item in items {
-                if let price = item.position.price {
-                    if !item.modifierGroups.isEmpty {
-                        for m in item.modifierGroups {
-                            for i in m.modifiers {
-                                modifiersText = modifiersText.isEmpty ? i.position.name : modifiersText + ", " + i.position.name
-                            }
-                        }
-
-                        itemStack.addArrangedSubview(OrderHistoryItemView(
-                            with: "\(item.count)x \(item.position.name) (\(modifiersText))",
-                            and: "\(Int(price)) ₸"
-                        ))
-                    } else {
-                        itemStack.addArrangedSubview(OrderHistoryItemView(
-                            with: "\(item.count)x \(item.position.name)",
-                            and: "\(Int(price)) ₸"
-                        ))
-                    }
-                }
+        items.forEach { item in
+            var title = "\(item.count)x \(item.position.name)"
+            if !item.modifierGroups.isEmpty {
+                let modifiersText = item.modifierGroups.map { $0.modifiers }.flatMap { $0 }.map { $0.position.name }.joined(separator: ", ")
+                title += " (\(modifiersText))"
             }
-
-            deliveryItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.shipping), and: "\(Int(deliveryPrice)) ₸")
-            sumItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.sum), and: "\(Int(totalSum)) ₸")
-
-            itemStack.addArrangedSubview(deliveryItem)
-            itemStack.addArrangedSubview(sumItem)
+            if let price = item.position.price {
+                itemStack.addArrangedSubview(OrderHistoryItemStackView(
+                    with: title,
+                    and: "\(price.formattedWithSeparator) ₸"
+                ))
+            }
         }
+
+        deliveryItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.shipping), and: "\(Int(deliveryPrice)) ₸")
+        sumItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.sum), and: "\(Int(totalSum)) ₸")
+
+        itemStack.addArrangedSubview(deliveryItem)
+        itemStack.addArrangedSubview(sumItem)
     }
 
     private func getConvertedDate(of date: String) -> String {
@@ -278,33 +271,13 @@ final class OrderHistoryCellContentView: UIView {
         let convertedDate = dateFormatter.date(from: date)
 
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "dd.MM.yyyy, HH:mm"
+        dateFormatterPrint.dateFormat = "dd.MM.yy, HH:mm"
 
         if let convertedDate = convertedDate {
             return dateFormatterPrint.string(from: convertedDate)
         } else {
             return ""
         }
-    }
-
-    private func configureAddress(of address: Address) -> String {
-        var displayAddress = ""
-        if let district = address.district {
-            displayAddress.append(district)
-        }
-        if let street = address.street {
-            displayAddress = displayAddress.isEmpty ? street : displayAddress + ", " + street
-        }
-        if let building = address.building {
-            displayAddress = displayAddress.isEmpty ? building : displayAddress + ", " + building
-        }
-        if let corpus = address.corpus {
-            displayAddress = displayAddress.isEmpty ? corpus : displayAddress + ", " + corpus
-        }
-        if let flat = address.flat {
-            displayAddress = displayAddress.isEmpty ? flat : displayAddress + ", " + flat
-        }
-        return displayAddress
     }
 
     @objc private func rateOrder() {
