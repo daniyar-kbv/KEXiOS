@@ -27,6 +27,7 @@ final class OrderHistoryController: UIViewController, LoaderDisplayable {
         view.register(cellType: OrderTestCell.self)
         view.showsVerticalScrollIndicator = false
         view.backgroundColor = .clear
+        view.tableFooterView = UIView()
         view.delegate = self
         view.dataSource = self
         view.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -113,7 +114,7 @@ extension OrderHistoryController {
             return
         }
 
-        showAnimationView(animationType: .emptyBasket) { [weak self] in
+        showAnimationView(animationType: .orderHistory) { [weak self] in
             self?.toMenu?()
         }
     }

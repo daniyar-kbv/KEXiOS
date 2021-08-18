@@ -22,6 +22,7 @@ final class OrderHistoryInfoStackView: UIStackView {
         view.textAlignment = .left
         view.font = .systemFont(ofSize: 14)
         view.textColor = .darkGray
+        view.numberOfLines = 0
         return view
     }()
 

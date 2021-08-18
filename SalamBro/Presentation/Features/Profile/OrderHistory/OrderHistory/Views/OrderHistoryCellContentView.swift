@@ -63,8 +63,8 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
-    private lazy var deliveryItem = OrderHistoryItemStackView()
-    private lazy var sumItem = OrderHistoryItemStackView()
+    private lazy var deliveryItem = OrderHistoryItemView()
+    private lazy var sumItem = OrderHistoryItemView()
 
     private lazy var itemStack: UIStackView = {
         let view = UIStackView()
@@ -122,8 +122,6 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
-    private var orderedItems: [OrderHistoryItemStackView]?
-
     private var orderStatus: OrderedFoodStatus?
 
     private var orderNumber: Int?
@@ -180,33 +178,45 @@ final class OrderHistoryCellContentView: UIView {
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
         }
 
-        if orderStatus != .paid || orderStatus != .cooking || orderStatus != .inDelivery {
+        configureButtonStack()
+    }
+
+    func updateUI() {
+        infoStack.snp.remakeConstraints {
+            $0.top.equalTo(itemStack.snp.bottom).offset(16)
+            $0.left.right.equalToSuperview()
+        }
+
+        addSubview(buttonStack)
+        buttonStack.snp.makeConstraints {
+            $0.top.equalTo(infoStack.snp.bottom).offset(16)
+            $0.left.right.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
+        }
+    }
+
+    func configureButtonStack() {
+        if orderStatus == .new || orderStatus == .failure || orderStatus == .issued {
             switch orderStatus {
             case .new:
                 sendCheckButton.isHidden = true
                 repeatOrderButton.isHidden = true
                 rateOrderButton.isHidden = true
+                cancelOrderButton.isHidden = false
             case .failure:
                 sendCheckButton.isHidden = true
                 cancelOrderButton.isHidden = true
                 rateOrderButton.isHidden = true
+                repeatOrderButton.isHidden = false
             case .issued:
+                sendCheckButton.isHidden = false
+                repeatOrderButton.isHidden = false
+                rateOrderButton.isHidden = false
                 cancelOrderButton.isHidden = true
             default:
                 return
             }
-
-            infoStack.snp.remakeConstraints {
-                $0.top.equalTo(itemStack.snp.bottom).offset(16)
-                $0.left.right.equalToSuperview()
-            }
-
-            addSubview(buttonStack)
-            buttonStack.snp.makeConstraints {
-                $0.top.equalTo(infoStack.snp.bottom).offset(16)
-                $0.left.right.equalToSuperview()
-                $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
-            }
+            updateUI()
         }
     }
 
@@ -250,15 +260,15 @@ final class OrderHistoryCellContentView: UIView {
                 title += " (\(modifiersText))"
             }
             if let price = item.position.price {
-                itemStack.addArrangedSubview(OrderHistoryItemStackView(
+                itemStack.addArrangedSubview(OrderHistoryItemView(
                     with: title,
                     and: "\(price.formattedWithSeparator) ₸"
                 ))
             }
         }
 
-        deliveryItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.shipping), and: "\(Int(deliveryPrice)) ₸")
-        sumItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.sum), and: "\(Int(totalSum)) ₸")
+        deliveryItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.shipping), and: "\(Int(deliveryPrice).formattedWithSeparator) ₸")
+        sumItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.sum), and: "\(Int(totalSum).formattedWithSeparator) ₸")
 
         itemStack.addArrangedSubview(deliveryItem)
         itemStack.addArrangedSubview(sumItem)

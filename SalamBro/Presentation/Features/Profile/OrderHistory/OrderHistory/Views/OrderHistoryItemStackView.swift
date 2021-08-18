@@ -1,5 +1,5 @@
 //
-//  OrderHistoryItemStackView.swift
+//  OrderHistoryItemView.swift
 //  SalamBro
 //
 //  Created by Meruyert Tastandiyeva on 6/24/21.
@@ -8,20 +8,10 @@
 import SnapKit
 import UIKit
 
-final class OrderHistoryItemStackView: UIStackView {
-    private lazy var itemLabel: UILabel = {
+final class OrderHistoryItemView: UIView {
+    private var itemLabel: UILabel = {
         let view = UILabel()
         view.textAlignment = .left
-        view.numberOfLines = 0
-        view.font = .systemFont(ofSize: 14)
-        view.textColor = .darkGray
-        view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        return view
-    }()
-
-    private lazy var priceLabel: UILabel = {
-        let view = UILabel()
-        view.textAlignment = .right
         view.numberOfLines = 0
         view.font = .systemFont(ofSize: 14)
         view.textColor = .darkGray
@@ -29,30 +19,47 @@ final class OrderHistoryItemStackView: UIStackView {
         return view
     }()
 
+    private var priceLabel: UILabel = {
+        let view = UILabel()
+        view.textAlignment = .right
+        view.numberOfLines = 1
+        view.font = .systemFont(ofSize: 14)
+        view.textColor = .darkGray
+        return view
+    }()
+
     init() {
         super.init(frame: .zero)
-        configureUI()
+        layoutUI()
     }
 
     init(with title: String, and price: String) {
         super.init(frame: .zero)
         itemLabel.text = title
         priceLabel.text = price
-        configureUI()
+        layoutUI()
     }
 
     @available(*, unavailable)
-    required init(coder _: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func configureUI() {
-        axis = .horizontal
-        alignment = .center
-        spacing = 8
+    private func layoutUI() {
+        [itemLabel, priceLabel].forEach {
+            addSubview($0)
+        }
 
-        addArrangedSubview(itemLabel)
-        addArrangedSubview(priceLabel)
+        itemLabel.snp.makeConstraints {
+            $0.top.bottom.equalTo(safeAreaLayoutGuide)
+            $0.left.equalToSuperview()
+        }
+
+        priceLabel.snp.makeConstraints {
+            $0.top.bottom.equalTo(safeAreaLayoutGuide)
+            $0.left.equalTo(itemLabel.snp.right).offset(4)
+            $0.right.equalToSuperview()
+        }
     }
 
     func configure(with title: String, and price: String) {
