@@ -180,7 +180,7 @@ final class OrderHistoryCellContentView: UIView {
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
         }
 
-        if orderStatus == .paid || orderStatus != .cooking || orderStatus != .inDelivery {
+        if orderStatus != .paid || orderStatus != .cooking || orderStatus != .inDelivery {
             switch orderStatus {
             case .new:
                 sendCheckButton.isHidden = true
@@ -190,7 +190,7 @@ final class OrderHistoryCellContentView: UIView {
                 sendCheckButton.isHidden = true
                 cancelOrderButton.isHidden = true
                 rateOrderButton.isHidden = true
-            case .paid:
+            case .issued:
                 cancelOrderButton.isHidden = true
             default:
                 return
