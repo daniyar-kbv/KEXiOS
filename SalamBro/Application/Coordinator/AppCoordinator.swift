@@ -75,6 +75,11 @@ final class AppCoordinator: BaseCoordinator {
             self?.restartApp()
         }
 
+        profileCoordinator.toMenu = { [weak self] in
+            guard let tabIndex = self?.tabBarBarTypes.firstIndex(of: .menu) else { return }
+            self?.pagesFactory.makeSBTabbarController().selectedIndex = tabIndex
+        }
+
         profileCoordinator.start()
         profileCoordinator.router.getNavigationController().tabBarItem = tabBarItem
 

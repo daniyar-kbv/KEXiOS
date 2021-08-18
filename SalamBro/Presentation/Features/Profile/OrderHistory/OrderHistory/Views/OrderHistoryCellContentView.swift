@@ -24,6 +24,7 @@ final class OrderHistoryCellContentView: UIView {
     private lazy var titleLabel: UILabel = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 14)
+        view.adjustsFontSizeToFitWidth = true
         return view
     }()
 
@@ -31,13 +32,15 @@ final class OrderHistoryCellContentView: UIView {
         let view = UILabel()
         view.textColor = .mildBlue
         view.font = .systemFont(ofSize: 14)
+        view.adjustsFontSizeToFitWidth = true
         return view
     }()
 
     private lazy var checkNumberLabel: UILabel = {
         let view = UILabel()
-        view.font = .systemFont(ofSize: 10, weight: .medium)
+        view.font = .systemFont(ofSize: 10)
         view.textColor = .mildBlue
+        view.adjustsFontSizeToFitWidth = true
         return view
     }()
 
@@ -72,13 +75,11 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
-    private lazy var addressItem = OrderHistoryInfoView(
+    private lazy var addressItem = OrderHistoryInfoStackView(
         title: SBLocalization.localized(key: ProfileText.OrderHistory.deliveryAddress))
-
-    private lazy var paymentItem = OrderHistoryInfoView(
+    private lazy var paymentItem = OrderHistoryInfoStackView(
         title: SBLocalization.localized(key: ProfileText.OrderHistory.paymentDetails))
-
-    private lazy var statusItem = OrderHistoryInfoView(
+    private lazy var statusItem = OrderHistoryInfoStackView(
         title: SBLocalization.localized(key: ProfileText.OrderHistory.orderStatus))
 
     private lazy var infoStack: UIStackView = {
@@ -106,17 +107,20 @@ final class OrderHistoryCellContentView: UIView {
         color: .mildBlue,
         titleString: SBLocalization.localized(key: ProfileText.OrderHistory.repeatOrder)
     )
+    private lazy var cancelOrderButton = OrderHistoryButton(
+        color: .mildBlue,
+        titleString: SBLocalization.localized(key: ProfileText.OrderHistory.cancelOrder)
+    )
 
     private lazy var buttonStack: UIStackView = {
-        let view = UIStackView()
+        let view = UIStackView(arrangedSubviews: [sendCheckButton,
+                                                  rateOrderButton, repeatOrderButton, cancelOrderButton])
         view.axis = .vertical
         view.alignment = .fill
         view.distribution = .fillEqually
         view.spacing = 16
         return view
     }()
-
-    private var orderedItems: [OrderHistoryItemView]?
 
     private var orderStatus: OrderedFoodStatus?
 
@@ -152,6 +156,7 @@ final class OrderHistoryCellContentView: UIView {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(24)
             $0.left.equalTo(logoView.snp.right).offset(16)
             $0.right.equalTo(shareToInstagramButton.snp.left).offset(-16)
+            $0.height.equalTo(48)
         }
         shareToInstagramButton.snp.makeConstraints {
             $0.right.equalToSuperview()
@@ -173,35 +178,45 @@ final class OrderHistoryCellContentView: UIView {
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
         }
 
-        if orderStatus != .paid || orderStatus != .cooking || orderStatus != .inDelivery {
-            var height = 43
+        configureButtonStack()
+    }
+
+    func updateUI() {
+        infoStack.snp.remakeConstraints {
+            $0.top.equalTo(itemStack.snp.bottom).offset(16)
+            $0.left.right.equalToSuperview()
+        }
+
+        addSubview(buttonStack)
+        buttonStack.snp.makeConstraints {
+            $0.top.equalTo(infoStack.snp.bottom).offset(16)
+            $0.left.right.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
+        }
+    }
+
+    func configureButtonStack() {
+        if orderStatus == .new || orderStatus == .failure || orderStatus == .issued {
             switch orderStatus {
             case .new:
-                repeatOrderButton.setTitle("Отменить заказ", for: .normal)
-                buttonStack.addArrangedSubview(repeatOrderButton)
+                sendCheckButton.isHidden = true
+                repeatOrderButton.isHidden = true
+                rateOrderButton.isHidden = true
+                cancelOrderButton.isHidden = false
             case .failure:
-                buttonStack.addArrangedSubview(repeatOrderButton)
+                sendCheckButton.isHidden = true
+                cancelOrderButton.isHidden = true
+                rateOrderButton.isHidden = true
+                repeatOrderButton.isHidden = false
             case .issued:
-                buttonStack.addArrangedSubview(sendCheckButton)
-                buttonStack.addArrangedSubview(rateOrderButton)
-                buttonStack.addArrangedSubview(repeatOrderButton)
-                height = 161
+                sendCheckButton.isHidden = false
+                repeatOrderButton.isHidden = false
+                rateOrderButton.isHidden = false
+                cancelOrderButton.isHidden = true
             default:
                 return
             }
-
-            infoStack.snp.remakeConstraints {
-                $0.top.equalTo(itemStack.snp.bottom).offset(16)
-                $0.left.right.equalToSuperview()
-            }
-
-            addSubview(buttonStack)
-            buttonStack.snp.makeConstraints {
-                $0.top.equalTo(infoStack.snp.bottom).offset(16)
-                $0.left.right.equalToSuperview()
-                $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-24)
-                $0.height.equalTo(height)
-            }
+            updateUI()
         }
     }
 
@@ -218,7 +233,9 @@ final class OrderHistoryCellContentView: UIView {
             configureItems(with: item.cart.items, deliveryPrice: deliveryPrice, totalSum: totalSum)
         }
 
-        addressItem.configure(with: configureAddress(of: item.address))
+        if let address = item.address.getName() {
+            addressItem.configure(with: address)
+        }
 
         if let paymentType = PaymentMethodType(rawValue: item.paymentType),
            let orderStatus = OrderedFoodStatus(rawValue: item.status)
@@ -234,37 +251,27 @@ final class OrderHistoryCellContentView: UIView {
     }
 
     private func configureItems(with items: [CartItem], deliveryPrice: Double, totalSum: Double) {
-        if itemStack.arrangedSubviews.isEmpty {
-            var modifiersText = ""
+        guard itemStack.arrangedSubviews.isEmpty else { return }
 
-            for item in items {
-                if let price = item.position.price {
-                    if !item.modifierGroups.isEmpty {
-                        for m in item.modifierGroups {
-                            for i in m.modifiers {
-                                modifiersText = modifiersText.isEmpty ? i.position.name : modifiersText + ", " + i.position.name
-                            }
-                        }
-
-                        itemStack.addArrangedSubview(OrderHistoryItemView(
-                            with: "\(item.count)x \(item.position.name) (\(modifiersText))",
-                            and: "\(Int(price)) ₸"
-                        ))
-                    } else {
-                        itemStack.addArrangedSubview(OrderHistoryItemView(
-                            with: "\(item.count)x \(item.position.name)",
-                            and: "\(Int(price)) ₸"
-                        ))
-                    }
-                }
+        items.forEach { item in
+            var title = "\(item.count)x \(item.position.name)"
+            if !item.modifierGroups.isEmpty {
+                let modifiersText = item.modifierGroups.map { $0.modifiers }.flatMap { $0 }.map { $0.position.name }.joined(separator: ", ")
+                title += " (\(modifiersText))"
             }
-
-            deliveryItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.shipping), and: "\(Int(deliveryPrice)) ₸")
-            sumItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.sum), and: "\(Int(totalSum)) ₸")
-
-            itemStack.addArrangedSubview(deliveryItem)
-            itemStack.addArrangedSubview(sumItem)
+            if let price = item.position.price {
+                itemStack.addArrangedSubview(OrderHistoryItemView(
+                    with: title,
+                    and: "\(price.formattedWithSeparator) ₸"
+                ))
+            }
         }
+
+        deliveryItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.shipping), and: "\(Int(deliveryPrice).formattedWithSeparator) ₸")
+        sumItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.sum), and: "\(Int(totalSum).formattedWithSeparator) ₸")
+
+        itemStack.addArrangedSubview(deliveryItem)
+        itemStack.addArrangedSubview(sumItem)
     }
 
     private func getConvertedDate(of date: String) -> String {
@@ -274,33 +281,13 @@ final class OrderHistoryCellContentView: UIView {
         let convertedDate = dateFormatter.date(from: date)
 
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "dd.MM.yyyy, HH:mm"
+        dateFormatterPrint.dateFormat = "dd.MM.yy, HH:mm"
 
         if let convertedDate = convertedDate {
             return dateFormatterPrint.string(from: convertedDate)
         } else {
             return ""
         }
-    }
-
-    private func configureAddress(of address: Address) -> String {
-        var displayAddress = ""
-        if let district = address.district {
-            displayAddress.append(district)
-        }
-        if let street = address.street {
-            displayAddress = displayAddress.isEmpty ? street : displayAddress + ", " + street
-        }
-        if let building = address.building {
-            displayAddress = displayAddress.isEmpty ? building : displayAddress + ", " + building
-        }
-        if let corpus = address.corpus {
-            displayAddress = displayAddress.isEmpty ? corpus : displayAddress + ", " + corpus
-        }
-        if let flat = address.flat {
-            displayAddress = displayAddress.isEmpty ? flat : displayAddress + ", " + flat
-        }
-        return displayAddress
     }
 
     @objc private func rateOrder() {

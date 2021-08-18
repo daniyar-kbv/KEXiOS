@@ -1,5 +1,5 @@
 //
-//  OrderHistoryItemStackView.swift
+//  OrderHistoryItemView.swift
 //  SalamBro
 //
 //  Created by Meruyert Tastandiyeva on 6/24/21.
@@ -13,6 +13,9 @@ final class OrderHistoryItemView: UIView {
         let view = UILabel()
         view.textAlignment = .left
         view.numberOfLines = 0
+        view.font = .systemFont(ofSize: 14)
+        view.textColor = .darkGray
+        view.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return view
     }()
 
@@ -20,6 +23,8 @@ final class OrderHistoryItemView: UIView {
         let view = UILabel()
         view.textAlignment = .right
         view.numberOfLines = 1
+        view.font = .systemFont(ofSize: 14)
+        view.textColor = .darkGray
         return view
     }()
 
@@ -44,10 +49,12 @@ final class OrderHistoryItemView: UIView {
         [itemLabel, priceLabel].forEach {
             addSubview($0)
         }
+
         itemLabel.snp.makeConstraints {
             $0.top.bottom.equalTo(safeAreaLayoutGuide)
             $0.left.equalToSuperview()
         }
+
         priceLabel.snp.makeConstraints {
             $0.top.bottom.equalTo(safeAreaLayoutGuide)
             $0.left.equalTo(itemLabel.snp.right).offset(4)

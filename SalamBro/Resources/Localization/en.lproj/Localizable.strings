@@ -144,6 +144,7 @@
 "OrderHistory.sendBill" = "EN Отправить чек на почту";
 "OrderHistory.rateOrder" = "EN Оценить заказ";
 "OrderHistory.repeatOrder" = "EN Повторить заказ";
+"OrderHistory.cancelOrder" = "EN Отменить заказ";
 "OrderHistory.new" = "EN Новый";
 "OrderHistory.paid" = "EN Оплачен";
 "OrderHistory.cooking" = "EN Готовится";

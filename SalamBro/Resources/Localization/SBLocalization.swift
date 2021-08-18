@@ -328,6 +328,7 @@ enum ProfileText: UILocalizable {
         case sendBill = "OrderHistory.sendBill"
         case rateOrder = "OrderHistory.rateOrder"
         case repeatOrder = "OrderHistory.repeatOrder"
+        case cancelOrder = "OrderHistory.cancelOrder"
         case new = "OrderHistory.new"
         case paid = "OrderHistory.paid"
         case cooking = "OrderHistory.cooking"

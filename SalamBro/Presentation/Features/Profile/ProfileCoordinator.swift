@@ -17,6 +17,7 @@ final class ProfileCoordinator: BaseCoordinator {
     private let coordinatorsFactory: ProfileChildCoordinatorsFactory
 
     var onLanguageChange: (() -> Void)?
+    var toMenu: (() -> Void)?
 
     init(router: Router, pagesFactory: ProfilePagesFactory, coordinatorsFactory: ProfileChildCoordinatorsFactory) {
         self.router = router
@@ -109,6 +110,10 @@ final class ProfileCoordinator: BaseCoordinator {
         orderHistoryCoordinator.didFinish = { [weak self, weak orderHistoryCoordinator] in
             self?.remove(orderHistoryCoordinator)
             orderHistoryCoordinator = nil
+        }
+
+        orderHistoryCoordinator.toMenu = { [weak self] in
+            self?.toMenu?()
         }
 
         orderHistoryCoordinator.start()

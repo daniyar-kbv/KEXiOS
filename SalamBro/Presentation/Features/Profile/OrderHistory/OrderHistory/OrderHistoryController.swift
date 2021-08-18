@@ -17,6 +17,9 @@ final class OrderHistoryController: UIViewController, LoaderDisplayable {
     var onRateTapped: ((Int) -> Void)?
     var onShareTapped: (() -> Void)?
     var onTerminate: (() -> Void)?
+    var toMenu: (() -> Void)?
+
+    let outputs = Output()
 
     private lazy var tableView: UITableView = {
         let view = UITableView()
@@ -99,7 +102,21 @@ extension OrderHistoryController {
             }).disposed(by: disposeBag)
 
         viewModel.outputs.didGetOrders
-            .bind(to: tableView.rx.reload).disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] in
+                self?.tableView.reloadData()
+                self?.configureAnimationView()
+            }).disposed(by: disposeBag)
+    }
+
+    private func configureAnimationView() {
+        guard viewModel.ordersEmpty() else {
+            hideAnimationView(completionHandler: nil)
+            return
+        }
+
+        showAnimationView(animationType: .orderHistory) { [weak self] in
+            self?.toMenu?()
+        }
     }
 
     @objc private func handleRefreshControlAction() {
