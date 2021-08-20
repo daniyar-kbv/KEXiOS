@@ -9,6 +9,7 @@ import UIKit
 
 final class SBTabBarController: UITabBarController {
     private let viewModel: SBTabBarViewModel
+    private var lastViewController: UIViewController?
 
     init(viewModel: SBTabBarViewModel) {
         self.viewModel = viewModel
@@ -49,7 +50,14 @@ final class SBTabBarController: UITabBarController {
 
 extension SBTabBarController: UITabBarControllerDelegate {
     func tabBarController(_: UITabBarController, didSelect viewController: UIViewController) {
-        guard let scrollView = viewController.view.getAllSubview().first(where: { $0 is UIScrollView }) as? UIScrollView else { return }
-        scrollView.setContentOffset(.zero, animated: true)
+        if lastViewController == viewController,
+           let scrollView = viewController
+           .view
+           .getAllSubview()
+           .first(where: { $0 is UIScrollView }) as? UIScrollView
+        {
+            scrollView.setContentOffset(.zero, animated: true)
+        }
+        lastViewController = viewController
     }
 }
