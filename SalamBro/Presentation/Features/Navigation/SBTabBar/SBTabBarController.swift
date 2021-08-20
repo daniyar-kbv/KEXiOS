@@ -30,6 +30,7 @@ final class SBTabBarController: UITabBarController {
         tabBar.backgroundColor = .white
         tabBar.isTranslucent = false
         tabBar.itemPositioning = .centered
+        delegate = self
     }
 
     override func viewDidLoad() {
@@ -43,5 +44,12 @@ final class SBTabBarController: UITabBarController {
         super.viewDidAppear(animated)
 
         tabBar.isHidden = false
+    }
+}
+
+extension SBTabBarController: UITabBarControllerDelegate {
+    func tabBarController(_: UITabBarController, didSelect viewController: UIViewController) {
+        guard let scrollView = viewController.view.getAllSubview().first(where: { $0 is UIScrollView }) as? UIScrollView else { return }
+        scrollView.setContentOffset(.zero, animated: true)
     }
 }

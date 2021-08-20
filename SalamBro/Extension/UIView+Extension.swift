@@ -105,3 +105,9 @@ extension UIView {
         }
     }
 }
+
+extension UIView {
+    func getAllSubview() -> [UIView] {
+        return subviews + subviews.map { $0.getAllSubview() }.flatMap { $0 }
+    }
+}
