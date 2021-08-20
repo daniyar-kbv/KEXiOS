@@ -118,7 +118,6 @@ extension AppDelegate {
     }
 
     func showNotificationAlert(pushNotification: PushNotification) {
-//        Tech debt: not show alert while payment process
         UIApplication.topViewController()?.showAlert(title: pushNotification.aps.alert.title,
                                                      message: pushNotification.aps.alert.body,
                                                      submitTitle: SBLocalization.localized(key: AlertText.ok)) { [weak self] in

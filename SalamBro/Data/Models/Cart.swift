@@ -10,7 +10,7 @@ import Foundation
 struct Cart: Codable {
     var items: [CartItem]
     let price: Double
-    let positionsCount: Int
+    var positionsCount: Int
 
     enum CodingKeys: String, CodingKey {
         case price

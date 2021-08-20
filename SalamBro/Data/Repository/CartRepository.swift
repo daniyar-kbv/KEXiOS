@@ -111,6 +111,7 @@ extension CartRepositoryImpl {
 
     func cleanUp() {
         cartStorage.cart.items = []
+        cartStorage.cart.positionsCount = 0
         sendItems()
     }
 
