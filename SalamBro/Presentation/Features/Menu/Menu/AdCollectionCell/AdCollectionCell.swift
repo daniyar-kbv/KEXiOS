@@ -16,8 +16,9 @@ final class AdCollectionCell: UITableViewCell {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        layout.sectionInset = UIEdgeInsets(top: 16, left: 24, bottom: 8, right: 24)
         layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 312, height: 112)
         collectionView.collectionViewLayout = layout
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.dataSource = self
@@ -61,10 +62,8 @@ extension AdCollectionCell {
         contentView.addSubview(collectionView)
 
         collectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(16)
-            $0.bottom.equalToSuperview().offset(-8)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(112)
+            $0.edges.equalToSuperview()
+            $0.height.equalTo(136)
         }
     }
 }
@@ -87,10 +86,19 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
         return cell
     }
 
-    public func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
-        let width: CGFloat = UIScreen.main.bounds.width * 0.8
-        let height: CGFloat = 112
-        return CGSize(width: width, height: height)
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate _: Bool) {
+        let targetContentOffset = scrollView.contentOffset
+        let pageWidth = collectionView.bounds.size.width
+        let minSpace: CGFloat = 24
+
+        var cellToSwipe = Int(targetContentOffset.x / (pageWidth + minSpace) + 0.5)
+        if cellToSwipe < 0 {
+            cellToSwipe = 0
+        } else if cellToSwipe >= collectionView.numberOfItems(inSection: 0) {
+            cellToSwipe = collectionView.numberOfItems(inSection: 0) - 1
+        }
+
+        collectionView.scrollToItem(at: .init(item: cellToSwipe, section: 0), at: .centeredHorizontally, animated: true)
     }
 }
 
