@@ -135,7 +135,8 @@ extension MenuDetailViewModelImpl {
 
     private func check() {
         guard let isComplete = position?.modifierGroups
-            .filter({ $0.isRequired && $0.selectedModifiers.count < $0.minAmount })
+            .filter({ $0.isRequired &&
+                    $0.selectedModifiers.map { $0.itemCount }.reduce(0, +) < $0.minAmount })
             .isEmpty
         else { return }
         outputs.isComplete.accept(isComplete)
