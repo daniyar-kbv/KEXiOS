@@ -144,6 +144,7 @@
 "OrderHistory.sendBill" = "KZ Отправить чек на почту";
 "OrderHistory.rateOrder" = "KZ Оценить заказ";
 "OrderHistory.repeatOrder" = "KZ Повторить заказ";
+"OrderHistory.cancelOrder" = "KZ Отменить заказ";
 "OrderHistory.new" = "KZ Новый";
 "OrderHistory.paid" = "KZ Оплачен";
 "OrderHistory.cooking" = "KZ Готовится";
