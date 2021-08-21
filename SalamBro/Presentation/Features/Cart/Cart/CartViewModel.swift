@@ -231,19 +231,19 @@ extension CartViewModelImpl {
 }
 
 extension CartViewModelImpl: CartAdditinalProductCellDelegate {
-    func increment(positionUUID: String?, isAdditional _: Bool) {
-        guard let positionUUID = positionUUID else { return }
-        cartRepository.incrementItem(positionUUID: positionUUID)
+    func increment(internalUUID: String?, isAdditional _: Bool) {
+        guard let internalUUID = internalUUID else { return }
+        cartRepository.incrementItem(internalUUID: internalUUID)
     }
 
-    func decrement(positionUUID: String?, isAdditional _: Bool) {
-        guard let positionUUID = positionUUID else { return }
-        cartRepository.decrementItem(positionUUID: positionUUID)
+    func decrement(internalUUID: String?, isAdditional _: Bool) {
+        guard let internalUUID = internalUUID else { return }
+        cartRepository.decrementItem(internalUUID: internalUUID)
     }
 
-    func delete(positionUUID: String?, isAdditional _: Bool) {
-        guard let positionUUID = positionUUID else { return }
-        cartRepository.removeItem(positionUUID: positionUUID)
+    func delete(internalUUID: String?, isAdditional _: Bool) {
+        guard let internalUUID = internalUUID else { return }
+        cartRepository.removeItem(internalUUID: internalUUID)
     }
 }
 

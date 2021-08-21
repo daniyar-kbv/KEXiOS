@@ -10,9 +10,9 @@ import RxSwift
 import UIKit
 
 protocol CartAdditinalProductCellDelegate: AnyObject {
-    func increment(positionUUID: String?, isAdditional: Bool)
-    func decrement(positionUUID: String?, isAdditional: Bool)
-    func delete(positionUUID: String?, isAdditional: Bool)
+    func increment(internalUUID: String?, isAdditional: Bool)
+    func decrement(internalUUID: String?, isAdditional: Bool)
+    func delete(internalUUID: String?, isAdditional: Bool)
 }
 
 final class CartAdditionalProductCell: UITableViewCell {
@@ -210,10 +210,10 @@ extension CartAdditionalProductCell {
 
 extension CartAdditionalProductCell {
     @objc private func decreaseItemCount(_: UIButton) {
-        delegate?.decrement(positionUUID: viewModel.getPositionUUID(), isAdditional: true)
+        delegate?.decrement(internalUUID: viewModel.getInternalUUID(), isAdditional: true)
     }
 
     @objc private func increaseItemButton(_: UIButton) {
-        delegate?.increment(positionUUID: viewModel.getPositionUUID(), isAdditional: true)
+        delegate?.increment(internalUUID: viewModel.getInternalUUID(), isAdditional: true)
     }
 }

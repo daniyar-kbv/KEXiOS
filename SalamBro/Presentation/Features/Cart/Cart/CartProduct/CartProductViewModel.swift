@@ -13,7 +13,7 @@ protocol CartProductViewModel: CartCellViewModel {
     var inputs: CartProductViewModelImpl.Input { get }
     var outputs: CartProductViewModelImpl.Output { get }
 
-    func getPositionUUID() -> String
+    func getInternalUUID() -> String
 }
 
 final class CartProductViewModelImpl: CartProductViewModel {
@@ -25,8 +25,8 @@ final class CartProductViewModelImpl: CartProductViewModel {
         outputs = .init(item: inputs.item)
     }
 
-    func getPositionUUID() -> String {
-        return inputs.item.position.uuid
+    func getInternalUUID() -> String {
+        return inputs.item.internalUUID
     }
 }
 
