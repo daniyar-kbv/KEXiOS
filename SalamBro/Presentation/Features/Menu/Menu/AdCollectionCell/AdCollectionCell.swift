@@ -13,14 +13,16 @@ import UIKit
 final class AdCollectionCell: UITableViewCell {
     weak var delegate: AddCollectionCellDelegate?
 
+    private let collectionViewItemSize = CGSize(width: 312, height: 112)
+
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 16, left: 24, bottom: 8, right: 24)
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 312, height: 112)
+        layout.itemSize = collectionViewItemSize
         collectionView.collectionViewLayout = layout
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.contentInset = UIEdgeInsets(top: 16, left: 24, bottom: 8, right: 24)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .white
@@ -87,18 +89,24 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate _: Bool) {
-        let targetContentOffset = scrollView.contentOffset
-        let pageWidth = collectionView.bounds.size.width
-        let minSpace: CGFloat = 24
+        scrollToClosestCell(scrollView)
+    }
 
-        var cellToSwipe = Int(targetContentOffset.x / (pageWidth + minSpace) + 0.5)
-        if cellToSwipe < 0 {
-            cellToSwipe = 0
-        } else if cellToSwipe >= collectionView.numberOfItems(inSection: 0) {
-            cellToSwipe = collectionView.numberOfItems(inSection: 0) - 1
-        }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        scrollToClosestCell(scrollView)
+    }
+}
 
-        collectionView.scrollToItem(at: .init(item: cellToSwipe, section: 0), at: .centeredHorizontally, animated: true)
+extension AdCollectionCell {
+    private func scrollToClosestCell(_ scrollView: UIScrollView) {
+        let targetContentOffset = scrollView.contentOffset.x
+        let itemWidth = collectionViewItemSize.width
+        let contentInset = collectionView.contentInset.left
+        let halfScreen = collectionView.frame.width / 2
+
+        let cellIndex = Int((targetContentOffset + halfScreen - contentInset) / itemWidth)
+
+        collectionView.scrollToItem(at: .init(item: cellIndex, section: 0), at: .centeredHorizontally, animated: true)
     }
 }
 
