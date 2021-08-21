@@ -98,9 +98,7 @@ extension CartRepositoryImpl {
     }
 
     func incrementItem(internalUUID: String) {
-        print(internalUUID)
         guard let index = getIndex(of: internalUUID) else { return }
-        print(index)
         cart.items[index].count += 1
         sendNewCart(withDebounce: true)
     }
@@ -204,7 +202,7 @@ extension CartRepositoryImpl {
 
         evokeDebouncedUpdateCart
             .asObservable()
-            .debounce(.milliseconds(400), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(700), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
                 self?.updateCart(withLoader: false)
             })

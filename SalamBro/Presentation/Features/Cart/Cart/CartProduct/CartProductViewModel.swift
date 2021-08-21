@@ -49,7 +49,8 @@ extension CartProductViewModelImpl {
             itemTitle = .init(value: item.position.name)
             modifiersTitles = .init(value: item.modifierGroups
                 .flatMap { $0.modifiers }
-                .map { $0.position.name }
+                .map { [String].init(repeating: $0.position.name, count: $0.count) }
+                .flatMap { $0 }
                 .joined(separator: ", "))
             comment = .init(value: item.comment)
             price = .init(value: "\((item.position.price ?? 0).formattedWithSeparator) ₸")

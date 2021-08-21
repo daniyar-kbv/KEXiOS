@@ -54,8 +54,7 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
 
         cartRepository.addItem(item: position.toCartItem(
             count: 1,
-            comment: comment ?? "",
-            modifiers: getSelectedModifiers()
+            comment: comment ?? ""
         ))
 
         outputs.didProceed.accept(())
@@ -143,9 +142,7 @@ extension MenuDetailViewModelImpl {
     }
 
     private func getSelectedModifiers() -> [Modifier] {
-        return modifierCellViewModels
-            .map { $0.getValue() }
-            .filter { $0 != nil } as! [Modifier]
+        return modifierCellViewModels.compactMap { $0.getValue() }
     }
 }
 
