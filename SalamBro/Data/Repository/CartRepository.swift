@@ -13,7 +13,7 @@ protocol CartRepository {
     var outputs: CartRepositoryImpl.Output { get }
 
     func reload()
-    func getItems()
+    func getItems(withLoader: Bool)
     func addItem(item: CartItem, isAdditional: Bool)
     func removeItem(positionUUID: String)
     func incrementItem(positionUUID: String)
@@ -109,7 +109,7 @@ extension CartRepositoryImpl {
 
     func cleanUp() {
         cartStorage.cart.items = []
-        getItems()
+        getItems(withLoader: true)
     }
 
     func update() {
@@ -145,16 +145,19 @@ extension CartRepositoryImpl {
 
 extension CartRepositoryImpl {
     private func sendNewCart(withDebounce: Bool) {
-        getItems()
+        getItems(withLoader: false)
         withDebounce ?
             evokeDebouncedUpdateCart.accept(()) :
             evokeUpdateCart.accept(())
     }
 
-    func getItems() {
+    func getItems(withLoader: Bool) {
         var additionalItems: [CartItem] = []
 
-        outputs.didStartRequest.accept(())
+        if withLoader {
+            outputs.didStartRequest.accept(())
+        }
+
         guard let leadUUID = defaultStorage.leadUUID else { return }
         ordersService.getAdditionalProducts(for: leadUUID)
             .subscribe(onSuccess: { [weak self] positions in
@@ -232,7 +235,7 @@ extension CartRepositoryImpl {
 
     private func process(cart: Cart) {
         cartStorage.cart = cart
-        getItems()
+        getItems(withLoader: false)
     }
 }
 

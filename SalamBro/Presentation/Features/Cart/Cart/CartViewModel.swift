@@ -55,7 +55,7 @@ extension CartViewModelImpl {
     }
 
     func getCart() {
-        cartRepository.getItems()
+        cartRepository.getItems(withLoader: true)
     }
 
     func getTotalPrice() -> String {
