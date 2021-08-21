@@ -135,21 +135,22 @@ final class MenuViewModel: MenuViewModelProtocol {
             promotions: promotions.sorted(by: { $0.priority < $1.priority })
         )]
 
+        let index = (tableSections.firstIndex(where: { $0.type == .address }) ?? -1) + 1
+
         tableSections.insert(.init(type: .promotions,
                                    headerViewModel: nil,
                                    cellViewModels: promotionsViewModels),
-                             at: 1)
+                             at: index)
     }
 
     private func set(categories: [MenuCategory]) {
         let categories = categories.filter { !$0.positions.isEmpty }
-        tableSections.insert(
+        tableSections.append(
             .init(type: .positions,
                   headerViewModel: CategoriesSectionHeaderViewModel(categories: categories),
                   cellViewModels: categories
                       .map { $0.positions.map { MenuCellViewModel(position: $0) } }
-                      .flatMap { $0 }),
-            at: 2
+                      .flatMap { $0 })
         )
     }
 
@@ -319,7 +320,7 @@ extension MenuViewModel {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let updateTableView = PublishRelay<Void>()
-        let didGetError = PublishRelay<ErrorPresentable?>()
+        let didGetError = PublishRelay<ErrorPresentable>()
 
         let showAnimation = PublishRelay<LottieAnimationModel>()
         let hideAnimation = PublishRelay<Void>()

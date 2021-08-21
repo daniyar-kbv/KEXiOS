@@ -9,6 +9,7 @@ import UIKit
 
 final class SBTabBarController: UITabBarController {
     private let viewModel: SBTabBarViewModel
+    private var lastViewController: UIViewController?
 
     init(viewModel: SBTabBarViewModel) {
         self.viewModel = viewModel
@@ -30,6 +31,7 @@ final class SBTabBarController: UITabBarController {
         tabBar.backgroundColor = .white
         tabBar.isTranslucent = false
         tabBar.itemPositioning = .centered
+        delegate = self
     }
 
     override func viewDidLoad() {
@@ -43,5 +45,19 @@ final class SBTabBarController: UITabBarController {
         super.viewDidAppear(animated)
 
         tabBar.isHidden = false
+    }
+}
+
+extension SBTabBarController: UITabBarControllerDelegate {
+    func tabBarController(_: UITabBarController, didSelect viewController: UIViewController) {
+        if lastViewController == viewController,
+           let scrollView = viewController
+           .view
+           .getAllSubview()
+           .first(where: { $0 is UIScrollView }) as? UIScrollView
+        {
+            scrollView.setContentOffset(.init(x: 0, y: -scrollView.contentInset.top), animated: true)
+        }
+        lastViewController = viewController
     }
 }

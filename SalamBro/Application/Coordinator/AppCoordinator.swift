@@ -251,13 +251,15 @@ extension AppCoordinator {
         menuRepository.openPromotion(by: promotionId)
     }
 
-    private func openRateOrder(pushNotification _: PushNotification) {
+    private func openRateOrder(pushNotification: PushNotification) {
         openOrderHistory()
 
         let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
         let orderHistoryCoordinator = profileCoordinator.childCoordinators.first(where: { $0 is OrderHistoryCoordinator }) as! OrderHistoryCoordinator
 
-        orderHistoryCoordinator.showRateOrderPage()
+        guard let orderId = Int(pushNotification.pushTypeValue) else { return }
+
+        orderHistoryCoordinator.showRateOrderPage(of: orderId)
     }
 
     private func openOrderHistory() {

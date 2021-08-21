@@ -79,7 +79,7 @@ struct Modifier: Codable {
 }
 
 extension MenuPositionDetail {
-    func toCartItem(count: Int, comment: String, modifiers _: [Modifier]) -> CartItem {
+    func toCartItem(count: Int, comment: String) -> CartItem {
         return .init(
             count: count,
             comment: comment,
@@ -90,22 +90,25 @@ extension MenuPositionDetail {
                 price: price,
                 categoryUUID: categoryUUID
             ),
-            modifierGroups: modifierGroups.map { modifierGroup in
-                let modifierGroup = modifierGroup
-                return .init(
-                    uuid: modifierGroup.uuid,
-                    modifiers: modifierGroup.selectedModifiers.compactMap { $0 }.map { modifier in
-                        .init(
-                            position: .init(
-                                uuid: modifier.uuid,
-                                name: modifier.name,
-                                image: modifier.image
-                            ),
-                            count: 1
-                        )
-                    }
-                )
-            }
+            modifierGroups: modifierGroups
+                .filter { !$0.modifiers.filter { $0.itemCount != 0 }.isEmpty }
+                .map { modifierGroup in
+                    .init(
+                        uuid: modifierGroup.uuid,
+                        modifiers: modifierGroup.modifiers
+                            .filter { $0.itemCount != 0 }
+                            .map { modifier in
+                                .init(
+                                    position: .init(
+                                        uuid: modifier.uuid,
+                                        name: modifier.name,
+                                        image: modifier.image
+                                    ),
+                                    count: modifier.itemCount
+                                )
+                            }
+                    )
+                }
         )
     }
 }

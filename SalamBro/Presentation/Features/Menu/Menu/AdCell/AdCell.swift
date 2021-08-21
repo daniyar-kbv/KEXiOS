@@ -28,7 +28,7 @@ final class AdCell: UICollectionViewCell, Reusable {
 
     override init(frame _: CGRect) {
         super.init(frame: .zero)
-        setup()
+        layoutUI()
     }
 
     required init?(coder _: NSCoder) { nil }
@@ -49,16 +49,13 @@ final class AdCell: UICollectionViewCell, Reusable {
         }).disposed(by: disposeBag)
     }
 
-    private func setup() {
-        setupViews()
-        setupConstraints()
-    }
+    private func layoutUI() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.15
+        layer.shadowRadius = 5
+        layer.shadowOffset = .zero
 
-    private func setupViews() {
         contentView.addSubview(adImageView)
-    }
-
-    private func setupConstraints() {
         adImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }

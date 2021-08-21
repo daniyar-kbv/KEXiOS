@@ -54,8 +54,7 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
 
         cartRepository.addItem(item: position.toCartItem(
             count: 1,
-            comment: comment ?? "",
-            modifiers: getSelectedModifiers()
+            comment: comment ?? ""
         ))
 
         outputs.didProceed.accept(())
@@ -134,23 +133,16 @@ extension MenuDetailViewModelImpl {
     }
 
     private func check() {
-        if let position = position {
-            for i in position.modifierGroups {
-                if i.isRequired, i.selectedModifiers.isEmpty { return }
-                if i.isRequired, !i.selectedModifiers.isEmpty {
-                    if i == position.modifierGroups.last {
-                        return
-                    }
-                }
-            }
-            outputs.isComplete.accept(true)
-        }
+        guard let isComplete = position?.modifierGroups
+            .filter({ $0.isRequired &&
+                    $0.selectedModifiers.map { $0.itemCount }.reduce(0, +) < $0.minAmount })
+            .isEmpty
+        else { return }
+        outputs.isComplete.accept(isComplete)
     }
 
     private func getSelectedModifiers() -> [Modifier] {
-        return modifierCellViewModels
-            .map { $0.getValue() }
-            .filter { $0 != nil } as! [Modifier]
+        return modifierCellViewModels.compactMap { $0.getValue() }
     }
 }
 
