@@ -243,9 +243,8 @@ extension CartRepositoryImpl {
                 self?.process(cart: cart)
                 self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
+                self?.process(error: error)
                 self?.outputs.didEndRequest.accept(())
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didGetError.accept(error)
             })
             .disposed(by: disposeBag)
     }
@@ -253,6 +252,13 @@ extension CartRepositoryImpl {
     private func process(cart: Cart) {
         self.cart = cart
         sendItems()
+    }
+
+    private func process(error: Error) {
+        cart = cartStorage.cart
+        sendItems()
+        guard let error = error as? ErrorPresentable else { return }
+        outputs.didGetError.accept(error)
     }
 }
 
