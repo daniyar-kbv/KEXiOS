@@ -27,6 +27,23 @@ struct MenuPosition: Codable {
     }
 }
 
+struct AdditionalPosition: Codable {
+    let uuid: String
+    let name: String
+    let price: Int
+    let description: String?
+    let image: String?
+    let count: Int
+    let isAvailable: Bool
+    let categoryUUID: String?
+
+    enum CodingKeys: String, CodingKey {
+        case uuid, name, description, image, price, count
+        case isAvailable = "is_available"
+        case categoryUUID = "category"
+    }
+}
+
 struct MenuPositionDetail: Codable {
     let uuid: String
     let name: String
@@ -79,7 +96,7 @@ struct Modifier: Codable {
 }
 
 extension MenuPositionDetail {
-    func toCartItem(count: Int, comment: String, modifiers _: [Modifier]) -> CartItem {
+    func toCartItem(count: Int, comment: String, modifiers _: [Modifier], description: String) -> CartItem {
         return .init(
             count: count,
             comment: comment,
@@ -88,7 +105,9 @@ extension MenuPositionDetail {
                 name: name,
                 image: image,
                 price: price,
-                categoryUUID: categoryUUID
+                categoryUUID: categoryUUID,
+                isAdditional: false,
+                description: description
             ),
             modifierGroups: modifierGroups.map { modifierGroup in
                 let modifierGroup = modifierGroup
@@ -99,13 +118,33 @@ extension MenuPositionDetail {
                             position: .init(
                                 uuid: modifier.uuid,
                                 name: modifier.name,
-                                image: modifier.image
+                                image: modifier.image,
+                                isAdditional: true
                             ),
                             count: 1
                         )
                     }
                 )
             }
+        )
+    }
+}
+
+extension AdditionalPosition {
+    func toCartItem(count: Int, comment: String, modifiers _: [Modifier], additional _: Bool) -> CartItem {
+        return .init(
+            count: count,
+            comment: comment,
+            position: .init(
+                uuid: uuid,
+                name: name,
+                image: image,
+                price: Double(price),
+                categoryUUID: categoryUUID,
+                isAdditional: true,
+                description: ""
+            ),
+            modifierGroups: []
         )
     }
 }

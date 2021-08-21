@@ -78,10 +78,13 @@ struct CartPosition: Codable, Equatable {
     var image: String?
     var price: Double?
     var categoryUUID: String?
+    var isAdditional: Bool
+    var description: String?
 
     enum CodingKeys: String, CodingKey {
-        case uuid, name, image, price
+        case uuid, name, image, price, description
         case categoryUUID = "category"
+        case isAdditional = "is_additional"
     }
 
     static func == (lhs: Self, rhs: Self) -> Bool {

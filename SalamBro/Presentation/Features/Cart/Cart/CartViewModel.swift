@@ -16,6 +16,7 @@ protocol CartViewModel {
     func getCart()
     func getTotalPrice() -> String
     func getIsEmpty() -> Bool
+    func additionalsEmpty() -> Bool
     func applyPromocode(promocode: String?)
 
     func numberOfSections() -> Int
@@ -32,6 +33,7 @@ final class CartViewModelImpl: CartViewModel {
     private let tokenStorage: AuthTokenStorage
 
     private var cart: Cart = .init(items: [], price: 0, positionsCount: 0)
+    private var cartItems: [CartItem] = []
     private var additionalItems: [CartItem] = []
     private var tableSections: [TableSection] = []
     private var promocode: Promocode?
@@ -62,6 +64,10 @@ extension CartViewModelImpl {
 
     func getIsEmpty() -> Bool {
         return cart.items.isEmpty
+    }
+
+    func additionalsEmpty() -> Bool {
+        return additionalItems.isEmpty
     }
 
     func proceedButtonTapped() {
@@ -153,8 +159,9 @@ extension CartViewModelImpl {
 extension CartViewModelImpl {
     private func bindCartRepository() {
         cartRepository.outputs.didChange
-            .subscribe(onNext: { [weak self] cartInfo in
-                self?.process(cart: cartInfo.cart, additionalItems: cartInfo.additional)
+            .subscribe(onNext: { [weak self] cartInfo, additionalItems in
+                self?.process(cart: cartInfo, additionalItems: additionalItems)
+                self?.outputs.update.accept(())
             }).disposed(by: disposeBag)
 
         cartRepository.outputs.didStartRequest
@@ -176,24 +183,46 @@ extension CartViewModelImpl {
             .disposed(by: disposeBag)
     }
 
+    private func process() {
+        cartItems = []
+        cart.items.forEach { item in
+            if item.position.isAdditional {
+                if let ind = additionalItems.firstIndex(where: { $0.position.uuid == item.position.uuid }) {
+                    additionalItems[ind].count = item.count
+                }
+            } else {
+                cartItems.append(item)
+            }
+        }
+
+        let additionals = cart.items.filter { $0.position.isAdditional }
+        if additionals.isEmpty {
+            for i in 0 ..< additionalItems.count {
+                additionalItems[i].count = 0
+            }
+        }
+    }
+
     private func process(cart: Cart, additionalItems: [CartItem]) {
         self.cart = cart
         self.additionalItems = additionalItems
 
+        process()
+
         tableSections = []
         tableSections.append(.init(
             headerViewModel: CartHeaderViewModelImpl(type: .positions(
-                count: cart.positionsCount,
+                count: cartItems.count,
                 sum: cart.price
             )),
-            cellViewModels: cart.items.map { CartProductViewModelImpl(inputs: .init(item: $0)) },
+            cellViewModels: cartItems.map { CartProductViewModelImpl(inputs: .init(item: $0)) },
             type: .products
         ))
 
-        if !additionalItems.isEmpty {
+        if !self.additionalItems.isEmpty {
             tableSections.append(.init(
                 headerViewModel: CartHeaderViewModelImpl(type: .additional),
-                cellViewModels: additionalItems.map { CartAdditionalProductViewModelImpl(inputs: .init(item: $0)) },
+                cellViewModels: self.additionalItems.map { CartAdditionalProductViewModelImpl(inputs: .init(item: $0), cartRepository: cartRepository) },
                 type: .additional
             ))
         }
@@ -231,17 +260,17 @@ extension CartViewModelImpl {
 }
 
 extension CartViewModelImpl: CartAdditinalProductCellDelegate {
-    func increment(positionUUID: String?, isAdditional _: Bool) {
+    func increment(positionUUID: String?) {
         guard let positionUUID = positionUUID else { return }
         cartRepository.incrementItem(positionUUID: positionUUID)
     }
 
-    func decrement(positionUUID: String?, isAdditional _: Bool) {
+    func decrement(positionUUID: String?) {
         guard let positionUUID = positionUUID else { return }
         cartRepository.decrementItem(positionUUID: positionUUID)
     }
 
-    func delete(positionUUID: String?, isAdditional _: Bool) {
+    func delete(positionUUID: String?) {
         guard let positionUUID = positionUUID else { return }
         cartRepository.removeItem(positionUUID: positionUUID)
     }

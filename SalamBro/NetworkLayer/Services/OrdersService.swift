@@ -12,7 +12,7 @@ import RxSwift
 
 protocol OrdersService: AnyObject {
     func applyOrder(dto: OrderApplyDTO) -> Single<String>
-    func getAdditionalProducts(for leadUUID: String) -> Single<[MenuPosition]>
+    func getAdditionalProducts(for leadUUID: String) -> Single<[AdditionalPosition]>
     func updateCart(for leadUUID: String, dto: CartDTO) -> Single<Cart>
     func applyPromocode(promocode: String) -> Single<Promocode>
     func getLeadInfo(for leadUUID: String) -> Single<LeadInfo>
@@ -46,7 +46,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
             }
     }
 
-    func getAdditionalProducts(for leadUUID: String) -> Single<[MenuPosition]> {
+    func getAdditionalProducts(for leadUUID: String) -> Single<[AdditionalPosition]> {
         return provider.rx
             .request(.additionalNomenclature(leadUUID: leadUUID))
             .map { response in

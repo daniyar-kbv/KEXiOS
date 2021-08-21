@@ -55,8 +55,9 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
         cartRepository.addItem(item: position.toCartItem(
             count: 1,
             comment: comment ?? "",
-            modifiers: getSelectedModifiers()
-        ))
+            modifiers: getSelectedModifiers(),
+            description: position.description ?? ""
+        ), isAdditional: false)
 
         outputs.didProceed.accept(())
     }

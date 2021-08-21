@@ -14,7 +14,7 @@ protocol CartRepository {
 
     func reload()
     func getItems()
-    func addItem(item: CartItem)
+    func addItem(item: CartItem, isAdditional: Bool)
     func removeItem(positionUUID: String)
     func incrementItem(positionUUID: String)
     func decrementItem(positionUUID: String)
@@ -38,7 +38,7 @@ final class CartRepositoryImpl: CartRepository {
     private let evokeDebouncedUpdateCart = PublishRelay<Void>()
     private let evokeUpdateCart = PublishRelay<Void>()
 
-    private var additionalPositions: [MenuPosition] = []
+    private var additionalPositions: [AdditionalPosition] = []
 
     let outputs = Output()
 
@@ -68,14 +68,7 @@ extension CartRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
-    func getItems() {
-//        getAdditionalPositions() { [weak self] in
-//            self?.sendItems()
-//        }
-        sendItems()
-    }
-
-    func addItem(item: CartItem) {
+    func addItem(item: CartItem, isAdditional: Bool) {
         if cartStorage.cart.items.contains(item),
            let index = cartStorage.cart.items.firstIndex(of: item)
         {
@@ -83,7 +76,12 @@ extension CartRepositoryImpl {
         } else {
             cartStorage.cart.items.append(item)
         }
-        sendNewCart(withDebounce: false)
+
+        if isAdditional {
+            sendNewCart(withDebounce: true)
+        } else {
+            sendNewCart(withDebounce: false)
+        }
     }
 
     func removeItem(positionUUID: String) {
@@ -111,7 +109,7 @@ extension CartRepositoryImpl {
 
     func cleanUp() {
         cartStorage.cart.items = []
-        sendItems()
+        getItems()
     }
 
     func update() {
@@ -143,46 +141,34 @@ extension CartRepositoryImpl {
             })
             .disposed(by: disposeBag)
     }
+}
 
-    func getAdditionalPositions(completion: (() -> Void)? = nil) {
-        guard let leadUUID = defaultStorage.leadUUID else { return }
+extension CartRepositoryImpl {
+    private func sendNewCart(withDebounce: Bool) {
+        getItems()
+        withDebounce ?
+            evokeDebouncedUpdateCart.accept(()) :
+            evokeUpdateCart.accept(())
+    }
+
+    func getItems() {
+        var additionalItems: [CartItem] = []
+
         outputs.didStartRequest.accept(())
+        guard let leadUUID = defaultStorage.leadUUID else { return }
         ordersService.getAdditionalProducts(for: leadUUID)
             .subscribe(onSuccess: { [weak self] positions in
-                self?.outputs.didEndRequest.accept(())
                 self?.additionalPositions = positions
-                completion?()
+                self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
                 self?.outputs.didGetError.accept(error)
             })
             .disposed(by: disposeBag)
-    }
-}
 
-extension CartRepositoryImpl {
-    private func sendNewCart(withDebounce: Bool) {
-        sendItems()
-        withDebounce ?
-            evokeDebouncedUpdateCart.accept(()) :
-            evokeUpdateCart.accept(())
-    }
+        additionalPositions.forEach { additionalItems.append($0.toCartItem(count: $0.count, comment: "", modifiers: [], additional: true)) }
 
-    private func sendItems() {
-//        Tech debt: change
-//        let cartItems = cartStorage.cart
-//            .filter {
-//                !additionalPositions
-//                    .map { $0.uuid }
-//                    .contains($0.position.uuid)
-//            }
-        let additionalItems = cartStorage.cart.items
-            .filter {
-                additionalPositions
-                    .map { $0.uuid }
-                    .contains($0.position.uuid)
-            }
         outputs.didChange.accept((cartStorage.cart, additionalItems))
     }
 
@@ -246,7 +232,7 @@ extension CartRepositoryImpl {
 
     private func process(cart: Cart) {
         cartStorage.cart = cart
-        sendItems()
+        getItems()
     }
 }
 
