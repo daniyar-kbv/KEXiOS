@@ -56,7 +56,7 @@ extension SBTabBarController: UITabBarControllerDelegate {
            .getAllSubview()
            .first(where: { $0 is UIScrollView }) as? UIScrollView
         {
-            scrollView.setContentOffset(.zero, animated: true)
+            scrollView.setContentOffset(.init(x: 0, y: -scrollView.contentInset.top), animated: true)
         }
         lastViewController = viewController
     }
