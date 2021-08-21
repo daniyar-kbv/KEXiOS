@@ -235,7 +235,7 @@ extension CartRepositoryImpl {
 
     private func process(cart: Cart) {
         cartStorage.cart = cart
-        getItems(withLoader: false)
+        getItems(withLoader: true)
     }
 }
 
