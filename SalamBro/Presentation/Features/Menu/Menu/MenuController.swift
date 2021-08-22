@@ -130,7 +130,6 @@ final class MenuController: UIViewController, LoaderDisplayable {
 
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
-                guard let error = error else { return }
                 self?.showError(error)
             }).disposed(by: disposeBag)
 

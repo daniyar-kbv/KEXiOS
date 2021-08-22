@@ -15,9 +15,9 @@ protocol CartRepository {
     func reload()
     func getItems(withLoader: Bool)
     func addItem(item: CartItem, isAdditional: Bool)
-    func removeItem(positionUUID: String)
-    func incrementItem(positionUUID: String)
-    func decrementItem(positionUUID: String)
+    func removeItem(internalUUID: String)
+    func incrementItem(internalUUID: String)
+    func decrementItem(internalUUID: String)
     func cleanUp()
     func update()
     func getIsEmpty() -> Bool
@@ -39,6 +39,11 @@ final class CartRepositoryImpl: CartRepository {
     private let evokeUpdateCart = PublishRelay<Void>()
 
     private var additionalPositions: [AdditionalPosition] = []
+    private lazy var cart: Cart = cartStorage.cart {
+        didSet {
+            cartStorage.cart = cart
+        }
+    }
 
     let outputs = Output()
 
@@ -72,9 +77,9 @@ extension CartRepositoryImpl {
         if cartStorage.cart.items.contains(item),
            let index = cartStorage.cart.items.firstIndex(of: item)
         {
-            cartStorage.cart.items[index].count += 1
+            cart.items[index].count += 1
         } else {
-            cartStorage.cart.items.append(item)
+            cart.items.append(item)
         }
 
         if isAdditional {
@@ -84,31 +89,32 @@ extension CartRepositoryImpl {
         }
     }
 
-    func removeItem(positionUUID: String) {
-        guard let index = getIndex(of: positionUUID) else { return }
-        cartStorage.cart.items.remove(at: index)
+    func removeItem(internalUUID: String) {
+        guard let index = getIndex(of: internalUUID) else { return }
+        cart.items.remove(at: index)
         sendNewCart(withDebounce: false)
     }
 
-    func incrementItem(positionUUID: String) {
-        guard let index = getIndex(of: positionUUID) else { return }
-        cartStorage.cart.items[index].count += 1
+    func incrementItem(internalUUID: String) {
+        guard let index = getIndex(of: internalUUID) else { return }
+        cart.items[index].count += 1
         sendNewCart(withDebounce: true)
     }
 
-    func decrementItem(positionUUID: String) {
-        guard let index = getIndex(of: positionUUID) else { return }
-        cartStorage.cart.items[index].count -= 1
-        if cartStorage.cart.items[index].count == 0,
-           let index = getIndex(of: positionUUID)
+    func decrementItem(internalUUID: String) {
+        guard let index = getIndex(of: internalUUID) else { return }
+        cart.items[index].count -= 1
+        if cart.items[index].count == 0,
+           let index = getIndex(of: internalUUID)
         {
-            cartStorage.cart.items.remove(at: index)
+            cart.items.remove(at: index)
         }
         sendNewCart(withDebounce: true)
     }
 
     func cleanUp() {
-        cartStorage.cart.items = []
+        cart.items = []
+        cart.positionsCount = 0
         getItems(withLoader: true)
     }
 
@@ -117,15 +123,15 @@ extension CartRepositoryImpl {
     }
 
     func getIsEmpty() -> Bool {
-        return cartStorage.cart.items.isEmpty
+        return cart.items.isEmpty
     }
 
     func getTotalAmount() -> Double {
-        return cartStorage.cart.price
+        return cart.price
     }
 
     func getLocalCart() -> Cart {
-        return cartStorage.cart
+        return cart
     }
 
     func applyPromocode(_ promocode: String) {
@@ -185,7 +191,7 @@ extension CartRepositoryImpl {
 
         evokeDebouncedUpdateCart
             .asObservable()
-            .debounce(.milliseconds(400), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(700), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
                 self?.updateCart(withLoader: false)
             })
@@ -209,13 +215,13 @@ extension CartRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
-    private func getIndex(of positionUUID: String) -> Int? {
-        return cartStorage.cart.items.firstIndex(where: { $0.position.uuid == positionUUID })
+    private func getIndex(of internalUUID: String) -> Int? {
+        return cart.items.firstIndex(where: { $0.internalUUID == internalUUID })
     }
 
     private func updateCart(withLoader: Bool = true) {
         guard let leadUUID = defaultStorage.leadUUID else { return }
-        let dto = cartStorage.cart.toDTO()
+        let dto = cart.toDTO()
 
         if withLoader {
             outputs.didStartRequest.accept(())
@@ -226,16 +232,22 @@ extension CartRepositoryImpl {
                 self?.process(cart: cart)
                 self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
+                self?.process(error: error)
                 self?.outputs.didEndRequest.accept(())
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didGetError.accept(error)
             })
             .disposed(by: disposeBag)
     }
 
     private func process(cart: Cart) {
-        cartStorage.cart = cart
+        self.cart = cart
         getItems(withLoader: true)
+    }
+
+    private func process(error: Error) {
+        cart = cartStorage.cart
+        getItems(withLoader: true)
+        guard let error = error as? ErrorPresentable else { return }
+        outputs.didGetError.accept(error)
     }
 }
 

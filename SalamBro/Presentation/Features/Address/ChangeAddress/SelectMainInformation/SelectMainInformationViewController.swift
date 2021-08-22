@@ -177,11 +177,11 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
         )
 
         switch viewModel.flowType {
-        case .create:
+        case .create, .changeAddress:
             showAlert(title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.title),
                       message: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.bodyAddress),
                       actions: [firstAction, secondAction])
-        case .changeAddress, .changeBrand:
+        case .changeBrand:
             showAlert(title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.title),
                       message: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.bodyBrand),
                       actions: [firstAction, secondAction])

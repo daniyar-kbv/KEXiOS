@@ -13,9 +13,10 @@ protocol CartAdditionalProductViewModel: CartCellViewModel {
     var inputs: CartAdditionalProductViewModelImpl.Input { get }
     var outputs: CartAdditionalProductViewModelImpl.Output { get }
 
-    func getPositionUUID() -> String
     func getCount() -> Int
     func addItemToCart()
+
+    func getInternalUUID() -> String
 }
 
 final class CartAdditionalProductViewModelImpl: CartAdditionalProductViewModel {
@@ -30,8 +31,8 @@ final class CartAdditionalProductViewModelImpl: CartAdditionalProductViewModel {
         outputs = .init(item: inputs.item)
     }
 
-    func getPositionUUID() -> String {
-        return inputs.item.position.uuid
+    func getInternalUUID() -> String {
+        return inputs.item.internalUUID
     }
 
     func getCount() -> Int {

@@ -10,7 +10,7 @@ import Foundation
 struct Cart: Codable {
     var items: [CartItem]
     let price: Double
-    let positionsCount: Int
+    var positionsCount: Int
 
     enum CodingKeys: String, CodingKey {
         case price
@@ -46,7 +46,8 @@ extension Cart {
     }
 }
 
-struct CartItem: Codable {
+class CartItem: Codable {
+    let internalUUID: String = UUID().uuidString
     var count: Int
     var comment: String
     var position: CartPosition
@@ -56,10 +57,17 @@ struct CartItem: Codable {
         case count, comment, position
         case modifierGroups = "modifier_groups"
     }
+
+    init(count: Int, comment: String, position: CartPosition, modifierGroups: [CartModifierGroup]) {
+        self.count = count
+        self.comment = comment
+        self.position = position
+        self.modifierGroups = modifierGroups
+    }
 }
 
 extension CartItem: Equatable {
-    static func == (lhs: Self, rhs: Self) -> Bool {
+    static func == (lhs: CartItem, rhs: CartItem) -> Bool {
         return lhs.comment == rhs.comment &&
             lhs.position == rhs.position &&
             lhs.modifierGroups == rhs.modifierGroups
