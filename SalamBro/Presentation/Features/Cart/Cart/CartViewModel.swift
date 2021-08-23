@@ -35,6 +35,7 @@ final class CartViewModelImpl: CartViewModel {
     private var cart: Cart = .init(items: [], price: 0, positionsCount: 0)
     private var cartItems: [CartItem] = []
     private var additionalItems: [CartItem] = []
+    private var cartAdditionals: [CartItem] = []
     private var tableSections: [TableSection] = []
     private var promocode: Promocode?
     let outputs = Output()
@@ -63,7 +64,10 @@ extension CartViewModelImpl {
     }
 
     func getIsEmpty() -> Bool {
-        return cart.items.isEmpty
+        if cartItems.isEmpty, !cartAdditionals.isEmpty {
+            cartRepository.cleanUp()
+        }
+        return cartItems.isEmpty
     }
 
     func additionalsEmpty() -> Bool {
@@ -195,8 +199,8 @@ extension CartViewModelImpl {
             }
         }
 
-        let additionals = cart.items.filter { $0.position.isAdditional }
-        if additionals.isEmpty {
+        cartAdditionals = cart.items.filter { $0.position.isAdditional }
+        if cartAdditionals.isEmpty {
             for i in 0 ..< additionalItems.count {
                 additionalItems[i].count = 0
             }
