@@ -27,6 +27,7 @@ final class CountryCodePickerViewController: UIViewController, LoaderDisplayable
         view.delegate = self
         view.dataSource = self
         view.refreshControl = refreshControl
+        view.delaysContentTouches = false
         return view
     }()
 
@@ -124,6 +125,20 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let codeCountry = viewModel.selectCodeCountry(at: indexPath)
         outputs.didSelectCountryCode.accept(codeCountry.country)
+    }
+
+    func tableView(_: UITableView, shouldHighlightRowAt _: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .calmGray
+    }
+
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .arcticWhite
     }
 }
 

@@ -17,6 +17,7 @@ final class PaymentMethodView: UIView {
         view.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
         view.rowHeight = 50
         view.separatorColor = .mildBlue
+        view.delaysContentTouches = false
         return view
     }()
 

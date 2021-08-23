@@ -26,6 +26,7 @@ final class ChangeLanguageController: UIViewController {
         table.delegate = self
         table.addTableHeaderViewLine()
         table.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
+        table.delaysContentTouches = false
         return table
     }()
 
@@ -86,6 +87,20 @@ extension ChangeLanguageController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.changeLanguage(at: indexPath.row)
+    }
+
+    func tableView(_: UITableView, shouldHighlightRowAt _: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .calmGray
+    }
+
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .arcticWhite
     }
 }
 

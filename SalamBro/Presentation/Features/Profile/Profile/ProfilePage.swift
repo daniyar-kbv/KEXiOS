@@ -165,6 +165,20 @@ extension ProfilePage: UITableViewDelegate, UITableViewDataSource {
         let item = viewModel.tableItems[indexPath.row]
         outputs.onTableItemPressed.accept(item)
     }
+
+    func tableView(_: UITableView, shouldHighlightRowAt _: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .calmGray
+    }
+
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .arcticWhite
+    }
 }
 
 extension ProfilePage: Reloadable {

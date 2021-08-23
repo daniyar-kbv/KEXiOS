@@ -25,6 +25,7 @@ final class SupportController: UIViewController, LoaderDisplayable, Reloadable {
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 186, right: 0)
         view.refreshControl = refreshControl
+        view.delaysContentTouches = false
         return view
     }()
 
@@ -178,6 +179,20 @@ extension SupportController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 50
+    }
+
+    func tableView(_: UITableView, shouldHighlightRowAt _: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .calmGray
+    }
+
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .arcticWhite
     }
 }
 

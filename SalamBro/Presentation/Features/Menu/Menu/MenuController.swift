@@ -59,6 +59,7 @@ final class MenuController: UIViewController, LoaderDisplayable {
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.tableFooterView = UIView()
         view.refreshControl = refreshControl
+        view.delaysContentTouches = false
         return view
     }()
 
@@ -235,6 +236,20 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
         viewModel.willDisplayRow(at: indexPath)
+    }
+
+    func tableView(_: UITableView, shouldHighlightRowAt _: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .calmGray
+    }
+
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .arcticWhite
     }
 }
 

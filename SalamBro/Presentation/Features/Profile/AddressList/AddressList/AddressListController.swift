@@ -31,6 +31,7 @@ final class AddressListController: UIViewController, Reloadable {
         tv.separatorInsetReference = .fromCellEdges
         tv.separatorStyle = .singleLine
         tv.refreshControl = refreshControll
+        tv.delaysContentTouches = false
         return tv
     }()
 
@@ -106,6 +107,20 @@ extension AddressListController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 50
+    }
+
+    func tableView(_: UITableView, shouldHighlightRowAt _: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .calmGray
+    }
+
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .arcticWhite
     }
 }
 

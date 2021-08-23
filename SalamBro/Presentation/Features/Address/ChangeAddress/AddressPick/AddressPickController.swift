@@ -43,6 +43,7 @@ final class AddressPickController: UIViewController {
         view.register(cellType: AddressPickerCell.self)
         view.addTableHeaderViewLine()
         view.separatorInset = .init(top: 0, left: 24, bottom: 0, right: 24)
+        view.delaysContentTouches = false
         return view
     }()
 
@@ -161,6 +162,20 @@ extension AddressPickController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AddressPickerCell.self)
         cell.set(viewModel: viewModel.cellViewModels[indexPath.row])
         return cell
+    }
+
+    func tableView(_: UITableView, shouldHighlightRowAt _: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .calmGray
+    }
+
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .arcticWhite
     }
 }
 
