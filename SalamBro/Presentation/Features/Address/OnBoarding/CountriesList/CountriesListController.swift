@@ -27,6 +27,7 @@ final class CountriesListController: UIViewController, LoaderDisplayable {
         view.refreshControl = refreshControl
         view.addTableHeaderViewLine()
         view.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 24, right: 0)
+        view.delaysContentTouches = false
         return view
     }()
 

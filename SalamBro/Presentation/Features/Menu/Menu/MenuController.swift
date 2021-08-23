@@ -59,6 +59,7 @@ final class MenuController: UIViewController, LoaderDisplayable {
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.tableFooterView = UIView()
         view.refreshControl = refreshControl
+        view.delaysContentTouches = false
         return view
     }()
 

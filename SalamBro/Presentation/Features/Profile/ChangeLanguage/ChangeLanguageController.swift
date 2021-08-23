@@ -26,6 +26,7 @@ final class ChangeLanguageController: UIViewController {
         table.delegate = self
         table.addTableHeaderViewLine()
         table.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
+        table.delaysContentTouches = false
         return table
     }()
 

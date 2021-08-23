@@ -25,6 +25,7 @@ final class SupportController: UIViewController, LoaderDisplayable, Reloadable {
         view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         view.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 186, right: 0)
         view.refreshControl = refreshControl
+        view.delaysContentTouches = false
         return view
     }()
 

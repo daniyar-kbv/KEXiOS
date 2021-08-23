@@ -71,6 +71,7 @@ final class ProfileView: UIView {
         table.isScrollEnabled = false
         table.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         table.rowHeight = 50
+        table.delaysContentTouches = false
         return table
     }()
 

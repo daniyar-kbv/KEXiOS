@@ -26,6 +26,7 @@ final class CitiesListController: UIViewController, LoaderDisplayable {
         view.dataSource = self
         view.refreshControl = refreshControl
         view.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 24, right: 0)
+        view.delaysContentTouches = false
         return view
     }()
 

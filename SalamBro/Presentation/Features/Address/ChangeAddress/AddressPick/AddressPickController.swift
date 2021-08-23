@@ -43,6 +43,7 @@ final class AddressPickController: UIViewController {
         view.register(cellType: AddressPickerCell.self)
         view.addTableHeaderViewLine()
         view.separatorInset = .init(top: 0, left: 24, bottom: 0, right: 24)
+        view.delaysContentTouches = false
         return view
     }()
 

@@ -31,6 +31,7 @@ final class AddressListController: UIViewController, Reloadable {
         tv.separatorInsetReference = .fromCellEdges
         tv.separatorStyle = .singleLine
         tv.refreshControl = refreshControll
+        tv.delaysContentTouches = false
         return tv
     }()
 

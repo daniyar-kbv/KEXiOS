@@ -27,6 +27,7 @@ final class CountryCodePickerViewController: UIViewController, LoaderDisplayable
         view.delegate = self
         view.dataSource = self
         view.refreshControl = refreshControl
+        view.delaysContentTouches = false
         return view
     }()
 
