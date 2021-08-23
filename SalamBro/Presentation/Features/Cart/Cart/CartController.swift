@@ -85,7 +85,7 @@ class CartController: UIViewController, LoaderDisplayable, Reloadable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        reload()
+        viewModel.reload()
     }
 
     override func viewDidAppear(_ animated: Bool) {

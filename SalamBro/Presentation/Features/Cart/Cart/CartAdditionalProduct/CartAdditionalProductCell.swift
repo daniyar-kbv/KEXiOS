@@ -10,9 +10,13 @@ import RxSwift
 import UIKit
 
 protocol CartAdditinalProductCellDelegate: AnyObject {
-    func increment(internalUUID: String?, isAdditional: Bool)
-    func decrement(internalUUID: String?, isAdditional: Bool)
-    func delete(internalUUID: String?, isAdditional: Bool)
+    func increment(internalUUID: String?)
+    func decrement(internalUUID: String?)
+    func delete(internalUUID: String?)
+
+    func incrementAdditionalItem(item: CartItem)
+    func decrementAdditionalItem(item: CartItem)
+    func deleteAdditionalItem(item: CartItem)
 }
 
 final class CartAdditionalProductCell: UITableViewCell {
@@ -65,6 +69,7 @@ final class CartAdditionalProductCell: UITableViewCell {
 
     private lazy var increaseButton: UIButton = {
         let button = UIButton()
+        button.borderWidth = 1
         button.cornerRadius = 5
         button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         button.addTarget(self, action: #selector(increaseItemButton), for: .touchUpInside)
@@ -83,10 +88,22 @@ final class CartAdditionalProductCell: UITableViewCell {
 
     private lazy var unavailableLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16, weight: .medium)
+        label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .kexRed
         label.numberOfLines = 0
         return label
+    }()
+
+    private lazy var deleteButton: UIButton = {
+        let button = UIButton()
+        button.borderWidth = 1
+        button.borderColor = .mildBlue
+        button.cornerRadius = 5
+        button.setTitle(SBLocalization.localized(key: CartText.Cart.ProductCell.deleteButton), for: .normal)
+        button.setTitleColor(.kexRed, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
+        button.addTarget(self, action: #selector(deleteItem), for: .touchUpInside)
+        return button
     }()
 
     private lazy var bottomSeparator: UIView = {
@@ -106,6 +123,7 @@ final class CartAdditionalProductCell: UITableViewCell {
         super.init(style: .default, reuseIdentifier: .none)
 
         layoutUI()
+        bindViewModel()
     }
 
     @available(*, unavailable)
@@ -132,8 +150,15 @@ extension CartAdditionalProductCell {
             .disposed(by: disposeBag)
 
         viewModel.outputs.count
-            .bind(to: countLabel.rx.text)
-            .disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] count in
+                self?.countLabel.text = count
+                self?.configureButton(for: count)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.isAvailable
+            .subscribe(onNext: { [weak self] isAvailable in
+                self?.updateAvailability(to: isAvailable)
+            }).disposed(by: disposeBag)
     }
 
     private func layoutUI() {
@@ -144,18 +169,19 @@ extension CartAdditionalProductCell {
         productImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(12)
             $0.left.equalToSuperview().offset(24)
-            $0.width.equalTo(40)
-            $0.height.equalTo(40)
+            $0.size.equalTo(40)
         }
 
         productTitleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(12)
             $0.left.equalTo(productImageView.snp.right).offset(8)
+            $0.right.equalToSuperview().offset(-24)
         }
 
         priceLabel.snp.makeConstraints {
             $0.top.equalTo(productTitleLabel.snp.bottom).offset(15)
             $0.left.equalTo(productImageView.snp.right).offset(8)
+            $0.bottom.equalToSuperview().offset(-24)
         }
 
         stackView = UIStackView(arrangedSubviews: [descreaseButton, countLabel, increaseButton])
@@ -179,25 +205,33 @@ extension CartAdditionalProductCell {
             $0.width.equalTo(30)
         }
 
-        containerView.addSubview(stackView)
+        [stackView, deleteButton].forEach {
+            containerView.addSubview($0)
+        }
 
         stackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
 
+        deleteButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(0.5)
+            $0.bottom.equalToSuperview().offset(-1.5)
+            $0.left.right.equalToSuperview()
+        }
+
         containerView.snp.makeConstraints {
             $0.left.equalTo(priceLabel.snp.right).offset(8)
             $0.right.equalToSuperview().offset(-24)
-            $0.top.equalToSuperview().offset(40)
+            $0.bottom.equalToSuperview().offset(-16)
+            $0.centerY.equalTo(priceLabel.snp.centerY)
             $0.height.equalTo(30)
             $0.width.equalTo(90)
         }
 
         unavailableLabel.snp.makeConstraints {
-            $0.top.equalTo(priceLabel.snp.bottom).offset(12)
-            $0.left.equalToSuperview().offset(24)
-            $0.right.equalToSuperview().offset(-24)
-            $0.bottom.equalToSuperview().offset(-10)
+            $0.top.equalTo(productTitleLabel.snp.bottom).offset(15)
+            $0.left.equalTo(productImageView.snp.right).offset(8)
+            $0.bottom.equalToSuperview().offset(-24)
         }
 
         bottomSeparator.snp.makeConstraints {
@@ -206,14 +240,44 @@ extension CartAdditionalProductCell {
             $0.height.equalTo(0.24)
         }
     }
+
+    private func updateAvailability(to isAvailable: Bool) {
+        if isAvailable {
+            deleteButton.isHidden = true
+            unavailableLabel.isHidden = true
+        } else {
+            stackView.isHidden = true
+            deleteButton.isHidden = false
+            unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.ProductCell.availability)
+            productTitleLabel.alpha = 0.5
+            priceLabel.isHidden = true
+            productImageView.alpha = 0.5
+        }
+    }
+
+    private func configureButton(for count: String) {
+        if count != "0" {
+            increaseButton.backgroundColor = .kexRed
+            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusWhite), for: .normal)
+            increaseButton.borderColor = .clear
+        } else {
+            increaseButton.backgroundColor = .arcticWhite
+            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusGray), for: .normal)
+            increaseButton.borderColor = .mildBlue
+        }
+    }
 }
 
 extension CartAdditionalProductCell {
     @objc private func decreaseItemCount(_: UIButton) {
-        delegate?.decrement(internalUUID: viewModel.getInternalUUID(), isAdditional: true)
+        delegate?.decrementAdditionalItem(item: viewModel.getItem())
     }
 
     @objc private func increaseItemButton(_: UIButton) {
-        delegate?.increment(internalUUID: viewModel.getInternalUUID(), isAdditional: true)
+        delegate?.incrementAdditionalItem(item: viewModel.getItem())
+    }
+
+    @objc private func deleteItem() {
+        delegate?.deleteAdditionalItem(item: viewModel.getItem())
     }
 }

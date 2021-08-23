@@ -13,20 +13,23 @@ protocol CartAdditionalProductViewModel: CartCellViewModel {
     var inputs: CartAdditionalProductViewModelImpl.Input { get }
     var outputs: CartAdditionalProductViewModelImpl.Output { get }
 
-    func getInternalUUID() -> String
+    func getItem() -> CartItem
 }
 
 final class CartAdditionalProductViewModelImpl: CartAdditionalProductViewModel {
     let inputs: Input
     let outputs: Output
 
-    init(inputs: Input) {
+    private let cartRepository: CartRepository
+
+    init(inputs: Input, cartRepository: CartRepository) {
         self.inputs = inputs
+        self.cartRepository = cartRepository
         outputs = .init(item: inputs.item)
     }
 
-    func getInternalUUID() -> String {
-        return inputs.item.internalUUID
+    func getItem() -> CartItem {
+        return inputs.item
     }
 }
 
@@ -40,12 +43,14 @@ extension CartAdditionalProductViewModelImpl {
         let itemTitle: BehaviorRelay<String>
         let price: BehaviorRelay<String>
         let count: BehaviorRelay<String>
+        let isAvailable: BehaviorRelay<Bool>
 
         init(item: CartItem) {
             itemImage = .init(value: URL(string: item.position.image ?? ""))
             itemTitle = .init(value: item.position.name)
-            price = .init(value: "\(((item.position.price ?? 0) * Double(item.count)).formattedWithSeparator) ₸")
+            price = .init(value: "\((item.position.price ?? 0).formattedWithSeparator) ₸")
             count = .init(value: String(item.count))
+            isAvailable = .init(value: true)
         }
     }
 }

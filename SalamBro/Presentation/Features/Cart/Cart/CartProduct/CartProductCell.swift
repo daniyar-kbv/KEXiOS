@@ -285,14 +285,14 @@ extension CartProductCell {
     }
 
     @objc private func increaseItemButton() {
-        delegate?.increment(internalUUID: viewModel.getInternalUUID(), isAdditional: false)
+        delegate?.increment(internalUUID: viewModel.getInternalUUID())
     }
 
     @objc private func decreaseItemCount() {
-        delegate?.decrement(internalUUID: viewModel.getInternalUUID(), isAdditional: false)
+        delegate?.decrement(internalUUID: viewModel.getInternalUUID())
     }
 
     @objc private func deleteItem() {
-        delegate?.delete(internalUUID: viewModel.getInternalUUID(), isAdditional: false)
+        delegate?.delete(internalUUID: viewModel.getInternalUUID())
     }
 }
