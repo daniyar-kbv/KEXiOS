@@ -125,6 +125,20 @@ extension CountryCodePickerViewController: UITableViewDelegate, UITableViewDataS
         let codeCountry = viewModel.selectCodeCountry(at: indexPath)
         outputs.didSelectCountryCode.accept(codeCountry.country)
     }
+
+    func tableView(_: UITableView, shouldHighlightRowAt _: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .calmGray
+    }
+
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .arcticWhite
+    }
 }
 
 extension CountryCodePickerViewController: Reloadable {

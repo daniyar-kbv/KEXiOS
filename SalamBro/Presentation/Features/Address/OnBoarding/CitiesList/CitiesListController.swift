@@ -132,6 +132,20 @@ extension CitiesListController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelect(index: indexPath.row)
     }
+
+    func tableView(_: UITableView, shouldHighlightRowAt _: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .calmGray
+    }
+
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = .arcticWhite
+    }
 }
 
 extension CitiesListController: Reloadable {
