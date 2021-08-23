@@ -13,6 +13,10 @@ protocol CartAdditinalProductCellDelegate: AnyObject {
     func increment(internalUUID: String?)
     func decrement(internalUUID: String?)
     func delete(internalUUID: String?)
+
+    func incrementAdditionalItem(item: CartItem)
+    func decrementAdditionalItem(item: CartItem)
+    func deleteAdditionalItem(item: CartItem)
 }
 
 final class CartAdditionalProductCell: UITableViewCell {
@@ -266,17 +270,14 @@ extension CartAdditionalProductCell {
 
 extension CartAdditionalProductCell {
     @objc private func decreaseItemCount(_: UIButton) {
-        delegate?.decrement(internalUUID: viewModel.getInternalUUID())
+        delegate?.decrementAdditionalItem(item: viewModel.getItem())
     }
 
     @objc private func increaseItemButton(_: UIButton) {
-        if viewModel.getCount() == 0 {
-            viewModel.addItemToCart()
-        }
-        delegate?.increment(internalUUID: viewModel.getInternalUUID())
+        delegate?.incrementAdditionalItem(item: viewModel.getItem())
     }
 
     @objc private func deleteItem() {
-        delegate?.delete(internalUUID: viewModel.getInternalUUID())
+        delegate?.deleteAdditionalItem(item: viewModel.getItem())
     }
 }

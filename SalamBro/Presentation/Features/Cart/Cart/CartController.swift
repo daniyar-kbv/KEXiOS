@@ -78,12 +78,14 @@ class CartController: UIViewController, LoaderDisplayable, Reloadable {
 
         layoutUI()
         bindViewModel()
+
+        viewModel.getCart()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        viewModel.getCart()
+        viewModel.reload()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -200,7 +202,7 @@ extension CartController {
     }
 
     private func configAnimationView() {
-        guard viewModel.getIsEmpty(), viewModel.additionalsEmpty() else {
+        guard viewModel.getIsEmpty() else {
             hideAnimationView(completionHandler: nil)
             return
         }

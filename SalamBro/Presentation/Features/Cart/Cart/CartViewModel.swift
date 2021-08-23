@@ -55,7 +55,7 @@ extension CartViewModelImpl {
     }
 
     func getCart() {
-        cartRepository.getItems(withLoader: true)
+        cartRepository.getItems()
     }
 
     func getTotalPrice() -> String {
@@ -273,6 +273,18 @@ extension CartViewModelImpl: CartAdditinalProductCellDelegate {
     func delete(internalUUID: String?) {
         guard let internalUUID = internalUUID else { return }
         cartRepository.removeItem(internalUUID: internalUUID)
+    }
+
+    func incrementAdditionalItem(item: CartItem) {
+        cartRepository.incrementAdditionalItem(item: item)
+    }
+
+    func decrementAdditionalItem(item: CartItem) {
+        cartRepository.decrementAdditionalItem(item: item)
+    }
+
+    func deleteAdditionalItem(item: CartItem) {
+        cartRepository.removeAdditionalItem(item: item)
     }
 }
 
