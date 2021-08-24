@@ -40,6 +40,8 @@ final class MenuViewModel: MenuViewModelProtocol {
     private var tableSections: [Section] = []
     private var scrollService: MenuScrollService
 
+    private var redirectURL = ""
+
     init(locationRepository: AddressRepository,
          brandRepository: BrandRepository,
          menuRepository: MenuRepository,
@@ -89,6 +91,12 @@ final class MenuViewModel: MenuViewModelProtocol {
             }
             .disposed(by: disposeBag)
 
+        menuRepository.outputs.didGetRedirectURL
+            .bind { [weak self] urlString in
+                self?.redirectURL = urlString
+            }
+            .disposed(by: disposeBag)
+
         menuRepository.outputs.didGetCategories
             .bind { [weak self] categories in
                 self?.set(categories: categories)
@@ -104,7 +112,7 @@ final class MenuViewModel: MenuViewModelProtocol {
 
         menuRepository.outputs.openPromotion
             .subscribe(onNext: { [weak self] promotion in
-                self?.openPromotion(promotionURL: promotion.url, name: promotion.name)
+                self?.openPromotion(promotionURL: promotion.url, name: promotion.name, redirectURL: self?.redirectURL ?? "")
             })
             .disposed(by: disposeBag)
     }
@@ -228,6 +236,7 @@ extension MenuViewModel {
             else { return .init() }
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AdCollectionCell.self)
             cell.set(viewModel)
+            cell.setRedirectURL(with: redirectURL)
             cell.delegate = self
             return cell
         case .positions:
@@ -307,8 +316,8 @@ extension MenuViewModel {
 }
 
 extension MenuViewModel: AddCollectionCellDelegate {
-    func openPromotion(promotionURL: URL, name: String) {
-        outputs.toPromotion.accept((promotionURL, name))
+    func openPromotion(promotionURL: URL, name: String, redirectURL: String) {
+        outputs.toPromotion.accept((promotionURL, name, redirectURL))
     }
 }
 
@@ -325,7 +334,7 @@ extension MenuViewModel {
         let showAnimation = PublishRelay<LottieAnimationModel>()
         let hideAnimation = PublishRelay<Void>()
 
-        let toPromotion = PublishRelay<(URL, String)>()
+        let toPromotion = PublishRelay<(URL, String, String)>()
         let toPositionDetail = PublishRelay<String>()
 
         let scrollToRowAt = PublishRelay<IndexPath>()

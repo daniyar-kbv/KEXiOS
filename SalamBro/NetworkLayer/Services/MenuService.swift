@@ -13,7 +13,7 @@ import RxSwift
 protocol MenuService: AnyObject {
     func getProducts(for leadUUID: String) -> Single<[MenuCategory]>
     func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail>
-    func getPromotions(leadUUID: String) -> Single<[Promotion]>
+    func getPromotions(leadUUID: String) -> Single<PromotionResult>
     func getPromotionDetail(for leadUUID: String, by id: Int) -> Single<Promotion>
 }
 
@@ -66,7 +66,7 @@ class MenuServiceImpl: MenuService {
             }
     }
 
-    func getPromotions(leadUUID: String) -> Single<[Promotion]> {
+    func getPromotions(leadUUID: String) -> Single<PromotionResult> {
         return provider.rx
             .request(.promotions(leadUUID: leadUUID))
             .map { response in

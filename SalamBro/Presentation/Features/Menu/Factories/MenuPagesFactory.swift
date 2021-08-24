@@ -9,7 +9,7 @@ import Foundation
 
 protocol MenuPagesFactory {
     func makeManuPage() -> MenuController
-    func makePromotionsPage(url: URL, name: String?) -> AgreementController
+    func makePromotionsPage(url: URL, name: String?, urlString: String) -> PromotionsController
 }
 
 class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
@@ -32,11 +32,14 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
                                     scrollService: .init()))
     }
 
-    func makePromotionsPage(url: URL, name: String?) -> AgreementController {
-        return scoped(.init(viewModel: makePromotionsViewModel(url: url, name: name)))
+    func makePromotionsPage(url: URL, name: String?, urlString: String) -> PromotionsController {
+        return scoped(.init(viewModel: makePromotionsViewModel(url: url, name: name, urlString: urlString)))
     }
 
-    private func makePromotionsViewModel(url: URL, name: String?) -> AgreementViewModel {
-        return scoped(AgreementViewModelImpl(input: .init(url: url, name: name)))
+    private func makePromotionsViewModel(url: URL, name: String?, urlString: String) -> PromotionsViewModel {
+        return scoped(PromotionsViewModelImpl(input: .init(url: url,
+                                                           name: name,
+                                                           redirectURL: urlString),
+                                              authTokenStorage: AuthTokenStorageImpl.sharedStorage))
     }
 }

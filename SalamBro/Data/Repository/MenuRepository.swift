@@ -121,8 +121,8 @@ extension MenuRepositoryImpl {
 
         menuService.getPromotions(leadUUID: leadUUID)
             .subscribe(onSuccess: {
-                [weak self] promotions in
-                self?.receivedData.append(.init(data: promotions, type: .promotions))
+                [weak self] result in
+                self?.receivedData.append(.init(data: result, type: .promotions))
                 self?.check()
             }, onError: { [weak self] error in
                 self?.process(error: error, type: .promotions)
@@ -158,8 +158,9 @@ extension MenuRepositoryImpl {
                 guard let leadInfo = receivedData.data as? LeadInfo else { return }
                 outputs.didGetAddressInfo.accept(leadInfo)
             case .promotions:
-                guard let promotions = receivedData.data as? [Promotion] else { return }
-                outputs.didGetPromotions.accept(promotions)
+                guard let result = receivedData.data as? PromotionResult else { return }
+                outputs.didGetRedirectURL.accept(result.redirectURL)
+                outputs.didGetPromotions.accept(result.promotions)
             case .categories:
                 guard let categories = receivedData.data as? [MenuCategory] else { return }
                 outputs.didGetCategories.accept(categories)
@@ -179,6 +180,7 @@ extension MenuRepositoryImpl {
         let didStartDataProcessing = PublishRelay<Void>()
         let didGetAddressInfo = PublishRelay<LeadInfo>()
         let didGetPromotions = PublishRelay<[Promotion]>()
+        let didGetRedirectURL = PublishRelay<String>()
         let didGetCategories = PublishRelay<[MenuCategory]>()
         let didEndDataProcessing = PublishRelay<Void>()
 

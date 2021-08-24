@@ -36,6 +36,8 @@ final class AdCollectionCell: UITableViewCell {
 
     private var disposeBag = DisposeBag()
 
+    private var redirectURL = ""
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layoutUI()
@@ -57,6 +59,10 @@ final class AdCollectionCell: UITableViewCell {
     }
 
     private func bind() {}
+
+    func setRedirectURL(with urlString: String) {
+        redirectURL = urlString
+    }
 }
 
 extension AdCollectionCell {
@@ -75,7 +81,8 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
         guard let promotionURL = URL(string: viewModel.cellViewModels[indexPath.item].promotion.link ?? "") else { return }
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         delegate?.openPromotion(promotionURL: promotionURL,
-                                name: viewModel.cellViewModels[indexPath.item].promotion.name)
+                                name: viewModel.cellViewModels[indexPath.item].promotion.name,
+                                redirectURL: redirectURL)
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
@@ -113,5 +120,5 @@ extension AdCollectionCell {
 extension AdCollectionCell: Reusable {}
 
 public protocol AddCollectionCellDelegate: AnyObject {
-    func openPromotion(promotionURL: URL, name: String)
+    func openPromotion(promotionURL: URL, name: String, redirectURL: String)
 }

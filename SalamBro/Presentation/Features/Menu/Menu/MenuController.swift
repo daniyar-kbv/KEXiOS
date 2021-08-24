@@ -267,7 +267,7 @@ extension MenuController: Reloadable {
 
 extension MenuController {
     struct Output {
-        let toPromotion = PublishRelay<(URL, String)>()
+        let toPromotion = PublishRelay<(URL, String, String)>()
         let toChangeBrand = PublishRelay<Void>()
         let toAddressess = PublishRelay<Void>()
         let toPositionDetail = PublishRelay<String>()
