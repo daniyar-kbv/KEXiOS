@@ -91,6 +91,10 @@ final class RateViewModelImpl: RateViewModel {
                 self?.rateChoices = rates
             }
             .disposed(by: disposeBag)
+
+        repository.outputs.didSendRate
+            .bind(to: outputs.didSendRate)
+            .disposed(by: disposeBag)
     }
 
     func sendUserRate(stars: Int, comment: String) {
@@ -107,5 +111,6 @@ extension RateViewModelImpl {
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
+        let didSendRate = PublishRelay<Void>()
     }
 }

@@ -99,6 +99,13 @@ extension RateController {
                 self?.rateView.configureSuggestionLabel(description: description)
             }
             .disposed(by: disposeBag)
+
+        viewModel.outputs.didSendRate
+            .bind { [weak self] in
+                print("here")
+                self?.outputs.close.accept(())
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -135,7 +142,6 @@ extension RateController: RateViewDelegate {
     }
 
     func sendButtonTapped() {
-        outputs.close.accept(())
         viewModel.sendUserRate(stars: rateView.rating, comment: rateView.getComment())
     }
 
