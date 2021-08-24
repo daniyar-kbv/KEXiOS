@@ -38,15 +38,11 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
 
     private var numberView: AuthNumberView?
 
-    private let getButton: UIButton = {
-        let button = UIButton()
+    private let getButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .filledRed)
         button.setTitle(SBLocalization.localized(key: AuthorizationText.Auth.buttonTitle), for: .normal)
         button.addTarget(self, action: #selector(handleGetButtonAction), for: .touchUpInside)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.backgroundColor = .calmGray
         button.isEnabled = false
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
         return button
     }()
 
@@ -131,7 +127,6 @@ extension AuthorizationController {
 extension AuthorizationController {
     @objc private func handleGetButtonAction() {
         viewModel.sendOTP()
-//        numberView?.resignFirstResponder()
     }
 
     @objc private func dismissVC() {
@@ -141,11 +136,9 @@ extension AuthorizationController {
     func textField(_: UITextField, didFillMandatoryCharacters complete: Bool, didExtractValue value: String) {
         if complete {
             getButton.isEnabled = true
-            getButton.backgroundColor = .kexRed
             viewModel.setPhoneNumber(value)
         } else {
             getButton.isEnabled = false
-            getButton.backgroundColor = .calmGray
         }
     }
 

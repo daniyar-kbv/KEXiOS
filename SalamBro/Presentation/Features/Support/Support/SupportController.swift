@@ -47,16 +47,10 @@ final class SupportController: UIViewController, LoaderDisplayable, Reloadable {
         return view
     }()
 
-    private lazy var callButton: UIButton = {
-        let button = UIButton()
+    private lazy var callButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .emptyRed)
         button.setTitle(SBLocalization.localized(key: SupportText.Support.callCenter), for: .normal)
-        button.setTitleColor(.kexRed, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.addTarget(self, action: #selector(call), for: .touchUpInside)
-        button.borderWidth = 1
-        button.borderColor = .kexRed
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
         return button
     }()
 

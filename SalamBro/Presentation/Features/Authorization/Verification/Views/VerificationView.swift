@@ -46,16 +46,10 @@ final class VerificationView: UIView {
         return field
     }()
 
-    lazy var getCodeButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.isEnabled = false
+    lazy var getCodeButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .filledRed)
+        button.isHidden = true
         button.setTitle(SBLocalization.localized(key: AuthorizationText.Verification.Button.title, arguments: "01:30"), for: .disabled)
-        button.setTitleColor(.mildBlue, for: .disabled)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(reload), for: .touchUpInside)
         return button
     }()
@@ -107,9 +101,7 @@ extension VerificationView {
     }
 
     func startTimer() {
-        // then set time interval to expirationDate…
-        getCodeButton.isEnabled = false
-        getCodeButton.backgroundColor = .white
+        getCodeButton.isHidden = true
 
         expirationDate = Date(timeIntervalSinceNow: numSeconds)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateUI), userInfo: nil, repeats: true)
@@ -130,13 +122,11 @@ extension VerificationView {
     }
 
     @objc private func updateUI() {
-        // Call the currentTimeString method which can decrease the time..
         let timeString = currentTimeString()
         if timeString != nil {
             getCodeButton.setTitle(" " + SBLocalization.localized(key: AuthorizationText.Verification.Button.title, arguments: timeString!), for: .disabled)
         } else {
-            getCodeButton.isEnabled = true
-            getCodeButton.backgroundColor = .kexRed
+            getCodeButton.isHidden = false
             getCodeButton.setTitle(SBLocalization.localized(key: AuthorizationText.Verification.Button.timeout), for: .normal)
         }
     }

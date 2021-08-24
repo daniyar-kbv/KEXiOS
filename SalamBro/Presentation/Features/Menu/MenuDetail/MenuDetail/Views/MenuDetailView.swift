@@ -63,12 +63,8 @@ final class MenuDetailView: UIView {
         return view
     }()
 
-    private(set) lazy var proceedButton: UIButton = {
-        let view = UIButton()
-        view.backgroundColor = .kexRed
-        view.setTitleColor(.white, for: .normal)
-        view.layer.cornerRadius = 10
-        view.layer.masksToBounds = true
+    private(set) lazy var proceedButton: SBSubmitButton = {
+        let view = SBSubmitButton(style: .filledRed)
         return view
     }()
 
@@ -159,8 +155,7 @@ extension MenuDetailView {
     }
 
     func setProceedButton(isActive: Bool) {
-        proceedButton.backgroundColor = isActive ? .kexRed : .calmGray
-        proceedButton.isUserInteractionEnabled = isActive
+        proceedButton.isEnabled = isActive
     }
 
     func setCommentary(action: @escaping () -> Void) {

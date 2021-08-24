@@ -47,12 +47,9 @@ final class PaymentCashView: UIView {
         return view
     }()
 
-    private lazy var submitButton: UIButton = {
-        let view = UIButton()
+    private lazy var submitButton: SBSubmitButton = {
+        let view = SBSubmitButton(style: .filledRed)
         view.addTarget(self, action: #selector(handleSubmitButtonAction), for: .touchUpInside)
-        view.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        view.layer.cornerRadius = 10
-        view.layer.masksToBounds = true
         return view
     }()
 
@@ -60,7 +57,7 @@ final class PaymentCashView: UIView {
         super.init(frame: frame)
 
         layoutUI()
-        configSubmitButton(isEnabled: true)
+        submitButton.isEnabled = true
     }
 
     @available(*, unavailable)
@@ -127,18 +124,13 @@ extension PaymentCashView {
         case .hide:
             descriptionLabel.text = ""
         }
-        configSubmitButton(isEnabled: action.needEnable)
+        submitButton.isEnabled = action.needEnable
         configTextField(isEnabled: action.needEnable)
     }
 
     private func configTextField(isEnabled: Bool) {
         textField.layer.borderColor = isEnabled ? UIColor.clear.cgColor : UIColor.kexRed.cgColor
         textField.layer.borderWidth = isEnabled ? 0 : 1
-    }
-
-    private func configSubmitButton(isEnabled: Bool) {
-        submitButton.backgroundColor = isEnabled ? .kexRed : .calmGray
-        submitButton.isUserInteractionEnabled = isEnabled
     }
 }
 
