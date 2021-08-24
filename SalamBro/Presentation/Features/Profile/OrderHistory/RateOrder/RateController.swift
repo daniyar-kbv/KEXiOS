@@ -102,7 +102,6 @@ extension RateController {
 
         viewModel.outputs.didSendRate
             .bind { [weak self] in
-                print("here")
                 self?.outputs.close.accept(())
             }
             .disposed(by: disposeBag)
