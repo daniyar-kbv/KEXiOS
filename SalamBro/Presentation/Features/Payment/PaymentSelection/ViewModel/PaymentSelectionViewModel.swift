@@ -14,6 +14,7 @@ import WebKit
 protocol PaymentSelectionViewModel: AnyObject {
     var outputs: PaymentSelectionViewModelImpl.Output { get }
 
+    func reload()
     func getPaymentMethods()
     func set(paymentMethod: PaymentMethod)
     func makePayment()
@@ -47,6 +48,11 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
 }
 
 extension PaymentSelectionViewModelImpl {
+    func reload() {
+        getPaymentMethods()
+        paymentRepository.checkPaymentStatus()
+    }
+
     func getPaymentMethods() {
         guard needsGetPaymentMethods else { return }
         needsGetPaymentMethods = false

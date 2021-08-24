@@ -22,6 +22,7 @@ protocol PaymentRepository: AnyObject {
     func makePayment()
     func makeApplePayPayment(payment: PKPayment)
     func deleteCards(with UUIDs: [String])
+    func checkPaymentStatus()
 }
 
 final class PaymentRepositoryImpl: PaymentRepository {
@@ -154,6 +155,7 @@ extension PaymentRepositoryImpl {
 
 extension PaymentRepositoryImpl {
     func makePayment() {
+        defaultStorage.persist(isPaymentProcess: true)
         switch selectedPaymentMethod?.type {
         case .savedCard:
             makeSavedCardPayment()
@@ -166,6 +168,20 @@ extension PaymentRepositoryImpl {
         default:
             break
         }
+    }
+
+    func checkPaymentStatus() {
+        print(defaultStorage.isPaymentProcess)
+        guard defaultStorage.isPaymentProcess,
+              let leadUUID = defaultStorage.leadUUID else { return }
+
+        outputs.didStartPaymentRequest.accept(())
+        paymentService.getPaymentStatus(leadUUID: leadUUID)
+            .flatMap(orderStatusFlatMapClosure(_:))
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: paymentOnSuccess(_:),
+                       onError: paymentOnFailure(_:))
+            .disposed(by: disposeBag)
     }
 
     private func makeSavedCardPayment() {
@@ -230,6 +246,7 @@ extension PaymentRepositoryImpl {
     }
 
     private func orderStatusFlatMapClosure(_ orderStatus: OrderStatusProtocol) -> Single<String> {
+        defaultStorage.persist(isPaymentProcess: false)
         switch orderStatus.determineStatus() {
         case .completed:
             return authorizedApplyService.authorizedApplyOrder()
@@ -258,6 +275,7 @@ extension PaymentRepositoryImpl {
     private func paymentOnFailure(_ error: Error) {
         outputs.didEndPaymentRequest.accept(())
         guard let error = error as? ErrorPresentable else { return }
+        defaultStorage.persist(isPaymentProcess: false)
         outputs.didGetError.accept(error)
     }
 }
