@@ -82,10 +82,10 @@ extension ChangeNameController: ChangeNameViewDelegate {
     func textFieldsTapped(_ textfield: UITextField) {
         textfield.text = textfield.text?.trimmingCharacters(in: .whitespaces)
         guard let name = contentView?.nameTextField.text, let email = contentView?.emailTextField.text, !name.isEmpty, !email.isEmpty else {
-            contentView?.configureButton(isEnabled: false)
+            contentView?.setButton(isEnabled: false)
             return
         }
-        contentView?.configureButton(isEnabled: true)
+        contentView?.setButton(isEnabled: true)
     }
 
     func saveButtonTapped() {

@@ -31,15 +31,12 @@ final class AddressPickCell: UITableViewCell {
         return label
     }()
 
-    private lazy var changeButton: UIButton = {
-        let button = UIButton()
+    private lazy var changeButton: SBTextButton = {
+        let button = SBTextButton()
         button.setTitle(SBLocalization.localized(key: MenuText.Menu.Address.changeButton), for: .normal)
-        button.setTitleColor(.kexRed, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.contentHorizontalAlignment = .center
         button.contentVerticalAlignment = .center
-        button.adjustsImageWhenHighlighted = true
-        button.adjustsImageWhenDisabled = true
         button.isUserInteractionEnabled = false
         button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         return button

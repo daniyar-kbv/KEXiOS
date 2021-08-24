@@ -172,7 +172,6 @@
 		D846B24773092F2471DFE446C0B4A25D /* OnBoardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9844FEA036C0704AC08700818D6D9E /* OnBoardingCoordinator.swift */; };
 		AFD7B8956FCF2195A31D0522B36AF1F7 /* OnBoardingPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10BE93F0E1E06BA155612D95B4F30D4B /* OnBoardingPagesFactory.swift */; };
 		733FED62F294F2D43EDE8B60D47C1FF0 /* OrderApplyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16426AE457FE6F7DF042B7802295013A /* OrderApplyDTO.swift */; };
-		4F1C79E2EC8F78A0076430C6FBE34ACE /* OrderHistoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785851054718D35A4F8D5A2AEEAEB635 /* OrderHistoryButton.swift */; };
 		5E01FA20E4AEA541AFD77C25CADF0AB2 /* OrderHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39D14BEFFA7748C1668B738C82D0AE1 /* OrderHistoryCell.swift */; };
 		05112FC227A1546DB01A33FD94C6EFC8 /* OrderHistoryCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35212C0C3A652476D0B304AEB4929141 /* OrderHistoryCellContentView.swift */; };
 		4EB5659CFFFCD83ECA602A6D83057017 /* OrderHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03C1FA0BF655A8743C53F3CFBF40D7 /* OrderHistoryController.swift */; };
@@ -256,9 +255,11 @@
 		AFE10B4ADDD5D00277E3D3352EFD195B /* SBImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 534CB6D497C2DF6E3ED3D112F209E652 /* SBImages.xcassets */; };
 		6390DB6C1CBC219D0CDAF1C5F2C58609 /* SBLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDF4C9EE88852C22ECA6E35607FA66 /* SBLocalization.swift */; };
 		662168E57B2C545F1879444F345732A7 /* SBNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F7907A61A66E9CEA660C77C6B23428 /* SBNavigationController.swift */; };
+		79F09267469286CE541A8C45EE898955 /* SBSubmitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F4C4618C10A4E743CA870AB6BDFCF /* SBSubmitButton.swift */; };
 		A73528BC44A05EB4815D46A1AC296647 /* SBTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC309BD440BECC27202E38140297F527 /* SBTabBarController.swift */; };
 		310190B06EB6F96D433DD4BA5EEB4A30 /* SBTabBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9649613AFC2BB94FDC1188326DFC6C14 /* SBTabBarType.swift */; };
 		9D579853029C4C56AC4530FAE166939D /* SBTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFBFF447EDEBE7F7F92A24AAB70F11D /* SBTabBarViewModel.swift */; };
+		579DE61E6E1BB2BB4F9F51ABF126B69A /* SBTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C10FE5E63C5203732BE0F245631DE /* SBTextButton.swift */; };
 		164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */; };
 		6382A29270DC95FE20964786BA382045 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */; };
 		825FC113C253F87745C6F961C47C9DAF /* SalamBroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B2A30C6F7592F9FD9C8743F0474722 /* SalamBroUITests.swift */; };
@@ -292,6 +293,7 @@
 		AC48B0075457DA457FF5D8DE42ACAC27 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA30F773A971EA2FDE29848462A2C514 /* UIAlertController+Extension.swift */; };
 		9CADCD2A4842323E78F20A705B98103B /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA266493C6946E18208AAE57CA77AB /* UIApplication+Extension.swift */; };
 		0D5850A82D4E2F59B33A85B051B30792 /* UIBarButtonConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB8EC433C370500268693AEBBE8362 /* UIBarButtonConfigurable.swift */; };
+		A7331CA00ED54AB1C9D4D3C53435E16C /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED51D94FAE25E535CEAFA3C3ADE87811 /* UIButton+Extension.swift */; };
 		7252602B1A349A43014F989154041C7D /* UICollectionViewCenterLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E9E792837002EB3CA84310B544D4D /* UICollectionViewCenterLayout.swift */; };
 		9B3F1374BE1464617A2A7D5C7B82A5EA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3D59E6970F72C3706351029DE4FD0 /* UIColor+Extension.swift */; };
 		4C8D8329E4A222925EEB832CDB05B27B /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99F4BF639255B023117FDAF61D897FF /* UINavigationController+Extension.swift */; };
@@ -525,7 +527,6 @@
 		FA9844FEA036C0704AC08700818D6D9E /* OnBoardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCoordinator.swift; sourceTree = "<group>"; };
 		10BE93F0E1E06BA155612D95B4F30D4B /* OnBoardingPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPagesFactory.swift; sourceTree = "<group>"; };
 		16426AE457FE6F7DF042B7802295013A /* OrderApplyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderApplyDTO.swift; sourceTree = "<group>"; };
-		785851054718D35A4F8D5A2AEEAEB635 /* OrderHistoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryButton.swift; sourceTree = "<group>"; };
 		A39D14BEFFA7748C1668B738C82D0AE1 /* OrderHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryCell.swift; sourceTree = "<group>"; };
 		35212C0C3A652476D0B304AEB4929141 /* OrderHistoryCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryCellContentView.swift; sourceTree = "<group>"; };
 		BB03C1FA0BF655A8743C53F3CFBF40D7 /* OrderHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryController.swift; sourceTree = "<group>"; };
@@ -627,9 +628,11 @@
 		5BBDF4C9EE88852C22ECA6E35607FA66 /* SBLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBLocalization.swift; sourceTree = "<group>"; };
 		80F7907A61A66E9CEA660C77C6B23428 /* SBNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBNavigationController.swift; sourceTree = "<group>"; };
 		A012B6069CF37EAF9A7D520208298845 /* SBNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBNavigationController.swift; sourceTree = "<group>"; };
+		C79F4C4618C10A4E743CA870AB6BDFCF /* SBSubmitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBSubmitButton.swift; sourceTree = "<group>"; };
 		DC309BD440BECC27202E38140297F527 /* SBTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBTabBarController.swift; sourceTree = "<group>"; };
 		9649613AFC2BB94FDC1188326DFC6C14 /* SBTabBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBTabBarType.swift; sourceTree = "<group>"; };
 		FBFBFF447EDEBE7F7F92A24AAB70F11D /* SBTabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBTabBarViewModel.swift; sourceTree = "<group>"; };
+		DE6C10FE5E63C5203732BE0F245631DE /* SBTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBTextButton.swift; sourceTree = "<group>"; };
 		A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
 		E109EA25F926DD19FBD62E082F1EA9E0 /* SalamBro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalamBro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EAD331DCD34AC79367C6991B1D485F3 /* SalamBro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SalamBro.entitlements; sourceTree = "<group>"; };
@@ -667,6 +670,7 @@
 		AA30F773A971EA2FDE29848462A2C514 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		44AA266493C6946E18208AAE57CA77AB /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		FBAB8EC433C370500268693AEBBE8362 /* UIBarButtonConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonConfigurable.swift; sourceTree = "<group>"; };
+		ED51D94FAE25E535CEAFA3C3ADE87811 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		105ECED4A60DE8A06E26BCFA2A3BB457 /* UICollectionViewCenterLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCenterLayout.swift; sourceTree = "<group>"; };
 		CC8E9E792837002EB3CA84310B544D4D /* UICollectionViewCenterLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewCenterLayout.swift; sourceTree = "<group>"; };
 		0DB3D59E6970F72C3706351029DE4FD0 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -776,6 +780,7 @@
 		08D6A8241F62B88573896C6DBBC3219A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E702AC6E2260B81E27489BC3F15B8639 /* Buttons */,
 				839AFAA5E34C8F0ECF1CFB2549D53586 /* StagLayout */,
 				9E42260DDA4C991D080DF7EA32BE6956 /* BasicLoaderView.swift */,
 				55B6F90C9E2DABAC29F09DB0CA1FE652 /* MapCommentaryPage.swift */,
@@ -842,6 +847,15 @@
 				A21DBF1D8149DD277ACF2EE07316691C /* SupportCoordinator.swift */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		E702AC6E2260B81E27489BC3F15B8639 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				C79F4C4618C10A4E743CA870AB6BDFCF /* SBSubmitButton.swift */,
+				DE6C10FE5E63C5203732BE0F245631DE /* SBTextButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		15BA1BB3C138589E5ECE03C5EE7747F5 /* PaymentEdit */ = {
@@ -1560,6 +1574,7 @@
 				20F5B8460D143B3F6AB86316114B4EC8 /* String+Extension.swift */,
 				AA30F773A971EA2FDE29848462A2C514 /* UIAlertController+Extension.swift */,
 				44AA266493C6946E18208AAE57CA77AB /* UIApplication+Extension.swift */,
+				ED51D94FAE25E535CEAFA3C3ADE87811 /* UIButton+Extension.swift */,
 				0DB3D59E6970F72C3706351029DE4FD0 /* UIColor+Extension.swift */,
 				D99F4BF639255B023117FDAF61D897FF /* UINavigationController+Extension.swift */,
 				B29555896AA5E00F2FAB1905B6F9ED5C /* UITableView+Extension.swift */,
@@ -1814,7 +1829,6 @@
 		A7FBFFAA677A25DB9FE9059BD7028333 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				785851054718D35A4F8D5A2AEEAEB635 /* OrderHistoryButton.swift */,
 				A39D14BEFFA7748C1668B738C82D0AE1 /* OrderHistoryCell.swift */,
 				35212C0C3A652476D0B304AEB4929141 /* OrderHistoryCellContentView.swift */,
 				396FA2D5A059F0D21641796429255D11 /* OrderHistoryInfoStackView.swift */,
@@ -2765,7 +2779,6 @@
 				D846B24773092F2471DFE446C0B4A25D /* OnBoardingCoordinator.swift in Sources */,
 				AFD7B8956FCF2195A31D0522B36AF1F7 /* OnBoardingPagesFactory.swift in Sources */,
 				733FED62F294F2D43EDE8B60D47C1FF0 /* OrderApplyDTO.swift in Sources */,
-				4F1C79E2EC8F78A0076430C6FBE34ACE /* OrderHistoryButton.swift in Sources */,
 				5E01FA20E4AEA541AFD77C25CADF0AB2 /* OrderHistoryCell.swift in Sources */,
 				05112FC227A1546DB01A33FD94C6EFC8 /* OrderHistoryCellContentView.swift in Sources */,
 				4EB5659CFFFCD83ECA602A6D83057017 /* OrderHistoryController.swift in Sources */,
@@ -2845,9 +2858,11 @@
 				40A974F7135401E5F5FEB3089CFFC325 /* SBIcons.swift in Sources */,
 				6390DB6C1CBC219D0CDAF1C5F2C58609 /* SBLocalization.swift in Sources */,
 				662168E57B2C545F1879444F345732A7 /* SBNavigationController.swift in Sources */,
+				79F09267469286CE541A8C45EE898955 /* SBSubmitButton.swift in Sources */,
 				A73528BC44A05EB4815D46A1AC296647 /* SBTabBarController.swift in Sources */,
 				310190B06EB6F96D433DD4BA5EEB4A30 /* SBTabBarType.swift in Sources */,
 				9D579853029C4C56AC4530FAE166939D /* SBTabBarViewModel.swift in Sources */,
+				579DE61E6E1BB2BB4F9F51ABF126B69A /* SBTextButton.swift in Sources */,
 				5752366203812F015BDB9D8A4A70F94B /* SecureStorageProvider.swift in Sources */,
 				4F8B480599740562799CF3FB740F85E4 /* SelectMainInformationCell.swift in Sources */,
 				A864EB1D6EC9EB7EC5A7EB750A9CC398 /* SelectMainInformationViewController.swift in Sources */,
@@ -2878,6 +2893,7 @@
 				AC48B0075457DA457FF5D8DE42ACAC27 /* UIAlertController+Extension.swift in Sources */,
 				9CADCD2A4842323E78F20A705B98103B /* UIApplication+Extension.swift in Sources */,
 				0D5850A82D4E2F59B33A85B051B30792 /* UIBarButtonConfigurable.swift in Sources */,
+				A7331CA00ED54AB1C9D4D3C53435E16C /* UIButton+Extension.swift in Sources */,
 				7252602B1A349A43014F989154041C7D /* UICollectionViewCenterLayout.swift in Sources */,
 				9B3F1374BE1464617A2A7D5C7B82A5EA /* UIColor+Extension.swift in Sources */,
 				4C8D8329E4A222925EEB832CDB05B27B /* UINavigationController+Extension.swift in Sources */,

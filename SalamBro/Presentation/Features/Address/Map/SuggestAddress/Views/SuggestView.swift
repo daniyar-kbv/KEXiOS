@@ -37,10 +37,9 @@ final class SuggestView: UIView {
         return searchBar
     }()
 
-    private lazy var doneButton: UIButton = {
-        let button = UIButton()
+    private lazy var doneButton: SBTextButton = {
+        let button = SBTextButton()
         button.setTitle(SBLocalization.localized(key: AddressText.Suggest.buttonTitle), for: .normal)
-        button.setTitleColor(.kexRed, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.contentHorizontalAlignment = .center
         button.contentVerticalAlignment = .center

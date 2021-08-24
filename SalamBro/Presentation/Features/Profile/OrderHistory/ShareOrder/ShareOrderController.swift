@@ -25,11 +25,10 @@ final class ShareOrderController: UIViewController {
         return view
     }()
 
-    private lazy var submitButton: UIButton = {
-        let view = UIButton()
+    private lazy var submitButton: SBTextButton = {
+        let view = SBTextButton()
         view.setTitle(SBLocalization.localized(key: ProfileText.ShareOrder.submitButton), for: .normal)
         view.titleLabel?.font = .systemFont(ofSize: 14)
-        view.setTitleColor(.kexRed, for: .normal)
         view.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
         return view
     }()

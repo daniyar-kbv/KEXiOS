@@ -54,7 +54,7 @@ final class PaymentSelectionButton: UIButton {
     private var changeLabel: UILabel = {
         let label = UILabel()
         label.text = SBLocalization.localized(key: PaymentText.PaymentSelection.change)
-        label.backgroundColor = .arcticWhite
+        label.backgroundColor = .clear
         label.textColor = .kexRed
         label.font = UIFont.systemFont(ofSize: 14)
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -64,6 +64,12 @@ final class PaymentSelectionButton: UIButton {
 
     init() {
         super.init(frame: .zero)
+
+        setBackgroundColor(color: .clear, forState: .normal)
+        setBackgroundColor(color: .calmGray, forState: .highlighted)
+
+        layer.cornerRadius = 10
+
         configure()
     }
 

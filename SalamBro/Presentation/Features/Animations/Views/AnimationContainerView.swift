@@ -10,6 +10,8 @@ import SnapKit
 import UIKit
 
 final class AnimationContainerView: UIView {
+    private let animationType: LottieAnimationModel
+
     private lazy var lottieAnimationView: AnimationView = {
         let view = AnimationView()
         view.contentMode = .scaleAspectFill
@@ -25,12 +27,8 @@ final class AnimationContainerView: UIView {
         return view
     }()
 
-    lazy var actionButton: UIButton = {
-        let view = UIButton()
-        view.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        view.cornerRadius = 10
-        view.borderWidth = 1
-        view.titleLabel?.textAlignment = .center
+    lazy var actionButton: SBSubmitButton = {
+        let view = SBSubmitButton(style: animationType.buttonStyle)
         view.addTarget(self, action: #selector(performAction), for: .touchUpInside)
         return view
     }()
@@ -47,6 +45,8 @@ final class AnimationContainerView: UIView {
     var action: (() -> Void)?
 
     init(animationType: LottieAnimationModel) {
+        self.animationType = animationType
+
         super.init(frame: .zero)
 
         configureViews(with: animationType)

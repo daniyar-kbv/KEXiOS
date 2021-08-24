@@ -31,14 +31,10 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
         return view
     }()
 
-    private lazy var saveButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .kexRed
-        button.layer.cornerRadius = 10
+    private lazy var saveButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .filledRed)
         button.setTitle(SBLocalization.localized(key: AddressText.SelectMainInfo.save), for: .normal)
         button.addTarget(self, action: #selector(save), for: .touchUpInside)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .regular)
         return button
     }()
 
@@ -188,10 +184,8 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
         }
     }
 
-//    Tech debt: create button class with states
     private func changeSaveButtonState(isActive: Bool) {
-        saveButton.isUserInteractionEnabled = isActive
-        saveButton.backgroundColor = isActive ? .kexRed : .calmGray
+        saveButton.isEnabled = isActive
     }
 
     private func didSelectItem(type: SelectMainInformationCell.InputType, with index: Int) {
