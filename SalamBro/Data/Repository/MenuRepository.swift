@@ -23,7 +23,6 @@ final class MenuRepositoryImpl: MenuRepository {
     private let ordersService: OrdersService
     private let storage: DefaultStorage
 
-    private var isRequestingData = false
     private var menuData = MenuData()
 
     init(menuService: MenuService,
