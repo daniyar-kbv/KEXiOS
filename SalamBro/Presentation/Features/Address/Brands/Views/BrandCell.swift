@@ -29,6 +29,29 @@ final class BrandCell: UICollectionViewCell, Reusable {
         return view
     }()
 
+    lazy var notAvaliableView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        return view
+    }()
+
+    lazy var blurView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .regular)
+        let view = UIVisualEffectView(effect: blurEffect)
+        view.alpha = 0.8
+        return view
+    }()
+
+    lazy var notAvalilableLabel: UILabel = {
+        let view = UILabel()
+        view.text = "Coming\nsoon"
+        view.font = SBFontResource.getFont(for: SBFonts.Pattaya.regular, with: 20)
+        view.textColor = .darkGray
+        view.numberOfLines = 0
+        view.textAlignment = .center
+        return view
+    }()
+
     override public init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -38,9 +61,17 @@ final class BrandCell: UICollectionViewCell, Reusable {
     public required init?(coder _: NSCoder) { nil }
 
     func configure(brand: Brand) {
-        guard let imageUrl = URL(string: brand.image) else { return }
+        configure(imageURLStr: brand.image)
+        configure(isAvailable: brand.isAvailable)
+    }
+
+    private func configure(imageURLStr: String) {
+        guard let imageUrl = URL(string: imageURLStr) else { return }
         imageView.setImage(url: imageUrl)
-        isUserInteractionEnabled = brand.isAvailable ?? false
+    }
+
+    private func configure(isAvailable: Bool) {
+        notAvaliableView.isHidden = isAvailable
     }
 
     private func layoutUI() {
@@ -54,6 +85,21 @@ final class BrandCell: UICollectionViewCell, Reusable {
         containerView.addSubview(imageView)
         imageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+
+        imageView.addSubview(notAvaliableView)
+        notAvaliableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        [blurView, notAvalilableLabel].forEach { notAvaliableView.addSubview($0) }
+
+        blurView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        notAvalilableLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 }
