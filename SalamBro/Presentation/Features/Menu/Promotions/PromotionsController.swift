@@ -47,9 +47,16 @@ final class PromotionsController: UIViewController, WKNavigationDelegate {
 
         viewModel.ouputs.url
             .bind(onNext: { [weak self] url in
-                var request = URLRequest(url: url)
-                request.addValue("JWT \(self?.viewModel.getToken() ?? "")", forHTTPHeaderField: "Authorization")
-                self?.webView.load(request)
+                var urlString = url.absoluteString
+                urlString.removeLast()
+                if let uuid = self?.viewModel.getLeadUUID(), let token = self?.viewModel.getToken() {
+                    urlString.append("&lead_uuid=\(uuid)")
+                    if let requestURL = URL(string: urlString) {
+                        var request = URLRequest(url: requestURL)
+                        request.addValue("JWT \(token))", forHTTPHeaderField: "Authorization")
+                        self?.webView.load(request)
+                    }
+                }
             })
             .disposed(by: disposeBag)
 
@@ -58,14 +65,5 @@ final class PromotionsController: UIViewController, WKNavigationDelegate {
                 self?.redirectURL = urlString
             })
             .disposed(by: disposeBag)
-    }
-}
-
-extension PromotionsController {
-    override func observeValue(forKeyPath keyPath: String?, of _: Any?, change _: [NSKeyValueChangeKey: Any]?, context _: UnsafeMutableRawPointer?) {
-        if keyPath == #keyPath(WKWebView.url) {
-            let url = webView.url
-            print("url = \(url)")
-        }
     }
 }

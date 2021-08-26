@@ -40,6 +40,7 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
         return scoped(PromotionsViewModelImpl(input: .init(url: url,
                                                            name: name,
                                                            redirectURL: urlString),
-                                              authTokenStorage: AuthTokenStorageImpl.sharedStorage))
+                                              authTokenStorage: AuthTokenStorageImpl.sharedStorage,
+                                              defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 }
