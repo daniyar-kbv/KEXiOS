@@ -74,6 +74,17 @@ enum LottieAnimationModel: String, CaseIterable {
         }
     }
 
+    var buttonStyle: SBSubmitButton.Style {
+        switch self {
+        case .orderHistory, .emptyBasket, .noInternet, .overload, .upgrade, .profile:
+            return .emptyRed
+        case .payment:
+            return .emptyGray
+        case .closed:
+            return .emptyRed
+        }
+    }
+
     func getButtonTitle() -> String {
         switch self {
         case .orderHistory, .emptyBasket:

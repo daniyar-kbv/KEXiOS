@@ -49,6 +49,7 @@ final class RateOrderRepositoryImpl: RateOrderRepository {
         rateService.setUserRate(with: UserRateDTO(star: stars, order: order, comment: comment, sample: samples))
             .retryWhenUnautharized()
             .subscribe(onSuccess: { [weak self] _ in
+                self?.outputs.didSendRate.accept(())
                 self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
@@ -68,5 +69,6 @@ extension RateOrderRepositoryImpl {
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
+        let didSendRate = PublishRelay<Void>()
     }
 }

@@ -15,16 +15,9 @@ protocol CartPromocodeCellDelegate: AnyObject {
 }
 
 final class CartPromocodeCell: UITableViewCell {
-    lazy var promocodeButton: UIButton = {
-        let button = UIButton()
+    lazy var promocodeButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .emptyRed)
         button.setTitle(SBLocalization.localized(key: CartText.Cart.Footer.promocodeButton), for: .normal)
-        button.backgroundColor = .arcticWhite
-        button.setTitleColor(.kexRed, for: .normal)
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
-        button.layer.borderColor = UIColor.kexRed.cgColor
-        button.layer.borderWidth = 1
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 

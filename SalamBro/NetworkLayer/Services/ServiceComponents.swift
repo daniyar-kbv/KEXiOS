@@ -87,38 +87,3 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
         return shared(OrdersHistoryServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, authPlugin])))
     }
 }
-
-/* Request sequences:
- * Update nomenclature DONE
-    promotions
-    nomenclature
- * Create address DONE
-    authorized apply with address (needs auth)
-    get user addresses (needs auth)
- * Change address DONE
-    change user address (needs auth)
-    authorized apply (needs auth)
-    get user addresses (needs auth)
- * Authorization DONE
-    otp verify
-    get account info (needs auth)
-    authorized apply with address (needs auth)
-    update cart
-    get user addresses (needs auth)
- * Delete address DONE
-    delete address (needs auth)
-    get addresses (needs auth)
- * Delete card DONE
-    delete card (needs auth)
-    get cards (needs auth)
- * Payment success DONE
-    create order (needs auth)
-    create payment (needs auth)
-    authorized apply (needs auth)
- * Payment 3ds DONE
-    create order (needs auth)
-    create payment (needs auth)
-    ------------------------
-    confirm payment (needs auth)
-    authorized apply (needs auth)
- */

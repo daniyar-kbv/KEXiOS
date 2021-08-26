@@ -61,13 +61,9 @@ final class ChangeNameView: UIView {
         return field
     }()
 
-    private lazy var saveButton: UIButton = {
-        let button = UIButton()
+    private lazy var saveButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .filledRed)
         button.setTitle(SBLocalization.localized(key: ProfileText.ChangeName.saveButton), for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.backgroundColor = .calmGray
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
         return button
     }()
 
@@ -95,13 +91,11 @@ extension ChangeNameView {
     func configureTextFields(name: String?, email: String?) {
         nameTextField.text = name
         emailTextField.text = email
-        saveButton.isEnabled = !(nameTextField.text?.isEmpty ?? true)
-        configureButton(isEnabled: !(nameTextField.text?.isEmpty ?? true))
+        setButton(isEnabled: !(nameTextField.text?.isEmpty ?? true))
     }
 
-    func configureButton(isEnabled: Bool) {
+    func setButton(isEnabled: Bool) {
         saveButton.isEnabled = isEnabled
-        saveButton.backgroundColor = isEnabled ? .kexRed : .calmGray
     }
 
     private func layoutUI() {

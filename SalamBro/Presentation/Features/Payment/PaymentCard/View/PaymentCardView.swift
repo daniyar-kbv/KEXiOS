@@ -57,19 +57,16 @@ final class PaymentCardView: UIView {
         return view
     }()
 
-    private lazy var saveButton: UIButton = {
-        let view = UIButton()
+    private lazy var saveButton: SBSubmitButton = {
+        let view = SBSubmitButton(style: .filledRed)
         view.setTitle(SBLocalization.localized(key: PaymentText.PaymentCard.saveButton), for: .normal)
-        view.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        view.layer.cornerRadius = 10
-        view.layer.masksToBounds = true
         return view
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        configButtonEnable(false)
+        saveButton.isEnabled = false
         layoutUI()
         configActions()
     }
@@ -120,14 +117,9 @@ final class PaymentCardView: UIView {
         }
     }
 
-    private func configButtonEnable(_ isEnabled: Bool) {
-        saveButton.backgroundColor = isEnabled ? .kexRed : .calmGray
-        saveButton.isUserInteractionEnabled = isEnabled
-    }
-
     private func checkFields() {
         configInvalidFields(false)
-        configButtonEnable(!fields.map { $0.isComplete() }.contains(false))
+        saveButton.isEnabled = !fields.map { $0.isComplete() }.contains(false)
     }
 
     private func configActions() {

@@ -14,7 +14,7 @@ final class PromotionsController: UIViewController, WKNavigationDelegate {
     private let disposeBag = DisposeBag()
     private let viewModel: PromotionsViewModel
 
-    private lazy var webView = PromotionsWebView()
+    private lazy var webView = WKWebView()
 
     private var redirectURL = ""
 
@@ -36,7 +36,6 @@ final class PromotionsController: UIViewController, WKNavigationDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        webView.addObserver(self, forKeyPath: "URL", options: .new, context: nil)
         bindViewModel()
     }
 

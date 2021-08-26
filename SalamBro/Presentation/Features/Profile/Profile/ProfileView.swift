@@ -26,12 +26,10 @@ final class ProfileView: UIView {
         return label
     }()
 
-    private(set) lazy var changeNameButton: UIButton = {
-        let label = UIButton()
+    private(set) lazy var changeNameButton: SBTextButton = {
+        let label = SBTextButton()
         label.setTitle(SBLocalization.localized(key: ProfileText.Profile.editButton), for: .normal)
-        label.setTitleColor(.kexRed, for: .normal)
         label.titleLabel?.font = .systemFont(ofSize: 12)
-        label.isUserInteractionEnabled = true
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         return label
     }()
@@ -75,15 +73,9 @@ final class ProfileView: UIView {
         return table
     }()
 
-    private(set) lazy var logoutButton: UIButton = {
-        let button = UIButton()
+    private(set) lazy var logoutButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .emptyGray)
         button.setTitle(SBLocalization.localized(key: ProfileText.Profile.logoutButton), for: .normal)
-        button.setTitleColor(.mildBlue, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
-        button.borderWidth = 1
-        button.borderColor = .mildBlue
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
         return button
     }()
 

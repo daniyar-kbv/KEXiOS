@@ -73,40 +73,9 @@ final class MenuViewModel: MenuViewModelProtocol {
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
 
-        menuRepository.outputs.didStartDataProcessing
-            .subscribe(onNext: { [weak self] in
-                self?.tableSections.removeAll()
-            })
-            .disposed(by: disposeBag)
-
-        menuRepository.outputs.didGetAddressInfo
-            .subscribe(onNext: { [weak self] leadInfo in
-                self?.set(leadInfo: leadInfo)
-            })
-            .disposed(by: disposeBag)
-
-        menuRepository.outputs.didGetPromotions
-            .bind { [weak self] promotions in
-                self?.set(promotions: promotions)
-            }
-            .disposed(by: disposeBag)
-
-        menuRepository.outputs.didGetRedirectURL
-            .bind { [weak self] urlString in
-                self?.redirectURL = urlString
-            }
-            .disposed(by: disposeBag)
-
-        menuRepository.outputs.didGetCategories
-            .bind { [weak self] categories in
-                self?.set(categories: categories)
-                self?.configureAnimation()
-            }
-            .disposed(by: disposeBag)
-
-        menuRepository.outputs.didEndDataProcessing
-            .subscribe(onNext: { [weak self] in
-                self?.outputs.updateTableView.accept(())
+        menuRepository.outputs.didGetData
+            .subscribe(onNext: { [weak self] menuData in
+                self?.process(menuData: menuData)
             })
             .disposed(by: disposeBag)
 
@@ -126,7 +95,21 @@ final class MenuViewModel: MenuViewModelProtocol {
             .disposed(by: disposeBag)
     }
 
-    private func set(leadInfo: LeadInfo) {
+    private func process(menuData: (leadInfo: LeadInfo?,
+                                    promotions: [Promotion]?,
+                                    categories: [MenuCategory]?))
+    {
+        var tableSections = [Section]()
+        process(leadInfo: menuData.leadInfo, tableSections: &tableSections)
+        process(promotions: menuData.promotions, tableSections: &tableSections)
+        process(categories: menuData.categories, tableSections: &tableSections)
+        self.tableSections = tableSections
+        configureAnimation()
+        outputs.updateTableView.accept(())
+    }
+
+    private func process(leadInfo: LeadInfo?, tableSections: inout [Section]) {
+        guard let leadInfo = leadInfo else { return }
         outputs.brandImage.accept(leadInfo.brandImage)
         outputs.brandName.accept(leadInfo.brandName)
         let addressViewModels = [AddressPickCellViewModel(address: leadInfo.address)]
@@ -136,8 +119,9 @@ final class MenuViewModel: MenuViewModelProtocol {
         tableSections.insert(section, at: 0)
     }
 
-    private func set(promotions: [Promotion]) {
-        guard !promotions.isEmpty else { return }
+    private func process(promotions: [Promotion]?, tableSections: inout [Section]) {
+        guard let promotions = promotions,
+              !promotions.isEmpty else { return }
 
         let promotionsViewModels = [AdCollectionCellViewModel(
             promotions: promotions.sorted(by: { $0.priority < $1.priority })
@@ -151,8 +135,8 @@ final class MenuViewModel: MenuViewModelProtocol {
                              at: index)
     }
 
-    private func set(categories: [MenuCategory]) {
-        let categories = categories.filter { !$0.positions.isEmpty }
+    private func process(categories: [MenuCategory]?, tableSections: inout [Section]) {
+        guard let categories = categories?.filter({ !$0.positions.isEmpty }) else { return }
         tableSections.append(
             .init(type: .positions,
                   headerViewModel: CategoriesSectionHeaderViewModel(categories: categories),
