@@ -11,13 +11,13 @@ enum MenuAPI {
     case products(leadUUID: String)
     case productDetail(leadUUID: String, productUUID: String)
     case promotions(leadUUID: String)
-    case participate
+    case participate(dto: PromotionsParticipateDTO)
     case promotionDetail(leadUUID: String, id: Int)
 }
 
 extension MenuAPI: TargetType {
     var baseURL: URL {
-        return devBaseUrl
+        return Constants.URLs.APIBase.dev
     }
 
     var path: String {
@@ -50,7 +50,7 @@ extension MenuAPI: TargetType {
         case .products: return .requestPlain
         case .productDetail: return .requestPlain
         case .promotions: return .requestPlain
-        case .participate: return .requestPlain
+        case let .participate(dto): return .requestJSONEncodable(dto)
         case .promotionDetail: return .requestPlain
         }
     }

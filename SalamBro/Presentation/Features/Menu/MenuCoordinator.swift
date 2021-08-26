@@ -61,8 +61,8 @@ final class MenuCoordinator: BaseCoordinator {
             .disposed(by: disposeBag)
 
         menuPage.outputs.toPromotion
-            .subscribe(onNext: { [weak self] promotionURL, name, urlString in
-                self?.openPromotion(promotionURL: promotionURL, name: name, redirectURL: urlString)
+            .subscribe(onNext: { [weak self] promotionId, promotionURL, name in
+                self?.openPromotion(promotionId: promotionId, promotionURL: promotionURL, name: name)
             })
             .disposed(by: disposeBag)
 
@@ -113,8 +113,8 @@ final class MenuCoordinator: BaseCoordinator {
         addressCoordinator.start()
     }
 
-    func openPromotion(promotionURL: URL, name: String?, redirectURL: String) {
-        let promotionsPage = pagesFactory.makePromotionsPage(url: promotionURL, name: name, urlString: redirectURL)
+    func openPromotion(promotionId: Int, promotionURL: URL, name: String?) {
+        let promotionsPage = pagesFactory.makePromotionsPage(id: promotionId, url: promotionURL, name: name)
 
         router.getNavigationController().setNavigationBarHidden(false, animated: true)
 

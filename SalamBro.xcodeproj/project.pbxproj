@@ -57,6 +57,7 @@
 		B4517A7DABB305FBE1B8DCE89E3C4FC4 /* AuthorizarionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71EC46FD26DC9927B90D201F5E89343 /* AuthorizarionController.swift */; };
 		9DB1D49108133E435483592E5D05FF8C /* AuthorizationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9524B0BA1A0CD6A4D3D1CDB831A4393C /* AuthorizationViewModel.swift */; };
 		328CD4D8EB34F22EE3E6D0E181536163 /* AuthorizedApplyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C581315447476B861653CD567B74DFBC /* AuthorizedApplyService.swift */; };
+		E2FF6FA04135B99865554BB0C22B28F3 /* AuthorizedPromotionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D1EB925BD86CED424228E1C909F18D /* AuthorizedPromotionsService.swift */; };
 		5BD2CFFCA2366206D83799E1CCFCCAE8 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290A1DA48B5F9A6E6924600548398AF2 /* BaseCoordinator.swift */; };
 		3152245DA855E1BDA66E1B5C6FDFBAA2 /* BasicLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E42260DDA4C991D080DF7EA32BE6956 /* BasicLoaderView.swift */; };
 		4E4A88E715A75EB824E0160F64974C51 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B083A8F562C53C044488D56E70C438B4 /* Brand.swift */; };
@@ -231,6 +232,7 @@
 		F5296374884BC79D60EC021455BFAF3F /* PromocodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E31DF6AD0BC8AB0D6125D829A1CCA0 /* PromocodeResponse.swift */; };
 		E82C0C971A2D81F1DB77B8B3DB283825 /* Promotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */; };
 		2012E2648A3AD4A2000F6E0D9BF17B61 /* PromotionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A04A0A1C3236176AA506058A2C4DC /* PromotionsController.swift */; };
+		CF1F9A475FD2E1463686601214F74498 /* PromotionsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A157A6E7E5AC1DC6A0278E06D862A7D /* PromotionsDTO.swift */; };
 		91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */; };
 		DFB7240F01011057B587DDFC2088B801 /* PromotionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6768BB84000FAFBCAFBD95B804E2D62F /* PromotionsViewModel.swift */; };
 		C14F742DCAFAC7971F7E3C76E7303E05 /* PushNotificationsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */; };
@@ -393,6 +395,7 @@
 		A71EC46FD26DC9927B90D201F5E89343 /* AuthorizarionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizarionController.swift; sourceTree = "<group>"; };
 		9524B0BA1A0CD6A4D3D1CDB831A4393C /* AuthorizationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationViewModel.swift; sourceTree = "<group>"; };
 		C581315447476B861653CD567B74DFBC /* AuthorizedApplyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedApplyService.swift; sourceTree = "<group>"; };
+		A7D1EB925BD86CED424228E1C909F18D /* AuthorizedPromotionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedPromotionsService.swift; sourceTree = "<group>"; };
 		290A1DA48B5F9A6E6924600548398AF2 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		9E42260DDA4C991D080DF7EA32BE6956 /* BasicLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLoaderView.swift; sourceTree = "<group>"; };
 		B083A8F562C53C044488D56E70C438B4 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
@@ -604,6 +607,7 @@
 		77E31DF6AD0BC8AB0D6125D829A1CCA0 /* PromocodeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromocodeResponse.swift; sourceTree = "<group>"; };
 		5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promotion.swift; sourceTree = "<group>"; };
 		FB5A04A0A1C3236176AA506058A2C4DC /* PromotionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsController.swift; sourceTree = "<group>"; };
+		7A157A6E7E5AC1DC6A0278E06D862A7D /* PromotionsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsDTO.swift; sourceTree = "<group>"; };
 		9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsResponse.swift; sourceTree = "<group>"; };
 		6768BB84000FAFBCAFBD95B804E2D62F /* PromotionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsViewModel.swift; sourceTree = "<group>"; };
 		DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsAPI.swift; sourceTree = "<group>"; };
@@ -1173,6 +1177,7 @@
 			children = (
 				1536E5A224DB94A51B38553CA32315BA /* AuthService.swift */,
 				C581315447476B861653CD567B74DFBC /* AuthorizedApplyService.swift */,
+				A7D1EB925BD86CED424228E1C909F18D /* AuthorizedPromotionsService.swift */,
 				FC7531BE862F28DDB203C29AC2FB9A14 /* DocumentsService.swift */,
 				DDDA1075864A35682717FD20F93C1D58 /* LocationService.swift */,
 				BA402C1122892CF8AF1248745A4495D3 /* MenuService.swift */,
@@ -1630,6 +1635,7 @@
 				BFCA77ACAE98C929BB38F9C19EADFC57 /* CartDTO.swift */,
 				16426AE457FE6F7DF042B7802295013A /* OrderApplyDTO.swift */,
 				EB691109FA8B18E100DAC02D47DAC2C9 /* PaymentsDTO.swift */,
+				7A157A6E7E5AC1DC6A0278E06D862A7D /* PromotionsDTO.swift */,
 				13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */,
 				741F81064E76308F846D01C08D7D4967 /* UserInfoDTO.swift */,
 				BCE0DA1FB0DE4E3C8E8D6E842854D9D7 /* UserRateDTO.swift */,
@@ -2696,6 +2702,7 @@
 				B4517A7DABB305FBE1B8DCE89E3C4FC4 /* AuthorizarionController.swift in Sources */,
 				9DB1D49108133E435483592E5D05FF8C /* AuthorizationViewModel.swift in Sources */,
 				328CD4D8EB34F22EE3E6D0E181536163 /* AuthorizedApplyService.swift in Sources */,
+				E2FF6FA04135B99865554BB0C22B28F3 /* AuthorizedPromotionsService.swift in Sources */,
 				5BD2CFFCA2366206D83799E1CCFCCAE8 /* BaseCoordinator.swift in Sources */,
 				3152245DA855E1BDA66E1B5C6FDFBAA2 /* BasicLoaderView.swift in Sources */,
 				4E4A88E715A75EB824E0160F64974C51 /* Brand.swift in Sources */,
@@ -2863,6 +2870,7 @@
 				F5296374884BC79D60EC021455BFAF3F /* PromocodeResponse.swift in Sources */,
 				E82C0C971A2D81F1DB77B8B3DB283825 /* Promotion.swift in Sources */,
 				2012E2648A3AD4A2000F6E0D9BF17B61 /* PromotionsController.swift in Sources */,
+				CF1F9A475FD2E1463686601214F74498 /* PromotionsDTO.swift in Sources */,
 				91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */,
 				DFB7240F01011057B587DDFC2088B801 /* PromotionsViewModel.swift in Sources */,
 				C14F742DCAFAC7971F7E3C76E7303E05 /* PushNotificationsAPI.swift in Sources */,

@@ -59,10 +59,6 @@ final class AdCollectionCell: UITableViewCell {
     }
 
     private func bind() {}
-
-    func setRedirectURL(with urlString: String) {
-        redirectURL = urlString
-    }
 }
 
 extension AdCollectionCell {
@@ -80,9 +76,9 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let promotionURL = URL(string: viewModel.cellViewModels[indexPath.item].promotion.link ?? "") else { return }
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        delegate?.openPromotion(promotionURL: promotionURL,
-                                name: viewModel.cellViewModels[indexPath.item].promotion.name,
-                                redirectURL: redirectURL)
+        delegate?.openPromotion(promotionId: viewModel.cellViewModels[indexPath.item].promotion.id,
+                                promotionURL: promotionURL,
+                                name: viewModel.cellViewModels[indexPath.item].promotion.name)
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
@@ -120,5 +116,5 @@ extension AdCollectionCell {
 extension AdCollectionCell: Reusable {}
 
 public protocol AddCollectionCellDelegate: AnyObject {
-    func openPromotion(promotionURL: URL, name: String, redirectURL: String)
+    func openPromotion(promotionId: Int, promotionURL: URL, name: String)
 }
