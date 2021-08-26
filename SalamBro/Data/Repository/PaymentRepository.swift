@@ -171,7 +171,6 @@ extension PaymentRepositoryImpl {
     }
 
     func checkPaymentStatus() {
-        print(defaultStorage.isPaymentProcess)
         guard defaultStorage.isPaymentProcess,
               let leadUUID = defaultStorage.leadUUID else { return }
 
