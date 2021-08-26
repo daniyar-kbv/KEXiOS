@@ -47,11 +47,20 @@ final class MenuCell: UITableViewCell, Reusable {
         return button
     }()
 
+    private let unavaiLableLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        label.textColor = .kexRed
+        return label
+    }()
+
     private lazy var stackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [
             self.titleLabel,
             self.descriptionLabel,
             self.button,
+            self.unavaiLableLabel,
         ])
         view.spacing = 4
         view.alignment = .leading
@@ -105,6 +114,13 @@ final class MenuCell: UITableViewCell, Reusable {
             .bind(to: descriptionLabel.rx.text)
             .disposed(by: disposeBag)
 
+        viewModel.itemStatus
+            .bind(onNext: { [weak self] status in
+                guard let status = status else { return }
+                self?.configureStatus(for: status)
+            })
+            .disposed(by: disposeBag)
+
         viewModel.itemPrice
             .bind(to: button.rx.title())
             .disposed(by: disposeBag)
@@ -114,6 +130,12 @@ final class MenuCell: UITableViewCell, Reusable {
         setupCell()
         setupViews()
         setupConstraints()
+    }
+
+    private func configureStatus(for status: Bool) {
+        unavaiLableLabel.text = SBLocalization.localized(key: MenuText.Menu.MenuItem.unavailable)
+        unavaiLableLabel.isHidden = status ? true : false
+        button.isHidden = status ? false : true
     }
 
     private func setupCell() {

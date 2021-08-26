@@ -223,6 +223,13 @@ enum MenuText: UILocalizable {
             var localized: String { rawValue }
         }
 
+        enum MenuItem: String, UILocalizable {
+            case unavailable = "Menu.unavailable"
+            case price = "CartFooter.productsPrice"
+
+            var localized: String { rawValue }
+        }
+
         var localized: String { "" }
     }
 
