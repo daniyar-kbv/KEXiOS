@@ -136,6 +136,7 @@ final class MenuCell: UITableViewCell, Reusable {
         unavaiLableLabel.text = SBLocalization.localized(key: MenuText.Menu.MenuItem.unavailable)
         unavaiLableLabel.isHidden = status ? true : false
         button.isHidden = status ? false : true
+        isUserInteractionEnabled = status ? true : false
     }
 
     private func setupCell() {

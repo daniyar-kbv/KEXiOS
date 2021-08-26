@@ -78,12 +78,12 @@ extension MenuDetailController {
     private func bindViewModel() {
         viewModel.outputs.didStartRequest
             .subscribe(onNext: { [weak self] in
+                self?.contentView.configureContentView(with: true)
                 self?.showLoader()
             }).disposed(by: disposeBag)
 
         viewModel.outputs.didEndRequest
             .subscribe(onNext: { [weak self] in
-                self?.contentView.configureContentView(with: true)
                 self?.hideLoader()
             }).disposed(by: disposeBag)
 
@@ -129,7 +129,7 @@ extension MenuDetailController {
 
         viewModel.outputs.didGetProductDetail
             .subscribe(onNext: { [weak self] in
-                self?.contentView.configureContentView(with: true)
+                self?.contentView.configureContentView(with: false)
             }).disposed(by: disposeBag)
     }
 
