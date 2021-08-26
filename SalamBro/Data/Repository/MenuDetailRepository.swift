@@ -32,6 +32,7 @@ final class MenuDetailRepositoryImpl: MenuDetailRepository {
             .subscribe(onSuccess: { [weak self] position in
                 self?.outputs.didEndRequest.accept(())
                 self?.modifierGroups = position.modifierGroups
+
                 self?.outputs.didGetProductDetail.accept(position)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
