@@ -853,15 +853,6 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		3F7EF7E4854E45E6B6FA4836CD270853 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				5B04B605A730252FC197FB6733C0A559 /* Pattaya-Regular.ttf */,
-				37E3A8ACF43854F3EFEEE1076CDD57C8 /* SBFonts.swift */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
 		15BA1BB3C138589E5ECE03C5EE7747F5 /* PaymentEdit */ = {
 			isa = PBXGroup;
 			children = (
@@ -1109,6 +1100,15 @@
 				DCE43441ABED5F6267322DA1B2F73FCA /* AddressPagesFactory.swift */,
 			);
 			path = Factories;
+			sourceTree = "<group>";
+		};
+		3F7EF7E4854E45E6B6FA4836CD270853 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				5B04B605A730252FC197FB6733C0A559 /* Pattaya-Regular.ttf */,
+				37E3A8ACF43854F3EFEEE1076CDD57C8 /* SBFonts.swift */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		40873E249CF718A160358EDC842B0644 /* Menu */ = {
@@ -2342,7 +2342,7 @@
 				4C7EAF6205E790C561FC9532C28380B4 /* Resources */,
 				8AF21AEFE17B7B2D0FE8A5822920D1B5 /* [CP] Embed Pods Frameworks */,
 				9661D946FD185ADB45999E3C99B320DA /* [CP] Copy Pods Resources */,
-				ABB979D377D0D354E3F2CB42CBB92EBE /* Crashlytics dSYM files upload */,
+				ABB979D377D0D354E3F2CB42CBB92EBE /* [Crashlytics] dSYM files upload */,
 			);
 			buildRules = (
 			);
@@ -2534,7 +2534,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ABB979D377D0D354E3F2CB42CBB92EBE /* Crashlytics dSYM files upload */ = {
+		ABB979D377D0D354E3F2CB42CBB92EBE /* [Crashlytics] dSYM files upload */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2545,7 +2545,7 @@
 				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
 				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
-			name = "Crashlytics dSYM files upload";
+			name = "[Crashlytics] dSYM files upload";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -3107,7 +3107,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 40;
-				DEVELOPMENT_TEAM = ULVD64ZNV2;
+				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3115,7 +3115,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.40;
-				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
+				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -3178,7 +3178,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 40;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = ULVD64ZNV2;
+				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3186,7 +3186,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.40;
-				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
+				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
