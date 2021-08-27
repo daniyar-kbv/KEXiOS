@@ -61,7 +61,14 @@ final class MenuRepositoryImpl: MenuRepository {
         guard let leadUUID = storage.leadUUID else { return }
 
         outputs.didStartRequest.accept(())
-        menuService.getPromotionDetail(for: leadUUID, by: id)
+
+        menuService.getPromotions(leadUUID: leadUUID)
+            .flatMap { [unowned self] promotionResult -> Single<Promotion> in
+                promotionsRedirectURL = promotionResult.redirectURL
+                promotionsVerificationURL = promotionResult.verificationURL
+                promotionsParameterName = promotionResult.parameterName
+                return menuService.getPromotionDetail(for: leadUUID, by: id)
+            }
             .subscribe { [weak self] promotion in
                 self?.process(promotion: promotion)
                 self?.outputs.didEndRequest.accept(())
