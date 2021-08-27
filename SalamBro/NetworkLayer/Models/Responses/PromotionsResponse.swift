@@ -23,8 +23,3 @@ struct PromotionDetailResponse: Decodable {
     let data: Promotion?
     let error: ErrorResponse?
 }
-
-struct PromotionsParticipateResponse: Decodable {
-    let data: PromotionsParticipateDTO?
-    let error: ErrorResponse?
-}

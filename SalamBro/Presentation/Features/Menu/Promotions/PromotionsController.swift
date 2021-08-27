@@ -51,9 +51,8 @@ final class PromotionsController: UIViewController, WKNavigationDelegate, Loader
             .disposed(by: disposeBag)
 
         viewModel.outputs.urlRequest
-            .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.processVerification(url: URL(string: "https://api-dev.kexbrands.kz/promotions/instagram/?code=AQBxzdnTjfnIbJJ5BogEQltx9qYps5hmlCG1w47-GE_6oKu1p2ZSZoBBjLsNdT3JNhf52_oXAXiX4DjY9kW30f9c50AGbyyZi8WkjaP54XP7Ud0hArVWCnJwerV7Ciw7gFh9J9fweLGkcstiCvt5NbwYJhHb-3npGNi_nOi40iKntiP-bZ6vm8SZDePcW6WN3FJ4l2uDbL3jDl8x3GtzyyceS84t1LhMpbqea8IrWwu0RQ#_"))
-//                self?.webView.load(request)
+            .subscribe(onNext: { [weak self] request in
+                self?.webView.load(request)
             })
             .disposed(by: disposeBag)
 
@@ -77,9 +76,7 @@ final class PromotionsController: UIViewController, WKNavigationDelegate, Loader
     }
 
     func webView(_: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let redirectURL = viewModel.getRedirectURL(),
-              let verificationURL = viewModel.getVerificationURL()
-        else {
+        guard let verificationURL = viewModel.getVerificationURL() else {
             decisionHandler(.allow)
             return
         }
@@ -89,12 +86,6 @@ final class PromotionsController: UIViewController, WKNavigationDelegate, Loader
         {
             viewModel.setIsOAuthRedirect(true)
             open(url: navigationAction.request.url)
-            decisionHandler(.cancel)
-            return
-        }
-
-        if navigationAction.request.url?.absoluteString.hasPrefix(redirectURL) ?? false {
-            viewModel.processVerification(url: navigationAction.request.url)
             decisionHandler(.cancel)
             return
         }

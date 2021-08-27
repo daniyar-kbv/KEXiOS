@@ -14,34 +14,26 @@ protocol MenuRepository: AnyObject {
 
     func getMenuItems()
     func openPromotion(by id: Int)
-    func sendParticipate(promotionId: Int, code: String)
 
-    func getPromotionsRedirectURL() -> String?
     func getPromotionsVerificationURL() -> String?
-    func getPromotionsParamenterName() -> String?
 }
 
 final class MenuRepositoryImpl: MenuRepository {
     private(set) var outputs: Output = .init()
     private let disposeBag = DisposeBag()
     private let menuService: MenuService
-    private let authorizedPromotionsSerive: AuthorizedPromotionsService
     private let ordersService: OrdersService
     private let storage: DefaultStorage
 
     private var menuData = MenuData()
 
-    private var promotionsRedirectURL: String?
     private var promotionsVerificationURL: String?
-    private var promotionsParameterName: String?
 
     init(menuService: MenuService,
-         authorizedPromotionsSerive: AuthorizedPromotionsService,
          ordersService: OrdersService,
          storage: DefaultStorage)
     {
         self.menuService = menuService
-        self.authorizedPromotionsSerive = authorizedPromotionsSerive
         self.ordersService = ordersService
         self.storage = storage
 
@@ -134,9 +126,7 @@ extension MenuRepositoryImpl {
     }
 
     private func process(promotionResult: PromotionResult) {
-        promotionsRedirectURL = promotionResult.redirectURL
         promotionsVerificationURL = promotionResult.verificationURL
-        promotionsParameterName = promotionResult.parameterName
         menuData.add(data: promotionResult.promotions, type: .promotions)
     }
 
@@ -154,32 +144,8 @@ extension MenuRepositoryImpl {
 }
 
 extension MenuRepositoryImpl {
-    func sendParticipate(promotionId: Int, code: String) {
-        let dto = PromotionsParticipateDTO(promotionId: promotionId, code: code)
-
-        outputs.didStartRequest.accept(())
-        authorizedPromotionsSerive.sendPartticipate(dto: dto)
-            .subscribe(onSuccess: { [weak self] in
-                self?.outputs.participationVerified.accept(())
-                self?.outputs.didStartRequest.accept(())
-            }, onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didGetError.accept(error)
-            })
-            .disposed(by: disposeBag)
-    }
-
-    func getPromotionsRedirectURL() -> String? {
-        return promotionsRedirectURL
-    }
-
     func getPromotionsVerificationURL() -> String? {
         return promotionsVerificationURL
-    }
-
-    func getPromotionsParamenterName() -> String? {
-        return promotionsParameterName
     }
 }
 
