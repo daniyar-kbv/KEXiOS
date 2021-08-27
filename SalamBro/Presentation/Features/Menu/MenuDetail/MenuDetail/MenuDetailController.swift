@@ -78,7 +78,6 @@ extension MenuDetailController {
     private func bindViewModel() {
         viewModel.outputs.didStartRequest
             .subscribe(onNext: { [weak self] in
-                self?.contentView.configureContentView(with: true)
                 self?.showLoader()
             }).disposed(by: disposeBag)
 

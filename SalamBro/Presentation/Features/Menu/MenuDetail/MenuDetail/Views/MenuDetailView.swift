@@ -73,6 +73,7 @@ final class MenuDetailView: UIView {
         self.delegate = delegate
         layoutUI()
         configureActions()
+        configureContentView(with: true)
     }
 
     @available(*, unavailable)
