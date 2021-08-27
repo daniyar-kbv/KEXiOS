@@ -61,8 +61,9 @@ final class BrandCell: UICollectionViewCell, Reusable {
     public required init?(coder _: NSCoder) { nil }
 
     func configure(brand: Brand) {
+        guard let status = brand.isAvailable else { return }
         configure(imageURLStr: brand.image)
-        configure(isAvailable: brand.isAvailable)
+        configure(isAvailable: status)
     }
 
     private func configure(imageURLStr: String) {

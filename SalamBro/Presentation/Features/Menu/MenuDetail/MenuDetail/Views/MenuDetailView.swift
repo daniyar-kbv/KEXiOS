@@ -24,7 +24,7 @@ final class MenuDetailView: UIView {
         return view
     }()
 
-    private lazy var contentView = UIView()
+    private(set) lazy var contentView = UIView()
 
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
@@ -73,6 +73,7 @@ final class MenuDetailView: UIView {
         self.delegate = delegate
         layoutUI()
         configureActions()
+        configureContentView(with: true)
     }
 
     @available(*, unavailable)
@@ -160,6 +161,11 @@ extension MenuDetailView {
 
     func setCommentary(action: @escaping () -> Void) {
         commentaryField.onShouldBeginEditing = action
+    }
+
+    func configureContentView(with state: Bool) {
+        contentView.isHidden = state
+        proceedButton.isHidden = state
     }
 
     @objc private func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {
