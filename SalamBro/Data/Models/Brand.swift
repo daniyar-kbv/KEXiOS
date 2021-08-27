@@ -11,7 +11,7 @@ class Brand: Codable {
     let id: Int
     let name: String
     let image: String
-    var isAvailable: Bool
+    var isAvailable: Bool?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -30,7 +30,7 @@ class Brand: Codable {
 
 extension Brand {
     func getCopy() -> Brand {
-        return .init(id: id, name: name, image: image, isAvailable: isAvailable)
+        return .init(id: id, name: name, image: image, isAvailable: isAvailable ?? false)
     }
 }
 
