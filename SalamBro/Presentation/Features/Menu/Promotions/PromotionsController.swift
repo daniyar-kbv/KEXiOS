@@ -10,13 +10,16 @@ import RxSwift
 import UIKit
 import WebKit
 
-final class PromotionsController: UIViewController, WKNavigationDelegate, LoaderDisplayable {
+final class PromotionsController: UIViewController, LoaderDisplayable {
     private let disposeBag = DisposeBag()
     private let viewModel: PromotionsViewModel
+
+    let outputs = Output()
 
     private lazy var webView: WKWebView = {
         let view = WKWebView()
         view.navigationDelegate = self
+        view.configuration.userContentController.add(self, name: viewModel.getWebHandlerName())
         return view
     }()
 
@@ -73,8 +76,14 @@ final class PromotionsController: UIViewController, WKNavigationDelegate, Loader
                 self?.showError(error)
             })
             .disposed(by: disposeBag)
-    }
 
+        viewModel.outputs.toAuth
+            .bind(to: outputs.toAuth)
+            .disposed(by: disposeBag)
+    }
+}
+
+extension PromotionsController: WKNavigationDelegate {
     func webView(_: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let verificationURL = viewModel.getVerificationURL() else {
             decisionHandler(.allow)
@@ -85,7 +94,9 @@ final class PromotionsController: UIViewController, WKNavigationDelegate, Loader
            !viewModel.getIsOAuthRedirect()
         {
             viewModel.setIsOAuthRedirect(true)
-            open(url: navigationAction.request.url)
+            if let url = navigationAction.request.url {
+                webView.load(.init(url: url))
+            }
             decisionHandler(.cancel)
             return
         }
@@ -93,13 +104,25 @@ final class PromotionsController: UIViewController, WKNavigationDelegate, Loader
         viewModel.setIsOAuthRedirect(false)
         decisionHandler(.allow)
     }
+}
 
-    private func open(url: URL?) {
-        guard let url = url else { return }
-        webView.load(.init(url: url))
+extension PromotionsController: WKScriptMessageHandler {
+    func userContentController(_: WKUserContentController, didReceive message: WKScriptMessage) {
+        viewModel.process(message: message)
     }
 
-    private func urlContains(_ string: String, in navigationAction: WKNavigationAction) -> Bool {
-        return navigationAction.request.url?.absoluteString.contains(string) ?? false
+    func didAuthirize() {
+        guard let token = viewModel.getAuthToken() else {
+            webView.reload()
+            return
+        }
+
+        webView.evaluateJavaScript("sendAuthToken(\(token)")
+    }
+}
+
+extension PromotionsController {
+    struct Output {
+        let toAuth = PublishRelay<Void>()
     }
 }

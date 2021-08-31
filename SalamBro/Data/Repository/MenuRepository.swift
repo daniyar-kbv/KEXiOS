@@ -56,9 +56,7 @@ final class MenuRepositoryImpl: MenuRepository {
 
         menuService.getPromotions(leadUUID: leadUUID)
             .flatMap { [unowned self] promotionResult -> Single<Promotion> in
-                promotionsRedirectURL = promotionResult.redirectURL
                 promotionsVerificationURL = promotionResult.verificationURL
-                promotionsParameterName = promotionResult.parameterName
                 return menuService.getPromotionDetail(for: leadUUID, by: id)
             }
             .subscribe { [weak self] promotion in

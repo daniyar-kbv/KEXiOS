@@ -116,6 +116,14 @@ final class MenuCoordinator: BaseCoordinator {
     func openPromotion(promotionId: Int, promotionURL: URL, name: String?) {
         let promotionsPage = pagesFactory.makePromotionsPage(id: promotionId, url: promotionURL, name: name)
 
+        promotionsPage.outputs.toAuth
+            .subscribe(onNext: { [weak self] in
+                self?.startAuthCoordinator { [weak promotionsPage] in
+                    promotionsPage?.didAuthirize()
+                }
+            })
+            .disposed(by: disposeBag)
+
         router.getNavigationController().setNavigationBarHidden(false, animated: true)
 
         router.push(viewController: promotionsPage, animated: true)

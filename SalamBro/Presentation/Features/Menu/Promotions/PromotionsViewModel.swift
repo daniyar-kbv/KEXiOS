@@ -8,17 +8,21 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import WebKit
 
 protocol PromotionsViewModel {
     var inputs: PromotionsViewModelImpl.Input { get }
     var outputs: PromotionsViewModelImpl.Output { get }
 
     func getURLRequest()
-
     func getVerificationURL() -> String?
 
     func getIsOAuthRedirect() -> Bool
     func setIsOAuthRedirect(_ isOAuthRedirect: Bool)
+
+    func getWebHandlerName() -> String
+    func process(message: WKScriptMessage)
+    func getAuthToken() -> String?
 }
 
 class PromotionsViewModelImpl: PromotionsViewModel {
@@ -29,6 +33,7 @@ class PromotionsViewModelImpl: PromotionsViewModel {
     private let defaultStorage: DefaultStorage
 
     private var isOAuthRedirect = false
+    private let webHandlerName = "KEXApp"
 
     let inputs: Input
     let outputs: Output
@@ -108,6 +113,22 @@ extension PromotionsViewModelImpl {
 }
 
 extension PromotionsViewModelImpl {
+    func getWebHandlerName() -> String {
+        return webHandlerName
+    }
+
+    func process(message: WKScriptMessage) {
+        if message.name == webHandlerName {
+            outputs.toAuth.accept(())
+        }
+    }
+
+    func getAuthToken() -> String? {
+        return authTokenStorage.token
+    }
+}
+
+extension PromotionsViewModelImpl {
     struct Input {
         let id: Int
         let url: URL
@@ -121,5 +142,7 @@ extension PromotionsViewModelImpl {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
+
+        let toAuth = PublishRelay<Void>()
     }
 }
