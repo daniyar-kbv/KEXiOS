@@ -265,23 +265,21 @@ extension CartProductCell {
 
         viewModel.outputs.isAvailable
             .subscribe(onNext: { [weak self] isAvailable in
-                self?.updateAvailability(to: isAvailable)
+                self?.updateAvailability(to: !isAvailable)
             }).disposed(by: disposeBag)
     }
 
     private func updateAvailability(to isAvailable: Bool) {
-        if isAvailable {
-            deleteButton.isHidden = true
-            unavailableLabel.isHidden = true
-        } else {
-            stackView.isHidden = true
-            deleteButton.isHidden = false
-            unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.ProductCell.availability)
-            productTitleLabel.alpha = 0.5
-            subitemLabel.alpha = 0.5
-            priceLabel.isHidden = true
-            productImageView.alpha = 0.5
-        }
+        deleteButton.isHidden = isAvailable
+        unavailableLabel.isHidden = isAvailable
+        stackView.isHidden = !isAvailable
+        priceLabel.isHidden = !isAvailable
+
+        productTitleLabel.alpha = isAvailable ? 1 : 0.5
+        subitemLabel.alpha = isAvailable ? 1 : 0.5
+        productImageView.alpha = isAvailable ? 1 : 0.5
+
+        unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.ProductCell.availability)
     }
 
     @objc private func increaseItemButton() {

@@ -242,17 +242,15 @@ extension CartAdditionalProductCell {
     }
 
     private func updateAvailability(to isAvailable: Bool) {
-        if isAvailable {
-            deleteButton.isHidden = true
-            unavailableLabel.isHidden = true
-        } else {
-            stackView.isHidden = true
-            deleteButton.isHidden = false
-            unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.ProductCell.availability)
-            productTitleLabel.alpha = 0.5
-            priceLabel.isHidden = true
-            productImageView.alpha = 0.5
-        }
+        deleteButton.isHidden = isAvailable
+        unavailableLabel.isHidden = isAvailable
+        stackView.isHidden = !isAvailable
+        priceLabel.isHidden = !isAvailable
+
+        productTitleLabel.alpha = isAvailable ? 1 : 0.5
+        productImageView.alpha = isAvailable ? 1 : 0.5
+
+        unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.ProductCell.availability)
     }
 
     private func configureButton(for count: String) {
