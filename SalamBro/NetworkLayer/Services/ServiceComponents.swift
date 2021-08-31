@@ -14,7 +14,6 @@ protocol ServiceComponents: AnyObject {
     func ordersService() -> OrdersService
     func authorizedApplyService() -> AuthorizedApplyService
     func menuService() -> MenuService
-    func authorizedPromotionsService() -> AuthorizedPromotionsService
     func profileService() -> ProfileService
     func documentsService() -> DocumentsService
     func rateService() -> RateService
@@ -62,10 +61,6 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
 
     func menuService() -> MenuService {
         return shared(MenuServiceImpl(provider: MoyaProvider<MenuAPI>(plugins: [networkPlugin, languagePlugin])))
-    }
-
-    func authorizedPromotionsService() -> AuthorizedPromotionsService {
-        return shared(AuthorizedPromotionsServiceImpl(provider: MoyaProvider<MenuAPI>(plugins: [networkPlugin, languagePlugin, authPlugin])))
     }
 
     func profileService() -> ProfileService {

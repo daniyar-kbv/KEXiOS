@@ -11,7 +11,6 @@ enum MenuAPI {
     case products(leadUUID: String)
     case productDetail(leadUUID: String, productUUID: String)
     case promotions(leadUUID: String)
-    case participate(dto: PromotionsParticipateDTO)
     case promotionDetail(leadUUID: String, id: Int)
 }
 
@@ -26,7 +25,6 @@ extension MenuAPI: TargetType {
         case let .productDetail(leadUUID, productUUID): return
             "orders/\(leadUUID)/nomenclature/\(productUUID)/"
         case let .promotions(leadUUID): return "/promotions/\(leadUUID)/"
-        case .participate: return "/promotions/participate/"
         case let .promotionDetail(leadUUID, id): return "/promotions/\(leadUUID)/\(id)/"
         }
     }
@@ -36,7 +34,6 @@ extension MenuAPI: TargetType {
         case .products: return .get
         case .productDetail: return .get
         case .promotions: return .get
-        case .participate: return .post
         case .promotionDetail: return .get
         }
     }
@@ -50,7 +47,6 @@ extension MenuAPI: TargetType {
         case .products: return .requestPlain
         case .productDetail: return .requestPlain
         case .promotions: return .requestPlain
-        case let .participate(dto): return .requestJSONEncodable(dto)
         case .promotionDetail: return .requestPlain
         }
     }

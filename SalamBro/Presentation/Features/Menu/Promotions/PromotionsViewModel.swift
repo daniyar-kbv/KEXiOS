@@ -14,9 +14,7 @@ protocol PromotionsViewModel {
     var outputs: PromotionsViewModelImpl.Output { get }
 
     func getURLRequest()
-    func processVerification(url: URL?)
 
-    func getRedirectURL() -> String?
     func getVerificationURL() -> String?
 
     func getIsOAuthRedirect() -> Bool
@@ -71,19 +69,6 @@ class PromotionsViewModelImpl: PromotionsViewModel {
 
         outputs.urlRequest.accept(request)
     }
-
-    func processVerification(url: URL?) {
-        guard let url = url,
-              let parameterName = menuRepository.getPromotionsParamenterName() else { return }
-
-        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-
-//        guard let parameter = urlComponents?.queryItems?.first(where: { $0.name == parameterName })?.value else { return }
-
-        let parameter = "AQBxzdnTjfnIbJJ5BogEQltx9qYps5hmlCG1w47-GE_6oKu1p2ZSZoBBjLsNdT3JNhf52_oXAXiX4DjY9kW30f9c50AGbyyZi8WkjaP54XP7Ud0hArVWCnJwerV7Ciw7gFh9J9fweLGkcstiCvt5NbwYJhHb-3npGNi_nOi40iKntiP-bZ6vm8SZDePcW6WN3FJ4l2uDbL3jDl8x3GtzyyceS84t1LhMpbqea8IrWwu0RQ#_"
-
-        menuRepository.sendParticipate(promotionId: inputs.id, code: parameter)
-    }
 }
 
 extension PromotionsViewModelImpl {
@@ -109,10 +94,6 @@ extension PromotionsViewModelImpl {
 }
 
 extension PromotionsViewModelImpl {
-    func getRedirectURL() -> String? {
-        return menuRepository.getPromotionsRedirectURL()
-    }
-
     func getVerificationURL() -> String? {
         return menuRepository.getPromotionsVerificationURL()
     }
