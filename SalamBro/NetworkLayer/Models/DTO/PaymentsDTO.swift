@@ -21,6 +21,7 @@ struct CreatePaymentDTO: Encodable {
     let cryptogram: String?
     let cardholderName: String?
     let keepCard: Bool?
+    let changeFor: Int?
 
     enum CodingKeys: String, CodingKey {
         case leadUUID = "lead"
@@ -28,6 +29,7 @@ struct CreatePaymentDTO: Encodable {
         case cryptogram
         case cardholderName = "card_holder_name"
         case keepCard = "keep_card"
+        case changeFor = "change_for"
     }
 }
 

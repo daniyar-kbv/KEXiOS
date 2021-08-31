@@ -196,7 +196,8 @@ extension PaymentRepositoryImpl {
                                                 paymentType: paymentType,
                                                 cryptogram: card.cryptogram,
                                                 cardholderName: card.cardholderName,
-                                                keepCard: card.keepCard)
+                                                keepCard: card.keepCard,
+                                                changeFor: nil)
 
         outputs.didStartPaymentRequest.accept(())
         paymentService.createOrder(dto: createOrderDTO)
@@ -217,7 +218,8 @@ extension PaymentRepositoryImpl {
                                                 paymentType: paymentType,
                                                 cryptogram: nil,
                                                 cardholderName: nil,
-                                                keepCard: nil)
+                                                keepCard: nil,
+                                                changeFor: selectedPaymentMethod?.getValue())
 
         outputs.didStartPaymentRequest.accept(())
         paymentService.createOrder(dto: createOrderDTO)
@@ -279,7 +281,8 @@ extension PaymentRepositoryImpl {
                                                 paymentType: paymentType,
                                                 cryptogram: cryptogram,
                                                 cardholderName: "",
-                                                keepCard: nil)
+                                                keepCard: nil,
+                                                changeFor: nil)
         outputs.didStartPaymentRequest.accept(())
         paymentService.createOrder(dto: createOrderDTO)
             .flatMap { [unowned self] in paymentService.createPayment(dto: createPaymentDTO) }
