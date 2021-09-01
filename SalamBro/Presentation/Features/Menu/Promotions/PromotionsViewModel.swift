@@ -22,7 +22,7 @@ protocol PromotionsViewModel {
 
     func getWebHandlerName() -> String
     func process(message: WKScriptMessage)
-    func getAuthToken() -> String?
+    func getFinishAuthScript() -> String?
 }
 
 class PromotionsViewModelImpl: PromotionsViewModel {
@@ -34,6 +34,8 @@ class PromotionsViewModelImpl: PromotionsViewModel {
 
     private var isOAuthRedirect = false
     private let webHandlerName = "KEXApp"
+    private let authFlowMessage = "startAuthFlow"
+    private let authFinshMethod = "sendAuthToken"
 
     let inputs: Input
     let outputs: Output
@@ -118,13 +120,20 @@ extension PromotionsViewModelImpl {
     }
 
     func process(message: WKScriptMessage) {
-        if message.name == webHandlerName {
+        guard message.name == webHandlerName,
+              let value = message.body as? String else { return }
+        switch value {
+        case authFlowMessage:
             outputs.toAuth.accept(())
+        default:
+            break
         }
     }
 
-    func getAuthToken() -> String? {
-        return authTokenStorage.token
+    func getFinishAuthScript() -> String? {
+        guard let token = authTokenStorage.token else { return nil }
+
+        return "\(webHandlerName).\(authFinshMethod)(\(token))"
     }
 }
 

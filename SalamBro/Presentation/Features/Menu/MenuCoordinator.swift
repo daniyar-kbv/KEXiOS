@@ -144,9 +144,15 @@ final class MenuCoordinator: BaseCoordinator {
         let authCoordinator = coordinatorsFactory.makeAuthCoordinator()
         router.getNavigationController().setNavigationBarHidden(false, animated: true)
 
+        let topViewController = router.getNavigationController().topViewController
         add(authCoordinator)
 
-        authCoordinator.didFinish = { [weak self, weak authCoordinator] in
+        authCoordinator.didFinish = { [weak self,
+                                       weak authCoordinator,
+                                       weak topViewController] in
+            if let topViewController = topViewController {
+                self?.router.pop(to: topViewController, animated: true)
+            }
             self?.remove(authCoordinator)
         }
 
