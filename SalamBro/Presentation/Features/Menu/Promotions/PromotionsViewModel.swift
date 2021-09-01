@@ -63,6 +63,7 @@ class PromotionsViewModelImpl: PromotionsViewModel {
         let queryItems = [
             URLQueryItem(name: "is_web_view", value: "1"),
             URLQueryItem(name: "lead_uuid", value: leadUUID),
+            URLQueryItem(name: "device", value: "ios"),
         ]
         urlComponents?.queryItems = queryItems
 
@@ -139,7 +140,6 @@ extension PromotionsViewModelImpl {
 
 extension PromotionsViewModelImpl {
     struct Input {
-        let id: Int
         let url: URL
         let name: String?
     }

@@ -40,8 +40,6 @@ final class MenuViewModel: MenuViewModelProtocol {
     private var tableSections: [Section] = []
     private var scrollService: MenuScrollService
 
-    private var redirectURL = ""
-
     init(locationRepository: AddressRepository,
          brandRepository: BrandRepository,
          menuRepository: MenuRepository,
@@ -81,7 +79,7 @@ final class MenuViewModel: MenuViewModelProtocol {
 
         menuRepository.outputs.openPromotion
             .subscribe(onNext: { [weak self] promotion in
-                self?.openPromotion(promotionId: promotion.id, promotionURL: promotion.url, name: promotion.name)
+                self?.openPromotion(promotionURL: promotion.url, name: promotion.name)
             })
             .disposed(by: disposeBag)
     }
@@ -299,8 +297,8 @@ extension MenuViewModel {
 }
 
 extension MenuViewModel: AddCollectionCellDelegate {
-    func openPromotion(promotionId: Int, promotionURL: URL, name: String) {
-        outputs.toPromotion.accept((promotionId, promotionURL, name))
+    func openPromotion(promotionURL: URL, name: String) {
+        outputs.toPromotion.accept((promotionURL, name))
     }
 }
 
@@ -317,7 +315,7 @@ extension MenuViewModel {
         let showAnimation = PublishRelay<LottieAnimationModel>()
         let hideAnimation = PublishRelay<Void>()
 
-        let toPromotion = PublishRelay<(Int, URL, String)>()
+        let toPromotion = PublishRelay<(URL, String)>()
         let toPositionDetail = PublishRelay<String>()
 
         let scrollToRowAt = PublishRelay<IndexPath>()
