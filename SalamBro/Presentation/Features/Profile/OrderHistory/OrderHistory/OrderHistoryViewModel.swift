@@ -13,11 +13,9 @@ protocol OrderHistoryViewModel: AnyObject {
     var outputs: OrderHistoryViewModelImpl.Output { get }
     var orders: [OrdersList] { get }
 
-    func update(page: Int)
+    func update()
     func ordersEmpty() -> Bool
-    func getCurrentPageIndex() -> Int
-    func getTotalPageCount() -> Int
-    func loadMoreData()
+    func loadMoreDataIfNeeded(for index: Int)
 }
 
 final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
@@ -35,28 +33,23 @@ final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
         bindOutputs()
     }
 
-    func update(page: Int) {
+    func update() {
         orders.removeAll()
-        ordersRepository.getOrders(page: page)
+        ordersRepository.getOrders(page: 1)
     }
 
     func ordersEmpty() -> Bool {
         return orders.isEmpty
     }
 
-    func getCurrentPageIndex() -> Int {
-        return currentPage ?? 0
-    }
-
-    func getTotalPageCount() -> Int {
-        return pageLimit ?? 0
-    }
-
-    func loadMoreData() {
-        guard var nextPage = currentPage else { return }
-        nextPage = nextPage + 1
-
-        ordersRepository.getOrders(page: nextPage)
+    func loadMoreDataIfNeeded(for index: Int) {
+        guard var currentPage = currentPage, let pageLimit = pageLimit else { return }
+        if index == orders.count - 1 {
+            if currentPage < pageLimit {
+                currentPage = currentPage + 1
+                ordersRepository.getOrders(page: currentPage)
+            }
+        }
     }
 
     private func bindOutputs() {
