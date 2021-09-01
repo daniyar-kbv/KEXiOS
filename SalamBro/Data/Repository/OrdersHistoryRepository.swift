@@ -12,7 +12,7 @@ import RxSwift
 protocol OrdersHistoryRepository: AnyObject {
     var outputs: OrdersHistoryRepositoryImpl.Output { get }
 
-    func getOrders()
+    func getOrders(page: Int)
 }
 
 final class OrdersHistoryRepositoryImpl: OrdersHistoryRepository {
@@ -24,13 +24,13 @@ final class OrdersHistoryRepositoryImpl: OrdersHistoryRepository {
         self.ordersHistoryService = ordersHistoryService
     }
 
-    func getOrders() {
+    func getOrders(page: Int) {
         outputs.didStartRequest.accept(())
-        ordersHistoryService.getOrders()
+        ordersHistoryService.getOrders(page: page)
             .retryWhenUnautharized()
-            .subscribe(onSuccess: { [weak self] ordersList in
+            .subscribe(onSuccess: { [weak self] ordersResponse in
                 self?.outputs.didEndRequest.accept(())
-                self?.outputs.didGetOrders.accept(ordersList)
+                self?.outputs.didGetOrders.accept(ordersResponse)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 if let error = error as? ErrorPresentable {
@@ -49,6 +49,6 @@ extension OrdersHistoryRepositoryImpl {
         let didEndRequest = PublishRelay<Void>()
         let didFail = PublishRelay<ErrorPresentable>()
 
-        let didGetOrders = PublishRelay<[OrdersList]>()
+        let didGetOrders = PublishRelay<OrdersListResponse.Data?>()
     }
 }

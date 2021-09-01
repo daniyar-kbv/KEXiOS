@@ -13,12 +13,13 @@ struct OrdersListResponse: Decodable {
 
     struct Data: Decodable {
         let count: Int
-        let next: String?
-        let previous: String?
+        let page: Int
+        let total: Int
         let results: [OrdersList]
 
         enum CodingKeys: String, CodingKey {
-            case count, next, previous, results
+            case count, page, results
+            case total = "total_pages"
         }
     }
 }

@@ -35,7 +35,6 @@ final class OrderHistoryController: UIViewController, LoaderDisplayable {
         view.refreshControl = refreshControl
         view.delaysContentTouches = false
         return view
-
     }()
 
     private lazy var refreshControl: UIRefreshControl = {
@@ -67,7 +66,7 @@ final class OrderHistoryController: UIViewController, LoaderDisplayable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        viewModel.update()
+        viewModel.update(page: 1)
     }
 }
 
@@ -121,7 +120,7 @@ extension OrderHistoryController {
     }
 
     @objc private func handleRefreshControlAction() {
-        viewModel.update()
+        viewModel.update(page: 1)
         refreshControl.endRefreshing()
     }
 }
@@ -137,11 +136,19 @@ extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(with: viewModel.orders[indexPath.row])
         return cell
     }
+
+    func tableView(_: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.orders.count - 1 {
+            if viewModel.getCurrentPageIndex() < viewModel.getTotalPageCount() {
+                viewModel.loadMoreData()
+            }
+        }
+    }
 }
 
 extension OrderHistoryController: Reloadable {
     func reload() {
-        viewModel.update()
+        viewModel.update(page: 1)
     }
 }
 
