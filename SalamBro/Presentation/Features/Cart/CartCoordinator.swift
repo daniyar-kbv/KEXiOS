@@ -68,6 +68,7 @@ final class CartCoordinator: BaseCoordinator {
         add(authCoordinator)
 
         authCoordinator.didFinish = { [weak self, weak authCoordinator] in
+            self?.router.popToRootViewController(animated: true)
             self?.remove(authCoordinator)
         }
 
