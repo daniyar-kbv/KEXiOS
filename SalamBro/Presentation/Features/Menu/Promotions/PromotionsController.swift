@@ -45,6 +45,13 @@ final class PromotionsController: UIViewController, LoaderDisplayable {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let dataStore = WKWebsiteDataStore.default()
+        dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+                                 for: records,
+                                 completionHandler: {})
+        }
+
         viewModel.getURLRequest()
     }
 
@@ -112,11 +119,13 @@ extension PromotionsController: WKScriptMessageHandler {
     }
 
     func didAuthirize() {
+        print("didAuthirize()")
         guard let script = viewModel.getFinishAuthScript() else {
             webView.reload()
             return
         }
 
+        print(script)
         webView.evaluateJavaScript(script)
     }
 }

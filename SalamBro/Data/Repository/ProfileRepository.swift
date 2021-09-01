@@ -8,6 +8,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import WebKit
 
 protocol ProfileRepository: AnyObject {
     var outputs: ProfileRepositoryImpl.Output { get }
@@ -52,6 +53,7 @@ final class ProfileRepositoryImpl: ProfileRepository {
 
     func logout() {
         tokenStorage.cleanUp()
+        clearCookies()
         outputs.didLogout.accept(())
     }
 
@@ -90,6 +92,22 @@ extension ProfileRepositoryImpl {
                 self?.outputs.didGetUserInfo.accept(userInfo)
             })
             .disposed(by: disposeBag)
+
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.unauthorize.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.logout()
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func clearCookies() {
+        let dataStore = WKWebsiteDataStore.default()
+        dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+                                 for: records,
+                                 completionHandler: {})
+        }
     }
 }
 
