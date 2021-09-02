@@ -38,7 +38,7 @@ final class LocationServiceMoyaImpl: LocationService {
                     throw NetworkError.noData
                 }
 
-                return data.results
+                return data
             }
     }
 
@@ -72,7 +72,7 @@ final class LocationServiceMoyaImpl: LocationService {
                     throw NetworkError.error(error)
                 }
 
-                return brandsResponse.data.results
+                return brandsResponse.data
             }
     }
 }

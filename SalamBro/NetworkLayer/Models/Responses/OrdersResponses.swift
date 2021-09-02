@@ -53,15 +53,8 @@ struct OrderProductDetailResponse: Decodable {
 }
 
 struct AdditionalNomenclatureResponse: Decodable {
-    let data: Data?
+    let data: [AdditionalPosition]?
     let error: ErrorResponse?
-
-    struct Data: Decodable {
-        let count: Int
-        let next: String?
-        let previous: String?
-        let results: [AdditionalPosition]
-    }
 }
 
 struct OrderUpdateCartResponse: Decodable {
