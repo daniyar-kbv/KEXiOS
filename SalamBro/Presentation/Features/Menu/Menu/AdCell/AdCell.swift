@@ -54,6 +54,11 @@ final class AdCell: UICollectionViewCell, Reusable {
     }
 
     private func layoutUI() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.15
+        layer.shadowRadius = 5
+        layer.shadowOffset = .zero
+
         contentView.addSubview(adImageView)
         adImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
