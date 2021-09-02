@@ -16,6 +16,8 @@ final class BrandCell: UICollectionViewCell, Reusable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -59,6 +61,12 @@ final class BrandCell: UICollectionViewCell, Reusable {
     }
 
     public required init?(coder _: NSCoder) { nil }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+    }
 
     func configure(brand: Brand) {
         guard let status = brand.isAvailable else { return }

@@ -34,6 +34,7 @@ final class OrderTestCell: UITableViewCell, Reusable {
 
     override public func prepareForReuse() {
         super.prepareForReuse()
+        orderView?.setDefaultLogo()
     }
 }
 

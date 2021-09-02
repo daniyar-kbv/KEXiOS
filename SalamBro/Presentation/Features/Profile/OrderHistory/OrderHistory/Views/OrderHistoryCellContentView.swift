@@ -18,6 +18,8 @@ final class OrderHistoryCellContentView: UIView {
 
     private lazy var logoView: UIImageView = {
         let view = UIImageView()
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -155,6 +157,11 @@ final class OrderHistoryCellContentView: UIView {
     func configureActions() {
         shareToInstagramButton.addTarget(self, action: #selector(shareToInstagram), for: .touchUpInside)
         rateOrderButton.addTarget(self, action: #selector(rateOrder), for: .touchUpInside)
+    }
+
+    func setDefaultLogo() {
+        logoView.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
     }
 
     private func layoutUI() {

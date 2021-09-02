@@ -22,6 +22,8 @@ final class MenuController: UIViewController, LoaderDisplayable {
         view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 9
         view.layer.masksToBounds = true
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -99,7 +101,7 @@ final class MenuController: UIViewController, LoaderDisplayable {
         viewModel.outputs.brandImage
             .subscribe(onNext: { [weak self] imageString in
                 guard let url = URL(string: imageString ?? "") else {
-                    self?.logoView.image = nil
+                    self?.logoView.image = SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
                     return
                 }
                 self?.logoView.setImage(url: url)
