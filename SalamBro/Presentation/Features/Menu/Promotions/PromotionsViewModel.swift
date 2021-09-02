@@ -134,7 +134,7 @@ extension PromotionsViewModelImpl {
     func getFinishAuthScript() -> String? {
         guard let token = authTokenStorage.token else { return nil }
 
-        return "\(webHandlerName).\(authFinshMethod)(\(token))"
+        return "\(webHandlerName).\(authFinshMethod)(`\(token)`)"
     }
 }
 
@@ -147,6 +147,7 @@ extension PromotionsViewModelImpl {
     struct Output {
         let name: BehaviorRelay<String?>
         let urlRequest = PublishRelay<URLRequest>()
+        let finishAuthScript = PublishRelay<String>()
 
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()

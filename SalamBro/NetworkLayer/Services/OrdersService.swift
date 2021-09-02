@@ -55,7 +55,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                     throw NetworkError.badMapping
                 }
 
-                guard let data = orderProductsResponse.data?.results else {
+                guard let data = orderProductsResponse.data else {
                     throw NetworkError.noData
                 }
 

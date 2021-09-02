@@ -265,7 +265,8 @@ final class OrderHistoryCellContentView: UIView {
     }
 
     private func configureItems(with items: [CartItem], deliveryPrice: Double, totalSum: Double) {
-        guard itemStack.arrangedSubviews.isEmpty else { return }
+        itemStack.arrangedSubviews
+            .forEach { $0.removeFromSuperview() }
 
         items.forEach { item in
             var title = "\(item.count)x \(item.position.name)"

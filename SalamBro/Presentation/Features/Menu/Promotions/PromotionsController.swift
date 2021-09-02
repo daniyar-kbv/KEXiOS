@@ -112,11 +112,13 @@ extension PromotionsController: WKScriptMessageHandler {
     }
 
     func didAuthirize() {
+        print("didAuthirize()")
         guard let script = viewModel.getFinishAuthScript() else {
             webView.reload()
             return
         }
 
+        print(script)
         webView.evaluateJavaScript(script)
     }
 }
