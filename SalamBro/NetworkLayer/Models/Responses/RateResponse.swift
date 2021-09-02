@@ -8,17 +8,6 @@
 import Foundation
 
 struct RateResponseContainer: Codable {
-    let data: RateResponse?
+    let data: [RateStarList]?
     let error: ErrorResponse?
-}
-
-struct RateResponse: Codable {
-    var count: Int
-    var next: String?
-    var previous: String?
-    var results: [RateStarList]
-
-    enum CodingKeys: String, CodingKey {
-        case count, next, previous, results
-    }
 }

@@ -8,15 +8,8 @@
 import Foundation
 
 struct DocumentsResponse: Codable {
-    let data: Data?
+    let data: [Document]?
     let error: ErrorResponse?
-
-    struct Data: Codable {
-        let count: Int
-        let next: String?
-        let previous: String?
-        let results: [Document]
-    }
 }
 
 struct ContactsResponse: Codable {

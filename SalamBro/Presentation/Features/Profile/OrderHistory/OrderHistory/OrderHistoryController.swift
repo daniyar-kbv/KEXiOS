@@ -34,8 +34,8 @@ final class OrderHistoryController: UIViewController, LoaderDisplayable {
         view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         view.refreshControl = refreshControl
         view.delaysContentTouches = false
+        view.estimatedRowHeight = 400
         return view
-
     }()
 
     private lazy var refreshControl: UIRefreshControl = {
@@ -136,6 +136,10 @@ extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
         cell.delegate = self
         cell.configure(with: viewModel.orders[indexPath.row])
         return cell
+    }
+
+    func tableView(_: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
+        viewModel.loadMoreDataIfNeeded(for: indexPath.row)
     }
 }
 
