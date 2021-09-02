@@ -71,7 +71,7 @@ final class CartProductCell: UITableViewCell {
         return view
     }()
 
-    private lazy var descreaseButton: UIButton = {
+    private lazy var decreaseButton: UIButton = {
         let button = UIButton()
         button.borderWidth = 1
         button.borderColor = .mildBlue
@@ -182,15 +182,15 @@ extension CartProductCell {
             $0.bottom.equalToSuperview().offset(-19)
         }
 
-        stackView = UIStackView(arrangedSubviews: [descreaseButton, countLabel, increaseButton])
+        stackView = UIStackView(arrangedSubviews: [decreaseButton, countLabel, increaseButton])
 
-        descreaseButton.snp.makeConstraints {
+        decreaseButton.snp.makeConstraints {
             $0.top.left.bottom.equalToSuperview()
             $0.width.equalTo(30)
         }
 
         countLabel.snp.makeConstraints {
-            $0.left.equalTo(descreaseButton.snp.right)
+            $0.left.equalTo(decreaseButton.snp.right)
             $0.top.equalTo(stackView).offset(1)
             $0.right.equalTo(increaseButton.snp.left)
             $0.bottom.equalTo(stackView).offset(-1)
@@ -265,14 +265,16 @@ extension CartProductCell {
 
         viewModel.outputs.isAvailable
             .subscribe(onNext: { [weak self] isAvailable in
-                self?.updateAvailability(to: !isAvailable)
+                self?.updateAvailability(to: isAvailable)
             }).disposed(by: disposeBag)
     }
 
     private func updateAvailability(to isAvailable: Bool) {
         deleteButton.isHidden = isAvailable
         unavailableLabel.isHidden = isAvailable
-        stackView.isHidden = !isAvailable
+        increaseButton.isHidden = !isAvailable
+        decreaseButton.isHidden = !isAvailable
+        countLabel.isHidden = !isAvailable
         priceLabel.isHidden = !isAvailable
 
         productTitleLabel.alpha = isAvailable ? 1 : 0.5
