@@ -98,7 +98,7 @@ struct Modifier: Codable {
 }
 
 extension MenuPositionDetail {
-    func toCartItem(count: Int, comment: String, description: String, available: Bool) -> CartItem {
+    func toCartItem(count: Int, comment: String, description: String) -> CartItem {
         return .init(
             count: count,
             comment: comment,
@@ -108,7 +108,6 @@ extension MenuPositionDetail {
                 image: image,
                 price: price,
                 categoryUUID: categoryUUID,
-                isAvailable: available,
                 isAdditional: false,
                 description: description
             ),
