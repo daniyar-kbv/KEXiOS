@@ -68,6 +68,8 @@ enum AddressIcons {
 enum MenuIcons {
     enum Menu: String, UIImageGetable {
         case arrow = "menu_arrow"
+        case adPlaceholder = "ad_placeholder"
+        case dishPlaceholder = "product_placeholder"
 
         var name: String { rawValue }
     }
