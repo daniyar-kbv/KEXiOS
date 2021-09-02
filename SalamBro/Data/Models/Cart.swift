@@ -87,11 +87,13 @@ struct CartPosition: Codable, Equatable {
     var price: Double?
     var categoryUUID: String?
     var isAdditional: Bool
+    var isAvailable: Bool
     var description: String?
 
     enum CodingKeys: String, CodingKey {
         case uuid, name, image, price, description
         case categoryUUID = "category"
+        case isAvailable = "is_available"
         case isAdditional = "is_additional"
     }
 
