@@ -16,6 +16,8 @@ final class MenuCell: UITableViewCell, Reusable {
     private lazy var foodImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -89,6 +91,9 @@ final class MenuCell: UITableViewCell, Reusable {
         super.prepareForReuse()
 
         disposeBag = DisposeBag()
+
+        foodImageView.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
     }
 
     func set(_ viewModel: MenuCellViewModelProtocol?) {
@@ -98,10 +103,7 @@ final class MenuCell: UITableViewCell, Reusable {
     private func bind() {
         viewModel.itemImageURL
             .bind(onNext: { [weak self] imageURL in
-                guard let url = imageURL else {
-                    self?.foodImageView.image = nil
-                    return
-                }
+                guard let url = imageURL else { return }
                 self?.foodImageView.setImage(url: url)
             })
             .disposed(by: disposeBag)
