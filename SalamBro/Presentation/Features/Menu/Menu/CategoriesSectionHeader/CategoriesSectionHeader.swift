@@ -14,6 +14,7 @@ import UIKit
 public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusable {
     private var viewModel: CategoriesSectionHeaderViewModelProtocol! {
         didSet {
+            collectionView.reloadData()
             collectionView.selectItem(at: .init(row: 0, section: 0), animated: false, scrollPosition: .centeredHorizontally)
         }
     }
@@ -54,10 +55,6 @@ public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusabl
 
     func set(_ viewModel: CategoriesSectionHeaderViewModelProtocol?) {
         self.viewModel = viewModel
-        collectionView.reloadData()
-        if let categoryUUID = viewModel?.getCategory(by: 0) {
-            select(category: categoryUUID)
-        }
     }
 
     private func bindScrollService() {
