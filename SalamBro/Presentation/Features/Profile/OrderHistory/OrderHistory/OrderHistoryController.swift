@@ -62,11 +62,6 @@ final class OrderHistoryController: UIViewController, LoaderDisplayable {
         super.viewDidLoad()
         layoutUI()
         bindViewModel()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
         viewModel.update()
     }
 }
@@ -104,6 +99,7 @@ extension OrderHistoryController {
 
         viewModel.outputs.didGetOrders
             .subscribe(onNext: { [weak self] in
+                print("self?.tableView.reloadData()")
                 self?.tableView.reloadData()
                 self?.configureAnimationView()
             }).disposed(by: disposeBag)
@@ -128,7 +124,7 @@ extension OrderHistoryController {
 
 extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        viewModel.orders.count
+        return viewModel.orders.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
