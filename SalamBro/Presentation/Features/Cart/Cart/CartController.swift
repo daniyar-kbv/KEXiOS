@@ -84,6 +84,7 @@ class CartController: UIViewController, LoaderDisplayable, Reloadable {
         super.viewWillAppear(animated)
 
         viewModel.reload()
+        checkForUnavailableProducts()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -115,6 +116,15 @@ extension CartController {
             }).disposed(by: disposeBag)
 
         commentaryPage.openTransitionSheet(on: self)
+    }
+
+    private func checkForUnavailableProducts() {
+        guard viewModel.hasUnavailableProducts() else { return }
+        orderButton.isEnabled = false
+
+        showAlert(title: SBLocalization.localized(key: CartText.Cart.UnavailabilityAlert.alertTitle),
+                  message: SBLocalization.localized(key:
+                      CartText.Cart.UnavailabilityAlert.alertMessage))
     }
 }
 

@@ -420,6 +420,13 @@ enum CartText: UILocalizable {
 
             var localized: String { rawValue }
         }
+
+        enum UnavailabilityAlert: String, UILocalizable {
+            case alertTitle = "Cart.alertTitle"
+            case alertMessage = "Cart.alertMessage"
+
+            var localized: String { rawValue }
+        }
     }
 
     var localized: String { "" }
