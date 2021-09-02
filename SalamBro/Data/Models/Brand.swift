@@ -10,7 +10,7 @@ import Foundation
 class Brand: Codable {
     let id: Int
     let name: String
-    let image: String
+    let image: String?
     var isAvailable: Bool?
 
     enum CodingKeys: String, CodingKey {
@@ -20,7 +20,7 @@ class Brand: Codable {
         case isAvailable = "is_available"
     }
 
-    init(id: Int, name: String, image: String, isAvailable: Bool) {
+    init(id: Int, name: String, image: String?, isAvailable: Bool) {
         self.id = id
         self.name = name
         self.image = image

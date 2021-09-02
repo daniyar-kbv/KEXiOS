@@ -107,7 +107,9 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func process(leadInfo: LeadInfo?, tableSections: inout [Section]) {
-        guard let leadInfo = leadInfo else { return }
+        guard let leadInfo = leadInfo else {
+            return
+        }
         outputs.brandImage.accept(leadInfo.brandImage)
         outputs.brandName.accept(leadInfo.brandName)
         let addressViewModels = [AddressPickCellViewModel(address: leadInfo.address)]

@@ -54,6 +54,10 @@ public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusabl
 
     func set(_ viewModel: CategoriesSectionHeaderViewModelProtocol?) {
         self.viewModel = viewModel
+        collectionView.reloadData()
+        if let categoryUUID = viewModel?.getCategory(by: 0) {
+            select(category: categoryUUID)
+        }
     }
 
     private func bindScrollService() {
@@ -87,7 +91,8 @@ public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusabl
 
 extension CategoriesSectionHeader: UICollectionViewDelegate, UICollectionViewDataSource {
     public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        scrollService?.didSelectCategory.accept((source: .header, categoryUUID: viewModel.getCategory(by: indexPath.item)))
+        guard let categoryUUID = viewModel.getCategory(by: indexPath.item) else { return }
+        scrollService?.didSelectCategory.accept((source: .header, categoryUUID: categoryUUID))
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {

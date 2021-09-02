@@ -66,8 +66,8 @@ final class BrandCell: UICollectionViewCell, Reusable {
         configure(isAvailable: status)
     }
 
-    private func configure(imageURLStr: String) {
-        guard let imageUrl = URL(string: imageURLStr) else { return }
+    private func configure(imageURLStr: String?) {
+        guard let imageUrl = URL(string: imageURLStr ?? "") else { return }
         imageView.setImage(url: imageUrl)
     }
 
