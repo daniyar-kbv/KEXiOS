@@ -21,6 +21,7 @@ final class MenuController: UIViewController, LoaderDisplayable {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 9
+        view.layer.masksToBounds = true
         view.image =
             SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
