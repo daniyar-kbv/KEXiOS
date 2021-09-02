@@ -9,6 +9,7 @@ import Foundation
 import Moya
 import RxCocoa
 import RxSwift
+import WebKit
 
 private var _authProvider = MoyaProvider<AuthAPI>()
 private let disposeBag = DisposeBag()
@@ -35,6 +36,12 @@ extension Single {
             .map { response in
                 guard response.response?.statusCode != Constants.StatusCode.unauthorized else {
                     authTokenStorage.cleanUp()
+                    let dataStore = WKWebsiteDataStore.default()
+                    dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+                        dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+                                             for: records,
+                                             completionHandler: {})
+                    }
                     NotificationCenter.default.post(
                         name: Constants.InternalNotification.unauthorize.name,
                         object: ()
