@@ -58,7 +58,7 @@ final class AuthorizationViewModelImpl {
             .bind(to: outputs.didEndRequest)
             .disposed(by: disposeBag)
 
-        authRepository.outputs.didFail
+        authRepository.outputs.didFailAuth
             .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
     }

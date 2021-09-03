@@ -55,20 +55,23 @@ final class BrandsController: UIViewController {
         super.viewDidLoad()
 
         collectionView.spruce.prepare(with: animations)
-        setup()
+        layoutUI()
         bind()
         viewModel.getBrands()
     }
 
     private func bind() {
         viewModel.outputs.didGetBrands
-            .do { [weak self] _ in
+            .subscribe(onNext: { [weak self] in
                 self?.callAnimation()
                 guard let ratios = self?.viewModel.ratios else { return }
                 self?.collectionView.collectionViewLayout.invalidateLayout()
                 self?.collectionView.collectionViewLayout = StagLayout(widthHeightRatios: ratios,
                                                                        itemSpacing: 0)
-            }
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didRefreshCollectionView
             .bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
 
@@ -85,22 +88,15 @@ final class BrandsController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func setup() {
-        setupViews()
-        setupConstraints()
-
+    private func layoutUI() {
         navigationItem.title = SBLocalization.localized(key: AddressText.Brands.title)
         setBackButton { [weak self] in
             self?.outputs.close.accept(())
         }
-    }
 
-    private func setupViews() {
-        view.backgroundColor = .white
+        view.backgroundColor = .arcticWhite
         view.addSubview(collectionView)
-    }
 
-    private func setupConstraints() {
         collectionView.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(16)
             $0.top.equalTo(view.snp.topMargin)

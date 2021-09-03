@@ -140,7 +140,11 @@ extension RateView {
     }
 
     func getComment() -> String {
-        return commentTextField.text
+        if !commentTextField.isEmpty {
+            return commentTextField.text
+        } else {
+            return ""
+        }
     }
 
     private func layoutUI() {
