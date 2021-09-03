@@ -93,6 +93,8 @@ final class RateView: UIView {
 
     private(set) var collectionViewHeightConstraint: Constraint?
 
+    private var commentaryAdded = false
+
     init(delegate: RateViewDelegate) {
         super.init(frame: .zero)
         self.delegate = delegate
@@ -136,11 +138,16 @@ extension RateView {
     }
 
     func configureTextField(with text: String) {
+        commentaryAdded = true
         commentTextField.set(text: text)
     }
 
     func getComment() -> String {
-        return commentTextField.text
+        if commentaryAdded {
+            return commentTextField.text
+        } else {
+            return ""
+        }
     }
 
     private func layoutUI() {
