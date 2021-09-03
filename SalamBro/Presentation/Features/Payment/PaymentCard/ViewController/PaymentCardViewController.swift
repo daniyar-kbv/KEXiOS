@@ -69,7 +69,8 @@ class PaymentCardViewController: UIViewController {
 
     private func showInvalidError() {
         showAlert(title: SBLocalization.localized(key: PaymentText.PaymentCard.Error.title),
-                  message: SBLocalization.localized(key: PaymentText.PaymentCard.Error.message))
+                  message: SBLocalization.localized(key: PaymentText.PaymentCard.Error.message),
+                  completion: nil)
         contentView.showInvalidFields()
     }
 }

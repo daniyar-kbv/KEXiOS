@@ -131,10 +131,13 @@ extension VerificationView {
         }
     }
 
-    @objc func reload() {
+    @objc func reload(for error: Bool) {
         otpField.text = ""
         otpField.clearLabels()
-        startTimer()
+
+        if !error {
+            startTimer()
+        }
     }
 
     private func passCode() {

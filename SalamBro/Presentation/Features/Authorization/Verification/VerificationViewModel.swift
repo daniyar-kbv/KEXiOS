@@ -46,7 +46,7 @@ final class VerificationViewModel {
             .bind(to: outputs.didEndRequest)
             .disposed(by: disposeBag)
 
-        authRepository.outputs.didFail
+        authRepository.outputs.didFailOTP
             .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
     }

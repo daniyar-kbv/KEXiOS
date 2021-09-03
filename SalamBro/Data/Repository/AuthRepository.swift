@@ -62,10 +62,10 @@ final class AuthRepositoryImpl: AuthRepository {
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 if let error = error as? ErrorPresentable {
-                    self?.outputs.didFail.accept(error)
+                    self?.outputs.didFailAuth.accept(error)
                     return
                 }
-                self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
+                self?.outputs.didFailAuth.accept(NetworkError.error(error.localizedDescription))
             })
             .disposed(by: disposeBag)
 
@@ -106,7 +106,10 @@ final class AuthRepositoryImpl: AuthRepository {
             .subscribe { [weak self] in
                 self?.outputs.didEndRequest.accept(())
             } onError: { [weak self] error in
-                self?.handleErrorResponse(error: error)
+                self?.outputs.didEndRequest.accept(())
+                if let error = error as? ErrorPresentable {
+                    self?.outputs.didFailOTP.accept(error)
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -118,17 +121,12 @@ final class AuthRepositoryImpl: AuthRepository {
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didResendOTP.accept(())
             }, onError: { [weak self] error in
-                self?.handleErrorResponse(error: error)
+                self?.outputs.didEndRequest.accept(())
+                if let error = error as? ErrorPresentable {
+                    self?.outputs.didFailOTP.accept(error)
+                }
             })
             .disposed(by: disposeBag)
-    }
-
-    private func handleErrorResponse(error: Error?) {
-        outputs.didEndRequest.accept(())
-        if let error = error as? ErrorPresentable {
-            outputs.didFail.accept(error)
-            return
-        }
     }
 }
 
@@ -136,7 +134,8 @@ extension AuthRepositoryImpl {
     struct Output {
         let didSendOTP = PublishRelay<String>()
         let didResendOTP = PublishRelay<Void>()
-        let didFail = PublishRelay<ErrorPresentable>()
+        let didFailAuth = PublishRelay<ErrorPresentable>()
+        let didFailOTP = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
     }

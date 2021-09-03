@@ -69,8 +69,10 @@ final class VerificationController: UIViewController, LoaderDisplayable {
 
         viewModel.outputs.didFail
             .subscribe(onNext: { [weak self] error in
-                self?.showError(error)
-                self?.rootView?.reload()
+                self?.showError(error, completion: {
+                    self?.rootView?.showKeyboard()
+                })
+                self?.rootView?.reload(for: true)
             })
             .disposed(by: disposeBag)
 
@@ -80,9 +82,14 @@ final class VerificationController: UIViewController, LoaderDisplayable {
 
         viewModel.outputs.didResendOTP
             .subscribe(onNext: { [weak self] in
-                self?.rootView?.reload()
+                self?.rootView?.reload(for: false)
             })
             .disposed(by: disposeBag)
+    }
+
+    private func reload() {
+        print("reload()")
+        rootView?.reload(for: true)
     }
 
     @objc private func dismissVC() {
