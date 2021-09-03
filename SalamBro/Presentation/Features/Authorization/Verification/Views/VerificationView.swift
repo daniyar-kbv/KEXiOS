@@ -47,8 +47,7 @@ final class VerificationView: UIView {
     }()
 
     lazy var getCodeButton: SBSubmitButton = {
-        let button = SBSubmitButton(style: .filledRed)
-        button.isHidden = true
+        let button = SBSubmitButton(style: .whiteGray)
         button.setTitle(SBLocalization.localized(key: AuthorizationText.Verification.Button.title, arguments: "01:30"), for: .disabled)
         button.addTarget(self, action: #selector(reload), for: .touchUpInside)
         return button
@@ -101,7 +100,7 @@ extension VerificationView {
     }
 
     func startTimer() {
-        getCodeButton.isHidden = true
+        getCodeButton.isEnabled = false
 
         expirationDate = Date(timeIntervalSinceNow: numSeconds)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateUI), userInfo: nil, repeats: true)
@@ -126,7 +125,7 @@ extension VerificationView {
         if timeString != nil {
             getCodeButton.setTitle(" " + SBLocalization.localized(key: AuthorizationText.Verification.Button.title, arguments: timeString!), for: .disabled)
         } else {
-            getCodeButton.isHidden = false
+            getCodeButton.isEnabled = true
             getCodeButton.setTitle(SBLocalization.localized(key: AuthorizationText.Verification.Button.timeout), for: .normal)
         }
     }
