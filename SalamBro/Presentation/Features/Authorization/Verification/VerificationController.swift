@@ -70,6 +70,7 @@ final class VerificationController: UIViewController, LoaderDisplayable {
         viewModel.outputs.didFail
             .subscribe(onNext: { [weak self] error in
                 self?.showError(error)
+                self?.rootView?.reload()
             })
             .disposed(by: disposeBag)
 
