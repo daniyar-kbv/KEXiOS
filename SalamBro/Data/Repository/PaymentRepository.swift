@@ -341,10 +341,7 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
     func onAuthorizationCompleted(with md: String, paRes: String) {
         outputs.hide3DS.accept(())
         threeDsProcessor = nil
-        guard let paymentUUID = paymentUUID else {
-            threeDsProcessor = nil
-            return
-        }
+        guard let paymentUUID = paymentUUID else { return }
         send3DS(paymentUUID: paymentUUID, paRes: paRes, transactionId: md)
         self.paymentUUID = nil
     }
