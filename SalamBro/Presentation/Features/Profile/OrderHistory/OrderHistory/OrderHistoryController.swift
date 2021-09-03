@@ -99,7 +99,6 @@ extension OrderHistoryController {
 
         viewModel.outputs.didGetOrders
             .subscribe(onNext: { [weak self] in
-                print("self?.tableView.reloadData()")
                 self?.tableView.reloadData()
                 self?.configureAnimationView()
             }).disposed(by: disposeBag)

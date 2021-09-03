@@ -238,13 +238,14 @@ extension PaymentRepositoryImpl {
         case .awaitingAuthentication:
             show3DS(orderStatus: orderStatus)
             outputs.didEndPaymentRequest.accept(())
-            return .never()
+            return .error(EmptyError())
         default:
             outputs.didEndPaymentRequest.accept(())
-            guard let statusReason = orderStatus.statusReason else { return .never() }
+            guard let statusReason = orderStatus.statusReason else {
+                return .error(NetworkError.badMapping)
+            }
             let error = ErrorResponse(code: orderStatus.status, message: statusReason)
-            outputs.didGetError.accept(error)
-            return .never()
+            return .error(error)
         }
     }
 
@@ -339,9 +340,12 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
 
     func onAuthorizationCompleted(with md: String, paRes: String) {
         outputs.hide3DS.accept(())
-        guard let paymentUUID = paymentUUID else { return }
-        send3DS(paymentUUID: paymentUUID, paRes: paRes, transactionId: md)
         threeDsProcessor = nil
+        guard let paymentUUID = paymentUUID else {
+            threeDsProcessor = nil
+            return
+        }
+        send3DS(paymentUUID: paymentUUID, paRes: paRes, transactionId: md)
         self.paymentUUID = nil
     }
 
@@ -372,4 +376,6 @@ extension PaymentRepositoryImpl {
 
         let didMakePayment = PublishRelay<Void>()
     }
+
+    struct EmptyError: Error {}
 }
