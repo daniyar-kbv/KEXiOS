@@ -24,11 +24,13 @@ final class MenuDetailView: UIView {
         return view
     }()
 
-    private lazy var contentView = UIView()
+    private(set) lazy var contentView = UIView()
 
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -63,12 +65,8 @@ final class MenuDetailView: UIView {
         return view
     }()
 
-    private(set) lazy var proceedButton: UIButton = {
-        let view = UIButton()
-        view.backgroundColor = .kexRed
-        view.setTitleColor(.white, for: .normal)
-        view.layer.cornerRadius = 10
-        view.layer.masksToBounds = true
+    private(set) lazy var proceedButton: SBSubmitButton = {
+        let view = SBSubmitButton(style: .filledRed)
         return view
     }()
 
@@ -77,6 +75,7 @@ final class MenuDetailView: UIView {
         self.delegate = delegate
         layoutUI()
         configureActions()
+        configureContentView(with: true)
     }
 
     @available(*, unavailable)
@@ -159,12 +158,16 @@ extension MenuDetailView {
     }
 
     func setProceedButton(isActive: Bool) {
-        proceedButton.backgroundColor = isActive ? .kexRed : .calmGray
-        proceedButton.isUserInteractionEnabled = isActive
+        proceedButton.isEnabled = isActive
     }
 
     func setCommentary(action: @escaping () -> Void) {
         commentaryField.onShouldBeginEditing = action
+    }
+
+    func configureContentView(with state: Bool) {
+        contentView.isHidden = state
+        proceedButton.isHidden = state
     }
 
     @objc private func commetaryViewTapped(_: UITapGestureRecognizer? = nil) {

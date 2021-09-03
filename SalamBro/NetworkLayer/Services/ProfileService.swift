@@ -81,7 +81,7 @@ final class ProfileServiceMoyaImpl: ProfileService {
                     throw error
                 }
 
-                guard let addresses = response.data?.results else {
+                guard let addresses = response.data else {
                     throw NetworkError.noData
                 }
 

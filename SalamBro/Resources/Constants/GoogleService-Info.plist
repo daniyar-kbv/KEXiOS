@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>78343092793-h85tgjnh67rogog4dm29rc0l8hju90q4.apps.googleusercontent.com</string>
+	<string>78343092793-te87snss4c9sdj1s0cuathq50pcg8ijm.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.78343092793-h85tgjnh67rogog4dm29rc0l8hju90q4</string>
+	<string>com.googleusercontent.apps.78343092793-te87snss4c9sdj1s0cuathq50pcg8ijm</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAeML74Z8_WxwGJ_FO9eAkeHFeW26tEOYE</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>mti.kz.kexBrandsTest</string>
+	<string>kex.group.kexBrands.app</string>
 	<key>PROJECT_ID</key>
 	<string>kexapp-pushes</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:78343092793:ios:544e418e18199711a22be8</string>
+	<string>1:78343092793:ios:978ecb1c9d3a73afa22be8</string>
 </dict>
 </plist>

@@ -81,17 +81,9 @@ final class RateView: UIView {
         return view
     }()
 
-    private lazy var sendButton: UIButton = {
-        let button = UIButton()
+    private lazy var sendButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .filledRed)
         button.setTitle(SBLocalization.localized(key: ProfileText.RateOrder.submitButton), for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .mildBlue
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.cornerRadius = 10
-        button.contentHorizontalAlignment = .center
-        button.contentVerticalAlignment = .center
-        button.adjustsImageWhenHighlighted = true
-        button.adjustsImageWhenDisabled = true
         return button
     }()
 
@@ -117,7 +109,7 @@ final class RateView: UIView {
 
 extension RateView {
     private func configureActions() {
-        sendButton.addTarget(self, action: #selector(dismissVC), for: .allTouchEvents)
+        sendButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
     }
 
     private func configureViews() {
@@ -220,7 +212,6 @@ extension RateView {
 
     private func didFinishTouchRating(_ rating: Double) {
         sendButton.isEnabled = true
-        sendButton.backgroundColor = .kexRed
         self.rating = Int(rating)
         delegate?.updateViewModelData(at: self.rating)
         questionLabel.text = questionTitle

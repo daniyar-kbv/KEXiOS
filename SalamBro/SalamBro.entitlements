@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
-		<string>merchant.kz.kexbrands.dev</string>
+		<string>merchant.kex.group.app</string>
 	</array>
 </dict>
 </plist>

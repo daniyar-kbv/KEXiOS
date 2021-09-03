@@ -44,7 +44,6 @@ extension AddressListCell {
 
     private func layoutUI() {
         selectionStyle = .none
-        contentView.backgroundColor = .white
 
         [titleLabel, rightArrowImageView].forEach {
             contentView.addSubview($0)

@@ -16,14 +16,16 @@ struct MenuCategory: Codable {
 struct MenuPosition: Codable {
     let uuid: String
     let name: String
+    let price: Double?
     let description: String?
     let image: String?
-    let price: Double?
+    let status: Bool
     let categoryUUID: String
 
     enum CodingKeys: String, CodingKey {
         case uuid, name, description, image, price
         case categoryUUID = "category"
+        case status = "is_available"
     }
 }
 

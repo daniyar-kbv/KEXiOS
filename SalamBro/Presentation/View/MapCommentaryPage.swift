@@ -22,11 +22,9 @@ final class MapCommentaryPage: UIViewController {
     let output = Output()
 
     private let commentaryTextField = MapTextField(image: nil)
-    private let actionButton: UIButton = {
-        let btn = UIButton()
-        btn.backgroundColor = .calmGray
-        btn.layer.cornerRadius = 10
-        btn.layer.masksToBounds = true
+    private let actionButton: SBSubmitButton = {
+        let btn = SBSubmitButton(style: .filledRed)
+        btn.isEnabled = false
         btn.setTitle(SBLocalization.localized(key: CommentaryText.buttonTitle), for: .normal)
         return btn
     }()
@@ -78,7 +76,6 @@ final class MapCommentaryPage: UIViewController {
         commentaryTextField.rx.text.orEmpty
             .subscribe(onNext: { [weak self] text in
                 self?.actionButton.isEnabled = !text.isEmpty
-                self?.actionButton.backgroundColor = text.isEmpty ? .calmGray : .kexRed
             })
             .disposed(by: disposeBag)
 

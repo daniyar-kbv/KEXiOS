@@ -88,6 +88,7 @@ extension MenuDetailController {
 
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
+                self?.outputs.close.accept(())
                 guard let error = error else { return }
                 self?.showError(error)
             }).disposed(by: disposeBag)
@@ -123,6 +124,11 @@ extension MenuDetailController {
         viewModel.outputs.isComplete
             .subscribe(onNext: { [weak self] isComplete in
                 self?.contentView.setProceedButton(isActive: isComplete)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didGetProductDetail
+            .subscribe(onNext: { [weak self] in
+                self?.contentView.configureContentView(with: false)
             }).disposed(by: disposeBag)
     }
 

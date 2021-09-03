@@ -43,15 +43,11 @@ final class SetNameView: UIView {
         return field
     }()
 
-    private lazy var nextButton: UIButton = {
-        let button = UIButton()
+    private lazy var nextButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .filledRed)
         button.setTitle(SBLocalization.localized(key: AuthorizationText.GetName.buttonTitle), for: .normal)
         button.addTarget(self, action: #selector(submitAction), for: .touchUpInside)
-        button.backgroundColor = .calmGray
         button.isEnabled = false
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -108,11 +104,9 @@ extension SetNameView {
 
         guard let name = nameField.text, !name.isEmpty else {
             nextButton.isEnabled = false
-            nextButton.backgroundColor = .calmGray
             return
         }
         nextButton.isEnabled = true
-        nextButton.backgroundColor = .kexRed
     }
 
     @objc private func submitAction() {

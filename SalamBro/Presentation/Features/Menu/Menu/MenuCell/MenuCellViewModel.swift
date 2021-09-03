@@ -16,6 +16,7 @@ protocol MenuCellViewModelProtocol: ViewModel {
     var itemTitle: BehaviorRelay<String?> { get }
     var itemDescription: BehaviorRelay<String?> { get }
     var itemPrice: BehaviorRelay<String?> { get }
+    var itemStatus: BehaviorRelay<Bool?> { get }
 
     func reload()
 }
@@ -27,6 +28,7 @@ final class MenuCellViewModel: MenuCellViewModelProtocol {
     let itemTitle = BehaviorRelay<String?>(value: nil)
     let itemDescription = BehaviorRelay<String?>(value: nil)
     let itemPrice = BehaviorRelay<String?>(value: nil)
+    let itemStatus = BehaviorRelay<Bool?>(value: nil)
 
     init(position: MenuPosition) {
         self.position = position
@@ -36,6 +38,8 @@ final class MenuCellViewModel: MenuCellViewModelProtocol {
         itemImageURL.accept(URL(string: position.image ?? ""))
         itemTitle.accept(position.name)
         itemDescription.accept(position.description)
-        itemPrice.accept("\(position.price?.removeTrailingZeros() ?? "") ₸") // здесь надо юзать локализацию
+        itemStatus.accept(position.status)
+        itemPrice.accept(SBLocalization.localized(key: MenuText.Menu.MenuItem.price,
+                                                  arguments: position.price?.removeTrailingZeros() ?? ""))
     }
 }

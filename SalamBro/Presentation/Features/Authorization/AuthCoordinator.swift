@@ -114,7 +114,6 @@ final class AuthCoordinator: BaseCoordinator {
 
 extension AuthCoordinator {
     private func handleAuthTermination(completion: (() -> Void)? = nil) {
-        router.popToRootViewController(animated: true)
         didFinish?()
         completion?()
     }

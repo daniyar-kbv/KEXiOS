@@ -18,6 +18,8 @@ final class OrderHistoryCellContentView: UIView {
 
     private lazy var logoView: UIImageView = {
         let view = UIImageView()
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -95,26 +97,40 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
-    private lazy var sendCheckButton = OrderHistoryButton(
-        color: .black,
-        titleString: SBLocalization.localized(key: ProfileText.OrderHistory.sendBill)
-    )
-    private lazy var rateOrderButton = OrderHistoryButton(
-        color: .kexRed,
-        titleString: SBLocalization.localized(key: ProfileText.OrderHistory.rateOrder)
-    )
-    private lazy var repeatOrderButton = OrderHistoryButton(
-        color: .mildBlue,
-        titleString: SBLocalization.localized(key: ProfileText.OrderHistory.repeatOrder)
-    )
-    private lazy var cancelOrderButton = OrderHistoryButton(
-        color: .mildBlue,
-        titleString: SBLocalization.localized(key: ProfileText.OrderHistory.cancelOrder)
-    )
+    private lazy var sendCheckButton: SBSubmitButton = {
+        let view = SBSubmitButton(style: .emptyBlack)
+        view.setTitle(SBLocalization.localized(key: ProfileText.OrderHistory.sendBill),
+                      for: .normal)
+        view.snp.makeConstraints {
+            $0.height.equalTo(43)
+        }
+        return view
+    }()
+
+    private lazy var rateOrderButton: SBSubmitButton = {
+        let view = SBSubmitButton(style: .emptyRed)
+        view.setTitle(SBLocalization.localized(key: ProfileText.OrderHistory.rateOrder),
+                      for: .normal)
+        view.snp.makeConstraints {
+            $0.height.equalTo(43)
+        }
+        return view
+    }()
+
+    private lazy var repeatOrderButton: SBSubmitButton = {
+        let view = SBSubmitButton(style: .emptyGray)
+        view.setTitle(SBLocalization.localized(key: ProfileText.OrderHistory.repeatOrder),
+                      for: .normal)
+        view.snp.makeConstraints {
+            $0.height.equalTo(43)
+        }
+        return view
+    }()
 
     private lazy var buttonStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [sendCheckButton,
-                                                  rateOrderButton, repeatOrderButton, cancelOrderButton])
+                                                  rateOrderButton,
+                                                  repeatOrderButton])
         view.axis = .vertical
         view.alignment = .fill
         view.distribution = .fillEqually
@@ -143,10 +159,16 @@ final class OrderHistoryCellContentView: UIView {
         rateOrderButton.addTarget(self, action: #selector(rateOrder), for: .touchUpInside)
     }
 
+    func setDefaultLogo() {
+        logoView.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+    }
+
     private func layoutUI() {
         [logoView, orderInfoStack, shareToInstagramButton].forEach {
             addSubview($0)
         }
+
         logoView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(24)
             $0.left.equalToSuperview()
@@ -196,32 +218,31 @@ final class OrderHistoryCellContentView: UIView {
     }
 
     func configureButtonStack() {
-        if orderStatus == .new || orderStatus == .failure || orderStatus == .issued {
-            switch orderStatus {
-            case .new:
-                sendCheckButton.isHidden = true
-                repeatOrderButton.isHidden = true
-                rateOrderButton.isHidden = true
-                cancelOrderButton.isHidden = false
-            case .failure:
-                sendCheckButton.isHidden = true
-                cancelOrderButton.isHidden = true
-                rateOrderButton.isHidden = true
-                repeatOrderButton.isHidden = false
-            case .issued:
-                sendCheckButton.isHidden = false
-                repeatOrderButton.isHidden = false
-                rateOrderButton.isHidden = false
-                cancelOrderButton.isHidden = true
-            default:
-                return
-            }
-            updateUI()
-        }
+//        MARK: Tech debt: uncomment when different order statuses exist
+
+//        if orderStatus == .new || orderStatus == .failure || orderStatus == .issued {
+//            switch orderStatus {
+//            case .new:
+//                sendCheckButton.isHidden = true
+//                repeatOrderButton.isHidden = true
+//                rateOrderButton.isHidden = true
+//            case .failure:
+//                sendCheckButton.isHidden = true
+//                rateOrderButton.isHidden = true
+//                repeatOrderButton.isHidden = false
+//            case .issued:
+        sendCheckButton.isHidden = false
+        repeatOrderButton.isHidden = false
+        rateOrderButton.isHidden = false
+//            default:
+//                return
+//            }
+        updateUI()
+//        }
     }
 
     func configure(with item: OrdersList) {
-        if let imageURL = URL(string: item.brand.image) {
+        if let imageURL = URL(string: item.brand.image ?? "") {
             logoView.setImage(url: imageURL)
         }
 
@@ -251,7 +272,8 @@ final class OrderHistoryCellContentView: UIView {
     }
 
     private func configureItems(with items: [CartItem], deliveryPrice: Double, totalSum: Double) {
-        guard itemStack.arrangedSubviews.isEmpty else { return }
+        itemStack.arrangedSubviews
+            .forEach { $0.removeFromSuperview() }
 
         items.forEach { item in
             var title = "\(item.count)x \(item.position.name)"

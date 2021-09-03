@@ -15,7 +15,11 @@ struct Constants {
     static let applePayMerchantId = getPlistValue(by: "APPLE_PAY_MERCHANT_ID")
 
     enum URLs {
-        static let promotionURL = devBaseUrl.absoluteString + "/promotions/%@/"
+        static let promotionURL = APIBase.dev.appendingPathComponent("/promotions/%@/")
+
+        enum APIBase {
+            static let dev = URL(string: "https://api-dev.kexbrands.kz")!
+        }
     }
 
     enum Map {

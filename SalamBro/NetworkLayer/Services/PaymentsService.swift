@@ -39,7 +39,7 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
                     throw error
                 }
 
-                guard let myCards = response.data?.results else {
+                guard let myCards = response.data else {
                     throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
                 }
 

@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol OrdersHistoryService: AnyObject {
-    func getOrders() -> Single<[OrdersList]>
+    func getOrders(page: Int) -> Single<OrdersListResponse.Data>
 }
 
 final class OrdersHistoryServiceMoyaImpl: OrdersHistoryService {
@@ -21,9 +21,9 @@ final class OrdersHistoryServiceMoyaImpl: OrdersHistoryService {
         self.provider = provider
     }
 
-    func getOrders() -> Single<[OrdersList]> {
+    func getOrders(page: Int) -> Single<OrdersListResponse.Data> {
         return provider.rx
-            .request(.getAllOrders)
+            .request(.getAllOrders(page: page))
             .map { response in
                 guard let ordersResponse = try? response.map(OrdersListResponse.self) else {
                     throw NetworkError.badMapping
@@ -33,11 +33,11 @@ final class OrdersHistoryServiceMoyaImpl: OrdersHistoryService {
                     throw error
                 }
 
-                guard let ordersList = ordersResponse.data?.results else {
+                guard let data = ordersResponse.data else {
                     throw NetworkError.noData
                 }
 
-                return ordersList
+                return data
             }
     }
 }

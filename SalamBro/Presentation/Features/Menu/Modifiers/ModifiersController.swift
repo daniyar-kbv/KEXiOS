@@ -40,15 +40,10 @@ final class ModifiersController: UIViewController {
         return collectionView
     }()
 
-    private lazy var doneButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .kexRed
-        button.cornerRadius = 10
+    private lazy var doneButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .filledRed)
         button.setTitle(SBLocalization.localized(key: CommentaryText.buttonTitle), for: .normal)
-        button.setTitleColor(.arcticWhite, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
-        button.layer.masksToBounds = true
         return button
     }()
 

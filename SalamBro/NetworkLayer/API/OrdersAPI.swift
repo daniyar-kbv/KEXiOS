@@ -8,7 +8,7 @@
 import Moya
 
 enum OrdersAPI {
-    case getAllOrders
+    case getAllOrders(page: Int)
     case apply(dto: OrderApplyDTO)
     case authorizedApply
     case authorizedApplyWithAddress(dto: OrderApplyDTO)
@@ -20,7 +20,7 @@ enum OrdersAPI {
 
 extension OrdersAPI: TargetType {
     var baseURL: URL {
-        return devBaseUrl
+        return Constants.URLs.APIBase.dev
     }
 
     var path: String {
@@ -55,7 +55,9 @@ extension OrdersAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .getAllOrders: return .requestPlain
+        case let .getAllOrders(page):
+            let params = ["page": page]
+            return .requestParameters(parameters: params, encoding: URLEncoding.default)
         case let .apply(dto): return .requestJSONEncodable(dto)
         case .authorizedApply: return .requestPlain
         case let .authorizedApplyWithAddress(dto): return .requestJSONEncodable(dto)

@@ -15,12 +15,16 @@ protocol OrderHistoryViewModel: AnyObject {
 
     func update()
     func ordersEmpty() -> Bool
+    func loadMoreDataIfNeeded(for index: Int)
 }
 
 final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
     private(set) var outputs: Output = .init()
     private let disposeBag = DisposeBag()
     private let ordersRepository: OrdersHistoryRepository
+
+    private var currentPage: Int?
+    private var pageLimit: Int?
 
     private(set) var orders: [OrdersList] = []
 
@@ -30,11 +34,21 @@ final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
     }
 
     func update() {
-        ordersRepository.getOrders()
+        ordersRepository.getOrders(page: 1)
     }
 
     func ordersEmpty() -> Bool {
         return orders.isEmpty
+    }
+
+    func loadMoreDataIfNeeded(for index: Int) {
+        guard var currentPage = currentPage, let pageLimit = pageLimit else { return }
+        if index == orders.count - 1 {
+            if currentPage < pageLimit {
+                currentPage = currentPage + 1
+                ordersRepository.getOrders(page: currentPage)
+            }
+        }
     }
 
     private func bindOutputs() {
@@ -43,8 +57,12 @@ final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
             .disposed(by: disposeBag)
 
         ordersRepository.outputs.didGetOrders.bind {
-            [weak self] orders in
-            self?.orders = orders
+            [weak self] response in
+            self?.currentPage = response?.page
+            self?.pageLimit = response?.total
+            response?.page == 1 ?
+                self?.orders = response?.results ?? [] :
+                self?.orders.append(contentsOf: response?.results ?? [])
             self?.outputs.didGetOrders.accept(())
         }
         .disposed(by: disposeBag)

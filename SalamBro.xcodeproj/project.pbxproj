@@ -172,7 +172,6 @@
 		D846B24773092F2471DFE446C0B4A25D /* OnBoardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9844FEA036C0704AC08700818D6D9E /* OnBoardingCoordinator.swift */; };
 		AFD7B8956FCF2195A31D0522B36AF1F7 /* OnBoardingPagesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10BE93F0E1E06BA155612D95B4F30D4B /* OnBoardingPagesFactory.swift */; };
 		733FED62F294F2D43EDE8B60D47C1FF0 /* OrderApplyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16426AE457FE6F7DF042B7802295013A /* OrderApplyDTO.swift */; };
-		4F1C79E2EC8F78A0076430C6FBE34ACE /* OrderHistoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785851054718D35A4F8D5A2AEEAEB635 /* OrderHistoryButton.swift */; };
 		5E01FA20E4AEA541AFD77C25CADF0AB2 /* OrderHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39D14BEFFA7748C1668B738C82D0AE1 /* OrderHistoryCell.swift */; };
 		05112FC227A1546DB01A33FD94C6EFC8 /* OrderHistoryCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35212C0C3A652476D0B304AEB4929141 /* OrderHistoryCellContentView.swift */; };
 		4EB5659CFFFCD83ECA602A6D83057017 /* OrderHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03C1FA0BF655A8743C53F3CFBF40D7 /* OrderHistoryController.swift */; };
@@ -187,6 +186,7 @@
 		77A4075051671B3E7BB279AB53A87EAF /* OrdersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3F3AC10C70D2FE354E5F5546C50811 /* OrdersList.swift */; };
 		099A87777B0098C8CC9353085E7723C9 /* OrdersResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */; };
 		233AEC182BE1BE8A729C9E18E9244FFE /* OrdersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DBCD36CB1C2C7E3069476CE83EACA /* OrdersService.swift */; };
+		3B5AE4FCA4E4B8B20D2C2B2BA759C7FC /* Pattaya-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B04B605A730252FC197FB6733C0A559 /* Pattaya-Regular.ttf */; };
 		F91579DAC68C59A68B687B0BB1568CCB /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1146ECD2C11F607B503E7FDF57A1F2 /* Payment.swift */; };
 		EB57872D1F9289D93A4CBF4FDEAAE067 /* PaymentCardMaskedField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6084ABDFDB9352185A02BB9E9370BF29 /* PaymentCardMaskedField.swift */; };
 		F0C374978915442AD77E6F840791858B /* PaymentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41290F89962F294E2049FA97B233586 /* PaymentCardView.swift */; };
@@ -230,7 +230,9 @@
 		0F3F7C2106BAF8059894F208EB6DF4C1 /* Promocode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC704D5ACC15F44FDC980B1A4D6337D /* Promocode.swift */; };
 		F5296374884BC79D60EC021455BFAF3F /* PromocodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E31DF6AD0BC8AB0D6125D829A1CCA0 /* PromocodeResponse.swift */; };
 		E82C0C971A2D81F1DB77B8B3DB283825 /* Promotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */; };
+		2012E2648A3AD4A2000F6E0D9BF17B61 /* PromotionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A04A0A1C3236176AA506058A2C4DC /* PromotionsController.swift */; };
 		91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */; };
+		DFB7240F01011057B587DDFC2088B801 /* PromotionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6768BB84000FAFBCAFBD95B804E2D62F /* PromotionsViewModel.swift */; };
 		C14F742DCAFAC7971F7E3C76E7303E05 /* PushNotificationsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */; };
 		AD8CE2AD0CB755170CD5CC960D7D5CDC /* PushNotificationsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */; };
 		3AE7C8AEC851E7B7ED23B3A6F002D941 /* PushNotificationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F178F78BC6BC7A15130B516809ABED08 /* PushNotificationsRepository.swift */; };
@@ -252,13 +254,16 @@
 		06D08A7A4DFD89113A0645A4837965B9 /* RepositoryComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB08FF8057E5534CDF7DE46C58195F2 /* RepositoryComponents.swift */; };
 		B55DF44451CD5F2F717157DC9E288F52 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E985F252CB9593A514BD35B7C1035E58 /* Router.swift */; };
 		89ADAE4D180274C223D01521EEC664AA /* RoutersFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6817B4A898B5A7668B11D266DA592E /* RoutersFactory.swift */; };
+		D1C69D3E780C117249FBC5BF1C37548D /* SBFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E3A8ACF43854F3EFEEE1076CDD57C8 /* SBFonts.swift */; };
 		40A974F7135401E5F5FEB3089CFFC325 /* SBIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DAAE10CC0380EEFD9B74C494E23AAF /* SBIcons.swift */; };
 		AFE10B4ADDD5D00277E3D3352EFD195B /* SBImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 534CB6D497C2DF6E3ED3D112F209E652 /* SBImages.xcassets */; };
 		6390DB6C1CBC219D0CDAF1C5F2C58609 /* SBLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBDF4C9EE88852C22ECA6E35607FA66 /* SBLocalization.swift */; };
 		662168E57B2C545F1879444F345732A7 /* SBNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F7907A61A66E9CEA660C77C6B23428 /* SBNavigationController.swift */; };
+		79F09267469286CE541A8C45EE898955 /* SBSubmitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F4C4618C10A4E743CA870AB6BDFCF /* SBSubmitButton.swift */; };
 		A73528BC44A05EB4815D46A1AC296647 /* SBTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC309BD440BECC27202E38140297F527 /* SBTabBarController.swift */; };
 		310190B06EB6F96D433DD4BA5EEB4A30 /* SBTabBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9649613AFC2BB94FDC1188326DFC6C14 /* SBTabBarType.swift */; };
 		9D579853029C4C56AC4530FAE166939D /* SBTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFBFF447EDEBE7F7F92A24AAB70F11D /* SBTabBarViewModel.swift */; };
+		579DE61E6E1BB2BB4F9F51ABF126B69A /* SBTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C10FE5E63C5203732BE0F245631DE /* SBTextButton.swift */; };
 		164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */; };
 		6382A29270DC95FE20964786BA382045 /* SalamBroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDE2650CFED1768760B10165E278B97 /* SalamBroTests.swift */; };
 		825FC113C253F87745C6F961C47C9DAF /* SalamBroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B2A30C6F7592F9FD9C8743F0474722 /* SalamBroUITests.swift */; };
@@ -292,6 +297,7 @@
 		AC48B0075457DA457FF5D8DE42ACAC27 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA30F773A971EA2FDE29848462A2C514 /* UIAlertController+Extension.swift */; };
 		9CADCD2A4842323E78F20A705B98103B /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA266493C6946E18208AAE57CA77AB /* UIApplication+Extension.swift */; };
 		0D5850A82D4E2F59B33A85B051B30792 /* UIBarButtonConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAB8EC433C370500268693AEBBE8362 /* UIBarButtonConfigurable.swift */; };
+		A7331CA00ED54AB1C9D4D3C53435E16C /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED51D94FAE25E535CEAFA3C3ADE87811 /* UIButton+Extension.swift */; };
 		7252602B1A349A43014F989154041C7D /* UICollectionViewCenterLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E9E792837002EB3CA84310B544D4D /* UICollectionViewCenterLayout.swift */; };
 		9B3F1374BE1464617A2A7D5C7B82A5EA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3D59E6970F72C3706351029DE4FD0 /* UIColor+Extension.swift */; };
 		4C8D8329E4A222925EEB832CDB05B27B /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99F4BF639255B023117FDAF61D897FF /* UINavigationController+Extension.swift */; };
@@ -525,7 +531,6 @@
 		FA9844FEA036C0704AC08700818D6D9E /* OnBoardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCoordinator.swift; sourceTree = "<group>"; };
 		10BE93F0E1E06BA155612D95B4F30D4B /* OnBoardingPagesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPagesFactory.swift; sourceTree = "<group>"; };
 		16426AE457FE6F7DF042B7802295013A /* OrderApplyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderApplyDTO.swift; sourceTree = "<group>"; };
-		785851054718D35A4F8D5A2AEEAEB635 /* OrderHistoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryButton.swift; sourceTree = "<group>"; };
 		A39D14BEFFA7748C1668B738C82D0AE1 /* OrderHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryCell.swift; sourceTree = "<group>"; };
 		35212C0C3A652476D0B304AEB4929141 /* OrderHistoryCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryCellContentView.swift; sourceTree = "<group>"; };
 		BB03C1FA0BF655A8743C53F3CFBF40D7 /* OrderHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryController.swift; sourceTree = "<group>"; };
@@ -540,6 +545,7 @@
 		5E3F3AC10C70D2FE354E5F5546C50811 /* OrdersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersList.swift; sourceTree = "<group>"; };
 		0F1C036583D250B0F64B6B0C2C26E957 /* OrdersResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersResponses.swift; sourceTree = "<group>"; };
 		3A4DBCD36CB1C2C7E3069476CE83EACA /* OrdersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersService.swift; sourceTree = "<group>"; };
+		5B04B605A730252FC197FB6733C0A559 /* Pattaya-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pattaya-Regular.ttf"; sourceTree = "<group>"; };
 		4A1146ECD2C11F607B503E7FDF57A1F2 /* Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payment.swift; sourceTree = "<group>"; };
 		6084ABDFDB9352185A02BB9E9370BF29 /* PaymentCardMaskedField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardMaskedField.swift; sourceTree = "<group>"; };
 		A41290F89962F294E2049FA97B233586 /* PaymentCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardView.swift; sourceTree = "<group>"; };
@@ -597,7 +603,9 @@
 		3AC704D5ACC15F44FDC980B1A4D6337D /* Promocode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promocode.swift; sourceTree = "<group>"; };
 		77E31DF6AD0BC8AB0D6125D829A1CCA0 /* PromocodeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromocodeResponse.swift; sourceTree = "<group>"; };
 		5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promotion.swift; sourceTree = "<group>"; };
+		FB5A04A0A1C3236176AA506058A2C4DC /* PromotionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsController.swift; sourceTree = "<group>"; };
 		9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsResponse.swift; sourceTree = "<group>"; };
+		6768BB84000FAFBCAFBD95B804E2D62F /* PromotionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsViewModel.swift; sourceTree = "<group>"; };
 		DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsAPI.swift; sourceTree = "<group>"; };
 		13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsDTO.swift; sourceTree = "<group>"; };
 		F178F78BC6BC7A15130B516809ABED08 /* PushNotificationsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsRepository.swift; sourceTree = "<group>"; };
@@ -622,14 +630,17 @@
 		E985F252CB9593A514BD35B7C1035E58 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		2A575D74F248228471995C4B0CEB1ED2 /* RoutersFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutersFactory.swift; sourceTree = "<group>"; };
 		DE6817B4A898B5A7668B11D266DA592E /* RoutersFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutersFactory.swift; sourceTree = "<group>"; };
+		37E3A8ACF43854F3EFEEE1076CDD57C8 /* SBFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBFonts.swift; sourceTree = "<group>"; };
 		82DAAE10CC0380EEFD9B74C494E23AAF /* SBIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBIcons.swift; sourceTree = "<group>"; };
 		534CB6D497C2DF6E3ED3D112F209E652 /* SBImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SBImages.xcassets; sourceTree = "<group>"; };
 		5BBDF4C9EE88852C22ECA6E35607FA66 /* SBLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBLocalization.swift; sourceTree = "<group>"; };
 		80F7907A61A66E9CEA660C77C6B23428 /* SBNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBNavigationController.swift; sourceTree = "<group>"; };
 		A012B6069CF37EAF9A7D520208298845 /* SBNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBNavigationController.swift; sourceTree = "<group>"; };
+		C79F4C4618C10A4E743CA870AB6BDFCF /* SBSubmitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBSubmitButton.swift; sourceTree = "<group>"; };
 		DC309BD440BECC27202E38140297F527 /* SBTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBTabBarController.swift; sourceTree = "<group>"; };
 		9649613AFC2BB94FDC1188326DFC6C14 /* SBTabBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBTabBarType.swift; sourceTree = "<group>"; };
 		FBFBFF447EDEBE7F7F92A24AAB70F11D /* SBTabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBTabBarViewModel.swift; sourceTree = "<group>"; };
+		DE6C10FE5E63C5203732BE0F245631DE /* SBTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBTextButton.swift; sourceTree = "<group>"; };
 		A9A6AFCA9E5926FB654D12E35B76730F /* SalamBro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalamBro-Info.plist"; sourceTree = "<group>"; };
 		E109EA25F926DD19FBD62E082F1EA9E0 /* SalamBro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalamBro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EAD331DCD34AC79367C6991B1D485F3 /* SalamBro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SalamBro.entitlements; sourceTree = "<group>"; };
@@ -667,6 +678,7 @@
 		AA30F773A971EA2FDE29848462A2C514 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		44AA266493C6946E18208AAE57CA77AB /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		FBAB8EC433C370500268693AEBBE8362 /* UIBarButtonConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonConfigurable.swift; sourceTree = "<group>"; };
+		ED51D94FAE25E535CEAFA3C3ADE87811 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		105ECED4A60DE8A06E26BCFA2A3BB457 /* UICollectionViewCenterLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCenterLayout.swift; sourceTree = "<group>"; };
 		CC8E9E792837002EB3CA84310B544D4D /* UICollectionViewCenterLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewCenterLayout.swift; sourceTree = "<group>"; };
 		0DB3D59E6970F72C3706351029DE4FD0 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -741,6 +753,15 @@
 			path = Reachability;
 			sourceTree = "<group>";
 		};
+		0582628447A2C3D6D7963A88527B569C /* Promotions */ = {
+			isa = PBXGroup;
+			children = (
+				FB5A04A0A1C3236176AA506058A2C4DC /* PromotionsController.swift */,
+				6768BB84000FAFBCAFBD95B804E2D62F /* PromotionsViewModel.swift */,
+			);
+			path = Promotions;
+			sourceTree = "<group>";
+		};
 		064730B27BC86F67D4AB452AD6B1ADCD /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -776,6 +797,7 @@
 		08D6A8241F62B88573896C6DBBC3219A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E702AC6E2260B81E27489BC3F15B8639 /* Buttons */,
 				839AFAA5E34C8F0ECF1CFB2549D53586 /* StagLayout */,
 				9E42260DDA4C991D080DF7EA32BE6956 /* BasicLoaderView.swift */,
 				55B6F90C9E2DABAC29F09DB0CA1FE652 /* MapCommentaryPage.swift */,
@@ -906,6 +928,7 @@
 				B18F499CA55B40414AFC03FEA03D7E31 /* Animations */,
 				AEA9139837F49E0C3A0420A1422FEA38 /* Assets */,
 				542581AD1CEBDAE017201B6A7231ED13 /* Constants */,
+				3F7EF7E4854E45E6B6FA4836CD270853 /* Fonts */,
 				5D908F0160906F7C346E463377BC337B /* Localization */,
 			);
 			path = Resources;
@@ -1090,6 +1113,15 @@
 				DCE43441ABED5F6267322DA1B2F73FCA /* AddressPagesFactory.swift */,
 			);
 			path = Factories;
+			sourceTree = "<group>";
+		};
+		3F7EF7E4854E45E6B6FA4836CD270853 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				5B04B605A730252FC197FB6733C0A559 /* Pattaya-Regular.ttf */,
+				37E3A8ACF43854F3EFEEE1076CDD57C8 /* SBFonts.swift */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		40873E249CF718A160358EDC842B0644 /* Menu */ = {
@@ -1560,6 +1592,7 @@
 				20F5B8460D143B3F6AB86316114B4EC8 /* String+Extension.swift */,
 				AA30F773A971EA2FDE29848462A2C514 /* UIAlertController+Extension.swift */,
 				44AA266493C6946E18208AAE57CA77AB /* UIApplication+Extension.swift */,
+				ED51D94FAE25E535CEAFA3C3ADE87811 /* UIButton+Extension.swift */,
 				0DB3D59E6970F72C3706351029DE4FD0 /* UIColor+Extension.swift */,
 				D99F4BF639255B023117FDAF61D897FF /* UINavigationController+Extension.swift */,
 				B29555896AA5E00F2FAB1905B6F9ED5C /* UITableView+Extension.swift */,
@@ -1814,7 +1847,6 @@
 		A7FBFFAA677A25DB9FE9059BD7028333 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				785851054718D35A4F8D5A2AEEAEB635 /* OrderHistoryButton.swift */,
 				A39D14BEFFA7748C1668B738C82D0AE1 /* OrderHistoryCell.swift */,
 				35212C0C3A652476D0B304AEB4929141 /* OrderHistoryCellContentView.swift */,
 				396FA2D5A059F0D21641796429255D11 /* OrderHistoryInfoStackView.swift */,
@@ -2083,6 +2115,7 @@
 				40873E249CF718A160358EDC842B0644 /* Menu */,
 				33F480AB963478A1793B59DD5A8D95DD /* MenuDetail */,
 				2D6249D187A471E342EAA585BB889667 /* Modifiers */,
+				0582628447A2C3D6D7963A88527B569C /* Promotions */,
 				AFD0C58DD4D9535CA606320DDE12BE18 /* MenuCoordinator.swift */,
 			);
 			path = Menu;
@@ -2209,6 +2242,15 @@
 			path = ChangeName;
 			sourceTree = "<group>";
 		};
+		E702AC6E2260B81E27489BC3F15B8639 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				C79F4C4618C10A4E743CA870AB6BDFCF /* SBSubmitButton.swift */,
+				DE6C10FE5E63C5203732BE0F245631DE /* SBTextButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
 		E856BD6015BA921084DEC338F6C25C48 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -2314,7 +2356,7 @@
 				4C7EAF6205E790C561FC9532C28380B4 /* Resources */,
 				8AF21AEFE17B7B2D0FE8A5822920D1B5 /* [CP] Embed Pods Frameworks */,
 				9661D946FD185ADB45999E3C99B320DA /* [CP] Copy Pods Resources */,
-				ABB979D377D0D354E3F2CB42CBB92EBE /* Crashlytics dSYM files upload */,
+				ABB979D377D0D354E3F2CB42CBB92EBE /* [Crashlytics] Upload dSYM files */,
 			);
 			buildRules = (
 			);
@@ -2404,6 +2446,7 @@
 				7FF3C00C520DBCFD5B1F801D9F8B482F /* GoogleService-Info.plist in Resources */,
 				05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */,
 				49BA5782D07E316FB616E479FFA6B7CA /* Localizable.strings in Resources */,
+				3B5AE4FCA4E4B8B20D2C2B2BA759C7FC /* Pattaya-Regular.ttf in Resources */,
 				AFE10B4ADDD5D00277E3D3352EFD195B /* SBImages.xcassets in Resources */,
 				164304FA9809BB70C42208DA4D44A928 /* SalamBro-Info.plist in Resources */,
 				2DD1F648F81BC8C4BE171637F779E537 /* closed.json in Resources */,
@@ -2448,6 +2491,26 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		ABB979D377D0D354E3F2CB42CBB92EBE /* [Crashlytics] Upload dSYM files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[Crashlytics] Upload dSYM files";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		6AD09E5E35A3DEB76BC248E09C267F82 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2504,26 +2567,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		ABB979D377D0D354E3F2CB42CBB92EBE /* Crashlytics dSYM files upload */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "Crashlytics dSYM files upload";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		AF8C389205F0CDB75427EF1F9D3B0CDB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2765,7 +2808,6 @@
 				D846B24773092F2471DFE446C0B4A25D /* OnBoardingCoordinator.swift in Sources */,
 				AFD7B8956FCF2195A31D0522B36AF1F7 /* OnBoardingPagesFactory.swift in Sources */,
 				733FED62F294F2D43EDE8B60D47C1FF0 /* OrderApplyDTO.swift in Sources */,
-				4F1C79E2EC8F78A0076430C6FBE34ACE /* OrderHistoryButton.swift in Sources */,
 				5E01FA20E4AEA541AFD77C25CADF0AB2 /* OrderHistoryCell.swift in Sources */,
 				05112FC227A1546DB01A33FD94C6EFC8 /* OrderHistoryCellContentView.swift in Sources */,
 				4EB5659CFFFCD83ECA602A6D83057017 /* OrderHistoryController.swift in Sources */,
@@ -2820,7 +2862,9 @@
 				0F3F7C2106BAF8059894F208EB6DF4C1 /* Promocode.swift in Sources */,
 				F5296374884BC79D60EC021455BFAF3F /* PromocodeResponse.swift in Sources */,
 				E82C0C971A2D81F1DB77B8B3DB283825 /* Promotion.swift in Sources */,
+				2012E2648A3AD4A2000F6E0D9BF17B61 /* PromotionsController.swift in Sources */,
 				91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */,
+				DFB7240F01011057B587DDFC2088B801 /* PromotionsViewModel.swift in Sources */,
 				C14F742DCAFAC7971F7E3C76E7303E05 /* PushNotificationsAPI.swift in Sources */,
 				AD8CE2AD0CB755170CD5CC960D7D5CDC /* PushNotificationsDTO.swift in Sources */,
 				3AE7C8AEC851E7B7ED23B3A6F002D941 /* PushNotificationsRepository.swift in Sources */,
@@ -2842,12 +2886,15 @@
 				06D08A7A4DFD89113A0645A4837965B9 /* RepositoryComponents.swift in Sources */,
 				B55DF44451CD5F2F717157DC9E288F52 /* Router.swift in Sources */,
 				89ADAE4D180274C223D01521EEC664AA /* RoutersFactory.swift in Sources */,
+				D1C69D3E780C117249FBC5BF1C37548D /* SBFonts.swift in Sources */,
 				40A974F7135401E5F5FEB3089CFFC325 /* SBIcons.swift in Sources */,
 				6390DB6C1CBC219D0CDAF1C5F2C58609 /* SBLocalization.swift in Sources */,
 				662168E57B2C545F1879444F345732A7 /* SBNavigationController.swift in Sources */,
+				79F09267469286CE541A8C45EE898955 /* SBSubmitButton.swift in Sources */,
 				A73528BC44A05EB4815D46A1AC296647 /* SBTabBarController.swift in Sources */,
 				310190B06EB6F96D433DD4BA5EEB4A30 /* SBTabBarType.swift in Sources */,
 				9D579853029C4C56AC4530FAE166939D /* SBTabBarViewModel.swift in Sources */,
+				579DE61E6E1BB2BB4F9F51ABF126B69A /* SBTextButton.swift in Sources */,
 				5752366203812F015BDB9D8A4A70F94B /* SecureStorageProvider.swift in Sources */,
 				4F8B480599740562799CF3FB740F85E4 /* SelectMainInformationCell.swift in Sources */,
 				A864EB1D6EC9EB7EC5A7EB750A9CC398 /* SelectMainInformationViewController.swift in Sources */,
@@ -2878,6 +2925,7 @@
 				AC48B0075457DA457FF5D8DE42ACAC27 /* UIAlertController+Extension.swift in Sources */,
 				9CADCD2A4842323E78F20A705B98103B /* UIApplication+Extension.swift in Sources */,
 				0D5850A82D4E2F59B33A85B051B30792 /* UIBarButtonConfigurable.swift in Sources */,
+				A7331CA00ED54AB1C9D4D3C53435E16C /* UIButton+Extension.swift in Sources */,
 				7252602B1A349A43014F989154041C7D /* UICollectionViewCenterLayout.swift in Sources */,
 				9B3F1374BE1464617A2A7D5C7B82A5EA /* UIColor+Extension.swift in Sources */,
 				4C8D8329E4A222925EEB832CDB05B27B /* UINavigationController+Extension.swift in Sources */,
@@ -3074,16 +3122,16 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
-				DEVELOPMENT_TEAM = ULVD64ZNV2;
+				CURRENT_PROJECT_VERSION = 48;
+				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.40;
-				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
+				MARKETING_VERSION = 0.0.48;
+				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -3144,17 +3192,17 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 48;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = ULVD64ZNV2;
+				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.40;
-				PRODUCT_BUNDLE_IDENTIFIER = mti.kz.kexBrandsTest;
+				MARKETING_VERSION = 0.0.48;
+				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

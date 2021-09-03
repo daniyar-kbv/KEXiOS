@@ -53,6 +53,7 @@ final class BrandViewModel: BrandViewModelProtocol {
     }
 
     func didSelect(index: Int, flowType: BrandsController.FlowType) {
+        guard brands[index].isAvailable == true else { return }
         switch flowType {
         case .change:
             outputs.didSelectBrand.accept(brands[index])

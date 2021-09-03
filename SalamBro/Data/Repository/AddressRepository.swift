@@ -169,7 +169,7 @@ extension AddressRepositoryImpl {
         outputs.didStartRequest.accept(())
         ordersService.applyOrder(dto: dto)
             .subscribe(onSuccess: { [weak self] leadUUID in
-                self?.process(leadUUID: leadUUID)
+                self?.defaultStorage.persist(leadUUID: leadUUID)
                 self?.outputs.didSaveUserAddress.accept(())
                 self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in

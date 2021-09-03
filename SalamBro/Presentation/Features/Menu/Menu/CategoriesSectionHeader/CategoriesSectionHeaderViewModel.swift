@@ -13,7 +13,7 @@ protocol CategoriesSectionHeaderViewModelProtocol: ViewModel {
     var cellViewModels: [CategoryCellViewModelProtocol] { get }
 
     func getIndex(of category: String) -> Int?
-    func getCategory(by index: Int) -> String
+    func getCategory(by index: Int) -> String?
 }
 
 final class CategoriesSectionHeaderViewModel: CategoriesSectionHeaderViewModelProtocol {
@@ -31,7 +31,8 @@ final class CategoriesSectionHeaderViewModel: CategoriesSectionHeaderViewModelPr
         })
     }
 
-    func getCategory(by index: Int) -> String {
+    func getCategory(by index: Int) -> String? {
+        guard cellViewModels.count > index else { return nil }
         return cellViewModels[index].category.uuid
     }
 }

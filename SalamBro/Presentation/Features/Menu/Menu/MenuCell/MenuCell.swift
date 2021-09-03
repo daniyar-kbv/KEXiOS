@@ -16,6 +16,8 @@ final class MenuCell: UITableViewCell, Reusable {
     private lazy var foodImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -47,11 +49,20 @@ final class MenuCell: UITableViewCell, Reusable {
         return button
     }()
 
+    private let unavaiLableLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        label.textColor = .kexRed
+        return label
+    }()
+
     private lazy var stackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [
             self.titleLabel,
             self.descriptionLabel,
             self.button,
+            self.unavaiLableLabel,
         ])
         view.spacing = 4
         view.alignment = .leading
@@ -80,6 +91,9 @@ final class MenuCell: UITableViewCell, Reusable {
         super.prepareForReuse()
 
         disposeBag = DisposeBag()
+
+        foodImageView.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
     }
 
     func set(_ viewModel: MenuCellViewModelProtocol?) {
@@ -89,10 +103,7 @@ final class MenuCell: UITableViewCell, Reusable {
     private func bind() {
         viewModel.itemImageURL
             .bind(onNext: { [weak self] imageURL in
-                guard let url = imageURL else {
-                    self?.foodImageView.image = nil
-                    return
-                }
+                guard let url = imageURL else { return }
                 self?.foodImageView.setImage(url: url)
             })
             .disposed(by: disposeBag)
@@ -105,6 +116,13 @@ final class MenuCell: UITableViewCell, Reusable {
             .bind(to: descriptionLabel.rx.text)
             .disposed(by: disposeBag)
 
+        viewModel.itemStatus
+            .bind(onNext: { [weak self] status in
+                guard let status = status else { return }
+                self?.configureStatus(for: status)
+            })
+            .disposed(by: disposeBag)
+
         viewModel.itemPrice
             .bind(to: button.rx.title())
             .disposed(by: disposeBag)
@@ -114,6 +132,13 @@ final class MenuCell: UITableViewCell, Reusable {
         setupCell()
         setupViews()
         setupConstraints()
+    }
+
+    private func configureStatus(for status: Bool) {
+        unavaiLableLabel.text = SBLocalization.localized(key: MenuText.Menu.MenuItem.unavailable)
+        unavaiLableLabel.isHidden = status
+        button.isHidden = !status
+        isUserInteractionEnabled = status
     }
 
     private func setupCell() {

@@ -23,6 +23,8 @@ final class AdCell: UICollectionViewCell, Reusable {
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 9
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.adPlaceholder)
         return view
     }()
 
@@ -36,6 +38,8 @@ final class AdCell: UICollectionViewCell, Reusable {
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
+        adImageView.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.adPlaceholder)
     }
 
     func set(_ viewModel: AdCellViewModelProtocol?) {

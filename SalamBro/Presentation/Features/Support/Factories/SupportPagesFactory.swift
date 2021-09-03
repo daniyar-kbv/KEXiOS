@@ -20,11 +20,11 @@ final class SupportPagesFactoryImpl: DependencyFactory, SupportPagesFactory {
     }
 
     func makeSupportPage() -> SupportController {
-        return shared(.init(viewModel: makeSupportViewModel()))
+        return scoped(.init(viewModel: makeSupportViewModel()))
     }
 
     private func makeSupportViewModel() -> SupportViewModel {
-        return shared(SupportViewModelImpl(documentsRepository: repositoryComponents.makeDocumentsRepository()))
+        return scoped(SupportViewModelImpl(documentsRepository: repositoryComponents.makeDocumentsRepository()))
     }
 
     func makeAgreementPage(url: URL, name: String) -> AgreementController {

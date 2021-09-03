@@ -13,7 +13,6 @@ protocol CartViewDelegate {
     func proceed()
 }
 
-// FIXME: Refactor
 class CartController: UIViewController, LoaderDisplayable, Reloadable {
     private let viewModel: CartViewModel
     private let disposeBag = DisposeBag()
@@ -29,6 +28,7 @@ class CartController: UIViewController, LoaderDisplayable, Reloadable {
         table.estimatedSectionFooterHeight = UITableView.automaticDimension
         table.separatorStyle = .none
         table.refreshControl = refreshControl
+        table.delaysContentTouches = false
         return table
     }()
 
@@ -50,10 +50,8 @@ class CartController: UIViewController, LoaderDisplayable, Reloadable {
         return view
     }()
 
-    private lazy var orderButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .kexRed
-        button.layer.cornerRadius = 10
+    private lazy var orderButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .filledRed)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         return button
     }()

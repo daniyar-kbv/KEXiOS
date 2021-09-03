@@ -14,6 +14,8 @@ protocol MenuRepository: AnyObject {
 
     func getMenuItems()
     func openPromotion(by id: Int)
+
+    func getPromotionsVerificationURL() -> String?
 }
 
 final class MenuRepositoryImpl: MenuRepository {
@@ -23,8 +25,9 @@ final class MenuRepositoryImpl: MenuRepository {
     private let ordersService: OrdersService
     private let storage: DefaultStorage
 
-    private var isRequestingData = false
-    private var receivedData = [ReceivedData]()
+    private var menuData = MenuData()
+
+    private var promotionsVerificationURL: String?
 
     init(menuService: MenuService,
          ordersService: OrdersService,
@@ -35,37 +38,12 @@ final class MenuRepositoryImpl: MenuRepository {
         self.storage = storage
 
         bindNotifications()
+        bindMenuData()
     }
 
     func getMenuItems() {
-//        guard let leadUUID = storage.leadUUID else { return }
-//
-//        let leadInfoSequence = ordersService.getLeadInfo(for: leadUUID)
-//        let promotionsSequence = menuService.getPromotions(leadUUID: leadUUID)
-//        let productsSequence = menuService.getProducts(for: leadUUID)
-//
-//        let finalSequence = Single.zip(leadInfoSequence,
-//                                       promotionsSequence,
-//                                       productsSequence,
-//                                       resultSelector: { ($0, $1, $2) })
-//
-//        outputs.didStartRequest.accept(())
-//        finalSequence.subscribe(onSuccess: {
-//            [weak self] leadInfo, promotions, categories in
-//            self?.outputs.didStartDataProcessing.accept(())
-//            self?.outputs.didGetAddressInfo.accept(leadInfo)
-        ////            self?.outputs.didGetPromotions.accept(promotions)
-//            self?.outputs.didGetCategories.accept(categories)
-//            self?.outputs.didEndDataProcessing.accept(())
-//            self?.outputs.didEndRequest.accept(())
-//        }, onError: { [weak self] error in
-//            self?.outputs.didEndRequest.accept(())
-//            guard let error = error as? ErrorPresentable else { return }
-//            self?.outputs.didGetError.accept(error)
-//        }).disposed(by: disposeBag)
-
-        receivedData.removeAll()
         outputs.didStartRequest.accept(())
+        menuData.cleanUp()
         getLeadInfo()
         getPromotions()
         getCategories()
@@ -75,7 +53,12 @@ final class MenuRepositoryImpl: MenuRepository {
         guard let leadUUID = storage.leadUUID else { return }
 
         outputs.didStartRequest.accept(())
-        menuService.getPromotionDetail(for: leadUUID, by: id)
+
+        menuService.getPromotions(leadUUID: leadUUID)
+            .flatMap { [unowned self] promotionResult -> Single<Promotion> in
+                promotionsVerificationURL = promotionResult.verificationURL
+                return menuService.getPromotionDetail(for: leadUUID, by: id)
+            }
             .subscribe { [weak self] promotion in
                 self?.process(promotion: promotion)
                 self?.outputs.didEndRequest.accept(())
@@ -98,9 +81,17 @@ extension MenuRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
+    private func bindMenuData() {
+        menuData.outputs.complete
+            .subscribe(onNext: { [weak self] in
+                self?.sendMenuData()
+            })
+            .disposed(by: disposeBag)
+    }
+
     private func process(promotion: Promotion) {
         guard let url = URL(string: promotion.link ?? "") else { return }
-        outputs.openPromotion.accept((url, promotion.name))
+        outputs.openPromotion.accept((promotion.id, url, promotion.name))
     }
 
     private func getLeadInfo() {
@@ -109,8 +100,7 @@ extension MenuRepositoryImpl {
         ordersService.getLeadInfo(for: leadUUID)
             .subscribe(onSuccess: {
                 [weak self] leadInfo in
-                self?.receivedData.append(.init(data: leadInfo, type: .leadInfo))
-                self?.check()
+                self?.menuData.add(data: leadInfo, type: .leadInfo)
             }, onError: { [weak self] error in
                 self?.process(error: error, type: .leadInfo)
             }).disposed(by: disposeBag)
@@ -121,9 +111,8 @@ extension MenuRepositoryImpl {
 
         menuService.getPromotions(leadUUID: leadUUID)
             .subscribe(onSuccess: {
-                [weak self] promotions in
-                self?.receivedData.append(.init(data: promotions, type: .promotions))
-                self?.check()
+                [weak self] promotionResult in
+                self?.process(promotionResult: promotionResult)
             }, onError: { [weak self] error in
                 self?.process(error: error, type: .promotions)
             }).disposed(by: disposeBag)
@@ -135,38 +124,33 @@ extension MenuRepositoryImpl {
         menuService.getProducts(for: leadUUID)
             .subscribe(onSuccess: {
                 [weak self] categories in
-                self?.receivedData.append(.init(data: categories, type: .categories))
-                self?.check()
+                self?.menuData.add(data: categories, type: .categories)
             }, onError: { [weak self] error in
                 self?.process(error: error, type: .categories)
             }).disposed(by: disposeBag)
     }
 
+    private func process(promotionResult: PromotionResult) {
+        promotionsVerificationURL = promotionResult.verificationURL
+        menuData.add(data: promotionResult.promotions, type: .promotions)
+    }
+
     private func process(error: Error, type: RequestType) {
-        receivedData.append(.init(data: nil, type: type))
-        check()
+        menuData.add(type: type)
         guard let error = error as? ErrorPresentable else { return }
         outputs.didGetError.accept(error)
     }
 
-    private func check() {
-        guard receivedData.count == RequestType.allCases.count else { return }
-        outputs.didStartDataProcessing.accept(())
-        receivedData.forEach { receivedData in
-            switch receivedData.type {
-            case .leadInfo:
-                guard let leadInfo = receivedData.data as? LeadInfo else { return }
-                outputs.didGetAddressInfo.accept(leadInfo)
-            case .promotions:
-                guard let promotions = receivedData.data as? [Promotion] else { return }
-                outputs.didGetPromotions.accept(promotions)
-            case .categories:
-                guard let categories = receivedData.data as? [MenuCategory] else { return }
-                outputs.didGetCategories.accept(categories)
-            }
-        }
-        outputs.didEndDataProcessing.accept(())
+    private func sendMenuData() {
+        let dataToSend = (menuData.leadInfo.data, menuData.promotions.data, menuData.categories.data)
+        outputs.didGetData.accept(dataToSend)
         outputs.didEndRequest.accept(())
+    }
+}
+
+extension MenuRepositoryImpl {
+    func getPromotionsVerificationURL() -> String? {
+        return promotionsVerificationURL
     }
 }
 
@@ -176,23 +160,73 @@ extension MenuRepositoryImpl {
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
 
-        let didStartDataProcessing = PublishRelay<Void>()
-        let didGetAddressInfo = PublishRelay<LeadInfo>()
-        let didGetPromotions = PublishRelay<[Promotion]>()
-        let didGetCategories = PublishRelay<[MenuCategory]>()
-        let didEndDataProcessing = PublishRelay<Void>()
+        let didGetData = PublishRelay<(leadInfo: LeadInfo?,
+                                       promotions: [Promotion]?,
+                                       categories: [MenuCategory]?)>()
 
-        let openPromotion = PublishRelay<(url: URL, name: String)>()
+        let openPromotion = PublishRelay<(id: Int, url: URL, name: String)>()
+
+        let participationVerified = PublishRelay<Void>()
     }
 
-    private struct ReceivedData {
-        let data: Any?
-        let type: RequestType
-    }
-
-    private enum RequestType: CaseIterable {
+    enum RequestType: CaseIterable {
         case leadInfo
         case promotions
         case categories
+    }
+
+    class MenuData {
+        var leadInfo = Data<LeadInfo>()
+        var promotions = Data<[Promotion]>()
+        var categories = Data<[MenuCategory]>()
+
+        let outputs = Output()
+
+        func add<T: Decodable>(data: T?, type: RequestType) {
+            switch type {
+            case .leadInfo: leadInfo.assign(data: data as? LeadInfo)
+            case .promotions: promotions.assign(data: data as? [Promotion])
+            case .categories: categories.assign(data: data as? [MenuCategory])
+            }
+            check()
+        }
+
+        func add(type: RequestType) {
+            switch type {
+            case .leadInfo: leadInfo.assign(data: nil)
+            case .promotions: promotions.assign(data: nil)
+            case .categories: categories.assign(data: nil)
+            }
+            check()
+        }
+
+        func cleanUp() {
+            leadInfo = .init()
+            promotions = .init()
+            categories = .init()
+        }
+
+        private func isComplete() -> Bool {
+            return leadInfo.isReceived && promotions.isReceived && categories.isReceived
+        }
+
+        private func check() {
+            guard isComplete() else { return }
+            outputs.complete.accept(())
+        }
+
+        class Data<T: Decodable> {
+            var data: T? = nil
+            var isReceived = false
+
+            func assign(data: T?) {
+                self.data = data
+                isReceived = true
+            }
+        }
+
+        struct Output {
+            let complete = PublishRelay<Void>()
+        }
     }
 }

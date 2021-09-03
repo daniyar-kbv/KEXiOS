@@ -110,6 +110,9 @@
 "AddressPickCell.changeButton" = "EN Изменить";
 "AddressPickCell.deliverLabel" = "EN Доставим на:";
 
+// MARK: - Menu
+"Menu.unavailable" = "EN Будет позже";
+
 // MARK: - MenuDetail
 "MenuDetail.proceedButton" = "EN В корзину за %@ ₸";
 "MenuDetail.commentaryField" = "EN Комментарий к блюду";

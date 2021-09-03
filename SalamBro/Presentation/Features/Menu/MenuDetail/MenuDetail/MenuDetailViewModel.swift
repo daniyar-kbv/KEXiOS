@@ -77,12 +77,12 @@ extension MenuDetailViewModelImpl {
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        menuDetailRepository.outputs.didGetProductDetail.bind {
-            [weak self] position in
-            self?.outputs.didEndRequest.accept(())
-            self?.process(position: position)
-        }
-        .disposed(by: disposeBag)
+        menuDetailRepository.outputs.didGetProductDetail
+            .bind { [weak self] position in
+                self?.outputs.didGetProductDetail.accept(())
+                self?.process(position: position)
+            }
+            .disposed(by: disposeBag)
 
         menuDetailRepository.outputs.didEndRequest
             .bind(to: outputs.didEndRequest)
@@ -152,6 +152,7 @@ extension MenuDetailViewModelImpl {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable?>()
+        let didGetProductDetail = PublishRelay<Void>()
 
         let comment = PublishRelay<String>()
         let itemImage = PublishRelay<URL?>()

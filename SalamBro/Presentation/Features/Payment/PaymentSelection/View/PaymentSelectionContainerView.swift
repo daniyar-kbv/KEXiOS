@@ -22,14 +22,10 @@ final class PaymentSelectionContainerView: UIView {
 
     private let paymentSelectionButton = PaymentSelectionButton()
 
-    private let actionButton: UIButton = {
-        let button = UIButton()
+    private let actionButton: SBSubmitButton = {
+        let button = SBSubmitButton(style: .filledRed)
         button.setTitle(SBLocalization.localized(key: PaymentText.PaymentSelection.orderPayment), for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
-        button.backgroundColor = .calmGray
         button.isEnabled = false
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
         return button
     }()
 
@@ -149,7 +145,6 @@ extension PaymentSelectionContainerView {
     }
 
     private func configActionButton(with paymentMethod: PaymentMethod?) {
-        actionButton.backgroundColor = paymentMethod != nil ? .kexRed : .calmGray
         actionButton.isEnabled = paymentMethod != nil
         actionButton.isHidden = paymentMethod?.type == .applePay
         applePayButton.isHidden = paymentMethod?.type != .applePay

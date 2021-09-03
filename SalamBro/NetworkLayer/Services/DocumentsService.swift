@@ -38,7 +38,7 @@ final class DocumentsServiceImpl: DocumentsService {
                     throw error
                 }
 
-                guard let documents = documentsResponse.data?.results else {
+                guard let documents = documentsResponse.data else {
                     throw NetworkError.badMapping
                 }
 
