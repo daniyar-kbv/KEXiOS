@@ -33,8 +33,19 @@ final class AppCoordinator: BaseCoordinator {
     }
 
     override func start() {
+        bindNotificationCenter()
         configureCoordinators()
         switchFlows()
+    }
+
+    private func bindNotificationCenter() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.startFirstFlow.name)
+            .subscribe(onNext: { [weak self] _ in
+                DefaultStorageImpl.sharedStorage.persist(notFirstLaunch: false)
+                self?.switchFlows()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func switchFlows() {

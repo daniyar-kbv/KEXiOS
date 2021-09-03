@@ -71,6 +71,12 @@ final class PaymentCoordinator: BaseCoordinator {
                 })
             }).disposed(by: disposeBag)
 
+        paymentSelectionVC.outputs.finishFlow
+            .subscribe(onNext: { [weak paymentSelectionVC] in
+                paymentSelectionVC?.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+
         let navigationVC = SBNavigationController(rootViewController: paymentSelectionVC)
         router.present(navigationVC, animated: true, completion: nil)
     }

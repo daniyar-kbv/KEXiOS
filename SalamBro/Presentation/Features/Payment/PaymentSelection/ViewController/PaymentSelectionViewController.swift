@@ -115,6 +115,10 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
                 self?.contentView.set(totalAmount: totalAmount)
             })
             .disposed(by: disposeBag)
+
+        viewModel.outputs.finishFlow
+            .bind(to: outputs.finishFlow)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -162,5 +166,6 @@ extension PaymentSelectionViewController {
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()
         let didMakePayment = PublishRelay<Void>()
+        let finishFlow = PublishRelay<Void>()
     }
 }

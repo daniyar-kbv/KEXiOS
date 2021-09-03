@@ -29,8 +29,10 @@ final class PaymentRepositoryImpl: PaymentRepository {
     private let disposeBag = DisposeBag()
     private let paymentService: PaymentsService
     private let authorizedApplyService: AuthorizedApplyService
+    private let ordersService: OrdersService
     private let defaultStorage: DefaultStorage
     private let cartStorage: CartStorage
+    private let addressStorage: GeoStorage
 
     private var selectedPaymentMethod: PaymentMethod?
     private var localPaymentMethods: [PaymentMethod] = [.init(type: .card), .init(type: .applePay), .init(type: .cash)]
@@ -45,13 +47,17 @@ final class PaymentRepositoryImpl: PaymentRepository {
 
     init(paymentService: PaymentsService,
          authorizedApplyService: AuthorizedApplyService,
+         ordersService: OrdersService,
          defaultStorage: DefaultStorage,
-         cartStorage: CartStorage)
+         cartStorage: CartStorage,
+         addressStorage: GeoStorage)
     {
         self.paymentService = paymentService
         self.authorizedApplyService = authorizedApplyService
+        self.ordersService = ordersService
         self.defaultStorage = defaultStorage
         self.cartStorage = cartStorage
+        self.addressStorage = addressStorage
     }
 
     func setSelected(paymentMethod: PaymentMethod?) {
@@ -175,8 +181,8 @@ extension PaymentRepositoryImpl {
               let leadUUID = defaultStorage.leadUUID else { return }
 
         outputs.didStartPaymentRequest.accept(())
+
         paymentService.getPaymentStatus(leadUUID: leadUUID)
-            .flatMap(orderStatusFlatMapClosure(_:))
             .retryWhenUnautharized()
             .subscribe(onSuccess: paymentOnSuccess(_:),
                        onError: paymentOnFailure(_:))
@@ -194,7 +200,6 @@ extension PaymentRepositoryImpl {
         outputs.didStartPaymentRequest.accept(())
         paymentService.createOrder(dto: createOrderDTO)
             .flatMap { [unowned self] in paymentService.createCardPayment(dto: createPaymentDTO) }
-            .flatMap(orderStatusFlatMapClosure(_:))
             .retryWhenUnautharized()
             .subscribe(onSuccess: paymentOnSuccess(_:),
                        onError: paymentOnFailure(_:))
@@ -214,14 +219,7 @@ extension PaymentRepositoryImpl {
                                                 keepCard: card.keepCard,
                                                 changeFor: nil)
 
-        outputs.didStartPaymentRequest.accept(())
-        paymentService.createOrder(dto: createOrderDTO)
-            .flatMap { [unowned self] in paymentService.createPayment(dto: createPaymentDTO) }
-            .flatMap(orderStatusFlatMapClosure(_:))
-            .retryWhenUnautharized()
-            .subscribe(onSuccess: paymentOnSuccess(_:),
-                       onError: paymentOnFailure(_:))
-            .disposed(by: disposeBag)
+        createPayment(createOrderDTO: createOrderDTO, createPaymentDTO: createPaymentDTO)
     }
 
     private func createCashPayment() {
@@ -236,42 +234,43 @@ extension PaymentRepositoryImpl {
                                                 keepCard: nil,
                                                 changeFor: selectedPaymentMethod?.getValue())
 
+        createPayment(createOrderDTO: createOrderDTO, createPaymentDTO: createPaymentDTO)
+    }
+
+    private func createPayment(createOrderDTO: CreateOrderDTO, createPaymentDTO: CreatePaymentDTO) {
         outputs.didStartPaymentRequest.accept(())
         paymentService.createOrder(dto: createOrderDTO)
             .flatMap { [unowned self] in paymentService.createPayment(dto: createPaymentDTO) }
-            .flatMap(orderStatusFlatMapClosure(_:))
             .retryWhenUnautharized()
             .subscribe(onSuccess: paymentOnSuccess(_:),
                        onError: paymentOnFailure(_:))
             .disposed(by: disposeBag)
     }
 
-    private func orderStatusFlatMapClosure(_ orderStatus: PaymentStatus) -> Single<String> {
-        switch orderStatus.determineStatus() {
+    private func paymentOnSuccess(_ paymentStatus: PaymentStatus) {
+        switch paymentStatus.determineStatus() {
         case .completed:
-            return authorizedApplyService.authorizedApplyOrder()
-        case .awaitingAuthentication:
-            show3DS(orderStatus: orderStatus)
             outputs.didEndPaymentRequest.accept(())
-            return .error(EmptyError())
+            outputs.didMakePayment.accept(())
+
+            getNewLeadAuthorized()
+
+            NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
+                                            object: ())
+        case .awaitingAuthentication:
+            show3DS(orderStatus: paymentStatus)
+            outputs.didEndPaymentRequest.accept(())
         default:
             outputs.didEndPaymentRequest.accept(())
-            guard let statusReason = orderStatus.statusReason else {
-                return .error(NetworkError.badMapping)
-            }
-            let error = ErrorResponse(code: orderStatus.status, message: statusReason)
-            return .error(error)
-        }
-    }
 
-    private func paymentOnSuccess(_ leadUUID: String) {
-        NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
-                                        object: leadUUID)
-        NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
-                                        object: ())
-        defaultStorage.persist(isPaymentProcess: false)
-        outputs.didEndPaymentRequest.accept(())
-        outputs.didMakePayment.accept(())
+            guard let statusReason = paymentStatus.statusReason else {
+                outputs.didGetError.accept(NetworkError.badMapping)
+                return
+            }
+
+            let error = ErrorResponse(code: paymentStatus.status, message: statusReason)
+            outputs.didGetError.accept(error)
+        }
     }
 
     private func paymentOnFailure(_ error: Error) {
@@ -283,7 +282,8 @@ extension PaymentRepositoryImpl {
         if let error = error as? ErrorResponse {
             switch error.code {
             case Constants.ErrorCode.orderAlreadyPaid:
-                getNewLead()
+                outputs.didMakePayment.accept(())
+                getNewLeadAuthorized()
             case Constants.ErrorCode.notFound:
                 return
             default:
@@ -294,25 +294,39 @@ extension PaymentRepositoryImpl {
         outputs.didGetError.accept(error)
     }
 
-    private func getNewLead() {
+    private func getNewLeadAuthorized() {
         outputs.didStartRequest.accept(())
         authorizedApplyService.authorizedApplyOrder()
             .retryWhenUnautharized()
-            .subscribe(onSuccess: { [weak self] leadUUID in
-                NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
-                                                object: leadUUID)
-                NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
-                                                object: ())
-                self?.outputs.didEndRequest.accept(())
-            }, onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                guard let error = error as? ErrorPresentable else {
-                    self?.outputs.didGetError.accept(NetworkError.badMapping)
-                    return
-                }
-                self?.outputs.didGetError.accept(error)
-            })
+            .subscribe(onSuccess: orderApplyOnSuccess(_:),
+                       onError: { [weak self] _ in
+                           self?.getNewLead()
+                       })
             .disposed(by: disposeBag)
+    }
+
+    private func getNewLead() {
+        guard let applyOrderDTO = addressStorage.userAddresses.first(where: { $0.isCurrent })?.toDTO() else { return }
+        ordersService.applyOrder(dto: applyOrderDTO)
+            .subscribe(onSuccess: orderApplyOnSuccess(_:),
+                       onError: { [weak self] error in
+                           self?.outputs.didEndRequest.accept(())
+                           NotificationCenter.default.post(name: Constants.InternalNotification.startFirstFlow.name,
+                                                           object: nil)
+                           guard let error = error as? ErrorPresentable else {
+                               self?.outputs.didGetError.accept(NetworkError.badMapping)
+                               return
+                           }
+                           self?.outputs.didGetError.accept(error)
+                       })
+            .disposed(by: disposeBag)
+    }
+
+    private func orderApplyOnSuccess(_ leadUUID: String) {
+        NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
+                                        object: leadUUID)
+        outputs.didEndRequest.accept(())
+        defaultStorage.persist(isPaymentProcess: false)
     }
 }
 
@@ -335,14 +349,8 @@ extension PaymentRepositoryImpl {
                                                 cardholderName: "",
                                                 keepCard: nil,
                                                 changeFor: nil)
-        outputs.didStartPaymentRequest.accept(())
-        paymentService.createOrder(dto: createOrderDTO)
-            .flatMap { [unowned self] in paymentService.createPayment(dto: createPaymentDTO) }
-            .flatMap(orderStatusFlatMapClosure(_:))
-            .retryWhenUnautharized()
-            .subscribe(onSuccess: paymentOnSuccess(_:),
-                       onError: paymentOnFailure(_:))
-            .disposed(by: disposeBag)
+
+        createPayment(createOrderDTO: createOrderDTO, createPaymentDTO: createPaymentDTO)
     }
 
     private func processApplePay() {
@@ -378,7 +386,6 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
 
         outputs.didStartPaymentRequest.accept(())
         paymentService.confirm3DSPayment(dto: dto, paymentUUID: paymentUUID)
-            .flatMap(orderStatusFlatMapClosure(_:))
             .retryWhenUnautharized()
             .subscribe(onSuccess: paymentOnSuccess(_:),
                        onError: paymentOnFailure(_:))
@@ -423,5 +430,6 @@ extension PaymentRepositoryImpl {
         let savedCards = PublishRelay<[MyCard]>()
 
         let didMakePayment = PublishRelay<Void>()
+        let finishFlow = PublishRelay<Void>()
     }
 }

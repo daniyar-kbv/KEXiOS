@@ -98,8 +98,10 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     func makePaymentRepository() -> PaymentRepository {
         return weakShared(PaymentRepositoryImpl(paymentService: serviceComponents.paymentsService(),
                                                 authorizedApplyService: serviceComponents.authorizedApplyService(),
+                                                ordersService: serviceComponents.ordersService(),
                                                 defaultStorage: DefaultStorageImpl.sharedStorage,
-                                                cartStorage: makeLocalStorage()))
+                                                cartStorage: makeLocalStorage(),
+                                                addressStorage: makeLocalStorage()))
     }
 
     func makeProfileRepository() -> ProfileRepository {
