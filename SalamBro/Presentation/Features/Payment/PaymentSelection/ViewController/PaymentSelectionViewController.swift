@@ -92,6 +92,14 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
                 self?.showError(error)
             }).disposed(by: disposeBag)
 
+        viewModel.outputs.didGetAuthError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error) {
+                    self?.outputs.finishFlow.accept(())
+                }
+            })
+            .disposed(by: disposeBag)
+
         viewModel.outputs.show3DS
             .bind(to: outputs.show3DS)
             .disposed(by: disposeBag)
@@ -114,10 +122,6 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
             .subscribe(onNext: { [weak self] totalAmount in
                 self?.contentView.set(totalAmount: totalAmount)
             })
-            .disposed(by: disposeBag)
-
-        viewModel.outputs.finishFlow
-            .bind(to: outputs.finishFlow)
             .disposed(by: disposeBag)
     }
 }

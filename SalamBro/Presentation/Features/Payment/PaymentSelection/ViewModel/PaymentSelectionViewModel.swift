@@ -43,7 +43,6 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
         self.defaultStorage = defaultStorage
 
         bindRepository()
-        bindNotificationCenter()
         setValues()
     }
 }
@@ -104,6 +103,10 @@ extension PaymentSelectionViewModelImpl {
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
 
+        paymentRepository.outputs.didGetAuthError
+            .bind(to: outputs.didGetAuthError)
+            .disposed(by: disposeBag)
+
         paymentRepository.outputs.didMakePayment
             .bind(to: outputs.didMakePayment)
             .disposed(by: disposeBag)
@@ -120,15 +123,6 @@ extension PaymentSelectionViewModelImpl {
             .bind(to: outputs.showApplePay)
             .disposed(by: disposeBag)
     }
-
-    private func bindNotificationCenter() {
-        NotificationCenter.default.rx
-            .notification(Constants.InternalNotification.unauthorize.name)
-            .subscribe(onNext: { [weak self] _ in
-                self?.outputs.finishFlow.accept(())
-            })
-            .disposed(by: disposeBag)
-    }
 }
 
 extension PaymentSelectionViewModelImpl {
@@ -140,6 +134,7 @@ extension PaymentSelectionViewModelImpl {
         let didEndPaymentRequest = PublishRelay<Void>()
 
         let didGetError = PublishRelay<ErrorPresentable>()
+        let didGetAuthError = PublishRelay<ErrorPresentable>()
 
         let totalAmount = BehaviorRelay<String?>(value: nil)
         let didSelectPaymentMethod = PublishRelay<PaymentMethod?>()
@@ -147,6 +142,5 @@ extension PaymentSelectionViewModelImpl {
         let hide3DS = PublishRelay<Void>()
         let showApplePay = PublishRelay<PKPaymentAuthorizationViewController>()
         let didMakePayment = PublishRelay<Void>()
-        let finishFlow = PublishRelay<Void>()
     }
 }

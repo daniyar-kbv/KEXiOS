@@ -199,7 +199,9 @@ extension PaymentRepositoryImpl {
 
         outputs.didStartPaymentRequest.accept(())
         paymentService.createOrder(dto: createOrderDTO)
-            .flatMap { [unowned self] in paymentService.createCardPayment(dto: createPaymentDTO) }
+            .flatMap { [unowned self] in
+                paymentService.createCardPayment(dto: createPaymentDTO)
+            }
             .retryWhenUnautharized()
             .subscribe(onSuccess: paymentOnSuccess(_:),
                        onError: paymentOnFailure(_:))
@@ -289,6 +291,11 @@ extension PaymentRepositoryImpl {
             default:
                 break
             }
+        }
+
+        if (error as? NetworkError) == .unauthorized {
+            outputs.didGetAuthError.accept(error)
+            return
         }
 
         outputs.didGetError.accept(error)
@@ -417,6 +424,7 @@ extension PaymentRepositoryImpl {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
+        let didGetAuthError = PublishRelay<ErrorPresentable>()
 
         let didStartPaymentRequest = PublishRelay<Void>()
         let didEndPaymentRequest = PublishRelay<Void>()
