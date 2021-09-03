@@ -41,6 +41,10 @@ final class OrderHistoryCoordinator: BaseCoordinator {
             self?.toMenu?()
         }
 
+        orderHistoryPage.finishFlow = { [weak self] in
+            self?.router.popToRootViewController(animated: true)
+        }
+
         orderHistoryPage.hidesBottomBarWhenPushed = true
         router.push(viewController: orderHistoryPage, animated: true)
     }

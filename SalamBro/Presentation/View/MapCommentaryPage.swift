@@ -167,6 +167,8 @@ extension MapCommentaryPage {
     }
 }
 
-struct Output {
-    let didProceed = PublishRelay<String?>()
+extension MapCommentaryPage {
+    struct Output {
+        let didProceed = PublishRelay<String?>()
+    }
 }

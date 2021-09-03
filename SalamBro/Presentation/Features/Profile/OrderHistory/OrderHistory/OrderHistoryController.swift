@@ -18,8 +18,7 @@ final class OrderHistoryController: UIViewController, LoaderDisplayable {
     var onShareTapped: (() -> Void)?
     var onTerminate: (() -> Void)?
     var toMenu: (() -> Void)?
-
-    let outputs = Output()
+    var finishFlow: (() -> Void)?
 
     private lazy var tableView: UITableView = {
         let view = UITableView()
@@ -93,9 +92,14 @@ extension OrderHistoryController {
 
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
-                guard let error = error else { return }
                 self?.showError(error)
             }).disposed(by: disposeBag)
+
+        viewModel.outputs.didGetAuthError
+            .subscribe(onNext: { [weak self] _ in
+                self?.finishFlow?()
+            })
+            .disposed(by: disposeBag)
 
         viewModel.outputs.didGetOrders
             .subscribe(onNext: { [weak self] in

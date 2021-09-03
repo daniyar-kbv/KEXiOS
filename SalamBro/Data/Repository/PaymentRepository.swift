@@ -317,9 +317,12 @@ extension PaymentRepositoryImpl {
         ordersService.applyOrder(dto: applyOrderDTO)
             .subscribe(onSuccess: orderApplyOnSuccess(_:),
                        onError: { [weak self] error in
+                           self?.defaultStorage.persist(isPaymentProcess: false)
                            self?.outputs.didEndRequest.accept(())
-                           NotificationCenter.default.post(name: Constants.InternalNotification.startFirstFlow.name,
-                                                           object: nil)
+                           NotificationCenter.default.post(
+                               name: Constants.InternalNotification.startFirstFlow.name,
+                               object: nil
+                           )
                            guard let error = error as? ErrorPresentable else {
                                self?.outputs.didGetError.accept(NetworkError.badMapping)
                                return

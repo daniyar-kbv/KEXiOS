@@ -64,6 +64,20 @@ final class AddressListController: UIViewController, Reloadable {
         viewModel.outputs.reload
             .bind(to: citiesTableView.rx.reload)
             .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetAuthError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error) {
+                    self?.outputs.finishFlow.accept(())
+                }
+            })
+            .disposed(by: disposeBag)
     }
 
     @objc func reload() {
@@ -128,5 +142,6 @@ extension AddressListController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
         let didSelectAddress = PublishRelay<UserAddress>()
+        let finishFlow = PublishRelay<Void>()
     }
 }

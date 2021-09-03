@@ -72,7 +72,13 @@ final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
             .disposed(by: disposeBag)
 
         ordersRepository.outputs.didFail
-            .bind(to: outputs.didGetError)
+            .subscribe(onNext: { [weak self] error in
+                if (error as? NetworkError) == .unauthorized {
+                    self?.outputs.didGetAuthError.accept(error)
+                    return
+                }
+                self?.outputs.didGetError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 }
@@ -81,7 +87,8 @@ extension OrderHistoryViewModelImpl {
     struct Output {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
-        let didGetError = PublishRelay<ErrorPresentable?>()
+        let didGetError = PublishRelay<ErrorPresentable>()
+        let didGetAuthError = PublishRelay<ErrorPresentable>()
         let didGetOrders = PublishRelay<Void>()
     }
 }

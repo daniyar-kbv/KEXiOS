@@ -35,6 +35,12 @@ final class AddressListCoordinator: BaseCoordinator {
             self?.openDetail(userAddress: userAddress)
         }).disposed(by: disposeBag)
 
+        listPage.outputs.finishFlow
+            .subscribe(onNext: { [weak self] in
+                self?.router.popToRootViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+
         listPage.hidesBottomBarWhenPushed = true
         router.push(viewController: listPage, animated: true)
     }

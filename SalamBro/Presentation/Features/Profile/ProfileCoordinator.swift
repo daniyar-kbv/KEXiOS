@@ -75,6 +75,12 @@ final class ProfileCoordinator: BaseCoordinator {
             })
             .disposed(by: disposeBag)
 
+        changeUserInfoPage.outputs.finishFlow
+            .subscribe(onNext: { [weak self] in
+                self?.router.pop(animated: true)
+            })
+            .disposed(by: disposeBag)
+
         router.push(viewController: changeUserInfoPage, animated: true)
     }
 
