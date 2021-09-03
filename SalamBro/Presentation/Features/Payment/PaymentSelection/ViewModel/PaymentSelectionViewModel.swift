@@ -43,6 +43,7 @@ final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
         self.defaultStorage = defaultStorage
 
         bindRepository()
+        bindNotificationCenter()
         setValues()
     }
 }
@@ -119,6 +120,15 @@ extension PaymentSelectionViewModelImpl {
             .bind(to: outputs.showApplePay)
             .disposed(by: disposeBag)
     }
+
+    private func bindNotificationCenter() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.unauthorize.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.outputs.finishFlow.accept(())
+            })
+            .disposed(by: disposeBag)
+    }
 }
 
 extension PaymentSelectionViewModelImpl {
@@ -137,5 +147,6 @@ extension PaymentSelectionViewModelImpl {
         let hide3DS = PublishRelay<Void>()
         let showApplePay = PublishRelay<PKPaymentAuthorizationViewController>()
         let didMakePayment = PublishRelay<Void>()
+        let finishFlow = PublishRelay<Void>()
     }
 }

@@ -147,7 +147,6 @@ extension PaymentSelectionViewController: PKPaymentAuthorizationViewControllerDe
 
 extension PaymentSelectionViewController: Reloadable {
     func reload() {
-        print("reload evoked")
         viewModel.reload()
     }
 }

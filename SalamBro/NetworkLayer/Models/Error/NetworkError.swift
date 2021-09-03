@@ -39,3 +39,5 @@ struct ErrorResponse: Codable, ErrorPresentable {
         #endif
     }
 }
+
+struct EmptyError: Error {}

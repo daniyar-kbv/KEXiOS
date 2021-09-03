@@ -246,8 +246,7 @@ extension PaymentRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
-    private func orderStatusFlatMapClosure(_ orderStatus: OrderStatusProtocol) -> Single<String> {
-        defaultStorage.persist(isPaymentProcess: false)
+    private func orderStatusFlatMapClosure(_ orderStatus: PaymentStatus) -> Single<String> {
         switch orderStatus.determineStatus() {
         case .completed:
             return authorizedApplyService.authorizedApplyOrder()
@@ -270,15 +269,50 @@ extension PaymentRepositoryImpl {
                                         object: leadUUID)
         NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
                                         object: ())
+        defaultStorage.persist(isPaymentProcess: false)
         outputs.didEndPaymentRequest.accept(())
         outputs.didMakePayment.accept(())
     }
 
     private func paymentOnFailure(_ error: Error) {
-        outputs.didEndPaymentRequest.accept(())
         guard let error = error as? ErrorPresentable else { return }
+
+        outputs.didEndPaymentRequest.accept(())
         defaultStorage.persist(isPaymentProcess: false)
+
+        if let error = error as? ErrorResponse {
+            switch error.code {
+            case Constants.ErrorCode.orderAlreadyPaid:
+                getNewLead()
+            case Constants.ErrorCode.notFound:
+                return
+            default:
+                break
+            }
+        }
+
         outputs.didGetError.accept(error)
+    }
+
+    private func getNewLead() {
+        outputs.didStartRequest.accept(())
+        authorizedApplyService.authorizedApplyOrder()
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: { [weak self] leadUUID in
+                NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
+                                                object: leadUUID)
+                NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
+                                                object: ())
+                self?.outputs.didEndRequest.accept(())
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else {
+                    self?.outputs.didGetError.accept(NetworkError.badMapping)
+                    return
+                }
+                self?.outputs.didGetError.accept(error)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -328,7 +362,7 @@ extension PaymentRepositoryImpl {
 //  MARK: - 3DS
 
 extension PaymentRepositoryImpl: ThreeDsDelegate {
-    private func show3DS(orderStatus: OrderStatusProtocol) {
+    private func show3DS(orderStatus: PaymentStatus) {
         guard let paReq = orderStatus.paReq,
               let acsUrl = orderStatus.acsURL else { return }
 
@@ -390,6 +424,4 @@ extension PaymentRepositoryImpl {
 
         let didMakePayment = PublishRelay<Void>()
     }
-
-    struct EmptyError: Error {}
 }

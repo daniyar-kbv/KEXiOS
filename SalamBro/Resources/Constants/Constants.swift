@@ -36,6 +36,8 @@ struct Constants {
 
     enum ErrorCode {
         static let orderAlreadyExists = "order_already_exists"
+        static let orderAlreadyPaid = "order_already_paid"
+        static let notFound = "not_found"
     }
 
     enum StatusCode {
