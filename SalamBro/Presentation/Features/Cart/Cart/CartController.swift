@@ -124,7 +124,8 @@ extension CartController {
 
         showAlert(title: SBLocalization.localized(key: CartText.Cart.UnavailabilityAlert.alertTitle),
                   message: SBLocalization.localized(key:
-                      CartText.Cart.UnavailabilityAlert.alertMessage))
+                      CartText.Cart.UnavailabilityAlert.alertMessage),
+                  actions: [])
     }
 }
 
