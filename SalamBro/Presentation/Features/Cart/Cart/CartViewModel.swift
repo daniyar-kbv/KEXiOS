@@ -92,7 +92,7 @@ extension CartViewModelImpl {
     }
 
     func hasUnavailableProducts() -> Bool {
-        return true
+        return cart.hasUnavailableProducts
     }
 }
 
