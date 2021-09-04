@@ -46,10 +46,10 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
         repository.outputs.didFail
             .subscribe(onNext: { [weak self] error in
                 if (error as? NetworkError) == .unauthorized {
-                    self?.outputs.didFailAuth.accept(())
+                    self?.outputs.didFailAuth.accept(error)
                     return
                 }
-                self?.outputs.didFail.accept(())
+                self?.outputs.didFail.accept(error)
             })
             .disposed(by: disposeBag)
 
