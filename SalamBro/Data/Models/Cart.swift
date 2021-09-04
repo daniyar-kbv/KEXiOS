@@ -11,11 +11,13 @@ struct Cart: Codable {
     var items: [CartItem]
     let price: Double
     var positionsCount: Int
+    var hasUnavailableProducts: Bool
 
     enum CodingKeys: String, CodingKey {
         case price
         case items = "positions"
         case positionsCount = "positions_count"
+        case hasUnavailableProducts = "has_unavailable_positions"
     }
 }
 
@@ -87,12 +89,14 @@ struct CartPosition: Codable, Equatable {
     var price: Double?
     var categoryUUID: String?
     var isAdditional: Bool
+    var isAvailable: Bool
     var description: String?
 
     enum CodingKeys: String, CodingKey {
         case uuid, name, image, price, description
         case categoryUUID = "category"
         case isAdditional = "is_additional"
+        case isAvailable = "is_available"
     }
 
     static func == (lhs: Self, rhs: Self) -> Bool {

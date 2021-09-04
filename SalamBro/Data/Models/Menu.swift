@@ -109,6 +109,7 @@ extension MenuPositionDetail {
                 price: price,
                 categoryUUID: categoryUUID,
                 isAdditional: false,
+                isAvailable: true,
                 description: description
             ),
             modifierGroups: modifierGroups
@@ -124,7 +125,8 @@ extension MenuPositionDetail {
                                         uuid: modifier.uuid,
                                         name: modifier.name,
                                         image: modifier.image,
-                                        isAdditional: true
+                                        isAdditional: true,
+                                        isAvailable: true
                                     ),
                                     count: modifier.itemCount
                                 )
@@ -147,6 +149,7 @@ extension AdditionalPosition {
                 price: Double(price),
                 categoryUUID: categoryUUID,
                 isAdditional: true,
+                isAvailable: true,
                 description: ""
             ),
             modifierGroups: []

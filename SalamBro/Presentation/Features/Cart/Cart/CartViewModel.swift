@@ -34,7 +34,7 @@ final class CartViewModelImpl: CartViewModel {
     private let cartRepository: CartRepository
     private let tokenStorage: AuthTokenStorage
 
-    private var cart: Cart = .init(items: [], price: 0, positionsCount: 0)
+    private var cart: Cart = .init(items: [], price: 0, positionsCount: 0, hasUnavailableProducts: false)
     private var cartItems: [CartItem] = []
     private var additionalItems: [CartItem] = []
     private var cartAdditionals: [CartItem] = []
@@ -92,7 +92,8 @@ extension CartViewModelImpl {
     }
 
     func hasUnavailableProducts() -> Bool {
-        return true
+        print("here \(cart)")
+        return cart.hasUnavailableProducts
     }
 }
 

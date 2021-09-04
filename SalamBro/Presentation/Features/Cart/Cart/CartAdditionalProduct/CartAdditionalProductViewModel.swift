@@ -50,7 +50,7 @@ extension CartAdditionalProductViewModelImpl {
             itemTitle = .init(value: item.position.name)
             price = .init(value: "\((item.position.price ?? 0).formattedWithSeparator) ₸")
             count = .init(value: String(item.count))
-            isAvailable = .init(value: true)
+            isAvailable = .init(value: item.position.isAvailable)
         }
     }
 }
