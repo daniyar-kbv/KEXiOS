@@ -250,7 +250,8 @@ extension CartAdditionalProductCell {
     }
 
     private func updateAvailability(to isAvailable: Bool) {
-        deleteButton.isHidden = isAvailable
+        deleteButton.isHidden = !viewModel.isInUsersCart()
+
         unavailableLabel.isHidden = isAvailable
         increaseButton.isHidden = !isAvailable
         decreaseButton.isHidden = !isAvailable

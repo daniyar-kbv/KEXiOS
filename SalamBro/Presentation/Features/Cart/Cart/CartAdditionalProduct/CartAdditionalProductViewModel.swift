@@ -14,6 +14,7 @@ protocol CartAdditionalProductViewModel: CartCellViewModel {
     var outputs: CartAdditionalProductViewModelImpl.Output { get }
 
     func getItem() -> CartItem
+    func isInUsersCart() -> Bool
 }
 
 final class CartAdditionalProductViewModelImpl: CartAdditionalProductViewModel {
@@ -30,6 +31,10 @@ final class CartAdditionalProductViewModelImpl: CartAdditionalProductViewModel {
 
     func getItem() -> CartItem {
         return inputs.item
+    }
+
+    func isInUsersCart() -> Bool {
+        return cartRepository.getLocalCart().items.contains(inputs.item)
     }
 }
 
