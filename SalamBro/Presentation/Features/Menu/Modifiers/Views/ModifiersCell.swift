@@ -20,6 +20,8 @@ final class ModifiersCell: UICollectionViewCell {
         view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -97,13 +99,17 @@ final class ModifiersCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        itemImageView.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+    }
+
     func configure(modifier: Modifier, index: Int) {
         if let url = modifier.image {
             if let imageURL = URL(string: url) {
                 itemImageView.setImage(url: imageURL)
             }
-        } else {
-            itemImageView.image = nil
         }
 
         itemTitleLabel.text = modifier.name

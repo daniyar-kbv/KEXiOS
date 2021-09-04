@@ -70,10 +70,11 @@ extension SBSubmitButton {
         case emptyRed
         case emptyBlack
         case emptyGray
+        case whiteGray
 
         var borderWidth: CGFloat {
             switch self {
-            case .filledRed: return 0
+            case .filledRed, .whiteGray: return 0
             case .emptyRed, .emptyBlack, .emptyGray: return 1
             }
         }
@@ -82,20 +83,19 @@ extension SBSubmitButton {
             switch state {
             case .normal:
                 switch self {
-                case .filledRed: return .kexRed
+                case .filledRed, .whiteGray: return .kexRed
                 case .emptyRed, .emptyBlack, .emptyGray: return .clear
                 }
             case .highlighted:
                 switch self {
-                case .filledRed: return .darkRed
-                case .emptyRed: return .darkRed
+                case .filledRed, .emptyRed, .whiteGray: return .darkRed
                 case .emptyBlack: return .darkGray
                 case .emptyGray: return .mildBlue
                 }
             case .disabled:
                 switch self {
                 case .filledRed: return .calmGray
-                case .emptyRed, .emptyBlack, .emptyGray: return .clear
+                case .emptyRed, .emptyBlack, .emptyGray, .whiteGray: return .clear
                 }
             default:
                 return .clear
@@ -106,7 +106,7 @@ extension SBSubmitButton {
             switch state {
             case .normal:
                 switch self {
-                case .filledRed: return .arcticWhite
+                case .filledRed, .whiteGray: return .arcticWhite
                 case .emptyRed: return .kexRed
                 case .emptyBlack: return .darkGray
                 case .emptyGray: return .mildBlue
@@ -118,6 +118,7 @@ extension SBSubmitButton {
                 case .filledRed: return .arcticWhite
                 case .emptyRed, .emptyBlack, .emptyGray:
                     return getTitleColor(for: .normal).withAlphaComponent(0.5)
+                case .whiteGray: return .mildBlue
                 }
             default:
                 return .clear
@@ -128,7 +129,7 @@ extension SBSubmitButton {
             switch state {
             case .normal, .highlighted:
                 switch self {
-                case .filledRed: return nil
+                case .filledRed, .whiteGray: return nil
                 case .emptyRed: return .kexRed
                 case .emptyBlack: return .darkGray
                 case .emptyGray: return .mildBlue

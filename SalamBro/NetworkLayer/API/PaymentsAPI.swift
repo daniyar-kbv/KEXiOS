@@ -18,7 +18,7 @@ enum PaymentsAPI {
 
 extension PaymentsAPI: TargetType {
     var baseURL: URL {
-        return devBaseUrl
+        return Constants.URLs.APIBase.dev
     }
 
     var path: String {

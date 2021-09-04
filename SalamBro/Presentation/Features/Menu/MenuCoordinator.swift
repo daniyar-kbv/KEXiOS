@@ -116,6 +116,14 @@ final class MenuCoordinator: BaseCoordinator {
     func openPromotion(promotionURL: URL, name: String?) {
         let promotionsPage = pagesFactory.makePromotionsPage(url: promotionURL, name: name)
 
+        promotionsPage.outputs.toAuth
+            .subscribe(onNext: { [weak self] in
+                self?.startAuthCoordinator { [weak promotionsPage] in
+                    promotionsPage?.didAuthirize()
+                }
+            })
+            .disposed(by: disposeBag)
+
         router.getNavigationController().setNavigationBarHidden(false, animated: true)
 
         router.push(viewController: promotionsPage, animated: true)
@@ -136,9 +144,15 @@ final class MenuCoordinator: BaseCoordinator {
         let authCoordinator = coordinatorsFactory.makeAuthCoordinator()
         router.getNavigationController().setNavigationBarHidden(false, animated: true)
 
+        let topViewController = router.getNavigationController().topViewController
         add(authCoordinator)
 
-        authCoordinator.didFinish = { [weak self, weak authCoordinator] in
+        authCoordinator.didFinish = { [weak self,
+                                       weak authCoordinator,
+                                       weak topViewController] in
+            if let topViewController = topViewController {
+                self?.router.pop(to: topViewController, animated: true)
+            }
             self?.remove(authCoordinator)
         }
 

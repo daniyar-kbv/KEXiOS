@@ -7,8 +7,6 @@
 
 import Moya
 
-let devBaseUrl = URL(string: "http://185.111.106.12:8000")!
-
 enum LocationAPI {
     case getAllCountries
     case getCities(countryId: Int)
@@ -18,7 +16,7 @@ enum LocationAPI {
 
 extension LocationAPI: TargetType {
     var baseURL: URL {
-        return devBaseUrl
+        return Constants.URLs.APIBase.dev
     }
 
     var path: String {

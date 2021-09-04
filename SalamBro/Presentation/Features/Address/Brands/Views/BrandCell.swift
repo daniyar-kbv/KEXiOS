@@ -13,9 +13,12 @@ final class BrandCell: UICollectionViewCell, Reusable {
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
+        view.backgroundColor = .arcticWhite
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -60,14 +63,20 @@ final class BrandCell: UICollectionViewCell, Reusable {
 
     public required init?(coder _: NSCoder) { nil }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+    }
+
     func configure(brand: Brand) {
         guard let status = brand.isAvailable else { return }
         configure(imageURLStr: brand.image)
         configure(isAvailable: status)
     }
 
-    private func configure(imageURLStr: String) {
-        guard let imageUrl = URL(string: imageURLStr) else { return }
+    private func configure(imageURLStr: String?) {
+        guard let imageUrl = URL(string: imageURLStr ?? "") else { return }
         imageView.setImage(url: imageUrl)
     }
 

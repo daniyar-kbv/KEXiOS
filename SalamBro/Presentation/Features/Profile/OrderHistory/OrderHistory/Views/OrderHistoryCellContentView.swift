@@ -18,6 +18,8 @@ final class OrderHistoryCellContentView: UIView {
 
     private lazy var logoView: UIImageView = {
         let view = UIImageView()
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -157,6 +159,11 @@ final class OrderHistoryCellContentView: UIView {
         rateOrderButton.addTarget(self, action: #selector(rateOrder), for: .touchUpInside)
     }
 
+    func setDefaultLogo() {
+        logoView.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+    }
+
     private func layoutUI() {
         [logoView, orderInfoStack, shareToInstagramButton].forEach {
             addSubview($0)
@@ -235,7 +242,7 @@ final class OrderHistoryCellContentView: UIView {
     }
 
     func configure(with item: OrdersList) {
-        if let imageURL = URL(string: item.brand.image) {
+        if let imageURL = URL(string: item.brand.image ?? "") {
             logoView.setImage(url: imageURL)
         }
 
@@ -265,7 +272,8 @@ final class OrderHistoryCellContentView: UIView {
     }
 
     private func configureItems(with items: [CartItem], deliveryPrice: Double, totalSum: Double) {
-        guard itemStack.arrangedSubviews.isEmpty else { return }
+        itemStack.arrangedSubviews
+            .forEach { $0.removeFromSuperview() }
 
         items.forEach { item in
             var title = "\(item.count)x \(item.position.name)"

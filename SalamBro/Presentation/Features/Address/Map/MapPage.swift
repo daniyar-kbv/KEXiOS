@@ -60,7 +60,8 @@ final class MapPage: UIViewController, LoaderDisplayable {
 extension MapPage: LocationManagerDelegate {
     func askUserForPermission() {
         showAlert(title: SBLocalization.localized(key: AddressText.Map.LocationAlert.title),
-                  message: SBLocalization.localized(key: AddressText.Map.LocationAlert.message))
+                  message: SBLocalization.localized(key: AddressText.Map.LocationAlert.message),
+                  completion: nil)
     }
 
     func didChangeLocation(latitude: Double, longtitude: Double) {

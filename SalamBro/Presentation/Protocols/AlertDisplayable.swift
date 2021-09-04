@@ -10,14 +10,15 @@ import UIKit
 protocol AlertDisplayable: AnyObject {
     func showError(_ error: ErrorPresentable)
     func showError(_ error: ErrorPresentable, completion: @escaping () -> Void)
-    func showAlert(title: String, message: String?, submitTitle: String, completion: @escaping () -> Void)
+    func showAlert(title: String, message: String?, submitTitle: String, completion: (() -> Void)?)
     func showAlert(title: String, message: String?, actions: [UIAlertAction])
 }
 
 extension UIViewController: AlertDisplayable {
     func showError(_ error: ErrorPresentable) {
         showAlert(title: SBLocalization.localized(key: AlertText.errorTitle),
-                  message: error.presentationDescription)
+                  message: error.presentationDescription,
+                  completion: nil)
     }
 
     func showError(_ error: ErrorPresentable, completion: @escaping () -> Void) {
@@ -30,11 +31,11 @@ extension UIViewController: AlertDisplayable {
     func showAlert(title: String,
                    message: String?,
                    submitTitle: String = SBLocalization.localized(key: AlertText.ok),
-                   completion: @escaping () -> Void = {})
+                   completion: (() -> Void)?)
     {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: submitTitle, style: .default) { _ in
-            completion()
+            completion?()
         }
         alertController.addAction(action)
 

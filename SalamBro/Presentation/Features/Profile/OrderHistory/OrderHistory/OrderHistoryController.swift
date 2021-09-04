@@ -34,8 +34,8 @@ final class OrderHistoryController: UIViewController, LoaderDisplayable {
         view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
         view.refreshControl = refreshControl
         view.delaysContentTouches = false
+        view.estimatedRowHeight = 400
         return view
-
     }()
 
     private lazy var refreshControl: UIRefreshControl = {
@@ -62,11 +62,6 @@ final class OrderHistoryController: UIViewController, LoaderDisplayable {
         super.viewDidLoad()
         layoutUI()
         bindViewModel()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
         viewModel.update()
     }
 }
@@ -128,7 +123,7 @@ extension OrderHistoryController {
 
 extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        viewModel.orders.count
+        return viewModel.orders.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -136,6 +131,10 @@ extension OrderHistoryController: UITableViewDelegate, UITableViewDataSource {
         cell.delegate = self
         cell.configure(with: viewModel.orders[indexPath.row])
         return cell
+    }
+
+    func tableView(_: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
+        viewModel.loadMoreDataIfNeeded(for: indexPath.row)
     }
 }
 

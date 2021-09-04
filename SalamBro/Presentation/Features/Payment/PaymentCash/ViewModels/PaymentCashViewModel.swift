@@ -21,7 +21,7 @@ final class PaymentCashViewModelImpl: PaymentCashViewModel {
     private let paymentRepository: PaymentRepository
     private var paymentMethod: PaymentMethod
     private var price: Double = 2770
-    private var change: Int = 0
+    private var change: Int?
 
     lazy var outputs = Output(price: price)
 
@@ -45,7 +45,7 @@ final class PaymentCashViewModelImpl: PaymentCashViewModel {
         guard let changeStr = change?.replacingOccurrences(of: " ", with: ""),
               let change = Int(changeStr)
         else {
-            self.change = 0
+            self.change = nil
             outputs.needChange.accept(false)
             outputs.isLessThanPrice.accept(false)
             return

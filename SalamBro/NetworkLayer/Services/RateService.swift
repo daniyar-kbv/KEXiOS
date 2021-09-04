@@ -42,7 +42,7 @@ final class RateServiceImpl: RateService {
                     throw NetworkError.badMapping
                 }
 
-                return rates.results
+                return rates
             }
     }
 

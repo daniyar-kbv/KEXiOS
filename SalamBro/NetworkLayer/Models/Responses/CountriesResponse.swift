@@ -8,13 +8,6 @@
 import Foundation
 
 struct CountriesResponse: Decodable {
-    let data: ResponseData?
+    let data: [Country]?
     let error: ErrorResponse?
-
-    struct ResponseData: Decodable {
-        let count: Int
-        let next: Int?
-        let previous: Int?
-        let results: [Country]
-    }
 }

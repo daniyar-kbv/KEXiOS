@@ -230,7 +230,9 @@
 		0F3F7C2106BAF8059894F208EB6DF4C1 /* Promocode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC704D5ACC15F44FDC980B1A4D6337D /* Promocode.swift */; };
 		F5296374884BC79D60EC021455BFAF3F /* PromocodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E31DF6AD0BC8AB0D6125D829A1CCA0 /* PromocodeResponse.swift */; };
 		E82C0C971A2D81F1DB77B8B3DB283825 /* Promotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */; };
+		2012E2648A3AD4A2000F6E0D9BF17B61 /* PromotionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A04A0A1C3236176AA506058A2C4DC /* PromotionsController.swift */; };
 		91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */; };
+		DFB7240F01011057B587DDFC2088B801 /* PromotionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6768BB84000FAFBCAFBD95B804E2D62F /* PromotionsViewModel.swift */; };
 		C14F742DCAFAC7971F7E3C76E7303E05 /* PushNotificationsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */; };
 		AD8CE2AD0CB755170CD5CC960D7D5CDC /* PushNotificationsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */; };
 		3AE7C8AEC851E7B7ED23B3A6F002D941 /* PushNotificationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F178F78BC6BC7A15130B516809ABED08 /* PushNotificationsRepository.swift */; };
@@ -601,7 +603,9 @@
 		3AC704D5ACC15F44FDC980B1A4D6337D /* Promocode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promocode.swift; sourceTree = "<group>"; };
 		77E31DF6AD0BC8AB0D6125D829A1CCA0 /* PromocodeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromocodeResponse.swift; sourceTree = "<group>"; };
 		5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promotion.swift; sourceTree = "<group>"; };
+		FB5A04A0A1C3236176AA506058A2C4DC /* PromotionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsController.swift; sourceTree = "<group>"; };
 		9F22FF28DBB6BD34C103920586A76E0B /* PromotionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsResponse.swift; sourceTree = "<group>"; };
+		6768BB84000FAFBCAFBD95B804E2D62F /* PromotionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsViewModel.swift; sourceTree = "<group>"; };
 		DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsAPI.swift; sourceTree = "<group>"; };
 		13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsDTO.swift; sourceTree = "<group>"; };
 		F178F78BC6BC7A15130B516809ABED08 /* PushNotificationsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsRepository.swift; sourceTree = "<group>"; };
@@ -747,6 +751,15 @@
 				E1D08A7040F61CF9CB70BD22F11FC77B /* ReachabilityManager.swift */,
 			);
 			path = Reachability;
+			sourceTree = "<group>";
+		};
+		0582628447A2C3D6D7963A88527B569C /* Promotions */ = {
+			isa = PBXGroup;
+			children = (
+				FB5A04A0A1C3236176AA506058A2C4DC /* PromotionsController.swift */,
+				6768BB84000FAFBCAFBD95B804E2D62F /* PromotionsViewModel.swift */,
+			);
+			path = Promotions;
 			sourceTree = "<group>";
 		};
 		064730B27BC86F67D4AB452AD6B1ADCD /* API */ = {
@@ -2102,6 +2115,7 @@
 				40873E249CF718A160358EDC842B0644 /* Menu */,
 				33F480AB963478A1793B59DD5A8D95DD /* MenuDetail */,
 				2D6249D187A471E342EAA585BB889667 /* Modifiers */,
+				0582628447A2C3D6D7963A88527B569C /* Promotions */,
 				AFD0C58DD4D9535CA606320DDE12BE18 /* MenuCoordinator.swift */,
 			);
 			path = Menu;
@@ -2342,7 +2356,7 @@
 				4C7EAF6205E790C561FC9532C28380B4 /* Resources */,
 				8AF21AEFE17B7B2D0FE8A5822920D1B5 /* [CP] Embed Pods Frameworks */,
 				9661D946FD185ADB45999E3C99B320DA /* [CP] Copy Pods Resources */,
-				ABB979D377D0D354E3F2CB42CBB92EBE /* [Crashlytics] dSYM files upload */,
+				ABB979D377D0D354E3F2CB42CBB92EBE /* [Crashlytics] Upload dSYM files */,
 			);
 			buildRules = (
 			);
@@ -2478,6 +2492,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		ABB979D377D0D354E3F2CB42CBB92EBE /* [Crashlytics] Upload dSYM files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[Crashlytics] Upload dSYM files";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
 		6AD09E5E35A3DEB76BC248E09C267F82 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2533,26 +2567,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		ABB979D377D0D354E3F2CB42CBB92EBE /* [Crashlytics] dSYM files upload */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "[Crashlytics] dSYM files upload";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		AF8C389205F0CDB75427EF1F9D3B0CDB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2848,7 +2862,9 @@
 				0F3F7C2106BAF8059894F208EB6DF4C1 /* Promocode.swift in Sources */,
 				F5296374884BC79D60EC021455BFAF3F /* PromocodeResponse.swift in Sources */,
 				E82C0C971A2D81F1DB77B8B3DB283825 /* Promotion.swift in Sources */,
+				2012E2648A3AD4A2000F6E0D9BF17B61 /* PromotionsController.swift in Sources */,
 				91DBE828918B5F053DC1AD89D17A69E3 /* PromotionsResponse.swift in Sources */,
+				DFB7240F01011057B587DDFC2088B801 /* PromotionsViewModel.swift in Sources */,
 				C14F742DCAFAC7971F7E3C76E7303E05 /* PushNotificationsAPI.swift in Sources */,
 				AD8CE2AD0CB755170CD5CC960D7D5CDC /* PushNotificationsDTO.swift in Sources */,
 				3AE7C8AEC851E7B7ED23B3A6F002D941 /* PushNotificationsRepository.swift in Sources */,
@@ -3106,7 +3122,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3114,7 +3130,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.40;
+				MARKETING_VERSION = 0.0.48;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3176,7 +3192,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 48;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
@@ -3185,7 +3201,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.40;
+				MARKETING_VERSION = 0.0.48;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

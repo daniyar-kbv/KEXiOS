@@ -196,7 +196,8 @@ extension PaymentRepositoryImpl {
                                                 paymentType: paymentType,
                                                 cryptogram: card.cryptogram,
                                                 cardholderName: card.cardholderName,
-                                                keepCard: card.keepCard)
+                                                keepCard: card.keepCard,
+                                                changeFor: nil)
 
         outputs.didStartPaymentRequest.accept(())
         paymentService.createOrder(dto: createOrderDTO)
@@ -217,7 +218,8 @@ extension PaymentRepositoryImpl {
                                                 paymentType: paymentType,
                                                 cryptogram: nil,
                                                 cardholderName: nil,
-                                                keepCard: nil)
+                                                keepCard: nil,
+                                                changeFor: selectedPaymentMethod?.getValue())
 
         outputs.didStartPaymentRequest.accept(())
         paymentService.createOrder(dto: createOrderDTO)
@@ -236,13 +238,14 @@ extension PaymentRepositoryImpl {
         case .awaitingAuthentication:
             show3DS(orderStatus: orderStatus)
             outputs.didEndPaymentRequest.accept(())
-            return .never()
+            return .error(EmptyError())
         default:
             outputs.didEndPaymentRequest.accept(())
-            guard let statusReason = orderStatus.statusReason else { return .never() }
+            guard let statusReason = orderStatus.statusReason else {
+                return .error(NetworkError.badMapping)
+            }
             let error = ErrorResponse(code: orderStatus.status, message: statusReason)
-            outputs.didGetError.accept(error)
-            return .never()
+            return .error(error)
         }
     }
 
@@ -279,7 +282,8 @@ extension PaymentRepositoryImpl {
                                                 paymentType: paymentType,
                                                 cryptogram: cryptogram,
                                                 cardholderName: "",
-                                                keepCard: nil)
+                                                keepCard: nil,
+                                                changeFor: nil)
         outputs.didStartPaymentRequest.accept(())
         paymentService.createOrder(dto: createOrderDTO)
             .flatMap { [unowned self] in paymentService.createPayment(dto: createPaymentDTO) }
@@ -336,9 +340,9 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
 
     func onAuthorizationCompleted(with md: String, paRes: String) {
         outputs.hide3DS.accept(())
+        threeDsProcessor = nil
         guard let paymentUUID = paymentUUID else { return }
         send3DS(paymentUUID: paymentUUID, paRes: paRes, transactionId: md)
-        threeDsProcessor = nil
         self.paymentUUID = nil
     }
 
@@ -369,4 +373,6 @@ extension PaymentRepositoryImpl {
 
         let didMakePayment = PublishRelay<Void>()
     }
+
+    struct EmptyError: Error {}
 }

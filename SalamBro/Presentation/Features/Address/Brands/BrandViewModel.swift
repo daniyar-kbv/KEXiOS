@@ -81,6 +81,7 @@ final class BrandViewModel: BrandViewModelProtocol {
             .bind {
                 [weak self] brands in
                 self?.brands = brands
+                self?.outputs.didRefreshCollectionView.accept(())
                 self?.outputs.didGetBrands.accept(())
             }
             .disposed(by: disposeBag)
@@ -90,8 +91,6 @@ final class BrandViewModel: BrandViewModelProtocol {
         for index in 0 ..< brands.count {
             ratios.append(cellSizeSequence[index % cellSizeSequence.count].ratio)
         }
-
-        outputs.didGetBrands.accept(())
     }
 }
 
@@ -103,6 +102,7 @@ extension BrandViewModel {
         let toMap = PublishRelay<UserAddress>()
         let didFail = PublishRelay<ErrorPresentable>()
         let didEndRequest = PublishRelay<Void>()
+        let didRefreshCollectionView = PublishRelay<Void>()
     }
 }
 

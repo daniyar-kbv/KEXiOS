@@ -14,6 +14,8 @@ final class CartProductCell: UITableViewCell {
     private lazy var productImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
+        view.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -137,6 +139,12 @@ final class CartProductCell: UITableViewCell {
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        productImageView.image =
+            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
     }
 }
 

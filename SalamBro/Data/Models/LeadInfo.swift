@@ -10,7 +10,7 @@ import Foundation
 struct LeadInfo: Decodable {
     let cart: Cart
     let address: Address
-    let brandImage: String
+    let brandImage: String?
     let brandName: String
 
     enum CodingKeys: String, CodingKey {

@@ -14,6 +14,8 @@ protocol MenuRepository: AnyObject {
 
     func getMenuItems()
     func openPromotion(by id: Int)
+
+    func getPromotionsVerificationURL() -> String?
 }
 
 final class MenuRepositoryImpl: MenuRepository {
@@ -24,6 +26,8 @@ final class MenuRepositoryImpl: MenuRepository {
     private let storage: DefaultStorage
 
     private var menuData = MenuData()
+
+    private var promotionsVerificationURL: String?
 
     init(menuService: MenuService,
          ordersService: OrdersService,
@@ -49,7 +53,12 @@ final class MenuRepositoryImpl: MenuRepository {
         guard let leadUUID = storage.leadUUID else { return }
 
         outputs.didStartRequest.accept(())
-        menuService.getPromotionDetail(for: leadUUID, by: id)
+
+        menuService.getPromotions(leadUUID: leadUUID)
+            .flatMap { [unowned self] promotionResult -> Single<Promotion> in
+                promotionsVerificationURL = promotionResult.verificationURL
+                return menuService.getPromotionDetail(for: leadUUID, by: id)
+            }
             .subscribe { [weak self] promotion in
                 self?.process(promotion: promotion)
                 self?.outputs.didEndRequest.accept(())
@@ -82,7 +91,7 @@ extension MenuRepositoryImpl {
 
     private func process(promotion: Promotion) {
         guard let url = URL(string: promotion.link ?? "") else { return }
-        outputs.openPromotion.accept((url, promotion.name))
+        outputs.openPromotion.accept((promotion.id, url, promotion.name))
     }
 
     private func getLeadInfo() {
@@ -102,8 +111,8 @@ extension MenuRepositoryImpl {
 
         menuService.getPromotions(leadUUID: leadUUID)
             .subscribe(onSuccess: {
-                [weak self] promotions in
-                self?.menuData.add(data: promotions, type: .promotions)
+                [weak self] promotionResult in
+                self?.process(promotionResult: promotionResult)
             }, onError: { [weak self] error in
                 self?.process(error: error, type: .promotions)
             }).disposed(by: disposeBag)
@@ -121,6 +130,11 @@ extension MenuRepositoryImpl {
             }).disposed(by: disposeBag)
     }
 
+    private func process(promotionResult: PromotionResult) {
+        promotionsVerificationURL = promotionResult.verificationURL
+        menuData.add(data: promotionResult.promotions, type: .promotions)
+    }
+
     private func process(error: Error, type: RequestType) {
         menuData.add(type: type)
         guard let error = error as? ErrorPresentable else { return }
@@ -135,6 +149,12 @@ extension MenuRepositoryImpl {
 }
 
 extension MenuRepositoryImpl {
+    func getPromotionsVerificationURL() -> String? {
+        return promotionsVerificationURL
+    }
+}
+
+extension MenuRepositoryImpl {
     struct Output {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
@@ -144,7 +164,9 @@ extension MenuRepositoryImpl {
                                        promotions: [Promotion]?,
                                        categories: [MenuCategory]?)>()
 
-        let openPromotion = PublishRelay<(url: URL, name: String)>()
+        let openPromotion = PublishRelay<(id: Int, url: URL, name: String)>()
+
+        let participationVerified = PublishRelay<Void>()
     }
 
     enum RequestType: CaseIterable {
