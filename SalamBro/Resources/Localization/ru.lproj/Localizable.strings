@@ -58,6 +58,10 @@
 "CartFooter.deliveryLabel" = "Доставка";
 "CartFooter.deliveryPrice" = "%@ ₸";
 
+// MARK: - UnavailabilityAlert
+"Cart.alertTitle" = "Внимание";
+"Cart.alertMessage" = "Некоторые товары недоступны";
+
 // MARK: - CartProductCell
 "CartProductCell.deleteButton.title" = "Удалить";
 "CartProductCell.availability.title" = "Товар недоступен";

@@ -73,7 +73,7 @@ final class CartProductCell: UITableViewCell {
         return view
     }()
 
-    private lazy var descreaseButton: UIButton = {
+    private lazy var decreaseButton: UIButton = {
         let button = UIButton()
         button.borderWidth = 1
         button.borderColor = .mildBlue
@@ -190,15 +190,15 @@ extension CartProductCell {
             $0.bottom.equalToSuperview().offset(-19)
         }
 
-        stackView = UIStackView(arrangedSubviews: [descreaseButton, countLabel, increaseButton])
+        stackView = UIStackView(arrangedSubviews: [decreaseButton, countLabel, increaseButton])
 
-        descreaseButton.snp.makeConstraints {
+        decreaseButton.snp.makeConstraints {
             $0.top.left.bottom.equalToSuperview()
             $0.width.equalTo(30)
         }
 
         countLabel.snp.makeConstraints {
-            $0.left.equalTo(descreaseButton.snp.right)
+            $0.left.equalTo(decreaseButton.snp.right)
             $0.top.equalTo(stackView).offset(1)
             $0.right.equalTo(increaseButton.snp.left)
             $0.bottom.equalTo(stackView).offset(-1)
@@ -278,18 +278,18 @@ extension CartProductCell {
     }
 
     private func updateAvailability(to isAvailable: Bool) {
-        if isAvailable {
-            deleteButton.isHidden = true
-            unavailableLabel.isHidden = true
-        } else {
-            stackView.isHidden = true
-            deleteButton.isHidden = false
-            unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.ProductCell.availability)
-            productTitleLabel.alpha = 0.5
-            subitemLabel.alpha = 0.5
-            priceLabel.isHidden = true
-            productImageView.alpha = 0.5
-        }
+        deleteButton.isHidden = isAvailable
+        unavailableLabel.isHidden = isAvailable
+        increaseButton.isHidden = !isAvailable
+        decreaseButton.isHidden = !isAvailable
+        countLabel.isHidden = !isAvailable
+        priceLabel.isHidden = !isAvailable
+
+        productTitleLabel.alpha = isAvailable ? 1 : 0.25
+        subitemLabel.alpha = isAvailable ? 1 : 0.25
+        productImageView.alpha = isAvailable ? 1 : 0.25
+
+        unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.ProductCell.availability)
     }
 
     @objc private func increaseItemButton() {

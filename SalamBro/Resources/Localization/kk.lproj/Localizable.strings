@@ -57,6 +57,10 @@
 "CartFooter.deliveryLabel" = "KZ Доставка";
 "CartFooter.deliveryPrice" = "KZ %@ ₸";
 
+// MARK: - UnavailabilityAlert
+"Cart.alertTitle" = "KZ Внимание";
+"Cart.alertMessage" = "KZ Некоторые товары недоступны";
+
 // MARK: - CartProductCell
 "CartProductCell.deleteButton.title" = "KZ Удалить";
 "CartProductCell.availability.title" = "KZ Товар недоступен";

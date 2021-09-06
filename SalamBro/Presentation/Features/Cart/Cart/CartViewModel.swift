@@ -25,6 +25,8 @@ protocol CartViewModel {
     func cell(for indexPath: IndexPath) -> UITableViewCell
 
     func proceedButtonTapped()
+
+    func hasUnavailableProducts() -> Bool
 }
 
 final class CartViewModelImpl: CartViewModel {
@@ -32,7 +34,7 @@ final class CartViewModelImpl: CartViewModel {
     private let cartRepository: CartRepository
     private let tokenStorage: AuthTokenStorage
 
-    private var cart: Cart = .init(items: [], price: 0, positionsCount: 0)
+    private var cart: Cart = .init(items: [], price: 0, positionsCount: 0, hasUnavailableProducts: false)
     private var cartItems: [CartItem] = []
     private var additionalItems: [CartItem] = []
     private var cartAdditionals: [CartItem] = []
@@ -87,6 +89,10 @@ extension CartViewModelImpl {
         guard let promocode = promocode,
               !promocode.isEmpty else { return }
         cartRepository.applyPromocode(promocode)
+    }
+
+    func hasUnavailableProducts() -> Bool {
+        return cart.hasUnavailableProducts
     }
 }
 

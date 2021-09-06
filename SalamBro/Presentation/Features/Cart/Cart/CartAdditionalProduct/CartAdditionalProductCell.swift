@@ -58,7 +58,7 @@ final class CartAdditionalProductCell: UITableViewCell {
         return view
     }()
 
-    private lazy var descreaseButton: UIButton = {
+    private lazy var decreaseButton: UIButton = {
         let button = UIButton()
         button.borderWidth = 1
         button.borderColor = .mildBlue
@@ -192,15 +192,15 @@ extension CartAdditionalProductCell {
             $0.bottom.equalToSuperview().offset(-24)
         }
 
-        stackView = UIStackView(arrangedSubviews: [descreaseButton, countLabel, increaseButton])
+        stackView = UIStackView(arrangedSubviews: [decreaseButton, countLabel, increaseButton])
 
-        descreaseButton.snp.makeConstraints {
+        decreaseButton.snp.makeConstraints {
             $0.top.left.bottom.equalToSuperview()
             $0.width.equalTo(30)
         }
 
         countLabel.snp.makeConstraints {
-            $0.left.equalTo(descreaseButton.snp.right)
+            $0.left.equalTo(decreaseButton.snp.right)
             $0.top.equalTo(stackView).offset(1)
             $0.right.equalTo(increaseButton.snp.left)
             $0.bottom.equalTo(stackView).offset(-1)
@@ -245,34 +245,31 @@ extension CartAdditionalProductCell {
         bottomSeparator.snp.makeConstraints {
             $0.bottom.equalToSuperview()
             $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(0.24)
+            $0.height.equalTo(0.5)
         }
     }
 
     private func updateAvailability(to isAvailable: Bool) {
-        if isAvailable {
-            deleteButton.isHidden = true
-            unavailableLabel.isHidden = true
-        } else {
-            stackView.isHidden = true
-            deleteButton.isHidden = false
-            unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.ProductCell.availability)
-            productTitleLabel.alpha = 0.5
-            priceLabel.isHidden = true
-            productImageView.alpha = 0.5
-        }
+        deleteButton.isHidden = isAvailable ? isAvailable : !viewModel.isInUsersCart()
+
+        unavailableLabel.isHidden = isAvailable
+        increaseButton.isHidden = !isAvailable
+        decreaseButton.isHidden = !isAvailable
+        countLabel.isHidden = !isAvailable
+        priceLabel.isHidden = !isAvailable
+
+        productTitleLabel.alpha = isAvailable ? 1 : 0.25
+        productImageView.alpha = isAvailable ? 1 : 0.25
+
+        unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.ProductCell.availability)
     }
 
     private func configureButton(for count: String) {
-        if count != "0" {
-            increaseButton.backgroundColor = .kexRed
-            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusWhite), for: .normal)
-            increaseButton.borderColor = .clear
-        } else {
-            increaseButton.backgroundColor = .arcticWhite
-            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusGray), for: .normal)
-            increaseButton.borderColor = .mildBlue
-        }
+        increaseButton.backgroundColor = count != "0" ? .kexRed : .arcticWhite
+        increaseButton.borderColor = count != "0" ? .clear : .mildBlue
+
+        let imageType = count != "0" ? CartIcons.Cart.plusWhite : CartIcons.Cart.plusGray
+        increaseButton.setBackgroundImage(SBImageResource.getIcon(for: imageType), for: .normal)
     }
 }
 

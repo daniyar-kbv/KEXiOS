@@ -14,6 +14,7 @@ protocol CartAdditionalProductViewModel: CartCellViewModel {
     var outputs: CartAdditionalProductViewModelImpl.Output { get }
 
     func getItem() -> CartItem
+    func isInUsersCart() -> Bool
 }
 
 final class CartAdditionalProductViewModelImpl: CartAdditionalProductViewModel {
@@ -30,6 +31,10 @@ final class CartAdditionalProductViewModelImpl: CartAdditionalProductViewModel {
 
     func getItem() -> CartItem {
         return inputs.item
+    }
+
+    func isInUsersCart() -> Bool {
+        return cartRepository.getLocalCart().items.contains(inputs.item)
     }
 }
 
@@ -50,7 +55,7 @@ extension CartAdditionalProductViewModelImpl {
             itemTitle = .init(value: item.position.name)
             price = .init(value: "\((item.position.price ?? 0).formattedWithSeparator) ₸")
             count = .init(value: String(item.count))
-            isAvailable = .init(value: true)
+            isAvailable = .init(value: item.position.isAvailable)
         }
     }
 }

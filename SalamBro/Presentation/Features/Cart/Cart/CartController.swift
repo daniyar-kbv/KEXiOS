@@ -116,6 +116,13 @@ extension CartController {
 
         commentaryPage.openTransitionSheet(on: self)
     }
+
+    private func checkForUnavailableProducts() {
+        guard viewModel.hasUnavailableProducts() else { return }
+        orderButton.isEnabled = false
+
+        showAlert(title: SBLocalization.localized(key: CartText.Cart.UnavailabilityAlert.alertTitle), message: SBLocalization.localized(key: CartText.Cart.UnavailabilityAlert.alertMessage), completion: nil)
+    }
 }
 
 extension CartController {
@@ -160,6 +167,7 @@ extension CartController {
         viewModel.outputs.update
             .subscribe(onNext: { [weak self] in
                 self?.refreshControl.endRefreshing()
+                self?.checkForUnavailableProducts()
                 self?.update()
             }).disposed(by: disposeBag)
 
