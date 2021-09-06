@@ -199,7 +199,6 @@ extension CartViewModelImpl {
             if item.position.isAdditional {
                 if let ind = additionalItems.firstIndex(where: { $0.position.uuid == item.position.uuid }) {
                     additionalItems[ind].count = item.count
-                    additionalItems = additionalItems.filter { $0.position.isAvailable || $0.count > 0 }
                 }
             } else {
                 cartItems.append(item)
