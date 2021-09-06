@@ -66,6 +66,8 @@ final class AppCoordinator: BaseCoordinator {
 
             cartCoordinator.resumePayment()
         }
+
+        ReachabilityManagerImpl.shared.check()
     }
 
     private func configureCoordinators() {
