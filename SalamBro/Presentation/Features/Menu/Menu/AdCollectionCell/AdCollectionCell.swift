@@ -13,13 +13,14 @@ import UIKit
 final class AdCollectionCell: UITableViewCell {
     weak var delegate: AddCollectionCellDelegate?
 
-    private let collectionViewItemSize = CGSize(width: 312, height: 112)
+    private lazy var collectionViewItemWidth = UIScreen.main.bounds.width * (312 / 375)
+    private lazy var collectionViewItemHeight = collectionViewItemWidth * (112 / 312)
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = collectionViewItemSize
+        layout.itemSize = .init(width: collectionViewItemWidth, height: collectionViewItemHeight)
         collectionView.collectionViewLayout = layout
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = UIEdgeInsets(top: 16, left: 24, bottom: 8, right: 24)
@@ -100,7 +101,7 @@ extension AdCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource
 extension AdCollectionCell {
     private func scrollToClosestCell(_ scrollView: UIScrollView) {
         let targetContentOffset = scrollView.contentOffset.x
-        let itemWidth = collectionViewItemSize.width
+        let itemWidth = collectionViewItemWidth
         let contentInset = collectionView.contentInset.left
         let halfScreen = collectionView.frame.width / 2
 

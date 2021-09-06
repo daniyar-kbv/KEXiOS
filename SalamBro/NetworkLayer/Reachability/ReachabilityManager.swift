@@ -15,6 +15,7 @@ protocol ReachabilityManager: AnyObject {
 
     func start()
     func getReachability() -> Bool
+    func check()
 }
 
 final class ReachabilityManagerImpl: ReachabilityManager {
@@ -34,6 +35,10 @@ final class ReachabilityManagerImpl: ReachabilityManager {
 
     func getReachability() -> Bool {
         return resolveReachability(connection: reachability.connection)
+    }
+
+    func check() {
+        configNoInternetView(isReachable: getReachability())
     }
 
     private func configActions() {
