@@ -23,7 +23,9 @@ final class ApplicationPagesFactoryImpl: DependencyFactory, ApplicationPagesFact
     }
 
     private func makeSBTabbarViewModel() -> SBTabBarViewModel {
-        return shared(SBTabBarViewModelImpl(documentsRepository: repositoryComponents.makeDocumentsRepository(),
-                                            defaultStorage: DefaultStorageImpl.sharedStorage))
+        return shared(SBTabBarViewModelImpl(
+            documentsRepository: repositoryComponents.makeDocumentsRepository(),
+            defaultStorage: DefaultStorageImpl.sharedStorage
+        ))
     }
 }
