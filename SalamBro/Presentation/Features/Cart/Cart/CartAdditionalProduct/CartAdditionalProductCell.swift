@@ -245,7 +245,7 @@ extension CartAdditionalProductCell {
         bottomSeparator.snp.makeConstraints {
             $0.bottom.equalToSuperview()
             $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(0.24)
+            $0.height.equalTo(0.5)
         }
     }
 
