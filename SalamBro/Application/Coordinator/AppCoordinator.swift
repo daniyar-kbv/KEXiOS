@@ -56,6 +56,16 @@ final class AppCoordinator: BaseCoordinator {
         }
 
         showTabBarController()
+
+        if DefaultStorageImpl.sharedStorage.isPaymentProcess,
+           let cartTabIndex = tabBarBarTypes.firstIndex(of: .cart)
+        {
+            pagesFactory.makeSBTabbarController().selectedIndex = cartTabIndex
+
+            let cartCoordinator = appCoordinatorsFactory.makeCartCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+            cartCoordinator.resumePayment()
+        }
     }
 
     private func configureCoordinators() {

@@ -96,8 +96,10 @@ extension OrderHistoryController {
             }).disposed(by: disposeBag)
 
         viewModel.outputs.didGetAuthError
-            .subscribe(onNext: { [weak self] _ in
-                self?.finishFlow?()
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error) {
+                    self?.finishFlow?()
+                }
             })
             .disposed(by: disposeBag)
 

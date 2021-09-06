@@ -94,4 +94,11 @@ final class CartCoordinator: BaseCoordinator {
 
         paymentCoordinator.start()
     }
+
+    func resumePayment() {
+        startPaymentCoordinator()
+
+        let paymentCoordinator = childCoordinators.first(where: { $0 is PaymentCoordinator }) as? PaymentCoordinator
+        paymentCoordinator?.reloadPayment()
+    }
 }

@@ -35,11 +35,7 @@ final class RateOrderRepositoryImpl: RateOrderRepository {
                 self?.outputs.didGetRates.accept(rateResponse)
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFail.accept(error)
-                    return
-                }
-                self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
+                self?.process(error: error)
             })
             .disposed(by: disposeBag)
     }
@@ -53,13 +49,23 @@ final class RateOrderRepositoryImpl: RateOrderRepository {
                 self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFail.accept(error)
-                    return
-                }
-                self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
+                self?.process(error: error)
             })
             .disposed(by: disposeBag)
+    }
+
+    private func process(error: Error) {
+        guard let errorPresentable = error as? ErrorPresentable else {
+            outputs.didFail.accept(NetworkError.error(error.localizedDescription))
+            return
+        }
+
+        if (errorPresentable as? NetworkError) == .unauthorized {
+            outputs.didFailAuth.accept(errorPresentable)
+            return
+        }
+
+        outputs.didFail.accept(errorPresentable)
     }
 }
 
@@ -67,6 +73,7 @@ extension RateOrderRepositoryImpl {
     struct Output {
         let didGetRates = PublishRelay<[RateStarList]>()
         let didFail = PublishRelay<ErrorPresentable>()
+        let didFailAuth = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didSendRate = PublishRelay<Void>()
