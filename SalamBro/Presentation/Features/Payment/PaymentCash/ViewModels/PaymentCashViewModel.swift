@@ -19,17 +19,21 @@ protocol PaymentCashViewModel: AnyObject {
 final class PaymentCashViewModelImpl: PaymentCashViewModel {
     private let disposeBag = DisposeBag()
     private let paymentRepository: PaymentRepository
+    private let cartRepository: CartRepository
     private var paymentMethod: PaymentMethod
-    private var price: Double = 2770
     private var change: Int?
 
-    lazy var outputs = Output(price: price)
+    let outputs: Output
 
     init(paymentRepository: PaymentRepository,
+         cartRepository: CartRepository,
          paymentMethod: PaymentMethod)
     {
         self.paymentRepository = paymentRepository
+        self.cartRepository = cartRepository
         self.paymentMethod = paymentMethod
+
+        outputs = .init(price: cartRepository.getTotalAmount())
 
         bindRepository()
     }
@@ -55,7 +59,7 @@ final class PaymentCashViewModelImpl: PaymentCashViewModel {
         paymentMethod.set(value: change as Any)
 
         outputs.needChange.accept(true)
-        outputs.isLessThanPrice.accept(Double(change) <= price)
+        outputs.isLessThanPrice.accept(Double(change) <= cartRepository.getTotalAmount())
     }
 
     func submit() {

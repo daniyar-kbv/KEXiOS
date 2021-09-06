@@ -66,6 +66,7 @@ final class PaymentPagesFactoryImpl: DependencyFactory, PaymentPagesFactory {
     private func makePaymentCashViewModel(paymentMethod: PaymentMethod) -> PaymentCashViewModel {
         return scoped(PaymentCashViewModelImpl(
             paymentRepository: repositoryComponents.makePaymentRepository(),
+            cartRepository: repositoryComponents.makeCartRepository(),
             paymentMethod: paymentMethod
         ))
     }
