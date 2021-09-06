@@ -92,6 +92,14 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
                 self?.showError(error)
             }).disposed(by: disposeBag)
 
+        viewModel.outputs.didGetAuthError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error) {
+                    self?.outputs.finishFlow.accept(())
+                }
+            })
+            .disposed(by: disposeBag)
+
         viewModel.outputs.show3DS
             .bind(to: outputs.show3DS)
             .disposed(by: disposeBag)
@@ -145,6 +153,12 @@ extension PaymentSelectionViewController: PKPaymentAuthorizationViewControllerDe
     }
 }
 
+extension PaymentSelectionViewController: Reloadable {
+    func reload() {
+        viewModel.reload()
+    }
+}
+
 extension PaymentSelectionViewController {
     struct Output {
         let didStartPaymentRequest = PublishRelay<Void>()
@@ -156,5 +170,6 @@ extension PaymentSelectionViewController {
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()
         let didMakePayment = PublishRelay<Void>()
+        let finishFlow = PublishRelay<Void>()
     }
 }

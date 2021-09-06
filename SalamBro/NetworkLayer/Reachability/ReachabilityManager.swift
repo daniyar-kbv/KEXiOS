@@ -81,8 +81,14 @@ final class ReachabilityManagerImpl: ReachabilityManager {
                 self.reloadTopViewController()
             }
         } else {
-            UIApplication.topViewController()?.presentAnimationView(animationType: .noInternet) { [weak self] in
-                self?.reloadTopViewController()
+            guard let topViewController = UIApplication.topViewController() as? AnimationController
+            else {
+                UIApplication.topViewController()?.presentAnimationView(animationType: .noInternet, action: nil)
+                return
+            }
+            let underTopViewController = topViewController.presentingViewController
+            topViewController.presentingViewController?.dismiss(animated: false) {
+                underTopViewController?.presentAnimationView(animationType: .noInternet, action: nil)
             }
         }
     }

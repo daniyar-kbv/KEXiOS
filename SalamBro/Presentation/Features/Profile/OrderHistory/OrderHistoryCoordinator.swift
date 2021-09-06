@@ -41,6 +41,10 @@ final class OrderHistoryCoordinator: BaseCoordinator {
             self?.toMenu?()
         }
 
+        orderHistoryPage.finishFlow = { [weak self] in
+            self?.router.popToRootViewController(animated: true)
+        }
+
         orderHistoryPage.hidesBottomBarWhenPushed = true
         router.push(viewController: orderHistoryPage, animated: true)
     }
@@ -51,11 +55,20 @@ final class OrderHistoryCoordinator: BaseCoordinator {
         rateOrderPage.setOrderNumber(with: orderNumber)
 
         rateOrderPage.outputs.close
-            .subscribe(onNext: {
-                rateOrderPage.dismiss(animated: true)
+            .subscribe(onNext: { [weak rateOrderPage] in
+                rateOrderPage?.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
+        rateOrderPage.outputs.finishFlow
+            .subscribe(onNext: { [weak self, weak rateOrderPage] in
+                rateOrderPage?.dismiss(animated: true) {
+                    self?.router.popToRootViewController(animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
+
         rateOrderPage.modalPresentationStyle = .pageSheet
+
         let nav = SBNavigationController(rootViewController: rateOrderPage)
         router.present(nav, animated: true, completion: nil)
     }

@@ -86,6 +86,10 @@ final class RateViewModelImpl: RateViewModel {
             .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
 
+        repository.outputs.didFailAuth
+            .bind(to: outputs.didFailAuth)
+            .disposed(by: disposeBag)
+
         repository.outputs.didGetRates
             .bind { [weak self] rates in
                 self?.rateChoices = rates
@@ -109,6 +113,7 @@ extension RateViewModelImpl {
         let didGetQuestionTitle = PublishRelay<String>()
         let didGetSuggestionTitle = PublishRelay<String>()
         let didFail = PublishRelay<ErrorPresentable>()
+        let didFailAuth = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didSendRate = PublishRelay<Void>()

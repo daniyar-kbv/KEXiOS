@@ -68,6 +68,14 @@ extension ChangeNameController {
             }
             .disposed(by: disposeBag)
 
+        viewModel.outputs.didFailAuth
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error) {
+                    self?.outputs.finishFlow.accept(())
+                }
+            })
+            .disposed(by: disposeBag)
+
         viewModel.outputs.didGetUserInfo
             .bind(to: outputs.didGetUserInfo)
             .disposed(by: disposeBag)
@@ -75,6 +83,7 @@ extension ChangeNameController {
 
     struct Output {
         let didGetUserInfo = PublishRelay<Void>()
+        let finishFlow = PublishRelay<Void>()
     }
 }
 

@@ -37,6 +37,17 @@ final class AddressListViewModelImpl: AddressListViewModel {
                 self?.outputs.reload.accept(())
             })
             .disposed(by: disposeBag)
+
+        addressRepository.outputs.didFail
+            .subscribe(onNext: { [weak self] error in
+                if (error as? NetworkError) == .unauthorized {
+                    self?.outputs.didGetAuthError.accept(error)
+                    return
+                }
+
+                self?.outputs.didGetError.accept(error)
+            })
+            .disposed(by: disposeBag)
     }
 
     func getAddresses() {
@@ -47,5 +58,7 @@ final class AddressListViewModelImpl: AddressListViewModel {
 extension AddressListViewModelImpl {
     struct Output {
         let reload = PublishRelay<Void>()
+        let didGetError = PublishRelay<ErrorPresentable>()
+        let didGetAuthError = PublishRelay<ErrorPresentable>()
     }
 }

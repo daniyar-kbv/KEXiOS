@@ -46,7 +46,14 @@ extension AddressPickerViewModel {
     private func bindAddressRepository() {
         addressRepository.outputs
             .didFail
-            .bind(to: outputs.didGetError)
+            .subscribe(onNext: { [weak self] error in
+                if (error as? NetworkError) == .unauthorized {
+                    self?.outputs.didGetAuthError.accept(error)
+                    return
+                }
+
+                self?.outputs.didGetError.accept(error)
+            })
             .disposed(by: disposeBag)
 
         addressRepository.outputs
@@ -70,6 +77,7 @@ extension AddressPickerViewModel {
 extension AddressPickerViewModel {
     struct Output {
         let didGetError = PublishRelay<ErrorPresentable>()
+        let didGetAuthError = PublishRelay<ErrorPresentable>()
 
         let didSelectAddress = PublishRelay<UserAddress>()
         let onReload = PublishRelay<Void>()

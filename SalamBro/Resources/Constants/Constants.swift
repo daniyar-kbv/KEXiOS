@@ -36,6 +36,9 @@ struct Constants {
 
     enum ErrorCode {
         static let orderAlreadyExists = "order_already_exists"
+        static let orderAlreadyPaid = "order_already_paid"
+        static let notFound = "not_found"
+        static let terminalNotFound = "terminal_not_found"
     }
 
     enum StatusCode {
@@ -51,6 +54,7 @@ struct Constants {
         case clearCart
         case cart
         case userAddresses
+        case startFirstFlow
 
         var name: Notification.Name {
             switch self {
@@ -61,6 +65,7 @@ struct Constants {
             case .clearCart: return .init("ClearCart")
             case .cart: return .init("Cart")
             case .userAddresses: return .init("UserAddresses")
+            case .startFirstFlow: return .init("StartFirstFlow")
             }
         }
     }

@@ -44,7 +44,13 @@ final class ChangeNameViewModelImpl: ChangeNameViewModel {
             .disposed(by: disposeBag)
 
         repository.outputs.didFail
-            .bind(to: outputs.didFail)
+            .subscribe(onNext: { [weak self] error in
+                if (error as? NetworkError) == .unauthorized {
+                    self?.outputs.didFailAuth.accept(error)
+                    return
+                }
+                self?.outputs.didFail.accept(error)
+            })
             .disposed(by: disposeBag)
 
         repository.outputs.didGetUserInfo
@@ -59,6 +65,7 @@ extension ChangeNameViewModelImpl {
     struct Output {
         let didGetUserInfo = PublishRelay<Void>()
         let didFail = PublishRelay<ErrorPresentable>()
+        let didFailAuth = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
     }

@@ -66,27 +66,38 @@ final class AddressCoordinator: Coordinator {
     {
         let selectMainInfoPage = pagesFactory.makeSelectMainInfoPage(flowType: flowType)
 
-        selectMainInfoPage.outputs.didTerminate.subscribe(onNext: { [weak self] in
-            self?.didFinish?()
-        }).disposed(by: disposeBag)
+        selectMainInfoPage.outputs.didTerminate
+            .subscribe(onNext: { [weak self] in
+                self?.didFinish?()
+            }).disposed(by: disposeBag)
 
-        selectMainInfoPage.outputs.toMap.subscribe(onNext: { [weak self, weak selectMainInfoPage] params in
-            self?.openMap(userAddress: params.userAddress,
-                          params.onSelect,
-                          presentOn: selectMainInfoPage)
-        }).disposed(by: disposeBag)
+        selectMainInfoPage.outputs.toMap
+            .subscribe(onNext: { [weak self, weak selectMainInfoPage] params in
+                self?.openMap(userAddress: params.userAddress,
+                              params.onSelect,
+                              presentOn: selectMainInfoPage)
+            }).disposed(by: disposeBag)
 
-        selectMainInfoPage.outputs.toBrands.subscribe(onNext: { [weak self, weak selectMainInfoPage] cityId, onSelectBrand in
-            self?.openBrands(cityId: cityId, onSelectBrand, presentOn: selectMainInfoPage)
-        }).disposed(by: disposeBag)
+        selectMainInfoPage.outputs.toBrands
+            .subscribe(onNext: { [weak self, weak selectMainInfoPage] cityId, onSelectBrand in
+                self?.openBrands(cityId: cityId, onSelectBrand, presentOn: selectMainInfoPage)
+            }).disposed(by: disposeBag)
 
-        selectMainInfoPage.outputs.didSave.subscribe(onNext: { [weak selectMainInfoPage] in
-            selectMainInfoPage?.dismiss(animated: true)
-        }).disposed(by: disposeBag)
+        selectMainInfoPage.outputs.didSave
+            .subscribe(onNext: { [weak selectMainInfoPage] in
+                selectMainInfoPage?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
 
-        selectMainInfoPage.outputs.close.subscribe(onNext: { [weak selectMainInfoPage] in
-            selectMainInfoPage?.dismiss(animated: true)
-        }).disposed(by: disposeBag)
+        selectMainInfoPage.outputs.close
+            .subscribe(onNext: { [weak selectMainInfoPage] in
+                selectMainInfoPage?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+
+        selectMainInfoPage.outputs.finishFlow
+            .subscribe(onNext: { [weak selectMainInfoPage] in
+                selectMainInfoPage?.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
 
         let nav = SBNavigationController(rootViewController: selectMainInfoPage)
         presentOn?.present(nav, animated: true)

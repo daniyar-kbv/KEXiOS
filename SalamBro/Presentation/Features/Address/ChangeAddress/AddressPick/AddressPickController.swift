@@ -115,6 +115,14 @@ extension AddressPickController {
                 self?.showError(error)
             })
             .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetAuthError
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error) {
+                    self?.outputs.finishFlow.accept(())
+                }
+            })
+            .disposed(by: disposeBag)
     }
 
     private func addTapped() {
@@ -185,5 +193,6 @@ extension AddressPickController {
         let didAddTapped = PublishRelay<() -> Void>()
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()
+        let finishFlow = PublishRelay<Void>()
     }
 }

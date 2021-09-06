@@ -88,6 +88,14 @@ extension RateController {
             }
             .disposed(by: disposeBag)
 
+        viewModel.outputs.didFailAuth
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(error) {
+                    self?.outputs.finishFlow.accept(())
+                }
+            })
+            .disposed(by: disposeBag)
+
         viewModel.outputs.didGetQuestionTitle
             .bind { [weak self] title in
                 self?.rateView.configureQuestionLabel(title: title)
@@ -152,5 +160,6 @@ extension RateController: RateViewDelegate {
 extension RateController {
     struct Output {
         let close = PublishRelay<Void>()
+        let finishFlow = PublishRelay<Void>()
     }
 }

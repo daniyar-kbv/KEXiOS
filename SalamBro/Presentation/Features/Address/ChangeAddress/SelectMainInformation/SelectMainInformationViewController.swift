@@ -61,8 +61,13 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
         }).disposed(by: disposeBag)
 
         viewModel.outputs.didGetError.subscribe(onNext: { [weak self] error in
-            guard let error = error else { return }
             self?.showError(error)
+        }).disposed(by: disposeBag)
+
+        viewModel.outputs.didGetAuthError.subscribe(onNext: { [weak self] error in
+            self?.showError(error) {
+                self?.outputs.finishFlow.accept(())
+            }
         }).disposed(by: disposeBag)
 
         viewModel.outputs.updateTableView.bind(to: tableView.rx.reload).disposed(by: disposeBag)
@@ -283,5 +288,6 @@ extension SelectMainInformationViewController {
         let toBrands = PublishRelay<(Int, (_ brand: Brand) -> Void)>()
         let didSave = PublishRelay<Void>()
         let close = PublishRelay<Void>()
+        let finishFlow = PublishRelay<Void>()
     }
 }

@@ -14,9 +14,10 @@ protocol PaymentsService: AnyObject {
     func myCards() -> Single<[MyCard]>
     func deleteCard(uuid: String) -> Single<Void>
     func createOrder(dto: CreateOrderDTO) -> Single<Void>
-    func createPayment(dto: CreatePaymentDTO) -> Single<OrderStatus>
-    func createCardPayment(dto: CardPaymentDTO) -> Single<CardPaymentOrderStatus>
-    func confirm3DSPayment(dto: Create3DSPaymentDTO, paymentUUID: String) -> Single<OrderStatus>
+    func createPayment(dto: CreatePaymentDTO) -> Single<PaymentStatus>
+    func createCardPayment(dto: CardPaymentDTO) -> Single<PaymentStatus>
+    func confirm3DSPayment(dto: Create3DSPaymentDTO, paymentUUID: String) -> Single<PaymentStatus>
+    func getPaymentStatus(leadUUID: String) -> Single<PaymentStatus>
 }
 
 final class PaymentsServiceMoyaImpl: PaymentsService {
@@ -90,51 +91,45 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
             }
     }
 
-    func createPayment(dto: CreatePaymentDTO) -> Single<OrderStatus> {
+    func createPayment(dto: CreatePaymentDTO) -> Single<PaymentStatus> {
         return provider.rx
             .request(.createPayment(dto: dto))
-            .map { response in
-                guard let response = try? response.map(CreatePaymentResponse.self) else {
-                    throw NetworkError.badMapping
-                }
-
-                if let error = response.error {
-                    throw error
-                }
-
-                guard let status = response.data else {
-                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
-                }
-
-                return status
-            }
+            .map(mapPayment(response:))
     }
 
-    func createCardPayment(dto: CardPaymentDTO) -> Single<CardPaymentOrderStatus> {
+    func createCardPayment(dto: CardPaymentDTO) -> Single<PaymentStatus> {
         return provider.rx
             .request(.createCardPayment(dto: dto))
-            .map { response in
-                guard let response = try? response.map(CardPaymentResponse.self) else {
-                    throw NetworkError.badMapping
-                }
-
-                if let error = response.error {
-                    throw error
-                }
-
-                guard let status = response.data else {
-                    throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
-                }
-
-                return status
-            }
+            .map(mapPayment(response:))
     }
 
-    func confirm3DSPayment(dto: Create3DSPaymentDTO, paymentUUID: String) -> Single<OrderStatus> {
+    func confirm3DSPayment(dto: Create3DSPaymentDTO, paymentUUID: String) -> Single<PaymentStatus> {
         return provider.rx
             .request(.confirm3DSPayment(dto: dto, paymentUUID: paymentUUID))
+            .map(mapPayment(response:))
+    }
+
+    private func mapPayment(response: Response) throws -> PaymentStatus {
+        guard let response = try? response.map(PaymentResponse.self) else {
+            throw NetworkError.badMapping
+        }
+
+        if let error = response.error {
+            throw error
+        }
+
+        guard let status = response.data else {
+            throw NetworkError.error(SBLocalization.localized(key: ErrorText.Network.noData))
+        }
+
+        return status
+    }
+
+    func getPaymentStatus(leadUUID: String) -> Single<PaymentStatus> {
+        return provider.rx
+            .request(.paymentStatus(leadUUID: leadUUID))
             .map { response in
-                guard let response = try? response.map(CreatePaymentResponse.self) else {
+                guard let response = try? response.map(PaymentResponse.self) else {
                     throw NetworkError.badMapping
                 }
 

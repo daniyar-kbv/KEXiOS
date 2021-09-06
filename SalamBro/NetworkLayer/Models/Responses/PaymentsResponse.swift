@@ -12,9 +12,9 @@ struct CreateOrderResponse: Decodable {
     let error: ErrorResponse?
 }
 
-struct CreatePaymentResponse: Decodable {
-    let data: OrderStatus?
-    let error: ErrorResponse?
+struct PaymentResponse: Decodable {
+    var data: PaymentStatus?
+    var error: ErrorResponse?
 }
 
 struct MyCardsResponse: Decodable {
@@ -23,10 +23,5 @@ struct MyCardsResponse: Decodable {
 }
 
 struct DeleteCardResponse: Decodable {
-    let error: ErrorResponse?
-}
-
-struct CardPaymentResponse: Decodable {
-    let data: CardPaymentOrderStatus?
     let error: ErrorResponse?
 }

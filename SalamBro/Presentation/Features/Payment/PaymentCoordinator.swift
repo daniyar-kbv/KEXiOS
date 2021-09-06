@@ -20,6 +20,7 @@ final class PaymentCoordinator: BaseCoordinator {
     private let pagesFactory: PaymentPagesFactory
 
     private var threeDSController: ThreeDSViewController?
+    private weak var paymentSelectionVC: PaymentSelectionViewController?
 
     init(router: Router, pagesFactory: PaymentPagesFactory) {
         self.router = router
@@ -28,6 +29,8 @@ final class PaymentCoordinator: BaseCoordinator {
 
     override func start() {
         let paymentSelectionVC = pagesFactory.makePaymentSelectionPage()
+
+        self.paymentSelectionVC = paymentSelectionVC
 
         paymentSelectionVC.outputs.didTerminate
             .subscribe(onNext: { [weak self] in
@@ -70,6 +73,12 @@ final class PaymentCoordinator: BaseCoordinator {
                     self?.didMakePayment?()
                 })
             }).disposed(by: disposeBag)
+
+        paymentSelectionVC.outputs.finishFlow
+            .subscribe(onNext: { [weak paymentSelectionVC] in
+                paymentSelectionVC?.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
 
         let navigationVC = SBNavigationController(rootViewController: paymentSelectionVC)
         router.present(navigationVC, animated: true, completion: nil)
@@ -203,6 +212,10 @@ final class PaymentCoordinator: BaseCoordinator {
 
     private func hidePaymentInProcessView(on viewController: UIViewController?) {
         viewController?.dismissAnimationView()
+    }
+
+    func reloadPayment() {
+        paymentSelectionVC?.reload()
     }
 }
 

@@ -107,7 +107,15 @@ extension SelectMainInformationViewModel {
             .disposed(by: disposeBag)
 
         citiesRepository.outputs.didFail
-            .bind(to: outputs.didGetError)
+            .subscribe(onNext: { [weak self] error in
+                if (error as? NetworkError) == .unauthorized,
+                   self?.flowType == .changeBrand
+                {
+                    self?.outputs.didGetAuthError.accept(error)
+                    return
+                }
+                self?.outputs.didGetError.accept(error)
+            })
             .disposed(by: disposeBag)
 
         addressRepository.outputs.didStartRequest
@@ -249,7 +257,8 @@ extension SelectMainInformationViewModel {
     struct Output {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
-        let didGetError = PublishRelay<ErrorPresentable?>()
+        let didGetError = PublishRelay<ErrorPresentable>()
+        let didGetAuthError = PublishRelay<ErrorPresentable>()
 
         let didGetCountries = PublishRelay<[String]>()
         let didGetCities = PublishRelay<[String]>()
