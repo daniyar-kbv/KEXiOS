@@ -84,7 +84,6 @@ class CartController: UIViewController, LoaderDisplayable, Reloadable {
         super.viewWillAppear(animated)
 
         viewModel.reload()
-        checkForUnavailableProducts()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -168,6 +167,7 @@ extension CartController {
         viewModel.outputs.update
             .subscribe(onNext: { [weak self] in
                 self?.refreshControl.endRefreshing()
+                self?.checkForUnavailableProducts()
                 self?.update()
             }).disposed(by: disposeBag)
 

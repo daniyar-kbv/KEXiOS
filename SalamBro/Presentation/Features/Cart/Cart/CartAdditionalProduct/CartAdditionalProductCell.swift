@@ -250,7 +250,7 @@ extension CartAdditionalProductCell {
     }
 
     private func updateAvailability(to isAvailable: Bool) {
-        deleteButton.isHidden = !viewModel.isInUsersCart()
+        deleteButton.isHidden = isAvailable ? isAvailable : !viewModel.isInUsersCart()
 
         unavailableLabel.isHidden = isAvailable
         increaseButton.isHidden = !isAvailable
@@ -258,8 +258,8 @@ extension CartAdditionalProductCell {
         countLabel.isHidden = !isAvailable
         priceLabel.isHidden = !isAvailable
 
-        productTitleLabel.alpha = isAvailable ? 1 : 0.5
-        productImageView.alpha = isAvailable ? 1 : 0.5
+        productTitleLabel.alpha = isAvailable ? 1 : 0.25
+        productImageView.alpha = isAvailable ? 1 : 0.25
 
         unavailableLabel.text = SBLocalization.localized(key: CartText.Cart.ProductCell.availability)
     }
