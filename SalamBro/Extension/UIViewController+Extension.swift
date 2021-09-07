@@ -20,25 +20,17 @@ extension UIViewController {
 }
 
 extension UIViewController {
-    func checkForViewHeight() {
-        if view.frame.height <= 568 {
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowForAuth), name: UIResponder.keyboardWillShowNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHideForAuth), name: UIResponder.keyboardWillHideNotification, object: nil)
-        }
+    func addObserversForAuthFlow() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowForAuthFlow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHideForAuthFlow), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
-    func removeObservers() {
+    func removeObserversForAuthFlow() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
-    @objc func keyboardWillShowForAuth(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIApplication.shared.keyWindow?.frame.origin.y -= keyboardSize.height / 3
-        }
-    }
+    @objc func keyboardWillShowForAuthFlow(notification _: NSNotification) {}
 
-    @objc func keyboardWillHideForAuth(notification _: NSNotification) {
-        UIApplication.shared.keyWindow?.frame.origin.y = 0.0
-    }
+    @objc func keyboardWillHideForAuthFlow(notification _: NSNotification) {}
 }

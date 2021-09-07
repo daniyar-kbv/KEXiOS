@@ -38,8 +38,13 @@ final class SetNameController: UIViewController, LoaderDisplayable {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        addObserversForAuthFlow()
         rootView.showKeyboard()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removeObserversForAuthFlow()
     }
 
     private func bindViewModel() {
@@ -76,5 +81,19 @@ final class SetNameController: UIViewController, LoaderDisplayable {
 extension SetNameController: GetNameViewDelegate {
     func submit(name: String) {
         viewModel.persist(name: name)
+    }
+}
+
+extension SetNameController {
+    @objc override func keyboardWillShowForAuthFlow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if view.frame.height - rootView.nextButton.frame.maxY <= keyboardSize.height {
+                UIApplication.shared.keyWindow?.frame.origin.y -= keyboardSize.height / 3
+            }
+        }
+    }
+
+    @objc override func keyboardWillHideForAuthFlow(notification _: NSNotification) {
+        UIApplication.shared.keyWindow?.frame.origin.y = 0.0
     }
 }
