@@ -86,10 +86,16 @@ extension SetNameController: GetNameViewDelegate {
 
 extension SetNameController {
     @objc override func keyboardWillShowForAuthFlow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if view.frame.height - rootView.nextButton.frame.maxY <= keyboardSize.height {
-                UIApplication.shared.keyWindow?.frame.origin.y -= keyboardSize.height / 3
-            }
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+              let keyWindow = UIApplication.shared.keyWindow else { return }
+
+        let convertedFrame = rootView.nextButton.convert(rootView.nextButton.bounds, to: keyWindow)
+
+        let heightFromButton = keyWindow.frame.height - (convertedFrame.maxY + 15)
+        let difference = keyboardSize.height - heightFromButton
+
+        if difference > 0 {
+            UIApplication.shared.keyWindow?.frame.origin.y = -difference
         }
     }
 

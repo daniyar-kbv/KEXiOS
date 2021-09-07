@@ -117,11 +117,17 @@ extension VerificationController {
 
 extension VerificationController {
     @objc override func keyboardWillShowForAuthFlow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            guard let maxY = rootView?.getCodeButton.frame.maxY else { return }
-            if view.frame.height - maxY <= keyboardSize.height {
-                UIApplication.shared.keyWindow?.frame.origin.y -= keyboardSize.height / 3
-            }
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+              let keyWindow = UIApplication.shared.keyWindow,
+              let bounds = rootView?.getCodeButton.bounds,
+              let convertedFrame = rootView?.getCodeButton.convert(bounds, to: keyWindow)
+        else { return }
+
+        let heightFromButton = keyWindow.frame.height - (convertedFrame.maxY + 15)
+        let difference = keyboardSize.height - heightFromButton
+
+        if difference > 0 {
+            UIApplication.shared.keyWindow?.frame.origin.y = -difference
         }
     }
 
