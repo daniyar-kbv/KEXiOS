@@ -34,11 +34,11 @@ extension UIViewController {
 
     @objc func keyboardWillShowForAuth(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIApplication.shared.keyWindow?.frame.origin.y -= keyboardSize.height / 2
+            UIApplication.shared.keyWindow?.frame.origin.y -= keyboardSize.height / 3
         }
     }
 
     @objc func keyboardWillHideForAuth(notification _: NSNotification) {
-        UIApplication.shared.keyWindow?.frame.origin.y = 0
+        UIApplication.shared.keyWindow?.frame.origin.y = 0.0
     }
 }
