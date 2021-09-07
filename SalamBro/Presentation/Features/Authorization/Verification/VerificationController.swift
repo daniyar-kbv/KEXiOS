@@ -43,11 +43,13 @@ final class VerificationController: UIViewController, LoaderDisplayable {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        addObserversForAuthFlow()
         rootView?.showKeyboard()
     }
 
     override func viewDidDisappear(_: Bool) {
+        removeObserversForAuthFlow()
+
         rootView?.otpField.text = ""
         rootView?.otpField.clearLabels()
         rootView?.timer.invalidate()
@@ -110,5 +112,26 @@ extension VerificationController: VerificationViewDelegate {
 extension VerificationController {
     struct Output {
         let didFinish = PublishRelay<Bool>()
+    }
+}
+
+extension VerificationController {
+    @objc override func keyboardWillShowForAuthFlow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+              let keyWindow = UIApplication.shared.keyWindow,
+              let bounds = rootView?.getCodeButton.bounds,
+              let convertedFrame = rootView?.getCodeButton.convert(bounds, to: keyWindow)
+        else { return }
+
+        let heightFromButton = keyWindow.frame.height - (convertedFrame.maxY + 15)
+        let difference = keyboardSize.height - heightFromButton
+
+        if difference > 0 {
+            UIApplication.shared.keyWindow?.frame.origin.y = -difference
+        }
+    }
+
+    @objc override func keyboardWillHideForAuthFlow(notification _: NSNotification) {
+        UIApplication.shared.keyWindow?.frame.origin.y = 0.0
     }
 }

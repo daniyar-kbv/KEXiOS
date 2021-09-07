@@ -82,8 +82,13 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        addObserversForAuthFlow()
         numberView?.showKeyboard()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removeObserversForAuthFlow()
     }
 
     private func bindViewModel() {
@@ -194,5 +199,25 @@ extension AuthorizationController {
         let didCloseAuthFlow = PublishRelay<Void>()
         let handleChangeCountryCode = PublishRelay<Void>()
         let handleAgreementTextAction = PublishRelay<(URL, String)>()
+    }
+}
+
+extension AuthorizationController {
+    @objc override func keyboardWillShowForAuthFlow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+              let keyWindow = UIApplication.shared.keyWindow else { return }
+
+        let convertedFrame = getButton.convert(getButton.bounds, to: keyWindow)
+
+        let heightFromButton = keyWindow.frame.height - (convertedFrame.maxY + 15)
+        let difference = keyboardSize.height - heightFromButton
+
+        if difference > 0 {
+            UIApplication.shared.keyWindow?.frame.origin.y = -difference
+        }
+    }
+
+    @objc override func keyboardWillHideForAuthFlow(notification _: NSNotification) {
+        UIApplication.shared.keyWindow?.frame.origin.y = 0.0
     }
 }

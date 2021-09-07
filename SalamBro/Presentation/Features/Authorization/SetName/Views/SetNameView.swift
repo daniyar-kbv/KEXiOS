@@ -43,7 +43,7 @@ final class SetNameView: UIView {
         return field
     }()
 
-    private lazy var nextButton: SBSubmitButton = {
+    private(set) lazy var nextButton: SBSubmitButton = {
         let button = SBSubmitButton(style: .filledRed)
         button.setTitle(SBLocalization.localized(key: AuthorizationText.GetName.buttonTitle), for: .normal)
         button.addTarget(self, action: #selector(submitAction), for: .touchUpInside)
