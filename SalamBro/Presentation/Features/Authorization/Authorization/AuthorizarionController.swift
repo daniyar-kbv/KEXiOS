@@ -60,6 +60,7 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
 
     deinit {
         outputs.didCloseAuthFlow.accept(())
+        removeObservers()
     }
 
     @available(*, unavailable)
@@ -72,6 +73,7 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
         layoutUI()
         configureViews()
         bindViewModel()
+        checkForViewHeight()
     }
 
     override func viewWillAppear(_ animated: Bool) {
