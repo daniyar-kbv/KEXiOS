@@ -49,6 +49,12 @@ final class VerificationViewModel {
         authRepository.outputs.didFailOTP
             .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
+
+        authRepository.outputs.didGetUnregisteredUser
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.didFinish.accept(false)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func bindProfileRepository() {
