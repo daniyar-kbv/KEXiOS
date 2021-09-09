@@ -7,271 +7,271 @@
 */
 
 // MARK: - CountriesList
-"CountriesList.navigation.title" = "KZ Выберите страну";
+"CountriesList.navigation.title" = "Еліңізді таңдаңыз";
 
 // MARK: - CitiesList
-"CitiesList.navigation.title" = "KZ Выберите город";
+"CitiesList.navigation.title" = "Қалаңызды таңдаңыз";
 
 // MARK: - Brands
-"Brands.navigation.title" = "KZ Выберите бренд";
+"Brands.navigation.title" = "Брендті таңдаңыз";
 
 // MARK: - Authorization
-"Authorization.title" = "KZ Введите Ваш номер телефона";
-"Authorization.subtitle" = "KZ На этот номер придет подтверждающий СМС код";
-"Authorization.numberField.placeholder.title" = "KZ Номер телефона";
-"Authorization.agreement.inactive.title" = "KZ Продолжая, вы соглашаетесь со сбором, обработкой персональных данных и ";
-"Authorization.agreement.active.title" = "KZ Пользовательским соглашением";
-"Authorization.button.title" = "KZ Получить код";
+"Authorization.title" = "Телефон нөміріңізді енгізіңіз";
+"Authorization.subtitle" = "Осы нөмірге растау СМС коды жіберіледі";
+"Authorization.numberField.placeholder.title" = "Телефон нөміріңізді енгізіңіз";
+"Authorization.agreement.inactive.title" = "Жалғастырау арқылы сіз жеке мәліметтерді және";
+"Authorization.agreement.active.title" = " қолдану ережесіне қолдануға рұқсат бересіз";
+"Authorization.button.title" = "Кодты қабылдау";
 
 // MARK: - Verification
-"Verification.title" = "KZ Введите код из сообщения";
-"Verification.subtitle" = "KZ Мы отправили его на номер %@";
-"Verification.button.title" = "KZ Отправить повторно через: %@";
-"Verification.button.timeout" = "KZ Отправить код повторно";
+"Verification.title" = "Кодтағы смс-ті енгізіңіз";
+"Verification.subtitle" = "Біз оны осы нөмірге жібердік %@";
+"Verification.button.title" = "Кодты жіберу осы арқылы: %@";
+"Verification.button.timeout" = "Кодты қайта жіберу";
 
 // MARK: - CountryCodePicker
-"CountryCodePicker.navigation.title" = "KZ Выберите код страны";
+"CountryCodePicker.navigation.title" = "Еліңіздің кодын жіберіңіз";
 
 // MARK: - GetName
-"GetName.title" = "KZ Как Вас зовут?";
-"GetName.field.title" = "KZ Введите Ваше имя";
-"GetName.button.title" = "KZ Далее";
+"GetName.title" = "Есіміңіз кім?";
+"GetName.field.title" = "Есіміңізді енгізіңіз";
+"GetName.button.title" = "Әрі қарай";
 
 // MARK: - MainTab
-"MainTab.Menu.Title" = "KZ Меню";
-"MainTab.Profile.Title" = "KZ Профиль";
-"MainTab.Support.Title" = "KZ Помощь";
-"MainTab.Cart.Title" = "KZ Корзина";
+"MainTab.Menu.Title" = "Мәзір";
+"MainTab.Profile.Title" = "Профиль";
+"MainTab.Support.Title" = "Көмек";
+"MainTab.Cart.Title" = "Себет";
 
 // MARK: - Cart
-"Cart.section0.title" = "KZ %@ товаров на %@ ₸";
-"Cart.section1.title" = "KZ Дополнительные покупки";
-"Cart.section2.title" = "KZ Промокод: %@";
-"Cart.orderButton.title" = "KZ Оформить заказ на %@ ₸";
-"Cart.title" = "KZ Корзина";
+"Cart.section0.title" = "%@ тауарлар %@ ₸";
+"Cart.section1.title" = "Қосымша сатып алу";
+"Cart.section2.title" = "Промокод: %@";
+"Cart.orderButton.title" = "Заказды тіркеу %@ ₸";
+"Cart.title" = "Cебет";
 
 // MARK: - CartFooter
-"CartFooter.promocodeButton.title" = "KZ Ввести промокод";
-"CartFooter.productsPrice" = "KZ %@ ₸";
-"CartFooter.productsCount" = "KZ %@ товара";
-"CartFooter.deliveryLabel" = "KZ Доставка";
-"CartFooter.deliveryPrice" = "KZ %@ ₸";
+"CartFooter.promocodeButton.title" = "Промокодты еңгізу";
+"CartFooter.productsPrice" = "%@ ₸";
+"CartFooter.productsCount" = "%@ тауар";
+"CartFooter.deliveryLabel" = "Жеткізу";
+"CartFooter.deliveryPrice" = "%@ ₸";
 
 // MARK: - UnavailabilityAlert
 "Cart.alertTitle" = "KZ Внимание";
 "Cart.alertMessage" = "KZ Некоторые товары недоступны";
 
 // MARK: - CartProductCell
-"CartProductCell.deleteButton.title" = "KZ Удалить";
-"CartProductCell.availability.title" = "KZ Товар недоступен";
+"CartProductCell.deleteButton.title" = "Жою";
+"CartProductCell.availability.title" = "Тауар қолжетімсіз";
 
 // MARK: - CartAdditionalProductCell
-"CartAdditionalProductCell.deleteButton.title" = "KZ Удалить";
-"CartAdditionalProductCell.availability.title" = "KZ Товар недоступен";
+"CartAdditionalProductCell.deleteButton.title" = "Жою";
+"CartAdditionalProductCell.availability.title" = "Тауар қолжетімсіз";
 
 // MARK: - Profile
-"Profile.navigationBar.title" = "KZ Профиль";
-"Profile.editButton.title" = "KZ Изменить";
-"Profile.orderHistory" = "KZ История заказов";
-"Profile.changeLanguage" = "KZ Сменить язык приложения";
-"Profile.logoutButton.title" = "KZ Выйти из аккаунта";
-"Profile.deliveryAddress" = "KZ Адреса доставки";
-"Profile.Alert.title" = "KZ Вы уверены?";
-"Profile.Alert.message" = "KZ Вы уверены что хотите выйти из аккаунта?";
-"Profile.Alert.Action.yes" = "KZ Да";
-"Profile.Alert.Action.no" = "KZ Нет";
+"Profile.navigationBar.title" = "Профиль";
+"Profile.editButton.title" = "Өзгерту";
+"Profile.orderHistory" = "Тапсырыстар тарихы";
+"Profile.changeLanguage" = "Тілді ауыстыру";
+"Profile.logoutButton.title" = "Шығу";
+"Profile.deliveryAddress" = "Жеткізу мекен-жайы";
+"Profile.Alert.title" = "Сенімдісізбе?";
+"Profile.Alert.message" = "Аккаунттан шығуыңызға сенімдісізбе?";
+"Profile.Alert.Action.yes" = "Иә";
+"Profile.Alert.Action.no" = "Жоқ";
 
 // MARK: - ChangeName
-"ChangeName.navigationBar.title" = "KZ Изменить";
-"ChangeName.nameField.placeholder" = "KZ введите имя";
-"ChangeName.saveButton.title" = "KZ Сохранить";
-"ChangeName.nameLabel" = "KZ Имя";
-"ChangeName.emailLabel" = "KZ E-mail";
+"ChangeName.navigationBar.title" = "Өзгерту";
+"ChangeName.nameField.placeholder" = "Есіміңізді енгізіңіз";
+"ChangeName.saveButton.title" = "Сақтау";
+"ChangeName.nameLabel" = "Есіміңіз";
+"ChangeName.emailLabel" = "Почтаңыз";
 
 // MARK: - Map
-"MapView.addressField.title" = "KZ Адрес доставки";
-"MapView.commentaryLabel.title" = "KZ Комментарий (квартира, подъезд, ...)";
-"Commentary.addressField.title" =" Комментарий (квартира, подъезд, ...)";
-"MapView.proceedButton.title" = "KZ Перейти к заказу";
-"MapView.LocationAlert.title" = "KZ Службы определения местоположения отключены";
-"MapView.LocationAlert.message" = "KZ Пожалуйста, включите Службы определения местоположения в своих настройках";
+"MapView.addressField.title" = "Жеткізу мекен-жайы";
+"MapView.commentaryLabel.title" = "Пікір (пәтер, кіреберіс, ...)";
+"Commentary.addressField.title" = "Пікір (пәтер, кіреберіс, ...)";
+"MapView.proceedButton.title" = "Тапсырысқа өту";
+"MapView.LocationAlert.title" = "Мекен-жайыңызды анықтауға мүмкін емес";
+"MapView.LocationAlert.message" = "Мекен-жайыңызды анықтауға мүмкіндік беріңіз";
 
 // MARK: - Suggest
-"Suggest.addressField.title" = "KZ Введите адрес";
-"Suggest.button.title" = "KZ Отменить";
+"Suggest.addressField.title" = "Мекен-жайыңызды енгізіңіз";
+"Suggest.button.title" = "Бас тарту";
 
 // MARK: - Commentary
-"Commentary.button.title" = "KZ Готово";
+"Commentary.button.title" = "Дайын";
 
 // MARK: - RateOrder
-"RateOrder.title" = "KZ Оцените заказ";
-"RateOrder.submitButton.title" = "KZ Отправить";
-"RateOrder.commentaryField.placeholder" = "KZ Добавить комментарий";
-"RateOrder.title" = "KZ Оцените заказ";
-"RateOrder.description" = "KZ Ваша оценка поможет улучшить качество нашей доставки";
+"RateOrder.title" = "Тапсырысты бағалаңыз";
+"RateOrder.submitButton.title" = "Жібері";
+"RateOrder.commentaryField.placeholder" = "Пікір қосу";
+"RateOrder.title" = "Тапсырысты бағалау";
+"RateOrder.description" = "Сіздің бағаңыз жеткізу қызметінің сапасын жақсартады";
 
 // MARK: - AddressPickCell
-"AddressPickCell.changeButton" = "KZ Изменить";
-"AddressPickCell.deliverLabel" = "KZ Доставим на:";
+"AddressPickCell.changeButton" = "Өзгерту";
+"AddressPickCell.deliverLabel" = "Жеткізу жері";
 
 // MARK: - Menu
 "Menu.unavailable" = "KZ Будет позже";
 
 // MARK: - MenuDetail
-"MenuDetail.proceedButton" = "KZ В корзину за %@ ₸";
-"MenuDetail.commentaryField" = "KZ Комментарий к блюду";
-"MenuDetail.chooseAdditionalItemButton" = "KZ Изменить";
-"MenuDetail.required" = "KZ Обязательно";
-"MenuDetail.choose" = "KZ Выберите";
-"MenuDetail.position" = "KZ позиция";
-"MenuDetail.positionLessOrEqualFour" = "KZ позиции";
-"MenuDetail.positionGreaterThanFour" = "KZ позиций";
-"MenuDetail.additional" = "KZ Дополнительно";
-"MenuDetail.max" = "KZ макс.";
-"MenuDetail.chooseAdditional" = "KZ Выберите дополнения";
-"MenuDetail.added" = "KZ Добавлено";
+"MenuDetail.proceedButton" = "Себетке жіберу %@ ₸";
+"MenuDetail.commentaryField" = "Тағамға пікір жазу";
+"MenuDetail.chooseAdditionalItemButton" = "Өзгерту";
+"MenuDetail.required" = "Міндетті түрде";
+"MenuDetail.choose" = "Таңдаңыз";
+"MenuDetail.position" = "Позиция";
+"MenuDetail.positionLessOrEqualFour" = "Позиция";
+"MenuDetail.positionGreaterThanFour" = "Позиция";
+"MenuDetail.additional" = "Қосымша";
+"MenuDetail.max" = "Максимальді";
+"MenuDetail.chooseAdditional" = "Қосымшаны таңдаңыз";
+"MenuDetail.added" = "Қосылды";
 
 // MARK: - Support
-"Support.title" = "KZ Помощь";
-"Support.callcenter" = "KZ Позвонить в Call-центр";
+"Support.title" = "Көмек";
+"Support.callcenter" = "Қоңырау шалу";
 
 // MARK: - ChangeLanguage
-"ChangeLanguage.title" = "KZ Язык приложения";
-"ChangeLanguage.kazakh" = "KZ Казахский";
-"ChangeLanguage.russian" = "KZ Русский";
-"ChangeLanguage.english" = "KZ Английский";
+"ChangeLanguage.title" = "Тілді таңдау";
+"ChangeLanguage.kazakh" = "Қазақша";
+"ChangeLanguage.russian" = "Орысша";
+"ChangeLanguage.english" = "Ағылшынша";
 
 // MARK: - OrderHistory
-"OrderHistory.title" = "KZ История заказов";
-"OrderHistory.shipping" = "KZ Доставка";
-"OrderHistory.sum" = "KZ Итого";
-"OrderHistory.deliveryAddress" = "KZ Адрес доставки";
-"OrderHistory.paymentDetails" = "KZ Детали оплаты";
-"OrderHistory.orderStatus" = "KZ Статус заказа";
-"OrderHistory.sendBill" = "KZ Отправить чек на почту";
-"OrderHistory.rateOrder" = "KZ Оценить заказ";
-"OrderHistory.repeatOrder" = "KZ Повторить заказ";
-"OrderHistory.cancelOrder" = "KZ Отменить заказ";
-"OrderHistory.new" = "KZ Новый";
-"OrderHistory.paid" = "KZ Оплачен";
-"OrderHistory.cooking" = "KZ Готовится";
-"OrderHistory.inDelivery" = "KZ В пути";
-"OrderHistory.issued" = "KZ Доставлен";
-"OrderHistory.failure" = "KZ Отменен";
+"OrderHistory.title" = "Тапсырыстар тарихы";
+"OrderHistory.shipping" = "Жеткізу қызметы";
+"OrderHistory.sum" = "Жалпы";
+"OrderHistory.deliveryAddress" = "Мекен-жай";
+"OrderHistory.paymentDetails" = "Төлеу  егжейлері";
+"OrderHistory.orderStatus" = "Тапсырыс статусы";
+"OrderHistory.sendBill" = "Чекті почтаға жібері";
+"OrderHistory.rateOrder" = "Тапсырысты бағалау";
+"OrderHistory.repeatOrder" = "Тапсырысты қайталау";
+"OrderHistory.cancelOrder" = "Тапсырыстан бас тарту";
+"OrderHistory.new" = "Жаңа";
+"OrderHistory.paid" = "Төленді";
+"OrderHistory.cooking" = "Дайындық үстінде";
+"OrderHistory.inDelivery" = "Жолда";
+"OrderHistory.issued" = "Тапсырылды";
+"OrderHistory.failure" = "Тапсырыстан бас тартылды";
 
 // MARK: - Select Main Info
-"select_main_info.country" = "KZ Страна";
-"select_main_info.country.placeholder" = "KZ Выберите страну";
-"select_main_info.city" = "KZ Город";
-"select_main_info.city.placeholder" = "KZ Выберите город";
-"select_main_info.address" = "KZ Адрес";
-"select_main_info.address.placeholder" = "KZ Введите адрес";
-"select_main_info.brand" = "KZ Бренд";
-"select_main_info.brand.placeholder" = "KZ Выберите бренд";
-"select_main_info.title" = "KZ Адрес доставки";
-"select_main_info.description" = "KZ Наличие или отсутствие того или иного бренда - зависит от Вашего адреса доставки";
-"select_main_info.save" = "KZ Сохранить";
-"select_main_info.alert.title" = "KZ Вы уверены?";
-"select_main_info.alert.body.address" = "KZ Если Вы сейчас смените адрес, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить адрес?";
+"select_main_info.country" = "Ел";
+"select_main_info.country.placeholder" = "Еліңізді таңдаңыз";
+"select_main_info.city" = "Қала";
+"select_main_info.city.placeholder" = "Еліңізді таңдаңыз";
+"select_main_info.address" = "Мекен-жай";
+"select_main_info.address.placeholder" = "Мекен-жайыңызды таңдаңыз";
+"select_main_info.brand" = "Бренд";
+"select_main_info.brand.placeholder" = "Брендті таңдау";
+"select_main_info.title" = "Тапсырыс мекен-жайы";
+"select_main_info.description" = "Белгілі бір брендтің болуы немесе болмауы сіздің жеткізу мекенжайыңызға байланысты";
+"select_main_info.save" = "Сақтау";
+"select_main_info.alert.title" = "Сенімдісізбе?";
+"select_main_info.alert.body.address" = "Егер мекен-жайыңызды өзгертсеңіз, сақталынған өнімдерді жоғалтып аласыз. Мекен-жайыңызды өзгертуге сенімдісізбе?";
 "select_main_info.alert.body.brand" = "KZ Если Вы сейчас смените бренд, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить бренд?";
-"select_main_info.alert.action.yes" = "KZ Да";
-"select_main_info.alert.action.no" = "KZ Нет";
+"select_main_info.alert.action.yes" = "Иә";
+"select_main_info.alert.action.no" = "Жоқ";
 
 // MARK: - Address Picker
-"address_picker.add" = "KZ Добавить новый адрес";
+"address_picker.add" = "Жаңа мекен-жайды енгізу";
 
 // MARK: - AddressList
-"address_picker.titleMany" = "KZ Адреса доставки";
+"address_picker.titleMany" = "Жеткізу мекен-жайы";
 
 // MARK: - AddressDetail
-"address_picker.titleOne" = "KZ Адрес доставки";
-"AddressDetail.commentaryTitleLabel" = "KZ Комментарий";
-"AddressDetail.Alert.title" = "KZ Вы уверены?";
-"AddressDetail.Alert.message" = "KZ Вы уверены что хотите удалить адрес доставки?";
-"AddressDetail.Alert.Action.yes" = "KZ Да";
-"AddressDetail.Alert.Action.no" = "KZ Нет";
+"address_picker.titleOne" = "Жеткізу мекен-жайы";
+"AddressDetail.commentaryTitleLabel" = "Пікір";
+"AddressDetail.Alert.title" = "Сенімдісізбе?";
+"AddressDetail.Alert.message" = "Жеткізу мекенжайын жойғыңыз келетініне сенімдісіз бе?";
+"AddressDetail.Alert.Action.yes" = "Иә";
+"AddressDetail.Alert.Action.no" = "Жоқ";
 
 // MARK: - ShareOrder
-"ShareOrder.submitButton" = "KZ Опубликовать";
+"ShareOrder.submitButton" = "Жариялау";
 
 // MARK: - Promocode
-"Promocode.button" = "KZ Применить";
-"Promocode.field" = "KZ Введите промокод";
+"Promocode.button" = "Қолдану";
+"Promocode.field" = "Промокодты енгізіңіз";
 
 // MARK: - Close
-"Common.error" = "KZ Ошибка";
-"Common.close" = "KZ Закрыть";
+"Common.error" = "Қате";
+"Common.close" = "Жабу";
 
 // MARK: - Error
-"Error.mappingError" = "KZ Неудалось обработать ответ";
-"Error.noData" = "KZ Нет данных";
-"Error.unauthorized" = "KZ Вам необходимо снова авторизоваться";
+"Error.mappingError" = "Жауап өңделмеді";
+"Error.noData" = "Мәлімет жоқ";
+"Error.unauthorized" = "Сіз қайта кіруіңіз қажет";
 
 // MARK: - Payment Selection
 
-"Payment.Selection.bill" = "KZ К оплате:";
-"Payment.Selection.change" = "KZ Изменить";
-"Payment.Selection.choosePaymentMethod" = "KZ Выберите способ оплаты";
-"Payment.Selection.orderPayment" = "KZ Оформить заказ";
-"Payment.Selection.paymentMethod" = "KZ Способ оплаты";
-"Payment.Selection.title" = "KZ Оформление заказа";
-"Payment.Selection.applePay" = "KZ Оформить с";
+"Payment.Selection.bill" = "Төлемге:";
+"Payment.Selection.change" = "Өзгерту ";
+"Payment.Selection.choosePaymentMethod" = "Төлеу әдісіг таңдаңыз";
+"Payment.Selection.orderPayment" = "Тапсырысты өңдеу ";
+"Payment.Selection.paymentMethod" = "Төлем тәсілі";
+"Payment.Selection.title" = "Тапсырысты  өңдеу";
+"Payment.Selection.applePay" = "Өңдеу";
 
 // MARK: - Payment Method
 
-"Payment.Method.PaymentMethod.title" = "KZ Способ оплаты";
-"Payment.Method.PaymentMethodError.description" = "KZ Не валидный indexPath";
-"Payment.Method.PaymentMethod.Title.savedCard" = "KZ Карта *%@";
-"Payment.Method.PaymentMethod.Title.card" = "KZ Картой в приложении";
-"Payment.Method.PaymentMethod.Title.cash" = "KZ Наличными курьеру";
+"Payment.Method.PaymentMethod.title" = "Төлем тәсілі";
+"Payment.Method.PaymentMethodError.description" = "Жарамсыз";
+"Payment.Method.PaymentMethod.Title.savedCard" = "Карта *%@";
+"Payment.Method.PaymentMethod.Title.card" = "Өтінімдегі карта";
+"Payment.Method.PaymentMethod.Title.cash" = "Курьерге қолма-қол төлем";
 
 // MARK: - Payment Card
 
-"Payment.Card.title" = "KZ Картой в приложении";
-"Payment.Card.saveCard" = "KZ Сохранить карту";
-"Payment.Card.cardNumber" = "KZ Номер карты";
-"Payment.Card.expiryDate" = "KZ Срок действия";
-"Payment.Card.cardholderName" = "KZ Имя Фамилия";
-"Payment.Card.saveButton" = "KZ Далее";
-"Payment.Card.Error.title" = "KZ Внимание";
-"Payment.Card.Error.message" = "KZ Некоторые поля заполнены неверно";
+"Payment.Card.title" = "Карта арқылы төлем";
+"Payment.Card.saveCard" = "Картаны сақтау";
+"Payment.Card.cardNumber" = "Карта нөмірі";
+"Payment.Card.expiryDate" = "Мерзімі";
+"Payment.Card.cardholderName" = "Аты-жөніңіз";
+"Payment.Card.saveButton" = "Әрі қарай";
+"Payment.Card.Error.title" = "Кейбір мәліметтер қате толтырылған";
+"Payment.Card.Error.message" = "Тапсырысты тіркеу";
 
 // MARK: - Payment Cash
 
-"Payment.Cash.titleDefault" = "KZ Оформление заказа";
-"Payment.Cash.titleChange" = "KZ Сдача";
+"Payment.Cash.titleDefault" = "Тапсырысты өңдеу";
+"Payment.Cash.titleChange" = "Артық ақшанв қайтару";
 "Payment.Cash.topText" = "KZ Заказ на %@ ₸.\nС какой суммы подготовить сдачу?";
-"Payment.Cash.fieldPlaceholder" = "KZ Введите сумму сдачи";
-"Payment.Cash.fieldDescription" = "KZ Укажите сумму больше стоимости заказа";
-"Payment.Cash.Button.noChange" = "KZ У меня без сдачи";
-"Payment.Cash.Button.submit" = "KZ Готово";
+"Payment.Cash.fieldPlaceholder" = "KZ Введите сумму наличных";
+"Payment.Cash.fieldDescription" = "Тапсырыс құнынан жоғары бағаны енгізіңіз";
+"Payment.Cash.Button.noChange" = "Артық ақша қалған жоқ";
+"Payment.Cash.Button.submit" = "Дайын";
 
 // MARK: - PaymentEdit
 
-"Payment.Edit.title" = "KZ Способ оплаты";
-"Payment.Edit.Cell.title" = "KZ Карта *%@";
-"Payment.Edit.Alert.title" = "KZ Вы уверены?";
-"Payment.Edit.Alert.message" = "KZ Вы уверены что хотите удалить данную карту?";
-"Payment.Edit.Alert.yes" = "KZ Да";
-"Payment.Edit.Alert.no" = "KZ Нет";
+"Payment.Edit.title" = "Төлем тәсілі";
+"Payment.Edit.Cell.title" = "Карта *%@";
+"Payment.Edit.Alert.title" = "Сенімдісізбе?";
+"Payment.Edit.Alert.message" = "Картаны жоюңызға сенімдісізбе?";
+"Payment.Edit.Alert.yes" = "Иә";
+"Payment.Edit.Alert.no" = "Жоқ";
 
 // MARK: - Alert
 
-"Alert.ok" = "KZ Ок";
-"Alert.Error.title" = "KZ Ошибка";
+"Alert.ok" = "Ок";
+"Alert.Error.title" = "Қате";
 
 // MARK: - Animations
 
-"Animation.InfoText.orderHistory" = "KZ Тут будут Ваши заказы, чтобы сделать заказ перейдите в меню";
-"Animation.InfoText.emptyBasket" = "KZ Вы еще ничего не выбрали. Минимальная сумма заказа 1000₸";
-"Animation.InfoText.noInternet" = "KZ Нет связи. Проверьте интернет соединение";
-"Animation.InfoText.upgrade" = "KZ Мы добавили много новых функций и исправили некоторые баги, чтобы вам было удобнее пользоваться приложением";
-"Animation.InfoText.overload" = "KZ В данный момент мы принимаем очень много заказов, пожалуйста попробуйте немного позднее";
-"Animation.InfoText.payment" = "KZ Проводим оплату";
-"Animation.InfoText.profile" = "KZ Вам необходимо авторизоваться, чтобы сделать заказ";
-"Animation.InfoText.closed" = "KZ Заведение закрыто";
-"Animation.ButtonTitle.orderHistory.emptyBasket" = "KZ Перейти в меню";
-"Animation.ButtonTitle.noInternet.overload" = "KZ Попробовать еще раз";
-"Animation.ButtonTitle.upgrade" = "KZ Обновить приложение";
-"Animation.ButtonTitle.payment" = "KZ Отменить заказ";
-"Animation.ButtonTitle.profile" = "KZ Войти";
+"Animation.InfoText.orderHistory" = "Тапсырыстарыңыз осы жерде болады, тапсырыс беру үшін мәзірге көшіңіз";
+"Animation.InfoText.emptyBasket" = "Әзірше ешнарсе таңдамадыңыз. Минималдық тапсырыс құны 1000 тг";
+"Animation.InfoText.noInternet" = "Байланыс жоқ. Интернетті байланысын тексеріңіз";
+"Animation.InfoText.upgrade" = "Біз қосымшаны пайдалануды жеңілдету үшін көптеген жаңа мүмкіндіктерді қостық және кейбір қателерді жөндедік.";
+"Animation.InfoText.overload" = "Қазіргі уақытта өте көп тапсырыс қабылдануда, өтініш, кешірек кіруіңізді сұраймыз";
+"Animation.InfoText.payment" = "Төлемді өңдеп жатырмыз";
+"Animation.InfoText.profile" = "Тапсырвс бері үшін тіркелі қажет";
+"Animation.InfoText.closed" = "Мекеме жабық";
+"Animation.ButtonTitle.orderHistory.emptyBasket" = "Мәзірге көшу";
+"Animation.ButtonTitle.noInternet.overload" = "Қайталау";
+"Animation.ButtonTitle.upgrade" = "Приложениені жаңарту";
+"Animation.ButtonTitle.payment" = "Тапсырыстан бас тарту";
+"Animation.ButtonTitle.profile" = "Кіру";

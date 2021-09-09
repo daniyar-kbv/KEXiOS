@@ -242,7 +242,7 @@
 "Payment.Cash.titleDefault" = "Оформление заказа";
 "Payment.Cash.titleChange" = "Сдача";
 "Payment.Cash.topText" = "Заказ на %@ ₸.\nС какой суммы подготовить сдачу?";
-"Payment.Cash.fieldPlaceholder" = "Введите сумму сдачи";
+"Payment.Cash.fieldPlaceholder" = "Введите сумму наличных";
 "Payment.Cash.fieldDescription" = "Укажите сумму больше стоимости заказа";
 "Payment.Cash.Button.noChange" = "У меня без сдачи";
 "Payment.Cash.Button.submit" = "Готово";
