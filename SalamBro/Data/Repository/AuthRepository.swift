@@ -77,6 +77,20 @@ final class AuthRepositoryImpl: AuthRepository {
         outputs.didStartRequest.accept(())
     }
 
+    func setUser(name: String) {
+        profileService.updateUserInfo(with: UserInfoDTO(name: name, email: nil, mobilePhone: nil))
+            .compactMap { _ -> Single<Void>? in
+                self.getFinishAuthSequence()
+            }
+            .retryWhenUnautharized()
+            .subscribe(onSuccess: { [weak self] _ in
+                self?.outputs.didEndRequest.accept(())
+            }, onError: { [weak self] _ in
+                self?.outputs.didEndRequest.accept(())
+            })
+            .disposed(by: disposeBag)
+    }
+
     func verifyOTP(code: String, number: String) {
         outputs.didStartRequest.accept(())
         authService.verifyOTP(with: .init(code: code, phoneNumber: number))
@@ -85,8 +99,13 @@ final class AuthRepositoryImpl: AuthRepository {
                 self.tokenStorage.persist(token: accessToken.access, refreshToken: accessToken.refresh)
                 return profileService.getUserInfo()
             }
-            .subscribe { [weak self] userInfo in
-                self?.checkForAuth(with: userInfo)
+            .compactMap { [unowned self] userInfo -> Single<Void>? in
+                guard let name = userInfo.name,
+                      !name.isEmpty
+                else { return nil }
+                return self.getFinishAuthSequence()
+            }
+            .subscribe { [weak self] _ in
                 self?.outputs.didEndRequest.accept(())
             } onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
@@ -115,6 +134,7 @@ final class AuthRepositoryImpl: AuthRepository {
 
         authorizedApplyService.authorizedApplyWithAddress(dto: applyDTO)
             .flatMap { [unowned self] leadUUID -> Single<Cart> in
+
                 NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
                                                 object: leadUUID)
                 return ordersService.updateCart(for: leadUUID, dto: cartStorage.cart.toDTO())
@@ -122,6 +142,7 @@ final class AuthRepositoryImpl: AuthRepository {
             .flatMap { [unowned self] cart -> Single<[UserAddress]> in
                 NotificationCenter.default.post(name: Constants.InternalNotification.cart.name,
                                                 object: cart)
+
                 return profileService.getAddresses()
             }
             .flatMap { [unowned self] userAddresses in
@@ -138,6 +159,30 @@ final class AuthRepositoryImpl: AuthRepository {
                 }
             }
             .disposed(by: disposeBag)
+    }
+
+    func getFinishAuthSequence() -> Single<Void>? {
+        guard let applyDTO = geoStorage.userAddresses.first(where: { $0.isCurrent })?.toDTO(),
+              let fcmToken = defaultStorage.fcmToken else { return nil }
+
+        return authorizedApplyService.authorizedApplyWithAddress(dto: applyDTO)
+            .flatMap { [unowned self] leadUUID -> Single<Cart> in
+
+                NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
+                                                object: leadUUID)
+                return ordersService.updateCart(for: leadUUID, dto: cartStorage.cart.toDTO())
+            }
+            .flatMap { [unowned self] cart -> Single<[UserAddress]> in
+                NotificationCenter.default.post(name: Constants.InternalNotification.cart.name,
+                                                object: cart)
+
+                return profileService.getAddresses()
+            }
+            .flatMap { [unowned self] userAddresses in
+                NotificationCenter.default.post(name: Constants.InternalNotification.userAddresses.name,
+                                                object: userAddresses)
+                return notificationsService.fcmTokenSave(dto: .init(fcmToken: fcmToken))
+            }
     }
 
     func resendOTP(with number: String) {
