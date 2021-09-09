@@ -50,7 +50,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeSetNameViewModel() -> SetNameViewModel {
-        return scoped(SetNameViewModelImpl(repository: repositoryComponents.makeProfileRepository()))
+        return scoped(SetNameViewModelImpl(repository: repositoryComponents.makeAuthRepository()))
     }
 
     func makeCountryCodePickerPage() -> CountryCodePickerViewController {

@@ -55,7 +55,6 @@ struct Constants {
         case cart
         case userAddresses
         case startFirstFlow
-        case registerUser
 
         var name: Notification.Name {
             switch self {
@@ -67,7 +66,6 @@ struct Constants {
             case .cart: return .init("Cart")
             case .userAddresses: return .init("UserAddresses")
             case .startFirstFlow: return .init("StartFirstFlow")
-            case .registerUser: return .init("RegisterUser")
             }
         }
     }
