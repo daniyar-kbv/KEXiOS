@@ -33,7 +33,7 @@ final class MapViewModel {
         }
     }
 
-    private let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .online)
+    private let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .combined)
     private var searchSession: YMKSearchSession?
     private(set) var flow: MapFlow
     private let disposeBag = DisposeBag()
@@ -103,60 +103,56 @@ final class MapViewModel {
     }
 
     private func onSearchResponseName(_ response: YMKSearchResponse, shouldMoveMap: Bool = false) {
-        for searchResult in response.collection.children {
-            guard let point = searchResult.obj!.geometry.first?.point else { return }
-            guard let objectMetadata = (response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata) else { continue }
+        guard let objectMetadata = response.collection.children.first?.obj?.metadataContainer
+            .getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata
+        else { return }
 
-            print("-----------------------")
-            print(objectMetadata.formerName)
-            print(objectMetadata.address.formattedAddress)
+        var address = Address()
 
-            let addressComponenets = objectMetadata.address.components
+        construct(address: &address, with: objectMetadata.address.components)
 
-            let locality = addressComponenets
-                .last(where: { $0.kinds.contains(where: { resolveKind(of: $0) == .locality }) })?
-                .name
+        address.longitude = objectMetadata.balloonPoint.longitude
+        address.latitude = objectMetadata.balloonPoint.latitude
 
-            let district = addressComponenets
-                .last(where: { $0.kinds.contains(where: { resolveKind(of: $0) == .district }) })?
-                .name
+        outputs.selectedAddress.onNext(address)
 
-            let street = addressComponenets
-                .last(where: { $0.kinds.contains(where: { resolveKind(of: $0) == .street }) })?
-                .name
+        if shouldMoveMap {
+            outputs.moveMapTo.accept(YMKPoint(latitude: objectMetadata.balloonPoint.latitude,
+                                              longitude: objectMetadata.balloonPoint.longitude))
+        }
+    }
 
-            let building = addressComponenets
-                .last(where: { $0.kinds.contains(where: { resolveKind(of: $0) == .house }) })?
-                .name
+    private func construct(address: inout Address, with components: [YMKSearchAddressComponent]) {
+        var street: String?
+        var district: String?
+        var locality: String?
+        var building: String?
 
-            let address = Address()
-
-            guard building != nil else { return }
-            address.building = building
-
-            if street != nil {
-                address.street = street
-                if district != nil {
-                    address.district = district
+        components.forEach { component in
+            component.kinds.forEach { kind in
+                switch resolveKind(of: kind) {
+                case .street: street = component.name
+                case .district: district = component.name
+                case .locality: locality = component.name
+                case .house: building = component.name
+                default: break
                 }
-            } else if district != nil {
+            }
+        }
+
+        guard building != nil else { return }
+        address.building = building
+
+        if street != nil {
+            address.street = street
+            if district != nil {
                 address.district = district
-            } else if locality != nil {
-                address.district = locality
-            } else {
-                return
             }
-
-            address.longitude = point.longitude
-            address.latitude = point.latitude
-
-            outputs.selectedAddress.onNext(address)
-
-            if shouldMoveMap {
-                outputs.moveMapTo.accept(YMKPoint(latitude: point.latitude,
-                                                  longitude: point.longitude))
-            }
-
+        } else if district != nil {
+            address.district = district
+        } else if locality != nil {
+            address.district = locality
+        } else {
             return
         }
     }
