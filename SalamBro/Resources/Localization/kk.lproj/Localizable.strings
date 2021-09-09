@@ -58,8 +58,8 @@
 "CartFooter.deliveryPrice" = "%@ ₸";
 
 // MARK: - UnavailabilityAlert
-"Cart.alertTitle" = "KZ Внимание";
-"Cart.alertMessage" = "KZ Некоторые товары недоступны";
+"Cart.alertTitle" = "Назар аударыңыз";
+"Cart.alertMessage" = "Кейбір тауарлар жоқ";
 
 // MARK: - CartProductCell
 "CartProductCell.deleteButton.title" = "Жою";
@@ -115,7 +115,7 @@
 "AddressPickCell.deliverLabel" = "Жеткізу жері";
 
 // MARK: - Menu
-"Menu.unavailable" = "KZ Будет позже";
+"Menu.unavailable" = "Кейінірек келеді";
 
 // MARK: - MenuDetail
 "MenuDetail.proceedButton" = "Себетке жіберу %@ ₸";
@@ -173,7 +173,7 @@
 "select_main_info.save" = "Сақтау";
 "select_main_info.alert.title" = "Сенімдісізбе?";
 "select_main_info.alert.body.address" = "Егер мекен-жайыңызды өзгертсеңіз, сақталынған өнімдерді жоғалтып аласыз. Мекен-жайыңызды өзгертуге сенімдісізбе?";
-"select_main_info.alert.body.brand" = "KZ Если Вы сейчас смените бренд, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить бренд?";
+"select_main_info.alert.body.brand" = "Егер сіз қазір брендті өзгертсеңіз, сіз таңдаған барлық өнімдерден бас тартасыз. Брендті өзгерткіңіз келетініне сенімдісіз бе?";
 "select_main_info.alert.action.yes" = "Иә";
 "select_main_info.alert.action.no" = "Жоқ";
 
@@ -240,8 +240,8 @@
 
 "Payment.Cash.titleDefault" = "Тапсырысты өңдеу";
 "Payment.Cash.titleChange" = "Артық ақшанв қайтару";
-"Payment.Cash.topText" = "KZ Заказ на %@ ₸.\nС какой суммы подготовить сдачу?";
-"Payment.Cash.fieldPlaceholder" = "KZ Введите сумму наличных";
+"Payment.Cash.topText" = "%@ ₸ тапсырыс беріңіз.\nқалған соманы беру үшін неше теңге қажет?";
+"Payment.Cash.fieldPlaceholder" = "Қолма-қол ақша сомасын енгізіңіз";
 "Payment.Cash.fieldDescription" = "Тапсырыс құнынан жоғары бағаны енгізіңіз";
 "Payment.Cash.Button.noChange" = "Артық ақша қалған жоқ";
 "Payment.Cash.Button.submit" = "Дайын";
