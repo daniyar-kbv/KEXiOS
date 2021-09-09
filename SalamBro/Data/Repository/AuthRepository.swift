@@ -32,6 +32,9 @@ final class AuthRepositoryImpl: AuthRepository {
     private let tokenStorage: AuthTokenStorage
     private let defaultStorage: DefaultStorage
 
+    private var authToken: AccessToken?
+    private var numberOfUnregistereduser: String?
+
     init(authService: AuthService,
          profileService: ProfileService,
          ordersService: OrdersService,
@@ -51,6 +54,8 @@ final class AuthRepositoryImpl: AuthRepository {
         self.geoStorage = geoStorage
         self.tokenStorage = tokenStorage
         self.defaultStorage = defaultStorage
+
+        bindNotifications()
     }
 
     func sendOTP(with number: String) {
@@ -75,10 +80,13 @@ final class AuthRepositoryImpl: AuthRepository {
     func verifyOTP(code: String, number: String) {
         outputs.didStartRequest.accept(())
         authService.verifyOTP(with: .init(code: code, phoneNumber: number))
-            .retryWhenUnautharized()
-            .subscribe { [weak self] accessToken in
-                self?.tokenStorage.persist(token: accessToken.access, refreshToken: accessToken.refresh)
-                self?.registerUser()
+            .flatMap { [unowned self] accessToken -> Single<UserInfoResponse> in
+                self.authToken = accessToken
+                self.tokenStorage.persist(token: accessToken.access, refreshToken: accessToken.refresh)
+                return profileService.getUserInfo()
+            }
+            .subscribe { [weak self] userInfo in
+                self?.checkForAuth(with: userInfo)
                 self?.outputs.didEndRequest.accept(())
             } onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
@@ -89,67 +97,39 @@ final class AuthRepositoryImpl: AuthRepository {
             .disposed(by: disposeBag)
     }
 
-    func registerUser() {
-        profileService.getUserInfo()
-            .subscribe { [weak self] info in
-                self?.applyWithAddress()
-                guard let _ = info.name else {
-                    self?.outputs.didGetUnregisteredUser.accept(())
-                    return
-                }
-                NotificationCenter.default.post(name: Constants.InternalNotification.userInfo.name,
-                                                object: info)
-                self?.outputs.didEndRequest.accept(())
-            } onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFailOTP.accept(error)
-                }
-            }
-            .disposed(by: disposeBag)
+    private func checkForAuth(with userInfo: UserInfoResponse) {
+        guard let name = userInfo.name, !name.isEmpty else {
+            numberOfUnregistereduser = userInfo.mobilePhone
+            tokenStorage.cleanUp()
+            outputs.didGetUnregisteredUser.accept(())
+            return
+        }
+        NotificationCenter.default.post(name: Constants.InternalNotification.userInfo.name,
+                                        object: userInfo)
+        applyWithAddress()
     }
 
     func applyWithAddress() {
-        guard let applyDTO = geoStorage.userAddresses.first(where: { $0.isCurrent })?.toDTO() else { return }
+        guard let applyDTO = geoStorage.userAddresses.first(where: { $0.isCurrent })?.toDTO(),
+              let fcmToken = defaultStorage.fcmToken else { return }
 
         authorizedApplyService.authorizedApplyWithAddress(dto: applyDTO)
-            .subscribe { [weak self] leadUUID in
+            .flatMap { [unowned self] leadUUID -> Single<Cart> in
                 NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
                                                 object: leadUUID)
-                self?.updateCart(with: leadUUID)
-                self?.outputs.didEndRequest.accept(())
-            } onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFailOTP.accept(error)
-                }
+                return ordersService.updateCart(for: leadUUID, dto: cartStorage.cart.toDTO())
             }
-            .disposed(by: disposeBag)
-    }
-
-    func updateCart(with leadUUID: String) {
-        ordersService.updateCart(for: leadUUID, dto: cartStorage.cart.toDTO())
-            .subscribe { [weak self] cart in
+            .flatMap { [unowned self] cart -> Single<[UserAddress]> in
                 NotificationCenter.default.post(name: Constants.InternalNotification.cart.name,
                                                 object: cart)
-                self?.outputs.didEndRequest.accept(())
-            } onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFailOTP.accept(error)
-                }
+                return profileService.getAddresses()
             }
-            .disposed(by: disposeBag)
-    }
-
-    func getAddresses() {
-        guard let fcmToken = defaultStorage.fcmToken else { return }
-
-        profileService.getAddresses()
-            .subscribe { [weak self] addresses in
+            .flatMap { [unowned self] userAddresses in
                 NotificationCenter.default.post(name: Constants.InternalNotification.userAddresses.name,
-                                                object: addresses)
-                self?.notificationsService.fcmTokenSave(dto: .init(fcmToken: fcmToken))
+                                                object: userAddresses)
+                return notificationsService.fcmTokenSave(dto: .init(fcmToken: fcmToken))
+            }
+            .subscribe { [weak self] in
                 self?.outputs.didEndRequest.accept(())
             } onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
@@ -161,6 +141,7 @@ final class AuthRepositoryImpl: AuthRepository {
     }
 
     func resendOTP(with number: String) {
+        outputs.didStartRequest.accept(())
         authService.resendOTP(with: SendOTPDTO(phoneNumber: number))
             .subscribe(onSuccess: { [weak self] in
                 self?.outputs.didEndRequest.accept(())
@@ -170,6 +151,21 @@ final class AuthRepositoryImpl: AuthRepository {
                 if let error = error as? ErrorPresentable {
                     self?.outputs.didFailOTP.accept(error)
                 }
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension AuthRepositoryImpl {
+    private func bindNotifications() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.registerUser.name)
+            .subscribe(onNext: { [weak self] name in
+                guard let token = self?.authToken, let username = name.object as? String else { return }
+                self?.tokenStorage.persist(token: token.access, refreshToken: token.refresh)
+                NotificationCenter.default.post(name: Constants.InternalNotification.userInfo.name,
+                                                object: UserInfoResponse(name: username, email: nil, mobilePhone: self?.numberOfUnregistereduser, error: nil))
+                self?.applyWithAddress()
             })
             .disposed(by: disposeBag)
     }

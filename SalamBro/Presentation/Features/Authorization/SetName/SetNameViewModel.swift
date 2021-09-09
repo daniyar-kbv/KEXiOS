@@ -27,6 +27,8 @@ final class SetNameViewModelImpl: SetNameViewModel {
     }
 
     func persist(name: String) {
+        NotificationCenter.default.post(name: Constants.InternalNotification.registerUser.name,
+                                        object: name)
         repository.changeUserInfo(name: name, email: nil)
     }
 
