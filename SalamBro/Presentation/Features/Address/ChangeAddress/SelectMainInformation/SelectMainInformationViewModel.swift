@@ -88,7 +88,9 @@ extension SelectMainInformationViewModel {
             .disposed(by: disposeBag)
 
         countriesRepository.outputs.didFail
-            .bind(to: outputs.didGetError)
+            .subscribe(onNext: { [weak self] error in
+                self?.process(error: error)
+            })
             .disposed(by: disposeBag)
 
         citiesRepository.outputs.didStartRequest
@@ -108,13 +110,7 @@ extension SelectMainInformationViewModel {
 
         citiesRepository.outputs.didFail
             .subscribe(onNext: { [weak self] error in
-                if (error as? NetworkError) == .unauthorized,
-                   self?.flowType == .changeBrand
-                {
-                    self?.outputs.didGetAuthError.accept(error)
-                    return
-                }
-                self?.outputs.didGetError.accept(error)
+                self?.process(error: error)
             })
             .disposed(by: disposeBag)
 
@@ -131,8 +127,18 @@ extension SelectMainInformationViewModel {
             .disposed(by: disposeBag)
 
         addressRepository.outputs.didFail
-            .bind(to: outputs.didGetError)
+            .subscribe(onNext: { [weak self] error in
+                self?.process(error: error)
+            })
             .disposed(by: disposeBag)
+    }
+
+    private func process(error: ErrorPresentable) {
+        if (error as? NetworkError) == .unauthorized {
+            outputs.didGetAuthError.accept(error)
+            return
+        }
+        outputs.didGetError.accept(error)
     }
 
     func didChange(country index: Int) {
@@ -193,6 +199,7 @@ extension SelectMainInformationViewModel {
             guard let id = userAddress?.id,
                   let brandId = userAddress?.brand?.id
             else { return }
+
             addressRepository.updateUserAddress(with: id, brandId: brandId)
         }
     }

@@ -18,6 +18,8 @@ final class AddressCoordinator: Coordinator {
     var flowType: FlowType
     var didFinish: (() -> Void)?
 
+    weak var addressPickPage: AddressPickController?
+
     init(router: Router,
          pagesFactory: AddressPagesFactory,
          flowType: FlowType)
@@ -39,23 +41,35 @@ final class AddressCoordinator: Coordinator {
     private func openAddressPicker() {
         let addressPickPage = pagesFactory.makeAddressPickPage()
 
-        addressPickPage.outputs.didTerminate.subscribe(onNext: { [weak self] in
-            self?.didFinish?()
-        }).disposed(by: disposeBag)
+        self.addressPickPage = addressPickPage
 
-        addressPickPage.outputs.didSelectAddress.subscribe(onNext: { [weak self, weak addressPickPage] address in
-            self?.openSelectMainInfo(flowType: .changeAddress(address.0),
-                                     presentOn: addressPickPage)
-        }).disposed(by: disposeBag)
+        addressPickPage.outputs.didTerminate
+            .subscribe(onNext: { [weak self] in
+                self?.didFinish?()
+            }).disposed(by: disposeBag)
 
-        addressPickPage.outputs.didAddTapped.subscribe(onNext: { [weak self, weak addressPickPage] _ in
-            self?.openSelectMainInfo(flowType: .create,
-                                     presentOn: addressPickPage)
-        }).disposed(by: disposeBag)
+        addressPickPage.outputs.didSelectAddress
+            .subscribe(onNext: { [weak self, weak addressPickPage] address in
+                self?.openSelectMainInfo(flowType: .changeAddress(address.0),
+                                         presentOn: addressPickPage)
+            }).disposed(by: disposeBag)
 
-        addressPickPage.outputs.close.subscribe(onNext: { [weak addressPickPage] in
-            addressPickPage?.dismiss(animated: true)
-        }).disposed(by: disposeBag)
+        addressPickPage.outputs.didAddTapped
+            .subscribe(onNext: { [weak self, weak addressPickPage] _ in
+                self?.openSelectMainInfo(flowType: .create,
+                                         presentOn: addressPickPage)
+            }).disposed(by: disposeBag)
+
+        addressPickPage.outputs.close
+            .subscribe(onNext: { [weak addressPickPage] in
+                addressPickPage?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+
+        addressPickPage.outputs.finishFlow
+            .subscribe(onNext: { [weak self] in
+                self?.router.dismissAll(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
 
         let nav = SBNavigationController(rootViewController: addressPickPage)
         router.present(nav, animated: true, completion: nil)
@@ -94,8 +108,8 @@ final class AddressCoordinator: Coordinator {
             }).disposed(by: disposeBag)
 
         selectMainInfoPage.outputs.finishFlow
-            .subscribe(onNext: { [weak selectMainInfoPage] in
-                selectMainInfoPage?.dismiss(animated: true)
+            .subscribe(onNext: { [weak self] in
+                self?.router.dismissAll(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
 

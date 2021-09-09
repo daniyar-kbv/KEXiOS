@@ -19,6 +19,7 @@ protocol Router {
     func present(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?)
     func dismiss(animated: Bool, completion: (() -> Void)?)
     func dismiss(viewController: UIViewController, animated: Bool, completion: (() -> Void)?)
+    func dismissAll(animated: Bool, completion: (() -> Void)?)
     func show(_ viewController: UIViewController)
 }
 
@@ -80,6 +81,23 @@ final class MainRouter: Router {
     func dismiss(animated: Bool, completion: (() -> Void)?) {
         navigationController.dismiss(animated: animated, completion: completion)
         didFinish?()
+    }
+
+    func dismissAll(animated _: Bool, completion: (() -> Void)?) {
+        var presentedViewControllers = [UIViewController?]()
+        var currentPresentedViewController = navigationController.presentedViewController
+
+        while currentPresentedViewController != nil {
+            presentedViewControllers.append(currentPresentedViewController)
+            currentPresentedViewController = currentPresentedViewController?.presentedViewController
+        }
+
+        presentedViewControllers.reversed().enumerated().forEach { index, viewController in
+            viewController?.dismiss(animated: index == presentedViewControllers.count - 1) {
+                guard index == presentedViewControllers.count - 1 else { return }
+                completion?()
+            }
+        }
     }
 
     func dismiss(viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
