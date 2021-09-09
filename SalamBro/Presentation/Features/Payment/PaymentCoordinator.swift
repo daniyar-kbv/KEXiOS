@@ -75,8 +75,8 @@ final class PaymentCoordinator: BaseCoordinator {
             }).disposed(by: disposeBag)
 
         paymentSelectionVC.outputs.finishFlow
-            .subscribe(onNext: { [weak paymentSelectionVC] in
-                paymentSelectionVC?.dismiss(animated: true)
+            .subscribe(onNext: { [weak self] in
+                self?.router.dismissAll(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
 
