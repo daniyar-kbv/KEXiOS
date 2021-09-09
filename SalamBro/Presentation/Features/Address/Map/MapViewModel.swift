@@ -106,6 +106,11 @@ final class MapViewModel {
         for searchResult in response.collection.children {
             guard let point = searchResult.obj!.geometry.first?.point else { return }
             guard let objectMetadata = (response.collection.children[0].obj!.metadataContainer.getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata) else { continue }
+
+            print("-----------------------")
+            print(objectMetadata.formerName)
+            print(objectMetadata.address.formattedAddress)
+
             let addressComponenets = objectMetadata.address.components
 
             let locality = addressComponenets
