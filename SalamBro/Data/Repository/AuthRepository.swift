@@ -35,6 +35,7 @@ final class AuthRepositoryImpl: AuthRepository {
 
     private var authToken: AccessToken?
 
+    private var userInfo: UserInfoResponse?
     private var leadUUID: String?
     private var cart: Cart?
     private var userAddresses: [UserAddress]?
@@ -84,8 +85,11 @@ final class AuthRepositoryImpl: AuthRepository {
         tokenStorage.persist(token: token.access, refreshToken: token.refresh)
 
         profileService.updateUserInfo(with: UserInfoDTO(name: name, email: nil, mobilePhone: nil))
-            .compactMap { _ -> Single<Void>? in
-                self.getUserinfo()
+            .flatMap { _ -> Single<UserInfoResponse> in
+                self.profileService.getUserInfo()
+            }
+            .compactMap { userInfo -> Single<Void>? in
+                self.userInfo = userInfo
                 return self.getFinishAuthSequence()
             }
             .retryWhenUnautharized()
@@ -94,23 +98,9 @@ final class AuthRepositoryImpl: AuthRepository {
                 self?.outputs.didRegisteredUser.accept(())
                 self?.postUserInfoDependencies()
             }, onError: { [weak self] _ in
+                self?.tokenStorage.cleanUp()
                 self?.outputs.didEndRequest.accept(())
             })
-            .disposed(by: disposeBag)
-    }
-
-    private func getUserinfo() {
-        profileService.getUserInfo()
-            .subscribe { [weak self] userInfo in
-                NotificationCenter.default.post(name: Constants.InternalNotification.userInfo.name,
-                                                object: userInfo)
-                self?.outputs.didEndRequest.accept(())
-            } onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                if let error = error as? ErrorPresentable {
-                    self?.outputs.didFailOTP.accept(error)
-                }
-            }
             .disposed(by: disposeBag)
     }
 
@@ -131,14 +121,14 @@ final class AuthRepositoryImpl: AuthRepository {
                     self.outputs.didEndRequest.accept(())
                     return nil
                 }
-                NotificationCenter.default.post(name: Constants.InternalNotification.userInfo.name,
-                                                object: userInfo)
+                self.userInfo = userInfo
                 return self.getFinishAuthSequence()
             }
             .subscribe { [weak self] _ in
-                self?.postUserInfoDependencies()
                 self?.outputs.didEndRequest.accept(())
+                self?.postUserInfoDependencies()
             } onError: { [weak self] error in
+                self?.tokenStorage.cleanUp()
                 self?.outputs.didEndRequest.accept(())
                 if let error = error as? ErrorPresentable {
                     self?.outputs.didFailOTP.accept(error)
@@ -170,6 +160,8 @@ final class AuthRepositoryImpl: AuthRepository {
         guard let leadUUID = leadUUID, let cart = cart, let userAddresses = userAddresses else {
             return
         }
+        NotificationCenter.default.post(name: Constants.InternalNotification.userInfo.name,
+                                        object: userInfo)
         NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
                                         object: leadUUID)
         NotificationCenter.default.post(name: Constants.InternalNotification.cart.name,
