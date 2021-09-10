@@ -101,7 +101,7 @@ final class AuthRepositoryImpl: AuthRepository {
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didRegisteredUser.accept(())
                 self?.postUserInfoDependencies()
-            }, onError: { [weak self] _ in
+            }, onError: { [weak self] error in
                 self?.tokenStorage.cleanUp()
                 self?.outputs.didEndRequest.accept(())
                 if let error = error as? ErrorPresentable {
