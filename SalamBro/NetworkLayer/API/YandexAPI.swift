@@ -36,8 +36,7 @@ extension RateAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .getRates: return .requestPlain
-        case let .saveUserRate(dto): return .requestJSONEncodable(dto)
+        case .geocode: return .requestParameters(parameters: <#T##[String : Any]#>, encoding: <#T##ParameterEncoding#>)
         }
     }
 
