@@ -80,7 +80,7 @@ final class MapViewModel {
         }
     }
 
-    func reverseGeoCoding(searchQuery: String, title _: String) {
+    func straightGeocoding(searchQuery: String, title _: String) {
         let responseHandler: (_ searchResponse: YMKSearchResponse?, _: Error?) -> Void = { [weak self] response, _ in
             guard let response = response else { return }
             self?.onSearchResponseName(response, shouldMoveMap: true)
@@ -91,7 +91,7 @@ final class MapViewModel {
                                              responseHandler: responseHandler)
     }
 
-    func getName(point: YMKPoint, zoom: NSNumber) {
+    func reverseGeocoding(point: YMKPoint, zoom: NSNumber) {
         let responseHandler: (_ searchResponse: YMKSearchResponse?, _: Error?) -> Void = { [weak self] response, _ in
             guard let response = response else { return }
             self?.onSearchResponseName(response, shouldMoveMap: false)
