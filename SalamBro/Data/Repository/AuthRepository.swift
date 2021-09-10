@@ -104,6 +104,9 @@ final class AuthRepositoryImpl: AuthRepository {
             }, onError: { [weak self] _ in
                 self?.tokenStorage.cleanUp()
                 self?.outputs.didEndRequest.accept(())
+                if let error = error as? ErrorPresentable {
+                    self?.outputs.didFailAuthName.accept(error)
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -208,6 +211,7 @@ extension AuthRepositoryImpl {
 
         let didFailAuth = PublishRelay<ErrorPresentable>()
         let didFailOTP = PublishRelay<ErrorPresentable>()
+        let didFailAuthName = PublishRelay<ErrorPresentable>()
 
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()

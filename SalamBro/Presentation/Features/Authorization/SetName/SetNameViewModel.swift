@@ -43,7 +43,7 @@ final class SetNameViewModelImpl: SetNameViewModel {
             .bind(to: outputs.didSaveUserName)
             .disposed(by: disposeBag)
 
-        repository.outputs.didFailOTP
+        repository.outputs.didFailAuthName
             .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
     }
