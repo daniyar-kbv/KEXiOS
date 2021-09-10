@@ -84,6 +84,8 @@ final class AuthRepositoryImpl: AuthRepository {
         guard let token = authToken else { return }
         tokenStorage.persist(token: token.access, refreshToken: token.refresh)
 
+        outputs.didStartRequest.accept(())
+
         profileService.updateUserInfo(with: UserInfoDTO(name: name, email: nil, mobilePhone: nil))
             .flatMap { _ -> Single<UserInfoResponse> in
                 self.profileService.getUserInfo()
@@ -139,6 +141,7 @@ final class AuthRepositoryImpl: AuthRepository {
             }
             .subscribe { [weak self] _ in
                 self?.outputs.didEndRequest.accept(())
+                self?.outputs.didFinish.accept(true)
                 self?.postUserInfoDependencies()
             } onError: { [weak self] error in
                 self?.tokenStorage.cleanUp()
@@ -212,6 +215,8 @@ extension AuthRepositoryImpl {
         let didFailAuth = PublishRelay<ErrorPresentable>()
         let didFailOTP = PublishRelay<ErrorPresentable>()
         let didFailAuthName = PublishRelay<ErrorPresentable>()
+
+        let didFinish = PublishRelay<Bool>()
 
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
