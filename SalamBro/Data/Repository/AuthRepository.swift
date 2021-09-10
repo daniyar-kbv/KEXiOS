@@ -84,9 +84,13 @@ final class AuthRepositoryImpl: AuthRepository {
         tokenStorage.persist(token: token.access, refreshToken: token.refresh)
 
         profileService.updateUserInfo(with: UserInfoDTO(name: name, email: nil, mobilePhone: nil))
-            .compactMap { _ -> Single<Void>? in
+            .flatMap { _ -> Single<Void> in
                 self.getUserinfo()
-                return self.getFinishAuthSequence()
+                do {
+                    return try self.getFinishAuthSequence()
+                } catch {
+                    throw error
+                }
             }
             .retryWhenUnautharized()
             .subscribe(onSuccess: { [weak self] _ in
@@ -122,20 +126,27 @@ final class AuthRepositoryImpl: AuthRepository {
                 self.tokenStorage.persist(token: accessToken.access, refreshToken: accessToken.refresh)
                 return profileService.getUserInfo()
             }
-            .compactMap { [unowned self] userInfo -> Single<Void>? in
+            .flatMap { [unowned self] userInfo -> Single<Void> in
                 guard let name = userInfo.name,
                       !name.isEmpty
                 else {
                     self.tokenStorage.cleanUp()
                     self.outputs.didGetUnregisteredUser.accept(())
                     self.outputs.didEndRequest.accept(())
-                    return nil
+                    throw EmptyError()
                 }
                 NotificationCenter.default.post(name: Constants.InternalNotification.userInfo.name,
                                                 object: userInfo)
-                return self.getFinishAuthSequence()
+                print("in userInfo")
+
+                do {
+                    return try self.getFinishAuthSequence()
+                } catch {
+                    throw error
+                }
             }
             .subscribe { [weak self] _ in
+                print("in success")
                 self?.postUserInfoDependencies()
                 self?.outputs.didEndRequest.accept(())
             } onError: { [weak self] error in
@@ -147,9 +158,12 @@ final class AuthRepositoryImpl: AuthRepository {
             .disposed(by: disposeBag)
     }
 
-    private func getFinishAuthSequence() -> Single<Void>? {
+    private func getFinishAuthSequence() throws -> Single<Void> {
         guard let applyDTO = geoStorage.userAddresses.first(where: { $0.isCurrent })?.toDTO(),
-              let fcmToken = defaultStorage.fcmToken else { return nil }
+              let fcmToken = defaultStorage.fcmToken
+        else {
+            throw NetworkError.noData
+        }
 
         return authorizedApplyService.authorizedApplyWithAddress(dto: applyDTO)
             .flatMap { [unowned self] leadUUID -> Single<Cart> in
