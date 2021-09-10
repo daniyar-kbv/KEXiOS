@@ -16,21 +16,17 @@ final class VerificationViewModel {
 
     private let authRepository: AuthRepository
     private let addressRepository: AddressRepository
-    private let profileRepository: ProfileRepository
     private(set) var phoneNumber: String
 
     init(authRepository: AuthRepository,
          addressRepository: AddressRepository,
-         profileRepository: ProfileRepository,
          phoneNumber: String)
     {
         self.authRepository = authRepository
         self.addressRepository = addressRepository
-        self.profileRepository = profileRepository
         self.phoneNumber = phoneNumber
 
         bindOutputs()
-        bindProfileRepository()
     }
 
     private func bindOutputs() {
@@ -49,21 +45,17 @@ final class VerificationViewModel {
         authRepository.outputs.didFailOTP
             .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
-    }
 
-    private func bindProfileRepository() {
-        profileRepository.outputs.didGetUserInfo
-            .subscribe(onNext: { [weak self] userInfo in
-                self?.outputs.didFinish.accept(userInfo.name != nil)
+        authRepository.outputs.didGetUnregisteredUser
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.didFinish.accept(false)
             })
             .disposed(by: disposeBag)
 
-        profileRepository.outputs.didEndRequest
-            .bind(to: outputs.didEndRequest)
-            .disposed(by: disposeBag)
-
-        profileRepository.outputs.didFail
-            .bind(to: outputs.didFail)
+        authRepository.outputs.didFinish
+            .subscribe(onNext: { [weak self] isFinished in
+                self?.outputs.didFinish.accept(isFinished)
+            })
             .disposed(by: disposeBag)
     }
 

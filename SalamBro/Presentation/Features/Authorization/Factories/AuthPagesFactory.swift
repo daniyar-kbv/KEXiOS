@@ -41,7 +41,6 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     private func makeVerificationViewModel(phoneNumber: String) -> VerificationViewModel {
         return scoped(.init(authRepository: repositoryComponents.makeAuthRepository(),
                             addressRepository: repositoryComponents.makeAddressRepository(),
-                            profileRepository: repositoryComponents.makeProfileRepository(),
                             phoneNumber: phoneNumber))
     }
 
@@ -50,7 +49,7 @@ final class AuthPagesFactoryImpl: DependencyFactory, AuthPagesFactory {
     }
 
     private func makeSetNameViewModel() -> SetNameViewModel {
-        return scoped(SetNameViewModelImpl(repository: repositoryComponents.makeProfileRepository()))
+        return scoped(SetNameViewModelImpl(repository: repositoryComponents.makeAuthRepository()))
     }
 
     func makeCountryCodePickerPage() -> CountryCodePickerViewController {
