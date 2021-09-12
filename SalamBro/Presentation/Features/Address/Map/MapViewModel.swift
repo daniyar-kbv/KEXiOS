@@ -38,6 +38,11 @@ final class MapViewModel {
     private(set) var flow: MapFlow
     private let disposeBag = DisposeBag()
 
+    private var searchQuery: String?
+    private var title: String?
+    private var point: YMKPoint?
+    private var zoom: NSNumber?
+
     init(defaultStorage: DefaultStorage,
          addressRepository: AddressRepository,
          brandRepository: BrandRepository,
@@ -65,6 +70,8 @@ final class MapViewModel {
 
         outputs.selectedAddress.onNext(userAddress.address)
         commentary = userAddress.address.comment
+
+        bindOutputs()
     }
 
     func onActionButtonTapped() {
@@ -80,22 +87,36 @@ final class MapViewModel {
         }
     }
 
-    func straightGeocoding(searchQuery: String, title _: String) {
+    func straightGeocoding(searchQuery: String, title: String) {
+        self.searchQuery = searchQuery
+        self.title = title
+        addressRepository.getNearestAddress(geocode: "\(searchQuery)")
+    }
+
+    func reverseGeocoding(point: YMKPoint, zoom: NSNumber) {
+        self.point = point
+        self.zoom = zoom
+        addressRepository.getNearestAddress(geocode: "\(point.latitude), \(point.longitude)")
+    }
+
+    private func makeAddressForStraightGeocoding(searchQuery: String, title _: String, response: YandexResponse) {
         let responseHandler: (_ searchResponse: YMKSearchResponse?, _: Error?) -> Void = { [weak self] response, _ in
             guard let response = response else { return }
             self?.onSearchResponseName(response, shouldMoveMap: true)
         }
+
         searchSession = searchManager.submit(withText: searchQuery,
                                              geometry: YMKGeometry(point: targetLocation),
                                              searchOptions: YMKSearchOptions(),
                                              responseHandler: responseHandler)
     }
 
-    func reverseGeocoding(point: YMKPoint, zoom: NSNumber) {
+    private func makeAddressForReverseGeocoding(point: YMKPoint, zoom: NSNumber, response: YandexResponse) {
         let responseHandler: (_ searchResponse: YMKSearchResponse?, _: Error?) -> Void = { [weak self] response, _ in
             guard let response = response else { return }
             self?.onSearchResponseName(response, shouldMoveMap: false)
         }
+
         searchSession = searchManager.submit(with: point,
                                              zoom: zoom,
                                              searchOptions: YMKSearchOptions(),
@@ -163,6 +184,17 @@ final class MapViewModel {
 }
 
 extension MapViewModel {
+    private func bindOutputs() {
+        addressRepository.outputs.didGetNearestAddress
+            .subscribe(onNext: { [weak self] address in
+                self?.checkForRequest(
+                    with: address.geoObjectCollection.metaDataProperty.geocoderResponseMetaData.request,
+                    response: address
+                )
+            })
+            .disposed(by: disposeBag)
+    }
+
     private func bindToOrdersOutputs(using address: Address) {
         addressRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
@@ -181,6 +213,16 @@ extension MapViewModel {
         addressRepository.outputs.didFail
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
+    }
+
+    private func checkForRequest(with request: String, response: YandexResponse) {
+        if request.contains(".") {
+            guard let point = point, let zoom = zoom else { return }
+            makeAddressForReverseGeocoding(point: point, zoom: zoom, response: response)
+        } else {
+            guard let query = searchQuery, let title = title else { return }
+            makeAddressForStraightGeocoding(searchQuery: query, title: title, response: response)
+        }
     }
 }
 

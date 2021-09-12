@@ -7,26 +7,24 @@
 
 import Moya
 
-enum RateAPI {
-    case geocode()
+enum YandexAPI {
+    case geocode(geocode: String)
 }
 
-extension RateAPI: TargetType {
+extension YandexAPI: TargetType {
     var baseURL: URL {
-        return Constants.URLs.APIBase.dev
+        return Constants.URLs.yandexURL
     }
 
     var path: String {
         switch self {
-        case .getRates: return "orders/ratestars/"
-        case .saveUserRate: return "orders/rates/"
+        case .geocode: return "1.x/"
         }
     }
 
     var method: Method {
         switch self {
-        case .getRates: return .get
-        case .saveUserRate: return .post
+        case .geocode: return .get
         }
     }
 
@@ -36,7 +34,15 @@ extension RateAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .geocode: return .requestParameters(parameters: <#T##[String : Any]#>, encoding: <#T##ParameterEncoding#>)
+        case let .geocode(geocode):
+            let params = ["geocode": geocode,
+                          "apikey": "7cd03aed-4c1a-460a-aca2-90ae52dd60b6",
+                          "lang": "ru_RU",
+                          "format": "json",
+                          "sco": "latlong",
+                          "kind": "house",
+                          "results": "1"]
+            return .requestParameters(parameters: params, encoding: URLEncoding.default)
         }
     }
 

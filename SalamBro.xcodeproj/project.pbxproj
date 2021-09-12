@@ -315,7 +315,9 @@
 		AA1338C81836575329A3D697EC26FBA5 /* VerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD78B6277861BDF6F586D4ACF62DBB94 /* VerificationViewModel.swift */; };
 		CDA770E8B2BA1C940497F99A7DDC9EBF /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D518B65F82AAFDA5E793620A6E128C /* ViewModel.swift */; };
 		C78D864CC95A2B0B4CF1CE6C37C162CA /* YandexAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262AE1E65389F96399862FC5F1D2F2C2 /* YandexAPI.swift */; };
+		3D172209668DA491C7781264D1F52440 /* YandexAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA23B23DB15E66A6056053D77F09DA61 /* YandexAddress.swift */; };
 		4E8E9FBC402A4486A28924E50E373D59 /* YandexDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD846DBE53D57DC159EFF86C399EDF6 /* YandexDTOs.swift */; };
+		1925B1F2365A6B01E7BB2A6CF1CDDC6F /* YandexService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C199DA7C6952397CEC43FE04140AD1 /* YandexService.swift */; };
 		2DD1F648F81BC8C4BE171637F779E537 /* closed.json in Resources */ = {isa = PBXBuildFile; fileRef = FA7660C751DC6F3962B5F84392948913 /* closed.json */; };
 		F694560D11CB08F2FE1D2F7E86B4167B /* emptyBasket.json in Resources */ = {isa = PBXBuildFile; fileRef = 152E0B4CE8AF22894D63204432A36E24 /* emptyBasket.json */; };
 		4B9B1575E958577624E23D440A6EE8FE /* noInternet.json in Resources */ = {isa = PBXBuildFile; fileRef = EF9C1FF18C8E321A84DEE7D3443789AC /* noInternet.json */; };
@@ -699,7 +701,9 @@
 		DD78B6277861BDF6F586D4ACF62DBB94 /* VerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewModel.swift; sourceTree = "<group>"; };
 		90D518B65F82AAFDA5E793620A6E128C /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		262AE1E65389F96399862FC5F1D2F2C2 /* YandexAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexAPI.swift; sourceTree = "<group>"; };
+		BA23B23DB15E66A6056053D77F09DA61 /* YandexAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexAddress.swift; sourceTree = "<group>"; };
 		3DD846DBE53D57DC159EFF86C399EDF6 /* YandexDTOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexDTOs.swift; sourceTree = "<group>"; };
+		25C199DA7C6952397CEC43FE04140AD1 /* YandexService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexService.swift; sourceTree = "<group>"; };
 		FA7660C751DC6F3962B5F84392948913 /* closed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = closed.json; sourceTree = "<group>"; };
 		152E0B4CE8AF22894D63204432A36E24 /* emptyBasket.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emptyBasket.json; sourceTree = "<group>"; };
 		47B2A04B8AFBC530EABCB13720C0890B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1188,6 +1192,7 @@
 				C9F58FDA6067CD76CD218CBA8EECF2EA /* PushNotificationsService.swift */,
 				BBBD4C20818092EA168A52FBF350C119 /* RateService.swift */,
 				D592E9FBAE65EA1FFBABA684C5ADCB9B /* ServiceComponents.swift */,
+				25C199DA7C6952397CEC43FE04140AD1 /* YandexService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2072,6 +2077,7 @@
 				5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */,
 				7120A99F9624B614E4F4E0E1F245EA7F /* Rate.swift */,
 				ED087FC022B58289758AB5B3C9837BFC /* RateItem.swift */,
+				BA23B23DB15E66A6056053D77F09DA61 /* YandexAddress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2949,7 +2955,9 @@
 				AA1338C81836575329A3D697EC26FBA5 /* VerificationViewModel.swift in Sources */,
 				CDA770E8B2BA1C940497F99A7DDC9EBF /* ViewModel.swift in Sources */,
 				C78D864CC95A2B0B4CF1CE6C37C162CA /* YandexAPI.swift in Sources */,
+				3D172209668DA491C7781264D1F52440 /* YandexAddress.swift in Sources */,
 				4E8E9FBC402A4486A28924E50E373D59 /* YandexDTOs.swift in Sources */,
+				1925B1F2365A6B01E7BB2A6CF1CDDC6F /* YandexService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

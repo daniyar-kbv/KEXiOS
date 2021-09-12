@@ -20,6 +20,8 @@ struct Constants {
         enum APIBase {
             static let dev = URL(string: "https://api-dev.kexbrands.kz")!
         }
+
+        static let yandexURL = URL(string: "https://geocode-maps.yandex.ru/")!
     }
 
     enum Map {
