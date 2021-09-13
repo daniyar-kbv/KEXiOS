@@ -164,6 +164,12 @@ struct GeoObjectCollectionMetaDataProperty: Decodable {
 }
 
 struct GeocoderResponseMetaData: Decodable {
+    let point: Point?
     let boundedBy: BoundedBy
     let request, results, found: String
+
+    enum CodingKeys: String, CodingKey {
+        case boundedBy, request, results, found
+        case point = "Point"
+    }
 }

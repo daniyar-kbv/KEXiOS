@@ -9,7 +9,6 @@ import Foundation
 import RxCocoa
 import RxSwift
 import YandexMapKit
-import YandexMapKitSearch
 
 final class MapViewModel {
     enum MapFlow {
@@ -33,8 +32,6 @@ final class MapViewModel {
         }
     }
 
-    private let searchManager = YMKSearch.sharedInstance().createSearchManager(with: .combined)
-    private var searchSession: YMKSearchSession?
     private(set) var flow: MapFlow
     private let disposeBag = DisposeBag()
 
@@ -90,14 +87,15 @@ final class MapViewModel {
     func straightGeocoding(searchQuery: String, title: String) {
         self.searchQuery = searchQuery
         self.title = title
-        addressRepository.getNearestAddress(geocode: "\(searchQuery)", language: "")
+        addressRepository.makeYandexDTO(geocode: "\(searchQuery)",
+                                        language: configureLanguage())
     }
 
     func reverseGeocoding(point: YMKPoint, zoom: NSNumber) {
         self.point = point
         self.zoom = zoom
-        addressRepository.getNearestAddress(geocode: "\(point.latitude), \(point.longitude)",
-                                            language: configureLanguage())
+        addressRepository.makeYandexDTO(geocode: "\(point.latitude), \(point.longitude)",
+                                        language: configureLanguage())
     }
 
     private func configureLanguage() -> String {
@@ -107,48 +105,24 @@ final class MapViewModel {
         }
     }
 
-    private func makeAddressForStraightGeocoding(searchQuery: String, title _: String, yandexResponse: YandexResponse) {
-        let responseHandler: (_ searchResponse: YMKSearchResponse?, _: Error?) -> Void = { [weak self] response, _ in
-            guard let response = response else { return }
-            self?.onSearchResponseName(response, yandexResponse: yandexResponse, shouldMoveMap: true)
-        }
-
-        searchSession = searchManager.submit(withText: searchQuery,
-                                             geometry: YMKGeometry(point: targetLocation),
-                                             searchOptions: YMKSearchOptions(),
-                                             responseHandler: responseHandler)
-    }
-
-    private func makeAddressForReverseGeocoding(point: YMKPoint, zoom: NSNumber, yandexResponse: YandexResponse) {
-        let responseHandler: (_ searchResponse: YMKSearchResponse?, _: Error?) -> Void = { [weak self] response, _ in
-            guard let response = response else { return }
-            self?.onSearchResponseName(response, yandexResponse: yandexResponse, shouldMoveMap: false)
-        }
-
-        searchSession = searchManager.submit(with: point,
-                                             zoom: zoom,
-                                             searchOptions: YMKSearchOptions(),
-                                             responseHandler: responseHandler)
-    }
-
-    private func onSearchResponseName(_ response: YMKSearchResponse, yandexResponse: YandexResponse, shouldMoveMap: Bool = false) {
-        guard let objectMetadata = response.collection.children.first?.obj?.metadataContainer
-            .getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata,
-            let yandexMetadata = yandexResponse.geoObjectCollection.featureMember.first
+    private func onSearchResponseName(yandexResponse: YandexResponse, shouldMoveMap _: Bool = false) {
+        guard let yandexMetadata = yandexResponse.geoObjectCollection.featureMember.first
         else { return }
 
         var address = Address()
 
         construct(address: &address, with: yandexMetadata.geoObject.metaDataProperty.geocoderMetaData.address.components)
 
-        address.longitude = objectMetadata.balloonPoint.longitude
-        address.latitude = objectMetadata.balloonPoint.latitude
+        let pointsString = yandexMetadata.geoObject.point.pos.split(separator: " ")
+
+        guard let longitude = Double(pointsString[0]), let latitude = Double(pointsString[1]) else { return }
+        address.longitude = longitude
+        address.latitude = latitude
 
         outputs.selectedAddress.onNext(address)
 
-        if shouldMoveMap {
-            outputs.moveMapTo.accept(YMKPoint(latitude: objectMetadata.balloonPoint.latitude,
-                                              longitude: objectMetadata.balloonPoint.longitude))
+        if !checkForRequest(response: yandexResponse) {
+            outputs.moveMapTo.accept(YMKPoint(latitude: latitude, longitude: longitude))
         }
     }
 
@@ -183,10 +157,7 @@ extension MapViewModel {
     private func bindOutputs() {
         addressRepository.outputs.didGetNearestAddress
             .subscribe(onNext: { [weak self] address in
-                self?.checkForRequest(
-                    with: address.geoObjectCollection.metaDataProperty.geocoderResponseMetaData.request,
-                    response: address
-                )
+                self?.onSearchResponseName(yandexResponse: address)
             })
             .disposed(by: disposeBag)
     }
@@ -211,14 +182,8 @@ extension MapViewModel {
             .disposed(by: disposeBag)
     }
 
-    private func checkForRequest(with request: String, response: YandexResponse) {
-        if request.contains(".") {
-            guard let point = point, let zoom = zoom else { return }
-            makeAddressForReverseGeocoding(point: point, zoom: zoom, yandexResponse: response)
-        } else {
-            guard let query = searchQuery, let title = title else { return }
-            makeAddressForStraightGeocoding(searchQuery: query, title: title, yandexResponse: response)
-        }
+    private func checkForRequest(response: YandexResponse) -> Bool {
+        return response.geoObjectCollection.metaDataProperty.geocoderResponseMetaData.point != nil
     }
 }
 

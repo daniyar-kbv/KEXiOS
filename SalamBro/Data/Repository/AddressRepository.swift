@@ -28,7 +28,7 @@ protocol AddressRepository: AnyObject {
     func updateUserAddress(with id: Int, brandId: Int)
     func deleteUserAddress(with id: Int)
 
-    func getNearestAddress(geocode: String, language: String)
+    func makeYandexDTO(geocode: String, language: String)
 }
 
 final class AddressRepositoryImpl: AddressRepository {
@@ -266,10 +266,15 @@ extension AddressRepositoryImpl {
 }
 
 extension AddressRepositoryImpl {
-    func getNearestAddress(geocode: String, language: String) {
+    func makeYandexDTO(geocode: String, language: String) {
+        let yandexDTO = YandexDTO(geocode: geocode, apiKey: Constants.yandexApiKey, language: language, format: "json", sco: "latlong", kind: "house", results: "1")
+
+        getNearestAddress(queryParams: yandexDTO.toQueryParams())
+    }
+
+    private func getNearestAddress(queryParams: [String: String]) {
         outputs.didStartRequest.accept(())
-        yandexService.getAddress(geocode: geocode, language: language)
-            .retryWhenUnautharized()
+        yandexService.getAddress(queryParams: queryParams)
             .subscribe(onSuccess: { [weak self] address in
                 self?.outputs.didGetNearestAddress.accept(address)
                 self?.outputs.didEndRequest.accept(())

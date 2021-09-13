@@ -13,6 +13,7 @@ struct Constants {
     static let apiKey = getPlistValue(by: "API_KEY")
     static let cloudpaymentsMerchantId = getPlistValue(by: "CLOUDPAYMENTS_MERCHANT_ID")
     static let applePayMerchantId = getPlistValue(by: "APPLE_PAY_MERCHANT_ID")
+    static let yandexApiKey = getPlistValue(by: "Yandex_API_KEY")
 
     enum URLs {
         static let promotionURL = APIBase.dev.appendingPathComponent("/promotions/%@/")
