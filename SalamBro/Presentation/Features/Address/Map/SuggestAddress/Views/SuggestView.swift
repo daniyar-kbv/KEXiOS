@@ -101,6 +101,7 @@ extension SuggestView {
             $0.left.equalTo(searchBar.snp.right).offset(8)
             $0.right.equalToSuperview().offset(-24)
             $0.centerY.equalTo(searchBar.snp.centerY)
+            $0.width.equalTo(72)
         }
 
         separator.snp.makeConstraints {

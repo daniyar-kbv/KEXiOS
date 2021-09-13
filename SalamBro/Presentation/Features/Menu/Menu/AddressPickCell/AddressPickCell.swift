@@ -28,6 +28,7 @@ final class AddressPickCell: UITableViewCell {
         label.baselineAdjustment = .alignBaselines
         label.lineBreakMode = .byTruncatingTail
         label.adjustsFontSizeToFitWidth = true
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return label
     }()
 
