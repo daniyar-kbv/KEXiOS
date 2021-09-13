@@ -69,7 +69,7 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
     }
 
     func yandexService() -> YandexService {
-        return shared(YandexServiceMoyaImpl(provider: MoyaProvider<YandexAPI>()))
+        return shared(YandexServiceMoyaImpl(provider: MoyaProvider<YandexAPI>(plugins: [networkPlugin])))
     }
 
     func documentsService() -> DocumentsService {
