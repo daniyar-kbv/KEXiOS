@@ -13,6 +13,7 @@ struct Constants {
     static let apiKey = getPlistValue(by: "API_KEY")
     static let cloudpaymentsMerchantId = getPlistValue(by: "CLOUDPAYMENTS_MERCHANT_ID")
     static let applePayMerchantId = getPlistValue(by: "APPLE_PAY_MERCHANT_ID")
+    static let yandexApiKey = getPlistValue(by: "Yandex_API_KEY")
 
     enum URLs {
         static let promotionURL = APIBase.dev.appendingPathComponent("/promotions/%@/")
@@ -20,6 +21,8 @@ struct Constants {
         enum APIBase {
             static let dev = URL(string: "https://api-dev.kexbrands.kz")!
         }
+
+        static let yandexURL = URL(string: "https://geocode-maps.yandex.ru/")!
     }
 
     enum Map {

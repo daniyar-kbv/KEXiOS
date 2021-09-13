@@ -15,6 +15,7 @@ protocol ServiceComponents: AnyObject {
     func authorizedApplyService() -> AuthorizedApplyService
     func menuService() -> MenuService
     func profileService() -> ProfileService
+    func yandexService() -> YandexService
     func documentsService() -> DocumentsService
     func rateService() -> RateService
     func paymentsService() -> PaymentsService
@@ -65,6 +66,10 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
 
     func profileService() -> ProfileService {
         return shared(ProfileServiceMoyaImpl(provider: MoyaProvider<ProfileAPI>(plugins: [networkPlugin, languagePlugin, authPlugin])))
+    }
+
+    func yandexService() -> YandexService {
+        return shared(YandexServiceMoyaImpl(provider: MoyaProvider<YandexAPI>(plugins: [networkPlugin])))
     }
 
     func documentsService() -> DocumentsService {

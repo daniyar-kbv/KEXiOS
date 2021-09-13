@@ -10,7 +10,7 @@ import RxSwift
 import UIKit
 
 protocol SuggestControllerDelegate: AnyObject {
-    func reverseGeocoding(searchQuery: String, title: String)
+    func straightGeocoding(searchQuery: String, title: String)
 }
 
 final class SuggestController: UIViewController {
@@ -125,7 +125,7 @@ extension SuggestController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         dismiss(animated: true, completion: nil)
 
-        suggestDelegate?.reverseGeocoding(searchQuery: viewModel.fullQuery, title: title)
+        suggestDelegate?.straightGeocoding(searchQuery: viewModel.fullQuery, title: title)
     }
 
     func tableView(_: UITableView, shouldHighlightRowAt _: IndexPath) -> Bool {

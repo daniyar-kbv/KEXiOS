@@ -84,7 +84,7 @@ extension MapPage: YMKMapCameraListener {
         guard finished else { return }
         let point = map.cameraPosition.target
         let zoom = map.cameraPosition.zoom as NSNumber
-        viewModel.getName(point: point, zoom: zoom)
+        viewModel.reverseGeocoding(point: point, zoom: zoom)
     }
 
     private func moveMap(to point: YMKPoint, zoom: Float = Constants.Map.Zoom.move) {
@@ -208,8 +208,8 @@ extension MapPage {
 // MARK: Search Delegates
 
 extension MapPage: SuggestControllerDelegate {
-    func reverseGeocoding(searchQuery: String, title: String) {
-        viewModel.reverseGeoCoding(searchQuery: searchQuery, title: title)
+    func straightGeocoding(searchQuery: String, title: String) {
+        viewModel.straightGeocoding(searchQuery: searchQuery, title: title)
     }
 }
 

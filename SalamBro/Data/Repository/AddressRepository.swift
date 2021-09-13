@@ -27,6 +27,8 @@ protocol AddressRepository: AnyObject {
     func create(userAddress: UserAddress)
     func updateUserAddress(with id: Int, brandId: Int)
     func deleteUserAddress(with id: Int)
+
+    func getNearestAddress(geocode: String, language: String)
 }
 
 final class AddressRepositoryImpl: AddressRepository {
@@ -41,6 +43,7 @@ final class AddressRepositoryImpl: AddressRepository {
     private let ordersService: OrdersService
     private let authorizedApplyService: AuthorizedApplyService
     private let profileService: ProfileService
+    private let yandexService: YandexService
 
     private let disposeBag = DisposeBag()
 
@@ -50,6 +53,7 @@ final class AddressRepositoryImpl: AddressRepository {
          ordersService: OrdersService,
          authorizedApplyService: AuthorizedApplyService,
          profileService: ProfileService,
+         yandexService: YandexService,
          defaultStorage: DefaultStorage,
          authTokenStorage: AuthTokenStorage)
     {
@@ -59,6 +63,7 @@ final class AddressRepositoryImpl: AddressRepository {
         self.ordersService = ordersService
         self.authorizedApplyService = authorizedApplyService
         self.profileService = profileService
+        self.yandexService = yandexService
         self.defaultStorage = defaultStorage
         self.authTokenStorage = authTokenStorage
 
@@ -261,6 +266,21 @@ extension AddressRepositoryImpl {
 }
 
 extension AddressRepositoryImpl {
+    func getNearestAddress(geocode: String, language: String) {
+        let yandexDTO = YandexDTO(geocode: geocode, apiKey: Constants.yandexApiKey, language: language, format: "json", sco: "latlong", kind: "house", results: "1")
+
+        yandexService.getAddress(dto: yandexDTO)
+            .subscribe(onSuccess: { [weak self] address in
+                self?.outputs.didGetNearestAddress.accept(address)
+            }, onError: { [weak self] error in
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didFail.accept(error)
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension AddressRepositoryImpl {
     enum OrderApplyFlow: Equatable {
         case create(dto: OrderApplyDTO)
         case newAddress(dto: OrderApplyDTO)
@@ -284,5 +304,7 @@ extension AddressRepositoryImpl {
         let didSaveUserAddress = PublishRelay<Void>()
         let didGetUserAddresses = PublishRelay<[UserAddress]>()
         let didDeleteUserAddress = PublishRelay<Void>()
+
+        let didGetNearestAddress = PublishRelay<YandexResponse>()
     }
 }
