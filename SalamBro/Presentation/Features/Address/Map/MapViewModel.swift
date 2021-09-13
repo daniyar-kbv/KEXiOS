@@ -90,19 +90,27 @@ final class MapViewModel {
     func straightGeocoding(searchQuery: String, title: String) {
         self.searchQuery = searchQuery
         self.title = title
-        addressRepository.getNearestAddress(geocode: "\(searchQuery)")
+        addressRepository.getNearestAddress(geocode: "\(searchQuery)", language: "")
     }
 
     func reverseGeocoding(point: YMKPoint, zoom: NSNumber) {
         self.point = point
         self.zoom = zoom
-        addressRepository.getNearestAddress(geocode: "\(point.latitude), \(point.longitude)")
+        addressRepository.getNearestAddress(geocode: "\(point.latitude), \(point.longitude)",
+                                            language: configureLanguage())
     }
 
-    private func makeAddressForStraightGeocoding(searchQuery: String, title _: String, response: YandexResponse) {
+    private func configureLanguage() -> String {
+        switch defaultStorage.appLocale {
+        case .russian, .kazakh: return "ru_RU"
+        case .english: return "en_RU"
+        }
+    }
+
+    private func makeAddressForStraightGeocoding(searchQuery: String, title _: String, yandexResponse: YandexResponse) {
         let responseHandler: (_ searchResponse: YMKSearchResponse?, _: Error?) -> Void = { [weak self] response, _ in
             guard let response = response else { return }
-            self?.onSearchResponseName(response, shouldMoveMap: true)
+            self?.onSearchResponseName(response, yandexResponse: yandexResponse, shouldMoveMap: true)
         }
 
         searchSession = searchManager.submit(withText: searchQuery,
@@ -111,10 +119,10 @@ final class MapViewModel {
                                              responseHandler: responseHandler)
     }
 
-    private func makeAddressForReverseGeocoding(point: YMKPoint, zoom: NSNumber, response: YandexResponse) {
+    private func makeAddressForReverseGeocoding(point: YMKPoint, zoom: NSNumber, yandexResponse: YandexResponse) {
         let responseHandler: (_ searchResponse: YMKSearchResponse?, _: Error?) -> Void = { [weak self] response, _ in
             guard let response = response else { return }
-            self?.onSearchResponseName(response, shouldMoveMap: false)
+            self?.onSearchResponseName(response, yandexResponse: yandexResponse, shouldMoveMap: false)
         }
 
         searchSession = searchManager.submit(with: point,
@@ -123,14 +131,15 @@ final class MapViewModel {
                                              responseHandler: responseHandler)
     }
 
-    private func onSearchResponseName(_ response: YMKSearchResponse, shouldMoveMap: Bool = false) {
+    private func onSearchResponseName(_ response: YMKSearchResponse, yandexResponse: YandexResponse, shouldMoveMap: Bool = false) {
         guard let objectMetadata = response.collection.children.first?.obj?.metadataContainer
-            .getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata
+            .getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata,
+            let yandexMetadata = yandexResponse.geoObjectCollection.featureMember.first
         else { return }
 
         var address = Address()
 
-        construct(address: &address, with: objectMetadata.address.components)
+        construct(address: &address, with: yandexMetadata.geoObject.metaDataProperty.geocoderMetaData.address.components)
 
         address.longitude = objectMetadata.balloonPoint.longitude
         address.latitude = objectMetadata.balloonPoint.latitude
@@ -143,43 +152,30 @@ final class MapViewModel {
         }
     }
 
-    private func construct(address: inout Address, with components: [YMKSearchAddressComponent]) {
-        var street: String?
-        var district: String?
+    private func construct(address: inout Address, with components: [Component]) {
         var locality: String?
-        var building: String?
+        var street: String?
+        var house: String?
 
         components.forEach { component in
-            component.kinds.forEach { kind in
-                switch resolveKind(of: kind) {
-                case .street: street = component.name
-                case .district: district = component.name
-                case .locality: locality = component.name
-                case .house: building = component.name
-                default: break
-                }
+            switch component.kind {
+            case "locality": locality = component.name
+            case "street": street = component.name
+            case "house": house = component.name
+            default: break
             }
         }
 
-        guard building != nil else { return }
-        address.building = building
+        guard house != nil else { return }
+        address.building = house
 
         if street != nil {
             address.street = street
-            if district != nil {
-                address.district = district
-            }
-        } else if district != nil {
-            address.district = district
         } else if locality != nil {
             address.district = locality
         } else {
             return
         }
-    }
-
-    private func resolveKind(of kind: NSNumber) -> YMKSearchComponentKind {
-        return YMKSearchComponentKind(rawValue: .init(truncating: kind)) ?? .unknown
     }
 }
 
@@ -218,10 +214,10 @@ extension MapViewModel {
     private func checkForRequest(with request: String, response: YandexResponse) {
         if request.contains(".") {
             guard let point = point, let zoom = zoom else { return }
-            makeAddressForReverseGeocoding(point: point, zoom: zoom, response: response)
+            makeAddressForReverseGeocoding(point: point, zoom: zoom, yandexResponse: response)
         } else {
             guard let query = searchQuery, let title = title else { return }
-            makeAddressForStraightGeocoding(searchQuery: query, title: title, response: response)
+            makeAddressForStraightGeocoding(searchQuery: query, title: title, yandexResponse: response)
         }
     }
 }
