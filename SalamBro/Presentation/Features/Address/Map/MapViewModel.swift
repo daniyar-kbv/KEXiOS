@@ -87,15 +87,15 @@ final class MapViewModel {
     func straightGeocoding(searchQuery: String, title: String) {
         self.searchQuery = searchQuery
         self.title = title
-        addressRepository.makeYandexDTO(geocode: "\(searchQuery)",
-                                        language: configureLanguage())
+        addressRepository.getNearestAddress(geocode: "\(searchQuery)",
+                                            language: configureLanguage())
     }
 
     func reverseGeocoding(point: YMKPoint, zoom: NSNumber) {
         self.point = point
         self.zoom = zoom
-        addressRepository.makeYandexDTO(geocode: "\(point.latitude), \(point.longitude)",
-                                        language: configureLanguage())
+        addressRepository.getNearestAddress(geocode: "\(point.latitude), \(point.longitude)",
+                                            language: configureLanguage())
     }
 
     private func configureLanguage() -> String {
@@ -105,7 +105,7 @@ final class MapViewModel {
         }
     }
 
-    private func onSearchResponseName(yandexResponse: YandexResponse, shouldMoveMap _: Bool = false) {
+    private func onSearchResponseName(yandexResponse: YandexResponse) {
         guard let yandexMetadata = yandexResponse.geoObjectCollection.featureMember.first
         else { return }
 
@@ -121,30 +121,37 @@ final class MapViewModel {
 
         outputs.selectedAddress.onNext(address)
 
-        if !checkForRequest(response: yandexResponse) {
+        if !isStraightGeocoding(response: yandexResponse) {
             outputs.moveMapTo.accept(YMKPoint(latitude: latitude, longitude: longitude))
         }
     }
 
     private func construct(address: inout Address, with components: [Component]) {
-        var locality: String?
         var street: String?
-        var house: String?
+        var district: String?
+        var locality: String?
+        var building: String?
 
         components.forEach { component in
             switch component.kind {
-            case "locality": locality = component.name
             case "street": street = component.name
-            case "house": house = component.name
+            case "district": district = component.name
+            case "locality": locality = component.name
+            case "house": building = component.name
             default: break
             }
         }
 
-        guard house != nil else { return }
-        address.building = house
+        guard building != nil else { return }
+        address.building = building
 
         if street != nil {
             address.street = street
+            if district != nil {
+                address.district = district
+            }
+        } else if district != nil {
+            address.district = district
         } else if locality != nil {
             address.district = locality
         } else {
@@ -182,7 +189,7 @@ extension MapViewModel {
             .disposed(by: disposeBag)
     }
 
-    private func checkForRequest(response: YandexResponse) -> Bool {
+    private func isStraightGeocoding(response: YandexResponse) -> Bool {
         return response.geoObjectCollection.metaDataProperty.geocoderResponseMetaData.point != nil
     }
 }

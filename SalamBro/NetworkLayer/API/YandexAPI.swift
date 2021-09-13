@@ -8,7 +8,7 @@
 import Moya
 
 enum YandexAPI {
-    case geocode(queryParams: [String: String])
+    case geocode(dto: YandexDTO)
 }
 
 extension YandexAPI: TargetType {
@@ -34,8 +34,8 @@ extension YandexAPI: TargetType {
 
     var task: Task {
         switch self {
-        case let .geocode(queryParams):
-            return .requestParameters(parameters: queryParams, encoding: URLEncoding.default)
+        case let .geocode(dto):
+            return .requestParameters(parameters: dto.toQueryParams(), encoding: URLEncoding.default)
         }
     }
 

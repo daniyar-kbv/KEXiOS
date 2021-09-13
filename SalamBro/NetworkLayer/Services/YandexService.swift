@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol YandexService: AnyObject {
-    func getAddress(queryParams: [String: String]) -> Single<YandexResponse>
+    func getAddress(dto: YandexDTO) -> Single<YandexResponse>
 }
 
 final class YandexServiceMoyaImpl: YandexService {
@@ -21,8 +21,8 @@ final class YandexServiceMoyaImpl: YandexService {
         self.provider = provider
     }
 
-    func getAddress(queryParams: [String: String]) -> Single<YandexResponse> {
-        return provider.rx.request(.geocode(queryParams: queryParams))
+    func getAddress(dto: YandexDTO) -> Single<YandexResponse> {
+        return provider.rx.request(.geocode(dto: dto))
             .map { response in
                 guard let response = try? response.map(YandexAddress.self) else {
                     throw NetworkError.badMapping
