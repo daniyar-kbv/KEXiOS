@@ -31,9 +31,9 @@ final class SuggestView: UIView {
         searchBar.borderStyle = .none
         searchBar.clearButtonMode = .never
         searchBar.minimumFontSize = 17
-        searchBar.adjustsFontSizeToFitWidth = true
         searchBar.contentHorizontalAlignment = .left
         searchBar.contentVerticalAlignment = .center
+        searchBar.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return searchBar
     }()
 
@@ -101,7 +101,6 @@ extension SuggestView {
             $0.left.equalTo(searchBar.snp.right).offset(8)
             $0.right.equalToSuperview().offset(-24)
             $0.centerY.equalTo(searchBar.snp.centerY)
-            $0.width.equalTo(72)
         }
 
         separator.snp.makeConstraints {
