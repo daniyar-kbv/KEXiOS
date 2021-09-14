@@ -28,6 +28,8 @@ final class AddressPickCell: UITableViewCell {
         label.baselineAdjustment = .alignBaselines
         label.lineBreakMode = .byTruncatingTail
         label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return label
     }()
 
@@ -38,14 +40,14 @@ final class AddressPickCell: UITableViewCell {
         button.contentHorizontalAlignment = .center
         button.contentVerticalAlignment = .center
         button.isUserInteractionEnabled = false
-        button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        button.setContentHuggingPriority(.required, for: .horizontal)
         return button
     }()
 
     private lazy var bottomStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [addressLabel, changeButton])
         view.axis = .horizontal
-        view.distribution = .equalSpacing
+        view.distribution = .fill
         view.alignment = .fill
         view.spacing = 24
         return view

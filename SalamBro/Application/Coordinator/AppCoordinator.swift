@@ -186,24 +186,32 @@ extension AppCoordinator {
         let menuCoordinator = appCoordinatorsFactory.makeMenuCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
         menuCoordinator.restart()
+
+        menuCoordinator.router.getNavigationController().tabBarItem = SBTabBarType.menu.tabBarItem
     }
 
     private func restartProfileCoordinator() {
         let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
         profileCoordinator.restart()
+
+        profileCoordinator.router.getNavigationController().tabBarItem = SBTabBarType.profile.tabBarItem
     }
 
     private func restartSupportCoordinator() {
         let supportCoordinator = appCoordinatorsFactory.makeSupportCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
         supportCoordinator.restart()
+
+        supportCoordinator.router.getNavigationController().tabBarItem = SBTabBarType.support.tabBarItem
     }
 
     private func restartCartCoordinator() {
         let cartCoordinator = appCoordinatorsFactory.makeCartCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
         cartCoordinator.restart()
+
+        cartCoordinator.router.getNavigationController().tabBarItem = SBTabBarType.cart.tabBarItem
     }
 }
 

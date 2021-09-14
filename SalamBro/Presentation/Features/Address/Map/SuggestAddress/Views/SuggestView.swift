@@ -31,9 +31,9 @@ final class SuggestView: UIView {
         searchBar.borderStyle = .none
         searchBar.clearButtonMode = .never
         searchBar.minimumFontSize = 17
-        searchBar.adjustsFontSizeToFitWidth = true
         searchBar.contentHorizontalAlignment = .left
         searchBar.contentVerticalAlignment = .center
+        searchBar.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return searchBar
     }()
 
@@ -45,6 +45,7 @@ final class SuggestView: UIView {
         button.contentVerticalAlignment = .center
         button.adjustsImageWhenHighlighted = true
         button.adjustsImageWhenDisabled = true
+        button.setContentHuggingPriority(.required, for: .horizontal)
         return button
     }()
 
