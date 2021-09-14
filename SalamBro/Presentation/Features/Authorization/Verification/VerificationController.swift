@@ -90,7 +90,6 @@ final class VerificationController: UIViewController, LoaderDisplayable {
     }
 
     private func reload() {
-        print("reload()")
         rootView?.reload(for: true)
     }
 
