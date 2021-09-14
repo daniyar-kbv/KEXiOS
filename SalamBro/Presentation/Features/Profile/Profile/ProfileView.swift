@@ -30,7 +30,9 @@ final class ProfileView: UIView {
         let label = SBTextButton()
         label.setTitle(SBLocalization.localized(key: ProfileText.Profile.editButton), for: .normal)
         label.titleLabel?.font = .systemFont(ofSize: 12)
-        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        label.snp.makeConstraints {
+            $0.width.equalTo(75)
+        }
         return label
     }()
 
