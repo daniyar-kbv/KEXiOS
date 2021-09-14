@@ -45,6 +45,7 @@ final class SuggestView: UIView {
         button.contentVerticalAlignment = .center
         button.adjustsImageWhenHighlighted = true
         button.adjustsImageWhenDisabled = true
+        button.setContentHuggingPriority(.required, for: .horizontal)
         return button
     }()
 
