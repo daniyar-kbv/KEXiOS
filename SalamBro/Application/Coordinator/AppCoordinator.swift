@@ -36,6 +36,7 @@ final class AppCoordinator: BaseCoordinator {
         bindNotificationCenter()
         configureCoordinators()
         switchFlows()
+        ReachabilityManagerImpl.shared.check()
     }
 
     private func bindNotificationCenter() {
@@ -66,8 +67,6 @@ final class AppCoordinator: BaseCoordinator {
 
             cartCoordinator.resumePayment()
         }
-
-        ReachabilityManagerImpl.shared.check()
     }
 
     private func configureCoordinators() {
