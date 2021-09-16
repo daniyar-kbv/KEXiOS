@@ -51,7 +51,7 @@ extension Cart {
 class CartItem: Codable {
     let internalUUID: String = UUID().uuidString
     var count: Int
-    var comment: String
+    var comment: String?
     var position: CartPosition
     var modifierGroups: [CartModifierGroup]
 

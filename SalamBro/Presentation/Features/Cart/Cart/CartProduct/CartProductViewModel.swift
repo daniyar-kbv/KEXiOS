@@ -39,7 +39,7 @@ extension CartProductViewModelImpl {
         let itemImage: BehaviorRelay<URL?>
         let itemTitle: BehaviorRelay<String>
         let modifiersTitles: BehaviorRelay<String>
-        let comment: BehaviorRelay<String>
+        let comment: BehaviorRelay<String?>
         let price: BehaviorRelay<String>
         let count: BehaviorRelay<String>
         let isAvailable: BehaviorRelay<Bool>

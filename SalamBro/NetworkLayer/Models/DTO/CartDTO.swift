@@ -17,7 +17,7 @@ struct CartDTO: Encodable {
     struct Item: Encodable {
         let positionUUID: String
         let count: Int
-        let comment: String
+        let comment: String?
         let modifierGroups: [ModifierGroup]
 
         enum CodingKeys: String, CodingKey {

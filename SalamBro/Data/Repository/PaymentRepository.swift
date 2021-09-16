@@ -33,6 +33,7 @@ final class PaymentRepositoryImpl: PaymentRepository {
     private let defaultStorage: DefaultStorage
     private let cartStorage: CartStorage
     private let addressStorage: GeoStorage
+    private let reachabilityManager: ReachabilityManager
 
     private var selectedPaymentMethod: PaymentMethod?
     private var localPaymentMethods: [PaymentMethod] = [.init(type: .card), .init(type: .applePay), .init(type: .cash)]
@@ -50,7 +51,8 @@ final class PaymentRepositoryImpl: PaymentRepository {
          ordersService: OrdersService,
          defaultStorage: DefaultStorage,
          cartStorage: CartStorage,
-         addressStorage: GeoStorage)
+         addressStorage: GeoStorage,
+         reachabilityManager: ReachabilityManager)
     {
         self.paymentService = paymentService
         self.authorizedApplyService = authorizedApplyService
@@ -58,6 +60,7 @@ final class PaymentRepositoryImpl: PaymentRepository {
         self.defaultStorage = defaultStorage
         self.cartStorage = cartStorage
         self.addressStorage = addressStorage
+        self.reachabilityManager = reachabilityManager
     }
 
     func setSelected(paymentMethod: PaymentMethod?) {
@@ -302,7 +305,6 @@ extension PaymentRepositoryImpl {
     }
 
     private func getNewLeadAuthorized() {
-        outputs.didStartRequest.accept(())
         authorizedApplyService.authorizedApplyOrder()
             .retryWhenUnautharized()
             .subscribe(onSuccess: orderApplyOnSuccess(_:),
@@ -318,7 +320,8 @@ extension PaymentRepositoryImpl {
             .subscribe(onSuccess: orderApplyOnSuccess(_:),
                        onError: { [weak self] error in
                            self?.defaultStorage.persist(isPaymentProcess: false)
-                           self?.outputs.didEndRequest.accept(())
+                           self?.outputs.didEndPaymentRequest.accept(())
+                           guard self?.reachabilityManager.getReachability() == true else { return }
                            NotificationCenter.default.post(
                                name: Constants.InternalNotification.startFirstFlow.name,
                                object: nil
@@ -335,7 +338,7 @@ extension PaymentRepositoryImpl {
     private func orderApplyOnSuccess(_ leadUUID: String) {
         NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
                                         object: leadUUID)
-        outputs.didEndRequest.accept(())
+        outputs.didEndPaymentRequest.accept(())
         defaultStorage.persist(isPaymentProcess: false)
     }
 }

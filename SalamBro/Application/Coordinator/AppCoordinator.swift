@@ -43,6 +43,7 @@ final class AppCoordinator: BaseCoordinator {
             .notification(Constants.InternalNotification.startFirstFlow.name)
             .subscribe(onNext: { [weak self] _ in
                 DefaultStorageImpl.sharedStorage.persist(notFirstLaunch: false)
+                self?.restartApp()
                 self?.switchFlows()
             })
             .disposed(by: disposeBag)
