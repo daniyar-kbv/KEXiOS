@@ -64,7 +64,7 @@ class CartItem: Codable {
         case modifierGroups = "modifier_groups"
     }
 
-    init(count: Int, comment: String, position: CartPosition, modifierGroups: [CartModifierGroup]) {
+    init(count: Int, comment: String?, position: CartPosition, modifierGroups: [CartModifierGroup]) {
         self.count = count
         self.comment = comment
         self.position = position
@@ -107,6 +107,13 @@ struct CartPosition: Codable, Equatable {
         case additional = "ADDITIONAL"
         case dayDelivery = "DAY_DELIVERY"
         case nightDelivery = "NIGHT_DELIVERY"
+    }
+
+    func getPositionType() -> PositionType? {
+        guard let type = positionType else {
+            return .none
+        }
+        return PositionType(rawValue: type)
     }
 
     static func == (lhs: Self, rhs: Self) -> Bool {

@@ -208,10 +208,10 @@ extension CartController {
 
         viewModel.outputs.didNotMatchMinPrice
             .subscribe(onNext: { [weak self] minPrice in
-                self?.showAlertWith(message: .init(SBLocalization.localized(
+                self?.showAlertWith(message: SBLocalization.localized(
                     key: CartText.Cart.CartAlert.minPriceAlertMessage,
                     arguments: minPrice.formattedWithSeparator
-                )))
+                ))
             })
             .disposed(by: disposeBag)
     }

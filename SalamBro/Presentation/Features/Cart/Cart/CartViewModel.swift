@@ -201,7 +201,7 @@ extension CartViewModelImpl {
     private func process() {
         cartItems = []
         cart.items.forEach { item in
-            if item.position.positionType == CartPosition.PositionType.additional.rawValue {
+            if item.position.getPositionType() == .additional {
                 if let ind = additionalItems.firstIndex(where: { $0.position.uuid == item.position.uuid }) {
                     additionalItems[ind].count = item.count
                 }
@@ -210,7 +210,7 @@ extension CartViewModelImpl {
             }
         }
 
-        cartAdditionals = cart.items.filter { $0.position.positionType == CartPosition.PositionType.additional.rawValue }
+        cartAdditionals = cart.items.filter { $0.position.getPositionType() == .additional }
         if cartAdditionals.isEmpty {
             for i in 0 ..< additionalItems.count {
                 additionalItems[i].count = 0
