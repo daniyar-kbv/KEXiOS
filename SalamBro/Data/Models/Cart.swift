@@ -91,7 +91,7 @@ struct CartPosition: Codable, Equatable {
     var name: String
     var image: String?
     var price: Double?
-    var positionType: String?
+    var positionType: String
     var isAvailable: Bool
     var description: String?
 
@@ -110,10 +110,7 @@ struct CartPosition: Codable, Equatable {
     }
 
     func getPositionType() -> PositionType? {
-        guard let type = positionType else {
-            return .none
-        }
-        return PositionType(rawValue: type)
+        return PositionType(rawValue: positionType)
     }
 
     static func == (lhs: Self, rhs: Self) -> Bool {
