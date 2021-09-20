@@ -421,9 +421,10 @@ enum CartText: UILocalizable {
             var localized: String { rawValue }
         }
 
-        enum UnavailabilityAlert: String, UILocalizable {
+        enum CartAlert: String, UILocalizable {
             case alertTitle = "Cart.alertTitle"
-            case alertMessage = "Cart.alertMessage"
+            case unavailabilityAlertMessage = "Cart.unavailabilityAlertMessage"
+            case minPriceAlertMessage = "Cart.minPriceAlertMessage"
 
             var localized: String { rawValue }
         }

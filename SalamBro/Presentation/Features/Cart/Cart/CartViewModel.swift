@@ -34,7 +34,7 @@ final class CartViewModelImpl: CartViewModel {
     private let cartRepository: CartRepository
     private let tokenStorage: AuthTokenStorage
 
-    private var cart: Cart = .init(items: [], price: 0, positionsCount: 0, hasUnavailableProducts: false)
+    private var cart: Cart = .init(items: [], price: 0, positionsCount: 0, deliveryPrice: 0, minPrice: 0, hasUnavailableProducts: false)
     private var cartItems: [CartItem] = []
     private var additionalItems: [CartItem] = []
     private var cartAdditionals: [CartItem] = []
@@ -77,6 +77,11 @@ extension CartViewModelImpl {
     }
 
     func proceedButtonTapped() {
+        guard cart.price >= cart.minPrice else {
+            outputs.didNotMatchMinPrice.accept(cart.minPrice)
+            return
+        }
+
         guard tokenStorage.token != nil else {
             outputs.toAuth.accept(())
             return
@@ -196,7 +201,7 @@ extension CartViewModelImpl {
     private func process() {
         cartItems = []
         cart.items.forEach { item in
-            if item.position.isAdditional {
+            if item.position.getPositionType() == .additional {
                 if let ind = additionalItems.firstIndex(where: { $0.position.uuid == item.position.uuid }) {
                     additionalItems[ind].count = item.count
                 }
@@ -205,7 +210,7 @@ extension CartViewModelImpl {
             }
         }
 
-        cartAdditionals = cart.items.filter { $0.position.isAdditional }
+        cartAdditionals = cart.items.filter { $0.position.getPositionType() == .additional }
         if cartAdditionals.isEmpty {
             for i in 0 ..< additionalItems.count {
                 additionalItems[i].count = 0
@@ -246,7 +251,7 @@ extension CartViewModelImpl {
         let footerViewModel = CartFooterViewModelImpl(input: .init(
             count: cart.positionsCount,
             productsPrice: cart.price,
-            delivaryPrice: 500
+            delivaryPrice: cart.deliveryPrice
         ))
 
         tableSections.append(.init(
@@ -328,5 +333,7 @@ extension CartViewModelImpl {
 
         let toAuth = PublishRelay<Void>()
         let toPayment = PublishRelay<Void>()
+
+        let didNotMatchMinPrice = PublishRelay<Double>()
     }
 }
