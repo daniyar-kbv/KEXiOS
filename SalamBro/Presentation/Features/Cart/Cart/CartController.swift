@@ -121,7 +121,13 @@ extension CartController {
         guard viewModel.hasUnavailableProducts() else { return }
         orderButton.isEnabled = false
 
-        showAlert(title: SBLocalization.localized(key: CartText.Cart.UnavailabilityAlert.alertTitle), message: SBLocalization.localized(key: CartText.Cart.UnavailabilityAlert.alertMessage), completion: nil)
+        showAlertWith(message: SBLocalization.localized(key: CartText.Cart.CartAlert.unavailabilityAlertMessage))
+    }
+
+    private func showAlertWith(message: String) {
+        showAlert(title: SBLocalization.localized(key: CartText.Cart.CartAlert.alertTitle),
+                  message: message,
+                  completion: nil)
     }
 }
 
@@ -197,6 +203,15 @@ extension CartController {
         viewModel.outputs.showPromocode
             .subscribe(onNext: { [weak self] in
                 self?.openPromocode()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didNotMatchMinPrice
+            .subscribe(onNext: { [weak self] minPrice in
+                self?.showAlertWith(message: .init(SBLocalization.localized(
+                    key: CartText.Cart.CartAlert.minPriceAlertMessage,
+                    arguments: minPrice.formattedWithSeparator
+                )))
             })
             .disposed(by: disposeBag)
     }

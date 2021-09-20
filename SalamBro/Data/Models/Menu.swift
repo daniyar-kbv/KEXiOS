@@ -98,7 +98,9 @@ struct Modifier: Codable {
 }
 
 extension MenuPositionDetail {
-    func toCartItem(count: Int, comment: String, description: String) -> CartItem {
+    func toCartItem(count: Int, comment: String, description: String, type: CartPosition.PositionType)
+        -> CartItem
+    {
         return .init(
             count: count,
             comment: comment,
@@ -107,8 +109,7 @@ extension MenuPositionDetail {
                 name: name,
                 image: image,
                 price: price,
-                categoryUUID: categoryUUID,
-                isAdditional: false,
+                positionType: type.rawValue,
                 isAvailable: true,
                 description: description
             ),
@@ -125,7 +126,7 @@ extension MenuPositionDetail {
                                         uuid: modifier.uuid,
                                         name: modifier.name,
                                         image: modifier.image,
-                                        isAdditional: true,
+                                        positionType: CartPosition.PositionType.modifier.rawValue,
                                         isAvailable: true
                                     ),
                                     count: modifier.itemCount
@@ -138,7 +139,7 @@ extension MenuPositionDetail {
 }
 
 extension AdditionalPosition {
-    func toCartItem(count: Int, comment: String, modifiers _: [Modifier], additional _: Bool) -> CartItem {
+    func toCartItem(count: Int, comment: String, modifiers _: [Modifier], type: CartPosition.PositionType) -> CartItem {
         return .init(
             count: count,
             comment: comment,
@@ -147,8 +148,7 @@ extension AdditionalPosition {
                 name: name,
                 image: image,
                 price: Double(price),
-                categoryUUID: categoryUUID,
-                isAdditional: true,
+                positionType: type.rawValue,
                 isAvailable: true,
                 description: ""
             ),

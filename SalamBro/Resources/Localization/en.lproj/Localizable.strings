@@ -59,7 +59,8 @@
 
 // MARK: - UnavailabilityAlert
 "Cart.alertTitle" = "EN Внимание";
-"Cart.alertMessage" = "EN Некоторые товары недоступны";
+"Cart.unavailabilityAlertMessage" = "EN Некоторые товары недоступны";
+"Cart.minPriceAlertMessage" = "EN Минимальная сумма заказа %@ ₸";
 
 // MARK: - CartProductCell
 "CartProductCell.deleteButton.title" = "EN Удалить";

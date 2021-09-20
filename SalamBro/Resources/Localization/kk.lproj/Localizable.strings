@@ -59,7 +59,8 @@
 
 // MARK: - UnavailabilityAlert
 "Cart.alertTitle" = "Назар аударыңыз";
-"Cart.alertMessage" = "Кейбір тауарлар жоқ";
+"Cart.unavailabilityAlertMessage" = "Кейбір тауарлар жоқ";
+"Cart.minPriceAlertMessage" = "Минималдық тапсырыс бағасы %@ ₸";
 
 // MARK: - CartProductCell
 "CartProductCell.deleteButton.title" = "Жою";
