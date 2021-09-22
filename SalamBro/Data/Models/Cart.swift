@@ -11,7 +11,7 @@ struct Cart: Codable {
     var totalPrice: Double
     var deliveryPrice: Double
     var positionsPrice: Double
-    var positionsCount: Int
+    var positionsCount: Int?
     var items: [CartItem]
     var minPrice: Double
     var hasUnavailableProducts: Bool
@@ -29,7 +29,8 @@ struct Cart: Codable {
 
 extension Cart {
     func getBadgeCount() -> String? {
-        return positionsCount == 0 ? nil : String(positionsCount)
+        guard let count = positionsCount else { return nil }
+        return positionsCount == 0 ? nil : String(count)
     }
 
     func toDTO() -> CartDTO {

@@ -114,7 +114,7 @@ extension CartViewModelImpl {
         switch tableSections[section].type {
         case .products:
             let viewModel = CartHeaderViewModelImpl(type: .positions(
-                count: cart.positionsCount,
+                count: cart.positionsCount ?? 0,
                 sum: cart.positionsPrice
             ))
             return CartHeader(viewModel: viewModel)
@@ -249,7 +249,7 @@ extension CartViewModelImpl {
         ))
 
         let footerViewModel = CartFooterViewModelImpl(input: .init(
-            count: cart.positionsCount,
+            count: cart.positionsCount ?? 0,
             productsPrice: cart.positionsPrice,
             delivaryPrice: cart.deliveryPrice
         ))
