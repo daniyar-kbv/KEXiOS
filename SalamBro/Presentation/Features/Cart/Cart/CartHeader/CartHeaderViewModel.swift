@@ -41,7 +41,16 @@ extension CartHeaderViewModelImpl {
         var title: String {
             switch self {
             case let .positions(count, sum):
-                return SBLocalization.localized(key: CartText.Cart.titlePositions, arguments: String(count), sum.formattedWithSeparator)
+                switch count {
+                case 1:
+                    return SBLocalization.localized(key: CartText.Cart.titlePosition, arguments: String(count), sum.formattedWithSeparator)
+                case 2 ... 4:
+                    return SBLocalization.localized(key: CartText.Cart.titlePositionLessOrEqualFour, arguments: String(count), sum.formattedWithSeparator)
+                case 5...:
+                    return SBLocalization.localized(key: CartText.Cart.titlePositionGreaterThanFour, arguments: String(count), sum.formattedWithSeparator)
+                default:
+                    return SBLocalization.localized(key: CartText.Cart.titlePositionGreaterThanFour, arguments: String(count), sum.formattedWithSeparator)
+                }
             case .additional:
                 return SBLocalization.localized(key: CartText.Cart.titleAdditional)
             case let .promocode(promocode):

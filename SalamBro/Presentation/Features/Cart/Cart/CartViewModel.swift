@@ -34,7 +34,7 @@ final class CartViewModelImpl: CartViewModel {
     private let cartRepository: CartRepository
     private let tokenStorage: AuthTokenStorage
 
-    private var cart: Cart = .init(items: [], price: 0, positionsCount: 0, deliveryPrice: 0, minPrice: 0, hasUnavailableProducts: false)
+    private var cart: Cart = .init(totalPrice: 0, deliveryPrice: 0, positionsPrice: 0, positionsCount: 0, items: [], minPrice: 0, hasUnavailableProducts: false)
     private var cartItems: [CartItem] = []
     private var additionalItems: [CartItem] = []
     private var cartAdditionals: [CartItem] = []
@@ -62,7 +62,7 @@ extension CartViewModelImpl {
     }
 
     func getTotalPrice() -> String {
-        return cart.price.formattedWithSeparator
+        return cart.totalPrice.formattedWithSeparator
     }
 
     func getIsEmpty() -> Bool {
@@ -77,7 +77,7 @@ extension CartViewModelImpl {
     }
 
     func proceedButtonTapped() {
-        guard cart.price >= cart.minPrice else {
+        guard cart.positionsPrice >= cart.minPrice else {
             outputs.didNotMatchMinPrice.accept(cart.minPrice)
             return
         }
@@ -114,8 +114,8 @@ extension CartViewModelImpl {
         switch tableSections[section].type {
         case .products:
             let viewModel = CartHeaderViewModelImpl(type: .positions(
-                count: cart.positionsCount,
-                sum: cart.price
+                count: cart.positionsCount ?? 0,
+                sum: cart.positionsPrice
             ))
             return CartHeader(viewModel: viewModel)
         case .additional:
@@ -228,7 +228,7 @@ extension CartViewModelImpl {
         tableSections.append(.init(
             headerViewModel: CartHeaderViewModelImpl(type: .positions(
                 count: cartItems.count,
-                sum: cart.price
+                sum: cart.positionsPrice
             )),
             cellViewModels: cartItems.map { CartProductViewModelImpl(inputs: .init(item: $0)) },
             type: .products
@@ -249,8 +249,8 @@ extension CartViewModelImpl {
         ))
 
         let footerViewModel = CartFooterViewModelImpl(input: .init(
-            count: cart.positionsCount,
-            productsPrice: cart.price,
+            count: cart.positionsCount ?? 0,
+            productsPrice: cart.positionsPrice,
             delivaryPrice: cart.deliveryPrice
         ))
 

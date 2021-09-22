@@ -153,7 +153,7 @@ extension CartRepositoryImpl {
     }
 
     func getTotalAmount() -> Double {
-        return cart.price
+        return cart.totalPrice
     }
 
     func getLocalCart() -> Cart {

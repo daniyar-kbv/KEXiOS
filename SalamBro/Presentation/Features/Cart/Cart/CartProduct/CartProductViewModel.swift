@@ -53,7 +53,8 @@ extension CartProductViewModelImpl {
                 .flatMap { $0 }
                 .joined(separator: ", "))
             comment = .init(value: item.comment)
-            price = .init(value: "\((item.position.price ?? 0).formattedWithSeparator) ₸")
+            price = .init(value: SBLocalization.localized(key: CartText.Cart.Footer.productsPrice,
+                                                          arguments: (item.position.price ?? 0).formattedWithSeparator))
             count = .init(value: String(item.count))
             isAvailable = .init(value: item.position.isAvailable)
         }

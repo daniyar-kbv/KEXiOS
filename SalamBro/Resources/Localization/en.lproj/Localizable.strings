@@ -44,7 +44,9 @@
 "MainTab.Cart.Title" = "EN Корзина";
 
 // MARK: - Cart
-"Cart.section0.title" = "EN %@ товаров на %@ ₸";
+"Cart.section0.positionTitle" = "EN %@ товар на %@ ₸";
+"Cart.section0.positionLessOrEqualFour" = "EN %@ товара на %@ ₸";
+"Cart.section0.positionGreaterThanFour" = "EN %@ товаров на %@ ₸";
 "Cart.section1.title" = "EN Дополнительные покупки";
 "Cart.section2.title" = "EN Промокод: %@";
 "Cart.orderButton.title" = "EN Оформить заказ на %@ ₸";
@@ -52,10 +54,11 @@
 
 // MARK: - CartFooter
 "CartFooter.promocodeButton.title" = "EN Ввести промокод";
-"CartFooter.productsPrice" = "EN %@ ₸";
-"CartFooter.productsCount" = "EN %@ товара";
+"CartFooter.priceSymbol" = "EN %@ ₸";
+"CartFooter.productsCount" = "EN %@ товар";
+"CartFooter.productsCountLessOrEqualFour" = "EN %@ товара";
+"CartFooter.productsCountGreaterThanFour" = "EN %@ товаров";
 "CartFooter.deliveryLabel" = "EN Доставка";
-"CartFooter.deliveryPrice" = "EN %@ ₸";
 
 // MARK: - UnavailabilityAlert
 "Cart.alertTitle" = "EN Внимание";
