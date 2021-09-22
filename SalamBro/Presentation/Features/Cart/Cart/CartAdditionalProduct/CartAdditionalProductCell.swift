@@ -30,7 +30,7 @@ final class CartAdditionalProductCell: UITableViewCell {
 
     private lazy var productTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16, weight: .regular)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .black
         label.numberOfLines = 0
         return label
