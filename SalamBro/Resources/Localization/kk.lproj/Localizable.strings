@@ -54,8 +54,10 @@
 
 // MARK: - CartFooter
 "CartFooter.promocodeButton.title" = "Промокодты еңгізу";
-"CartFooter.priceSymbol" = "EN %@ ₸";
+"CartFooter.priceSymbol" = "%@ ₸";
 "CartFooter.productsCount" = "%@ тауар";
+"CartFooter.productsCountLessOrEqualFour" = "%@ тауар";
+"CartFooter.productsCountGreaterThanFour" = "%@ тауарлар";
 "CartFooter.deliveryLabel" = "Жеткізу";
 
 // MARK: - UnavailabilityAlert

@@ -55,7 +55,9 @@
 // MARK: - CartFooter
 "CartFooter.promocodeButton.title" = "EN Ввести промокод";
 "CartFooter.priceSymbol" = "EN %@ ₸";
-"CartFooter.productsCount" = "EN %@ товара";
+"CartFooter.productsCount" = "EN %@ товар";
+"CartFooter.productsCountLessOrEqualFour" = "EN %@ товара";
+"CartFooter.productsCountGreaterThanFour" = "EN %@ товаров";
 "CartFooter.deliveryLabel" = "EN Доставка";
 
 // MARK: - UnavailabilityAlert
