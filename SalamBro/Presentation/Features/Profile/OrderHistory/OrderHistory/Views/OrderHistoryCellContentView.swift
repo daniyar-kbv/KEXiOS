@@ -250,9 +250,7 @@ final class OrderHistoryCellContentView: UIView {
         dateLabel.text = getConvertedDate(of: item.createdDate)
         checkNumberLabel.text = "№\(item.id)"
 
-        if let deliveryPrice = Double("500.0"), let totalSum = Double(item.price) {
-            configureItems(with: item.cart.items, deliveryPrice: deliveryPrice, totalSum: totalSum)
-        }
+        configureItems(with: item.cart.items, deliveryPrice: Double(item.cart.deliveryPrice), totalSum: Double(item.cart.price))
 
         if let address = item.address.getName() {
             addressItem.configure(with: address)
