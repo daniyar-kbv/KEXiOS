@@ -50,15 +50,18 @@ struct MenuPositionDetail: Codable {
     let uuid: String
     let name: String
     let description: String?
-    let image: String?
+    let imageSmall: String?
+    let imageBig: String?
     let price: Double
     let categoryUUID: String
     var modifierGroups: [ModifierGroup]
 
     enum CodingKeys: String, CodingKey {
-        case uuid, name, description, image, price
+        case uuid, name, description, price
         case modifierGroups = "modifier_groups"
         case categoryUUID = "branch_category"
+        case imageSmall = "image_small"
+        case imageBig = "image_big"
     }
 }
 
@@ -88,27 +91,31 @@ struct ModifierGroup: Codable, Equatable {
 struct Modifier: Codable {
     let name: String
     let uuid: String
-    let image: String?
+    let imageSmall: String?
+    let imageBig: String?
 
     var itemCount: Int = 0
 
     enum CodingKeys: String, CodingKey {
-        case name, uuid, image
+        case name, uuid
+        case imageSmall = "image_small"
+        case imageBig = "image_big"
     }
 }
 
 extension MenuPositionDetail {
-    func toCartItem(count: Int, comment: String, description: String) -> CartItem {
+    func toCartItem(count: Int, comment: String?, description: String?, type: CartPosition.PositionType)
+        -> CartItem
+    {
         return .init(
             count: count,
             comment: comment,
             position: .init(
                 uuid: uuid,
                 name: name,
-                image: image,
+                image: imageSmall,
                 price: price,
-                categoryUUID: categoryUUID,
-                isAdditional: false,
+                positionType: type.rawValue,
                 isAvailable: true,
                 description: description
             ),
@@ -124,8 +131,8 @@ extension MenuPositionDetail {
                                     position: .init(
                                         uuid: modifier.uuid,
                                         name: modifier.name,
-                                        image: modifier.image,
-                                        isAdditional: true,
+                                        image: modifier.imageSmall,
+                                        positionType: CartPosition.PositionType.modifier.rawValue,
                                         isAvailable: true
                                     ),
                                     count: modifier.itemCount
@@ -138,7 +145,7 @@ extension MenuPositionDetail {
 }
 
 extension AdditionalPosition {
-    func toCartItem(count: Int, comment: String, modifiers _: [Modifier], additional _: Bool) -> CartItem {
+    func toCartItem(count: Int, comment: String, modifiers _: [Modifier], type: CartPosition.PositionType) -> CartItem {
         return .init(
             count: count,
             comment: comment,
@@ -147,8 +154,7 @@ extension AdditionalPosition {
                 name: name,
                 image: image,
                 price: Double(price),
-                categoryUUID: categoryUUID,
-                isAdditional: true,
+                positionType: type.rawValue,
                 isAvailable: true,
                 description: ""
             ),

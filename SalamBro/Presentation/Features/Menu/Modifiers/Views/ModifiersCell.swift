@@ -29,6 +29,7 @@ final class ModifiersCell: UICollectionViewCell {
         let view = UILabel()
         view.font = .systemFont(ofSize: 12)
         view.textColor = .darkGray
+        view.setContentCompressionResistancePriority(.required, for: .vertical)
         return view
     }()
 
@@ -36,6 +37,7 @@ final class ModifiersCell: UICollectionViewCell {
         let view = UILabel()
         view.font = .systemFont(ofSize: 12)
         view.textColor = .darkGray
+        view.setContentCompressionResistancePriority(.required, for: .vertical)
         return view
     }()
 
@@ -106,29 +108,24 @@ final class ModifiersCell: UICollectionViewCell {
     }
 
     func configure(modifier: Modifier, index: Int) {
-        if let url = modifier.image {
-            if let imageURL = URL(string: url) {
-                itemImageView.setImage(url: imageURL)
-            }
+        if let url = modifier.imageSmall, let imageURL = URL(string: url) {
+            itemImageView.setImage(url: imageURL)
         }
 
         itemTitleLabel.text = modifier.name
+        itemPriceLabel.text = SBLocalization.localized(key: MenuText.Modifier.price,
+                                                       arguments: "0")
         countLabel.text = "\(modifier.itemCount)"
         itemCount = modifier.itemCount
         self.index = index
 
-        if modifier.itemCount > 0 {
-            increaseButton.borderColor = .clear
-            increaseButton.backgroundColor = .kexRed
-            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusWhite), for: .normal)
-            itemImageView.borderColor = .kexRed
-            itemImageView.borderWidth = 1
-        } else {
-            increaseButton.borderColor = .mildBlue
-            increaseButton.backgroundColor = .clear
-            increaseButton.setBackgroundImage(SBImageResource.getIcon(for: CartIcons.Cart.plusGray), for: .normal)
-            itemImageView.borderColor = .clear
-        }
+        increaseButton.borderColor = modifier.itemCount > 0 ? .clear : .mildBlue
+        increaseButton.backgroundColor = modifier.itemCount > 0 ? .kexRed : .clear
+        let image = modifier.itemCount > 0 ? SBImageResource.getIcon(for: CartIcons.Cart.plusWhite) :
+            SBImageResource.getIcon(for: CartIcons.Cart.plusGray)
+        increaseButton.setBackgroundImage(image, for: .normal)
+        itemImageView.borderColor = modifier.itemCount > 0 ? .kexRed : .clear
+        itemImageView.borderWidth = modifier.itemCount > 0 ? 1 : 0
     }
 
     func configureUI(with status: (Bool, Bool)) {

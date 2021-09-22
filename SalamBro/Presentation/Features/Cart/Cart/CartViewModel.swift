@@ -34,7 +34,7 @@ final class CartViewModelImpl: CartViewModel {
     private let cartRepository: CartRepository
     private let tokenStorage: AuthTokenStorage
 
-    private var cart: Cart = .init(items: [], price: 0, positionsCount: 0, hasUnavailableProducts: false)
+    private var cart: Cart = .init(totalPrice: 0, deliveryPrice: 0, positionsPrice: 0, positionsCount: 0, items: [], minPrice: 0, hasUnavailableProducts: false)
     private var cartItems: [CartItem] = []
     private var additionalItems: [CartItem] = []
     private var cartAdditionals: [CartItem] = []
@@ -62,7 +62,7 @@ extension CartViewModelImpl {
     }
 
     func getTotalPrice() -> String {
-        return cart.price.formattedWithSeparator
+        return cart.totalPrice.formattedWithSeparator
     }
 
     func getIsEmpty() -> Bool {
@@ -77,6 +77,11 @@ extension CartViewModelImpl {
     }
 
     func proceedButtonTapped() {
+        guard cart.positionsPrice >= cart.minPrice else {
+            outputs.didNotMatchMinPrice.accept(cart.minPrice)
+            return
+        }
+
         guard tokenStorage.token != nil else {
             outputs.toAuth.accept(())
             return
@@ -109,8 +114,8 @@ extension CartViewModelImpl {
         switch tableSections[section].type {
         case .products:
             let viewModel = CartHeaderViewModelImpl(type: .positions(
-                count: cart.positionsCount,
-                sum: cart.price
+                count: cart.positionsCount ?? 0,
+                sum: cart.positionsPrice
             ))
             return CartHeader(viewModel: viewModel)
         case .additional:
@@ -196,7 +201,7 @@ extension CartViewModelImpl {
     private func process() {
         cartItems = []
         cart.items.forEach { item in
-            if item.position.isAdditional {
+            if item.position.getPositionType() == .additional {
                 if let ind = additionalItems.firstIndex(where: { $0.position.uuid == item.position.uuid }) {
                     additionalItems[ind].count = item.count
                 }
@@ -205,7 +210,7 @@ extension CartViewModelImpl {
             }
         }
 
-        cartAdditionals = cart.items.filter { $0.position.isAdditional }
+        cartAdditionals = cart.items.filter { $0.position.getPositionType() == .additional }
         if cartAdditionals.isEmpty {
             for i in 0 ..< additionalItems.count {
                 additionalItems[i].count = 0
@@ -223,7 +228,7 @@ extension CartViewModelImpl {
         tableSections.append(.init(
             headerViewModel: CartHeaderViewModelImpl(type: .positions(
                 count: cartItems.count,
-                sum: cart.price
+                sum: cart.positionsPrice
             )),
             cellViewModels: cartItems.map { CartProductViewModelImpl(inputs: .init(item: $0)) },
             type: .products
@@ -244,9 +249,9 @@ extension CartViewModelImpl {
         ))
 
         let footerViewModel = CartFooterViewModelImpl(input: .init(
-            count: cart.positionsCount,
-            productsPrice: cart.price,
-            delivaryPrice: 500
+            count: cart.positionsCount ?? 0,
+            productsPrice: cart.positionsPrice,
+            delivaryPrice: cart.deliveryPrice
         ))
 
         tableSections.append(.init(
@@ -328,5 +333,7 @@ extension CartViewModelImpl {
 
         let toAuth = PublishRelay<Void>()
         let toPayment = PublishRelay<Void>()
+
+        let didNotMatchMinPrice = PublishRelay<Double>()
     }
 }

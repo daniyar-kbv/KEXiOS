@@ -225,7 +225,7 @@ enum MenuText: UILocalizable {
 
         enum MenuItem: String, UILocalizable {
             case unavailable = "Menu.unavailable"
-            case price = "CartFooter.productsPrice"
+            case price = "CartFooter.priceSymbol"
 
             var localized: String { rawValue }
         }
@@ -246,6 +246,12 @@ enum MenuText: UILocalizable {
         case max = "MenuDetail.max"
         case chooseAdditional = "MenuDetail.chooseAdditional"
         case added = "MenuDetail.added"
+
+        var localized: String { rawValue }
+    }
+
+    enum Modifier: String, UILocalizable {
+        case price = "CartFooter.priceSymbol"
 
         var localized: String { rawValue }
     }
@@ -342,6 +348,7 @@ enum ProfileText: UILocalizable {
         case inDelivery = "OrderHistory.inDelivery"
         case issued = "OrderHistory.issued"
         case failure = "OrderHistory.failure"
+        case price = "CartFooter.priceSymbol"
 
         var localized: String { rawValue }
     }
@@ -383,7 +390,9 @@ enum SupportText: UILocalizable {
 enum CartText: UILocalizable {
     enum Cart: String, UILocalizable {
         case navigationTitle = "Cart.title"
-        case titlePositions = "Cart.section0.title"
+        case titlePosition = "Cart.section0.positionTitle"
+        case titlePositionLessOrEqualFour = "Cart.section0.positionLessOrEqualFour"
+        case titlePositionGreaterThanFour = "Cart.section0.positionGreaterThanFour"
         case titleAdditional = "Cart.section1.title"
         case titlePromocode = "Cart.section2.title"
         case buttonTitle = "Cart.orderButton.title"
@@ -392,10 +401,9 @@ enum CartText: UILocalizable {
 
         enum Footer: String, UILocalizable {
             case promocodeButton = "CartFooter.promocodeButton.title"
-            case productsPrice = "CartFooter.productsPrice"
+            case productsPrice = "CartFooter.priceSymbol"
             case productsCount = "CartFooter.productsCount"
             case deliveryTitle = "CartFooter.deliveryLabel"
-            case deliveryPrice = "CartFooter.deliveryPrice"
 
             var localized: String { rawValue }
         }
@@ -421,9 +429,10 @@ enum CartText: UILocalizable {
             var localized: String { rawValue }
         }
 
-        enum UnavailabilityAlert: String, UILocalizable {
+        enum CartAlert: String, UILocalizable {
             case alertTitle = "Cart.alertTitle"
-            case alertMessage = "Cart.alertMessage"
+            case unavailabilityAlertMessage = "Cart.unavailabilityAlertMessage"
+            case minPriceAlertMessage = "Cart.minPriceAlertMessage"
 
             var localized: String { rawValue }
         }
@@ -441,6 +450,7 @@ enum PaymentText: UILocalizable {
         case bill = "Payment.Selection.bill"
         case orderPayment = "Payment.Selection.orderPayment"
         case applePay = "Payment.Selection.applePay"
+        case price = "CartFooter.priceSymbol"
 
         var localized: String { rawValue }
     }

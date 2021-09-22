@@ -8,22 +8,29 @@
 import Foundation
 
 struct Cart: Codable {
+    var totalPrice: Double
+    var deliveryPrice: Double
+    var positionsPrice: Double
+    var positionsCount: Int?
     var items: [CartItem]
-    let price: Double
-    var positionsCount: Int
+    var minPrice: Double
     var hasUnavailableProducts: Bool
 
     enum CodingKeys: String, CodingKey {
-        case price
-        case items = "positions"
+        case totalPrice = "total_price"
+        case deliveryPrice = "delivery_price"
+        case positionsPrice = "positions_price"
         case positionsCount = "positions_count"
+        case items = "positions"
+        case minPrice = "min_price"
         case hasUnavailableProducts = "has_unavailable_positions"
     }
 }
 
 extension Cart {
     func getBadgeCount() -> String? {
-        return positionsCount == 0 ? nil : String(positionsCount)
+        guard let count = positionsCount else { return nil }
+        return positionsCount == 0 ? nil : String(count)
     }
 
     func toDTO() -> CartDTO {
@@ -60,7 +67,7 @@ class CartItem: Codable {
         case modifierGroups = "modifier_groups"
     }
 
-    init(count: Int, comment: String, position: CartPosition, modifierGroups: [CartModifierGroup]) {
+    init(count: Int, comment: String?, position: CartPosition, modifierGroups: [CartModifierGroup]) {
         self.count = count
         self.comment = comment
         self.position = position
@@ -87,16 +94,26 @@ struct CartPosition: Codable, Equatable {
     var name: String
     var image: String?
     var price: Double?
-    var categoryUUID: String?
-    var isAdditional: Bool
+    var positionType: String
     var isAvailable: Bool
     var description: String?
 
     enum CodingKeys: String, CodingKey {
         case uuid, name, image, price, description
-        case categoryUUID = "category"
-        case isAdditional = "is_additional"
+        case positionType = "position_type"
         case isAvailable = "is_available"
+    }
+
+    enum PositionType: String, Codable {
+        case main = "MAIN"
+        case modifier = "MODIFIER"
+        case additional = "ADDITIONAL"
+        case dayDelivery = "DAY_DELIVERY"
+        case nightDelivery = "NIGHT_DELIVERY"
+    }
+
+    func getPositionType() -> PositionType? {
+        return PositionType(rawValue: positionType)
     }
 
     static func == (lhs: Self, rhs: Self) -> Bool {

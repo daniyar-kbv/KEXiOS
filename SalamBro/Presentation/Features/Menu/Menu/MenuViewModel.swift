@@ -31,7 +31,6 @@ final class MenuViewModel: MenuViewModelProtocol {
     private let disposeBag = DisposeBag()
     let outputs = Output()
 
-    private let locationRepository: AddressRepository
     private let brandRepository: BrandRepository
     private let menuRepository: MenuRepository
     private let defaultStorage: DefaultStorage
@@ -40,14 +39,12 @@ final class MenuViewModel: MenuViewModelProtocol {
     private var tableSections: [Section] = []
     private var scrollService: MenuScrollService
 
-    init(locationRepository: AddressRepository,
-         brandRepository: BrandRepository,
+    init(brandRepository: BrandRepository,
          menuRepository: MenuRepository,
          defaultStorage: DefaultStorage,
          tokenStorage: AuthTokenStorage,
          scrollService: MenuScrollService)
     {
-        self.locationRepository = locationRepository
         self.brandRepository = brandRepository
         self.menuRepository = menuRepository
         self.defaultStorage = defaultStorage

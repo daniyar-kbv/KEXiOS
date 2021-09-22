@@ -314,6 +314,10 @@
 		0725B222B63E50ED12230E074A98771C /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BB62014044728D18B26D86AC5A00E3 /* VerificationView.swift */; };
 		AA1338C81836575329A3D697EC26FBA5 /* VerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD78B6277861BDF6F586D4ACF62DBB94 /* VerificationViewModel.swift */; };
 		CDA770E8B2BA1C940497F99A7DDC9EBF /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D518B65F82AAFDA5E793620A6E128C /* ViewModel.swift */; };
+		C78D864CC95A2B0B4CF1CE6C37C162CA /* YandexAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262AE1E65389F96399862FC5F1D2F2C2 /* YandexAPI.swift */; };
+		3D172209668DA491C7781264D1F52440 /* YandexAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA23B23DB15E66A6056053D77F09DA61 /* YandexAddress.swift */; };
+		743FF1AB52B8D553AC9D042B87BD09FB /* YandexDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FAE6AA8A65CABAAD535608F7BB5129 /* YandexDTO.swift */; };
+		1925B1F2365A6B01E7BB2A6CF1CDDC6F /* YandexService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C199DA7C6952397CEC43FE04140AD1 /* YandexService.swift */; };
 		2DD1F648F81BC8C4BE171637F779E537 /* closed.json in Resources */ = {isa = PBXBuildFile; fileRef = FA7660C751DC6F3962B5F84392948913 /* closed.json */; };
 		F694560D11CB08F2FE1D2F7E86B4167B /* emptyBasket.json in Resources */ = {isa = PBXBuildFile; fileRef = 152E0B4CE8AF22894D63204432A36E24 /* emptyBasket.json */; };
 		4B9B1575E958577624E23D440A6EE8FE /* noInternet.json in Resources */ = {isa = PBXBuildFile; fileRef = EF9C1FF18C8E321A84DEE7D3443789AC /* noInternet.json */; };
@@ -696,6 +700,10 @@
 		67BB62014044728D18B26D86AC5A00E3 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
 		DD78B6277861BDF6F586D4ACF62DBB94 /* VerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewModel.swift; sourceTree = "<group>"; };
 		90D518B65F82AAFDA5E793620A6E128C /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		262AE1E65389F96399862FC5F1D2F2C2 /* YandexAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexAPI.swift; sourceTree = "<group>"; };
+		BA23B23DB15E66A6056053D77F09DA61 /* YandexAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexAddress.swift; sourceTree = "<group>"; };
+		68FAE6AA8A65CABAAD535608F7BB5129 /* YandexDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexDTO.swift; sourceTree = "<group>"; };
+		25C199DA7C6952397CEC43FE04140AD1 /* YandexService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexService.swift; sourceTree = "<group>"; };
 		FA7660C751DC6F3962B5F84392948913 /* closed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = closed.json; sourceTree = "<group>"; };
 		152E0B4CE8AF22894D63204432A36E24 /* emptyBasket.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emptyBasket.json; sourceTree = "<group>"; };
 		47B2A04B8AFBC530EABCB13720C0890B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -774,6 +782,7 @@
 				1837B6B60911400AFFDA44172683C858 /* ProfileAPI.swift */,
 				DE127A7E92E528135BA2D4E9437F7367 /* PushNotificationsAPI.swift */,
 				237BE45C3C3B7D8C2AFB438760AE2926 /* RateAPI.swift */,
+				262AE1E65389F96399862FC5F1D2F2C2 /* YandexAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1183,6 +1192,7 @@
 				C9F58FDA6067CD76CD218CBA8EECF2EA /* PushNotificationsService.swift */,
 				BBBD4C20818092EA168A52FBF350C119 /* RateService.swift */,
 				D592E9FBAE65EA1FFBABA684C5ADCB9B /* ServiceComponents.swift */,
+				25C199DA7C6952397CEC43FE04140AD1 /* YandexService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1633,6 +1643,7 @@
 				13402C2C071183C40FC701E64C794FBD /* PushNotificationsDTO.swift */,
 				741F81064E76308F846D01C08D7D4967 /* UserInfoDTO.swift */,
 				BCE0DA1FB0DE4E3C8E8D6E842854D9D7 /* UserRateDTO.swift */,
+				68FAE6AA8A65CABAAD535608F7BB5129 /* YandexDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -2066,6 +2077,7 @@
 				5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */,
 				7120A99F9624B614E4F4E0E1F245EA7F /* Rate.swift */,
 				ED087FC022B58289758AB5B3C9837BFC /* RateItem.swift */,
+				BA23B23DB15E66A6056053D77F09DA61 /* YandexAddress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2492,26 +2504,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ABB979D377D0D354E3F2CB42CBB92EBE /* [Crashlytics] Upload dSYM files */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "[Crashlytics] Upload dSYM files";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
 		6AD09E5E35A3DEB76BC248E09C267F82 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2567,6 +2559,26 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SalamBro/Pods-SalamBro-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		ABB979D377D0D354E3F2CB42CBB92EBE /* [Crashlytics] Upload dSYM files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[Crashlytics] Upload dSYM files";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		AF8C389205F0CDB75427EF1F9D3B0CDB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2942,6 +2954,10 @@
 				0725B222B63E50ED12230E074A98771C /* VerificationView.swift in Sources */,
 				AA1338C81836575329A3D697EC26FBA5 /* VerificationViewModel.swift in Sources */,
 				CDA770E8B2BA1C940497F99A7DDC9EBF /* ViewModel.swift in Sources */,
+				C78D864CC95A2B0B4CF1CE6C37C162CA /* YandexAPI.swift in Sources */,
+				3D172209668DA491C7781264D1F52440 /* YandexAddress.swift in Sources */,
+				743FF1AB52B8D553AC9D042B87BD09FB /* YandexDTO.swift in Sources */,
+				1925B1F2365A6B01E7BB2A6CF1CDDC6F /* YandexService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

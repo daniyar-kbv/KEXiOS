@@ -44,7 +44,9 @@
 "MainTab.Cart.Title" = "Себет";
 
 // MARK: - Cart
-"Cart.section0.title" = "%@ тауарлар %@ ₸";
+"Cart.section0.positionTitle" = "%@ тауар %@ ₸";
+"Cart.section0.positionLessOrEqualFour" = "%@ тауар %@ ₸";
+"Cart.section0.positionGreaterThanFour" = "%@ тауарлар %@ ₸";
 "Cart.section1.title" = "Қосымша сатып алу";
 "Cart.section2.title" = "Промокод: %@";
 "Cart.orderButton.title" = "Заказды тіркеу %@ ₸";
@@ -52,14 +54,14 @@
 
 // MARK: - CartFooter
 "CartFooter.promocodeButton.title" = "Промокодты еңгізу";
-"CartFooter.productsPrice" = "%@ ₸";
+"CartFooter.priceSymbol" = "EN %@ ₸";
 "CartFooter.productsCount" = "%@ тауар";
 "CartFooter.deliveryLabel" = "Жеткізу";
-"CartFooter.deliveryPrice" = "%@ ₸";
 
 // MARK: - UnavailabilityAlert
 "Cart.alertTitle" = "Назар аударыңыз";
-"Cart.alertMessage" = "Кейбір тауарлар жоқ";
+"Cart.unavailabilityAlertMessage" = "Кейбір тауарлар жоқ";
+"Cart.minPriceAlertMessage" = "Минималдық тапсырыс бағасы %@ ₸";
 
 // MARK: - CartProductCell
 "CartProductCell.deleteButton.title" = "Жою";

@@ -74,7 +74,8 @@ extension PaymentSelectionViewModelImpl {
 
 extension PaymentSelectionViewModelImpl {
     private func setValues() {
-        outputs.totalAmount.accept("\(cartRepository.getTotalAmount().formattedWithSeparator) ₸")
+        outputs.totalAmount.accept(.init(SBLocalization.localized(key: PaymentText.PaymentSelection.price,
+                                                                  arguments: cartRepository.getTotalAmount().formattedWithSeparator)))
     }
 
     private func bindRepository() {

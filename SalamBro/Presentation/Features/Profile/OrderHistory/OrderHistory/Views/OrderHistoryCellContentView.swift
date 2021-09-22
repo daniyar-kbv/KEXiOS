@@ -250,9 +250,7 @@ final class OrderHistoryCellContentView: UIView {
         dateLabel.text = getConvertedDate(of: item.createdDate)
         checkNumberLabel.text = "№\(item.id)"
 
-        if let deliveryPrice = Double("500.0"), let totalSum = Double(item.price) {
-            configureItems(with: item.cart.items, deliveryPrice: deliveryPrice, totalSum: totalSum)
-        }
+        configureItems(with: item.cart.items, deliveryPrice: Double(item.cart.deliveryPrice), totalSum: Double(item.cart.totalPrice))
 
         if let address = item.address.getName() {
             addressItem.configure(with: address)
@@ -284,13 +282,18 @@ final class OrderHistoryCellContentView: UIView {
             if let price = item.position.price {
                 itemStack.addArrangedSubview(OrderHistoryItemView(
                     with: title,
-                    and: "\(price.formattedWithSeparator) ₸"
+                    and: SBLocalization.localized(key: ProfileText.OrderHistory.price,
+                                                  arguments: price.formattedWithSeparator)
                 ))
             }
         }
 
-        deliveryItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.shipping), and: "\(Int(deliveryPrice).formattedWithSeparator) ₸")
-        sumItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.sum), and: "\(Int(totalSum).formattedWithSeparator) ₸")
+        deliveryItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.shipping),
+                               and: SBLocalization.localized(key: ProfileText.OrderHistory.price,
+                                                             arguments: Int(deliveryPrice).formattedWithSeparator))
+        sumItem.configure(with: SBLocalization.localized(key: ProfileText.OrderHistory.sum),
+                          and: SBLocalization.localized(key: ProfileText.OrderHistory.price,
+                                                        arguments: Int(totalSum).formattedWithSeparator))
 
         itemStack.addArrangedSubview(deliveryItem)
         itemStack.addArrangedSubview(sumItem)

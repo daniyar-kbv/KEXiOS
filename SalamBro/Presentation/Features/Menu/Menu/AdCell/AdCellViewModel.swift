@@ -22,6 +22,6 @@ final class AdCellViewModel: AdCellViewModelProtocol {
     init(promotion: Promotion) {
         self.promotion = promotion
 
-        promotionImageURL = .init(value: promotion.image)
+        promotionImageURL = .init(value: promotion.imageSmall)
     }
 }

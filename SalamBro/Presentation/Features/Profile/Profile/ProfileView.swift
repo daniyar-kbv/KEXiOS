@@ -23,22 +23,23 @@ final class ProfileView: UIView {
         label.font = .systemFont(ofSize: 32, weight: .semibold)
         label.textAlignment = .left
         label.adjustsFontSizeToFitWidth = true
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return label
     }()
 
     private(set) lazy var changeNameButton: SBTextButton = {
-        let label = SBTextButton()
-        label.setTitle(SBLocalization.localized(key: ProfileText.Profile.editButton), for: .normal)
-        label.titleLabel?.font = .systemFont(ofSize: 12)
-        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        return label
+        let button = SBTextButton()
+        button.setTitle(SBLocalization.localized(key: ProfileText.Profile.editButton), for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 12)
+        button.setContentHuggingPriority(.required, for: .horizontal)
+        return button
     }()
 
     private(set) lazy var middleStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [nameLabel, changeNameButton])
         view.axis = .horizontal
-        view.distribution = .equalSpacing
-        view.alignment = .center
+        view.distribution = .fill
+        view.alignment = .fill
         view.spacing = 24
         return view
     }()

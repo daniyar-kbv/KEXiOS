@@ -23,12 +23,15 @@ struct Promotion: Codable {
     let promoType: String
     let name: String
     let description: String
-    let image: String
+    let imageSmall: String
+    let imageBig: String?
     let slug: String
     let link: String?
 
     enum CodingKeys: String, CodingKey {
-        case priority, id, name, image, slug, link, description
+        case priority, id, name, slug, link, description
         case promoType = "promo_type"
+        case imageSmall = "image_small"
+        case imageBig = "image_big"
     }
 }

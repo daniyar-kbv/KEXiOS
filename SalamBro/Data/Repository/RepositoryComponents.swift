@@ -38,6 +38,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
                                             ordersService: serviceComponents.ordersService(),
                                             authorizedApplyService: serviceComponents.authorizedApplyService(),
                                             profileService: serviceComponents.profileService(),
+                                            yandexService: serviceComponents.yandexService(),
                                             defaultStorage: DefaultStorageImpl.sharedStorage,
                                             authTokenStorage: AuthTokenStorageImpl.sharedStorage))
     }
