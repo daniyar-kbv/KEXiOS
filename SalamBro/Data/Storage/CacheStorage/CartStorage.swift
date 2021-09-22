@@ -19,7 +19,7 @@ extension Storage: CartStorage {
     }
 
     var cart: Cart {
-        get { get(key: Keys.cart.rawValue) ?? Cart(items: [], price: 0, positionsCount: 0, deliveryPrice: 0, minPrice: 0, hasUnavailableProducts: false) }
+        get { get(key: Keys.cart.rawValue) ?? Cart(totalPrice: 0, deliveryPrice: 0, positionsPrice: 0, positionsCount: 0, items: [], minPrice: 0, hasUnavailableProducts: false) }
         set { save(key: Keys.cart.rawValue, object: newValue) }
     }
 

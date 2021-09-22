@@ -111,7 +111,7 @@ extension MenuDetailViewModelImpl {
     private func process(position: MenuPositionDetail) {
         self.position = position
 
-        outputs.itemImage.accept(URL(string: position.image ?? ""))
+        outputs.itemImage.accept(URL(string: position.imageSmall ?? ""))
         outputs.itemTitle.accept(position.name)
         outputs.itemDescription.accept(position.description)
         outputs.itemPrice.accept(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton, arguments: position.price.removeTrailingZeros()))

@@ -8,18 +8,20 @@
 import Foundation
 
 struct Cart: Codable {
-    var items: [CartItem]
-    let price: Double
-    var positionsCount: Int
+    var totalPrice: Double
     var deliveryPrice: Double
+    var positionsPrice: Double
+    var positionsCount: Int
+    var items: [CartItem]
     var minPrice: Double
     var hasUnavailableProducts: Bool
 
     enum CodingKeys: String, CodingKey {
-        case price
-        case items = "positions"
-        case positionsCount = "positions_count"
+        case totalPrice = "total_price"
         case deliveryPrice = "delivery_price"
+        case positionsPrice = "positions_price"
+        case positionsCount = "positions_count"
+        case items = "positions"
         case minPrice = "min_price"
         case hasUnavailableProducts = "has_unavailable_positions"
     }
