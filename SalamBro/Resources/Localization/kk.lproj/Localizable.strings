@@ -46,7 +46,7 @@
 // MARK: - Cart
 "Cart.section0.positionTitle" = "%@ тауар %@ ₸";
 "Cart.section0.positionLessOrEqualFour" = "%@ тауар %@ ₸";
-"Cart.section0.positionGreaterThanFour" = "%@ тауарлар %@ ₸";
+"Cart.section0.positionGreaterThanFour" = "%@ тауар %@ ₸";
 "Cart.section1.title" = "Қосымша сатып алу";
 "Cart.section2.title" = "Промокод: %@";
 "Cart.orderButton.title" = "Заказды тіркеу %@ ₸";
@@ -54,8 +54,10 @@
 
 // MARK: - CartFooter
 "CartFooter.promocodeButton.title" = "Промокодты еңгізу";
-"CartFooter.priceSymbol" = "EN %@ ₸";
+"CartFooter.priceSymbol" = "%@ ₸";
 "CartFooter.productsCount" = "%@ тауар";
+"CartFooter.productsCountLessOrEqualFour" = "%@ тауар";
+"CartFooter.productsCountGreaterThanFour" = "%@ тауар";
 "CartFooter.deliveryLabel" = "Жеткізу";
 
 // MARK: - UnavailabilityAlert

@@ -85,7 +85,9 @@ final class CartFooterCell: UITableViewCell {
 
     private func bindViewModel() {
         viewModel.outputs.countText
-            .bind(to: countLabel.rx.text)
+            .bind(onNext: { [weak self] count in
+                self?.countLabel.text = self?.setLocalizationForCount(with: count)
+            })
             .disposed(by: disposeBag)
 
         viewModel.outputs.productsPrice
@@ -103,6 +105,23 @@ final class CartFooterCell: UITableViewCell {
             $0.top.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-9)
             $0.left.right.equalToSuperview().inset(24)
+        }
+    }
+
+    private func setLocalizationForCount(with count: Int) -> String {
+        switch count {
+        case 1:
+            return SBLocalization.localized(key: CartText.Cart.Footer.productsCount,
+                                            arguments: count.formattedWithSeparator)
+        case 2 ... 4:
+            return SBLocalization.localized(key: CartText.Cart.Footer.productsCountLessOrEqualFour,
+                                            arguments: count.formattedWithSeparator)
+        case 5...:
+            return SBLocalization.localized(key: CartText.Cart.Footer.productsCountGreaterThanFour,
+                                            arguments: count.formattedWithSeparator)
+        default:
+            return SBLocalization.localized(key: CartText.Cart.Footer.productsCountGreaterThanFour,
+                                            arguments: count.formattedWithSeparator)
         }
     }
 }

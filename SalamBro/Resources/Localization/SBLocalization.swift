@@ -403,6 +403,8 @@ enum CartText: UILocalizable {
             case promocodeButton = "CartFooter.promocodeButton.title"
             case productsPrice = "CartFooter.priceSymbol"
             case productsCount = "CartFooter.productsCount"
+            case productsCountLessOrEqualFour = "CartFooter.productsCountLessOrEqualFour"
+            case productsCountGreaterThanFour = "CartFooter.productsCountGreaterThanFour"
             case deliveryTitle = "CartFooter.deliveryLabel"
 
             var localized: String { rawValue }

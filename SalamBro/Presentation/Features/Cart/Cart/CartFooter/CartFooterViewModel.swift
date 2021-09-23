@@ -18,8 +18,7 @@ final class CartFooterViewModelImpl: CartFooterViewModel, CartCellViewModel {
 
     init(input: Input) {
         outputs = .init(
-            countText: .init(value: SBLocalization.localized(key: CartText.Cart.Footer.productsCount,
-                                                             arguments: String(input.count))),
+            countText: .init(value: input.count),
             productsPrice: .init(value: SBLocalization.localized(key: CartText.Cart.Footer.productsPrice,
                                                                  arguments: input.productsPrice.formattedWithSeparator)),
             deliveryPrice: .init(value: SBLocalization.localized(key: CartText.Cart.Footer.productsPrice,
@@ -36,7 +35,7 @@ extension CartFooterViewModelImpl {
     }
 
     struct Output {
-        let countText: BehaviorRelay<String>
+        let countText: BehaviorRelay<Int>
         let productsPrice: BehaviorRelay<String>
         let deliveryPrice: BehaviorRelay<String>
     }
