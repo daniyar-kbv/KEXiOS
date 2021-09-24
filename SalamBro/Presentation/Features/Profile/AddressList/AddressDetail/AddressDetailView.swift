@@ -20,6 +20,7 @@ final class AddressDetailView: UIView {
     private lazy var addressLabel: UILabel = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 14)
+        view.numberOfLines = 0
         view.textColor = .darkGray
         return view
     }()
