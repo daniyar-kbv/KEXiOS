@@ -158,9 +158,10 @@ final class MenuCell: UITableViewCell, Reusable {
         }
 
         stackView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(16)
             $0.left.equalTo(foodImageView.snp.right).offset(8)
-            $0.right.bottom.equalToSuperview().offset(-16)
+            $0.right.equalToSuperview().offset(-16)
+            $0.centerY.equalToSuperview()
+            $0.height.lessThanOrEqualToSuperview().inset(16)
         }
     }
 }

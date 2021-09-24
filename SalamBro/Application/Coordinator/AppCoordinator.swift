@@ -30,15 +30,24 @@ final class AppCoordinator: BaseCoordinator {
         self.repositoryComponents = repositoryComponents
         self.appCoordinatorsFactory = appCoordinatorsFactory
         self.pagesFactory = pagesFactory
+
+        super.init()
+
+        bindNotificationCenter()
+        bindReachabilityManager()
+        bindPaymentNotifications()
     }
 
     override func start() {
-        bindNotificationCenter()
         configureCoordinators()
         switchFlows()
-        ReachabilityManagerImpl.shared.check()
+        checkForInternet()
     }
+}
 
+//  MARK: - App start
+
+extension AppCoordinator {
     private func bindNotificationCenter() {
         NotificationCenter.default.rx
             .notification(Constants.InternalNotification.startFirstFlow.name)
@@ -70,6 +79,29 @@ final class AppCoordinator: BaseCoordinator {
         }
     }
 
+    private func startOnboardingFlow() {
+        let onboardingCoordinator = appCoordinatorsFactory.makeOnboardingCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
+
+        add(onboardingCoordinator)
+        onboardingCoordinator.didFinish = { [weak self, weak onboardingCoordinator] in
+            self?.remove(onboardingCoordinator)
+            onboardingCoordinator = nil
+            self?.showTabBarController()
+        }
+
+        onboardingCoordinator.start()
+    }
+
+    private func showTabBarController() {
+        pagesFactory.makeSBTabbarController().viewControllers = preparedViewControllers
+
+        UIApplication.shared.setRootView(pagesFactory.makeSBTabbarController())
+    }
+}
+
+//  MARK: - Child coordinators config
+
+extension AppCoordinator {
     private func configureCoordinators() {
         tabBarBarTypes.forEach { type in
             switch type {
@@ -151,25 +183,6 @@ final class AppCoordinator: BaseCoordinator {
             })
             .disposed(by: disposeBag)
     }
-
-    private func startOnboardingFlow() {
-        let onboardingCoordinator = appCoordinatorsFactory.makeOnboardingCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
-
-        add(onboardingCoordinator)
-        onboardingCoordinator.didFinish = { [weak self, weak onboardingCoordinator] in
-            self?.remove(onboardingCoordinator)
-            onboardingCoordinator = nil
-            self?.showTabBarController()
-        }
-
-        onboardingCoordinator.start()
-    }
-
-    private func showTabBarController() {
-        pagesFactory.makeSBTabbarController().viewControllers = preparedViewControllers
-
-        UIApplication.shared.setRootView(pagesFactory.makeSBTabbarController())
-    }
 }
 
 // MARK: - App Restart
@@ -215,7 +228,7 @@ extension AppCoordinator {
     }
 }
 
-// MARK: - Notifications handling
+// MARK: - Push Notifications handling
 
 extension AppCoordinator {
     func handleNotification(pushNotification: PushNotification) {
@@ -287,5 +300,81 @@ extension AppCoordinator {
         let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
         profileCoordinator.showOrderHistoryPage()
+    }
+}
+
+//  MARK: - Payment Process View handling
+
+extension AppCoordinator {
+    private func bindPaymentNotifications() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.showPaymentProcess.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.showPaymentProcess()
+            })
+            .disposed(by: disposeBag)
+
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.hidePaymentProcess.name)
+            .subscribe(onNext: { [weak self] completion in
+                self?.hidePaymentProcess(completion: completion.object as? () -> Void)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func showPaymentProcess() {
+        UIApplication.topViewController()?.presentAnimationView(animationType: .payment, action: nil)
+    }
+
+    private func hidePaymentProcess(completion: (() -> Void)? = nil) {
+        UIApplication.topViewController()?.dismiss(animated: false) {
+            completion?()
+        }
+    }
+}
+
+//  MARK: - Network Connection View handling
+
+extension AppCoordinator {
+    private func bindReachabilityManager() {
+        ReachabilityManagerImpl.shared.outputs
+            .connectionDidChange
+            .subscribe(onNext: { [weak self] isReachable in
+                self?.processReachability(isReachable)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func checkForInternet() {
+        processReachability(ReachabilityManagerImpl.shared.getReachability())
+    }
+
+    private func processReachability(_ isReachable: Bool) {
+        if isReachable {
+            hideNoInternet()
+        } else {
+            showNoInternet()
+        }
+    }
+
+    private func showNoInternet() {
+        UIApplication.topViewController()?.presentAnimationView(animationType: .noInternet, action: nil)
+    }
+
+    private func hideNoInternet(completion: (() -> Void)? = nil) {
+        UIApplication.topViewController()?.dismiss(animated: false) { [weak self] in
+            guard (UIApplication.topViewController() as? AnimationController)?.animationType != .payment else {
+                UIApplication.topViewController()?.dismiss(animated: false) {
+                    self?.finishHideNoInternet(completion: completion)
+                }
+                return
+            }
+            self?.finishHideNoInternet(completion: completion)
+        }
+    }
+
+    private func finishHideNoInternet(completion: (() -> Void)?) {
+        (UIApplication.topViewController() as? Reloadable)?.reload()
+        completion?()
     }
 }
