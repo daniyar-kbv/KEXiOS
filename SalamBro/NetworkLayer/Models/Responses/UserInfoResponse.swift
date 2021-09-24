@@ -16,12 +16,10 @@ struct UserInfoResponse: Codable {
     let name: String?
     let email: String?
     let mobilePhone: String?
-    let error: ErrorResponse?
 
     enum CodingKeys: String, CodingKey {
         case name, email
         case mobilePhone = "mobile_phone"
-        case error
     }
 }
 

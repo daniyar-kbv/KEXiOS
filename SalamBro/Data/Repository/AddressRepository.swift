@@ -47,6 +47,12 @@ final class AddressRepositoryImpl: AddressRepository {
 
     private let disposeBag = DisposeBag()
 
+    private lazy var userAddresses = geoStorage.userAddresses {
+        didSet {
+            geoStorage.userAddresses = userAddresses
+        }
+    }
+
     init(storage: GeoStorage,
          authService: AuthService,
          brandStorage: BrandStorage,
@@ -127,8 +133,8 @@ extension AddressRepositoryImpl {
                               longitude: Double?,
                               latitude: Double?)
     {
-        guard let index = geoStorage.userAddresses.firstIndex(where: { $0.isCurrent }) else { return }
-        let userAddresses = geoStorage.userAddresses
+        guard let index = userAddresses.firstIndex(where: { $0.isCurrent }) else { return }
+        let userAddresses = self.userAddresses
         userAddresses[index].address.district = district
         userAddresses[index].address.street = street
         userAddresses[index].address.building = building
@@ -137,7 +143,7 @@ extension AddressRepositoryImpl {
         userAddresses[index].address.comment = comment
         userAddresses[index].address.longitude = longitude
         userAddresses[index].address.latitude = latitude
-        geoStorage.userAddresses = userAddresses
+        self.userAddresses = userAddresses
     }
 }
 
@@ -161,12 +167,12 @@ extension AddressRepositoryImpl {
     }
 
     private func process(userAddresses: [UserAddress]) {
-        geoStorage.userAddresses = userAddresses
+        self.userAddresses = userAddresses
         outputs.didGetUserAddresses.accept(userAddresses)
     }
 
     func getCurrentUserAddress() -> UserAddress? {
-        return geoStorage.userAddresses.first(where: { $0.isCurrent })
+        return userAddresses.first(where: { $0.isCurrent })
     }
 
     func setInitial(userAddress: UserAddress) {
@@ -233,10 +239,8 @@ extension AddressRepositoryImpl {
     }
 
     func deleteUserAddress(with id: Int) {
-        var userAddresses = geoStorage.userAddresses
         userAddresses.removeAll(where: { $0.id == id })
-        geoStorage.userAddresses = userAddresses
-        outputs.didGetUserAddresses.accept(geoStorage.userAddresses)
+        outputs.didGetUserAddresses.accept(userAddresses)
         outputs.didStartRequest.accept(())
         profileService.deleteAddress(id: id)
             .flatMap { [unowned self] in

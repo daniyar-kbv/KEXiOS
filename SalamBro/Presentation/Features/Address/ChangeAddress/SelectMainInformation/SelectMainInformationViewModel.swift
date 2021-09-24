@@ -67,12 +67,14 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
             userAddress = .init()
         }
 
-        bindOutputs()
+        bindCountriesRepository()
+        bindCitiesRepository()
+        bindAddressRepository()
     }
 }
 
 extension SelectMainInformationViewModel {
-    private func bindOutputs() {
+    private func bindCountriesRepository() {
         countriesRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
@@ -92,7 +94,9 @@ extension SelectMainInformationViewModel {
                 self?.process(error: error)
             })
             .disposed(by: disposeBag)
+    }
 
+    private func bindCitiesRepository() {
         citiesRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
@@ -113,7 +117,9 @@ extension SelectMainInformationViewModel {
                 self?.process(error: error)
             })
             .disposed(by: disposeBag)
+    }
 
+    private func bindAddressRepository() {
         addressRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)

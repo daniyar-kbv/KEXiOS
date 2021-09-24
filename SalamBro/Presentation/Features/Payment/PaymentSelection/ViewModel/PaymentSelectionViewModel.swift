@@ -92,14 +92,6 @@ extension PaymentSelectionViewModelImpl {
             .bind(to: outputs.didEndRequest)
             .disposed(by: disposeBag)
 
-        paymentRepository.outputs.didStartPaymentRequest
-            .bind(to: outputs.didStartPaymentRequest)
-            .disposed(by: disposeBag)
-
-        paymentRepository.outputs.didEndPaymentRequest
-            .bind(to: outputs.didEndPaymentRequest)
-            .disposed(by: disposeBag)
-
         paymentRepository.outputs.didGetError
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
@@ -130,9 +122,6 @@ extension PaymentSelectionViewModelImpl {
     struct Output {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
-
-        let didStartPaymentRequest = PublishRelay<Void>()
-        let didEndPaymentRequest = PublishRelay<Void>()
 
         let didGetError = PublishRelay<ErrorPresentable>()
         let didGetAuthError = PublishRelay<ErrorPresentable>()

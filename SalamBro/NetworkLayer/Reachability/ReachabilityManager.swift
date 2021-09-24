@@ -15,7 +15,6 @@ protocol ReachabilityManager: AnyObject {
 
     func start()
     func getReachability() -> Bool
-    func check()
 }
 
 final class ReachabilityManagerImpl: ReachabilityManager {
@@ -35,10 +34,6 @@ final class ReachabilityManagerImpl: ReachabilityManager {
 
     func getReachability() -> Bool {
         return resolveReachability(connection: reachability.connection)
-    }
-
-    func check() {
-        configNoInternetView(isReachable: getReachability())
     }
 
     private func configActions() {
@@ -70,37 +65,6 @@ final class ReachabilityManagerImpl: ReachabilityManager {
               lastReachability != isReachable else { return }
         lastReachability = isReachable
         outputs.connectionDidChange.accept(isReachable)
-        configNoInternetView(isReachable: isReachable)
-    }
-
-    private func configNoInternetView(isReachable: Bool) {
-        if isReachable {
-            guard let topViewController = UIApplication.topViewController() as? AnimationController
-            else {
-                UIApplication.topViewController()?.dismissAnimationView {
-                    self.reloadTopViewController()
-                }
-                return
-            }
-            topViewController.presentingViewController?.dismissAnimationView {
-                self.reloadTopViewController()
-            }
-        } else {
-            guard let topViewController = UIApplication.topViewController() as? AnimationController
-            else {
-                UIApplication.topViewController()?.presentAnimationView(animationType: .noInternet, action: nil)
-                return
-            }
-            let underTopViewController = topViewController.presentingViewController
-            topViewController.presentingViewController?.dismiss(animated: false) {
-                underTopViewController?.presentAnimationView(animationType: .noInternet, action: nil)
-            }
-        }
-    }
-
-    private func reloadTopViewController() {
-        guard let topViewController = UIApplication.topViewController() as? Reloadable else { return }
-        topViewController.reload()
     }
 }
 

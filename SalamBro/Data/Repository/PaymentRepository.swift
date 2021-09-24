@@ -33,6 +33,7 @@ final class PaymentRepositoryImpl: PaymentRepository {
     private let defaultStorage: DefaultStorage
     private let cartStorage: CartStorage
     private let addressStorage: GeoStorage
+    private let reachabilityManager: ReachabilityManager
 
     private var selectedPaymentMethod: PaymentMethod?
     private var localPaymentMethods: [PaymentMethod] = [.init(type: .card), .init(type: .applePay), .init(type: .cash)]
@@ -50,7 +51,8 @@ final class PaymentRepositoryImpl: PaymentRepository {
          ordersService: OrdersService,
          defaultStorage: DefaultStorage,
          cartStorage: CartStorage,
-         addressStorage: GeoStorage)
+         addressStorage: GeoStorage,
+         reachabilityManager: ReachabilityManager)
     {
         self.paymentService = paymentService
         self.authorizedApplyService = authorizedApplyService
@@ -58,6 +60,7 @@ final class PaymentRepositoryImpl: PaymentRepository {
         self.defaultStorage = defaultStorage
         self.cartStorage = cartStorage
         self.addressStorage = addressStorage
+        self.reachabilityManager = reachabilityManager
     }
 
     func setSelected(paymentMethod: PaymentMethod?) {
@@ -180,7 +183,7 @@ extension PaymentRepositoryImpl {
         guard defaultStorage.isPaymentProcess,
               let leadUUID = defaultStorage.leadUUID else { return }
 
-        outputs.didStartPaymentRequest.accept(())
+        sendShowPaymentProcessNotification()
 
         paymentService.getPaymentStatus(leadUUID: leadUUID)
             .retryWhenUnautharized()
@@ -197,7 +200,7 @@ extension PaymentRepositoryImpl {
         let createOrderDTO = CreateOrderDTO(leadUUID: leadUUID)
         let createPaymentDTO = CardPaymentDTO(leadUUID: leadUUID, cardUUID: card.uuid)
 
-        outputs.didStartPaymentRequest.accept(())
+        sendShowPaymentProcessNotification()
         paymentService.createOrder(dto: createOrderDTO)
             .flatMap { [unowned self] in
                 paymentService.createCardPayment(dto: createPaymentDTO)
@@ -240,7 +243,7 @@ extension PaymentRepositoryImpl {
     }
 
     private func createPayment(createOrderDTO: CreateOrderDTO, createPaymentDTO: CreatePaymentDTO) {
-        outputs.didStartPaymentRequest.accept(())
+        sendShowPaymentProcessNotification()
         paymentService.createOrder(dto: createOrderDTO)
             .flatMap { [unowned self] in paymentService.createPayment(dto: createPaymentDTO) }
             .retryWhenUnautharized()
@@ -252,57 +255,51 @@ extension PaymentRepositoryImpl {
     private func paymentOnSuccess(_ paymentStatus: PaymentStatus) {
         switch paymentStatus.determineStatus() {
         case .completed:
-            outputs.didEndPaymentRequest.accept(())
-            outputs.didMakePayment.accept(())
-
             getNewLeadAuthorized()
-
-            NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
-                                            object: ())
         case .awaitingAuthentication:
-            show3DS(orderStatus: paymentStatus)
-            outputs.didEndPaymentRequest.accept(())
-        default:
-            outputs.didEndPaymentRequest.accept(())
-
-            guard let statusReason = paymentStatus.statusReason else {
-                outputs.didGetError.accept(NetworkError.badMapping)
-                return
+            sendHidePaymentProcessNotification { [weak self] in
+                self?.show3DS(orderStatus: paymentStatus)
             }
+        default:
+            sendHidePaymentProcessNotification { [weak self] in
+                guard let statusReason = paymentStatus.statusReason else {
+                    self?.outputs.didGetError.accept(NetworkError.badMapping)
+                    return
+                }
 
-            let error = ErrorResponse(code: paymentStatus.status, message: statusReason)
-            outputs.didGetError.accept(error)
+                let error = ErrorResponse(code: paymentStatus.status, message: statusReason)
+                self?.outputs.didGetError.accept(error)
+            }
         }
     }
 
     private func paymentOnFailure(_ error: Error) {
-        guard let error = error as? ErrorPresentable else { return }
+        guard let error = error as? ErrorPresentable,
+              reachabilityManager.getReachability() else { return }
+        sendHidePaymentProcessNotification { [weak self] in
+            self?.defaultStorage.persist(isPaymentProcess: false)
 
-        outputs.didEndPaymentRequest.accept(())
-        defaultStorage.persist(isPaymentProcess: false)
-
-        if let error = error as? ErrorResponse {
-            switch error.code {
-            case Constants.ErrorCode.orderAlreadyPaid:
-                outputs.didMakePayment.accept(())
-                getNewLeadAuthorized()
-            case Constants.ErrorCode.notFound:
-                return
-            default:
-                break
+            if let error = error as? ErrorResponse {
+                switch error.code {
+                case Constants.ErrorCode.orderAlreadyPaid:
+                    self?.getNewLeadAuthorized()
+                case Constants.ErrorCode.notFound:
+                    return
+                default:
+                    break
+                }
             }
-        }
 
-        if (error as? NetworkError) == .unauthorized {
-            outputs.didGetAuthError.accept(error)
-            return
-        }
+            if (error as? NetworkError) == .unauthorized {
+                self?.outputs.didGetAuthError.accept(error)
+                return
+            }
 
-        outputs.didGetError.accept(error)
+            self?.outputs.didGetError.accept(error)
+        }
     }
 
     private func getNewLeadAuthorized() {
-        outputs.didStartRequest.accept(())
         authorizedApplyService.authorizedApplyOrder()
             .retryWhenUnautharized()
             .subscribe(onSuccess: orderApplyOnSuccess(_:),
@@ -317,26 +314,32 @@ extension PaymentRepositoryImpl {
         ordersService.applyOrder(dto: applyOrderDTO)
             .subscribe(onSuccess: orderApplyOnSuccess(_:),
                        onError: { [weak self] error in
-                           self?.defaultStorage.persist(isPaymentProcess: false)
-                           self?.outputs.didEndRequest.accept(())
-                           NotificationCenter.default.post(
-                               name: Constants.InternalNotification.startFirstFlow.name,
-                               object: nil
-                           )
-                           guard let error = error as? ErrorPresentable else {
-                               self?.outputs.didGetError.accept(NetworkError.badMapping)
-                               return
+                           guard self?.reachabilityManager.getReachability() == true else { return }
+                           self?.sendHidePaymentProcessNotification {
+                               self?.defaultStorage.persist(isPaymentProcess: false)
+                               NotificationCenter.default.post(
+                                   name: Constants.InternalNotification.startFirstFlow.name,
+                                   object: nil
+                               )
+                               guard let error = error as? ErrorPresentable else {
+                                   self?.outputs.didGetError.accept(NetworkError.badMapping)
+                                   return
+                               }
+                               self?.outputs.didGetError.accept(error)
                            }
-                           self?.outputs.didGetError.accept(error)
                        })
             .disposed(by: disposeBag)
     }
 
     private func orderApplyOnSuccess(_ leadUUID: String) {
-        NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
-                                        object: leadUUID)
-        outputs.didEndRequest.accept(())
-        defaultStorage.persist(isPaymentProcess: false)
+        sendHidePaymentProcessNotification { [weak self] in
+            NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
+                                            object: ())
+            NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
+                                            object: leadUUID)
+            self?.outputs.didMakePayment.accept(())
+            self?.defaultStorage.persist(isPaymentProcess: false)
+        }
     }
 }
 
@@ -394,7 +397,7 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
     private func send3DS(paymentUUID: String, paRes: String, transactionId: String) {
         let dto = Create3DSPaymentDTO(paRes: paRes, transactionId: transactionId)
 
-        outputs.didStartPaymentRequest.accept(())
+        sendShowPaymentProcessNotification()
         paymentService.confirm3DSPayment(dto: dto, paymentUUID: paymentUUID)
             .retryWhenUnautharized()
             .subscribe(onSuccess: paymentOnSuccess(_:),
@@ -423,14 +426,25 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
 }
 
 extension PaymentRepositoryImpl {
+    private func sendShowPaymentProcessNotification() {
+        NotificationCenter.default.post(name: Constants.InternalNotification.showPaymentProcess.name, object: nil)
+    }
+
+    private func sendHidePaymentProcessNotification(completion: (() -> Void)? = nil) {
+        guard reachabilityManager.getReachability() else { return }
+        NotificationCenter.default.post(
+            name: Constants.InternalNotification.hidePaymentProcess.name,
+            object: completion
+        )
+    }
+}
+
+extension PaymentRepositoryImpl {
     struct Output {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
         let didGetAuthError = PublishRelay<ErrorPresentable>()
-
-        let didStartPaymentRequest = PublishRelay<Void>()
-        let didEndPaymentRequest = PublishRelay<Void>()
 
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()

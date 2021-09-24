@@ -47,16 +47,6 @@ final class PaymentCoordinator: BaseCoordinator {
                 self?.showChangePaymentVC(on: paymentSelectionVC)
             }).disposed(by: disposeBag)
 
-        paymentSelectionVC.outputs.didStartPaymentRequest
-            .subscribe(onNext: { [weak self, weak paymentSelectionVC] in
-                self?.showPaymentInProcessView(on: paymentSelectionVC)
-            }).disposed(by: disposeBag)
-
-        paymentSelectionVC.outputs.didEndPaymentRequest
-            .subscribe(onNext: { [weak self, weak paymentSelectionVC] in
-                self?.hidePaymentInProcessView(on: paymentSelectionVC)
-            }).disposed(by: disposeBag)
-
         paymentSelectionVC.outputs.show3DS
             .subscribe(onNext: { [weak self, weak paymentSelectionVC] webView in
                 self?.show3DS(on: paymentSelectionVC, webView: webView)
@@ -202,16 +192,6 @@ final class PaymentCoordinator: BaseCoordinator {
         threeDSController?.dismiss(animated: false) { [weak self] in
             self?.threeDSController = nil
         }
-    }
-
-    private func showPaymentInProcessView(on viewController: UIViewController?) {
-        viewController?.presentAnimationView(animationType: .payment) {
-//            Tech debt
-        }
-    }
-
-    private func hidePaymentInProcessView(on viewController: UIViewController?) {
-        viewController?.dismissAnimationView()
     }
 
     func reloadPayment() {

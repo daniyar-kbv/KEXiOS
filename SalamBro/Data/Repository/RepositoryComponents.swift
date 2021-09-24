@@ -102,7 +102,8 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
                                                 ordersService: serviceComponents.ordersService(),
                                                 defaultStorage: DefaultStorageImpl.sharedStorage,
                                                 cartStorage: makeLocalStorage(),
-                                                addressStorage: makeLocalStorage()))
+                                                addressStorage: makeLocalStorage(),
+                                                reachabilityManager: ReachabilityManagerImpl.shared))
     }
 
     func makeProfileRepository() -> ProfileRepository {

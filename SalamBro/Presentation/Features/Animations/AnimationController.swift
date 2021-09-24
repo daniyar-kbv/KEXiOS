@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 final class AnimationController: UIViewController {
-    private let animationType: LottieAnimationModel
+    let animationType: LottieAnimationModel
     private(set) lazy var contenView = AnimationContainerView(animationType: animationType)
 
     init(animationType: LottieAnimationModel) {
