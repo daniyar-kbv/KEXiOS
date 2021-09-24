@@ -15,6 +15,7 @@ final class OrderHistoryItemView: UIView {
         view.numberOfLines = 0
         view.font = .systemFont(ofSize: 14)
         view.textColor = .darkGray
+        view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return view
     }()
 
@@ -24,6 +25,7 @@ final class OrderHistoryItemView: UIView {
         view.numberOfLines = 1
         view.font = .systemFont(ofSize: 14)
         view.textColor = .darkGray
+        view.setContentHuggingPriority(.required, for: .horizontal)
         return view
     }()
 
@@ -52,12 +54,11 @@ final class OrderHistoryItemView: UIView {
         itemLabel.snp.makeConstraints {
             $0.top.bottom.equalTo(safeAreaLayoutGuide)
             $0.left.equalToSuperview()
-            $0.width.lessThanOrEqualTo(200)
         }
 
         priceLabel.snp.makeConstraints {
             $0.top.bottom.equalTo(safeAreaLayoutGuide)
-            $0.left.equalTo(itemLabel.snp.right).offset(4)
+            $0.left.equalTo(itemLabel.snp.right).offset(8)
             $0.right.equalToSuperview()
         }
     }

@@ -55,6 +55,8 @@ final class AdCollectionCell: UITableViewCell {
 
     public func set(_ viewModel: AdCollectionCellViewModelProtocol?) {
         self.viewModel = viewModel
+
+        collectionView.reloadData()
     }
 
     private func bind() {}
