@@ -36,7 +36,7 @@ final class ModifiersController: UIViewController {
         collectionView.backgroundColor = .arcticWhite
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.contentInset = UIEdgeInsets(top: 24, left: 23, bottom: 20, right: 23)
+        collectionView.contentInset = UIEdgeInsets(top: 24, left: 23, bottom: 75, right: 23)
         return collectionView
     }()
 

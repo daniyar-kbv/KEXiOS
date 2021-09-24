@@ -100,8 +100,10 @@ extension MenuDetailController {
             }).disposed(by: disposeBag)
 
         viewModel.outputs.updateModifiers
-            .bind(to: contentView.modifiersTableView.rx.reload)
-            .disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] in
+                self?.contentView.modifiersTableView.reloadData()
+                self?.contentView.updateTableViewHeight()
+            }).disposed(by: disposeBag)
 
         viewModel.outputs.itemTitle
             .bind(to: contentView.itemTitleLabel.rx.text)
@@ -176,10 +178,6 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         outputs.toModifiers.accept(viewModel.modifierCellViewModels[indexPath.row].getModifierGroup())
-    }
-
-    func tableView(_: UITableView, willDisplay _: UITableViewCell, forRowAt _: IndexPath) {
-        viewWillLayoutSubviews()
     }
 }
 
