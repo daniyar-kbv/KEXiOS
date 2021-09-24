@@ -446,9 +446,6 @@ extension PaymentRepositoryImpl {
         let didGetError = PublishRelay<ErrorPresentable>()
         let didGetAuthError = PublishRelay<ErrorPresentable>()
 
-        let didStartPaymentRequest = PublishRelay<Void>()
-        let didEndPaymentRequest = PublishRelay<Void>()
-
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()
         let showApplePay = PublishRelay<PKPaymentAuthorizationViewController>()

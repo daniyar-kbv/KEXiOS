@@ -79,14 +79,6 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
             })
             .disposed(by: disposeBag)
 
-        viewModel.outputs.didStartPaymentRequest
-            .bind(to: outputs.didStartPaymentRequest)
-            .disposed(by: disposeBag)
-
-        viewModel.outputs.didEndPaymentRequest
-            .bind(to: outputs.didEndPaymentRequest)
-            .disposed(by: disposeBag)
-
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
                 self?.showError(error)
@@ -161,9 +153,6 @@ extension PaymentSelectionViewController: Reloadable {
 
 extension PaymentSelectionViewController {
     struct Output {
-        let didStartPaymentRequest = PublishRelay<Void>()
-        let didEndPaymentRequest = PublishRelay<Void>()
-
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()
         let onChangePaymentMethod = PublishRelay<Void>()
