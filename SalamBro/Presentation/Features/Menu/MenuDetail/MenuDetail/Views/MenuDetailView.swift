@@ -152,6 +152,8 @@ extension MenuDetailView {
     }
 
     func updateTableViewHeight() {
+        scrollView.layoutIfNeeded()
+
         modifiersTableView.snp.updateConstraints {
             $0.height.equalTo(modifiersTableView.contentSize.height)
         }
