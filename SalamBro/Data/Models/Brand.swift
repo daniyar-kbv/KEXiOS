@@ -10,27 +10,31 @@ import Foundation
 class Brand: Codable {
     let id: Int
     let name: String
-    let image: String?
+    let imageSmall: String?
+    let imageBig: String?
     var isAvailable: Bool?
 
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case image
+        case imageSmall = "image_small"
+        case imageBig = "image_big"
         case isAvailable = "is_available"
     }
 
-    init(id: Int, name: String, image: String?, isAvailable: Bool) {
+    init(id: Int, name: String, imageSmall: String?, imageBig: String?, isAvailable: Bool) {
         self.id = id
         self.name = name
-        self.image = image
+        self.imageSmall = imageSmall
+        self.imageBig = imageBig
         self.isAvailable = isAvailable
     }
 }
 
 extension Brand {
     func getCopy() -> Brand {
-        return .init(id: id, name: name, image: image, isAvailable: isAvailable ?? false)
+        return .init(id: id, name: name, imageSmall: imageSmall, imageBig: imageBig,
+                     isAvailable: isAvailable ?? false)
     }
 }
 

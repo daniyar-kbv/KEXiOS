@@ -242,7 +242,7 @@ final class OrderHistoryCellContentView: UIView {
     }
 
     func configure(with item: OrdersList) {
-        if let imageURL = URL(string: item.brand.image ?? "") {
+        if let imageURL = URL(string: item.brand.imageSmall ?? "") {
             logoView.setImage(url: imageURL)
         }
 
