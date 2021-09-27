@@ -214,9 +214,9 @@ extension AddressRepositoryImpl {
     }
 
     func updateUserAddress(with id: Int, brandId: Int) {
-        let dto = UpdateAddressDTO(brandId: brandId)
+        let dto = UpdateAddressDTO(id: id, brandId: brandId)
         outputs.didStartRequest.accept(())
-        profileService.updateAddress(id: id, dto: dto)
+        profileService.updateAddress(dto: dto)
             .flatMap { [unowned self] _ -> Single<String> in
                 authorizedApplyService.authorizedApplyOrder()
             }

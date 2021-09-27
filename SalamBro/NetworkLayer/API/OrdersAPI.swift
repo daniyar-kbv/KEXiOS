@@ -28,7 +28,7 @@ extension OrdersAPI: TargetType {
         case .getAllOrders: return "orders/"
         case .apply: return "orders/apply/"
         case .authorizedApply: return "/orders/authorized-apply/"
-        case .authorizedApplyWithAddress: return "/orders/authorized-apply-with-address/"
+        case .authorizedApplyWithAddress: return "/orders/authorized-apply/"
         case let .additionalNomenclature(leadUUID): return "/orders/\(leadUUID)/additional-nomenclature/"
         case let .updateCart(leadUUID, _): return "orders/\(leadUUID)/cart/"
         case let .applyPromocode(promocode): return "/orders/coupons/\(promocode)/"

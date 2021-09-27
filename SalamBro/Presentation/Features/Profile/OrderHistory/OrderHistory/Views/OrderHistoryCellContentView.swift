@@ -275,10 +275,12 @@ final class OrderHistoryCellContentView: UIView {
 
         items.forEach { item in
             var title = "\(item.count)x \(item.position.name)"
+
             if !item.modifierGroups.isEmpty {
                 let modifiersText = item.modifierGroups.map { $0.modifiers }.flatMap { $0 }.map { $0.position.name }.joined(separator: ", ")
                 title += " (\(modifiersText))"
             }
+
             if let price = item.position.price {
                 itemStack.addArrangedSubview(OrderHistoryItemView(
                     with: title,
