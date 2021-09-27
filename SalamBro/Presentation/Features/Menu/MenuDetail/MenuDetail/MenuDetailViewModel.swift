@@ -101,6 +101,10 @@ extension MenuDetailViewModelImpl {
             self?.outputs.updateModifiers.accept(())
         }
         .disposed(by: disposeBag)
+
+        cartRepository.outputs.didGetError
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
     }
 
     private func download() {

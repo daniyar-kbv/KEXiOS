@@ -34,7 +34,9 @@ class MenuServiceImpl: MenuService {
                 }
 
                 if let error = orderProductsResponse.error {
-                    throw error
+                    guard error.code != Constants.ErrorCode.branchIsClosed else {
+                        return []
+                    }
                 }
 
                 guard let data = orderProductsResponse.data?.categories else {
@@ -55,7 +57,9 @@ class MenuServiceImpl: MenuService {
                 }
 
                 if let error = orderProductDetailResponse.error {
-                    throw error
+                    guard error.code != Constants.ErrorCode.branchIsClosed else {
+                        throw NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed))
+                    }
                 }
 
                 guard let data = orderProductDetailResponse.data else {

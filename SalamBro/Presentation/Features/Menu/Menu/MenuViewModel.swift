@@ -24,7 +24,6 @@ protocol MenuViewModelProtocol {
     func didSelectRow(at indexPath: IndexPath)
     func finishedScrolling()
     func willDisplayRow(at indexPath: IndexPath)
-    func configureAnimation()
 }
 
 final class MenuViewModel: MenuViewModelProtocol {
@@ -99,7 +98,6 @@ final class MenuViewModel: MenuViewModelProtocol {
         process(promotions: menuData.promotions, tableSections: &tableSections)
         process(categories: menuData.categories, tableSections: &tableSections)
         self.tableSections = tableSections
-        configureAnimation()
         outputs.updateTableView.accept(())
     }
 
@@ -133,6 +131,11 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func process(categories: [MenuCategory]?, tableSections: inout [Section]) {
+        if let categories = categories, categories.isEmpty {
+            tableSections.removeAll(where: { $0.type == .promotions })
+            configureAnimation(with: true)
+        }
+
         guard let categories = categories?.filter({ !$0.positions.isEmpty }) else { return }
         tableSections.append(
             .init(type: .positions,
@@ -143,7 +146,13 @@ final class MenuViewModel: MenuViewModelProtocol {
         )
     }
 
-    func configureAnimation() {}
+    private func configureAnimation(with showStatus: Bool) {
+        if showStatus {
+            outputs.showAnimation.accept(.closed)
+        } else {
+            outputs.hideAnimation.accept(())
+        }
+    }
 }
 
 extension MenuViewModel {
@@ -166,6 +175,7 @@ extension MenuViewModel {
     }
 
     func update() {
+        configureAnimation(with: false)
         menuRepository.getMenuItems()
     }
 

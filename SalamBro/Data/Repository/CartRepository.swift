@@ -243,6 +243,7 @@ extension CartRepositoryImpl {
                 self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
                 self?.process(error: error)
+                self?.outputs.didGetError.accept(error as! ErrorPresentable)
                 self?.outputs.didEndRequest.accept(())
             })
             .disposed(by: disposeBag)

@@ -55,6 +55,12 @@ final class OrdersServiceMoyaImpl: OrdersService {
                     throw NetworkError.badMapping
                 }
 
+                if let error = orderProductsResponse.error {
+                    guard error.code != Constants.ErrorCode.branchIsClosed else {
+                        throw NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed))
+                    }
+                }
+
                 guard let data = orderProductsResponse.data else {
                     throw NetworkError.noData
                 }
@@ -67,12 +73,17 @@ final class OrdersServiceMoyaImpl: OrdersService {
         return provider.rx
             .request(.updateCart(leadUUID: leadUUID, dto: dto))
             .map { response in
+
                 guard let cartResponse = try? response.map(OrderUpdateCartResponse.self) else {
                     throw NetworkError.badMapping
                 }
 
                 if let error = cartResponse.error {
-                    throw error
+                    if error.code == Constants.ErrorCode.branchIsClosed {
+                        throw NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed))
+                    } else {
+                        throw error
+                    }
                 }
 
                 guard let cart = cartResponse.data else {

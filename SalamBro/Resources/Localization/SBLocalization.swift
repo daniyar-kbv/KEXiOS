@@ -42,6 +42,12 @@ enum ErrorText: UILocalizable {
         var localized: String { rawValue }
     }
 
+    enum Branch: String, UILocalizable {
+        case closed = "Error.closed"
+
+        var localized: String { rawValue }
+    }
+
     var localized: String { "" }
 }
 

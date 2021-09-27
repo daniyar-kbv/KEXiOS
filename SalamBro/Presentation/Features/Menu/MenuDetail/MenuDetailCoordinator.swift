@@ -19,6 +19,7 @@ public final class MenuDetailCoordinator: Coordinator {
     private let positionUUID: String
 
     var didFinish: (() -> Void)?
+    var updateMenu: (() -> Void)?
 
     init(router: Router,
          serviceComponents: ServiceComponents,
@@ -42,6 +43,11 @@ public final class MenuDetailCoordinator: Coordinator {
         menuDetailPage.outputs.close
             .subscribe(onNext: {
                 menuDetailPage.dismiss(animated: true)
+            }).disposed(by: disposeBag)
+
+        menuDetailPage.outputs.updateMenu
+            .subscribe(onNext: { [weak self] in
+                self?.updateMenu?()
             }).disposed(by: disposeBag)
 
         menuDetailPage.outputs.toModifiers

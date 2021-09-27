@@ -76,11 +76,13 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
                 }
 
                 if let error = response.error {
-                    guard error.code != Constants.ErrorCode.orderAlreadyExists else {
+                    if error.code == Constants.ErrorCode.orderAlreadyExists {
                         return ()
+                    } else if error.code == Constants.ErrorCode.branchIsClosed {
+                        throw NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed))
+                    } else {
+                        throw error
                     }
-
-                    throw error
                 }
 
                 guard response.data?.leadUUID != nil else {

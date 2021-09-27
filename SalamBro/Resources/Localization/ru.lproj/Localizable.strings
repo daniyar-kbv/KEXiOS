@@ -211,6 +211,7 @@
 "Error.mappingError" = "Неудалось обработать ответ";
 "Error.noData" = "Нет данных";
 "Error.unauthorized" = "Вам необходимо снова авторизоваться";
+"Error.closed" = "Заведение закрыто";
 
 // MARK: - Payment Selection
 

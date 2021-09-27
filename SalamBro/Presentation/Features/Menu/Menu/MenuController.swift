@@ -93,8 +93,6 @@ final class MenuController: UIViewController, LoaderDisplayable {
         super.viewWillAppear(animated)
 
         navigationController?.setNavigationBarHidden(true, animated: true)
-
-        viewModel.configureAnimation()
     }
 
     private func bindViewModel() {

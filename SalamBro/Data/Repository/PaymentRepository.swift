@@ -285,6 +285,8 @@ extension PaymentRepositoryImpl {
                     self?.getNewLeadAuthorized()
                 case Constants.ErrorCode.notFound:
                     return
+                case Constants.ErrorCode.branchIsClosed:
+                    self?.outputs.didGetAuthError.accept(error)
                 default:
                     break
                 }

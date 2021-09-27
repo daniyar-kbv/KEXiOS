@@ -20,6 +20,7 @@ final class ModifiersCell: UICollectionViewCell {
         view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
+        view.image = SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
