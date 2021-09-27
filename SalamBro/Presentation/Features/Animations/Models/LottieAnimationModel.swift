@@ -57,7 +57,12 @@ enum LottieAnimationModel: String, CaseIterable {
     }
 
     var animationSize: CGSize {
-        return CGSize(width: 272, height: 200)
+        switch self {
+        case .orderHistory, .emptyBasket, .noInternet, .upgrade, .overload, .payment, .closed:
+            return CGSize(width: 272, height: 200)
+        case .profile:
+            return CGSize(width: 736, height: 200)
+        }
     }
 
     var withButton: Bool {
