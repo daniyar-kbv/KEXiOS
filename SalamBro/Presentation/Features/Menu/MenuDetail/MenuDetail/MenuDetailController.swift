@@ -88,7 +88,6 @@ extension MenuDetailController {
 
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
-                self?.outputs.updateMenu.accept(())
                 self?.outputs.close.accept(())
                 guard let error = error else { return }
                 self?.showError(error)
@@ -218,7 +217,6 @@ extension MenuDetailController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()
-        let updateMenu = PublishRelay<Void>()
         let toModifiers = PublishRelay<ModifierGroup>()
     }
 }

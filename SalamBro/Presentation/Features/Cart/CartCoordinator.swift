@@ -94,6 +94,7 @@ final class CartCoordinator: BaseCoordinator {
 
         paymentCoordinator.didGetBranchClosed = { [weak self] in
             self?.toMenu?()
+            NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name, object: nil)
         }
 
         paymentCoordinator.start()

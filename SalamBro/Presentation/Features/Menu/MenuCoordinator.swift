@@ -137,10 +137,6 @@ final class MenuCoordinator: BaseCoordinator {
             self?.remove(menuDetailCoordinator)
         }
 
-        menuDetailCoordinator.updateMenu = { [weak self] in
-            // reload menu
-        }
-
         menuDetailCoordinator.start()
     }
 

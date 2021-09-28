@@ -45,11 +45,6 @@ public final class MenuDetailCoordinator: Coordinator {
                 menuDetailPage.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
-        menuDetailPage.outputs.updateMenu
-            .subscribe(onNext: { [weak self] in
-                self?.updateMenu?()
-            }).disposed(by: disposeBag)
-
         menuDetailPage.outputs.toModifiers
             .subscribe(onNext: { [weak self] modifierGroup in
                 self?.openModifiers(on: menuDetailPage,

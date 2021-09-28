@@ -35,6 +35,7 @@ final class MenuDetailRepositoryImpl: MenuDetailRepository {
 
                 self?.outputs.didGetProductDetail.accept(position)
             }, onError: { [weak self] error in
+                self?.process(error: error)
                 self?.outputs.didEndRequest.accept(())
                 guard let error = error as? ErrorPresentable else { return }
                 self?.outputs.didFail.accept(error)
@@ -47,6 +48,14 @@ final class MenuDetailRepositoryImpl: MenuDetailRepository {
         modifierGroups[index].set(selectedModifiers: selectedModifiers)
         modifierGroups[index].set(totalCount: totalCount)
         outputs.updateSelectedModifiers.accept(modifierGroups)
+    }
+
+    private func process(error: Error) {
+        if let errorResponse = error as? ErrorResponse {
+            if errorResponse.code == Constants.ErrorCode.branchIsClosed {
+                NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
+            }
+        }
     }
 }
 
