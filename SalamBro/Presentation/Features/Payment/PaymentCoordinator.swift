@@ -15,6 +15,7 @@ final class PaymentCoordinator: BaseCoordinator {
 
     var didFinish: (() -> Void)?
     var didMakePayment: (() -> Void)?
+    var didGetBranchClosed: (() -> Void)?
 
     private(set) var router: Router
     private let pagesFactory: PaymentPagesFactory
@@ -67,6 +68,12 @@ final class PaymentCoordinator: BaseCoordinator {
         paymentSelectionVC.outputs.finishFlow
             .subscribe(onNext: { [weak self] in
                 self?.router.dismissAll(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+
+        paymentSelectionVC.outputs.branchClosed
+            .subscribe(onNext: { [weak self] in
+                self?.didGetBranchClosed?()
             })
             .disposed(by: disposeBag)
 

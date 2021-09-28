@@ -86,7 +86,17 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
 
         viewModel.outputs.didGetAuthError
             .subscribe(onNext: { [weak self] error in
-                self?.showError(error) {
+                if let error = error as? ErrorResponse {
+                    if error.code == Constants.ErrorCode.branchIsClosed {
+                        self?.showError(
+                            NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed)), completion: {
+                                self?.outputs.finishFlow.accept(())
+                                self?.outputs.branchClosed.accept(())
+                            }
+                        )
+                    }
+                } else {
+                    self?.showError(error)
                     self?.outputs.finishFlow.accept(())
                 }
             })
@@ -160,5 +170,6 @@ extension PaymentSelectionViewController {
         let hide3DS = PublishRelay<Void>()
         let didMakePayment = PublishRelay<Void>()
         let finishFlow = PublishRelay<Void>()
+        let branchClosed = PublishRelay<Void>()
     }
 }

@@ -92,6 +92,10 @@ final class CartCoordinator: BaseCoordinator {
             self?.toOrderHistory?()
         }
 
+        paymentCoordinator.didGetBranchClosed = { [weak self] in
+            self?.toMenu?()
+        }
+
         paymentCoordinator.start()
     }
 

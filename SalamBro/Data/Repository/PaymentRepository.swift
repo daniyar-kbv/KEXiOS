@@ -287,6 +287,7 @@ extension PaymentRepositoryImpl {
                     return
                 case Constants.ErrorCode.branchIsClosed:
                     self?.outputs.didGetAuthError.accept(error)
+                    return
                 default:
                     break
                 }

@@ -71,6 +71,7 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
         return provider.rx
             .request(.createOrder(dto: dto))
             .map { response in
+
                 guard let response = try? response.map(CreateOrderResponse.self) else {
                     throw NetworkError.badMapping
                 }
@@ -79,7 +80,7 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
                     if error.code == Constants.ErrorCode.orderAlreadyExists {
                         return ()
                     } else if error.code == Constants.ErrorCode.branchIsClosed {
-                        throw NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed))
+                        throw error
                     } else {
                         throw error
                     }
