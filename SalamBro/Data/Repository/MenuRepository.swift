@@ -142,7 +142,11 @@ extension MenuRepositoryImpl {
     }
 
     private func sendMenuData() {
-        let dataToSend = (menuData.leadInfo.data, menuData.promotions.data, menuData.categories.data)
+        var dataToSend = (menuData.leadInfo.data, menuData.promotions.data, menuData.categories.data)
+        if let data = menuData.categories.data, data.isEmpty {
+            dataToSend.1?.removeAll()
+            outputs.didGetBranchClosed.accept(())
+        }
         outputs.didGetData.accept(dataToSend)
         outputs.didEndRequest.accept(())
     }
@@ -159,6 +163,7 @@ extension MenuRepositoryImpl {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
+        let didGetBranchClosed = PublishRelay<Void>()
 
         let didGetData = PublishRelay<(leadInfo: LeadInfo?,
                                        promotions: [Promotion]?,

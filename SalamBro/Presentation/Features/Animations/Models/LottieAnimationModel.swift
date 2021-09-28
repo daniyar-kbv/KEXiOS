@@ -49,9 +49,9 @@ enum LottieAnimationModel: String, CaseIterable {
 
     var animationLoopMode: LottieLoopMode {
         switch self {
-        case .orderHistory, .emptyBasket, .noInternet, .upgrade, .overload, .payment:
+        case .orderHistory, .emptyBasket, .noInternet, .upgrade, .overload, .payment, .closed:
             return .loop
-        case .profile, .closed:
+        case .profile:
             return .playOnce
         }
     }

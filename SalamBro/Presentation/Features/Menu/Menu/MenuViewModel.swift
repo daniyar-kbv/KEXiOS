@@ -67,6 +67,12 @@ final class MenuViewModel: MenuViewModelProtocol {
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
 
+        menuRepository.outputs.didGetBranchClosed
+            .subscribe(onNext: { [weak self] in
+                self?.configureAnimation(with: true)
+            })
+            .disposed(by: disposeBag)
+
         menuRepository.outputs.didGetData
             .subscribe(onNext: { [weak self] menuData in
                 self?.process(menuData: menuData)
@@ -131,11 +137,6 @@ final class MenuViewModel: MenuViewModelProtocol {
     }
 
     private func process(categories: [MenuCategory]?, tableSections: inout [Section]) {
-        if let categories = categories, categories.isEmpty {
-            tableSections.removeAll(where: { $0.type == .promotions })
-            configureAnimation(with: true)
-        }
-
         guard let categories = categories?.filter({ !$0.positions.isEmpty }) else { return }
         tableSections.append(
             .init(type: .positions,
