@@ -243,7 +243,6 @@ extension CartRepositoryImpl {
                 self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
                 self?.process(error: error)
-                self?.outputs.didGetError.accept(error as! ErrorPresentable)
                 self?.outputs.didEndRequest.accept(())
             })
             .disposed(by: disposeBag)
@@ -257,6 +256,13 @@ extension CartRepositoryImpl {
     private func process(error: Error) {
         cart = cartStorage.cart
         getItems()
+
+        if let errorResponse = error as? ErrorResponse {
+            if errorResponse.code == Constants.ErrorCode.branchIsClosed {
+                NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
+            }
+        }
+
         guard let error = error as? ErrorPresentable else { return }
         outputs.didGetError.accept(error)
     }

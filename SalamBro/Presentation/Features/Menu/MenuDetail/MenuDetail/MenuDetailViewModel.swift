@@ -58,8 +58,6 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
             description: position.description,
             type: .main
         ))
-
-        outputs.didProceed.accept(())
     }
 
     func set(comment: String) {
@@ -101,6 +99,15 @@ extension MenuDetailViewModelImpl {
             self?.outputs.updateModifiers.accept(())
         }
         .disposed(by: disposeBag)
+
+        cartRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        cartRepository.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.didProceed.accept(())
+            }).disposed(by: disposeBag)
 
         cartRepository.outputs.didGetError
             .bind(to: outputs.didGetError)
