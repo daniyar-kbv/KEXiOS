@@ -302,7 +302,7 @@ extension PaymentRepositoryImpl {
     }
 
     private func getNewLeadAuthorized() {
-        authorizedApplyService.authorizedApplyOrder()
+        authorizedApplyService.authorizedApply(dto: nil)
             .retryWhenUnautharized()
             .subscribe(onSuccess: orderApplyOnSuccess(_:),
                        onError: { [weak self] _ in

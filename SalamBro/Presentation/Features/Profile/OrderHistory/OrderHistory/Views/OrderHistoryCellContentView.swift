@@ -20,6 +20,9 @@ final class OrderHistoryCellContentView: UIView {
         let view = UIImageView()
         view.image =
             SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+        view.contentMode = .scaleAspectFit
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = true
         return view
     }()
 
@@ -242,7 +245,7 @@ final class OrderHistoryCellContentView: UIView {
     }
 
     func configure(with item: OrdersList) {
-        if let imageURL = URL(string: item.brand.imageSmall ?? "") {
+        if let imageURL = URL(string: item.brand.image ?? "") {
             logoView.setImage(url: imageURL)
         }
 

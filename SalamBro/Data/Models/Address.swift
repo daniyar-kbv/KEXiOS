@@ -179,3 +179,11 @@ extension Address: Equatable {
         return lhs.longitude == rhs.longitude && lhs.latitude == rhs.latitude
     }
 }
+
+struct UpdateAddress: Codable {
+    let id: String
+
+    enum CodingKeys: String, CodingKey {
+        case id = "uuid"
+    }
+}

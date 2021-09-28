@@ -10,8 +10,7 @@ import Moya
 enum OrdersAPI {
     case getAllOrders(page: Int)
     case apply(dto: OrderApplyDTO)
-    case authorizedApply
-    case authorizedApplyWithAddress(dto: OrderApplyDTO)
+    case authorizedApply(dto: OrderApplyDTO?)
     case additionalNomenclature(leadUUID: String)
     case updateCart(leadUUID: String, dto: CartDTO)
     case applyPromocode(promocode: String)
@@ -28,7 +27,6 @@ extension OrdersAPI: TargetType {
         case .getAllOrders: return "orders/"
         case .apply: return "orders/apply/"
         case .authorizedApply: return "/orders/authorized-apply/"
-        case .authorizedApplyWithAddress: return "/orders/authorized-apply/"
         case let .additionalNomenclature(leadUUID): return "/orders/\(leadUUID)/additional-nomenclature/"
         case let .updateCart(leadUUID, _): return "orders/\(leadUUID)/cart/"
         case let .applyPromocode(promocode): return "/orders/coupons/\(promocode)/"
@@ -41,7 +39,6 @@ extension OrdersAPI: TargetType {
         case .getAllOrders: return .get
         case .apply: return .post
         case .authorizedApply: return .post
-        case .authorizedApplyWithAddress: return .post
         case .additionalNomenclature: return .get
         case .updateCart: return .put
         case .applyPromocode: return .get
@@ -59,8 +56,9 @@ extension OrdersAPI: TargetType {
             let params = ["page": page]
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
         case let .apply(dto): return .requestJSONEncodable(dto)
-        case .authorizedApply: return .requestPlain
-        case let .authorizedApplyWithAddress(dto): return .requestJSONEncodable(dto)
+        case let .authorizedApply(dto):
+            if let dto = dto { return .requestJSONEncodable(dto) }
+            else { return .requestPlain }
         case .additionalNomenclature: return .requestPlain
         case let .updateCart(_, dto): return .requestJSONEncodable(dto)
         case .applyPromocode: return .requestPlain

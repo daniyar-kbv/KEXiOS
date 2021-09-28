@@ -160,7 +160,7 @@ final class AuthRepositoryImpl: AuthRepository {
             throw NetworkError.noData
         }
 
-        return authorizedApplyService.authorizedApplyWithAddress(dto: applyDTO)
+        return authorizedApplyService.authorizedApply(dto: applyDTO)
             .flatMap { [unowned self] leadUUID -> Single<Cart> in
                 self.leadUUID = leadUUID
                 return ordersService.updateCart(for: leadUUID, dto: cartStorage.cart.toDTO())

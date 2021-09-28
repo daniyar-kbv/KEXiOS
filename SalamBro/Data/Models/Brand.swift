@@ -31,6 +31,22 @@ class Brand: Codable {
     }
 }
 
+class HistoryBrand: Codable {
+    let id: Int
+    let name: String
+    let image: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, image
+    }
+
+    init(id: Int, name: String, image: String?) {
+        self.id = id
+        self.name = name
+        self.image = image
+    }
+}
+
 extension Brand {
     func getCopy() -> Brand {
         return .init(id: id, name: name, imageSmall: imageSmall, imageBig: imageBig,

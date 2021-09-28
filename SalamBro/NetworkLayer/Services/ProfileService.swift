@@ -93,6 +93,7 @@ final class ProfileServiceMoyaImpl: ProfileService {
         provider.rx
             .request(.updateAddress(dto: dto))
             .map { response in
+
                 guard let response = try? response.map(UpdateUserAddressResponse.self) else {
                     throw NetworkError.badMapping
                 }

@@ -201,11 +201,13 @@ extension SelectMainInformationViewModel {
         case .create:
             guard let userAddress = userAddress else { return }
             addressRepository.create(userAddress: userAddress)
-        case .changeAddress, .changeBrand:
+        case .changeAddress:
+            guard let id = userAddress?.id else { return }
+            addressRepository.updateUserAddress(with: id, brandId: nil)
+        case .changeBrand:
             guard let id = userAddress?.id,
                   let brandId = userAddress?.brand?.id
             else { return }
-
             addressRepository.updateUserAddress(with: id, brandId: brandId)
         }
     }

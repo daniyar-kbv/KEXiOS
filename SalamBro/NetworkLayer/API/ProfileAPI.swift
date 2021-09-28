@@ -35,7 +35,7 @@ extension ProfileAPI: TargetType {
         case .editUserInfo: return .post
         case .getUserInfo: return .get
         case .getAddresses: return .get
-        case .updateAddress: return .put
+        case .updateAddress: return .post
         case .deleteAddress: return .delete
         }
     }
