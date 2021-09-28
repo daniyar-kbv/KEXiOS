@@ -79,8 +79,6 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
                 if let error = response.error {
                     if error.code == Constants.ErrorCode.orderAlreadyExists {
                         return ()
-                    } else if error.code == Constants.ErrorCode.branchIsClosed {
-                        throw error
                     } else {
                         throw error
                     }

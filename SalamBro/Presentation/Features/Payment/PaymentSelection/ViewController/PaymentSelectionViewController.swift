@@ -86,6 +86,13 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
 
         viewModel.outputs.didGetAuthError
             .subscribe(onNext: { [weak self] error in
+                self?.showError(error)
+                self?.outputs.finishFlow.accept(())
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didGetBranchError
+            .subscribe(onNext: { [weak self] error in
                 if let error = error as? ErrorResponse {
                     if error.code == Constants.ErrorCode.branchIsClosed {
                         self?.showError(
@@ -95,9 +102,6 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
                             }
                         )
                     }
-                } else {
-                    self?.showError(error)
-                    self?.outputs.finishFlow.accept(())
                 }
             })
             .disposed(by: disposeBag)

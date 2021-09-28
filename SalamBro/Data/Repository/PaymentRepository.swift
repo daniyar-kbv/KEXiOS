@@ -286,7 +286,7 @@ extension PaymentRepositoryImpl {
                 case Constants.ErrorCode.notFound:
                     return
                 case Constants.ErrorCode.branchIsClosed:
-                    self?.outputs.didGetAuthError.accept(error)
+                    self?.outputs.didGetBranchError.accept(error)
                     return
                 default:
                     break
@@ -448,6 +448,7 @@ extension PaymentRepositoryImpl {
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
         let didGetAuthError = PublishRelay<ErrorPresentable>()
+        let didGetBranchError = PublishRelay<ErrorPresentable>()
 
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()

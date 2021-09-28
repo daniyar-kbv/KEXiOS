@@ -20,7 +20,7 @@ final class OrderHistoryCellContentView: UIView {
         let view = UIImageView()
         view.image =
             SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
         view.layer.cornerRadius = 8
         view.layer.masksToBounds = true
         return view

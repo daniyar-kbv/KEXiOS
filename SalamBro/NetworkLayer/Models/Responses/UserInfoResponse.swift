@@ -27,8 +27,3 @@ struct UserAddressesResponse: Decodable {
     let data: [UserAddress]?
     let error: ErrorResponse?
 }
-
-struct UpdateUserAddressResponse: Decodable {
-    let data: UpdateAddress?
-    let error: ErrorResponse?
-}

@@ -69,7 +69,7 @@ final class MenuViewModel: MenuViewModelProtocol {
 
         menuRepository.outputs.didGetBranchClosed
             .subscribe(onNext: { [weak self] in
-                self?.configureAnimation(with: true)
+                self?.outputs.showAnimation.accept(.closed)
             })
             .disposed(by: disposeBag)
 
@@ -146,14 +146,6 @@ final class MenuViewModel: MenuViewModelProtocol {
                       .flatMap { $0 })
         )
     }
-
-    private func configureAnimation(with showStatus: Bool) {
-        if showStatus {
-            outputs.showAnimation.accept(.closed)
-        } else {
-            outputs.hideAnimation.accept(())
-        }
-    }
 }
 
 extension MenuViewModel {
@@ -176,7 +168,7 @@ extension MenuViewModel {
     }
 
     func update() {
-        configureAnimation(with: false)
+        outputs.hideAnimation.accept(())
         menuRepository.getMenuItems()
     }
 

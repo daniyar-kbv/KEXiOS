@@ -217,9 +217,6 @@ extension AddressRepositoryImpl {
         let dto = UpdateAddressDTO(id: id, brandId: brandId)
         outputs.didStartRequest.accept(())
         profileService.updateAddress(dto: dto)
-            .flatMap { [unowned self] _ -> Single<String> in
-                authorizedApplyService.authorizedApply(dto: nil)
-            }
             .flatMap { [unowned self] leadUUID -> Single<[UserAddress]> in
                 self.process(leadUUID: leadUUID)
                 return profileService.getAddresses()
