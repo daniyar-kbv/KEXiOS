@@ -59,6 +59,8 @@ final class OrdersServiceMoyaImpl: OrdersService {
                     guard error.code != Constants.ErrorCode.branchIsClosed else {
                         throw NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed))
                     }
+
+                    throw error
                 }
 
                 guard let data = orderProductsResponse.data else {
