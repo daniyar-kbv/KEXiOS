@@ -56,10 +56,6 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 if let error = orderProductsResponse.error {
-                    guard error.code != Constants.ErrorCode.branchIsClosed else {
-                        throw NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed))
-                    }
-
                     throw error
                 }
 
@@ -81,11 +77,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
                 }
 
                 if let error = cartResponse.error {
-                    if error.code == Constants.ErrorCode.branchIsClosed {
-                        throw NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed))
-                    } else {
-                        throw error
-                    }
+                    throw error
                 }
 
                 guard let cart = cartResponse.data else {

@@ -88,9 +88,18 @@ extension MenuDetailController {
 
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
-                self?.outputs.close.accept(())
                 guard let error = error else { return }
-                self?.showError(error)
+                if let error = error as? ErrorResponse {
+                    if error.code == Constants.ErrorCode.branchIsClosed {
+                        self?.showError(
+                            NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed)), completion: {
+                                self?.outputs.close.accept(())
+                            }
+                        )
+                    }
+                } else {
+                    self?.showError(error)
+                }
             }).disposed(by: disposeBag)
 
         viewModel.outputs.itemImage

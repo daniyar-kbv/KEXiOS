@@ -59,10 +59,6 @@ class MenuServiceImpl: MenuService {
                 }
 
                 if let error = orderProductDetailResponse.error {
-                    guard error.code != Constants.ErrorCode.branchIsClosed else {
-                        throw NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed))
-                    }
-
                     throw error
                 }
 
