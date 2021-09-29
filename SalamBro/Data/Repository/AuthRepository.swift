@@ -105,7 +105,6 @@ final class AuthRepositoryImpl: AuthRepository {
                 self?.outputs.didRegisteredUser.accept(())
                 self?.postUserInfoDependencies()
             }, onError: { [weak self] error in
-                self?.tokenStorage.cleanUp()
                 self?.outputs.didEndRequest.accept(())
                 if let error = error as? ErrorPresentable {
                     if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
@@ -113,7 +112,7 @@ final class AuthRepositoryImpl: AuthRepository {
                         self?.outputs.didFailBranch.accept(error)
                         return
                     }
-
+                    self?.tokenStorage.cleanUp()
                     self?.outputs.didFailAuthName.accept(error)
                 }
             })
@@ -152,7 +151,6 @@ final class AuthRepositoryImpl: AuthRepository {
                 self?.outputs.didFinish.accept(true)
                 self?.postUserInfoDependencies()
             } onError: { [weak self] error in
-                self?.tokenStorage.cleanUp()
                 self?.outputs.didEndRequest.accept(())
                 if let error = error as? ErrorPresentable {
                     if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
@@ -160,7 +158,7 @@ final class AuthRepositoryImpl: AuthRepository {
                         self?.outputs.didFailBranch.accept(error)
                         return
                     }
-
+                    self?.tokenStorage.cleanUp()
                     self?.outputs.didFailOTP.accept(error)
                 }
             }
