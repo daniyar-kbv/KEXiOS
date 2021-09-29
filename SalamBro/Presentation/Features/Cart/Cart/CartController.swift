@@ -194,6 +194,8 @@ extension CartController {
                         self?.showError(
                             NetworkError.error(error.message), completion: {
                                 self?.outputs.toMenu.accept(())
+                                NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
+                                                                object: ())
                             }
                         )
                     }
