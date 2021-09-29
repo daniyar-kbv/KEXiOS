@@ -96,13 +96,11 @@ extension MenuDetailController {
         viewModel.outputs.didGetBranchClosed
             .subscribe(onNext: { [weak self] error in
                 if let error = error as? ErrorResponse {
-                    if error.code == Constants.ErrorCode.branchIsClosed {
-                        self?.showError(
-                            NetworkError.error(error.message), completion: {
-                                self?.outputs.close.accept(())
-                            }
-                        )
-                    }
+                    self?.showError(
+                        NetworkError.error(error.message), completion: {
+                            self?.outputs.close.accept(())
+                        }
+                    )
                 }
             }).disposed(by: disposeBag)
 

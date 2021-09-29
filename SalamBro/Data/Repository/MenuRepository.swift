@@ -141,10 +141,8 @@ extension MenuRepositoryImpl {
     private func process(error: Error, type: RequestType) {
         menuData.add(type: type)
 
-        if let error = error as? ErrorResponse {
-            if error.code == Constants.ErrorCode.branchIsClosed {
-                branchIsClosed = true
-            }
+        if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
+            branchIsClosed = true
         }
 
         guard let error = error as? ErrorPresentable else { return }

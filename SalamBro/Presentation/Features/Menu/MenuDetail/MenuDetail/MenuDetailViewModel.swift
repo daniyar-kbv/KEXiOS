@@ -91,6 +91,10 @@ extension MenuDetailViewModelImpl {
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
 
+        menuDetailRepository.outputs.didGetBranchClosed
+            .bind(to: outputs.didGetBranchClosed)
+            .disposed(by: disposeBag)
+
         menuDetailRepository.outputs.updateSelectedModifiers.bind {
             [weak self] modifierGroups in
             self?.position?.modifierGroups = modifierGroups

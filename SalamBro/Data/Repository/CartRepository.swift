@@ -88,7 +88,7 @@ extension CartRepositoryImpl {
         } else {
             cart.items.append(item)
         }
-        addNewCartItem()
+        sendNewCart(withDebounce: false)
     }
 
     func removeItem(internalUUID: String) {
@@ -240,21 +240,6 @@ extension CartRepositoryImpl {
         ordersService.updateCart(for: leadUUID, dto: dto)
             .subscribe(onSuccess: { [weak self] cart in
                 self?.process(cart: cart)
-                self?.outputs.didEndRequest.accept(())
-            }, onError: { [weak self] error in
-                self?.process(error: error)
-                self?.outputs.didEndRequest.accept(())
-            })
-            .disposed(by: disposeBag)
-    }
-
-    private func addNewCartItem() {
-        guard let leadUUID = defaultStorage.leadUUID else { return }
-        let dto = cart.toDTO()
-
-        ordersService.updateCart(for: leadUUID, dto: dto)
-            .subscribe(onSuccess: { [weak self] cart in
-                self?.process(cart: cart)
                 self?.outputs.didAdd.accept(())
                 self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
@@ -273,13 +258,11 @@ extension CartRepositoryImpl {
         cart = cartStorage.cart
         getItems()
 
-        if let errorResponse = error as? ErrorResponse {
-            if errorResponse.code == Constants.ErrorCode.branchIsClosed {
-                outputs.didGetBranchClosed.accept(error)
-                NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
-                cleanUp()
-                return
-            }
+        if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
+            outputs.didGetBranchClosed.accept(error)
+            NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
+            cleanUp()
+            return
         }
 
         guard let error = error as? ErrorPresentable else { return }
