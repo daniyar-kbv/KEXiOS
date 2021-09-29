@@ -41,12 +41,13 @@ public final class MenuDetailCoordinator: Coordinator {
             }).disposed(by: disposeBag)
 
         menuDetailPage.outputs.close
-            .subscribe(onNext: {
-                menuDetailPage.dismiss(animated: true)
+            .subscribe(onNext: { [weak menuDetailPage] in
+                menuDetailPage?.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
         menuDetailPage.outputs.toModifiers
-            .subscribe(onNext: { [weak self] modifierGroup in
+            .subscribe(onNext: { [weak self, weak menuDetailPage] modifierGroup in
+                guard let menuDetailPage = menuDetailPage else { return }
                 self?.openModifiers(on: menuDetailPage,
                                     modifierGroup: modifierGroup)
             }).disposed(by: disposeBag)
@@ -61,8 +62,8 @@ public final class MenuDetailCoordinator: Coordinator {
         let modifiersPage = pagesFactory.makeModifiersPage(modifierGroup: modifierGroup)
 
         modifiersPage.outputs.close
-            .subscribe(onNext: {
-                modifiersPage.dismiss(animated: true)
+            .subscribe(onNext: { [weak modifiersPage] in
+                modifiersPage?.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
         let nav = SBNavigationController(rootViewController: modifiersPage)

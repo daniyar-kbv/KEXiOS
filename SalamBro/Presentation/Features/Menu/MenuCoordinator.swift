@@ -133,7 +133,7 @@ final class MenuCoordinator: BaseCoordinator {
         let menuDetailCoordinator = coordinatorsFactory.makeMenuDetailCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents, positionUUID: positionUUID)
         add(menuDetailCoordinator)
 
-        menuDetailCoordinator.didFinish = { [weak self] in
+        menuDetailCoordinator.didFinish = { [weak self, weak menuDetailCoordinator] in
             self?.remove(menuDetailCoordinator)
         }
 
