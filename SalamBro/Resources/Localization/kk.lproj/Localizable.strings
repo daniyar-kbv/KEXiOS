@@ -210,7 +210,6 @@
 "Error.mappingError" = "Жауап өңделмеді";
 "Error.noData" = "Мәлімет жоқ";
 "Error.unauthorized" = "Сіз қайта кіруіңіз қажет";
-"Error.closed" = "Мекеме жабық";
 
 // MARK: - Payment Selection
 

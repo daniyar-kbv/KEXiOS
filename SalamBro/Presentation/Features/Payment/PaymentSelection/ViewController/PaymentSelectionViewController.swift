@@ -96,7 +96,7 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
                 if let error = error as? ErrorResponse {
                     if error.code == Constants.ErrorCode.branchIsClosed {
                         self?.showError(
-                            NetworkError.error(SBLocalization.localized(key: ErrorText.Branch.closed)), completion: {
+                            NetworkError.error(error.message), completion: {
                                 self?.outputs.finishFlow.accept(())
                                 self?.outputs.branchClosed.accept(())
                             }
