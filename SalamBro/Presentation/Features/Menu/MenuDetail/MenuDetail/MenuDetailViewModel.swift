@@ -104,10 +104,15 @@ extension MenuDetailViewModelImpl {
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
 
-        cartRepository.outputs.didEndRequest
+        cartRepository.outputs.didAdd
             .subscribe(onNext: { [weak self] in
+                self?.outputs.didEndRequest.accept(())
                 self?.outputs.didProceed.accept(())
             }).disposed(by: disposeBag)
+
+        cartRepository.outputs.didGetBranchClosed
+            .bind(to: outputs.didGetBranchClosed)
+            .disposed(by: disposeBag)
 
         cartRepository.outputs.didGetError
             .bind(to: outputs.didGetError)
@@ -175,5 +180,7 @@ extension MenuDetailViewModelImpl {
 
         let didProceed = PublishRelay<Void>()
         let isComplete = PublishRelay<Bool>()
+
+        let didGetBranchClosed = PublishRelay<Error>()
     }
 }

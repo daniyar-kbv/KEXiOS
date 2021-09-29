@@ -47,6 +47,8 @@ final class CartRepositoryImpl: CartRepository {
         }
     }
 
+    private var branchIsClosed = false
+
     let outputs = Output()
 
     init(cartStorage: CartStorage,
@@ -81,13 +83,19 @@ extension CartRepositoryImpl {
     }
 
     func addItem(item: CartItem) {
-        if cart.items.contains(item),
-           let index = cart.items.firstIndex(of: item)
-        {
-            cart.items[index].count += 1
-        } else {
-            cart.items.append(item)
+        updateCart(withLoader: false)
+
+        if !branchIsClosed {
+            if cart.items.contains(item),
+               let index = cart.items.firstIndex(of: item)
+            {
+                cart.items[index].count += 1
+            } else {
+                cart.items.append(item)
+            }
+            outputs.didAdd.accept(())
         }
+
         sendNewCart(withDebounce: false)
     }
 
@@ -259,6 +267,8 @@ extension CartRepositoryImpl {
 
         if let errorResponse = error as? ErrorResponse {
             if errorResponse.code == Constants.ErrorCode.branchIsClosed {
+                branchIsClosed = true
+                outputs.didGetBranchClosed.accept(error)
                 NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
             }
         }
@@ -275,6 +285,8 @@ extension CartRepositoryImpl {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
+        let didGetBranchClosed = PublishRelay<Error>()
+        let didAdd = PublishRelay<Void>()
 
         let promocode = PublishRelay<Promocode>()
     }

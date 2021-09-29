@@ -90,7 +90,7 @@ final class AuthRepositoryImpl: AuthRepository {
             .flatMap { _ -> Single<UserInfoResponse> in
                 self.profileService.getUserInfo()
             }
-            .flatMap { userInfo -> Single<Void> in
+            .flatMap { userInfo -> Single<Cart> in
                 self.userInfo = userInfo
                 do {
                     return try self.getFinishAuthSequence()
@@ -99,7 +99,8 @@ final class AuthRepositoryImpl: AuthRepository {
                 }
             }
             .retryWhenUnautharized()
-            .subscribe(onSuccess: { [weak self] _ in
+            .subscribe(onSuccess: { [weak self] cart in
+                self?.cart = cart
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didRegisteredUser.accept(())
                 self?.postUserInfoDependencies()
@@ -107,6 +108,12 @@ final class AuthRepositoryImpl: AuthRepository {
                 self?.tokenStorage.cleanUp()
                 self?.outputs.didEndRequest.accept(())
                 if let error = error as? ErrorPresentable {
+                    if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
+                        self?.postUserInfoDependencies()
+                        self?.outputs.didFailBranch.accept(error)
+                        return
+                    }
+
                     self?.outputs.didFailAuthName.accept(error)
                 }
             })
@@ -121,7 +128,7 @@ final class AuthRepositoryImpl: AuthRepository {
                 self.tokenStorage.persist(token: accessToken.access, refreshToken: accessToken.refresh)
                 return profileService.getUserInfo()
             }
-            .flatMap { [unowned self] userInfo -> Single<Void> in
+            .flatMap { [unowned self] userInfo -> Single<Cart> in
                 guard let name = userInfo.name,
                       !name.isEmpty
                 else {
@@ -139,7 +146,8 @@ final class AuthRepositoryImpl: AuthRepository {
                     throw error
                 }
             }
-            .subscribe { [weak self] _ in
+            .subscribe { [weak self] cart in
+                self?.cart = cart
                 self?.outputs.didEndRequest.accept(())
                 self?.outputs.didFinish.accept(true)
                 self?.postUserInfoDependencies()
@@ -147,13 +155,19 @@ final class AuthRepositoryImpl: AuthRepository {
                 self?.tokenStorage.cleanUp()
                 self?.outputs.didEndRequest.accept(())
                 if let error = error as? ErrorPresentable {
+                    if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
+                        self?.postUserInfoDependencies()
+                        self?.outputs.didFailBranch.accept(error)
+                        return
+                    }
+
                     self?.outputs.didFailOTP.accept(error)
                 }
             }
             .disposed(by: disposeBag)
     }
 
-    private func getFinishAuthSequence() throws -> Single<Void> {
+    private func getFinishAuthSequence() throws -> Single<Cart> {
         guard let applyDTO = geoStorage.userAddresses.first(where: { $0.isCurrent })?.toDTO(),
               let fcmToken = defaultStorage.fcmToken
         else {
@@ -161,32 +175,34 @@ final class AuthRepositoryImpl: AuthRepository {
         }
 
         return authorizedApplyService.authorizedApply(dto: applyDTO)
-            .flatMap { [unowned self] leadUUID -> Single<Cart> in
+            .flatMap { [unowned self] leadUUID -> Single<[UserAddress]> in
                 self.leadUUID = leadUUID
-                return ordersService.updateCart(for: leadUUID, dto: cartStorage.cart.toDTO())
-            }
-            .flatMap { [unowned self] cart -> Single<[UserAddress]> in
-                self.cart = cart
                 return profileService.getAddresses()
             }
             .flatMap { [unowned self] userAddresses in
                 self.userAddresses = userAddresses
                 return notificationsService.fcmTokenSave(dto: .init(fcmToken: fcmToken))
             }
+            .flatMap { () -> Single<Cart> in
+                self.ordersService.updateCart(for: self.leadUUID ?? "", dto: self.cartStorage.cart.toDTO())
+            }
     }
 
     private func postUserInfoDependencies() {
-        guard let leadUUID = leadUUID, let cart = cart, let userAddresses = userAddresses else {
+        guard let leadUUID = leadUUID, let userAddresses = userAddresses else {
             return
         }
         NotificationCenter.default.post(name: Constants.InternalNotification.userInfo.name,
                                         object: userInfo)
         NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
                                         object: leadUUID)
-        NotificationCenter.default.post(name: Constants.InternalNotification.cart.name,
-                                        object: cart)
         NotificationCenter.default.post(name: Constants.InternalNotification.userAddresses.name,
                                         object: userAddresses)
+
+        if let cart = cart {
+            NotificationCenter.default.post(name: Constants.InternalNotification.cart.name,
+                                            object: cart)
+        }
     }
 
     func resendOTP(with number: String) {
@@ -215,6 +231,7 @@ extension AuthRepositoryImpl {
         let didFailAuth = PublishRelay<ErrorPresentable>()
         let didFailOTP = PublishRelay<ErrorPresentable>()
         let didFailAuthName = PublishRelay<ErrorPresentable>()
+        let didFailBranch = PublishRelay<ErrorPresentable>()
 
         let didFinish = PublishRelay<Bool>()
 

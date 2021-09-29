@@ -14,6 +14,7 @@ final class AuthCoordinator: BaseCoordinator {
 
     var didFinish: (() -> Void)?
     var didAuthorize: (() -> Void)?
+    var toMenu: (() -> Void)?
 
     private let router: Router
     private let pagesFactory: AuthPagesFactory
@@ -70,6 +71,11 @@ final class AuthCoordinator: BaseCoordinator {
                 }
             })
             .disposed(by: disposeBag)
+
+        verificationPage.toMenu = { [weak self] in
+            self?.toMenu?()
+            self?.handleAuthTermination()
+        }
 
         router.push(viewController: verificationPage, animated: true)
     }

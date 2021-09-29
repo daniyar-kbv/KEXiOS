@@ -14,6 +14,8 @@ final class VerificationController: UIViewController, LoaderDisplayable {
 
     let outputs = Output()
 
+    var toMenu: (() -> Void)?
+
     private var rootView: VerificationView?
     private let viewModel: VerificationViewModel
 
@@ -75,6 +77,20 @@ final class VerificationController: UIViewController, LoaderDisplayable {
                     self?.rootView?.showKeyboard()
                 })
                 self?.rootView?.reload(for: true)
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.didFailBranch
+            .subscribe(onNext: { [weak self] error in
+                if let error = error as? ErrorResponse {
+                    if error.code == Constants.ErrorCode.branchIsClosed {
+                        self?.showError(
+                            NetworkError.error(error.message), completion: {
+                                self?.toMenu?()
+                            }
+                        )
+                    }
+                }
             })
             .disposed(by: disposeBag)
 
