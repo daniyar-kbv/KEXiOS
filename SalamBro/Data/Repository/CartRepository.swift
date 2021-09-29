@@ -47,8 +47,6 @@ final class CartRepositoryImpl: CartRepository {
         }
     }
 
-    private var branchIsClosed = false
-
     let outputs = Output()
 
     init(cartStorage: CartStorage,
@@ -83,20 +81,14 @@ extension CartRepositoryImpl {
     }
 
     func addItem(item: CartItem) {
-        updateCart(withLoader: false)
-
-        if !branchIsClosed {
-            if cart.items.contains(item),
-               let index = cart.items.firstIndex(of: item)
-            {
-                cart.items[index].count += 1
-            } else {
-                cart.items.append(item)
-            }
-            outputs.didAdd.accept(())
+        if cart.items.contains(item),
+           let index = cart.items.firstIndex(of: item)
+        {
+            cart.items[index].count += 1
+        } else {
+            cart.items.append(item)
         }
-
-        sendNewCart(withDebounce: false)
+        addNewCartItem()
     }
 
     func removeItem(internalUUID: String) {
@@ -256,6 +248,22 @@ extension CartRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
+    private func addNewCartItem() {
+        guard let leadUUID = defaultStorage.leadUUID else { return }
+        let dto = cart.toDTO()
+
+        ordersService.updateCart(for: leadUUID, dto: dto)
+            .subscribe(onSuccess: { [weak self] cart in
+                self?.process(cart: cart)
+                self?.outputs.didAdd.accept(())
+                self?.outputs.didEndRequest.accept(())
+            }, onError: { [weak self] error in
+                self?.process(error: error)
+                self?.outputs.didEndRequest.accept(())
+            })
+            .disposed(by: disposeBag)
+    }
+
     private func process(cart: Cart) {
         self.cart = cart
         getItems()
@@ -267,9 +275,10 @@ extension CartRepositoryImpl {
 
         if let errorResponse = error as? ErrorResponse {
             if errorResponse.code == Constants.ErrorCode.branchIsClosed {
-                branchIsClosed = true
                 outputs.didGetBranchClosed.accept(error)
                 NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
+                cleanUp()
+                return
             }
         }
 
