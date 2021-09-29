@@ -61,9 +61,10 @@
 "CartFooter.deliveryLabel" = "Жеткізу";
 
 // MARK: - UnavailabilityAlert
-"Cart.alertTitle" = "Назар аударыңыз";
-"Cart.unavailabilityAlertMessage" = "Кейбір тауарлар жоқ";
-"Cart.minPriceAlertMessage" = "Минималдық тапсырыс бағасы %@ ₸";
+"Cart.Alert.title" = "Назар аударыңыз";
+"Cart.Alert.deliveryPriceChangedMessage" = "Жеткізудің бағасы өзгерді";
+"Cart.Alert.unavailabilityAlertMessage" = "Кейбір тауарлар жоқ";
+"Cart.Alert.minPriceAlertMessage" = "Минималдық тапсырыс бағасы %@ ₸";
 
 // MARK: - CartProductCell
 "CartProductCell.deleteButton.title" = "Жою";

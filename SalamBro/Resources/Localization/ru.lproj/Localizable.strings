@@ -62,9 +62,10 @@
 "CartFooter.deliveryLabel" = "Доставка";
 
 // MARK: - UnavailabilityAlert
-"Cart.alertTitle" = "Внимание";
-"Cart.unavailabilityAlertMessage" = "Некоторые товары недоступны";
-"Cart.minPriceAlertMessage" = "Минимальная сумма заказа %@ ₸";
+"Cart.Alert.title" = "Внимание";
+"Cart.Alert.deliveryPriceChangedMessage" = "Изменилась цена доставки";
+"Cart.Alert.unavailabilityAlertMessage" = "Некоторые товары недоступны";
+"Cart.Alert.minPriceAlertMessage" = "Минимальная сумма заказа %@ ₸";
 
 // MARK: - CartProductCell
 "CartProductCell.deleteButton.title" = "Удалить";

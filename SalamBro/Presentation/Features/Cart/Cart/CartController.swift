@@ -125,7 +125,7 @@ extension CartController {
     }
 
     private func showAlertWith(message: String) {
-        showAlert(title: SBLocalization.localized(key: CartText.Cart.CartAlert.alertTitle),
+        showAlert(title: SBLocalization.localized(key: CartText.Cart.CartAlert.title),
                   message: message,
                   completion: nil)
     }
@@ -208,10 +208,18 @@ extension CartController {
 
         viewModel.outputs.didNotMatchMinPrice
             .subscribe(onNext: { [weak self] minPrice in
+                self?.showAlertWith(
+                    message: SBLocalization.localized(
+                        key: CartText.Cart.CartAlert.minPriceAlertMessage,
+                        arguments: minPrice.formattedWithSeparator
+                    ))
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.outputs.deliveryPriceChanged
+            .subscribe(onNext: { [weak self] in
                 self?.showAlertWith(message: SBLocalization.localized(
-                    key: CartText.Cart.CartAlert.minPriceAlertMessage,
-                    arguments: minPrice.formattedWithSeparator
-                ))
+                    key: CartText.Cart.CartAlert.deliveryPriceChangedMessage))
             })
             .disposed(by: disposeBag)
     }
