@@ -29,6 +29,8 @@ final class MenuRepositoryImpl: MenuRepository {
 
     private var promotionsVerificationURL: String?
 
+    private var branchIsClosed = false
+
     init(menuService: MenuService,
          ordersService: OrdersService,
          storage: DefaultStorage)
@@ -47,6 +49,7 @@ final class MenuRepositoryImpl: MenuRepository {
         getLeadInfo()
         getPromotions()
         getCategories()
+        branchIsClosed = false
     }
 
     func openPromotion(by id: Int) {
@@ -137,13 +140,20 @@ extension MenuRepositoryImpl {
 
     private func process(error: Error, type: RequestType) {
         menuData.add(type: type)
+
+        if let error = error as? ErrorResponse {
+            if error.code == Constants.ErrorCode.branchIsClosed {
+                branchIsClosed = true
+            }
+        }
+
         guard let error = error as? ErrorPresentable else { return }
         outputs.didGetError.accept(error)
     }
 
     private func sendMenuData() {
         var dataToSend = (menuData.leadInfo.data, menuData.promotions.data, menuData.categories.data)
-        if let data = menuData.categories.data, data.isEmpty {
+        if branchIsClosed {
             dataToSend.1?.removeAll()
             outputs.didGetBranchClosed.accept(())
         }

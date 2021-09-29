@@ -34,10 +34,6 @@ class MenuServiceImpl: MenuService {
                 }
 
                 if let error = orderProductsResponse.error {
-                    guard error.code != Constants.ErrorCode.branchIsClosed else {
-                        return []
-                    }
-
                     throw error
                 }
 
