@@ -93,12 +93,10 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
 
         viewModel.outputs.didGetBranchError
             .subscribe(onNext: { [weak self] error in
-                self?.showError(
-                    NetworkError.error(error.message), completion: {
-                        self?.outputs.finishFlow.accept(())
-                        self?.outputs.branchClosed.accept(())
-                    }
-                )
+                self?.showError(error, completion: {
+                    self?.outputs.finishFlow.accept(())
+                    self?.outputs.branchClosed.accept(())
+                })
             })
             .disposed(by: disposeBag)
 

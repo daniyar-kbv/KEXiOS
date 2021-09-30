@@ -96,7 +96,7 @@ extension MenuDetailController {
         viewModel.outputs.didGetBranchClosed
             .subscribe(onNext: { [weak self] error in
                 self?.showError(
-                    NetworkError.error(error.message), completion: {
+                    error, completion: {
                         self?.outputs.close.accept(())
                     }
                 )

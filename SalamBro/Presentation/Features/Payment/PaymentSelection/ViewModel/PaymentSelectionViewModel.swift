@@ -129,7 +129,7 @@ extension PaymentSelectionViewModelImpl {
 
         let didGetError = PublishRelay<ErrorPresentable>()
         let didGetAuthError = PublishRelay<ErrorPresentable>()
-        let didGetBranchError = PublishRelay<ErrorResponse>()
+        let didGetBranchError = PublishRelay<ErrorPresentable>()
 
         let totalAmount = BehaviorRelay<String?>(value: nil)
         let didSelectPaymentMethod = PublishRelay<PaymentMethod?>()

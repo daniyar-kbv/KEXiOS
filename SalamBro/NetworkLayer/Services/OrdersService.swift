@@ -71,6 +71,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
         return provider.rx
             .request(.updateCart(leadUUID: leadUUID, dto: dto))
             .map { response in
+
                 guard let cartResponse = try? response.map(OrderUpdateCartResponse.self) else {
                     throw NetworkError.badMapping
                 }

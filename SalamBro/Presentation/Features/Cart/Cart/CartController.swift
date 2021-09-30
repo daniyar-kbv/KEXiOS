@@ -189,19 +189,16 @@ extension CartController {
 
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
-                if let error = error as? ErrorResponse {
-                    if error.code == Constants.ErrorCode.branchIsClosed {
-                        self?.showError(
-                            NetworkError.error(error.message), completion: {
-                                self?.outputs.toMenu.accept(())
-                                NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
-                                                                object: ())
-                            }
-                        )
+                self?.showError(error)
+            }).disposed(by: disposeBag)
+
+        viewModel.outputs.didGetBranchClosed
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(
+                    error, completion: {
+                        self?.outputs.toMenu.accept(())
                     }
-                } else {
-                    self?.showError(error)
-                }
+                )
             }).disposed(by: disposeBag)
 
         viewModel.outputs.toAuth

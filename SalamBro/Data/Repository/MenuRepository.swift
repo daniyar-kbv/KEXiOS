@@ -49,7 +49,6 @@ final class MenuRepositoryImpl: MenuRepository {
         getLeadInfo()
         getPromotions()
         getCategories()
-        branchIsClosed = false
     }
 
     func openPromotion(by id: Int) {
@@ -139,11 +138,11 @@ extension MenuRepositoryImpl {
     }
 
     private func process(error: Error, type: RequestType) {
-        menuData.add(type: type)
-
         if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
             branchIsClosed = true
         }
+
+        menuData.add(type: type)
 
         guard let error = error as? ErrorPresentable else { return }
         outputs.didGetError.accept(error)
@@ -154,6 +153,7 @@ extension MenuRepositoryImpl {
         if branchIsClosed {
             dataToSend.1?.removeAll()
             outputs.didGetBranchClosed.accept(())
+            branchIsClosed = false
         }
         outputs.didGetData.accept(dataToSend)
         outputs.didEndRequest.accept(())

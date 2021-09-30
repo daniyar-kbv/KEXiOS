@@ -102,7 +102,11 @@ final class ProfileServiceMoyaImpl: ProfileService {
                     throw error
                 }
 
-                return response.data?.uuid ?? ""
+                guard let uuid = response.data?.uuid else {
+                    throw NetworkError.noData
+                }
+
+                return uuid
             }
     }
 

@@ -279,8 +279,8 @@ extension PaymentRepositoryImpl {
         sendHidePaymentProcessNotification { [weak self] in
             self?.defaultStorage.persist(isPaymentProcess: false)
 
-            if let error = error as? ErrorResponse {
-                switch error.code {
+            if let errorResponse = error as? ErrorResponse {
+                switch errorResponse.code {
                 case Constants.ErrorCode.orderAlreadyPaid:
                     self?.getNewLeadAuthorized()
                 case Constants.ErrorCode.notFound:
@@ -448,7 +448,7 @@ extension PaymentRepositoryImpl {
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
         let didGetAuthError = PublishRelay<ErrorPresentable>()
-        let didGetBranchError = PublishRelay<ErrorResponse>()
+        let didGetBranchError = PublishRelay<ErrorPresentable>()
 
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()

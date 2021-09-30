@@ -74,8 +74,7 @@ extension CartRepositoryImpl {
             .subscribe { [weak self] leadInfo in
                 self?.process(cart: leadInfo.cart)
             } onError: { [weak self] error in
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didGetError.accept(error)
+                self?.process(error: error)
             }
             .disposed(by: disposeBag)
     }
@@ -258,16 +257,14 @@ extension CartRepositoryImpl {
         cart = cartStorage.cart
         getItems()
 
-        if let errorReponse = (error as? ErrorResponse),
-           errorReponse.code == Constants.ErrorCode.branchIsClosed
-        {
-            outputs.didGetBranchClosed.accept(errorReponse)
+        guard let error = error as? ErrorPresentable else { return }
+        if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
+            outputs.didGetBranchClosed.accept(error)
             NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
             cleanUp()
             return
         }
 
-        guard let error = error as? ErrorPresentable else { return }
         outputs.didGetError.accept(error)
     }
 }
@@ -279,7 +276,7 @@ extension CartRepositoryImpl {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
-        let didGetBranchClosed = PublishRelay<ErrorResponse>()
+        let didGetBranchClosed = PublishRelay<ErrorPresentable>()
         let didAdd = PublishRelay<Void>()
 
         let promocode = PublishRelay<Promocode>()

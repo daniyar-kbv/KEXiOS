@@ -83,7 +83,7 @@ final class VerificationController: UIViewController, LoaderDisplayable {
         viewModel.outputs.didFailBranch
             .subscribe(onNext: { [weak self] error in
                 self?.showError(
-                    NetworkError.error(error.message), completion: {
+                    error, completion: {
                         self?.toMenu?()
                     }
                 )

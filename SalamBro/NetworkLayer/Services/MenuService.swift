@@ -28,7 +28,6 @@ class MenuServiceImpl: MenuService {
         return provider.rx
             .request(.products(leadUUID: leadUUID))
             .map { response in
-
                 guard let orderProductsResponse = try? response.map(OrderProductResponse.self) else {
                     throw NetworkError.badMapping
                 }
