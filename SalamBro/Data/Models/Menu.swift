@@ -113,6 +113,8 @@ extension MenuPositionDetail {
     func toCartItem(count: Int, comment: String?, description: String?, type: CartPosition.PositionType)
         -> CartItem
     {
+        print("here")
+        print(modifierGroups)
         return .init(
             count: count,
             comment: comment,
@@ -129,7 +131,6 @@ extension MenuPositionDetail {
                 .filter { !$0.modifiers.filter { $0.itemCount != 0 }.isEmpty }
                 .flatMap { modifierGroup in
                     modifierGroup.modifiers
-                        .filter { $0.itemCount != 0 }
                         .map { modifier in
                             .init(
                                 name: modifier.name,
@@ -141,7 +142,7 @@ extension MenuPositionDetail {
                                     category: nil,
                                     isAvailable: true
                                 ),
-                                count: modifierGroup.totalCount,
+                                count: modifier.itemCount,
                                 modifierGroupUUID: modifierGroup.uuid
                             )
                         }
