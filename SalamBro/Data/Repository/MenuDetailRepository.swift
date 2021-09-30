@@ -51,8 +51,10 @@ final class MenuDetailRepositoryImpl: MenuDetailRepository {
         outputs.didEndRequest.accept(())
 
         if let error = error as? ErrorPresentable {
-            if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
-                outputs.didGetBranchClosed.accept(error)
+            if let errorReponse = (error as? ErrorResponse),
+               errorReponse.code == Constants.ErrorCode.branchIsClosed
+            {
+                outputs.didGetBranchClosed.accept(errorReponse)
                 NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
                 return
             }
@@ -66,7 +68,7 @@ extension MenuDetailRepositoryImpl {
         let didGetProductDetail = PublishRelay<MenuPositionDetail>()
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
-        let didGetBranchClosed = PublishRelay<Error>()
+        let didGetBranchClosed = PublishRelay<ErrorResponse>()
         let didEndRequest = PublishRelay<Void>()
         let updateSelectedModifiers = PublishRelay<[ModifierGroup]>()
     }

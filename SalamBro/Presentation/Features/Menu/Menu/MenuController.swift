@@ -135,10 +135,8 @@ final class MenuController: UIViewController, LoaderDisplayable {
 
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
-                if let error = error as? ErrorResponse {
-                    if error.code != Constants.ErrorCode.branchIsClosed {
-                        self?.showError(error)
-                    }
+                if (error as? ErrorResponse)?.code != Constants.ErrorCode.branchIsClosed {
+                    self?.showError(error)
                 }
             }).disposed(by: disposeBag)
 

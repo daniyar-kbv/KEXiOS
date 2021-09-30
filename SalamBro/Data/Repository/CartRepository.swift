@@ -258,8 +258,10 @@ extension CartRepositoryImpl {
         cart = cartStorage.cart
         getItems()
 
-        if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
-            outputs.didGetBranchClosed.accept(error)
+        if let errorReponse = (error as? ErrorResponse),
+           errorReponse.code == Constants.ErrorCode.branchIsClosed
+        {
+            outputs.didGetBranchClosed.accept(errorReponse)
             NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
             cleanUp()
             return
@@ -277,7 +279,7 @@ extension CartRepositoryImpl {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
-        let didGetBranchClosed = PublishRelay<Error>()
+        let didGetBranchClosed = PublishRelay<ErrorResponse>()
         let didAdd = PublishRelay<Void>()
 
         let promocode = PublishRelay<Promocode>()

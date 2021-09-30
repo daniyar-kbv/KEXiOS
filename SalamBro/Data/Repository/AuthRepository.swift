@@ -107,9 +107,11 @@ final class AuthRepositoryImpl: AuthRepository {
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 if let error = error as? ErrorPresentable {
-                    if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
+                    if let errorReponse = (error as? ErrorResponse),
+                       errorReponse.code == Constants.ErrorCode.branchIsClosed
+                    {
                         self?.postUserInfoDependencies()
-                        self?.outputs.didFailBranch.accept(error)
+                        self?.outputs.didFailBranch.accept(errorReponse)
                         return
                     }
                     self?.tokenStorage.cleanUp()
@@ -153,9 +155,11 @@ final class AuthRepositoryImpl: AuthRepository {
             } onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
                 if let error = error as? ErrorPresentable {
-                    if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
+                    if let errorReponse = (error as? ErrorResponse),
+                       errorReponse.code == Constants.ErrorCode.branchIsClosed
+                    {
                         self?.postUserInfoDependencies()
-                        self?.outputs.didFailBranch.accept(error)
+                        self?.outputs.didFailBranch.accept(errorReponse)
                         return
                     }
                     self?.tokenStorage.cleanUp()
@@ -229,7 +233,7 @@ extension AuthRepositoryImpl {
         let didFailAuth = PublishRelay<ErrorPresentable>()
         let didFailOTP = PublishRelay<ErrorPresentable>()
         let didFailAuthName = PublishRelay<ErrorPresentable>()
-        let didFailBranch = PublishRelay<ErrorPresentable>()
+        let didFailBranch = PublishRelay<ErrorResponse>()
 
         let didFinish = PublishRelay<Bool>()
 

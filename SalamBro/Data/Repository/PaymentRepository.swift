@@ -448,7 +448,7 @@ extension PaymentRepositoryImpl {
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
         let didGetAuthError = PublishRelay<ErrorPresentable>()
-        let didGetBranchError = PublishRelay<ErrorPresentable>()
+        let didGetBranchError = PublishRelay<ErrorResponse>()
 
         let show3DS = PublishRelay<WKWebView>()
         let hide3DS = PublishRelay<Void>()

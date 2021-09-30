@@ -79,6 +79,6 @@ extension VerificationViewModel {
         let didFail = PublishRelay<ErrorPresentable>()
         let didFinish = PublishRelay<Bool>()
         let didResendOTP = PublishRelay<Void>()
-        let didFailBranch = PublishRelay<ErrorPresentable>()
+        let didFailBranch = PublishRelay<ErrorResponse>()
     }
 }

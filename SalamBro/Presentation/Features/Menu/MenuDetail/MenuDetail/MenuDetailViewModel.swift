@@ -185,6 +185,6 @@ extension MenuDetailViewModelImpl {
         let didProceed = PublishRelay<Void>()
         let isComplete = PublishRelay<Bool>()
 
-        let didGetBranchClosed = PublishRelay<Error>()
+        let didGetBranchClosed = PublishRelay<ErrorResponse>()
     }
 }
