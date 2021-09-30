@@ -25,7 +25,7 @@ protocol AddressRepository: AnyObject {
     func getCurrentUserAddress() -> UserAddress?
     func setInitial(userAddress: UserAddress)
     func create(userAddress: UserAddress)
-    func updateUserAddress(with id: Int, brandId: Int)
+    func updateUserAddress(with id: Int, brandId: Int?)
     func deleteUserAddress(with id: Int)
 
     func getNearestAddress(geocode: String, language: String)
@@ -194,7 +194,7 @@ extension AddressRepositoryImpl {
     func create(userAddress: UserAddress) {
         guard let dto = userAddress.toDTO() else { return }
         outputs.didStartRequest.accept(())
-        authorizedApplyService.authorizedApplyWithAddress(dto: dto)
+        authorizedApplyService.authorizedApply(dto: dto)
             .flatMap { [unowned self] leadUUID -> Single<[UserAddress]> in
                 self.process(leadUUID: leadUUID)
                 return profileService.getAddresses()
@@ -213,13 +213,10 @@ extension AddressRepositoryImpl {
             .disposed(by: disposeBag)
     }
 
-    func updateUserAddress(with id: Int, brandId: Int) {
-        let dto = UpdateAddressDTO(brandId: brandId)
+    func updateUserAddress(with id: Int, brandId: Int?) {
+        let dto = UpdateAddressDTO(id: id, brandId: brandId)
         outputs.didStartRequest.accept(())
-        profileService.updateAddress(id: id, dto: dto)
-            .flatMap { [unowned self] _ -> Single<String> in
-                authorizedApplyService.authorizedApplyOrder()
-            }
+        profileService.updateAddress(dto: dto)
             .flatMap { [unowned self] leadUUID -> Single<[UserAddress]> in
                 self.process(leadUUID: leadUUID)
                 return profileService.getAddresses()

@@ -93,6 +93,15 @@ extension MenuDetailController {
                 self?.showError(error)
             }).disposed(by: disposeBag)
 
+        viewModel.outputs.didGetBranchClosed
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(
+                    error, completion: {
+                        self?.outputs.close.accept(())
+                    }
+                )
+            }).disposed(by: disposeBag)
+
         viewModel.outputs.itemImage
             .subscribe(onNext: { [weak self] url in
                 guard let url = url else { return }

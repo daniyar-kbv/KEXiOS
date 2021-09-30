@@ -20,6 +20,9 @@ final class OrderHistoryCellContentView: UIView {
         let view = UIImageView()
         view.image =
             SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+        view.contentMode = .scaleAspectFill
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = true
         return view
     }()
 
@@ -275,10 +278,12 @@ final class OrderHistoryCellContentView: UIView {
 
         items.forEach { item in
             var title = "\(item.count)x \(item.position.name)"
+
             if !item.modifierGroups.isEmpty {
                 let modifiersText = item.modifierGroups.map { $0.modifiers }.flatMap { $0 }.map { $0.position.name }.joined(separator: ", ")
                 title += " (\(modifiersText))"
             }
+
             if let price = item.position.price {
                 itemStack.addArrangedSubview(OrderHistoryItemView(
                     with: title,

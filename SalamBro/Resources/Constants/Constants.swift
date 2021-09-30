@@ -42,6 +42,7 @@ struct Constants {
         static let orderAlreadyPaid = "order_already_paid"
         static let notFound = "not_found"
         static let terminalNotFound = "terminal_not_found"
+        static let branchIsClosed = "branch_is_closed"
     }
 
     enum StatusCode {

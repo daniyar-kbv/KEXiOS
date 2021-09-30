@@ -18,14 +18,17 @@ struct MenuPosition: Codable {
     let name: String
     let price: Double?
     let description: String?
-    let image: String?
+    let imageSmall: String?
+    let imageBig: String?
     let status: Bool
     let categoryUUID: String
 
     enum CodingKeys: String, CodingKey {
-        case uuid, name, description, image, price
+        case uuid, name, description, price
         case categoryUUID = "category"
         case status = "is_available"
+        case imageSmall = "image_small"
+        case imageBig = "image_big"
     }
 }
 
@@ -34,15 +37,18 @@ struct AdditionalPosition: Codable {
     let name: String
     let price: Int
     let description: String?
-    let image: String?
+    let imageSmall: String?
+    let imageBig: String?
     let count: Int
     let isAvailable: Bool
     let categoryUUID: String?
 
     enum CodingKeys: String, CodingKey {
-        case uuid, name, description, image, price, count
+        case uuid, name, description, price, count
         case isAvailable = "is_available"
         case categoryUUID = "category"
+        case imageSmall = "image_small"
+        case imageBig = "image_big"
     }
 }
 
@@ -152,7 +158,7 @@ extension AdditionalPosition {
             position: .init(
                 uuid: uuid,
                 name: name,
-                image: image,
+                image: imageSmall,
                 price: Double(price),
                 positionType: type.rawValue,
                 isAvailable: true,

@@ -71,16 +71,17 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
         return provider.rx
             .request(.createOrder(dto: dto))
             .map { response in
+
                 guard let response = try? response.map(CreateOrderResponse.self) else {
                     throw NetworkError.badMapping
                 }
 
                 if let error = response.error {
-                    guard error.code != Constants.ErrorCode.orderAlreadyExists else {
+                    if error.code == Constants.ErrorCode.orderAlreadyExists {
                         return ()
+                    } else {
+                        throw error
                     }
-
-                    throw error
                 }
 
                 guard response.data?.leadUUID != nil else {

@@ -17,6 +17,9 @@ struct OrderApplyDTO: Encodable {
     }
 
     struct Address: Encodable {
+        var city: Int
+        var longitude: Double
+        var latitude: Double
         var district: String?
         var street: String?
         var building: String?
@@ -24,8 +27,5 @@ struct OrderApplyDTO: Encodable {
         var flat: String?
         var comment: String?
         var country: Int
-        var city: Int
-        var longitude: Double
-        var latitude: Double
     }
 }

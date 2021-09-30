@@ -24,7 +24,6 @@ protocol MenuViewModelProtocol {
     func didSelectRow(at indexPath: IndexPath)
     func finishedScrolling()
     func willDisplayRow(at indexPath: IndexPath)
-    func configureAnimation()
 }
 
 final class MenuViewModel: MenuViewModelProtocol {
@@ -68,6 +67,12 @@ final class MenuViewModel: MenuViewModelProtocol {
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
 
+        menuRepository.outputs.didGetBranchClosed
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.showAnimation.accept(.closed)
+            })
+            .disposed(by: disposeBag)
+
         menuRepository.outputs.didGetData
             .subscribe(onNext: { [weak self] menuData in
                 self?.process(menuData: menuData)
@@ -99,7 +104,6 @@ final class MenuViewModel: MenuViewModelProtocol {
         process(promotions: menuData.promotions, tableSections: &tableSections)
         process(categories: menuData.categories, tableSections: &tableSections)
         self.tableSections = tableSections
-        configureAnimation()
         outputs.updateTableView.accept(())
     }
 
@@ -142,8 +146,6 @@ final class MenuViewModel: MenuViewModelProtocol {
                       .flatMap { $0 })
         )
     }
-
-    func configureAnimation() {}
 }
 
 extension MenuViewModel {
@@ -166,6 +168,7 @@ extension MenuViewModel {
     }
 
     func update() {
+        outputs.hideAnimation.accept(())
         menuRepository.getMenuItems()
     }
 

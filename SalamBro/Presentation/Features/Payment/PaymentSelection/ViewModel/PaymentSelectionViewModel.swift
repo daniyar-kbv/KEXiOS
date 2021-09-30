@@ -100,6 +100,10 @@ extension PaymentSelectionViewModelImpl {
             .bind(to: outputs.didGetAuthError)
             .disposed(by: disposeBag)
 
+        paymentRepository.outputs.didGetBranchError
+            .bind(to: outputs.didGetBranchError)
+            .disposed(by: disposeBag)
+
         paymentRepository.outputs.didMakePayment
             .bind(to: outputs.didMakePayment)
             .disposed(by: disposeBag)
@@ -125,6 +129,7 @@ extension PaymentSelectionViewModelImpl {
 
         let didGetError = PublishRelay<ErrorPresentable>()
         let didGetAuthError = PublishRelay<ErrorPresentable>()
+        let didGetBranchError = PublishRelay<ErrorPresentable>()
 
         let totalAmount = BehaviorRelay<String?>(value: nil)
         let didSelectPaymentMethod = PublishRelay<PaymentMethod?>()

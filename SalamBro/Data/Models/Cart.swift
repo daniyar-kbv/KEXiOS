@@ -9,6 +9,7 @@ import Foundation
 
 struct Cart: Codable {
     var totalPrice: Double
+    var deliveryType: String?
     var deliveryPrice: Double
     var positionsPrice: Double
     var positionsCount: Int?
@@ -18,12 +19,22 @@ struct Cart: Codable {
 
     enum CodingKeys: String, CodingKey {
         case totalPrice = "total_price"
+        case deliveryType = "delivery_type"
         case deliveryPrice = "delivery_price"
         case positionsPrice = "positions_price"
         case positionsCount = "positions_count"
         case items = "positions"
         case minPrice = "min_price"
         case hasUnavailableProducts = "has_unavailable_positions"
+    }
+
+    enum DeliveryType: String, Codable {
+        case day = "DAY_DELIVERY"
+        case night = "NIGHT_DELIVERY"
+    }
+
+    func getDeliveryType() -> DeliveryType? {
+        return DeliveryType(rawValue: deliveryType ?? "")
     }
 }
 

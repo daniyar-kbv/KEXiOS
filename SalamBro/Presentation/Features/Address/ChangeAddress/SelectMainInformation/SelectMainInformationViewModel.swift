@@ -202,11 +202,8 @@ extension SelectMainInformationViewModel {
             guard let userAddress = userAddress else { return }
             addressRepository.create(userAddress: userAddress)
         case .changeAddress, .changeBrand:
-            guard let id = userAddress?.id,
-                  let brandId = userAddress?.brand?.id
-            else { return }
-
-            addressRepository.updateUserAddress(with: id, brandId: brandId)
+            guard let id = userAddress?.id else { return }
+            addressRepository.updateUserAddress(with: id, brandId: userAddress?.brand?.id)
         }
     }
 

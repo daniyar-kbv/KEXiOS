@@ -57,6 +57,10 @@ final class VerificationViewModel {
                 self?.outputs.didFinish.accept(isFinished)
             })
             .disposed(by: disposeBag)
+
+        authRepository.outputs.didFailBranch
+            .bind(to: outputs.didFailBranch)
+            .disposed(by: disposeBag)
     }
 
     func verifyOTP(code: String) {
@@ -75,5 +79,6 @@ extension VerificationViewModel {
         let didFail = PublishRelay<ErrorPresentable>()
         let didFinish = PublishRelay<Bool>()
         let didResendOTP = PublishRelay<Void>()
+        let didFailBranch = PublishRelay<ErrorPresentable>()
     }
 }

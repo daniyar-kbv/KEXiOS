@@ -135,8 +135,10 @@ final class CartAdditionalProductCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        productImageView.image =
-            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+        if productImageView.image == nil {
+            productImageView.image =
+                SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+        }
     }
 }
 

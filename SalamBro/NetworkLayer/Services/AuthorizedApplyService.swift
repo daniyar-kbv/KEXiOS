@@ -11,8 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol AuthorizedApplyService: AnyObject {
-    func authorizedApplyOrder() -> Single<String>
-    func authorizedApplyWithAddress(dto: OrderApplyDTO) -> Single<String>
+    func authorizedApply(dto: OrderApplyDTO?) -> Single<String>
 }
 
 final class AuthorizedApplyServiceImpl: AuthorizedApplyService {
@@ -22,30 +21,9 @@ final class AuthorizedApplyServiceImpl: AuthorizedApplyService {
         self.provider = provider
     }
 
-    func authorizedApplyOrder() -> Single<String> {
+    func authorizedApply(dto: OrderApplyDTO?) -> Single<String> {
         return provider.rx
-            .request(.authorizedApply)
-            .map { response in
-
-                guard let applyResponse = try? response.map(OrderApplyResponse.self) else {
-                    throw NetworkError.badMapping
-                }
-
-                if let error = applyResponse.error {
-                    throw error
-                }
-
-                guard let leadUUID = applyResponse.data?.uuid else {
-                    throw NetworkError.noData
-                }
-
-                return leadUUID
-            }
-    }
-
-    func authorizedApplyWithAddress(dto: OrderApplyDTO) -> Single<String> {
-        return provider.rx
-            .request(.authorizedApplyWithAddress(dto: dto))
+            .request(.authorizedApply(dto: dto))
             .map { response in
 
                 guard let applyResponse = try? response.map(OrderApplyResponse.self) else {

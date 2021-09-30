@@ -55,6 +55,10 @@ final class OrdersServiceMoyaImpl: OrdersService {
                     throw NetworkError.badMapping
                 }
 
+                if let error = orderProductsResponse.error {
+                    throw error
+                }
+
                 guard let data = orderProductsResponse.data else {
                     throw NetworkError.noData
                 }
@@ -67,6 +71,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
         return provider.rx
             .request(.updateCart(leadUUID: leadUUID, dto: dto))
             .map { response in
+
                 guard let cartResponse = try? response.map(OrderUpdateCartResponse.self) else {
                     throw NetworkError.badMapping
                 }
