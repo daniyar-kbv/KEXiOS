@@ -50,9 +50,9 @@ extension Cart {
                 positionUUID: item.position.uuid,
                 count: item.count,
                 comment: item.comment,
-                modifierGroups: item.modifierGroups.map { modifierGroup in
+                modifiers: item.modifiers.map { modifierGroup in
                     .init(
-                        uuid: modifierGroup.modifierGroup,
+                        modifierGroupUUID: modifierGroup.modifierGroupUUID,
                         positionUUID: modifierGroup.position.uuid,
                         count: modifierGroup.count
                     )
@@ -67,18 +67,17 @@ class CartItem: Codable {
     var count: Int
     var comment: String?
     var position: CartPosition
-    var modifierGroups: [CartModifierGroup]
+    var modifiers: [CartModifier]
 
     enum CodingKeys: String, CodingKey {
-        case count, comment, position
-        case modifierGroups = "modifiers"
+        case count, comment, position, modifiers
     }
 
-    init(count: Int, comment: String?, position: CartPosition, modifierGroups: [CartModifierGroup]) {
+    init(count: Int, comment: String?, position: CartPosition, modifierGroups: [CartModifier]) {
         self.count = count
         self.comment = comment
         self.position = position
-        self.modifierGroups = modifierGroups
+        modifiers = modifierGroups
     }
 }
 
@@ -86,7 +85,7 @@ extension CartItem: Equatable {
     static func == (lhs: CartItem, rhs: CartItem) -> Bool {
         return lhs.comment == rhs.comment &&
             lhs.position == rhs.position &&
-            lhs.modifierGroups == rhs.modifierGroups
+            lhs.modifiers == rhs.modifiers
     }
 }
 
@@ -129,15 +128,15 @@ struct CartPosition: Codable, Equatable {
     }
 }
 
-struct CartModifierGroup: Codable, Equatable {
+struct CartModifier: Codable, Equatable {
     let name: String
     let position: CartPosition
     let count: Int
-    let modifierGroup: String
+    let modifierGroupUUID: String
 
     enum CodingKeys: String, CodingKey {
         case name, position, count
-        case modifierGroup = "modifier_group"
+        case modifierGroupUUID = "modifier_group"
     }
 
     static func == (lhs: Self, rhs: Self) -> Bool {

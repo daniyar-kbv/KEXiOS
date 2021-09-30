@@ -279,8 +279,8 @@ final class OrderHistoryCellContentView: UIView {
         items.forEach { item in
             var title = "\(item.count)x \(item.position.name)"
 
-            if !item.modifierGroups.isEmpty {
-                let modifiersText = item.modifierGroups
+            if !item.modifiers.isEmpty {
+                let modifiersText = item.modifiers
                     .map { $0.position.name }.joined(separator: ", ")
                 title += " (\(modifiersText))"
             }

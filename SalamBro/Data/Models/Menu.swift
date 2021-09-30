@@ -128,21 +128,23 @@ extension MenuPositionDetail {
             modifierGroups: modifierGroups
                 .filter { !$0.modifiers.filter { $0.itemCount != 0 }.isEmpty }
                 .flatMap { modifierGroup in
-                    modifierGroup.modifiers.map { modifier in
-                        .init(
-                            name: modifier.name,
-                            position: .init(
-                                uuid: modifier.uuid,
+                    modifierGroup.modifiers
+                        .filter { $0.itemCount != 0 }
+                        .map { modifier in
+                            .init(
                                 name: modifier.name,
-                                price: 0,
-                                positionType: CartPosition.PositionType.modifier.rawValue,
-                                category: nil,
-                                isAvailable: true
-                            ),
-                            count: modifierGroup.totalCount,
-                            modifierGroup: modifierGroup.uuid
-                        )
-                    }
+                                position: .init(
+                                    uuid: modifier.uuid,
+                                    name: modifier.name,
+                                    price: 0,
+                                    positionType: CartPosition.PositionType.modifier.rawValue,
+                                    category: nil,
+                                    isAvailable: true
+                                ),
+                                count: modifierGroup.totalCount,
+                                modifierGroupUUID: modifierGroup.uuid
+                            )
+                        }
                 }
         )
     }
