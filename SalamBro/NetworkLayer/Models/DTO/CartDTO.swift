@@ -23,26 +23,18 @@ struct CartDTO: Encodable {
         enum CodingKeys: String, CodingKey {
             case count, comment
             case positionUUID = "position"
-            case modifierGroups = "modifier_groups"
+            case modifierGroups = "modifiers"
         }
 
         struct ModifierGroup: Encodable {
-            let uuid: String
-            let modifiers: [Modifier]
+            let uuid: String?
+            let positionUUID: String
+            let count: Int
 
             enum CodingKeys: String, CodingKey {
-                case modifiers
                 case uuid = "modifier_group"
-            }
-
-            struct Modifier: Encodable {
-                let positionUUID: String
-                let count: Int
-
-                enum CodingKeys: String, CodingKey {
-                    case count
-                    case positionUUID = "position"
-                }
+                case count
+                case positionUUID = "position"
             }
         }
     }

@@ -52,13 +52,9 @@ extension Cart {
                 comment: item.comment,
                 modifierGroups: item.modifierGroups.map { modifierGroup in
                     .init(
-                        uuid: modifierGroup.uuid,
-                        modifiers: modifierGroup.modifiers.map { modifier in
-                            .init(
-                                positionUUID: modifier.position.uuid,
-                                count: modifier.count
-                            )
-                        }
+                        uuid: modifierGroup.modifierGroup,
+                        positionUUID: modifierGroup.position.uuid,
+                        count: modifierGroup.count
                     )
                 }
             )
@@ -75,7 +71,7 @@ class CartItem: Codable {
 
     enum CodingKeys: String, CodingKey {
         case count, comment, position
-        case modifierGroups = "modifier_groups"
+        case modifierGroups = "modifiers"
     }
 
     init(count: Int, comment: String?, position: CartPosition, modifierGroups: [CartModifierGroup]) {
@@ -106,11 +102,12 @@ struct CartPosition: Codable, Equatable {
     var image: String?
     var price: Double?
     var positionType: String
+    var category: String?
     var isAvailable: Bool
     var description: String?
 
     enum CodingKeys: String, CodingKey {
-        case uuid, name, image, price, description
+        case uuid, name, image, category, price, description
         case positionType = "position_type"
         case isAvailable = "is_available"
     }
@@ -133,26 +130,14 @@ struct CartPosition: Codable, Equatable {
 }
 
 struct CartModifierGroup: Codable, Equatable {
-    let uuid: String
-    var modifiers: [CartModifier]
+    let name: String
+    let position: CartPosition
+    let count: Int
+    let modifierGroup: String
 
     enum CodingKeys: String, CodingKey {
-        case modifiers
-        case uuid = "modifier_group"
-    }
-
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.uuid == rhs.uuid &&
-            lhs.modifiers == rhs.modifiers
-    }
-}
-
-struct CartModifier: Codable, Equatable {
-    var position: CartPosition
-    var count: Int
-
-    enum CodingKeys: String, CodingKey {
-        case position, count
+        case name, position, count
+        case modifierGroup = "modifier_group"
     }
 
     static func == (lhs: Self, rhs: Self) -> Bool {
