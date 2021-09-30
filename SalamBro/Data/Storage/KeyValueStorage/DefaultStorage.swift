@@ -13,6 +13,7 @@ enum DefaultStorageKey: String, StorageKey, Equatable {
     case appLocale
     case notFirstLaunch
     case isPaymentProcess
+    case deliveryPrice
 
     var value: String { return rawValue }
 }
@@ -23,12 +24,14 @@ protocol DefaultStorage {
     var appLocale: Language { get }
     var notFirstLaunch: Bool { get }
     var isPaymentProcess: Bool { get }
+    var deliveryPrice: Double { get }
 
     func persist(leadUUID: String)
     func persist(fcmToken: String)
     func persist(appLocale: Language)
     func persist(notFirstLaunch: Bool)
     func persist(isPaymentProcess: Bool)
+    func persist(deliveryPrice: Double)
 
     func cleanUp(key: DefaultStorageKey)
 }
@@ -62,6 +65,10 @@ final class DefaultStorageImpl: DefaultStorage {
         return storageProvider.bool(forKey: DefaultStorageKey.isPaymentProcess.value)
     }
 
+    var deliveryPrice: Double {
+        return storageProvider.double(forKey: DefaultStorageKey.deliveryPrice.value)
+    }
+
     func persist(leadUUID: String) {
         storageProvider.set(leadUUID, forKey: DefaultStorageKey.leadUUID.value)
     }
@@ -80,6 +87,10 @@ final class DefaultStorageImpl: DefaultStorage {
 
     func persist(isPaymentProcess: Bool) {
         storageProvider.set(isPaymentProcess, forKey: DefaultStorageKey.isPaymentProcess.value)
+    }
+
+    func persist(deliveryPrice: Double) {
+        storageProvider.set(deliveryPrice, forKey: DefaultStorageKey.deliveryPrice.value)
     }
 
     func cleanUp(key: DefaultStorageKey) {

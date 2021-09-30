@@ -73,6 +73,7 @@ class PromotionsViewModelImpl: PromotionsViewModel {
 
         if let token = authTokenStorage.token {
             request.addValue("JWT \(token)", forHTTPHeaderField: "Authorization")
+            request.addValue(defaultStorage.appLocale.code, forHTTPHeaderField: "language")
         }
 
         outputs.urlRequest.accept(request)

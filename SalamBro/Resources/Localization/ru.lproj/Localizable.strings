@@ -62,9 +62,10 @@
 "CartFooter.deliveryLabel" = "Доставка";
 
 // MARK: - UnavailabilityAlert
-"Cart.alertTitle" = "Внимание";
-"Cart.unavailabilityAlertMessage" = "Некоторые товары недоступны";
-"Cart.minPriceAlertMessage" = "Минимальная сумма заказа %@ ₸";
+"Cart.Alert.title" = "Внимание";
+"Cart.Alert.deliveryPriceChangedMessage" = "Изменилась цена доставки";
+"Cart.Alert.unavailabilityAlertMessage" = "Некоторые товары недоступны";
+"Cart.Alert.minPriceAlertMessage" = "Минимальная сумма заказа %@ ₸";
 
 // MARK: - CartProductCell
 "CartProductCell.deleteButton.title" = "Удалить";
@@ -268,7 +269,7 @@
 // MARK: - Animations
 
 "Animation.InfoText.orderHistory" = "Тут будут Ваши заказы, чтобы сделать заказ перейдите в меню";
-"Animation.InfoText.emptyBasket" = "Вы еще ничего не выбрали. Минимальная сумма заказа 1000₸";
+"Animation.InfoText.emptyBasket" = "Вы еще ничего не выбрали.";
 "Animation.InfoText.noInternet" = "Нет связи. Проверьте интернет соединение";
 "Animation.InfoText.upgrade" = "Мы добавили много новых функций и исправили некоторые баги, чтобы вам было удобнее пользоваться приложением";
 "Animation.InfoText.overload" = "В данный момент мы принимаем очень много заказов, пожалуйста попробуйте немного позднее";

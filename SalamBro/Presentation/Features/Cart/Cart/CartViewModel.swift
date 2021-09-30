@@ -200,6 +200,10 @@ extension CartViewModelImpl {
                 self?.process(promocode: promocode)
             })
             .disposed(by: disposeBag)
+
+        cartRepository.outputs.deliveryPriceChanged
+            .bind(to: outputs.deliveryPriceChanged)
+            .disposed(by: disposeBag)
     }
 
     private func process() {
@@ -339,7 +343,7 @@ extension CartViewModelImpl {
         let toPayment = PublishRelay<Void>()
 
         let didNotMatchMinPrice = PublishRelay<Double>()
-
+        let deliveryPriceChanged = PublishRelay<Void>()
         let didGetBranchClosed = PublishRelay<ErrorPresentable>()
     }
 }

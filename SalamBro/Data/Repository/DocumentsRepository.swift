@@ -23,7 +23,7 @@ final class DocumentsRepositoryImpl: DocumentsRepository {
 
     private let disposeBag = DisposeBag()
     private var needsFetchDocuments = true
-    //  Tech debt: change slug to user agreements slug
+
     private let userAgreementSlug = "publichnaya-oferta"
 
     let outputs = Output()
