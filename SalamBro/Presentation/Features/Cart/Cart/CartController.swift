@@ -192,6 +192,15 @@ extension CartController {
                 self?.showError(error)
             }).disposed(by: disposeBag)
 
+        viewModel.outputs.didGetBranchClosed
+            .subscribe(onNext: { [weak self] error in
+                self?.showError(
+                    error, completion: {
+                        self?.outputs.toMenu.accept(())
+                    }
+                )
+            }).disposed(by: disposeBag)
+
         viewModel.outputs.toAuth
             .bind(to: outputs.toAuth)
             .disposed(by: disposeBag)

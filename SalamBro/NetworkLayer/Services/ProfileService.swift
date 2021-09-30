@@ -14,7 +14,7 @@ protocol ProfileService: AnyObject {
     func getUserInfo() -> Single<UserInfoResponse>
     func updateUserInfo(with dto: UserInfoDTO) -> Single<UserInfoResponse>
     func getAddresses() -> Single<[UserAddress]>
-    func updateAddress(id: Int, dto: UpdateAddressDTO) -> Single<Void>
+    func updateAddress(dto: UpdateAddressDTO) -> Single<String>
     func deleteAddress(id: Int) -> Single<Void>
 }
 
@@ -89,11 +89,12 @@ final class ProfileServiceMoyaImpl: ProfileService {
             }
     }
 
-    func updateAddress(id: Int, dto: UpdateAddressDTO) -> Single<Void> {
+    func updateAddress(dto: UpdateAddressDTO) -> Single<String> {
         provider.rx
-            .request(.updateAddress(id: id, dto: dto))
+            .request(.updateAddress(dto: dto))
             .map { response in
-                guard let response = try? response.map(UpdateUserAddressResponse.self) else {
+
+                guard let response = try? response.map(OrderApplyResponse.self) else {
                     throw NetworkError.badMapping
                 }
 
@@ -101,7 +102,11 @@ final class ProfileServiceMoyaImpl: ProfileService {
                     throw error
                 }
 
-                return ()
+                guard let uuid = response.data?.uuid else {
+                    throw NetworkError.noData
+                }
+
+                return uuid
             }
     }
 
@@ -109,8 +114,8 @@ final class ProfileServiceMoyaImpl: ProfileService {
         provider.rx
             .request(.deleteAddress(id: id))
             .map { response in
-                guard response.response?.statusCode == 204 else {
-                    guard let response = try? response.map(UpdateUserAddressResponse.self) else {
+                guard response.response?.statusCode == Constants.StatusCode.noContent else {
+                    guard let response = try? response.map(OrderApplyResponse.self) else {
                         throw NetworkError.badMapping
                     }
 

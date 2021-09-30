@@ -85,8 +85,6 @@ final class MenuController: UIViewController, LoaderDisplayable {
 
         layoutUI()
         bindViewModel()
-
-        viewModel.update()
     }
 
     override public func viewWillAppear(_ animated: Bool) {
@@ -94,7 +92,7 @@ final class MenuController: UIViewController, LoaderDisplayable {
 
         navigationController?.setNavigationBarHidden(true, animated: true)
 
-        viewModel.configureAnimation()
+        viewModel.update()
     }
 
     private func bindViewModel() {
@@ -137,7 +135,9 @@ final class MenuController: UIViewController, LoaderDisplayable {
 
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
-                self?.showError(error)
+                if (error as? ErrorResponse)?.code != Constants.ErrorCode.branchIsClosed {
+                    self?.showError(error)
+                }
             }).disposed(by: disposeBag)
 
         viewModel.outputs.toPromotion

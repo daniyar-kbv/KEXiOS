@@ -20,8 +20,7 @@ final class ModifiersCell: UICollectionViewCell {
         view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
-        view.image =
-            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+        view.image = SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -103,8 +102,10 @@ final class ModifiersCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        itemImageView.image =
-            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+        if itemImageView.image == nil {
+            itemImageView.image =
+                SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+        }
     }
 
     func configure(modifier: Modifier, index: Int) {

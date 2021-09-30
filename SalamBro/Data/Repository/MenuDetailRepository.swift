@@ -35,9 +35,7 @@ final class MenuDetailRepositoryImpl: MenuDetailRepository {
 
                 self?.outputs.didGetProductDetail.accept(position)
             }, onError: { [weak self] error in
-                self?.outputs.didEndRequest.accept(())
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didFail.accept(error)
+                self?.process(error: error)
             }).disposed(by: disposeBag)
     }
 
@@ -48,6 +46,19 @@ final class MenuDetailRepositoryImpl: MenuDetailRepository {
         modifierGroups[index].set(totalCount: totalCount)
         outputs.updateSelectedModifiers.accept(modifierGroups)
     }
+
+    private func process(error: Error) {
+        outputs.didEndRequest.accept(())
+
+        if let error = error as? ErrorPresentable {
+            if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
+                outputs.didGetBranchClosed.accept(error)
+                NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
+                return
+            }
+            outputs.didFail.accept(error)
+        }
+    }
 }
 
 extension MenuDetailRepositoryImpl {
@@ -55,6 +66,7 @@ extension MenuDetailRepositoryImpl {
         let didGetProductDetail = PublishRelay<MenuPositionDetail>()
         let didFail = PublishRelay<ErrorPresentable>()
         let didStartRequest = PublishRelay<Void>()
+        let didGetBranchClosed = PublishRelay<ErrorPresentable>()
         let didEndRequest = PublishRelay<Void>()
         let updateSelectedModifiers = PublishRelay<[ModifierGroup]>()
     }

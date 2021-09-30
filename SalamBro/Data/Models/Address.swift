@@ -70,16 +70,16 @@ extension UserAddress {
               let latitude = address.latitude?.rounded(to: 8),
               let brandId = brand?.id
         else { return nil }
-        return .init(address: .init(district: address.district,
+        return .init(address: .init(city: cityId,
+                                    longitude: longitude,
+                                    latitude: latitude,
+                                    district: address.district,
                                     street: address.street,
                                     building: address.building,
                                     corpus: address.corpus,
                                     flat: address.flat,
                                     comment: address.comment,
-                                    country: countryId,
-                                    city: cityId,
-                                    longitude: longitude,
-                                    latitude: latitude),
+                                    country: countryId),
                      localBrand: brandId)
     }
 }

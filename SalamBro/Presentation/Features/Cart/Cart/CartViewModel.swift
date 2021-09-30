@@ -191,6 +191,10 @@ extension CartViewModelImpl {
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
 
+        cartRepository.outputs.didGetBranchClosed
+            .bind(to: outputs.didGetBranchClosed)
+            .disposed(by: disposeBag)
+
         cartRepository.outputs.promocode
             .subscribe(onNext: { [weak self] promocode in
                 self?.process(promocode: promocode)
@@ -340,5 +344,6 @@ extension CartViewModelImpl {
 
         let didNotMatchMinPrice = PublishRelay<Double>()
         let deliveryPriceChanged = PublishRelay<Void>()
+        let didGetBranchClosed = PublishRelay<ErrorPresentable>()
     }
 }

@@ -71,7 +71,7 @@ final class BrandCell: UICollectionViewCell, Reusable {
 
     func configure(brand: Brand) {
         guard let status = brand.isAvailable else { return }
-        configure(imageURLStr: brand.image)
+        configure(imageURLStr: brand.imageSmall)
         configure(isAvailable: status)
     }
 

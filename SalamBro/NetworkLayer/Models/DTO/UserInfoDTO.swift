@@ -19,9 +19,11 @@ struct UserInfoDTO: Encodable {
 }
 
 struct UpdateAddressDTO: Codable {
-    let brandId: Int
+    let id: Int
+    let brandId: Int?
 
     enum CodingKeys: String, CodingKey {
+        case id = "user_address"
         case brandId = "local_brand"
     }
 }

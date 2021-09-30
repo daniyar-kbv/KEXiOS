@@ -74,8 +74,7 @@ extension CartRepositoryImpl {
             .subscribe { [weak self] leadInfo in
                 self?.process(cart: leadInfo.cart)
             } onError: { [weak self] error in
-                guard let error = error as? ErrorPresentable else { return }
-                self?.outputs.didGetError.accept(error)
+                self?.process(error: error)
             }
             .disposed(by: disposeBag)
     }
@@ -241,6 +240,7 @@ extension CartRepositoryImpl {
         ordersService.updateCart(for: leadUUID, dto: dto)
             .subscribe(onSuccess: { [weak self] cart in
                 self?.process(cart: cart)
+                self?.outputs.didAdd.accept(())
                 self?.outputs.didEndRequest.accept(())
             }, onError: { [weak self] error in
                 self?.process(error: error)
@@ -264,7 +264,15 @@ extension CartRepositoryImpl {
     private func process(error: Error) {
         cart = cartStorage.cart
         getItems()
+
         guard let error = error as? ErrorPresentable else { return }
+        if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
+            outputs.didGetBranchClosed.accept(error)
+            NotificationCenter.default.post(name: Constants.InternalNotification.updateMenu.name, object: nil)
+            cleanUp()
+            return
+        }
+
         outputs.didGetError.accept(error)
     }
 }
@@ -276,6 +284,8 @@ extension CartRepositoryImpl {
         let didStartRequest = PublishRelay<Void>()
         let didEndRequest = PublishRelay<Void>()
         let didGetError = PublishRelay<ErrorPresentable>()
+        let didGetBranchClosed = PublishRelay<ErrorPresentable>()
+        let didAdd = PublishRelay<Void>()
 
         let promocode = PublishRelay<Promocode>()
 

@@ -58,8 +58,6 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
             description: position.description,
             type: .main
         ))
-
-        outputs.didProceed.accept(())
     }
 
     func set(comment: String) {
@@ -93,6 +91,10 @@ extension MenuDetailViewModelImpl {
             .bind(to: outputs.didGetError)
             .disposed(by: disposeBag)
 
+        menuDetailRepository.outputs.didGetBranchClosed
+            .bind(to: outputs.didGetBranchClosed)
+            .disposed(by: disposeBag)
+
         menuDetailRepository.outputs.updateSelectedModifiers.bind {
             [weak self] modifierGroups in
             self?.position?.modifierGroups = modifierGroups
@@ -101,6 +103,24 @@ extension MenuDetailViewModelImpl {
             self?.outputs.updateModifiers.accept(())
         }
         .disposed(by: disposeBag)
+
+        cartRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        cartRepository.outputs.didAdd
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.didEndRequest.accept(())
+                self?.outputs.didProceed.accept(())
+            }).disposed(by: disposeBag)
+
+        cartRepository.outputs.didGetBranchClosed
+            .bind(to: outputs.didGetBranchClosed)
+            .disposed(by: disposeBag)
+
+        cartRepository.outputs.didGetError
+            .bind(to: outputs.didGetError)
+            .disposed(by: disposeBag)
     }
 
     private func download() {
@@ -164,5 +184,7 @@ extension MenuDetailViewModelImpl {
 
         let didProceed = PublishRelay<Void>()
         let isComplete = PublishRelay<Bool>()
+
+        let didGetBranchClosed = PublishRelay<ErrorPresentable>()
     }
 }
