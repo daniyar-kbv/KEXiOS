@@ -48,7 +48,6 @@ extension CartProductViewModelImpl {
             itemImage = .init(value: URL(string: item.position.image ?? ""))
             itemTitle = .init(value: item.position.name)
             modifiersTitles = .init(value: item.modifierGroups
-                .flatMap { $0.modifiers }
                 .map { [String].init(repeating: $0.position.name, count: $0.count) }
                 .flatMap { $0 }
                 .joined(separator: ", "))
