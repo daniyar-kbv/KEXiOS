@@ -61,9 +61,10 @@
 "CartFooter.deliveryLabel" = "EN Доставка";
 
 // MARK: - UnavailabilityAlert
-"Cart.alertTitle" = "EN Внимание";
-"Cart.unavailabilityAlertMessage" = "EN Некоторые товары недоступны";
-"Cart.minPriceAlertMessage" = "EN Минимальная сумма заказа %@ ₸";
+"Cart.Alert.title" = "EN Внимание";
+"Cart.Alert.deliveryPriceChangedMessage" = "EN Изменилась цена доставки";
+"Cart.Alert.unavailabilityAlertMessage" = "EN Некоторые товары недоступны";
+"Cart.Alert.minPriceAlertMessage" = "EN Минимальная сумма заказа %@ ₸";
 
 // MARK: - CartProductCell
 "CartProductCell.deleteButton.title" = "EN Удалить";
@@ -267,7 +268,7 @@
 // MARK: - Animations
 
 "Animation.InfoText.orderHistory" = "EN Тут будут Ваши заказы, чтобы сделать заказ перейдите в меню";
-"Animation.InfoText.emptyBasket" = "EN Вы еще ничего не выбрали. Минимальная сумма заказа 1000₸";
+"Animation.InfoText.emptyBasket" = "EN Вы еще ничего не выбрали.";
 "Animation.InfoText.noInternet" = "EN Нет связи. Проверьте интернет соединение";
 "Animation.InfoText.upgrade" = "EN Мы добавили много новых функций и исправили некоторые баги, чтобы вам было удобнее пользоваться приложением";
 "Animation.InfoText.overload" = "EN В данный момент мы принимаем очень много заказов, пожалуйста попробуйте немного позднее";

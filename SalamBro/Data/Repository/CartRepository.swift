@@ -141,6 +141,7 @@ extension CartRepositoryImpl {
         cart.items = []
         cart.positionsCount = 0
         getItems()
+        defaultStorage.persist(deliveryPrice: 0)
     }
 
     func update() {
@@ -251,6 +252,13 @@ extension CartRepositoryImpl {
     private func process(cart: Cart) {
         self.cart = cart
         getItems()
+
+        if defaultStorage.deliveryPrice != 0,
+           cart.deliveryPrice != defaultStorage.deliveryPrice
+        {
+            outputs.deliveryPriceChanged.accept(())
+            defaultStorage.persist(deliveryPrice: cart.deliveryPrice)
+        }
     }
 
     private func process(error: Error) {
@@ -280,5 +288,7 @@ extension CartRepositoryImpl {
         let didAdd = PublishRelay<Void>()
 
         let promocode = PublishRelay<Promocode>()
+
+        let deliveryPriceChanged = PublishRelay<Void>()
     }
 }
