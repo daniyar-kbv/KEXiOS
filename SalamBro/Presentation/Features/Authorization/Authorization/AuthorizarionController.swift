@@ -175,7 +175,6 @@ extension AuthorizationController {
         aggreementLabel.snp.makeConstraints {
             $0.top.equalTo(numberView.snp.bottom).offset(72)
             $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(32)
         }
 
         view.addSubview(getButton)
