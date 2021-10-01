@@ -9,8 +9,8 @@ import UIKit
 
 protocol OrderHistoryPagesFactory: AnyObject {
     func makeOrderHistoryPage() -> OrderHistoryController
-    func makeRateOrderPage() -> RateController
-    func makeShareOrderPage() -> ShareOrderController // FIXME: Tect debt, rewrite this class
+    func makeRateOrderPage(for rateID: Int) -> RateController
+    func makeShareOrderPage(with url: String) -> ShareOrderController
 }
 
 final class OrderHistoryPagesFactoryImpl: DependencyFactory, OrderHistoryPagesFactory {
@@ -25,11 +25,15 @@ final class OrderHistoryPagesFactoryImpl: DependencyFactory, OrderHistoryPagesFa
             ordersRepository: repositoryComponents.makeOrdersHistoryRepository())))
     }
 
-    func makeRateOrderPage() -> RateController {
-        return scoped(.init(viewModel: RateViewModelImpl(repository: repositoryComponents.makeRateOrderRepository())))
+    func makeRateOrderPage(for rateID: Int) -> RateController {
+        return scoped(.init(viewModel: RateViewModelImpl(
+            repository: repositoryComponents.makeRateOrderRepository(),
+            rateID: rateID
+        ))
+        )
     }
 
-    func makeShareOrderPage() -> ShareOrderController {
-        return scoped(.init())
+    func makeShareOrderPage(with url: String) -> ShareOrderController {
+        return scoped(.init(viewModel: ShareOrderViewModelImpl(url: url)))
     }
 }

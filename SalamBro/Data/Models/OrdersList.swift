@@ -18,6 +18,7 @@ struct OrdersList: Decodable {
     let paymentType: String
     let statusReason: String?
     let leadID: String
+    let checkURL: String
 
     enum CodingKeys: String, CodingKey {
         case id, brand, address, cart, price, status
@@ -25,6 +26,7 @@ struct OrdersList: Decodable {
         case paymentType = "payment_type"
         case statusReason = "status_reason"
         case leadID = "lead_id"
+        case checkURL = "check_url"
     }
 }
 

@@ -10,7 +10,7 @@ import SnapKit
 import UIKit
 
 protocol OrderTestCellDelegate: AnyObject {
-    func share()
+    func share(with url: String)
     func rate(at orderNumber: Int)
 }
 
@@ -54,8 +54,8 @@ extension OrderTestCell {
 }
 
 extension OrderTestCell: OrderHistoryViewDelegate {
-    func shareToInstagramTapped() {
-        delegate?.share()
+    func shareToInstagramTapped(with url: String) {
+        delegate?.share(with: url)
     }
 
     func rateOrder(at orderNumber: Int) {

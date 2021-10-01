@@ -12,6 +12,8 @@ import UIKit
 import WebKit
 
 final class ShareOrderController: UIViewController {
+    private let viewModel: ShareOrderViewModel
+
     private let disposeBag = DisposeBag()
 
     private lazy var webView: WKWebView = {
@@ -33,7 +35,8 @@ final class ShareOrderController: UIViewController {
         return view
     }()
 
-    init() {
+    init(viewModel: ShareOrderViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: .none, bundle: .none)
     }
 
@@ -45,10 +48,20 @@ final class ShareOrderController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutUI()
+        bindOutputs()
     }
 }
 
 extension ShareOrderController {
+    private func bindOutputs() {
+        viewModel.checkURL
+            .bind(onNext: { [weak self] checkURL in
+                guard let url = URL(string: checkURL) else { return }
+                self?.webView.load(URLRequest(url: url))
+            })
+            .disposed(by: disposeBag)
+    }
+
     private func layoutUI() {
         view.backgroundColor = .white
         contentView.backgroundColor = .white
@@ -56,8 +69,6 @@ extension ShareOrderController {
 
         contentView.addSubview(webView)
         view.addSubview(contentView)
-
-        webView.loadHTMLString(htmlString, baseURL: nil)
 
         contentView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
