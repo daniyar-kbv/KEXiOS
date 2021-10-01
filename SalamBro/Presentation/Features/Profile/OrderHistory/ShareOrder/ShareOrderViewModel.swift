@@ -10,13 +10,13 @@ import RxCocoa
 import RxSwift
 
 protocol ShareOrderViewModel {
-    var checkURL: BehaviorRelay<String?> { get }
+    var checkURL: BehaviorRelay<String> { get }
 }
 
 final class ShareOrderViewModelImpl: ShareOrderViewModel {
-    var checkURL = BehaviorRelay<String?>(value: nil)
+    var checkURL: BehaviorRelay<String>
 
     init(url: String) {
-        checkURL = BehaviorRelay<String?>(value: url)
+        checkURL = .init(value: url)
     }
 }
