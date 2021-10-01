@@ -19,8 +19,8 @@ extension RateAPI: TargetType {
 
     var path: String {
         switch self {
-        case .getRates: return "orders/ratestars/"
-        case .saveUserRate: return "orders/rates/"
+        case .getRates: return "rates/stars/"
+        case .saveUserRate: return "rates/"
         }
     }
 
