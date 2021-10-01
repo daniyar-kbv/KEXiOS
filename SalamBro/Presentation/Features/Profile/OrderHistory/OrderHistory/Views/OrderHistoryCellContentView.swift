@@ -234,8 +234,8 @@ final class OrderHistoryCellContentView: UIView {
 //                rateOrderButton.isHidden = true
 //                repeatOrderButton.isHidden = false
 //            case .issued:
-        sendCheckButton.isHidden = false
-        repeatOrderButton.isHidden = false
+        sendCheckButton.isHidden = true
+        repeatOrderButton.isHidden = true
         rateOrderButton.isHidden = false
 //            default:
 //                return
