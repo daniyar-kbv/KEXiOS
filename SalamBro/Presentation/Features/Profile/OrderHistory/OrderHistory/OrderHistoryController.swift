@@ -15,7 +15,7 @@ final class OrderHistoryController: UIViewController, LoaderDisplayable {
     private let viewModel: OrderHistoryViewModel
 
     var onRateTapped: ((Int) -> Void)?
-    var onShareTapped: (() -> Void)?
+    var onShareTapped: ((String) -> Void)?
     var onTerminate: (() -> Void)?
     var toMenu: (() -> Void)?
     var finishFlow: (() -> Void)?
@@ -151,8 +151,8 @@ extension OrderHistoryController: Reloadable {
 }
 
 extension OrderHistoryController: OrderTestCellDelegate {
-    func share() {
-        onShareTapped?()
+    func share(with url: String) {
+        onShareTapped?(url)
     }
 
     func rate(at orderNumber: Int) {

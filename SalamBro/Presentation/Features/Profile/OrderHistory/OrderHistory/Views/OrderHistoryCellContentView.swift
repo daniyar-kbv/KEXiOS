@@ -9,7 +9,7 @@ import SnapKit
 import UIKit
 
 protocol OrderHistoryViewDelegate: AnyObject {
-    func shareToInstagramTapped()
+    func shareToInstagramTapped(with url: String)
     func rateOrder(at orderNumber: Int)
 }
 
@@ -145,6 +145,8 @@ final class OrderHistoryCellContentView: UIView {
 
     private var orderNumber: Int?
 
+    private var checkURL: String?
+
     init(delegate: OrderHistoryViewDelegate) {
         super.init(frame: .zero)
         self.delegate = delegate
@@ -269,6 +271,8 @@ final class OrderHistoryCellContentView: UIView {
 
         orderNumber = item.id
 
+        checkURL = item.checkURL
+
         layoutUI()
     }
 
@@ -330,6 +334,7 @@ final class OrderHistoryCellContentView: UIView {
     }
 
     @objc private func shareToInstagram() {
-        delegate?.shareToInstagramTapped()
+        guard let checkURL = checkURL else { return }
+        delegate?.shareToInstagramTapped(with: checkURL)
     }
 }

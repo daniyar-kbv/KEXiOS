@@ -47,10 +47,6 @@ final class RateController: UIViewController, LoaderDisplayable {
         super.viewDidLayoutSubviews()
         rateView.setCollectionViewHeight()
     }
-
-    func setOrderNumber(with orderNumber: Int) {
-        viewModel.setOrderNumber(with: orderNumber)
-    }
 }
 
 extension RateController {
