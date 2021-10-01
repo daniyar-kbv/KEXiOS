@@ -25,10 +25,29 @@ final class AuthorizationController: UIViewController, MaskedTextFieldDelegateLi
 
     private let aggreementLabel: UILabel = {
         let label = UILabel()
-        label.text = SBLocalization.localized(key: AuthorizationText.Auth.Agreement.inactive) +
-            SBLocalization.localized(key: AuthorizationText.Auth.Agreement.active)
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = .mildBlue
+
+        var baseAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
+        ]
+        var startAttributes = baseAttributes
+        startAttributes[NSAttributedString.Key.foregroundColor] = UIColor.mildBlue
+
+        var endAttributes = baseAttributes
+        endAttributes[NSAttributedString.Key.foregroundColor] = UIColor.kexRed
+
+        var attributedStringStart = NSMutableAttributedString(
+            string: SBLocalization.localized(key: AuthorizationText.Auth.Agreement.inactive),
+            attributes: startAttributes
+        )
+
+        let attributedStringEnd = NSMutableAttributedString(
+            string: SBLocalization.localized(key: AuthorizationText.Auth.Agreement.active),
+            attributes: endAttributes
+        )
+
+        attributedStringStart.append(attributedStringEnd)
+
+        label.attributedText = attributedStringStart
         label.numberOfLines = 0
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
@@ -175,7 +194,6 @@ extension AuthorizationController {
         aggreementLabel.snp.makeConstraints {
             $0.top.equalTo(numberView.snp.bottom).offset(72)
             $0.left.right.equalToSuperview().inset(24)
-            $0.height.equalTo(32)
         }
 
         view.addSubview(getButton)

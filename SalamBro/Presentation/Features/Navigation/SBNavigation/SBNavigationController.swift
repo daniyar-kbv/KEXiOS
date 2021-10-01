@@ -55,33 +55,15 @@ final class SBNavigationController: UINavigationController {
 
     private func navigationDefaultAppearance() {
         setNavigationBarHidden(false, animated: true)
-
-        if #available(iOS 13.0, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithTransparentBackground()
-            appearance.shadowImage = .init()
-            appearance.backgroundImage = .init()
-            appearance.backgroundColor = .clear
-
-            let textAttributes = [
-                NSAttributedString.Key.foregroundColor: UIColor.darkGray,
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            ]
-            appearance.titleTextAttributes = textAttributes
-
-            navigationBar.standardAppearance = appearance
-            navigationBar.scrollEdgeAppearance = appearance
-        } else {
-            navigationBar.shadowImage = .init()
-            navigationBar.setBackgroundImage(.init(), for: .default)
-            navigationBar.backgroundColor = .clear
-            let textAttributes = [
-                NSAttributedString.Key.foregroundColor: UIColor.darkGray,
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .semibold),
-            ]
-            navigationBar.titleTextAttributes = textAttributes
-            navigationBar.isTranslucent = false
-        }
+        navigationBar.shadowImage = .init()
+        navigationBar.setBackgroundImage(.init(), for: .default)
+        navigationBar.backgroundColor = .clear
+        let textAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .semibold),
+        ]
+        navigationBar.titleTextAttributes = textAttributes
+        navigationBar.isTranslucent = false
     }
 }
 

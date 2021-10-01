@@ -119,32 +119,31 @@ extension MenuPositionDetail {
             position: .init(
                 uuid: uuid,
                 name: name,
-                image: imageSmall,
                 price: price,
                 positionType: type.rawValue,
+                category: categoryUUID,
                 isAvailable: true,
                 description: description
             ),
             modifierGroups: modifierGroups
                 .filter { !$0.modifiers.filter { $0.itemCount != 0 }.isEmpty }
-                .map { modifierGroup in
-                    .init(
-                        uuid: modifierGroup.uuid,
-                        modifiers: modifierGroup.modifiers
-                            .filter { $0.itemCount != 0 }
-                            .map { modifier in
-                                .init(
-                                    position: .init(
-                                        uuid: modifier.uuid,
-                                        name: modifier.name,
-                                        image: modifier.imageSmall,
-                                        positionType: CartPosition.PositionType.modifier.rawValue,
-                                        isAvailable: true
-                                    ),
-                                    count: modifier.itemCount
-                                )
-                            }
-                    )
+                .flatMap { modifierGroup in
+                    modifierGroup.modifiers
+                        .map { modifier in
+                            .init(
+                                name: modifier.name,
+                                position: .init(
+                                    uuid: modifier.uuid,
+                                    name: modifier.name,
+                                    price: 0,
+                                    positionType: CartPosition.PositionType.modifier.rawValue,
+                                    category: nil,
+                                    isAvailable: true
+                                ),
+                                count: modifier.itemCount,
+                                modifierGroupUUID: modifierGroup.uuid
+                            )
+                        }
                 }
         )
     }
@@ -158,9 +157,9 @@ extension AdditionalPosition {
             position: .init(
                 uuid: uuid,
                 name: name,
-                image: imageSmall,
                 price: Double(price),
                 positionType: type.rawValue,
+                category: categoryUUID,
                 isAvailable: true,
                 description: ""
             ),

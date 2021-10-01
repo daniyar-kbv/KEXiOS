@@ -80,7 +80,7 @@ extension CartRepositoryImpl {
     }
 
     func addItem(item: CartItem) {
-        if cart.items.contains(item),
+        if cart.items.contains(where: { $0.internalUUID == item.internalUUID }),
            let index = cart.items.firstIndex(of: item)
         {
             cart.items[index].count += 1
@@ -253,9 +253,7 @@ extension CartRepositoryImpl {
         self.cart = cart
         getItems()
 
-        if defaultStorage.deliveryPrice != 0,
-           cart.deliveryPrice != defaultStorage.deliveryPrice
-        {
+        if ![0, cart.deliveryPrice].contains(defaultStorage.deliveryPrice) {
             outputs.deliveryPriceChanged.accept(())
             defaultStorage.persist(deliveryPrice: cart.deliveryPrice)
         }

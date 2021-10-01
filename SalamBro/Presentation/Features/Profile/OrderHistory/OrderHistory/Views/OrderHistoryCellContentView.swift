@@ -234,8 +234,8 @@ final class OrderHistoryCellContentView: UIView {
 //                rateOrderButton.isHidden = true
 //                repeatOrderButton.isHidden = false
 //            case .issued:
-        sendCheckButton.isHidden = false
-        repeatOrderButton.isHidden = false
+        sendCheckButton.isHidden = true
+        repeatOrderButton.isHidden = true
         rateOrderButton.isHidden = false
 //            default:
 //                return
@@ -279,8 +279,11 @@ final class OrderHistoryCellContentView: UIView {
         items.forEach { item in
             var title = "\(item.count)x \(item.position.name)"
 
-            if !item.modifierGroups.isEmpty {
-                let modifiersText = item.modifierGroups.map { $0.modifiers }.flatMap { $0 }.map { $0.position.name }.joined(separator: ", ")
+            if !item.modifiers.isEmpty {
+                let modifiersText = item.modifiers
+                    .map { [String].init(repeating: $0.position.name, count: $0.count) }
+                    .flatMap { $0 }
+                    .joined(separator: ", ")
                 title += " (\(modifiersText))"
             }
 
@@ -288,7 +291,8 @@ final class OrderHistoryCellContentView: UIView {
                 itemStack.addArrangedSubview(OrderHistoryItemView(
                     with: title,
                     and: SBLocalization.localized(key: ProfileText.OrderHistory.price,
-                                                  arguments: price.formattedWithSeparator)
+                                                  arguments:
+                                                  (price * Double(item.count)).formattedWithSeparator)
                 ))
             }
         }
