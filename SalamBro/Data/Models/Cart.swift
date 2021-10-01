@@ -50,11 +50,11 @@ extension Cart {
                 positionUUID: item.position.uuid,
                 count: item.count,
                 comment: item.comment,
-                modifiers: item.modifiers.map { modifierGroup in
+                modifiers: item.modifiers.map { modifier in
                     .init(
-                        modifierGroupUUID: modifierGroup.modifierGroupUUID,
-                        positionUUID: modifierGroup.position.uuid,
-                        count: modifierGroup.count
+                        modifierGroupUUID: modifier.modifierGroupUUID,
+                        positionUUID: modifier.position.uuid,
+                        count: modifier.count
                     )
                 }
             )

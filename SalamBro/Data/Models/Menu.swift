@@ -113,8 +113,6 @@ extension MenuPositionDetail {
     func toCartItem(count: Int, comment: String?, description: String?, type: CartPosition.PositionType)
         -> CartItem
     {
-        print("here")
-        print(modifierGroups)
         return .init(
             count: count,
             comment: comment,
