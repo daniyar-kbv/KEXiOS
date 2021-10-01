@@ -281,7 +281,9 @@ final class OrderHistoryCellContentView: UIView {
 
             if !item.modifiers.isEmpty {
                 let modifiersText = item.modifiers
-                    .map { $0.position.name }.joined(separator: ", ")
+                    .map { [String].init(repeating: $0.position.name, count: $0.count) }
+                    .flatMap { $0 }
+                    .joined(separator: ", ")
                 title += " (\(modifiersText))"
             }
 
@@ -289,7 +291,8 @@ final class OrderHistoryCellContentView: UIView {
                 itemStack.addArrangedSubview(OrderHistoryItemView(
                     with: title,
                     and: SBLocalization.localized(key: ProfileText.OrderHistory.price,
-                                                  arguments: price.formattedWithSeparator)
+                                                  arguments:
+                                                  (price * Double(item.count)).formattedWithSeparator)
                 ))
             }
         }
