@@ -49,7 +49,6 @@ final class ShareOrderController: UIViewController {
         super.viewDidLoad()
         layoutUI()
         bindOutputs()
-        viewModel.update()
     }
 }
 
@@ -57,7 +56,7 @@ extension ShareOrderController {
     private func bindOutputs() {
         viewModel.checkURL
             .bind(onNext: { [weak self] checkURL in
-                guard let url = checkURL else { return }
+                guard let urlString = checkURL, let url = URL(string: urlString) else { return }
                 self?.webView.load(URLRequest(url: url))
             })
             .disposed(by: disposeBag)
