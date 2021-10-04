@@ -138,6 +138,9 @@ final class MenuViewModel: MenuViewModelProtocol {
 
     private func process(categories: [MenuCategory]?, tableSections: inout [Section]) {
         guard let categories = categories?.filter({ !$0.positions.isEmpty }) else { return }
+
+        outputs.hideAnimation.accept(())
+
         tableSections.append(
             .init(type: .positions,
                   headerViewModel: CategoriesSectionHeaderViewModel(categories: categories),
@@ -168,7 +171,6 @@ extension MenuViewModel {
     }
 
     func update() {
-        outputs.hideAnimation.accept(())
         menuRepository.getMenuItems()
     }
 
