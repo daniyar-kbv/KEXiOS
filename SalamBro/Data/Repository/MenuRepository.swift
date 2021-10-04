@@ -149,9 +149,8 @@ extension MenuRepositoryImpl {
     }
 
     private func sendMenuData() {
-        var dataToSend = (menuData.leadInfo.data, menuData.promotions.data, menuData.categories.data)
+        let dataToSend = (menuData.leadInfo.data, menuData.promotions.data, menuData.categories.data)
         if branchIsClosed {
-            dataToSend.1?.removeAll()
             outputs.didGetBranchClosed.accept(())
             branchIsClosed = false
         }
