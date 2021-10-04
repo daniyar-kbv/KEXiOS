@@ -18,17 +18,14 @@ struct MenuPosition: Codable {
     let name: String
     let price: Double?
     let description: String?
-    let imageSmall: String?
-    let imageBig: String?
+    let image: String?
     let status: Bool
     let categoryUUID: String
 
     enum CodingKeys: String, CodingKey {
-        case uuid, name, description, price
+        case uuid, name, description, price, image
         case categoryUUID = "category"
         case status = "is_available"
-        case imageSmall = "image_small"
-        case imageBig = "image_big"
     }
 }
 
@@ -37,18 +34,15 @@ struct AdditionalPosition: Codable {
     let name: String
     let price: Int
     let description: String?
-    let imageSmall: String?
-    let imageBig: String?
+    let image: String?
     let count: Int
     let isAvailable: Bool
     let categoryUUID: String?
 
     enum CodingKeys: String, CodingKey {
-        case uuid, name, description, price, count
+        case uuid, name, description, price, count, image
         case isAvailable = "is_available"
         case categoryUUID = "category"
-        case imageSmall = "image_small"
-        case imageBig = "image_big"
     }
 }
 
@@ -56,18 +50,15 @@ struct MenuPositionDetail: Codable {
     let uuid: String
     let name: String
     let description: String?
-    let imageSmall: String?
-    let imageBig: String?
+    let image: String?
     let price: Double
     let categoryUUID: String
     var modifierGroups: [ModifierGroup]
 
     enum CodingKeys: String, CodingKey {
-        case uuid, name, description, price
+        case uuid, name, description, price, image
         case modifierGroups = "modifier_groups"
         case categoryUUID = "branch_category"
-        case imageSmall = "image_small"
-        case imageBig = "image_big"
     }
 }
 
@@ -97,15 +88,11 @@ struct ModifierGroup: Codable, Equatable {
 struct Modifier: Codable {
     let name: String
     let uuid: String
-    let imageSmall: String?
-    let imageBig: String?
-
+    let image: String?
     var itemCount: Int = 0
 
     enum CodingKeys: String, CodingKey {
-        case name, uuid
-        case imageSmall = "image_small"
-        case imageBig = "image_big"
+        case name, uuid, image
     }
 }
 

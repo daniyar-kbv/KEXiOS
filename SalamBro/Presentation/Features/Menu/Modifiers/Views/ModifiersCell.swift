@@ -109,7 +109,7 @@ final class ModifiersCell: UICollectionViewCell {
     }
 
     func configure(modifier: Modifier, index: Int) {
-        if let url = modifier.imageSmall, let imageURL = URL(string: url) {
+        if let url = modifier.image, let imageURL = URL(string: url) {
             itemImageView.setImage(url: imageURL)
         }
 

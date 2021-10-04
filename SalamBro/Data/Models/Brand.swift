@@ -10,47 +10,25 @@ import Foundation
 class Brand: Codable {
     let id: Int
     let name: String
-    let imageSmall: String?
-    let imageBig: String?
+    let image: String?
     var isAvailable: Bool?
 
     enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case imageSmall = "image_small"
-        case imageBig = "image_big"
+        case id, name, image
         case isAvailable = "is_available"
     }
 
-    init(id: Int, name: String, imageSmall: String?, imageBig: String?, isAvailable: Bool) {
-        self.id = id
-        self.name = name
-        self.imageSmall = imageSmall
-        self.imageBig = imageBig
-        self.isAvailable = isAvailable
-    }
-}
-
-class HistoryBrand: Codable {
-    let id: Int
-    let name: String
-    let image: String?
-
-    enum CodingKeys: String, CodingKey {
-        case id, name, image
-    }
-
-    init(id: Int, name: String, image: String?) {
+    init(id: Int, name: String, image: String?, isAvailable: Bool) {
         self.id = id
         self.name = name
         self.image = image
+        self.isAvailable = isAvailable
     }
 }
 
 extension Brand {
     func getCopy() -> Brand {
-        return .init(id: id, name: name, imageSmall: imageSmall, imageBig: imageBig,
-                     isAvailable: isAvailable ?? false)
+        return .init(id: id, name: name, image: image, isAvailable: isAvailable ?? false)
     }
 }
 

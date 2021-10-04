@@ -35,7 +35,7 @@ final class MenuCellViewModel: MenuCellViewModelProtocol {
     }
 
     func reload() {
-        itemImageURL.accept(URL(string: position.imageSmall ?? ""))
+        itemImageURL.accept(URL(string: position.image ?? ""))
         itemTitle.accept(position.name)
         itemDescription.accept(position.description)
         itemStatus.accept(position.status)
