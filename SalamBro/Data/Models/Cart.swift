@@ -140,6 +140,7 @@ struct CartModifier: Codable, Equatable {
     }
 
     static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.position == rhs.position
+        return lhs.position == rhs.position &&
+            lhs.count == rhs.count
     }
 }
