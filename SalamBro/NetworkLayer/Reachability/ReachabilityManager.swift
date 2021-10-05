@@ -56,13 +56,13 @@ final class ReachabilityManagerImpl: ReachabilityManager {
 
     private func resolveReachability(connection: Reachability.Connection) -> Bool {
         let isReachable = [.cellular, .wifi].contains(connection)
-        print("Internet connection reachable: \(isReachable)")
         return isReachable
     }
 
     private func onReachabilityChange(_ isReachable: Bool?) {
         guard let isReachable = isReachable,
               lastReachability != isReachable else { return }
+        print("Reachability changed: \(isReachable)")
         lastReachability = isReachable
         outputs.connectionDidChange.accept(isReachable)
     }

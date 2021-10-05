@@ -80,7 +80,7 @@ extension CartRepositoryImpl {
     }
 
     func addItem(item: CartItem) {
-        if cart.items.contains(where: { $0.internalUUID == item.internalUUID }),
+        if cart.items.contains(item),
            let index = cart.items.firstIndex(of: item)
         {
             cart.items[index].count += 1

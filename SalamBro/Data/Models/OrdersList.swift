@@ -9,7 +9,7 @@ import Foundation
 
 struct OrdersList: Decodable {
     let id: Int
-    let brand: HistoryBrand
+    let brand: Brand
     let address: Address
     let cart: Cart
     let price: String
