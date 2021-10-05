@@ -159,10 +159,18 @@
 "OrderHistory.cancelOrder" = "Тапсырыстан бас тарту";
 "OrderHistory.new" = "Жаңа";
 "OrderHistory.paid" = "Төленді";
-"OrderHistory.cooking" = "Дайындық үстінде";
-"OrderHistory.inDelivery" = "Жолда";
-"OrderHistory.issued" = "Тапсырылды";
-"OrderHistory.failure" = "Тапсырыстан бас тартылды";
+"OrderHistory.applying" = " ";
+"OrderHistory.applyError" = " ";
+"OrderHistory.applied" = " ";
+"OrderHistory.unconfirmed" = " ";
+"OrderHistory.readyForCooking" = " ";
+"OrderHistory.started" = " ";
+"OrderHistory.completed" = " ";
+"OrderHistory.waiting" = " ";
+"OrderHistory.onWay" = " ";
+"OrderHistory.delivered" = " ";
+"OrderHistory.done" = " ";
+"OrderHistory.canceled" = " ";
 
 // MARK: - Select Main Info
 "select_main_info.country" = "Ел";

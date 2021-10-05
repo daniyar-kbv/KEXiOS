@@ -33,10 +33,18 @@ struct OrdersList: Decodable {
 enum OrderedFoodStatus: String, Codable {
     case new = "NEW"
     case paid = "PAID"
-    case cooking = "COOKING"
-    case inDelivery = "IN_DELIVERY"
-    case issued = "ISSUED"
-    case failure = "FAILURE"
+    case applying = "APPLYING"
+    case applyError = "APPLY_ERROR"
+    case applied = "APPLIED"
+    case unconfirmed = "UNCONFIRMED"
+    case readyForCooking = "READY_FOR_COOKING"
+    case started = "COOKING_STARTED"
+    case completed = "COOKING_COMPLETED"
+    case waiting = "WAITING"
+    case onWay = "ON_WAY"
+    case delivered = "DELIVERED"
+    case done = "DONE"
+    case canceled = "CANCELED"
 
     var title: String {
         switch self {
@@ -44,14 +52,30 @@ enum OrderedFoodStatus: String, Codable {
             return SBLocalization.localized(key: ProfileText.OrderHistory.new)
         case .paid:
             return SBLocalization.localized(key: ProfileText.OrderHistory.paid)
-        case .cooking:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.cooking)
-        case .inDelivery:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.inDelivery)
-        case .issued:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.issued)
-        case .failure:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.failure)
+        case .applying:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.applying)
+        case .applyError:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.applyError)
+        case .applied:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.applied)
+        case .unconfirmed:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.unconfirmed)
+        case .readyForCooking:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.readyForCooking)
+        case .started:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.started)
+        case .completed:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.completed)
+        case .waiting:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.waiting)
+        case .onWay:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.onWay)
+        case .delivered:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.delivered)
+        case .done:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.done)
+        case .canceled:
+            return SBLocalization.localized(key: ProfileText.OrderHistory.canceled)
         }
     }
 }
