@@ -56,7 +56,6 @@ final class ReachabilityManagerImpl: ReachabilityManager {
 
     private func resolveReachability(connection: Reachability.Connection) -> Bool {
         let isReachable = [.cellular, .wifi].contains(connection)
-        print("Internet connection reachable: \(isReachable)")
         return isReachable
     }
 
