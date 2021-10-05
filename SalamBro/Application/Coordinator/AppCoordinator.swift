@@ -67,7 +67,10 @@ extension AppCoordinator {
         }
 
         showTabBarController()
+        resumePaymentIfNeeded()
+    }
 
+    private func resumePaymentIfNeeded() {
         if DefaultStorageImpl.sharedStorage.isPaymentProcess,
            let cartTabIndex = tabBarBarTypes.firstIndex(of: .cart)
         {
@@ -75,7 +78,7 @@ extension AppCoordinator {
 
             let cartCoordinator = appCoordinatorsFactory.makeCartCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
 
-            cartCoordinator.resumePayment()
+            cartCoordinator.startPaymentCoordinator()
         }
     }
 

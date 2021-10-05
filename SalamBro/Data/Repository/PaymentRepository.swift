@@ -183,6 +183,7 @@ extension PaymentRepositoryImpl {
         guard defaultStorage.isPaymentProcess,
               let leadUUID = defaultStorage.leadUUID else { return }
 
+        defaultStorage.persist(isPaymentProcess: true)
         sendShowPaymentProcessNotification()
 
         paymentService.getPaymentStatus(leadUUID: leadUUID)
@@ -262,6 +263,8 @@ extension PaymentRepositoryImpl {
             }
         default:
             sendHidePaymentProcessNotification { [weak self] in
+                self?.defaultStorage.persist(isPaymentProcess: false)
+
                 guard let statusReason = paymentStatus.statusReason else {
                     self?.outputs.didGetError.accept(NetworkError.badMapping)
                     return
@@ -275,7 +278,9 @@ extension PaymentRepositoryImpl {
 
     private func paymentOnFailure(_ error: Error) {
         guard let error = error as? ErrorPresentable,
-              reachabilityManager.getReachability() else { return }
+              reachabilityManager.getReachability()
+        else { return }
+
         sendHidePaymentProcessNotification { [weak self] in
             self?.defaultStorage.persist(isPaymentProcess: false)
 

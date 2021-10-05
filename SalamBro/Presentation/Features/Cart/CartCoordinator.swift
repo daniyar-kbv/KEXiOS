@@ -79,7 +79,7 @@ final class CartCoordinator: BaseCoordinator {
         authCoordinator.start()
     }
 
-    private func startPaymentCoordinator() {
+    func startPaymentCoordinator() {
         let paymentCoordinator = coordinatorsFactory.makePaymentCoordinator()
         add(paymentCoordinator)
 
@@ -98,12 +98,5 @@ final class CartCoordinator: BaseCoordinator {
         }
 
         paymentCoordinator.start()
-    }
-
-    func resumePayment() {
-        startPaymentCoordinator()
-
-        let paymentCoordinator = childCoordinators.first(where: { $0 is PaymentCoordinator }) as? PaymentCoordinator
-        paymentCoordinator?.reloadPayment()
     }
 }
