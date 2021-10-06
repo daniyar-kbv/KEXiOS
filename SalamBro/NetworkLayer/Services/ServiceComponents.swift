@@ -89,6 +89,6 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
     }
 
     func ordersHistoryService() -> OrdersHistoryService {
-        return shared(OrdersHistoryServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, authPlugin])))
+        return shared(OrdersHistoryServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, authPlugin, languagePlugin])))
     }
 }

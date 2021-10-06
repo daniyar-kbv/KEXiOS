@@ -186,7 +186,7 @@ extension CartRepositoryImpl {
     func getItems() {
         var additionalItems: [CartItem] = []
 
-        cartStorage.additionalProducts.forEach { additionalItems.append($0.toCartItem(count: $0.count, comment: "", modifiers: [], type: .additional)) }
+        cartStorage.additionalProducts.forEach { additionalItems.append($0.toCartItem(count: $0.count, comment: "", modifiers: [], image: $0.image, type: .additional)) }
 
         outputs.didChange.accept((cart, additionalItems))
     }
