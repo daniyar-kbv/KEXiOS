@@ -19,7 +19,7 @@ struct Constants {
         static let promotionURL = APIBase.dev.appendingPathComponent("/promotions/%@/")
 
         enum APIBase {
-            static let dev = URL(string: "https://api-dev.kexbrands.kz")!
+            static let dev = URL(string: "https://api.kexbrands.kz")!
         }
 
         static let yandexURL = URL(string: "https://geocode-maps.yandex.ru/")!
