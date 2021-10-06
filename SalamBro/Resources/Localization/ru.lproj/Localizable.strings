@@ -158,20 +158,14 @@
 "OrderHistory.rateOrder" = "Оценить заказ";
 "OrderHistory.repeatOrder" = "Повторить заказ";
 "OrderHistory.cancelOrder" = "Отменить заказ";
-"OrderHistory.new" = "Новый";
-"OrderHistory.paid" = "Оплачен";
-"OrderHistory.applying" = " ";
-"OrderHistory.applyError" = " ";
-"OrderHistory.applied" = " ";
-"OrderHistory.unconfirmed" = " ";
-"OrderHistory.readyForCooking" = " ";
-"OrderHistory.started" = " ";
-"OrderHistory.completed" = " ";
-"OrderHistory.waiting" = " ";
-"OrderHistory.onWay" = " ";
-"OrderHistory.delivered" = " ";
-"OrderHistory.done" = " ";
-"OrderHistory.canceled" = " ";
+"OrderHistory.applying" = "На потверждении";
+"OrderHistory.started" = "Готовится";
+"OrderHistory.waiting" = "Ожидает курьера";
+"OrderHistory.onWay" = "Доставляется";
+"OrderHistory.delivered" = "Доставлен";
+"OrderHistory.canceled" = "Отменен";
+"OrderHistory.Error.title" = "Внимание";
+"OrderHistory.Error.text" = "Если вы хотите отменить заказ, то вам необходимо связаться с колл-центром.";
 
 // MARK: - Select Main Info
 "select_main_info.country" = "Страна";

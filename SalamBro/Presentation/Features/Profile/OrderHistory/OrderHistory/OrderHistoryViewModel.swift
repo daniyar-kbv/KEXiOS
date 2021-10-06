@@ -16,6 +16,7 @@ protocol OrderHistoryViewModel: AnyObject {
     func update()
     func ordersEmpty() -> Bool
     func loadMoreDataIfNeeded(for index: Int)
+    func getContact() -> Contact?
 }
 
 final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
@@ -23,13 +24,16 @@ final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
     private let disposeBag = DisposeBag()
     private let ordersRepository: OrdersHistoryRepository
 
+    private let storage: DocumentsStorage
+
     private var currentPage: Int?
     private var pageLimit: Int?
 
     private(set) var orders: [OrdersList] = []
 
-    init(ordersRepository: OrdersHistoryRepository) {
+    init(ordersRepository: OrdersHistoryRepository, storage: DocumentsStorage) {
         self.ordersRepository = ordersRepository
+        self.storage = storage
         bindOutputs()
     }
 
@@ -39,6 +43,10 @@ final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
 
     func ordersEmpty() -> Bool {
         return orders.isEmpty
+    }
+
+    func getContact() -> Contact? {
+        return storage.contacts.first(where: { $0.getType() == .callCenter })
     }
 
     func loadMoreDataIfNeeded(for index: Int) {

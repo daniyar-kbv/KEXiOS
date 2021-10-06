@@ -12,6 +12,7 @@ import UIKit
 protocol OrderTestCellDelegate: AnyObject {
     func share(with url: String)
     func rate(at orderNumber: Int)
+    func cancel()
 }
 
 final class OrderTestCell: UITableViewCell, Reusable {
@@ -60,5 +61,9 @@ extension OrderTestCell: OrderHistoryViewDelegate {
 
     func rateOrder(at orderNumber: Int) {
         delegate?.rate(at: orderNumber)
+    }
+
+    func cancelOrder() {
+        delegate?.cancel()
     }
 }

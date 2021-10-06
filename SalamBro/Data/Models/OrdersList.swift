@@ -48,32 +48,16 @@ enum OrderedFoodStatus: String, Codable {
 
     var title: String {
         switch self {
-        case .new:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.new)
-        case .paid:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.paid)
-        case .applying:
+        case .new, .paid, .applying, .applyError, .applied, .unconfirmed, .readyForCooking:
             return SBLocalization.localized(key: ProfileText.OrderHistory.applying)
-        case .applyError:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.applyError)
-        case .applied:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.applied)
-        case .unconfirmed:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.unconfirmed)
-        case .readyForCooking:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.readyForCooking)
-        case .started:
+        case .started, .completed:
             return SBLocalization.localized(key: ProfileText.OrderHistory.started)
-        case .completed:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.completed)
         case .waiting:
             return SBLocalization.localized(key: ProfileText.OrderHistory.waiting)
         case .onWay:
             return SBLocalization.localized(key: ProfileText.OrderHistory.onWay)
-        case .delivered:
+        case .delivered, .done:
             return SBLocalization.localized(key: ProfileText.OrderHistory.delivered)
-        case .done:
-            return SBLocalization.localized(key: ProfileText.OrderHistory.done)
         case .canceled:
             return SBLocalization.localized(key: ProfileText.OrderHistory.canceled)
         }
