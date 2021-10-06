@@ -83,17 +83,20 @@ extension ShareOrderController {
 
 extension ShareOrderController {
     @objc private func addTapped() {
-        let url = URL(string: "instagram-stories://share")!
+        guard let url = URL(string: "instagram-stories://share") else { return }
+
         if UIApplication.shared.canOpenURL(url) {
-            let backgroundData = contentView.asImage().jpegData(compressionQuality: 1.0)!
+            guard let backgroundData = contentView.asImage().jpegData(compressionQuality: 1.0) else { return }
             let pasteBoardItems = [
                 ["com.instagram.sharedSticker.backgroundImage": backgroundData],
             ]
+
             if #available(iOS 10.0, *) {
                 UIPasteboard.general.setItems(pasteBoardItems, options: [.expirationDate: Date().addingTimeInterval(60 * 5)])
             } else {
                 UIPasteboard.general.items = pasteBoardItems
             }
+
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
