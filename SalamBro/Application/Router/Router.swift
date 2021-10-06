@@ -119,7 +119,7 @@ extension MainRouter: SBNavigationControllerDelegate {
         }
     }
 
-    func sbNavigationController(_ navigationController: UINavigationController, didShow _: UIViewController) {
+    func sbNavigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController) {
         let didPop: Bool = totalNumberOfPages > navigationController.viewControllers.count
 
         let isNonChangeable = totalNumberOfPages == navigationController.viewControllers.count
@@ -132,6 +132,8 @@ extension MainRouter: SBNavigationControllerDelegate {
             if shouldCommitSuicide {
                 didFinish?()
             }
+            let configuration = navigationLogic.configure(viewController: viewController, in: navigationController)
+            setConfiguration(configuration, for: viewController)
         }
     }
 
@@ -140,10 +142,13 @@ extension MainRouter: SBNavigationControllerDelegate {
         case .withBackButton:
             viewController.setBackButton(completion: didTapOnBack)
             navigationController.interactivePopGestureRecognizer?.delegate = viewController as? UIGestureRecognizerDelegate
+            navigationController.interactivePopGestureRecognizer?.isEnabled = true
         case .none:
             viewController.navigationItem.rightBarButtonItem = nil
             viewController.navigationItem.leftBarButtonItem = nil
             viewController.navigationItem.setHidesBackButton(true, animated: true)
+            navigationController.interactivePopGestureRecognizer?.isEnabled = false
+            navigationController.interactivePopGestureRecognizer?.delegate = nil
         }
     }
 }

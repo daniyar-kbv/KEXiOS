@@ -116,6 +116,7 @@ extension MenuPositionDetail {
                 .filter { !$0.modifiers.filter { $0.itemCount != 0 }.isEmpty }
                 .flatMap { modifierGroup in
                     modifierGroup.modifiers
+                        .filter { $0.itemCount > 0 }
                         .map { modifier in
                             .init(
                                 name: modifier.name,
