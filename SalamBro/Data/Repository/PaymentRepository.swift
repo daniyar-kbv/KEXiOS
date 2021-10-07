@@ -260,6 +260,10 @@ extension PaymentRepositoryImpl {
             sendHidePaymentProcessNotification { [weak self] in
                 self?.show3DS(orderStatus: paymentStatus)
             }
+        case .declined:
+            guard let statusReason = paymentStatus.statusReason else { return }
+            let error = ErrorResponse(code: paymentStatus.status, message: statusReason)
+            outputs.didGetError.accept(error)
         default:
             sendHidePaymentProcessNotification { [weak self] in
                 guard let statusReason = paymentStatus.statusReason else {

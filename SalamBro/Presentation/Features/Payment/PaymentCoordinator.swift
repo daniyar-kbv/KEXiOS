@@ -71,6 +71,12 @@ final class PaymentCoordinator: BaseCoordinator {
             })
             .disposed(by: disposeBag)
 
+        paymentSelectionVC.outputs.threeDSFailed
+            .subscribe(onNext: { [weak paymentSelectionVC] in
+                paymentSelectionVC?.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+
         paymentSelectionVC.outputs.branchClosed
             .subscribe(onNext: { [weak self] in
                 self?.didGetBranchClosed?()
