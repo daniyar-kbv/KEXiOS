@@ -154,7 +154,8 @@ extension CartViewModelImpl {
         case .additional:
             guard let viewModel = viewModel as? CartAdditionalProductViewModel
             else { return UITableViewCell() }
-            let cell = CartAdditionalProductCell(viewModel: viewModel)
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CartAdditionalProductCell.self), for: indexPath) as! CartAdditionalProductCell
+            cell.set(viewModel: viewModel)
             cell.delegate = self
             return cell
         case .promocode:

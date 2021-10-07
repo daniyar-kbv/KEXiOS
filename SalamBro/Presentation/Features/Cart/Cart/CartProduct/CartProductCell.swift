@@ -127,6 +127,8 @@ final class CartProductCell: UITableViewCell {
 
     weak var delegate: CartAdditinalProductCellDelegate?
 
+    private var imageURL: URL?
+
     override init(style _: UITableViewCell.CellStyle, reuseIdentifier _: String?) {
         super.init(style: .default, reuseIdentifier: .none)
 
