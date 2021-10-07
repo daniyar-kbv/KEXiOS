@@ -29,6 +29,10 @@ class CartController: UIViewController, LoaderDisplayable, Reloadable {
         table.separatorStyle = .none
         table.refreshControl = refreshControl
         table.delaysContentTouches = false
+        table.register(CartProductCell.self, forCellReuseIdentifier: String(describing: CartProductCell.self))
+        table.register(CartAdditionalProductCell.self, forCellReuseIdentifier: String(describing: CartAdditionalProductCell.self))
+        table.register(CartPromocodeCell.self, forCellReuseIdentifier: String(describing: CartPromocodeCell.self))
+        table.register(CartFooterCell.self, forCellReuseIdentifier: String(describing: CartFooterCell.self))
         return table
     }()
 
@@ -264,8 +268,8 @@ extension CartController: UITableViewDelegate, UITableViewDataSource {
         viewModel.headerView(for: section)
     }
 
-    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return viewModel.cell(for: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        viewModel.cell(tableView: tableView, for: indexPath)
     }
 
     func tableView(_: UITableView, estimatedHeightForHeaderInSection _: Int) -> CGFloat {
