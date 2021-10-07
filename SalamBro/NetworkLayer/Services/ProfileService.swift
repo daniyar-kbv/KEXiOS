@@ -16,6 +16,7 @@ protocol ProfileService: AnyObject {
     func getAddresses() -> Single<[UserAddress]>
     func updateAddress(dto: UpdateAddressDTO) -> Single<String>
     func deleteAddress(id: Int) -> Single<Void>
+    func logOutUser(dto: LogOutDTO) -> Single<String>
 }
 
 final class ProfileServiceMoyaImpl: ProfileService {
@@ -126,6 +127,22 @@ final class ProfileServiceMoyaImpl: ProfileService {
                 }
 
                 return ()
+            }
+    }
+
+    func logOutUser(dto: LogOutDTO) -> Single<String> {
+        provider.rx
+            .request(.logout(dto: dto))
+            .map { response in
+                guard let response = try? response.map(LogOutResponse.self) else {
+                    throw NetworkError.badMapping
+                }
+
+                if let error = response.error {
+                    throw error
+                }
+
+                return ""
             }
     }
 }

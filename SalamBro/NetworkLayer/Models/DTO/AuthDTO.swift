@@ -28,3 +28,11 @@ struct OTPVerifyDTO: Encodable {
 struct RefreshDTO: Encodable {
     let refresh: String
 }
+
+struct LogOutDTO: Encodable {
+    let token: String
+
+    enum CodingKeys: String, CodingKey {
+        case token = "firebase_token"
+    }
+}
