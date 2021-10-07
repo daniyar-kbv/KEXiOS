@@ -119,8 +119,6 @@ final class CartAdditionalProductCell: UITableViewCell {
 
     weak var delegate: CartAdditinalProductCellDelegate?
 
-    private var imageURL: URL?
-
     override init(style _: UITableViewCell.CellStyle, reuseIdentifier _: String?) {
         super.init(style: .default, reuseIdentifier: .none)
 
@@ -153,9 +151,8 @@ extension CartAdditionalProductCell {
     private func bindViewModel() {
         viewModel?.outputs.itemImage
             .bind(onNext: { [weak self] url in
-                guard let url = url, url != self?.imageURL else { return }
+                guard let url = url else { return }
                 self?.productImageView.setImage(url: url)
-                self?.imageURL = url
             })
             .disposed(by: disposeBag)
 
