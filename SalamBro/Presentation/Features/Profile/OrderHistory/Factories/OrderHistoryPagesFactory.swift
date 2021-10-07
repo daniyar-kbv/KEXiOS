@@ -22,8 +22,7 @@ final class OrderHistoryPagesFactoryImpl: DependencyFactory, OrderHistoryPagesFa
 
     func makeOrderHistoryPage() -> OrderHistoryController {
         return scoped(.init(viewModel: OrderHistoryViewModelImpl(
-            ordersRepository: repositoryComponents.makeOrdersHistoryRepository(),
-            storage: makeLocalStorage()
+            ordersRepository: repositoryComponents.makeOrdersHistoryRepository()
         )))
     }
 

@@ -120,7 +120,10 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     }
 
     func makeOrdersHistoryRepository() -> OrdersHistoryRepository {
-        return shared(OrdersHistoryRepositoryImpl(ordersHistoryService: serviceComponents.ordersHistoryService()))
+        return shared(OrdersHistoryRepositoryImpl(
+            ordersHistoryService: serviceComponents.ordersHistoryService(),
+            storage: makeLocalStorage()
+        ))
     }
 
     private func makeLocalStorage() -> Storage {

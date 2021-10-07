@@ -41,6 +41,8 @@ final class AdCollectionCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layoutUI()
         selectionStyle = .none
+        separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+        directionalLayoutMargins = .zero
     }
 
     @available(*, unavailable)

@@ -223,8 +223,6 @@ extension MenuViewModel {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: AdCollectionCell.self)
             cell.set(viewModel)
             cell.delegate = self
-            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
-            cell.directionalLayoutMargins = .zero
             return cell
         case .positions:
             guard let viewModel = cellViewModel as? MenuCellViewModelProtocol

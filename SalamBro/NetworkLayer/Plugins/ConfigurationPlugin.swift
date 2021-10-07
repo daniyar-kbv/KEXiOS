@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-struct LanguagePlugin: PluginType {
+struct ConfigurationPlugin: PluginType {
     private let defaultStorage: DefaultStorage
 
     init(defaultStorage: DefaultStorage) {

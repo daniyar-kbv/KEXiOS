@@ -91,7 +91,7 @@ extension ShareOrderController {
                 ["com.instagram.sharedSticker.backgroundImage": backgroundData],
             ]
 
-            if #available(iOS 10.0, *) {
+            if #available(iOS 12, *) {
                 UIPasteboard.general.setItems(pasteBoardItems, options: [.expirationDate: Date().addingTimeInterval(60 * 5)])
             } else {
                 UIPasteboard.general.items = pasteBoardItems

@@ -24,16 +24,13 @@ final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
     private let disposeBag = DisposeBag()
     private let ordersRepository: OrdersHistoryRepository
 
-    private let storage: DocumentsStorage
-
     private var currentPage: Int?
     private var pageLimit: Int?
 
     private(set) var orders: [OrdersList] = []
 
-    init(ordersRepository: OrdersHistoryRepository, storage: DocumentsStorage) {
+    init(ordersRepository: OrdersHistoryRepository) {
         self.ordersRepository = ordersRepository
-        self.storage = storage
         bindOutputs()
     }
 
@@ -46,7 +43,7 @@ final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
     }
 
     func getContact() -> Contact? {
-        return storage.contacts.first(where: { $0.getType() == .callCenter })
+        ordersRepository.getContact()
     }
 
     func loadMoreDataIfNeeded(for index: Int) {
