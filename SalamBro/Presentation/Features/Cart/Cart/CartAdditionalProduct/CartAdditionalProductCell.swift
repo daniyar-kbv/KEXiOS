@@ -119,6 +119,8 @@ final class CartAdditionalProductCell: UITableViewCell {
 
     weak var delegate: CartAdditinalProductCellDelegate?
 
+    private var imageURL: URL?
+
     override init(style _: UITableViewCell.CellStyle, reuseIdentifier _: String?) {
         super.init(style: .default, reuseIdentifier: .none)
 
@@ -132,18 +134,9 @@ final class CartAdditionalProductCell: UITableViewCell {
 
     func set(viewModel: CartAdditionalProductViewModel) {
         self.viewModel = viewModel
-        bindViewModel()
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
 
         disposeBag = DisposeBag()
-
-        if productImageView.image == nil {
-            productImageView.image =
-                SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
-        }
+        bindViewModel()
     }
 }
 
@@ -151,8 +144,13 @@ extension CartAdditionalProductCell {
     private func bindViewModel() {
         viewModel?.outputs.itemImage
             .bind(onNext: { [weak self] url in
-                guard let url = url else { return }
-                self?.productImageView.setImage(url: url)
+                if url == nil, url != self?.imageURL {
+                    self?.productImageView.image =
+                        SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+                } else if let url = url {
+                    self?.productImageView.setImage(url: url)
+                    self?.imageURL = url
+                }
             })
             .disposed(by: disposeBag)
 

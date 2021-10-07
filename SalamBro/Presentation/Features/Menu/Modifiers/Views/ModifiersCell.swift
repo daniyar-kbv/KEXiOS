@@ -90,6 +90,8 @@ final class ModifiersCell: UICollectionViewCell {
 
     weak var delegate: ModifiersCellDelegate?
 
+    private var imageURL: String?
+
     override init(frame _: CGRect) {
         super.init(frame: .zero)
         layoutUI()
@@ -109,8 +111,12 @@ final class ModifiersCell: UICollectionViewCell {
     }
 
     func configure(modifier: Modifier, index: Int) {
-        if let url = modifier.image, let imageURL = URL(string: url) {
-            itemImageView.setImage(url: imageURL)
+        if modifier.image == nil, modifier.image != imageURL {
+            itemImageView.image =
+                SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+        } else if let urlString = modifier.image, let url = URL(string: urlString) {
+            itemImageView.setImage(url: url)
+            imageURL = urlString
         }
 
         itemTitleLabel.text = modifier.name
