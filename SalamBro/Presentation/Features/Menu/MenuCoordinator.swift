@@ -42,6 +42,8 @@ final class MenuCoordinator: BaseCoordinator {
     func restart() {
         let menuPage = makeMenuPage()
 
+        menuPage.updateUserAddresses()
+
         router.getNavigationController().setViewControllers([menuPage], animated: true)
     }
 

@@ -95,6 +95,10 @@ final class MenuController: UIViewController, LoaderDisplayable {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
+    public func updateUserAddresses() {
+        viewModel.updateUserAddresses()
+    }
+
     private func bindViewModel() {
         viewModel.outputs.brandImage
             .subscribe(onNext: { [weak self] imageString in
