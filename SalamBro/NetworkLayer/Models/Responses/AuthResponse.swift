@@ -25,3 +25,16 @@ struct AccessToken: Codable {
         case access
     }
 }
+
+struct LogOutResponse: Codable {
+    let data: LogOutToken?
+    let error: ErrorResponse?
+}
+
+struct LogOutToken: Codable {
+    let token: String?
+
+    enum CodingKeys: String, CodingKey {
+        case token = "firebase_token"
+    }
+}

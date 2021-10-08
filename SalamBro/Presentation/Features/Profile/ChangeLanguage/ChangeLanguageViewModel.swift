@@ -22,7 +22,7 @@ final class ChangeLanguageViewModelImpl: ChangeLanguageViewModel {
     private let defaultStorage: DefaultStorage
     private(set) var outputs: Output = .init()
 
-    let languages: [Language] = [.russian, .kazakh, .english]
+    let languages: [Language] = [.russian, .kazakh]
 
     init(defaultStorage: DefaultStorage) {
         self.defaultStorage = defaultStorage

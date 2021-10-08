@@ -19,7 +19,7 @@
 "Authorization.title" = "Телефон нөміріңізді енгізіңіз";
 "Authorization.subtitle" = "Осы нөмірге растау СМС коды жіберіледі";
 "Authorization.numberField.placeholder.title" = "Телефон нөміріңізді енгізіңіз";
-"Authorization.agreement.inactive.title" = "Жалғастырау арқылы сіз жеке мәліметтерді және";
+"Authorization.agreement.inactive.title" = "Жалғастыру арқылы сіз жеке мәліметтерді және";
 "Authorization.agreement.active.title" = " қолдану ережесіне қолдануға рұқсат бересіз";
 "Authorization.button.title" = "Кодты қабылдау";
 
@@ -81,8 +81,8 @@
 "Profile.changeLanguage" = "Тілді ауыстыру";
 "Profile.logoutButton.title" = "Шығу";
 "Profile.deliveryAddress" = "Жеткізу мекен-жайы";
-"Profile.Alert.title" = "Сенімдісізбе?";
-"Profile.Alert.message" = "Аккаунттан шығуыңызға сенімдісізбе?";
+"Profile.Alert.title" = "Сенімдісіз бе?";
+"Profile.Alert.message" = "Аккаунттан шығуыңызға сенімдісіз бе?";
 "Profile.Alert.Action.yes" = "Иә";
 "Profile.Alert.Action.no" = "Жоқ";
 
@@ -110,7 +110,7 @@
 
 // MARK: - RateOrder
 "RateOrder.title" = "Тапсырысты бағалаңыз";
-"RateOrder.submitButton.title" = "Жібері";
+"RateOrder.submitButton.title" = "Жіберу";
 "RateOrder.commentaryField.placeholder" = "Пікір қосу";
 "RateOrder.title" = "Тапсырысты бағалау";
 "RateOrder.description" = "Сіздің бағаңыз жеткізу қызметінің сапасын жақсартады";
@@ -157,12 +157,14 @@
 "OrderHistory.rateOrder" = "Тапсырысты бағалау";
 "OrderHistory.repeatOrder" = "Тапсырысты қайталау";
 "OrderHistory.cancelOrder" = "Тапсырыстан бас тарту";
-"OrderHistory.new" = "Жаңа";
-"OrderHistory.paid" = "Төленді";
-"OrderHistory.cooking" = "Дайындық үстінде";
-"OrderHistory.inDelivery" = "Жолда";
-"OrderHistory.issued" = "Тапсырылды";
-"OrderHistory.failure" = "Тапсырыстан бас тартылды";
+"OrderHistory.applying" = "Расталу барысында";
+"OrderHistory.started" = "Дайындалу барысында";
+"OrderHistory.waiting" = "Курьер күтілуде";
+"OrderHistory.onWay" = "Жеткізілуде";
+"OrderHistory.delivered" = "Жеткізілді";
+"OrderHistory.canceled" = "Доғарылды";
+"OrderHistory.Error.title" = "Назар аударыңыз";
+"OrderHistory.Error.text" = "Егер сіз тапсырыстан бас тартқыңыз келсе, байланыс орталығына хабарласуыңыз қажет.";
 
 // MARK: - Select Main Info
 "select_main_info.country" = "Ел";
@@ -176,8 +178,8 @@
 "select_main_info.title" = "Тапсырыс мекен-жайы";
 "select_main_info.description" = "Белгілі бір брендтің болуы немесе болмауы сіздің жеткізу мекенжайыңызға байланысты";
 "select_main_info.save" = "Сақтау";
-"select_main_info.alert.title" = "Сенімдісізбе?";
-"select_main_info.alert.body.address" = "Егер мекен-жайыңызды өзгертсеңіз, сақталынған өнімдерді жоғалтып аласыз. Мекен-жайыңызды өзгертуге сенімдісізбе?";
+"select_main_info.alert.title" = "Сенімдісіз бе?";
+"select_main_info.alert.body.address" = "Егер мекен-жайыңызды өзгертсеңіз, сақталынған өнімдерді жоғалтып аласыз. Мекен-жайыңызды өзгертуге сенімдісіз бе?";
 "select_main_info.alert.body.brand" = "Егер сіз қазір брендті өзгертсеңіз, сіз таңдаған барлық өнімдерден бас тартасыз. Брендті өзгерткіңіз келетініне сенімдісіз бе?";
 "select_main_info.alert.action.yes" = "Иә";
 "select_main_info.alert.action.no" = "Жоқ";
@@ -191,8 +193,8 @@
 // MARK: - AddressDetail
 "address_picker.titleOne" = "Жеткізу мекен-жайы";
 "AddressDetail.commentaryTitleLabel" = "Пікір";
-"AddressDetail.Alert.title" = "Сенімдісізбе?";
-"AddressDetail.Alert.message" = "Жеткізу мекенжайын жойғыңыз келетініне сенімдісіз бе?";
+"AddressDetail.Alert.title" = "Сенімдісіз бе?";
+"AddressDetail.Alert.message" = "Жеткізу мекен-жайын жойғыңыз келетініне сенімдісіз бе?";
 "AddressDetail.Alert.Action.yes" = "Иә";
 "AddressDetail.Alert.Action.no" = "Жоқ";
 
@@ -216,7 +218,7 @@
 
 "Payment.Selection.bill" = "Төлемге:";
 "Payment.Selection.change" = "Өзгерту ";
-"Payment.Selection.choosePaymentMethod" = "Төлеу әдісіг таңдаңыз";
+"Payment.Selection.choosePaymentMethod" = "Төлеу әдісін таңдаңыз";
 "Payment.Selection.orderPayment" = "Тапсырысты өңдеу ";
 "Payment.Selection.paymentMethod" = "Төлем тәсілі";
 "Payment.Selection.title" = "Тапсырысты  өңдеу";
@@ -244,7 +246,7 @@
 // MARK: - Payment Cash
 
 "Payment.Cash.titleDefault" = "Тапсырысты өңдеу";
-"Payment.Cash.titleChange" = "Артық ақшанв қайтару";
+"Payment.Cash.titleChange" = "Артық ақшаны қайтару";
 "Payment.Cash.topText" = "%@ ₸ тапсырыс беріңіз.\nқалған соманы беру үшін неше теңге қажет?";
 "Payment.Cash.fieldPlaceholder" = "Қолма-қол ақша сомасын енгізіңіз";
 "Payment.Cash.fieldDescription" = "Тапсырыс құнынан жоғары бағаны енгізіңіз";
@@ -255,8 +257,8 @@
 
 "Payment.Edit.title" = "Төлем тәсілі";
 "Payment.Edit.Cell.title" = "Карта *%@";
-"Payment.Edit.Alert.title" = "Сенімдісізбе?";
-"Payment.Edit.Alert.message" = "Картаны жоюңызға сенімдісізбе?";
+"Payment.Edit.Alert.title" = "Сенімдісіз бе?";
+"Payment.Edit.Alert.message" = "Картаны жоюңызға сенімдісіз бе?";
 "Payment.Edit.Alert.yes" = "Иә";
 "Payment.Edit.Alert.no" = "Жоқ";
 
@@ -268,12 +270,12 @@
 // MARK: - Animations
 
 "Animation.InfoText.orderHistory" = "Тапсырыстарыңыз осы жерде болады, тапсырыс беру үшін мәзірге көшіңіз";
-"Animation.InfoText.emptyBasket" = "Әзірше ешнарсе таңдамадыңыз.";
+"Animation.InfoText.emptyBasket" = "Әзірше ешнәрсе таңдамадыңыз.";
 "Animation.InfoText.noInternet" = "Байланыс жоқ. Интернетті байланысын тексеріңіз";
 "Animation.InfoText.upgrade" = "Біз қосымшаны пайдалануды жеңілдету үшін көптеген жаңа мүмкіндіктерді қостық және кейбір қателерді жөндедік.";
 "Animation.InfoText.overload" = "Қазіргі уақытта өте көп тапсырыс қабылдануда, өтініш, кешірек кіруіңізді сұраймыз";
 "Animation.InfoText.payment" = "Төлемді өңдеп жатырмыз";
-"Animation.InfoText.profile" = "Тапсырвс бері үшін тіркелі қажет";
+"Animation.InfoText.profile" = "Тапсырыс беру үшін тіркелу қажет";
 "Animation.InfoText.closed" = "Мекеме жабық";
 "Animation.ButtonTitle.orderHistory.emptyBasket" = "Мәзірге көшу";
 "Animation.ButtonTitle.noInternet.overload" = "Қайталау";

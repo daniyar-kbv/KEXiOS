@@ -109,7 +109,8 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     func makeProfileRepository() -> ProfileRepository {
         return shared(ProfileRepositoryImpl(profileService: serviceComponents.profileService(),
                                             authService: serviceComponents.authService(),
-                                            tokenStorage: AuthTokenStorageImpl.sharedStorage))
+                                            tokenStorage: AuthTokenStorageImpl.sharedStorage,
+                                            defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
     func makePushNotificationsRepository() -> PushNotificationsRepository {
@@ -120,7 +121,10 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     }
 
     func makeOrdersHistoryRepository() -> OrdersHistoryRepository {
-        return shared(OrdersHistoryRepositoryImpl(ordersHistoryService: serviceComponents.ordersHistoryService()))
+        return shared(OrdersHistoryRepositoryImpl(
+            ordersHistoryService: serviceComponents.ordersHistoryService(),
+            storage: makeLocalStorage()
+        ))
     }
 
     private func makeLocalStorage() -> Storage {

@@ -86,8 +86,9 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
 
         viewModel.outputs.didGetAuthError
             .subscribe(onNext: { [weak self] error in
-                self?.showError(error)
-                self?.outputs.finishFlow.accept(())
+                self?.showError(error, completion: {
+                    self?.outputs.finishFlow.accept(())
+                })
             })
             .disposed(by: disposeBag)
 

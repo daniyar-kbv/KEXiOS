@@ -11,6 +11,7 @@ import UIKit
 protocol OrderHistoryViewDelegate: AnyObject {
     func shareToInstagramTapped(with url: String)
     func rateOrder(at orderNumber: Int)
+    func cancelOrder()
 }
 
 final class OrderHistoryCellContentView: UIView {
@@ -120,20 +121,21 @@ final class OrderHistoryCellContentView: UIView {
         return view
     }()
 
-    private lazy var repeatOrderButton: SBSubmitButton = {
+    private lazy var cancelOrderButton: SBSubmitButton = {
         let view = SBSubmitButton(style: .emptyGray)
-        view.setTitle(SBLocalization.localized(key: ProfileText.OrderHistory.repeatOrder),
+        view.setTitle(SBLocalization.localized(key: AnimationsText.ButtonTitle.payment),
                       for: .normal)
         view.snp.makeConstraints {
             $0.height.equalTo(43)
         }
+        view.addTarget(self, action: #selector(cancelOrder), for: .touchUpInside)
         return view
     }()
 
     private lazy var buttonStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [sendCheckButton,
                                                   rateOrderButton,
-                                                  repeatOrderButton])
+                                                  cancelOrderButton])
         view.axis = .vertical
         view.alignment = .fill
         view.distribution = .fillEqually
@@ -223,27 +225,23 @@ final class OrderHistoryCellContentView: UIView {
     }
 
     func configureButtonStack() {
-//        MARK: Tech debt: uncomment when different order statuses exist
+        switch orderStatus {
+        case .new, .paid, .applying, .applyError, .applied, .unconfirmed, .readyForCooking:
+            sendCheckButton.isHidden = true
+            cancelOrderButton.isHidden = false
+            rateOrderButton.isHidden = true
+        case .delivered, .done:
+            sendCheckButton.isHidden = true
+            cancelOrderButton.isHidden = true
+            rateOrderButton.isHidden = false
+        default:
+            sendCheckButton.isHidden = true
+            cancelOrderButton.isHidden = true
+            rateOrderButton.isHidden = true
+            return
+        }
 
-//        if orderStatus == .new || orderStatus == .failure || orderStatus == .issued {
-//            switch orderStatus {
-//            case .new:
-//                sendCheckButton.isHidden = true
-//                repeatOrderButton.isHidden = true
-//                rateOrderButton.isHidden = true
-//            case .failure:
-//                sendCheckButton.isHidden = true
-//                rateOrderButton.isHidden = true
-//                repeatOrderButton.isHidden = false
-//            case .issued:
-        sendCheckButton.isHidden = true
-        repeatOrderButton.isHidden = true
-        rateOrderButton.isHidden = false
-//            default:
-//                return
-//            }
         updateUI()
-//        }
     }
 
     func configure(with item: OrdersList) {
@@ -336,5 +334,9 @@ final class OrderHistoryCellContentView: UIView {
     @objc private func shareToInstagram() {
         guard let checkURL = checkURL else { return }
         delegate?.shareToInstagramTapped(with: checkURL)
+    }
+
+    @objc private func cancelOrder() {
+        delegate?.cancelOrder()
     }
 }

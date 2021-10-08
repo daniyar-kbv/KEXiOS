@@ -29,8 +29,6 @@ final class MenuDetailView: UIView {
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
-        view.image =
-            SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
         return view
     }()
 
@@ -89,7 +87,12 @@ extension MenuDetailView {
         commentaryField.set(text: text)
     }
 
-    func setImageView(with url: URL) {
+    func setImageView(with url: URL?) {
+        guard let url = url else {
+            imageView.image =
+                SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+            return
+        }
         imageView.setImage(url: url)
     }
 

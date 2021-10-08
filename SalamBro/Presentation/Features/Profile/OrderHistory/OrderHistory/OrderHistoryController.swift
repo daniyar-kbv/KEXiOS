@@ -158,4 +158,13 @@ extension OrderHistoryController: OrderTestCellDelegate {
     func rate(at orderNumber: Int) {
         onRateTapped?(orderNumber)
     }
+
+    func cancel() {
+        showAlert(title: SBLocalization.localized(key: ProfileText.OrderHistory.Error.title),
+                  message: SBLocalization.localized(key: ProfileText.OrderHistory.Error.message)) {
+            guard let url = self.viewModel.getContact()?.getURL(),
+                  UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url)
+        }
+    }
 }

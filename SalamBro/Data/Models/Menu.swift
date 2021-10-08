@@ -138,13 +138,14 @@ extension MenuPositionDetail {
 }
 
 extension AdditionalPosition {
-    func toCartItem(count: Int, comment: String, modifiers _: [Modifier], type: CartPosition.PositionType) -> CartItem {
+    func toCartItem(count: Int, comment: String, modifiers _: [Modifier], image: String?, type: CartPosition.PositionType) -> CartItem {
         return .init(
             count: count,
             comment: comment,
             position: .init(
                 uuid: uuid,
                 name: name,
+                image: image,
                 price: Double(price),
                 positionType: type.rawValue,
                 category: categoryUUID,

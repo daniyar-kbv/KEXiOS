@@ -77,13 +77,6 @@ final class PaymentCardView: UIView {
     }
 
     private func layoutUI() {
-        cardNumberField.text = "4000 0566 5566 5556"
-        expiryDateField.text = "11/23"
-        cvvCodeField.text = "222"
-        cardholderNameField.text = "TEST TEST"
-        saveButton.isEnabled = true
-        switchButton.isOn = true
-
         backgroundColor = .arcticWhite
 
         [cardStackView, switchButton, saveCardLabel, saveButton].forEach { addSubview($0) }

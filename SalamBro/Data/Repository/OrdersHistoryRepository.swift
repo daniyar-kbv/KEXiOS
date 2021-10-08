@@ -13,6 +13,7 @@ protocol OrdersHistoryRepository: AnyObject {
     var outputs: OrdersHistoryRepositoryImpl.Output { get }
 
     func getOrders(page: Int)
+    func getContact() -> Contact?
 }
 
 final class OrdersHistoryRepositoryImpl: OrdersHistoryRepository {
@@ -20,8 +21,11 @@ final class OrdersHistoryRepositoryImpl: OrdersHistoryRepository {
     private let disposeBag = DisposeBag()
     private let ordersHistoryService: OrdersHistoryService
 
-    init(ordersHistoryService: OrdersHistoryService) {
+    private let storage: DocumentsStorage
+
+    init(ordersHistoryService: OrdersHistoryService, storage: DocumentsStorage) {
         self.ordersHistoryService = ordersHistoryService
+        self.storage = storage
     }
 
     func getOrders(page: Int) {
@@ -40,6 +44,10 @@ final class OrdersHistoryRepositoryImpl: OrdersHistoryRepository {
                 self?.outputs.didFail.accept(NetworkError.error(error.localizedDescription))
             })
             .disposed(by: disposeBag)
+    }
+
+    func getContact() -> Contact? {
+        storage.contacts.first(where: { $0.getType() == .callCenter })
     }
 }
 

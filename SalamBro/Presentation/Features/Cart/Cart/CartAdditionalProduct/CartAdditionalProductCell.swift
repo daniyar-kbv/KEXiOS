@@ -114,18 +114,17 @@ final class CartAdditionalProductCell: UITableViewCell {
         return view
     }()
 
-    private let disposeBag = DisposeBag()
-    private let viewModel: CartAdditionalProductViewModel
+    private var disposeBag = DisposeBag()
+    private var viewModel: CartAdditionalProductViewModel?
 
     weak var delegate: CartAdditinalProductCellDelegate?
 
-    init(viewModel: CartAdditionalProductViewModel) {
-        self.viewModel = viewModel
+    private var imageURL: URL?
 
+    override init(style _: UITableViewCell.CellStyle, reuseIdentifier _: String?) {
         super.init(style: .default, reuseIdentifier: .none)
 
         layoutUI()
-        bindViewModel()
     }
 
     @available(*, unavailable)
@@ -133,39 +132,43 @@ final class CartAdditionalProductCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        if productImageView.image == nil {
-            productImageView.image =
-                SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
-        }
+    func set(viewModel: CartAdditionalProductViewModel) {
+        self.viewModel = viewModel
+
+        disposeBag = DisposeBag()
+        bindViewModel()
     }
 }
 
 extension CartAdditionalProductCell {
     private func bindViewModel() {
-        viewModel.outputs.itemImage
+        viewModel?.outputs.itemImage
             .bind(onNext: { [weak self] url in
-                guard let url = url else { return }
-                self?.productImageView.setImage(url: url)
+                if url == nil, url != self?.imageURL {
+                    self?.productImageView.image =
+                        SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+                } else if let url = url {
+                    self?.productImageView.setImage(url: url)
+                    self?.imageURL = url
+                }
             })
             .disposed(by: disposeBag)
 
-        viewModel.outputs.itemTitle
+        viewModel?.outputs.itemTitle
             .bind(to: productTitleLabel.rx.text)
             .disposed(by: disposeBag)
 
-        viewModel.outputs.price
+        viewModel?.outputs.price
             .bind(to: priceLabel.rx.text)
             .disposed(by: disposeBag)
 
-        viewModel.outputs.count
+        viewModel?.outputs.count
             .subscribe(onNext: { [weak self] count in
                 self?.countLabel.text = count
                 self?.configureButton(for: count)
             }).disposed(by: disposeBag)
 
-        viewModel.outputs.isAvailable
+        viewModel?.outputs.isAvailable
             .subscribe(onNext: { [weak self] isAvailable in
                 self?.updateAvailability(to: isAvailable)
             }).disposed(by: disposeBag)
@@ -252,7 +255,8 @@ extension CartAdditionalProductCell {
     }
 
     private func updateAvailability(to isAvailable: Bool) {
-        deleteButton.isHidden = isAvailable ? isAvailable : !viewModel.isInUsersCart()
+        guard let isInUsersCart = viewModel?.isInUsersCart() else { return }
+        deleteButton.isHidden = isAvailable ? isAvailable : !isInUsersCart
 
         unavailableLabel.isHidden = isAvailable
         increaseButton.isHidden = !isAvailable
@@ -277,14 +281,17 @@ extension CartAdditionalProductCell {
 
 extension CartAdditionalProductCell {
     @objc private func decreaseItemCount(_: UIButton) {
-        delegate?.decrementAdditionalItem(item: viewModel.getItem())
+        guard let item = viewModel?.getItem() else { return }
+        delegate?.decrementAdditionalItem(item: item)
     }
 
     @objc private func increaseItemButton(_: UIButton) {
-        delegate?.incrementAdditionalItem(item: viewModel.getItem())
+        guard let item = viewModel?.getItem() else { return }
+        delegate?.incrementAdditionalItem(item: item)
     }
 
     @objc private func deleteItem() {
-        delegate?.deleteAdditionalItem(item: viewModel.getItem())
+        guard let item = viewModel?.getItem() else { return }
+        delegate?.deleteAdditionalItem(item: item)
     }
 }
