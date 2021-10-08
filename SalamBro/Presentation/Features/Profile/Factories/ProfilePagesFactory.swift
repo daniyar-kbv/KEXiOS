@@ -43,6 +43,7 @@ final class ProfilePagesFactoryImpl: DependencyFactory, ProfilePagesFactory {
     }
 
     private func makeChangeLanguageViewModel() -> ChangeLanguageViewModelImpl {
-        return scoped(ChangeLanguageViewModelImpl(defaultStorage: DefaultStorageImpl.sharedStorage))
+        return scoped(ChangeLanguageViewModelImpl(defaultStorage: DefaultStorageImpl.sharedStorage,
+                                                  addressRepository: repositoryComponents.makeAddressRepository()))
     }
 }

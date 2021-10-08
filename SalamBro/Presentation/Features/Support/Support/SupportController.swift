@@ -73,7 +73,7 @@ final class SupportController: UIViewController, LoaderDisplayable, Reloadable {
         super.viewDidLoad()
         layoutUI()
         bindViewModel()
-        viewModel.getData()
+        viewModel.fetchData()
 
         navigationItem.title = SBLocalization.localized(key: SupportText.Support.title)
     }

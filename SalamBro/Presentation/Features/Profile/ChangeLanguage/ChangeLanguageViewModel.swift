@@ -19,13 +19,20 @@ protocol ChangeLanguageViewModel: AnyObject {
 }
 
 final class ChangeLanguageViewModelImpl: ChangeLanguageViewModel {
+    private let disposeBag = DisposeBag()
+
     private let defaultStorage: DefaultStorage
     private(set) var outputs: Output = .init()
 
+    private let addressRepository: AddressRepository
+
     let languages: [Language] = [.russian, .kazakh]
 
-    init(defaultStorage: DefaultStorage) {
+    init(defaultStorage: DefaultStorage, addressRepository: AddressRepository) {
         self.defaultStorage = defaultStorage
+        self.addressRepository = addressRepository
+
+        bindOutputs()
     }
 
     func getLanguage(at index: Int) -> (language: Language, isCurrent: Bool) {
@@ -34,14 +41,27 @@ final class ChangeLanguageViewModelImpl: ChangeLanguageViewModel {
 
     func changeLanguage(at index: Int) {
         defaultStorage.persist(appLocale: languages[index])
-        outputs.didChangeLanguage.accept(())
-        outputs.didEnd.accept(())
+        addressRepository.getUserAddresses()
+    }
+
+    private func bindOutputs() {
+        addressRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        addressRepository.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.didChangeLanguage.accept(())
+                self?.outputs.didEndRequest.accept(())
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 extension ChangeLanguageViewModelImpl {
     struct Output {
+        let didStartRequest = PublishRelay<Void>()
+        let didEndRequest = PublishRelay<Void>()
         let didChangeLanguage = PublishRelay<Void>()
-        let didEnd = PublishRelay<Void>()
     }
 }
