@@ -415,17 +415,18 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
     }
 
     func onAuthorizationCompleted(with md: String, paRes: String) {
-        outputs.hide3DS.accept(())
+        outputs.hide3DS.accept {
+            guard let paymentUUID = self.paymentUUID else { return }
+            self.send3DS(paymentUUID: paymentUUID, paRes: paRes, transactionId: md)
+            self.paymentUUID = nil
+        }
         threeDsProcessor = nil
-        guard let paymentUUID = paymentUUID else { return }
-        send3DS(paymentUUID: paymentUUID, paRes: paRes, transactionId: md)
-        self.paymentUUID = nil
     }
 
     func onAuthorizationFailed(with html: String) {
         threeDsProcessor = nil
         paymentUUID = nil
-        outputs.hide3DS.accept(())
+        outputs.hide3DS.accept {}
         print("error: \(html)")
     }
 }
@@ -453,7 +454,7 @@ extension PaymentRepositoryImpl {
         let didGetBranchError = PublishRelay<ErrorPresentable>()
 
         let show3DS = PublishRelay<WKWebView>()
-        let hide3DS = PublishRelay<Void>()
+        let hide3DS = PublishRelay<() -> Void>()
         let showApplePay = PublishRelay<PKPaymentAuthorizationViewController>()
 
         let selectedPaymentMethod = PublishRelay<PaymentMethod?>()
