@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class ChangeLanguageController: UIViewController {
+final class ChangeLanguageController: UIViewController, LoaderDisplayable {
     private let disposeBag = DisposeBag()
 
     private let viewModel: ChangeLanguageViewModel
@@ -57,15 +57,22 @@ final class ChangeLanguageController: UIViewController {
 
 extension ChangeLanguageController {
     private func bindViewModel() {
+        viewModel.outputs.didStartRequest
+            .subscribe(onNext: { [weak self] in
+                self?.showLoader()
+            }).disposed(by: disposeBag)
+
         viewModel.outputs.didChangeLanguage
             .subscribe(onNext: { [weak self] in
                 self?.languagesTableView.reloadData()
             })
             .disposed(by: disposeBag)
 
-        viewModel.outputs.didEnd
-            .bind(to: outputs.restart)
-            .disposed(by: disposeBag)
+        viewModel.outputs.didEndRequest
+            .subscribe(onNext: { [weak self] in
+                self?.outputs.restart.accept(())
+                self?.hideLoader()
+            }).disposed(by: disposeBag)
     }
 }
 
