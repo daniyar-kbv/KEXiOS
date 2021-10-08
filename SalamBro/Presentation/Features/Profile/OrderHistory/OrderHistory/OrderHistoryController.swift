@@ -164,11 +164,7 @@ extension OrderHistoryController: OrderTestCellDelegate {
                   message: SBLocalization.localized(key: ProfileText.OrderHistory.Error.message)) {
             guard let url = self.viewModel.getContact()?.getURL(),
                   UIApplication.shared.canOpenURL(url) else { return }
-            if #available(iOS 12, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
+            UIApplication.shared.open(url)
         }
     }
 }

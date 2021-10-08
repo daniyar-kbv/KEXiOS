@@ -81,9 +81,7 @@ final class PaymentSelectionViewController: UIViewController, LoaderDisplayable 
 
         viewModel.outputs.didGetError
             .subscribe(onNext: { [weak self] error in
-                self?.showError(error, completion: {
-                    self?.outputs.threeDSFailed.accept(())
-                })
+                self?.showError(error)
             }).disposed(by: disposeBag)
 
         viewModel.outputs.didGetAuthError
@@ -172,6 +170,5 @@ extension PaymentSelectionViewController {
         let didMakePayment = PublishRelay<Void>()
         let finishFlow = PublishRelay<Void>()
         let branchClosed = PublishRelay<Void>()
-        let threeDSFailed = PublishRelay<Void>()
     }
 }

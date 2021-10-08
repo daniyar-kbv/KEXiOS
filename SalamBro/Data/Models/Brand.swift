@@ -18,7 +18,7 @@ class Brand: Codable {
         case isAvailable = "is_available"
     }
 
-    init(id: Int, name: String, image: String?, isAvailable: Bool) {
+    init(id: Int?, name: String, image: String?, isAvailable: Bool) {
         self.id = id
         self.name = name
         self.image = image
@@ -28,7 +28,7 @@ class Brand: Codable {
 
 extension Brand {
     func getCopy() -> Brand {
-        return .init(id: id ?? 0, name: name, image: image, isAvailable: isAvailable ?? false)
+        return .init(id: id, name: name, image: image, isAvailable: isAvailable ?? false)
     }
 }
 

@@ -87,13 +87,13 @@ extension MenuDetailView {
         commentaryField.set(text: text)
     }
 
-    func setImageView(with url: URL) {
-        if url.absoluteString.isEmpty {
+    func setImageView(with url: URL?) {
+        guard let url = url else {
             imageView.image =
                 SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
-        } else {
-            imageView.setImage(url: url)
+            return
         }
+        imageView.setImage(url: url)
     }
 
     private func configureActions() {
