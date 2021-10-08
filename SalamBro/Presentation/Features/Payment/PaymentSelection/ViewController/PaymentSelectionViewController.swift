@@ -166,7 +166,7 @@ extension PaymentSelectionViewController {
         let close = PublishRelay<Void>()
         let onChangePaymentMethod = PublishRelay<Void>()
         let show3DS = PublishRelay<WKWebView>()
-        let hide3DS = PublishRelay<Void>()
+        let hide3DS = PublishRelay<() -> Void>()
         let didMakePayment = PublishRelay<Void>()
         let finishFlow = PublishRelay<Void>()
         let branchClosed = PublishRelay<Void>()

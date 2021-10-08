@@ -134,7 +134,7 @@ extension PaymentSelectionViewModelImpl {
         let totalAmount = BehaviorRelay<String?>(value: nil)
         let didSelectPaymentMethod = PublishRelay<PaymentMethod?>()
         let show3DS = PublishRelay<WKWebView>()
-        let hide3DS = PublishRelay<Void>()
+        let hide3DS = PublishRelay<() -> Void>()
         let showApplePay = PublishRelay<PKPaymentAuthorizationViewController>()
         let didMakePayment = PublishRelay<Void>()
     }

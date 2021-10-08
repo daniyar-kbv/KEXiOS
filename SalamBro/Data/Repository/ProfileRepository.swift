@@ -71,6 +71,12 @@ final class ProfileRepositoryImpl: ProfileRepository {
             .disposed(by: disposeBag)
     }
 
+    func logoutWhenUnauthorized() {
+        tokenStorage.cleanUp()
+        clearCookies()
+        outputs.didLogout.accept(())
+    }
+
     func set(userInfo: UserInfoResponse) {
         outputs.didGetUserInfo.accept(userInfo)
     }
@@ -110,7 +116,7 @@ extension ProfileRepositoryImpl {
         NotificationCenter.default.rx
             .notification(Constants.InternalNotification.unauthorize.name)
             .subscribe(onNext: { [weak self] _ in
-                self?.logout()
+                self?.logoutWhenUnauthorized()
             })
             .disposed(by: disposeBag)
     }
