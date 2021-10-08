@@ -24,14 +24,12 @@ protocol MenuViewModelProtocol {
     func didSelectRow(at indexPath: IndexPath)
     func finishedScrolling()
     func willDisplayRow(at indexPath: IndexPath)
-    func updateUserAddresses()
 }
 
 final class MenuViewModel: MenuViewModelProtocol {
     private let disposeBag = DisposeBag()
     let outputs = Output()
 
-    private let addressRepository: AddressRepository
     private let brandRepository: BrandRepository
     private let menuRepository: MenuRepository
     private let defaultStorage: DefaultStorage
@@ -40,14 +38,12 @@ final class MenuViewModel: MenuViewModelProtocol {
     private var tableSections: [Section] = []
     private var scrollService: MenuScrollService
 
-    init(addressRepository: AddressRepository,
-         brandRepository: BrandRepository,
+    init(brandRepository: BrandRepository,
          menuRepository: MenuRepository,
          defaultStorage: DefaultStorage,
          tokenStorage: AuthTokenStorage,
          scrollService: MenuScrollService)
     {
-        self.addressRepository = addressRepository
         self.brandRepository = brandRepository
         self.menuRepository = menuRepository
         self.defaultStorage = defaultStorage
@@ -156,10 +152,6 @@ final class MenuViewModel: MenuViewModelProtocol {
 }
 
 extension MenuViewModel {
-    func updateUserAddresses() {
-        addressRepository.getUserAddresses()
-    }
-
     func processToBrand() {
         guard tokenStorage.token != nil else {
             outputs.toAuthChangeBrand.accept(())

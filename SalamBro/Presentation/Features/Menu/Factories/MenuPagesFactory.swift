@@ -24,8 +24,7 @@ class MenuPagesFactoryIml: DependencyFactory, MenuPagesFactory {
     }
 
     private func makeMenuViewModel() -> MenuViewModelProtocol {
-        return scoped(MenuViewModel(addressRepository: repositoryComponents.makeAddressRepository(),
-                                    brandRepository: repositoryComponents.makeBrandRepository(),
+        return scoped(MenuViewModel(brandRepository: repositoryComponents.makeBrandRepository(),
                                     menuRepository: repositoryComponents.makeMenuRepository(),
                                     defaultStorage: DefaultStorageImpl.sharedStorage,
                                     tokenStorage: AuthTokenStorageImpl.sharedStorage,
