@@ -264,12 +264,9 @@ extension PaymentRepositoryImpl {
             sendHidePaymentProcessNotification { [weak self] in
                 self?.defaultStorage.persist(isPaymentProcess: false)
 
-                guard let statusReason = paymentStatus.statusReason else {
-                    self?.outputs.didGetError.accept(NetworkError.badMapping)
-                    return
-                }
+                let error = ErrorResponse(code: paymentStatus.status,
+                                          message: paymentStatus.statusReason ?? "")
 
-                let error = ErrorResponse(code: paymentStatus.status, message: statusReason)
                 self?.outputs.didGetError.accept(error)
             }
         }
