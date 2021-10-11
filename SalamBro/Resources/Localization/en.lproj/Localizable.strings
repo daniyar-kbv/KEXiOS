@@ -213,6 +213,7 @@
 "Error.mappingError" = "EN Неудалось обработать ответ";
 "Error.noData" = "EN Нет данных";
 "Error.unauthorized" = "EN Вам необходимо снова авторизоваться";
+"Error.internetConnection" = "EN Интернет соеденение было прервано";
 
 // MARK: - Payment Selection
 

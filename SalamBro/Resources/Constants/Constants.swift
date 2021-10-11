@@ -43,6 +43,7 @@ struct Constants {
         static let notFound = "not_found"
         static let terminalNotFound = "terminal_not_found"
         static let branchIsClosed = "branch_is_closed"
+        static let localNetworkConnection = "local_network_connection"
     }
 
     enum StatusCode {
