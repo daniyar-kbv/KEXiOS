@@ -16,6 +16,7 @@ final class NetworkErrorPlugin: PluginType {
             switch error {
             case let .underlying(error, _):
                 guard (error.asAFError?.isSessionTaskError) == true else { return result }
+//                Tech debt: refactor
 //                Да, костыль, ну а что делать?
                 let json = [
                     "data": nil,

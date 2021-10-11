@@ -9,8 +9,6 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-// Tech debt: add types
-
 final class MapCommentaryPage: UIViewController {
     var cachedCommentary: String? {
         didSet {
