@@ -54,26 +54,32 @@ struct Constants {
         case unauthorize
         case userInfo
         case leadUUID
-        case updateMenu
         case clearCart
         case cart
         case userAddresses
         case startFirstFlow
         case showPaymentProcess
         case hidePaymentProcess
+        case updateMenu
+        case updateCart
+        case updateProfile
+        case updateDocuments
 
         var name: Notification.Name {
             switch self {
             case .unauthorize: return .init("Unauthorize")
             case .userInfo: return .init("UserInfo")
             case .leadUUID: return .init("LeadUUID")
-            case .updateMenu: return .init("UpdateMenu")
             case .clearCart: return .init("ClearCart")
             case .cart: return .init("Cart")
             case .userAddresses: return .init("UserAddresses")
             case .startFirstFlow: return .init("StartFirstFlow")
             case .showPaymentProcess: return .init("ShowPaymentProcess")
             case .hidePaymentProcess: return .init("HidePaymentProcess")
+            case .updateMenu: return .init("UpdateMenu")
+            case .updateCart: return .init("UpdateCart")
+            case .updateProfile: return .init("UpdateProfile")
+            case .updateDocuments: return .init("UpdateDocuments")
             }
         }
     }

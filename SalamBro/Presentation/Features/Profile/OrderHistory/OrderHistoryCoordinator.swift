@@ -45,6 +45,7 @@ final class OrderHistoryCoordinator: BaseCoordinator {
             self?.router.popToRootViewController(animated: true)
         }
 
+        print("start order hisory")
         orderHistoryPage.hidesBottomBarWhenPushed = true
         router.push(viewController: orderHistoryPage, animated: true)
     }

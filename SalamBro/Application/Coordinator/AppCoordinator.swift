@@ -308,6 +308,35 @@ extension AppCoordinator {
     }
 }
 
+//  MARK: - Animation Presentation
+
+extension AppCoordinator {
+    private func showAnimation(type: LottieAnimationModel) {
+        UIApplication.shared.keyWindow?.subviews
+            .first(where: { $0 is AnimationContainerView })?
+            .removeFromSuperview()
+
+        let animationView = AnimationContainerView(animationType: type)
+
+        UIApplication.shared.keyWindow?.addSubview(animationView)
+
+        animationView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        animationView.animationPlay()
+    }
+
+    private func hideAnimation() {
+        UIApplication.shared.keyWindow?.subviews
+            .first(where: { $0 is AnimationContainerView })?
+            .removeFromSuperview()
+
+        (UIApplication.topViewController() as? Reloadable)?.reload()
+//        restartApp()
+    }
+}
+
 //  MARK: - Payment Process View handling
 
 extension AppCoordinator {
@@ -315,26 +344,16 @@ extension AppCoordinator {
         NotificationCenter.default.rx
             .notification(Constants.InternalNotification.showPaymentProcess.name)
             .subscribe(onNext: { [weak self] _ in
-                self?.showPaymentProcess()
+                self?.showAnimation(type: .payment)
             })
             .disposed(by: disposeBag)
 
         NotificationCenter.default.rx
             .notification(Constants.InternalNotification.hidePaymentProcess.name)
-            .subscribe(onNext: { [weak self] completion in
-                self?.hidePaymentProcess(completion: completion.object as? () -> Void)
+            .subscribe(onNext: { [weak self] _ in
+                self?.hideAnimation()
             })
             .disposed(by: disposeBag)
-    }
-
-    private func showPaymentProcess() {
-        UIApplication.topViewController()?.presentAnimationView(animationType: .payment, action: nil)
-    }
-
-    private func hidePaymentProcess(completion: (() -> Void)? = nil) {
-        UIApplication.topViewController()?.dismiss(animated: false) {
-            completion?()
-        }
     }
 }
 
@@ -356,30 +375,9 @@ extension AppCoordinator {
 
     private func processReachability(_ isReachable: Bool) {
         if isReachable {
-            hideNoInternet()
+            hideAnimation()
         } else {
-            showNoInternet()
+            showAnimation(type: .noInternet)
         }
-    }
-
-    private func showNoInternet() {
-        UIApplication.topViewController()?.presentAnimationView(animationType: .noInternet, action: nil)
-    }
-
-    private func hideNoInternet(completion: (() -> Void)? = nil) {
-        UIApplication.topViewController()?.dismiss(animated: false) { [weak self] in
-            guard (UIApplication.topViewController() as? AnimationController)?.animationType != .payment else {
-                UIApplication.topViewController()?.dismiss(animated: false) {
-                    self?.finishHideNoInternet(completion: completion)
-                }
-                return
-            }
-            self?.finishHideNoInternet(completion: completion)
-        }
-    }
-
-    private func finishHideNoInternet(completion: (() -> Void)?) {
-        (UIApplication.topViewController() as? Reloadable)?.reload()
-        completion?()
     }
 }
