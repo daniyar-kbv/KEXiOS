@@ -342,12 +342,21 @@ enum ProfileText: UILocalizable {
         case rateOrder = "OrderHistory.rateOrder"
         case repeatOrder = "OrderHistory.repeatOrder"
         case cancelOrder = "OrderHistory.cancelOrder"
-        case new = "OrderHistory.new"
-        case paid = "OrderHistory.paid"
-        case cooking = "OrderHistory.cooking"
-        case inDelivery = "OrderHistory.inDelivery"
-        case issued = "OrderHistory.issued"
-        case failure = "OrderHistory.failure"
+
+        case applying = "OrderHistory.applying"
+        case started = "OrderHistory.started"
+        case waiting = "OrderHistory.waiting"
+        case onWay = "OrderHistory.onWay"
+        case delivered = "OrderHistory.delivered"
+        case canceled = "OrderHistory.canceled"
+
+        enum Error: String, UILocalizable {
+            case title = "OrderHistory.Error.title"
+            case message = "OrderHistory.Error.text"
+
+            var localized: String { rawValue }
+        }
+
         case price = "CartFooter.priceSymbol"
 
         var localized: String { rawValue }

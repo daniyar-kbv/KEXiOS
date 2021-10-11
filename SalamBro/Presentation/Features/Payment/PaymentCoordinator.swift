@@ -51,8 +51,8 @@ final class PaymentCoordinator: BaseCoordinator {
             }).disposed(by: disposeBag)
 
         paymentSelectionVC.outputs.hide3DS
-            .subscribe(onNext: { [weak self] in
-                self?.hide3DS()
+            .subscribe(onNext: { [weak self] completion in
+                self?.hide3DS(completion)
             }).disposed(by: disposeBag)
 
         paymentSelectionVC.outputs.didMakePayment
@@ -181,7 +181,7 @@ final class PaymentCoordinator: BaseCoordinator {
 
         threeDSController?.outputs.close
             .subscribe(onNext: { [weak self] in
-                self?.hide3DS()
+                self?.hide3DS {}
             }).disposed(by: disposeBag)
 
         guard let threeDSController = threeDSController else { return }
@@ -192,8 +192,9 @@ final class PaymentCoordinator: BaseCoordinator {
         viewController?.present(nav, animated: false)
     }
 
-    private func hide3DS() {
+    private func hide3DS(_ completion: @escaping () -> Void) {
         threeDSController?.dismiss(animated: false) { [weak self] in
+            completion()
             self?.threeDSController = nil
         }
     }

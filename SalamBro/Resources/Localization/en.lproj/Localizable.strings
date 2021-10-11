@@ -157,12 +157,14 @@
 "OrderHistory.rateOrder" = "EN Оценить заказ";
 "OrderHistory.repeatOrder" = "EN Повторить заказ";
 "OrderHistory.cancelOrder" = "EN Отменить заказ";
-"OrderHistory.new" = "EN Новый";
-"OrderHistory.paid" = "EN Оплачен";
-"OrderHistory.cooking" = "EN Готовится";
-"OrderHistory.inDelivery" = "EN В пути";
-"OrderHistory.issued" = "EN Доставлен";
-"OrderHistory.failure" = "EN Отменен";
+"OrderHistory.applying" = "EN На потверждении";
+"OrderHistory.started" = "EN Готовится";
+"OrderHistory.waiting" = "EN Ожидает курьера";
+"OrderHistory.onWay" = "EN Доставляется";
+"OrderHistory.delivered" = "EN Доставлен";
+"OrderHistory.canceled" = "EN Отменен";
+"OrderHistory.Error.title" = "EN Внимание";
+"OrderHistory.Error.text" = "EN Если вы хотите отменить заказ, то вам необходимо связатьс с колл-центром.";
 
 // MARK: - Select Main Info
 "select_main_info.country" = "EN Страна";

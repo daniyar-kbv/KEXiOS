@@ -101,6 +101,7 @@
 		F091964D4253066851CF444BC7E80896 /* CitiesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F9B00C87EC9410D224F0BF4AE07C2E /* CitiesRepository.swift */; };
 		02FD958DFEED73F2B0A2F45702768640 /* CitiesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182A758BB1A04D6DD413CD71E6E6FE1 /* CitiesResponse.swift */; };
 		8F0879F3C1CF7D3E797F02DE9FDE9F39 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D108C9F3E1BE55E39EBB94BB446FA4 /* City.swift */; };
+		31BE32302BADC4FEFC6BA834BBFABA5C /* ConfigurationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB0D8C2F30BD0A6ECB0A487BB7088F7 /* ConfigurationPlugin.swift */; };
 		56EF0190AA0C382AE88C80A7550E9C1F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */; };
 		8F699535B6CA823BFD614E876109274E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48B66EEDF6F5955128F064B6723FD19 /* Contact.swift */; };
 		9C8E65C43F933DDE451A60237F056730 /* CountriesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6868AB836014516D5C9A9FA53A38C3C /* CountriesListController.swift */; };
@@ -126,7 +127,6 @@
 		54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070881AEDB3977B0482B6A6B06A1C201 /* GeoStorage.swift */; };
 		7FF3C00C520DBCFD5B1F801D9F8B482F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */; };
 		10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */; };
-		2C3E677691E3DAE38B0D168AE032D58A /* LanguagePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFEA9695FCF2EA57210330515725F4B /* LanguagePlugin.swift */; };
 		05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */; };
 		A5C9B7AD6C8EB31158EB6C4FBD444C18 /* LeadInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6080B52F0FEB50CD00ABE2FFDB49B4CD /* LeadInfo.swift */; };
 		AFE4A9CB1651215078FF7933E0FE1E84 /* LoaderDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B1DD3359C1EF5D60E6A24C6244E9F6 /* LoaderDisplayable.swift */; };
@@ -461,6 +461,7 @@
 		F5F9B00C87EC9410D224F0BF4AE07C2E /* CitiesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesRepository.swift; sourceTree = "<group>"; };
 		D182A758BB1A04D6DD413CD71E6E6FE1 /* CitiesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesResponse.swift; sourceTree = "<group>"; };
 		D4D108C9F3E1BE55E39EBB94BB446FA4 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		BAB0D8C2F30BD0A6ECB0A487BB7088F7 /* ConfigurationPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationPlugin.swift; sourceTree = "<group>"; };
 		76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F48B66EEDF6F5955128F064B6723FD19 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		C6868AB836014516D5C9A9FA53A38C3C /* CountriesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListController.swift; sourceTree = "<group>"; };
@@ -489,7 +490,6 @@
 		82DF8DD4A94962F1A97777FAD3747A32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9C0AD81DF662457ACBFD84D90AF44BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
-		5FFEA9695FCF2EA57210330515725F4B /* LanguagePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePlugin.swift; sourceTree = "<group>"; };
 		118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6080B52F0FEB50CD00ABE2FFDB49B4CD /* LeadInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadInfo.swift; sourceTree = "<group>"; };
 		39BA308FCB7A9A775DD5A1463690B68E /* LegacyCartDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyCartDTO.swift; sourceTree = "<group>"; };
@@ -947,7 +947,7 @@
 			isa = PBXGroup;
 			children = (
 				2F6040B6D620DF2D89D9D6F170DA7189 /* AuthPlugin.swift */,
-				5FFEA9695FCF2EA57210330515725F4B /* LanguagePlugin.swift */,
+				BAB0D8C2F30BD0A6ECB0A487BB7088F7 /* ConfigurationPlugin.swift */,
 			);
 			path = Plugins;
 			sourceTree = "<group>";
@@ -2752,6 +2752,7 @@
 				F091964D4253066851CF444BC7E80896 /* CitiesRepository.swift in Sources */,
 				02FD958DFEED73F2B0A2F45702768640 /* CitiesResponse.swift in Sources */,
 				8F0879F3C1CF7D3E797F02DE9FDE9F39 /* City.swift in Sources */,
+				31BE32302BADC4FEFC6BA834BBFABA5C /* ConfigurationPlugin.swift in Sources */,
 				56EF0190AA0C382AE88C80A7550E9C1F /* Constants.swift in Sources */,
 				8F699535B6CA823BFD614E876109274E /* Contact.swift in Sources */,
 				9C8E65C43F933DDE451A60237F056730 /* CountriesListController.swift in Sources */,
@@ -2776,7 +2777,6 @@
 				4689A2E43C9E1832756F31868F0DBF8F /* Formatted+Extension.swift in Sources */,
 				54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */,
 				10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */,
-				2C3E677691E3DAE38B0D168AE032D58A /* LanguagePlugin.swift in Sources */,
 				A5C9B7AD6C8EB31158EB6C4FBD444C18 /* LeadInfo.swift in Sources */,
 				AFE4A9CB1651215078FF7933E0FE1E84 /* LoaderDisplayable.swift in Sources */,
 				11A54FF839FE6A0CBA870EEB511B5D87 /* LocationAPI.swift in Sources */,
@@ -3138,7 +3138,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 62;
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -3146,7 +3146,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.58;
+				MARKETING_VERSION = 0.0.62;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3208,7 +3208,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 62;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
@@ -3217,7 +3217,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.58;
+				MARKETING_VERSION = 0.0.62;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

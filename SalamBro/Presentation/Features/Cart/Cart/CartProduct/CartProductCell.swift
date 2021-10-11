@@ -122,17 +122,16 @@ final class CartProductCell: UITableViewCell {
         return view
     }()
 
-    private let viewModel: CartProductViewModel
-    private let disposeBag = DisposeBag()
+    private var viewModel: CartProductViewModel?
+    private var disposeBag = DisposeBag()
 
     weak var delegate: CartAdditinalProductCellDelegate?
 
-    init(viewModel: CartProductViewModel) {
-        self.viewModel = viewModel
+    private var imageURL: URL?
 
+    override init(style _: UITableViewCell.CellStyle, reuseIdentifier _: String?) {
         super.init(style: .default, reuseIdentifier: .none)
 
-        bindViewModel()
         layoutUI()
     }
 
@@ -141,12 +140,11 @@ final class CartProductCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        if productImageView.image == nil {
-            productImageView.image =
-                SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
-        }
+    func set(viewModel: CartProductViewModel) {
+        self.viewModel = viewModel
+
+        disposeBag = DisposeBag()
+        bindViewModel()
     }
 }
 
@@ -246,34 +244,39 @@ extension CartProductCell {
 
 extension CartProductCell {
     private func bindViewModel() {
-        viewModel.outputs.itemImage
+        viewModel?.outputs.itemImage
             .bind(onNext: { [weak self] url in
-                guard let url = url else { return }
-                self?.productImageView.setImage(url: url)
+                if url == nil, url != self?.imageURL {
+                    self?.productImageView.image =
+                        SBImageResource.getIcon(for: MenuIcons.Menu.dishPlaceholder)
+                } else if let url = url {
+                    self?.productImageView.setImage(url: url)
+                    self?.imageURL = url
+                }
             })
             .disposed(by: disposeBag)
 
-        viewModel.outputs.itemTitle
+        viewModel?.outputs.itemTitle
             .bind(to: productTitleLabel.rx.text)
             .disposed(by: disposeBag)
 
-        viewModel.outputs.modifiersTitles
+        viewModel?.outputs.modifiersTitles
             .bind(to: subitemLabel.rx.text)
             .disposed(by: disposeBag)
 
-        viewModel.outputs.comment
+        viewModel?.outputs.comment
             .bind(to: commentLabel.rx.text)
             .disposed(by: disposeBag)
 
-        viewModel.outputs.price
+        viewModel?.outputs.price
             .bind(to: priceLabel.rx.text)
             .disposed(by: disposeBag)
 
-        viewModel.outputs.count
+        viewModel?.outputs.count
             .bind(to: countLabel.rx.text)
             .disposed(by: disposeBag)
 
-        viewModel.outputs.isAvailable
+        viewModel?.outputs.isAvailable
             .subscribe(onNext: { [weak self] isAvailable in
                 self?.updateAvailability(to: isAvailable)
             }).disposed(by: disposeBag)
@@ -295,14 +298,17 @@ extension CartProductCell {
     }
 
     @objc private func increaseItemButton() {
-        delegate?.increment(internalUUID: viewModel.getInternalUUID())
+        guard let uuid = viewModel?.getInternalUUID() else { return }
+        delegate?.increment(internalUUID: uuid)
     }
 
     @objc private func decreaseItemCount() {
-        delegate?.decrement(internalUUID: viewModel.getInternalUUID())
+        guard let uuid = viewModel?.getInternalUUID() else { return }
+        delegate?.decrement(internalUUID: uuid)
     }
 
     @objc private func deleteItem() {
-        delegate?.delete(internalUUID: viewModel.getInternalUUID())
+        guard let uuid = viewModel?.getInternalUUID() else { return }
+        delegate?.delete(internalUUID: uuid)
     }
 }

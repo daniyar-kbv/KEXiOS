@@ -62,9 +62,9 @@ enum LottieAnimationModel: String, CaseIterable {
 
     var withButton: Bool {
         switch self {
-        case .orderHistory, .emptyBasket, .noInternet, .upgrade, .overload, .payment, .profile:
+        case .orderHistory, .emptyBasket, .noInternet, .upgrade, .overload, .profile:
             return true
-        case .closed:
+        case .closed, .payment:
             return false
         }
     }

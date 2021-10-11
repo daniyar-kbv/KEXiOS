@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-struct LanguagePlugin: PluginType {
+struct ConfigurationPlugin: PluginType {
     private let defaultStorage: DefaultStorage
 
     init(defaultStorage: DefaultStorage) {
@@ -19,6 +19,7 @@ struct LanguagePlugin: PluginType {
         var request = request
 
         request.addValue(defaultStorage.appLocale.code, forHTTPHeaderField: "language")
+        request.addValue("IOS", forHTTPHeaderField: "User-Agent")
 
         return request
     }

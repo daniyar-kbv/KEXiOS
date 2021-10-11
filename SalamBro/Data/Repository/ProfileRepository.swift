@@ -27,11 +27,13 @@ final class ProfileRepositoryImpl: ProfileRepository {
     private let profileService: ProfileService
     private let authService: AuthService
     private let tokenStorage: AuthTokenStorage
+    private let defaultStorage: DefaultStorage
 
-    init(profileService: ProfileService, authService: AuthService, tokenStorage: AuthTokenStorage) {
+    init(profileService: ProfileService, authService: AuthService, tokenStorage: AuthTokenStorage, defaultStorage: DefaultStorage) {
         self.profileService = profileService
         self.authService = authService
         self.tokenStorage = tokenStorage
+        self.defaultStorage = defaultStorage
 
         bindNotifications()
     }
@@ -52,6 +54,24 @@ final class ProfileRepositoryImpl: ProfileRepository {
     }
 
     func logout() {
+        guard let token = defaultStorage.fcmToken else { return }
+
+        outputs.didStartRequest.accept(())
+        profileService.logOutUser(dto: LogOutDTO(token: token))
+            .subscribe(onSuccess: { [weak self] _ in
+                self?.outputs.didEndRequest.accept(())
+                self?.tokenStorage.cleanUp()
+                self?.clearCookies()
+                self?.outputs.didLogout.accept(())
+            }, onError: { [weak self] error in
+                self?.outputs.didEndRequest.accept(())
+                guard let error = error as? ErrorPresentable else { return }
+                self?.outputs.didFail.accept(error)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    func logoutWhenUnauthorized() {
         tokenStorage.cleanUp()
         clearCookies()
         outputs.didLogout.accept(())
@@ -96,7 +116,7 @@ extension ProfileRepositoryImpl {
         NotificationCenter.default.rx
             .notification(Constants.InternalNotification.unauthorize.name)
             .subscribe(onNext: { [weak self] _ in
-                self?.logout()
+                self?.logoutWhenUnauthorized()
             })
             .disposed(by: disposeBag)
     }

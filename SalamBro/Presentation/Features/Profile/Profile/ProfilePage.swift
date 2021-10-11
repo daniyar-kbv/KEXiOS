@@ -123,7 +123,7 @@ final class ProfilePage: UIViewController, LoaderDisplayable {
 
     private func updateViews(with model: UserInfoResponse) {
         if let phoneNumber = model.mobilePhone {
-            contentView.phoneTitleLabel.text = phoneNumber
+            contentView.phoneTitleLabel.text = phoneNumber.toPhoneNumber()
         }
         contentView.nameLabel.text = model.name
         contentView.emailLabel.text = model.email

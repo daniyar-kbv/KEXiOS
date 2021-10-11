@@ -22,7 +22,7 @@ protocol CartViewModel {
     func numberOfSections() -> Int
     func numberOfRows(in section: Int) -> Int
     func headerView(for section: Int) -> UIView
-    func cell(for indexPath: IndexPath) -> UITableViewCell
+    func cell(tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell
 
     func proceedButtonTapped()
 
@@ -140,20 +140,22 @@ extension CartViewModelImpl {
         }
     }
 
-    func cell(for indexPath: IndexPath) -> UITableViewCell {
+    func cell(tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
         let tableSection = tableSections[indexPath.section]
         let viewModel = tableSection.cellViewModels[indexPath.row]
         switch tableSection.type {
         case .products:
             guard let viewModel = viewModel as? CartProductViewModel
             else { return UITableViewCell() }
-            let cell = CartProductCell(viewModel: viewModel)
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CartProductCell.self), for: indexPath) as! CartProductCell
+            cell.set(viewModel: viewModel)
             cell.delegate = self
             return cell
         case .additional:
             guard let viewModel = viewModel as? CartAdditionalProductViewModel
             else { return UITableViewCell() }
-            let cell = CartAdditionalProductCell(viewModel: viewModel)
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CartAdditionalProductCell.self), for: indexPath) as! CartAdditionalProductCell
+            cell.set(viewModel: viewModel)
             cell.delegate = self
             return cell
         case .promocode:

@@ -228,6 +228,8 @@ extension AppCoordinator {
         cartCoordinator.restart()
 
         cartCoordinator.router.getNavigationController().tabBarItem = SBTabBarType.cart.tabBarItem
+
+        configCartTabBarItem(cartCoordinator: cartCoordinator)
     }
 }
 

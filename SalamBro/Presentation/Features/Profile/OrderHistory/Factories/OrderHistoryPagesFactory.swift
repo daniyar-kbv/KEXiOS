@@ -22,7 +22,8 @@ final class OrderHistoryPagesFactoryImpl: DependencyFactory, OrderHistoryPagesFa
 
     func makeOrderHistoryPage() -> OrderHistoryController {
         return scoped(.init(viewModel: OrderHistoryViewModelImpl(
-            ordersRepository: repositoryComponents.makeOrdersHistoryRepository())))
+            ordersRepository: repositoryComponents.makeOrdersHistoryRepository()
+        )))
     }
 
     func makeRateOrderPage(for rateID: Int) -> RateController {
@@ -35,5 +36,9 @@ final class OrderHistoryPagesFactoryImpl: DependencyFactory, OrderHistoryPagesFa
 
     func makeShareOrderPage(with url: String) -> ShareOrderController {
         return scoped(.init(viewModel: ShareOrderViewModelImpl(url: url)))
+    }
+
+    private func makeLocalStorage() -> Storage {
+        return shared(.init())
     }
 }
