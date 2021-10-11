@@ -333,7 +333,15 @@ extension AppCoordinator {
             .removeFromSuperview()
 
         (UIApplication.topViewController() as? Reloadable)?.reload()
-//        restartApp()
+        sendUpdateNotifications()
+    }
+
+    private func sendUpdateNotifications() {
+        let notifications: [Constants.InternalNotification] = [.updateMenu, .updateProfile, .updateDocuments, .updateMenu]
+
+        notifications.forEach {
+            NotificationCenter.default.post(name: $0.name, object: nil)
+        }
     }
 }
 

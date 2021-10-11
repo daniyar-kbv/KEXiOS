@@ -119,6 +119,13 @@ extension ProfileRepositoryImpl {
                 self?.logoutWhenUnauthorized()
             })
             .disposed(by: disposeBag)
+
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.updateProfile.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.fetchUserInfo()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func clearCookies() {
