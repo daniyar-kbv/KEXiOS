@@ -161,6 +161,7 @@
 		34FB6344DBA4296A94E96483659A07D3 /* MenuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ECEC156A2E051E74B15FA38585B064 /* MenuRepository.swift */; };
 		53EEC96DBDBE5883D7D2AC4D2E5A2EAC /* MenuScrollService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62307C93B0CDC20AE006CD22F6B9C964 /* MenuScrollService.swift */; };
 		3D8C268C1847B2E715256B24B29D7354 /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA402C1122892CF8AF1248745A4495D3 /* MenuService.swift */; };
+		3AB6C428F43FF9250644F38512CDE315 /* MenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA5AD38104ADA7FDAE1C01E7B928036 /* MenuTableView.swift */; };
 		4EA0FE74CCF0C75BD733749CCB6D13B7 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE127A2EBFD1265788247D022F65B5 /* MenuViewModel.swift */; };
 		14D4B5271A7E7DBE724988D9A3F2CCCA /* ModifiersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F19B6044C88C7D6A875703C80A7B031 /* ModifiersCell.swift */; };
 		193C5738E6AFB6E210DB194E3E03F9DA /* ModifiersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE87AD2ADCAD916F3E323FE75E1E38 /* ModifiersController.swift */; };
@@ -525,6 +526,7 @@
 		57ECEC156A2E051E74B15FA38585B064 /* MenuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRepository.swift; sourceTree = "<group>"; };
 		62307C93B0CDC20AE006CD22F6B9C964 /* MenuScrollService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScrollService.swift; sourceTree = "<group>"; };
 		BA402C1122892CF8AF1248745A4495D3 /* MenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuService.swift; sourceTree = "<group>"; };
+		2BA5AD38104ADA7FDAE1C01E7B928036 /* MenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableView.swift; sourceTree = "<group>"; };
 		54DE127A2EBFD1265788247D022F65B5 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		9F19B6044C88C7D6A875703C80A7B031 /* ModifiersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifiersCell.swift; sourceTree = "<group>"; };
 		07DE87AD2ADCAD916F3E323FE75E1E38 /* ModifiersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifiersController.swift; sourceTree = "<group>"; };
@@ -709,8 +711,8 @@
 		25C199DA7C6952397CEC43FE04140AD1 /* YandexService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexService.swift; sourceTree = "<group>"; };
 		FA7660C751DC6F3962B5F84392948913 /* closed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = closed.json; sourceTree = "<group>"; };
 		152E0B4CE8AF22894D63204432A36E24 /* emptyBasket.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emptyBasket.json; sourceTree = "<group>"; };
-		995E9AF0A6378318C4CE1CB6A66BE268 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		47B2A04B8AFBC530EABCB13720C0890B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		995E9AF0A6378318C4CE1CB6A66BE268 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5F567F30E85B8EA443B392E9B99AA085 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7F0636439F4E355D12571AC1DC930454 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EF9C1FF18C8E321A84DEE7D3443789AC /* noInternet.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = noInternet.json; sourceTree = "<group>"; };
@@ -879,6 +881,14 @@
 				A21DBF1D8149DD277ACF2EE07316691C /* SupportCoordinator.swift */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		C56B225A5268B69E22504EF1BD8AB450 /* MenuTableView */ = {
+			isa = PBXGroup;
+			children = (
+				2BA5AD38104ADA7FDAE1C01E7B928036 /* MenuTableView.swift */,
+			);
+			path = MenuTableView;
 			sourceTree = "<group>";
 		};
 		15BA1BB3C138589E5ECE03C5EE7747F5 /* PaymentEdit */ = {
@@ -1080,6 +1090,14 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
+		35D69EBDFB02F33AC94E0125810E0E71 /* ErrorHandling */ = {
+			isa = PBXGroup;
+			children = (
+				E15462585743CB1EFD80C4C797DBB1C3 /* UnauthorizedError.swift */,
+			);
+			path = ErrorHandling;
+			sourceTree = "<group>";
+		};
 		37CD6A845FFF9FC04DB0A9A549CA55CD /* Factories */ = {
 			isa = PBXGroup;
 			children = (
@@ -1105,14 +1123,6 @@
 				ED0D734666913DB588648DF8BC069C08 /* CountryCodePickerViewModel.swift */,
 			);
 			path = CountryCodePicker;
-			sourceTree = "<group>";
-		};
-		35D69EBDFB02F33AC94E0125810E0E71 /* ErrorHandling */ = {
-			isa = PBXGroup;
-			children = (
-				E15462585743CB1EFD80C4C797DBB1C3 /* UnauthorizedError.swift */,
-			);
-			path = ErrorHandling;
 			sourceTree = "<group>";
 		};
 		3C00459B7F8AF0133672E4FF859E015B /* Views */ = {
@@ -1149,6 +1159,7 @@
 				A89B6EBB966AE2DBD5AF5269DF41112E /* CategoriesSectionHeader */,
 				1EE1976EDC4D2619CA8F661B297808A7 /* CategoryCell */,
 				8095E9303B9C72F76E3B31E40D174AB3 /* MenuCell */,
+				C56B225A5268B69E22504EF1BD8AB450 /* MenuTableView */,
 				AD3D5E1C73B34E2A8C7C8620108B1FFB /* ScrollService */,
 				E993D156091F0CA8CAF43764580B109D /* MenuController.swift */,
 				54DE127A2EBFD1265788247D022F65B5 /* MenuViewModel.swift */,
@@ -2817,6 +2828,7 @@
 				34FB6344DBA4296A94E96483659A07D3 /* MenuRepository.swift in Sources */,
 				53EEC96DBDBE5883D7D2AC4D2E5A2EAC /* MenuScrollService.swift in Sources */,
 				3D8C268C1847B2E715256B24B29D7354 /* MenuService.swift in Sources */,
+				3AB6C428F43FF9250644F38512CDE315 /* MenuTableView.swift in Sources */,
 				4EA0FE74CCF0C75BD733749CCB6D13B7 /* MenuViewModel.swift in Sources */,
 				14D4B5271A7E7DBE724988D9A3F2CCCA /* ModifiersCell.swift in Sources */,
 				193C5738E6AFB6E210DB194E3E03F9DA /* ModifiersController.swift in Sources */,
