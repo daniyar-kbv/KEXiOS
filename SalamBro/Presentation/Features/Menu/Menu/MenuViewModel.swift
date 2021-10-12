@@ -22,7 +22,7 @@ protocol MenuViewModelProtocol {
     func viewForHeader(in tableView: UITableView, for section: Int) -> UIView?
     func cell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell
     func didSelectRow(at indexPath: IndexPath)
-    func didScrollToItem(at position: Int)
+    func didScrollToItem(at indexPath: IndexPath)
     func finishedScrolling()
 }
 
@@ -37,7 +37,6 @@ final class MenuViewModel: MenuViewModelProtocol {
 
     private var tableSections: [Section] = []
     private var scrollService: MenuScrollService
-    private var isFinishingScrolling = false
 
     init(brandRepository: BrandRepository,
          menuRepository: MenuRepository,
@@ -250,31 +249,21 @@ extension MenuViewModel {
         }
     }
 
-    func willDisplayRow(at indexPath: IndexPath) {
-        didScrollToItem(at: indexPath.row)
-    }
-
     func finishedScrolling() {
-        isFinishingScrolling = true
         scrollService.finishedScrolling()
     }
 }
 
 extension MenuViewModel {
-    func didScrollToItem(at position: Int) {
+    func didScrollToItem(at indexPath: IndexPath) {
         guard isNotEmpty(),
-              let positionsIndex = getSectionIndex(of: .positions),
-              tableSections[positionsIndex].cellViewModels.count > position,
-              let cellViewModel = tableSections[positionsIndex]
-              .cellViewModels[position]
+              getSectionIndex(of: .positions) == indexPath.section,
+              tableSections[indexPath.section].cellViewModels.count > indexPath.row,
+              let cellViewModel = tableSections[indexPath.section]
+              .cellViewModels[indexPath.row]
               as? MenuCellViewModelProtocol,
               !scrollService.isHeaderScrolling,
               scrollService.currentCategory != cellViewModel.position.categoryUUID else { return }
-
-        if isFinishingScrolling {
-            isFinishingScrolling = false
-            return
-        }
 
         scrollService.didSelectCategory.accept((source: .table, categoryUUID: cellViewModel.position.categoryUUID))
     }

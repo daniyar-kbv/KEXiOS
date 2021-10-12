@@ -161,7 +161,6 @@
 		34FB6344DBA4296A94E96483659A07D3 /* MenuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ECEC156A2E051E74B15FA38585B064 /* MenuRepository.swift */; };
 		53EEC96DBDBE5883D7D2AC4D2E5A2EAC /* MenuScrollService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62307C93B0CDC20AE006CD22F6B9C964 /* MenuScrollService.swift */; };
 		3D8C268C1847B2E715256B24B29D7354 /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA402C1122892CF8AF1248745A4495D3 /* MenuService.swift */; };
-		3AB6C428F43FF9250644F38512CDE315 /* MenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA5AD38104ADA7FDAE1C01E7B928036 /* MenuTableView.swift */; };
 		4EA0FE74CCF0C75BD733749CCB6D13B7 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DE127A2EBFD1265788247D022F65B5 /* MenuViewModel.swift */; };
 		14D4B5271A7E7DBE724988D9A3F2CCCA /* ModifiersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F19B6044C88C7D6A875703C80A7B031 /* ModifiersCell.swift */; };
 		193C5738E6AFB6E210DB194E3E03F9DA /* ModifiersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE87AD2ADCAD916F3E323FE75E1E38 /* ModifiersController.swift */; };
@@ -526,7 +525,6 @@
 		57ECEC156A2E051E74B15FA38585B064 /* MenuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRepository.swift; sourceTree = "<group>"; };
 		62307C93B0CDC20AE006CD22F6B9C964 /* MenuScrollService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScrollService.swift; sourceTree = "<group>"; };
 		BA402C1122892CF8AF1248745A4495D3 /* MenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuService.swift; sourceTree = "<group>"; };
-		2BA5AD38104ADA7FDAE1C01E7B928036 /* MenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableView.swift; sourceTree = "<group>"; };
 		54DE127A2EBFD1265788247D022F65B5 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		9F19B6044C88C7D6A875703C80A7B031 /* ModifiersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifiersCell.swift; sourceTree = "<group>"; };
 		07DE87AD2ADCAD916F3E323FE75E1E38 /* ModifiersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifiersController.swift; sourceTree = "<group>"; };
@@ -883,14 +881,6 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		C56B225A5268B69E22504EF1BD8AB450 /* MenuTableView */ = {
-			isa = PBXGroup;
-			children = (
-				2BA5AD38104ADA7FDAE1C01E7B928036 /* MenuTableView.swift */,
-			);
-			path = MenuTableView;
-			sourceTree = "<group>";
-		};
 		15BA1BB3C138589E5ECE03C5EE7747F5 /* PaymentEdit */ = {
 			isa = PBXGroup;
 			children = (
@@ -1159,7 +1149,6 @@
 				A89B6EBB966AE2DBD5AF5269DF41112E /* CategoriesSectionHeader */,
 				1EE1976EDC4D2619CA8F661B297808A7 /* CategoryCell */,
 				8095E9303B9C72F76E3B31E40D174AB3 /* MenuCell */,
-				C56B225A5268B69E22504EF1BD8AB450 /* MenuTableView */,
 				AD3D5E1C73B34E2A8C7C8620108B1FFB /* ScrollService */,
 				E993D156091F0CA8CAF43764580B109D /* MenuController.swift */,
 				54DE127A2EBFD1265788247D022F65B5 /* MenuViewModel.swift */,
@@ -2828,7 +2817,6 @@
 				34FB6344DBA4296A94E96483659A07D3 /* MenuRepository.swift in Sources */,
 				53EEC96DBDBE5883D7D2AC4D2E5A2EAC /* MenuScrollService.swift in Sources */,
 				3D8C268C1847B2E715256B24B29D7354 /* MenuService.swift in Sources */,
-				3AB6C428F43FF9250644F38512CDE315 /* MenuTableView.swift in Sources */,
 				4EA0FE74CCF0C75BD733749CCB6D13B7 /* MenuViewModel.swift in Sources */,
 				14D4B5271A7E7DBE724988D9A3F2CCCA /* ModifiersCell.swift in Sources */,
 				193C5738E6AFB6E210DB194E3E03F9DA /* ModifiersController.swift in Sources */,
@@ -3170,7 +3158,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 66;
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -3178,7 +3166,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.64;
+				MARKETING_VERSION = 0.0.66;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3240,7 +3228,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 66;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
@@ -3249,7 +3237,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.64;
+				MARKETING_VERSION = 0.0.66;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

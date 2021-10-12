@@ -43,6 +43,7 @@ public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusabl
 
     override public init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
+
         setup()
     }
 
