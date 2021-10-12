@@ -24,19 +24,21 @@ protocol ServiceComponents: AnyObject {
 }
 
 final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
-    // MARK: Network logger
-
+    // Network logger
     private let networkPlugin = NetworkLoggerPlugin(configuration: NetworkLoggerPlugin.Configuration(logOptions: .verbose))
 
-    // MARK: Auth Plugin for authorized requests
-
+    // Auth Plugin for authorized requests
     private let authPlugin = AuthPlugin(authTokenStorage: AuthTokenStorageImpl.sharedStorage)
 
-    // MARK: Language Plugin to pass language code to headers
-
+    // Language Plugin to pass language code to headers
     private let configurationPlugin = ConfigurationPlugin(defaultStorage: DefaultStorageImpl.sharedStorage)
 
-    private lazy var authProvider = MoyaProvider<AuthAPI>(plugins: [networkPlugin, configurationPlugin])
+    // Plugin for iOS network error processing
+    private let networkErrorPlugin = NetworkErrorPlugin()
+
+    private lazy var defaultPlugins: [PluginType] = [networkPlugin, configurationPlugin, networkErrorPlugin]
+
+    private lazy var authProvider = MoyaProvider<AuthAPI>(plugins: defaultPlugins)
 
     override init() {
         super.init()
@@ -49,23 +51,23 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
     }
 
     func locationService() -> LocationService {
-        return shared(LocationServiceMoyaImpl(provider: MoyaProvider<LocationAPI>(plugins: [networkPlugin, configurationPlugin])))
+        return shared(LocationServiceMoyaImpl(provider: MoyaProvider<LocationAPI>(plugins: defaultPlugins)))
     }
 
     func ordersService() -> OrdersService {
-        return shared(OrdersServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, configurationPlugin])))
+        return shared(OrdersServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: defaultPlugins)))
     }
 
     func authorizedApplyService() -> AuthorizedApplyService {
-        return shared(AuthorizedApplyServiceImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, configurationPlugin, authPlugin])))
+        return shared(AuthorizedApplyServiceImpl(provider: MoyaProvider<OrdersAPI>(plugins: defaultPlugins + [authPlugin])))
     }
 
     func menuService() -> MenuService {
-        return shared(MenuServiceImpl(provider: MoyaProvider<MenuAPI>(plugins: [networkPlugin, configurationPlugin])))
+        return shared(MenuServiceImpl(provider: MoyaProvider<MenuAPI>(plugins: defaultPlugins)))
     }
 
     func profileService() -> ProfileService {
-        return shared(ProfileServiceMoyaImpl(provider: MoyaProvider<ProfileAPI>(plugins: [networkPlugin, configurationPlugin, authPlugin])))
+        return shared(ProfileServiceMoyaImpl(provider: MoyaProvider<ProfileAPI>(plugins: defaultPlugins + [authPlugin])))
     }
 
     func yandexService() -> YandexService {
@@ -73,22 +75,22 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
     }
 
     func documentsService() -> DocumentsService {
-        return shared(DocumentsServiceImpl(provider: MoyaProvider<DocumentsAPI>(plugins: [networkPlugin, configurationPlugin])))
+        return shared(DocumentsServiceImpl(provider: MoyaProvider<DocumentsAPI>(plugins: defaultPlugins)))
     }
 
     func rateService() -> RateService {
-        return shared(RateServiceImpl(provider: MoyaProvider<RateAPI>(plugins: [networkPlugin, configurationPlugin, authPlugin])))
+        return shared(RateServiceImpl(provider: MoyaProvider<RateAPI>(plugins: defaultPlugins + [authPlugin])))
     }
 
     func pushNotificationsService() -> PushNotificationsService {
-        return shared(PushNotificationsServiceMoyaImpl(provider: MoyaProvider<PushNotificationsAPI>(plugins: [networkPlugin, configurationPlugin, authPlugin])))
+        return shared(PushNotificationsServiceMoyaImpl(provider: MoyaProvider<PushNotificationsAPI>(plugins: defaultPlugins + [authPlugin])))
     }
 
     func paymentsService() -> PaymentsService {
-        return shared(PaymentsServiceMoyaImpl(provider: MoyaProvider<PaymentsAPI>(plugins: [networkPlugin, configurationPlugin, authPlugin])))
+        return shared(PaymentsServiceMoyaImpl(provider: MoyaProvider<PaymentsAPI>(plugins: defaultPlugins + [authPlugin])))
     }
 
     func ordersHistoryService() -> OrdersHistoryService {
-        return shared(OrdersHistoryServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: [networkPlugin, authPlugin, configurationPlugin])))
+        return shared(OrdersHistoryServiceMoyaImpl(provider: MoyaProvider<OrdersAPI>(plugins: defaultPlugins + [authPlugin])))
     }
 }

@@ -31,6 +31,8 @@ final class DocumentsRepositoryImpl: DocumentsRepository {
     init(storage: DocumentsStorage, service: DocumentsService) {
         self.storage = storage
         self.service = service
+
+        bindNotifications()
     }
 
     func getDocuments() {
@@ -81,6 +83,16 @@ final class DocumentsRepositoryImpl: DocumentsRepository {
         storage.documents = documents
         storage.contacts = contacts
         needsFetchDocuments = false
+    }
+
+    private func bindNotifications() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.updateDocuments.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.needsFetchDocuments = true
+                self?.getDocuments()
+            })
+            .disposed(by: disposeBag)
     }
 }
 

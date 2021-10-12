@@ -6,4 +6,4 @@
   
 */
 
-NSLocationWhenInUseUsageDescription = "KZ Ваше местоположение будет использоваться для определения адреса доставки";
+NSLocationWhenInUseUsageDescription = "Сіздің орналасқан жеріңіз жеткізу мекенжайын анықтау үшін пайдаланылады";

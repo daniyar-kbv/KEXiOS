@@ -21,7 +21,6 @@ final class PaymentCoordinator: BaseCoordinator {
     private let pagesFactory: PaymentPagesFactory
 
     private var threeDSController: ThreeDSViewController?
-    private weak var paymentSelectionVC: PaymentSelectionViewController?
 
     init(router: Router, pagesFactory: PaymentPagesFactory) {
         self.router = router
@@ -30,8 +29,6 @@ final class PaymentCoordinator: BaseCoordinator {
 
     override func start() {
         let paymentSelectionVC = pagesFactory.makePaymentSelectionPage()
-
-        self.paymentSelectionVC = paymentSelectionVC
 
         paymentSelectionVC.outputs.didTerminate
             .subscribe(onNext: { [weak self] in
@@ -200,10 +197,6 @@ final class PaymentCoordinator: BaseCoordinator {
             completion()
             self?.threeDSController = nil
         }
-    }
-
-    func reloadPayment() {
-        paymentSelectionVC?.reload()
     }
 }
 
