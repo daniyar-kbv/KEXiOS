@@ -213,7 +213,7 @@
 "Error.mappingError" = "Жауап өңделмеді";
 "Error.noData" = "Мәлімет жоқ";
 "Error.unauthorized" = "Сіз қайта кіруіңіз қажет";
-"Error.internetConnection" = "KZ Интернет соеденение было прервано";
+"Error.internetConnection" = "Интернет байланысы үзілді";
 
 // MARK: - Payment Selection
 
