@@ -113,6 +113,7 @@ final class ProfileCoordinator: BaseCoordinator {
     func showOrderHistoryPage() {
         let orderHistoryCoordinator = coordinatorsFactory.makeOrderCoordinator()
         add(orderHistoryCoordinator)
+
         orderHistoryCoordinator.didFinish = { [weak self, weak orderHistoryCoordinator] in
             self?.remove(orderHistoryCoordinator)
             orderHistoryCoordinator = nil

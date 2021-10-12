@@ -223,6 +223,13 @@ extension CartRepositoryImpl {
                 self?.process(cart: cart)
             })
             .disposed(by: disposeBag)
+
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.updateCart.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.reload()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func getIndex(of internalUUID: String) -> Int? {

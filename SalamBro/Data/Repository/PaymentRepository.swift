@@ -183,6 +183,7 @@ extension PaymentRepositoryImpl {
         guard defaultStorage.isPaymentProcess,
               let leadUUID = defaultStorage.leadUUID else { return }
 
+        defaultStorage.persist(isPaymentProcess: true)
         sendShowPaymentProcessNotification()
 
         paymentService.getPaymentStatus(leadUUID: leadUUID)
@@ -257,48 +258,48 @@ extension PaymentRepositoryImpl {
         case .completed:
             getNewLeadAuthorized()
         case .awaitingAuthentication:
-            sendHidePaymentProcessNotification { [weak self] in
-                self?.show3DS(orderStatus: paymentStatus)
-            }
+            sendHidePaymentProcessNotification()
+            show3DS(orderStatus: paymentStatus)
         default:
-            sendHidePaymentProcessNotification { [weak self] in
-                self?.defaultStorage.persist(isPaymentProcess: false)
+            sendHidePaymentProcessNotification()
+            defaultStorage.persist(isPaymentProcess: false)
 
-                let error = ErrorResponse(code: paymentStatus.status,
-                                          message: paymentStatus.statusReason ?? "")
+            let error = ErrorResponse(code: paymentStatus.status,
+                                      message: paymentStatus.statusReason ?? "")
 
-                self?.outputs.didGetError.accept(error)
-            }
+            outputs.didGetError.accept(error)
         }
     }
 
     private func paymentOnFailure(_ error: Error) {
         guard let error = error as? ErrorPresentable,
-              reachabilityManager.getReachability() else { return }
-        sendHidePaymentProcessNotification { [weak self] in
-            self?.defaultStorage.persist(isPaymentProcess: false)
+              reachabilityManager.getReachability()
+        else { return }
 
-            if let errorResponse = error as? ErrorResponse {
-                switch errorResponse.code {
-                case Constants.ErrorCode.orderAlreadyPaid:
-                    self?.getNewLeadAuthorized()
-                case Constants.ErrorCode.notFound:
-                    return
-                case Constants.ErrorCode.branchIsClosed:
-                    self?.outputs.didGetBranchError.accept(error)
-                    return
-                default:
-                    break
-                }
-            }
+        sendHidePaymentProcessNotification()
 
-            if (error as? NetworkError) == .unauthorized {
-                self?.outputs.didGetAuthError.accept(error)
+        defaultStorage.persist(isPaymentProcess: false)
+
+        if let errorResponse = error as? ErrorResponse {
+            switch errorResponse.code {
+            case Constants.ErrorCode.orderAlreadyPaid:
+                getNewLeadAuthorized()
+            case Constants.ErrorCode.notFound:
                 return
+            case Constants.ErrorCode.branchIsClosed:
+                outputs.didGetBranchError.accept(error)
+                return
+            default:
+                break
             }
-
-            self?.outputs.didGetError.accept(error)
         }
+
+        if (error as? NetworkError) == .unauthorized {
+            outputs.didGetAuthError.accept(error)
+            return
+        }
+
+        outputs.didGetError.accept(error)
     }
 
     private func getNewLeadAuthorized() {
@@ -317,31 +318,33 @@ extension PaymentRepositoryImpl {
             .subscribe(onSuccess: orderApplyOnSuccess(_:),
                        onError: { [weak self] error in
                            guard self?.reachabilityManager.getReachability() == true else { return }
-                           self?.sendHidePaymentProcessNotification {
-                               self?.defaultStorage.persist(isPaymentProcess: false)
-                               NotificationCenter.default.post(
-                                   name: Constants.InternalNotification.startFirstFlow.name,
-                                   object: nil
-                               )
-                               guard let error = error as? ErrorPresentable else {
-                                   self?.outputs.didGetError.accept(NetworkError.badMapping)
-                                   return
-                               }
-                               self?.outputs.didGetError.accept(error)
+
+                           self?.sendHidePaymentProcessNotification()
+                           self?.defaultStorage.persist(isPaymentProcess: false)
+
+                           NotificationCenter.default.post(
+                               name: Constants.InternalNotification.startFirstFlow.name,
+                               object: nil
+                           )
+
+                           guard let error = error as? ErrorPresentable else {
+                               self?.outputs.didGetError.accept(NetworkError.badMapping)
+                               return
                            }
+
+                           self?.outputs.didGetError.accept(error)
                        })
             .disposed(by: disposeBag)
     }
 
     private func orderApplyOnSuccess(_ leadUUID: String) {
-        sendHidePaymentProcessNotification { [weak self] in
-            NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
-                                            object: ())
-            NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
-                                            object: leadUUID)
-            self?.outputs.didMakePayment.accept(())
-            self?.defaultStorage.persist(isPaymentProcess: false)
-        }
+        sendHidePaymentProcessNotification()
+        NotificationCenter.default.post(name: Constants.InternalNotification.clearCart.name,
+                                        object: ())
+        NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
+                                        object: leadUUID)
+        outputs.didMakePayment.accept(())
+        defaultStorage.persist(isPaymentProcess: false)
     }
 }
 
@@ -433,12 +436,9 @@ extension PaymentRepositoryImpl {
         NotificationCenter.default.post(name: Constants.InternalNotification.showPaymentProcess.name, object: nil)
     }
 
-    private func sendHidePaymentProcessNotification(completion: (() -> Void)? = nil) {
+    private func sendHidePaymentProcessNotification() {
         guard reachabilityManager.getReachability() else { return }
-        NotificationCenter.default.post(
-            name: Constants.InternalNotification.hidePaymentProcess.name,
-            object: completion
-        )
+        NotificationCenter.default.post(name: Constants.InternalNotification.hidePaymentProcess.name, object: nil)
     }
 }
 

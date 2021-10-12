@@ -214,6 +214,7 @@
 "Error.mappingError" = "Неудалось обработать ответ";
 "Error.noData" = "Нет данных";
 "Error.unauthorized" = "Вам необходимо снова авторизоваться";
+"Error.internetConnection" = "Интернет соеденение было прервано";
 
 // MARK: - Payment Selection
 
