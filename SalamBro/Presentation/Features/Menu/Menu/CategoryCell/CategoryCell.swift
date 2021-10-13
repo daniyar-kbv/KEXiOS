@@ -51,8 +51,10 @@ final class CategoryCell: UICollectionViewCell {
 
     override public var isSelected: Bool {
         didSet {
-            indicatorView.isHidden = isSelected ? false : true
-            categoryLabel.textColor = isSelected ? .black : .mildBlue
+            UIView.animate(withDuration: 0.2) {
+                self.indicatorView.isHidden = self.isSelected ? false : true
+                self.categoryLabel.textColor = self.isSelected ? .black : .mildBlue
+            }
         }
     }
 

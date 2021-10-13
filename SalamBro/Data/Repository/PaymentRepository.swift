@@ -426,6 +426,7 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
     }
 
     func onAuthorizationFailed(with html: String) {
+        defaultStorage.persist(isPaymentProcess: false)
         threeDsProcessor = nil
         paymentUUID = nil
         outputs.hide3DS.accept {}
