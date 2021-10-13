@@ -411,16 +411,18 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
     }
 
     func willPresentWebView(_ webView: WKWebView) {
+        defaultStorage.persist(isPaymentProcess: false)
         outputs.show3DS.accept(webView)
     }
 
     func onAuthorizationCompleted(with md: String, paRes: String) {
-        outputs.hide3DS.accept {
-            guard let paymentUUID = self.paymentUUID else { return }
-            self.send3DS(paymentUUID: paymentUUID, paRes: paRes, transactionId: md)
-            self.paymentUUID = nil
+        outputs.hide3DS.accept { [weak self] in
+            guard let paymentUUID = self?.paymentUUID else { return }
+            self?.defaultStorage.persist(isPaymentProcess: false)
+            self?.send3DS(paymentUUID: paymentUUID, paRes: paRes, transactionId: md)
+            self?.paymentUUID = nil
+            self?.threeDsProcessor = nil
         }
-        threeDsProcessor = nil
     }
 
     func onAuthorizationFailed(with html: String) {
