@@ -17,6 +17,7 @@ protocol MenuViewModelProtocol {
     func processToBrand()
     func processToAddresses()
     func numberOfSections() -> Int
+    func getPositionsSection() -> Int?
     func numberOfRows(in section: Int) -> Int
     func heightForHeader(in section: Int) -> CGFloat
     func viewForHeader(in tableView: UITableView, for section: Int) -> UIView?
@@ -176,6 +177,10 @@ extension MenuViewModel {
 
     func numberOfSections() -> Int {
         return tableSections.count
+    }
+
+    func getPositionsSection() -> Int? {
+        return tableSections.firstIndex(where: { $0.type == .positions })
     }
 
     func numberOfRows(in section: Int) -> Int {

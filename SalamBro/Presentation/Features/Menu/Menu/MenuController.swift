@@ -257,7 +257,9 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
 
 extension MenuController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let y = scrollView.contentOffset.y + tableView(itemTableView, heightForHeaderInSection: 2)
+        guard let section = viewModel.getPositionsSection() else { return }
+
+        let y = scrollView.contentOffset.y + tableView(itemTableView, heightForHeaderInSection: section)
 
         guard let indexPath = itemTableView.indexPathForRow(at: .init(x: 0, y: y)) else { return }
 
