@@ -123,6 +123,7 @@ extension ProfileRepositoryImpl {
         NotificationCenter.default.rx
             .notification(Constants.InternalNotification.updateProfile.name)
             .subscribe(onNext: { [weak self] _ in
+                guard self?.tokenStorage.token != nil else { return }
                 self?.fetchUserInfo()
             })
             .disposed(by: disposeBag)

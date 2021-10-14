@@ -43,6 +43,7 @@ public final class CategoriesSectionHeader: UITableViewHeaderFooterView, Reusabl
 
     override public init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
+
         setup()
     }
 
@@ -108,7 +109,7 @@ extension CategoriesSectionHeader {
         guard scrollService?.isHeaderScrolling == false,
               let index = viewModel.getIndex(of: category)
         else { return }
-        collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+        collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .centeredHorizontally)
     }
 
     func scroll(to category: String) {

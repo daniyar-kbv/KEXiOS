@@ -47,14 +47,22 @@ final class MenuController: UIViewController, LoaderDisplayable {
         return view
     }()
 
-    private lazy var itemTableView: MenuTableView = {
-        let view = MenuTableView()
-        view.set(delegate: self)
-        view.onUpdate = { [weak self, weak view] in
-            guard let firstCell = view?.visibleCells.first,
-                  let row = view?.indexPath(for: firstCell)?.row else { return }
-            self?.viewModel.didScrollToItem(at: row)
-        }
+    private lazy var itemTableView: UITableView = {
+        let view = UITableView()
+        view.separatorColor = .mildBlue
+        view.backgroundColor = .white
+        view.register(cellType: AddressPickCell.self)
+        view.register(cellType: MenuCell.self)
+        view.register(cellType: AdCollectionCell.self)
+        view.register(headerFooterViewType: CategoriesSectionHeader.self)
+        view.showsVerticalScrollIndicator = false
+        view.estimatedRowHeight = 300
+        view.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        view.tableFooterView = UIView()
+        view.delaysContentTouches = false
+        view.delegate = self
+        view.dataSource = self
+        view.refreshControl = refreshControl
         return view
     }()
 
@@ -248,6 +256,16 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension MenuController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let section = viewModel.getPositionsSection() else { return }
+
+        let y = scrollView.contentOffset.y + tableView(itemTableView, heightForHeaderInSection: section)
+
+        guard let indexPath = itemTableView.indexPathForRow(at: .init(x: 0, y: y)) else { return }
+
+        viewModel.didScrollToItem(at: indexPath)
+    }
+
     func scrollViewDidEndScrollingAnimation(_: UIScrollView) {
         viewModel.finishedScrolling()
     }
