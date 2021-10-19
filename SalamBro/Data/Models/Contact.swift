@@ -26,8 +26,6 @@ extension Contact {
             return URL(string: "https://www.tiktok.com/@\(value)")
         case .email:
             return URL(string: "mailto:\(value)")
-        case .vk:
-            return URL(string: value)
         case .callCenter:
             return URL(string: "tel://\(value)")
         default:
@@ -39,7 +37,6 @@ extension Contact {
         case instagram = "INSTAGRAM"
         case tiktok = "TIKTOK"
         case email = "EMAIL"
-        case vk = "VK"
         case callCenter = "CALL_CENTER_PHONE"
 
         var image: UIImage? {
@@ -47,7 +44,6 @@ extension Contact {
             case .instagram: return SBImageResource.getIcon(for: SupportIcons.Support.instagramIcon)
             case .tiktok: return SBImageResource.getIcon(for: SupportIcons.Support.tikTokIcon)
             case .email: return SBImageResource.getIcon(for: SupportIcons.Support.mailIcon)
-            case .vk: return SBImageResource.getIcon(for: SupportIcons.Support.vkIcon)
             case .callCenter: return nil
             }
         }
