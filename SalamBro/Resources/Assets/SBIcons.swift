@@ -120,7 +120,6 @@ enum SupportIcons {
         case instagramIcon = "instagram_icon"
         case mailIcon = "mail_icon"
         case tikTokIcon = "tik_tok_icon"
-        case vkIcon = "vk_icon"
 
         var name: String { rawValue }
     }

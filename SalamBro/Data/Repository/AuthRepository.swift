@@ -109,7 +109,6 @@ final class AuthRepositoryImpl: AuthRepository {
                 if let error = error as? ErrorPresentable {
                     if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
                         self?.postUserInfoDependencies()
-                        self?.outputs.didFailBranch.accept(error)
                         return
                     }
                     self?.tokenStorage.cleanUp()
@@ -155,7 +154,6 @@ final class AuthRepositoryImpl: AuthRepository {
                 if let error = error as? ErrorPresentable {
                     if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
                         self?.postUserInfoDependencies()
-                        self?.outputs.didFailBranch.accept(error)
                         return
                     }
                     self?.tokenStorage.cleanUp()
