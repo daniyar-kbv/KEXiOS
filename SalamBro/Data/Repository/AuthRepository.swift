@@ -153,6 +153,7 @@ final class AuthRepositoryImpl: AuthRepository {
                 self?.outputs.didEndRequest.accept(())
                 if let error = error as? ErrorPresentable {
                     if (error as? ErrorResponse)?.code == Constants.ErrorCode.branchIsClosed {
+                        self?.outputs.didFinish.accept(true)
                         self?.postUserInfoDependencies()
                         return
                     }
