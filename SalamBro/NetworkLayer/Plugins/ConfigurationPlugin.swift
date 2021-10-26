@@ -21,6 +21,10 @@ struct ConfigurationPlugin: PluginType {
         request.addValue(defaultStorage.appLocale.code, forHTTPHeaderField: "language")
         request.addValue("IOS", forHTTPHeaderField: "User-Agent")
 
+        if let fcmToken = defaultStorage.fcmToken {
+            request.addValue(fcmToken, forHTTPHeaderField: "X-NOTIFICATION-TOKEN")
+        }
+
         return request
     }
 }
