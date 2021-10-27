@@ -120,6 +120,14 @@ extension SelectMainInformationViewModel {
     }
 
     private func bindAddressRepository() {
+        addressRepository.outputs.didGetUserAddresses
+            .subscribe(onNext: { [weak self] _ in
+                guard self?.flowType == .changeBrand else { return }
+
+                self?.userAddress = self?.addressRepository.getCurrentUserAddress()?.getCopy()
+            })
+            .disposed(by: disposeBag)
+
         addressRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
