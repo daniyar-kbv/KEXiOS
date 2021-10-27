@@ -122,8 +122,9 @@ extension CartController {
     }
 
     private func checkForUnavailableProducts() {
+        orderButton.isEnabled = !viewModel.hasUnavailableProducts()
+
         guard viewModel.hasUnavailableProducts() else { return }
-        orderButton.isEnabled = false
 
         showAlertWith(message: SBLocalization.localized(key: CartText.Cart.CartAlert.unavailabilityAlertMessage))
     }

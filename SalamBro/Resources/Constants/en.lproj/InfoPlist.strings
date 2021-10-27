@@ -7,3 +7,6 @@
 */
 
 NSLocationWhenInUseUsageDescription = "EN Ваше местоположение будет использоваться для определения адреса доставки";
+NSLocationAlwaysAndWhenInUseUsageDescription = "EN Ваше местоположение будет использоваться для определения адреса доставки";
+NSLocationAlwaysUsageDescription = "EN Ваше местоположение будет использоваться для определения адреса доставки";
+NSLocationUsageDescription = "EN Ваше местоположение будет использоваться для определения адреса доставки";

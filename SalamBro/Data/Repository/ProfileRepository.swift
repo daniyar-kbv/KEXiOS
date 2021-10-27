@@ -58,13 +58,16 @@ final class ProfileRepositoryImpl: ProfileRepository {
 
         outputs.didStartRequest.accept(())
         profileService.logOutUser(dto: LogOutDTO(token: token))
+            .retryWhenUnautharized()
             .subscribe(onSuccess: { [weak self] _ in
                 self?.outputs.didEndRequest.accept(())
-                self?.tokenStorage.cleanUp()
-                self?.clearCookies()
-                self?.outputs.didLogout.accept(())
+                self?.logoutWhenUnauthorized()
             }, onError: { [weak self] error in
                 self?.outputs.didEndRequest.accept(())
+                if (error as? NetworkError) == .unauthorized {
+                    self?.logoutWhenUnauthorized()
+                    return
+                }
                 guard let error = error as? ErrorPresentable else { return }
                 self?.outputs.didFail.accept(error)
             })
