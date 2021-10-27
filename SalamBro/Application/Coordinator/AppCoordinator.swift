@@ -328,12 +328,14 @@ extension AppCoordinator {
     }
 
     private func hideAnimation() {
-        UIApplication.shared.keyWindow?.subviews
-            .first(where: { $0 is AnimationContainerView })?
-            .removeFromSuperview()
+        let animationView = UIApplication.shared.keyWindow?.subviews
+            .first(where: { $0 is AnimationContainerView }) as? AnimationContainerView
+        animationView?.removeFromSuperview()
 
-        (UIApplication.topViewController() as? Reloadable)?.reload()
-        sendUpdateNotifications()
+        if animationView?.animationType == .noInternet {
+            (UIApplication.topViewController() as? Reloadable)?.reload()
+            sendUpdateNotifications()
+        }
     }
 
     private func sendUpdateNotifications() {

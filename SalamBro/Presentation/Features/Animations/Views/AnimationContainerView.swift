@@ -10,7 +10,7 @@ import SnapKit
 import UIKit
 
 final class AnimationContainerView: UIView {
-    private let animationType: LottieAnimationModel
+    let animationType: LottieAnimationModel
 
     private lazy var lottieAnimationView: AnimationView = {
         let view = AnimationView()
