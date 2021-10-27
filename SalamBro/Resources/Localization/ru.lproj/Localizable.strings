@@ -158,7 +158,7 @@
 "OrderHistory.rateOrder" = "Оценить заказ";
 "OrderHistory.repeatOrder" = "Повторить заказ";
 "OrderHistory.cancelOrder" = "Отменить заказ";
-"OrderHistory.applying" = "На потверждении";
+"OrderHistory.applying" = "На подтверждении";
 "OrderHistory.started" = "Готовится";
 "OrderHistory.waiting" = "Ожидает курьера";
 "OrderHistory.onWay" = "Доставляется";
