@@ -46,6 +46,12 @@ struct AdditionalPosition: Codable {
     }
 }
 
+extension AdditionalPosition {
+    func getNumericPrice() -> Int {
+        return price * count
+    }
+}
+
 struct MenuPositionDetail: Codable {
     let uuid: String
     let name: String

@@ -374,14 +374,46 @@ extension PaymentRepositoryImpl {
     private func processApplePay() {
         let request = PKPaymentRequest()
         request.merchantIdentifier = Constants.applePayMerchantId
-        request.supportedNetworks = [.visa, .masterCard]
+        request.supportedNetworks = [.visa, .masterCard, .JCB, .amex, .cartesBancaires, .chinaUnionPay, .discover, .eftpos, .electron, .idCredit, .interac, .maestro, .privateLabel, .quicPay, .suica, .vPay]
         request.merchantCapabilities = .capability3DS
-        request.countryCode = "RU"
+        request.countryCode = "KZ"
         request.currencyCode = "KZT"
-        request.paymentSummaryItems = cartStorage.cart.items.map { .init(label: $0.position.name, amount: NSDecimalNumber(value: $0.getNumericPrice())) }
+        request.shippingType = .delivery
+        request.paymentSummaryItems = makeSummaryItems()
         guard let applePayController = PKPaymentAuthorizationViewController(paymentRequest: request)
         else { return }
         outputs.showApplePay.accept(applePayController)
+    }
+
+    private func makeSummaryItems() -> [PKPaymentSummaryItem] {
+        let productItems: [PKPaymentSummaryItem] = cartStorage.cart.items
+            .filter {
+                $0.count > 0 && $0.position.isAvailable
+            }
+            .map {
+                .init(label: $0.position.name,
+                      amount: .init(value: $0.getNumericPrice()))
+            }
+        let additionalItems: [PKPaymentSummaryItem] = cartStorage.additionalProducts
+            .filter {
+                $0.count > 0 && $0.isAvailable
+            }
+            .map {
+                .init(label: $0.name,
+                      amount: .init(value: $0.getNumericPrice()))
+            }
+        let deliveryItem: PKPaymentSummaryItem = .init(label: SBLocalization.localized(key: CartText.Cart.Footer.deliveryTitle),
+                                                       amount: .init(value: cartStorage.cart.deliveryPrice))
+        let merchantItem: PKPaymentSummaryItem = .init(label: Constants.merchantName,
+                                                       amount: NSDecimalNumber(value: cartStorage.cart.totalPrice))
+
+        var allSummaryItems = [PKPaymentSummaryItem]()
+        allSummaryItems.append(contentsOf: productItems)
+        allSummaryItems.append(contentsOf: additionalItems)
+        allSummaryItems.append(deliveryItem)
+        allSummaryItems.append(merchantItem)
+
+        return allSummaryItems
     }
 }
 
