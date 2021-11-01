@@ -8,7 +8,7 @@
 import UIKit
 
 struct Constants {
-    let screenSize: CGRect = UIScreen.main.bounds
+    static let appMode: AppMode = .dev
 
     static let apiKey = getPlistValue(by: "API_KEY")
     static let cloudpaymentsMerchantId = getPlistValue(by: "CLOUDPAYMENTS_MERCHANT_ID")
@@ -18,13 +18,21 @@ struct Constants {
     static let merchantName = "ТОО \"KEX GROUP\""
     static let websiteURL = "kexbrands.kz"
 
-    enum URLs {
-        static let promotionURL = APIBase.dev.appendingPathComponent("/promotions/%@/")
+    enum AppMode {
+        case dev
+        case prod
 
-        enum APIBase {
-            static let dev = URL(string: "https://api-dev.kexbrands.kz")!
+        var apiBaseURL: URL {
+            switch self {
+            case .dev: return URL(string: "https://api-dev.kexbrands.kz")!
+            case .prod: return URL(string: "https://api.kexbrands.kz")!
+            }
         }
+    }
 
+    enum URLs {
+        static let apiBaseURL = appMode.apiBaseURL
+        static let promotionURL = appMode.apiBaseURL.appendingPathComponent("/promotions/%@/")
         static let yandexURL = URL(string: "https://geocode-maps.yandex.ru/")!
     }
 
