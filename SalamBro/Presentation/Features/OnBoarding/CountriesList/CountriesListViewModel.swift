@@ -57,6 +57,7 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
 
     func getCountries() {
         repository.fetchCountries()
+        askNotifications()
     }
 
     func getCountriesCount() -> Int {
@@ -71,6 +72,11 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
         let country = countries[index]
         repository.changeCurrentCountry(to: country)
         outputs.didSelectCountry.accept(countries[index].id)
+    }
+
+    private func askNotifications() {
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in })
     }
 }
 

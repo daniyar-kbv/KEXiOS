@@ -275,7 +275,7 @@
 "Animation.InfoText.emptyBasket" = "Вы еще ничего не выбрали.";
 "Animation.InfoText.noInternet" = "Нет связи. Проверьте интернет соединение";
 "Animation.InfoText.upgrade" = "Мы добавили много новых функций и исправили некоторые баги, чтобы вам было удобнее пользоваться приложением";
-"Animation.InfoText.overload" = "В данный момент мы принимаем очень много заказов, пожалуйста попробуйте немного позднее";
+"Animation.InfoText.overload" = "В данный момент ведутся технические работы, для совершения заказа перейдите на сайт kexbrands.kz или позвоните на номер 5-888";
 "Animation.InfoText.payment" = "Проводим оплату";
 "Animation.InfoText.profile" = "Вам необходимо авторизоваться, чтобы сделать заказ";
 "Animation.InfoText.closed" = "Заведение закрыто";

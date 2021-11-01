@@ -61,12 +61,18 @@ final class AnimationContainerView: UIView {
     private func configureViews(with type: LottieAnimationModel) {
         setState(with: type)
 
-        infoLabel.text = type.infoText
-
+        configureLabel(with: type)
         actionButton.setTitle(type.getButtonTitle(), for: .normal)
 
         lottieAnimationView.animation = type.getAnimation()
         lottieAnimationView.loopMode = type.animationLoopMode
+    }
+
+    private func configureLabel(with type: LottieAnimationModel) {
+        switch type {
+        case .overload: setOverloadText()
+        default: infoLabel.text = type.infoText
+        }
     }
 
     private func setState(with style: LottieAnimationModel) {
@@ -85,7 +91,6 @@ final class AnimationContainerView: UIView {
 
         infoLabel.snp.makeConstraints {
             $0.width.equalTo(UIScreen.main.bounds.width - 48)
-            $0.height.lessThanOrEqualTo(64)
         }
 
         if animationType.withButton {
@@ -110,5 +115,40 @@ final class AnimationContainerView: UIView {
 
     @objc private func performAction() {
         action?()
+    }
+}
+
+// MARK: - Overload handling
+
+extension AnimationContainerView {
+    private func setOverloadText() {
+        let attributedString = NSMutableAttributedString(
+            string: LottieAnimationModel.overload.infoText,
+            attributes: [
+                .foregroundColor: UIColor.mildBlue,
+                .font: UIFont.systemFont(ofSize: 16, weight: .medium),
+            ]
+        )
+        let linkRange = NSString(string: attributedString.string).range(of: Constants.websiteURL)
+        attributedString.addAttributes(
+            [
+                .foregroundColor: UIColor.kexRed,
+                .underlineStyle: NSUnderlineStyle.single,
+                .underlineColor: UIColor.kexRed,
+            ],
+            range: linkRange
+        )
+        infoLabel.attributedText = attributedString
+
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(openWebSite))
+        infoLabel.addGestureRecognizer(gesture)
+    }
+
+    @objc func openWebSite() {
+        guard let url = URL(string: "https://\(Constants.websiteURL)"),
+              UIApplication.shared.canOpenURL(url)
+        else { return }
+
+        UIApplication.shared.open(url, options: [:])
     }
 }

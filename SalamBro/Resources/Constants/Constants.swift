@@ -15,6 +15,9 @@ struct Constants {
     static let applePayMerchantId = getPlistValue(by: "APPLE_PAY_MERCHANT_ID")
     static let yandexApiKey = getPlistValue(by: "Yandex_API_KEY")
 
+    static let merchantName = "ТОО \"KEX GROUP\""
+    static let websiteURL = "kexbrands.kz"
+
     enum URLs {
         static let promotionURL = APIBase.dev.appendingPathComponent("/promotions/%@/")
 
@@ -44,6 +47,7 @@ struct Constants {
         static let terminalNotFound = "terminal_not_found"
         static let branchIsClosed = "branch_is_closed"
         static let localNetworkConnection = "local_network_connection"
+        static let iosNotAvailable = "ios_not_available"
     }
 
     enum StatusCode {
@@ -65,6 +69,9 @@ struct Constants {
         case updateCart
         case updateProfile
         case updateDocuments
+        case appUnavailable
+        case appAvailable
+        case checkAvailability
 
         var name: Notification.Name {
             switch self {
@@ -81,6 +88,9 @@ struct Constants {
             case .updateCart: return .init("UpdateCart")
             case .updateProfile: return .init("UpdateProfile")
             case .updateDocuments: return .init("UpdateDocuments")
+            case .appUnavailable: return .init("AppUnavailable")
+            case .appAvailable: return .init("AppAvailable")
+            case .checkAvailability: return .init("CheckAvailability")
             }
         }
     }

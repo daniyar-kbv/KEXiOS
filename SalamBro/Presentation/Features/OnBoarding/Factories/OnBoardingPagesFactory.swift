@@ -8,6 +8,7 @@
 import Foundation
 
 protocol OnBoadingPagesFactory: AnyObject {
+    func makeIntroVideoPage() -> IntroVideoController
     func makeCountriesPage() -> CountriesListController
     func makeCitiesPage(countryId: Int) -> CitiesListController
     func makeBrandsPage(cityId: Int) -> BrandsController
@@ -19,6 +20,14 @@ final class OnBoardingPagesFactoryImpl: DependencyFactory, OnBoadingPagesFactory
 
     init(repositoryComponents: RepositoryComponents) {
         self.repositoryComponents = repositoryComponents
+    }
+
+    func makeIntroVideoPage() -> IntroVideoController {
+        return .init(viewModel: makeIntroVideoViewModel())
+    }
+
+    private func makeIntroVideoViewModel() -> IntroVideoViewModel {
+        return scoped(IntroVideoViewModelImpl())
     }
 
     func makeCountriesPage() -> CountriesListController {

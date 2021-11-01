@@ -36,6 +36,7 @@ final class AppCoordinator: BaseCoordinator {
         bindNotificationCenter()
         bindReachabilityManager()
         bindPaymentNotifications()
+        bindUnavailableNotification()
     }
 
     override func start() {
@@ -311,12 +312,13 @@ extension AppCoordinator {
 //  MARK: - Animation Presentation
 
 extension AppCoordinator {
-    private func showAnimation(type: LottieAnimationModel) {
+    private func showAnimation(type: LottieAnimationModel, action: (() -> Void)? = nil) {
         UIApplication.shared.keyWindow?.subviews
             .first(where: { $0 is AnimationContainerView })?
             .removeFromSuperview()
 
         let animationView = AnimationContainerView(animationType: type)
+        animationView.action = action
 
         UIApplication.shared.keyWindow?.addSubview(animationView)
 
@@ -327,12 +329,19 @@ extension AppCoordinator {
         animationView.animationPlay()
     }
 
-    private func hideAnimation() {
+    private func hideAnimation(ifAnimationType: LottieAnimationModel? = nil) {
         let animationView = UIApplication.shared.keyWindow?.subviews
             .first(where: { $0 is AnimationContainerView }) as? AnimationContainerView
+
+        if let animationType = ifAnimationType,
+           animationView?.animationType != animationType
+        {
+            return
+        }
+
         animationView?.removeFromSuperview()
 
-        if animationView?.animationType == .noInternet {
+        if [.noInternet, .overload].contains(animationView?.animationType) {
             (UIApplication.topViewController() as? Reloadable)?.reload()
             sendUpdateNotifications()
         }
@@ -389,5 +398,27 @@ extension AppCoordinator {
         } else {
             showAnimation(type: .noInternet)
         }
+    }
+}
+
+//  MARK: - App Unavailable handling
+
+extension AppCoordinator {
+    private func bindUnavailableNotification() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.appUnavailable.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.showAnimation(type: .overload) {
+                    NotificationCenter.default.post(name: Constants.InternalNotification.checkAvailability.name, object: nil)
+                }
+            })
+            .disposed(by: disposeBag)
+
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.appAvailable.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.hideAnimation(ifAnimationType: .overload)
+            })
+            .disposed(by: disposeBag)
     }
 }

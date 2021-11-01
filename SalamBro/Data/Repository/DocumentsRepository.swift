@@ -33,6 +33,7 @@ final class DocumentsRepositoryImpl: DocumentsRepository {
         self.service = service
 
         bindNotifications()
+        bindAvailabilityNotification()
     }
 
     func getDocuments() {
@@ -91,6 +92,28 @@ final class DocumentsRepositoryImpl: DocumentsRepository {
             .subscribe(onNext: { [weak self] _ in
                 self?.needsFetchDocuments = true
                 self?.getDocuments()
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+//  MARK: - Checking App Availability
+
+extension DocumentsRepositoryImpl {
+    private func checkAvailability() {
+        outputs.didStartRequest.accept(())
+        service.getDocuments()
+            .subscribe { _ in
+                NotificationCenter.default.post(name: Constants.InternalNotification.appAvailable.name, object: nil)
+            } onError: { _ in }
+            .disposed(by: disposeBag)
+    }
+
+    private func bindAvailabilityNotification() {
+        NotificationCenter.default.rx
+            .notification(Constants.InternalNotification.checkAvailability.name)
+            .subscribe(onNext: { [weak self] _ in
+                self?.checkAvailability()
             })
             .disposed(by: disposeBag)
     }

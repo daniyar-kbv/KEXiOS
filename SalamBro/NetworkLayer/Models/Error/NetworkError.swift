@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Moya
 
 protocol ErrorPresentable: Error {
     var presentationDescription: String { get }
