@@ -462,8 +462,8 @@
 		5522818DF6CF1575393E6A7C145378B0 /* ChangeNameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeNameViewModel.swift; sourceTree = "<group>"; };
 		9192B1E3A8C99E48F74CF996EE4F1F50 /* CitiesListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesListController.swift; sourceTree = "<group>"; };
 		C8E7AE2B036AC37A852ACEE0B481798B /* CitiesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListController.swift; sourceTree = "<group>"; };
-		5415DD6DEBB43DD854FC6416F4F6E0A0 /* CitiesListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesListViewModel.swift; sourceTree = "<group>"; };
 		3F606432D1913E96452A893D5CC7D411 /* CitiesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListViewModel.swift; sourceTree = "<group>"; };
+		5415DD6DEBB43DD854FC6416F4F6E0A0 /* CitiesListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesListViewModel.swift; sourceTree = "<group>"; };
 		F5F9B00C87EC9410D224F0BF4AE07C2E /* CitiesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesRepository.swift; sourceTree = "<group>"; };
 		D182A758BB1A04D6DD413CD71E6E6FE1 /* CitiesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesResponse.swift; sourceTree = "<group>"; };
 		D4D108C9F3E1BE55E39EBB94BB446FA4 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
@@ -890,23 +890,6 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		A1C92B996E780B7E9C61DD1F246FEA2E /* IntroVideo */ = {
-			isa = PBXGroup;
-			children = (
-				DE344DA16F5E9A6EBBF18C887EA3B6C0 /* IntroVideoController.swift */,
-				2BEFBAFCB10449CADC1FD81ED9EC497C /* IntroVideoViewModel.swift */,
-			);
-			path = IntroVideo;
-			sourceTree = "<group>";
-		};
-		6AEBD2BEBE08B7D72B02687E1C3ADEC2 /* Videos */ = {
-			isa = PBXGroup;
-			children = (
-				C64A05B8A91233A4D946B500BECD1E47 /* intro_app.mp4 */,
-			);
-			path = Videos;
-			sourceTree = "<group>";
-		};
 		15BA1BB3C138589E5ECE03C5EE7747F5 /* PaymentEdit */ = {
 			isa = PBXGroup;
 			children = (
@@ -944,14 +927,6 @@
 				BA01A6AE1BACEB2944EBDF6E083108E5 /* CartPromocodeViewModel.swift */,
 			);
 			path = CartPromocode;
-			sourceTree = "<group>";
-		};
-		28F9B1E6A842CD5414538A2BB32030C7 /* Factories */ = {
-			isa = PBXGroup;
-			children = (
-				D8D478A5D329CAAB7FEAF4FD9CCEE2E9 /* OnBoardingPagesFactory.swift */,
-			);
-			path = Factories;
 			sourceTree = "<group>";
 		};
 		1EE1976EDC4D2619CA8F661B297808A7 /* CategoryCell */ = {
@@ -1030,6 +1005,14 @@
 				67BB62014044728D18B26D86AC5A00E3 /* VerificationView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		28F9B1E6A842CD5414538A2BB32030C7 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				D8D478A5D329CAAB7FEAF4FD9CCEE2E9 /* OnBoardingPagesFactory.swift */,
+			);
+			path = Factories;
 			sourceTree = "<group>";
 		};
 		2D343F9E5F60C36A9F467241C414765C /* Views */ = {
@@ -1283,15 +1266,6 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		CE712B75964A8CA2C26DD6BEBCA67C13 /* CountriesList */ = {
-			isa = PBXGroup;
-			children = (
-				40C03D37DCC224B9CCB3BE6049F12802 /* CountriesListController.swift */,
-				910F93957F11FEAC0347429F3F93ADDD /* CountriesListViewModel.swift */,
-			);
-			path = CountriesList;
-			sourceTree = "<group>";
-		};
 		4D9B1E855908F046114F499255B605EB /* KeyValueStorage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1393,15 +1367,6 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		B4D0A9748890E80377057BB2FD845A5D /* CitiesList */ = {
-			isa = PBXGroup;
-			children = (
-				9192B1E3A8C99E48F74CF996EE4F1F50 /* CitiesListController.swift */,
-				5415DD6DEBB43DD854FC6416F4F6E0A0 /* CitiesListViewModel.swift */,
-			);
-			path = CitiesList;
-			sourceTree = "<group>";
-		};
 		5D908F0160906F7C346E463377BC337B /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -1436,18 +1401,6 @@
 				8E40C736022C5C0B5C64C5A5BD01DA3D /* PaymentPagesFactory.swift */,
 			);
 			path = Factories;
-			sourceTree = "<group>";
-		};
-		73C9FA3C1E79BDFBFA37C07755182CD8 /* OnBoarding */ = {
-			isa = PBXGroup;
-			children = (
-				B4D0A9748890E80377057BB2FD845A5D /* CitiesList */,
-				CE712B75964A8CA2C26DD6BEBCA67C13 /* CountriesList */,
-				28F9B1E6A842CD5414538A2BB32030C7 /* Factories */,
-				A1C92B996E780B7E9C61DD1F246FEA2E /* IntroVideo */,
-				36AE99E011D25D94B7DD1DD146AD6335 /* OnBoardingCoordinator.swift */,
-			);
-			path = OnBoarding;
 			sourceTree = "<group>";
 		};
 		66174B70E610873B846EA2DFDBC446DA /* Agreement */ = {
@@ -1495,6 +1448,14 @@
 				08D6A8241F62B88573896C6DBBC3219A /* View */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		6AEBD2BEBE08B7D72B02687E1C3ADEC2 /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+				C64A05B8A91233A4D946B500BECD1E47 /* intro_app.mp4 */,
+			);
+			path = Videos;
 			sourceTree = "<group>";
 		};
 		6E626EA9A6624AD95551F270F1F2DE15 /* Models */ = {
@@ -1548,6 +1509,18 @@
 				D23C58033ECCF4D1CE1C9EA35AA02C97 /* ChangeLanguageCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		73C9FA3C1E79BDFBFA37C07755182CD8 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				B4D0A9748890E80377057BB2FD845A5D /* CitiesList */,
+				CE712B75964A8CA2C26DD6BEBCA67C13 /* CountriesList */,
+				28F9B1E6A842CD5414538A2BB32030C7 /* Factories */,
+				A1C92B996E780B7E9C61DD1F246FEA2E /* IntroVideo */,
+				36AE99E011D25D94B7DD1DD146AD6335 /* OnBoardingCoordinator.swift */,
+			);
+			path = OnBoarding;
 			sourceTree = "<group>";
 		};
 		7437A0ADDA35067D46E6E07E67E04F22 /* Factories */ = {
@@ -1848,6 +1821,15 @@
 			path = CartAdditionalProduct;
 			sourceTree = "<group>";
 		};
+		A1C92B996E780B7E9C61DD1F246FEA2E /* IntroVideo */ = {
+			isa = PBXGroup;
+			children = (
+				DE344DA16F5E9A6EBBF18C887EA3B6C0 /* IntroVideoController.swift */,
+				2BEFBAFCB10449CADC1FD81ED9EC497C /* IntroVideoViewModel.swift */,
+			);
+			path = IntroVideo;
+			sourceTree = "<group>";
+		};
 		A5ECF944127E6FB597F773D79669E96E /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -2023,6 +2005,15 @@
 			path = AddressPick;
 			sourceTree = "<group>";
 		};
+		B4D0A9748890E80377057BB2FD845A5D /* CitiesList */ = {
+			isa = PBXGroup;
+			children = (
+				9192B1E3A8C99E48F74CF996EE4F1F50 /* CitiesListController.swift */,
+				5415DD6DEBB43DD854FC6416F4F6E0A0 /* CitiesListViewModel.swift */,
+			);
+			path = CitiesList;
+			sourceTree = "<group>";
+		};
 		B7715CB7E53A15F7321B9187AD0EC641 /* CountryCodeCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2146,6 +2137,15 @@
 				DD78B6277861BDF6F586D4ACF62DBB94 /* VerificationViewModel.swift */,
 			);
 			path = Verification;
+			sourceTree = "<group>";
+		};
+		CE712B75964A8CA2C26DD6BEBCA67C13 /* CountriesList */ = {
+			isa = PBXGroup;
+			children = (
+				40C03D37DCC224B9CCB3BE6049F12802 /* CountriesListController.swift */,
+				910F93957F11FEAC0347429F3F93ADDD /* CountriesListViewModel.swift */,
+			);
+			path = CountriesList;
 			sourceTree = "<group>";
 		};
 		CF5C9144BDFCBE6E71E7754690FCD540 /* ViewController */ = {
@@ -3190,7 +3190,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -3198,7 +3198,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.74;
+				MARKETING_VERSION = 0.0.77;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3260,7 +3260,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 77;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
@@ -3269,7 +3269,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.74;
+				MARKETING_VERSION = 0.0.77;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

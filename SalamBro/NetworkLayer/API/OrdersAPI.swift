@@ -19,7 +19,7 @@ enum OrdersAPI {
 
 extension OrdersAPI: TargetType {
     var baseURL: URL {
-        return Constants.URLs.APIBase.dev
+        return Constants.URLs.apiBaseURL
     }
 
     var path: String {
