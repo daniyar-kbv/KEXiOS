@@ -123,6 +123,7 @@
 		B53F87BF1F22A91DD708001C91F8897F /* DocumentsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD1472EF7B2CF7B421BC0A2D25806D4 /* DocumentsStorage.swift */; };
 		007AB0C732342F848EF737F8CC77C270 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0449D8BAEF9C31EBA09309E71F90CD48 /* Double+Extension.swift */; };
 		15EFEE4C7F5BB74B69DD098820A3EF4D /* DropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93581ADFA33A138320E2BC43171B226F /* DropDownTextField.swift */; };
+		2B50D8F2E1132377E128C4561EF7246D /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEBAEF2CAEF4905C75BCB7FDEA04654 /* ErrorResponse.swift */; };
 		4689A2E43C9E1832756F31868F0DBF8F /* Formatted+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CA23E645A53D190EF1336A05E81C3 /* Formatted+Extension.swift */; };
 		54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070881AEDB3977B0482B6A6B06A1C201 /* GeoStorage.swift */; };
 		7FF3C00C520DBCFD5B1F801D9F8B482F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */; };
@@ -485,6 +486,7 @@
 		EBD1472EF7B2CF7B421BC0A2D25806D4 /* DocumentsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsStorage.swift; sourceTree = "<group>"; };
 		0449D8BAEF9C31EBA09309E71F90CD48 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		93581ADFA33A138320E2BC43171B226F /* DropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTextField.swift; sourceTree = "<group>"; };
+		4EEBAEF2CAEF4905C75BCB7FDEA04654 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		CF1CA23E645A53D190EF1336A05E81C3 /* Formatted+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatted+Extension.swift"; sourceTree = "<group>"; };
 		070881AEDB3977B0482B6A6B06A1C201 /* GeoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoStorage.swift; sourceTree = "<group>"; };
 		04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -804,6 +806,7 @@
 		07E5B414E845FBE9E982741C34761A44 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				4EEBAEF2CAEF4905C75BCB7FDEA04654 /* ErrorResponse.swift */,
 				5C6BB17D599C2783876EE5593605D27F /* NetworkError.swift */,
 			);
 			path = Error;
@@ -2783,6 +2786,7 @@
 				B53F87BF1F22A91DD708001C91F8897F /* DocumentsStorage.swift in Sources */,
 				007AB0C732342F848EF737F8CC77C270 /* Double+Extension.swift in Sources */,
 				15EFEE4C7F5BB74B69DD098820A3EF4D /* DropDownTextField.swift in Sources */,
+				2B50D8F2E1132377E128C4561EF7246D /* ErrorResponse.swift in Sources */,
 				4689A2E43C9E1832756F31868F0DBF8F /* Formatted+Extension.swift in Sources */,
 				54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */,
 				10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */,

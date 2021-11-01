@@ -27,4 +27,25 @@ struct ConfigurationPlugin: PluginType {
 
         return request
     }
+
+    func process(_ result: Result<Response, MoyaError>, target _: TargetType) -> Result<Response, MoyaError> {
+        let isAvailable = result.map { response -> Bool in
+            guard let errorResponse = try? response.map(ResponseWithErrorOnly.self) else {
+                return true
+            }
+
+            guard errorResponse.error.code == Constants.ErrorCode.iosNotAvailable else {
+                return true
+            }
+
+            return false
+        }
+
+        guard (try? isAvailable.get()) ?? true else {
+            NotificationCenter.default.post(name: Constants.InternalNotification.appUnavailable.name, object: nil)
+            return .failure(.underlying(EmptyError(), nil))
+        }
+
+        return result
+    }
 }
