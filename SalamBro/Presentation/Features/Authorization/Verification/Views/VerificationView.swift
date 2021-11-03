@@ -48,7 +48,7 @@ final class VerificationView: UIView {
 
     lazy var getCodeButton: SBSubmitButton = {
         let button = SBSubmitButton(style: .whiteGray)
-        button.addTarget(self, action: #selector(reload), for: .touchUpInside)
+        button.addTarget(self, action: #selector(resendTapped), for: .touchUpInside)
         return button
     }()
 
@@ -129,6 +129,10 @@ extension VerificationView {
             getCodeButton.isEnabled = true
             getCodeButton.setTitle(SBLocalization.localized(key: AuthorizationText.Verification.Button.timeout), for: .normal)
         }
+    }
+
+    @objc func resendTapped() {
+        delegate?.resendOTPTapped(self)
     }
 
     @objc func reload(for error: Bool) {

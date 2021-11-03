@@ -84,6 +84,7 @@ final class RateView: UIView {
     private lazy var sendButton: SBSubmitButton = {
         let button = SBSubmitButton(style: .filledRed)
         button.setTitle(SBLocalization.localized(key: ProfileText.RateOrder.submitButton), for: .normal)
+        button.isEnabled = false
         return button
     }()
 
@@ -215,7 +216,7 @@ extension RateView {
     }
 
     private func didFinishTouchRating(_ rating: Double) {
-        sendButton.isEnabled = true
+        sendButton.isEnabled = rating != 0
         self.rating = Int(rating)
         delegate?.updateViewModelData(at: self.rating)
         questionLabel.text = questionTitle
