@@ -61,6 +61,10 @@ final class VerificationViewModel {
         authRepository.outputs.didFailBranch
             .bind(to: outputs.didFailBranch)
             .disposed(by: disposeBag)
+
+        authRepository.outputs.didResendOTP
+            .bind(to: outputs.didResendOTP)
+            .disposed(by: disposeBag)
     }
 
     func verifyOTP(code: String) {
