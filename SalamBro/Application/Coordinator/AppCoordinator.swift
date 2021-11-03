@@ -292,7 +292,7 @@ extension AppCoordinator {
         openOrderHistory()
 
         let profileCoordinator = appCoordinatorsFactory.makeProfileCoordinator(serviceComponents: serviceComponents, repositoryComponents: repositoryComponents)
-        let orderHistoryCoordinator = profileCoordinator.childCoordinators.first(where: { $0 is OrderHistoryCoordinator }) as? OrderHistoryCoordinator
+        let orderHistoryCoordinator = profileCoordinator.childCoordinators.last(where: { $0 is OrderHistoryCoordinator }) as? OrderHistoryCoordinator
 
         guard let orderId = Int(pushNotification.pushTypeValue) else { return }
 
