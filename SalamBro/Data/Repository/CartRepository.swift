@@ -260,7 +260,9 @@ extension CartRepositoryImpl {
         self.cart = cart
         getItems()
 
-        if ![0, defaultStorage.deliveryPrice].contains(cart.deliveryPrice) {
+        if defaultStorage.deliveryPrice == 0 {
+            defaultStorage.persist(deliveryPrice: cart.deliveryPrice)
+        } else if defaultStorage.deliveryPrice != cart.deliveryPrice {
             outputs.deliveryPriceChanged.accept(())
             defaultStorage.persist(deliveryPrice: cart.deliveryPrice)
         }
