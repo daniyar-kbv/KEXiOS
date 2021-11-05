@@ -150,7 +150,9 @@ extension PaymentSelectionViewController: PKPaymentAuthorizationViewControllerDe
     }
 
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
-        controller.dismiss(animated: true)
+        controller.dismiss(animated: true) { [weak self] in
+            self?.viewModel.applePayDidFinish()
+        }
     }
 }
 

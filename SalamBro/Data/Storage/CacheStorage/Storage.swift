@@ -14,7 +14,13 @@ public final class Storage {
     }
 
     private func cache<T: Codable>(objectType _: T.Type) throws -> Cache.Storage<String, T> {
-        let diskConfig = DiskConfig(name: Keys.disk.rawValue)
+        let applicationSupportURL = try? FileManager.default.url(for: .applicationSupportDirectory,
+                                                                 in: .userDomainMask,
+                                                                 appropriateFor: nil,
+                                                                 create: true)
+        let diskConfig = DiskConfig(name: Keys.disk.rawValue,
+                                    expiry: .never,
+                                    directory: applicationSupportURL)
         let memoryConfig = MemoryConfig(expiry: .never,
                                         countLimit: 0,
                                         totalCostLimit: 0)
@@ -32,6 +38,6 @@ public final class Storage {
     }
 
     internal func get<T: Codable>(key: String) -> T? {
-        try? cache(objectType: T.self).object(forKey: key)
+        return try? cache(objectType: T.self).object(forKey: key)
     }
 }

@@ -20,6 +20,7 @@ protocol PaymentRepository: AnyObject {
     func fetchSavedCards()
     func getPaymentMethods()
     func makePayment()
+    func handleApplePayTermination()
     func makeApplePayPayment(payment: PKPayment)
     func deleteCards(with UUIDs: [String])
     func checkPaymentStatus()
@@ -39,6 +40,7 @@ final class PaymentRepositoryImpl: PaymentRepository {
     private var localPaymentMethods: [PaymentMethod] = [.init(type: .card), .init(type: .applePay), .init(type: .cash)]
     private var paymentMethods: [PaymentMethod] = []
 
+    private var applePayAutorized = false
     private var threeDsProcessor: ThreeDsProcessor?
     private var paymentUUID: String?
 
@@ -351,40 +353,6 @@ extension PaymentRepositoryImpl {
 // MARK: - Apple pay
 
 extension PaymentRepositoryImpl {
-    func makeApplePayPayment(payment: PKPayment) {
-        guard let cryptogram = payment.convertToString() else {
-            print("Unable to create cryptogram")
-            return
-        }
-
-        guard let leadUUID = defaultStorage.leadUUID,
-              let paymentType = selectedPaymentMethod?.type.rawValue
-        else { return }
-        let createOrderDTO = CreateOrderDTO(leadUUID: leadUUID)
-        let createPaymentDTO = CreatePaymentDTO(leadUUID: leadUUID,
-                                                paymentType: paymentType,
-                                                cryptogram: cryptogram,
-                                                cardholderName: "",
-                                                keepCard: nil,
-                                                changeFor: nil)
-
-        createPayment(createOrderDTO: createOrderDTO, createPaymentDTO: createPaymentDTO)
-    }
-
-    private func processApplePay() {
-        let request = PKPaymentRequest()
-        request.merchantIdentifier = Constants.applePayMerchantId
-        request.supportedNetworks = [.visa, .masterCard, .JCB, .amex, .cartesBancaires, .chinaUnionPay, .discover, .eftpos, .electron, .idCredit, .interac, .maestro, .privateLabel, .quicPay, .suica, .vPay]
-        request.merchantCapabilities = .capability3DS
-        request.countryCode = "KZ"
-        request.currencyCode = "KZT"
-        request.shippingType = .delivery
-        request.paymentSummaryItems = makeSummaryItems()
-        guard let applePayController = PKPaymentAuthorizationViewController(paymentRequest: request)
-        else { return }
-        outputs.showApplePay.accept(applePayController)
-    }
-
     private func makeSummaryItems() -> [PKPaymentSummaryItem] {
         let productItems: [PKPaymentSummaryItem] = cartStorage.cart.items
             .filter {
@@ -414,6 +382,51 @@ extension PaymentRepositoryImpl {
         allSummaryItems.append(merchantItem)
 
         return allSummaryItems
+    }
+
+    private func processApplePay() {
+        let request = PKPaymentRequest()
+        request.merchantIdentifier = Constants.applePayMerchantId
+        request.supportedNetworks = [.visa, .masterCard, .JCB, .amex, .cartesBancaires, .chinaUnionPay, .discover, .eftpos, .electron, .idCredit, .interac, .maestro, .privateLabel, .quicPay, .suica, .vPay]
+        request.merchantCapabilities = .capability3DS
+        request.countryCode = "KZ"
+        request.currencyCode = "KZT"
+        request.shippingType = .delivery
+        request.paymentSummaryItems = makeSummaryItems()
+        guard let applePayController = PKPaymentAuthorizationViewController(paymentRequest: request)
+        else { return }
+        outputs.showApplePay.accept(applePayController)
+    }
+
+    func makeApplePayPayment(payment: PKPayment) {
+        applePayAutorized = true
+
+        guard let cryptogram = payment.convertToString() else {
+            print("Unable to create cryptogram")
+            return
+        }
+
+        guard let leadUUID = defaultStorage.leadUUID,
+              let paymentType = selectedPaymentMethod?.type.rawValue
+        else { return }
+        let createOrderDTO = CreateOrderDTO(leadUUID: leadUUID)
+        let createPaymentDTO = CreatePaymentDTO(leadUUID: leadUUID,
+                                                paymentType: paymentType,
+                                                cryptogram: cryptogram,
+                                                cardholderName: "",
+                                                keepCard: nil,
+                                                changeFor: nil)
+
+        createPayment(createOrderDTO: createOrderDTO, createPaymentDTO: createPaymentDTO)
+    }
+
+    func handleApplePayTermination() {
+        guard !applePayAutorized else {
+            applePayAutorized = false
+            return
+        }
+
+        defaultStorage.persist(isPaymentProcess: false)
     }
 }
 

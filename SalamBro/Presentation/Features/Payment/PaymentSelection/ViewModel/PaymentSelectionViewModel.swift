@@ -19,6 +19,7 @@ protocol PaymentSelectionViewModel: AnyObject {
     func set(paymentMethod: PaymentMethod)
     func makePayment()
     func processApplePay(payment: PKPayment)
+    func applePayDidFinish()
 }
 
 final class PaymentSelectionViewModelImpl: PaymentSelectionViewModel {
@@ -69,6 +70,10 @@ extension PaymentSelectionViewModelImpl {
 
     func processApplePay(payment: PKPayment) {
         paymentRepository.makeApplePayPayment(payment: payment)
+    }
+
+    func applePayDidFinish() {
+        paymentRepository.handleApplePayTermination()
     }
 }
 
