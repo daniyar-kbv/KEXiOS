@@ -95,10 +95,11 @@ struct Modifier: Codable {
     let name: String
     let uuid: String
     let image: String?
+    let price: Int
     var itemCount: Int = 0
 
     enum CodingKeys: String, CodingKey {
-        case name, uuid, image
+        case name, uuid, image, price
     }
 }
 
