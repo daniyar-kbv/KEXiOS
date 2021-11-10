@@ -39,11 +39,13 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
     private lazy var defaultPlugins: [PluginType] = [networkPlugin, configurationPlugin, networkErrorPlugin]
 
     private lazy var authProvider = MoyaProvider<AuthAPI>(plugins: defaultPlugins)
+    private lazy var pushNotificationsProvider = MoyaProvider<PushNotificationsAPI>(plugins: defaultPlugins + [authPlugin])
 
     override init() {
         super.init()
 
         Single<Any>.authProvider = authProvider
+        Single<Any>.pushNotificationsProvider = pushNotificationsProvider
     }
 
     func authService() -> AuthService {
@@ -83,7 +85,7 @@ final class ServiceComponentsAssembly: DependencyFactory, ServiceComponents {
     }
 
     func pushNotificationsService() -> PushNotificationsService {
-        return shared(PushNotificationsServiceMoyaImpl(provider: MoyaProvider<PushNotificationsAPI>(plugins: defaultPlugins + [authPlugin])))
+        return shared(PushNotificationsServiceMoyaImpl(provider: pushNotificationsProvider))
     }
 
     func paymentsService() -> PaymentsService {
