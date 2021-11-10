@@ -11,7 +11,7 @@ struct Constants {
     static let appMode: AppMode = .dev
 
     static let apiKey = getPlistValue(by: "API_KEY")
-    static let cloudpaymentsMerchantId = getPlistValue(by: "CLOUDPAYMENTS_MERCHANT_ID")
+    static let cloudpaymentsMerchantId = appMode.cloudpaymentsMerchantId
     static let applePayMerchantId = getPlistValue(by: "APPLE_PAY_MERCHANT_ID")
     static let yandexApiKey = getPlistValue(by: "Yandex_API_KEY")
 
@@ -26,6 +26,13 @@ struct Constants {
             switch self {
             case .dev: return URL(string: "https://api-dev.kexbrands.kz")!
             case .prod: return URL(string: "https://api.kexbrands.kz")!
+            }
+        }
+
+        var cloudpaymentsMerchantId: String {
+            switch self {
+            case .dev: return Constants.getPlistValue(by: "CLOUDPAYMENTS_MERCHANT_ID_DEV")
+            case .prod: return Constants.getPlistValue(by: "CLOUDPAYMENTS_MERCHANT_ID_PROD")
             }
         }
     }

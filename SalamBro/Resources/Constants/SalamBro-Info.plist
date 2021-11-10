@@ -6,8 +6,10 @@
 	<string>c4d8ffe6-c93f-4f23-ac7a-89362bd75d36</string>
 	<key>Yandex_API_KEY</key>
 	<string>7cd03aed-4c1a-460a-aca2-90ae52dd60b6</string>
-	<key>CLOUDPAYMENTS_MERCHANT_ID</key>
+	<key>CLOUDPAYMENTS_MERCHANT_ID_PROD</key>
 	<string>pk_2ec019c3a3a24b44996a1a2ca6f8c</string>
+	<key>CLOUDPAYMENTS_MERCHANT_ID_DEV</key>
+	<string>pk_af13fcf78717ce672b9a8b33867f4</string>
 	<key>APPLE_PAY_MERCHANT_ID</key>
 	<string>merchant.kex.group.app</string>
 </dict>
