@@ -11,11 +11,12 @@ import RxCocoa
 import RxSwift
 import WebKit
 
-private var _authProvider = MoyaProvider<AuthAPI>()
+private var _authProvider: MoyaProvider<AuthAPI>?
+private var _pushNotificationsProvider: MoyaProvider<PushNotificationsAPI>?
 private let disposeBag = DisposeBag()
 
 extension Single {
-    static var authProvider: MoyaProvider<AuthAPI> {
+    static var authProvider: MoyaProvider<AuthAPI>? {
         get {
             _authProvider
         }
@@ -24,13 +25,23 @@ extension Single {
         }
     }
 
+    static var pushNotificationsProvider: MoyaProvider<PushNotificationsAPI>? {
+        get {
+            _pushNotificationsProvider
+        }
+        set {
+            _pushNotificationsProvider = newValue
+        }
+    }
+
     private var authTokenStorage: AuthTokenStorage {
         return AuthTokenStorageImpl.sharedStorage
     }
 
-    private func refreshToken() -> Single<Void> {
+    private func refreshToken() throws -> Single<Void> {
         let dto = RefreshDTO(refresh: authTokenStorage.refreshToken ?? "")
-        return Single<Any>.authProvider
+        guard let authProvider = Single<Any>.authProvider else { throw NetworkError.unauthorized }
+        return authProvider
             .rx
             .request(.refreshToken(dto: dto))
             .map { response in
@@ -67,12 +78,33 @@ extension Single {
             }
     }
 
+    private func sendNewFCMToken() throws -> Single<Void> {
+        guard let pushNotificationsProvider = Single<Any>.pushNotificationsProvider,
+              let fcmToken = DefaultStorageImpl.sharedStorage.fcmToken
+        else { throw NetworkError.noData }
+        return pushNotificationsProvider
+            .rx
+            .request(.fcmTokenSave(dto: .init(fcmToken: fcmToken)))
+            .map { _ in () }
+    }
+
     func retryWhenUnautharized() -> PrimitiveSequence<Trait, Element> {
         return retryWhen { source in
             source.flatMapLatest { error -> Single<Void> in
                 guard (error as? MoyaError)?.response?.statusCode != Constants.StatusCode.unauthorized
                 else {
-                    return refreshToken()
+                    do {
+                        return try refreshToken()
+                            .flatMap { _ -> Single<Void> in
+                                do {
+                                    return try sendNewFCMToken()
+                                } catch {
+                                    throw error
+                                }
+                            }
+                    } catch {
+                        throw error
+                    }
                 }
                 return Single.error(error)
             }

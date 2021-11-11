@@ -263,7 +263,9 @@ extension CartRepositoryImpl {
         if defaultStorage.deliveryPrice == 0 {
             defaultStorage.persist(deliveryPrice: cart.deliveryPrice)
         } else if defaultStorage.deliveryPrice != cart.deliveryPrice {
-            outputs.deliveryPriceChanged.accept(())
+            if !getIsEmpty() {
+                outputs.deliveryPriceChanged.accept(())
+            }
             defaultStorage.persist(deliveryPrice: cart.deliveryPrice)
         }
     }

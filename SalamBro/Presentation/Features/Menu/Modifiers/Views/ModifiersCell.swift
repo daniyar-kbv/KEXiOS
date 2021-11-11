@@ -121,7 +121,7 @@ final class ModifiersCell: UICollectionViewCell {
 
         itemTitleLabel.text = modifier.name
         itemPriceLabel.text = SBLocalization.localized(key: MenuText.Modifier.price,
-                                                       arguments: "0")
+                                                       arguments: String(modifier.price))
         countLabel.text = "\(modifier.itemCount)"
         itemCount = modifier.itemCount
         self.index = index
