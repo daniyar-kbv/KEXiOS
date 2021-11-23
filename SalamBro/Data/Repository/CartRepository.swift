@@ -93,6 +93,7 @@ extension CartRepositoryImpl {
     func removeItem(internalUUID: String) {
         guard let index = getIndex(of: internalUUID) else { return }
         cart.items.remove(at: index)
+        cart.hasUnavailableProducts = cart.items.contains(where: { !$0.position.isAvailable && $0.count != 0 })
         sendNewCart(withDebounce: false)
     }
 
@@ -184,9 +185,7 @@ extension CartRepositoryImpl {
     }
 
     func getItems() {
-        var additionalItems: [CartItem] = []
-
-        cartStorage.additionalProducts.forEach { additionalItems.append($0.toCartItem(count: $0.count, comment: "", modifiers: [], image: $0.image, type: .additional)) }
+        let additionalItems = cartStorage.additionalProducts.map { $0.toCartItem(count: $0.count, comment: "", modifiers: [], image: $0.image, type: .additional) }
 
         outputs.didChange.accept((cart, additionalItems))
     }
