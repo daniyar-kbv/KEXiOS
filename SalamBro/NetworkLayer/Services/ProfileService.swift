@@ -31,6 +31,7 @@ final class ProfileServiceMoyaImpl: ProfileService {
     func getUserInfo() -> Single<UserInfoResponse> {
         return provider.rx
             .request(.getUserInfo)
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard
                     let userInfoContainerResponse = try? response.map(UserInfoResponseContainer.self)
@@ -53,6 +54,7 @@ final class ProfileServiceMoyaImpl: ProfileService {
     func updateUserInfo(with dto: UserInfoDTO) -> Single<UserInfoResponse> {
         return provider.rx
             .request(.editUserInfo(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let userInfoResponse = try? response.map(UserInfoResponseContainer.self) else {
                     throw NetworkError.badMapping
@@ -73,6 +75,7 @@ final class ProfileServiceMoyaImpl: ProfileService {
     func getAddresses() -> Single<[UserAddress]> {
         return provider.rx
             .request(.getAddresses)
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let response = try? response.map(UserAddressesResponse.self) else {
                     throw NetworkError.badMapping
@@ -93,6 +96,7 @@ final class ProfileServiceMoyaImpl: ProfileService {
     func updateAddress(dto: UpdateAddressDTO) -> Single<String> {
         provider.rx
             .request(.updateAddress(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
 
                 guard let response = try? response.map(OrderApplyResponse.self) else {
@@ -114,6 +118,7 @@ final class ProfileServiceMoyaImpl: ProfileService {
     func deleteAddress(id: Int) -> Single<Void> {
         provider.rx
             .request(.deleteAddress(id: id))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard response.response?.statusCode == Constants.StatusCode.noContent else {
                     guard let response = try? response.map(OrderApplyResponse.self) else {
@@ -133,6 +138,7 @@ final class ProfileServiceMoyaImpl: ProfileService {
     func logOutUser(dto: LogOutDTO) -> Single<Void> {
         provider.rx
             .request(.logout(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let response = try? response.map(LogOutResponse.self) else {
                     throw NetworkError.badMapping

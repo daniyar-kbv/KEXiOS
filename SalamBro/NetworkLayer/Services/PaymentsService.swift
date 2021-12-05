@@ -30,6 +30,7 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
     func myCards() -> Single<[MyCard]> {
         return provider.rx
             .request(.myCards)
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let response = try? response.map(MyCardsResponse.self) else {
                     throw NetworkError.badMapping
@@ -50,6 +51,7 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
     func deleteCard(uuid: String) -> Single<Void> {
         return provider.rx
             .request(.deleteCard(uuid: uuid))
+            .retryWhenDeliveryChanged()
             .map { response in
                 if response.response?.statusCode == Constants.StatusCode.noContent {
                     return ()
@@ -70,6 +72,7 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
     func createOrder(dto: CreateOrderDTO) -> Single<Void> {
         return provider.rx
             .request(.createOrder(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
 
                 guard let response = try? response.map(CreateOrderResponse.self) else {
@@ -95,18 +98,21 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
     func createPayment(dto: CreatePaymentDTO) -> Single<PaymentStatus> {
         return provider.rx
             .request(.createPayment(dto: dto))
+            .retryWhenDeliveryChanged()
             .map(mapPayment(response:))
     }
 
     func createCardPayment(dto: CardPaymentDTO) -> Single<PaymentStatus> {
         return provider.rx
             .request(.createCardPayment(dto: dto))
+            .retryWhenDeliveryChanged()
             .map(mapPayment(response:))
     }
 
     func confirm3DSPayment(dto: Create3DSPaymentDTO, paymentUUID: String) -> Single<PaymentStatus> {
         return provider.rx
             .request(.confirm3DSPayment(dto: dto, paymentUUID: paymentUUID))
+            .retryWhenDeliveryChanged()
             .map(mapPayment(response:))
     }
 
@@ -129,6 +135,7 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
     func getPaymentStatus(leadUUID: String) -> Single<PaymentStatus> {
         return provider.rx
             .request(.paymentStatus(leadUUID: leadUUID))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let response = try? response.map(PaymentResponse.self) else {
                     throw NetworkError.badMapping

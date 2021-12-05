@@ -63,6 +63,7 @@ struct Constants {
         static let branchIsClosed = "branch_is_closed"
         static let localNetworkConnection = "local_network_connection"
         static let iosNotAvailable = "ios_not_available"
+        static let deliveryIsChanged = "delivery_is_changed"
     }
 
     enum StatusCode {

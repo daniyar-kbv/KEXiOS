@@ -16,6 +16,7 @@ enum NetworkError: ErrorPresentable, Equatable {
     case badMapping
     case noData
     case unauthorized
+    case deliveryChanged
     case error(String)
 
     var presentationDescription: String {
@@ -23,6 +24,8 @@ enum NetworkError: ErrorPresentable, Equatable {
         case .badMapping: return SBLocalization.localized(key: ErrorText.Network.mappingError)
         case .noData: return SBLocalization.localized(key: ErrorText.Network.noData)
         case .unauthorized: return SBLocalization.localized(key: ErrorText.Network.unauthorized)
+//            Tech debt: refactor
+        case .deliveryChanged: return ""
         case let .error(error): return error
         }
     }

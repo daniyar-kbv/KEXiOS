@@ -27,6 +27,7 @@ final class PushNotificationsServiceMoyaImpl: PushNotificationsService {
     func fcmTokenSave(dto: FCMTokenSaveDTO) -> Single<Void> {
         return provider.rx
             .request(.fcmTokenSave(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let response = try? response.map(FCMTokenSaveResponse.self) else {
                     throw NetworkError.badMapping
@@ -47,6 +48,7 @@ final class PushNotificationsServiceMoyaImpl: PushNotificationsService {
     func fcmTokenUpdate(dto: FCMTokenUpdateDTO) -> Single<Void> {
         return provider.rx
             .request(.fcmTokenUpdate(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let response = try? response.map(FCMTokenUpdateResponse.self) else {
                     throw NetworkError.badMapping

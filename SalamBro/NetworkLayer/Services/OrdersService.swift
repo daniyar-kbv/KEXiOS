@@ -28,6 +28,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
     func applyOrder(dto: OrderApplyDTO) -> Single<String> {
         return provider.rx
             .request(.apply(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
 
                 guard let applyResponse = try? response.map(OrderApplyResponse.self) else {
@@ -49,6 +50,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
     func getAdditionalProducts(for leadUUID: String) -> Single<[AdditionalPosition]> {
         return provider.rx
             .request(.additionalNomenclature(leadUUID: leadUUID))
+            .retryWhenDeliveryChanged()
             .map { response in
 
                 guard let orderProductsResponse = try? response.map(AdditionalNomenclatureResponse.self) else {
@@ -70,6 +72,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
     func updateCart(for leadUUID: String, dto: CartDTO) -> Single<Cart> {
         return provider.rx
             .request(.updateCart(leadUUID: leadUUID, dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
 
                 guard let cartResponse = try? response.map(OrderUpdateCartResponse.self) else {
@@ -91,6 +94,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
     func applyPromocode(promocode: String) -> Single<Promocode> {
         return provider.rx
             .request(.applyPromocode(promocode: promocode))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let promocodeResponse = try? response.map(PromocodeResponse.self) else {
                     throw NetworkError.badMapping
@@ -111,6 +115,7 @@ final class OrdersServiceMoyaImpl: OrdersService {
     func getLeadInfo(for leadUUID: String) -> Single<LeadInfo> {
         return provider.rx
             .request(.leadInfo(leadUUID: leadUUID))
+            .retryWhenDeliveryChanged()
             .map { response in
 
                 guard let orderProductsResponse = try? response.map(OrdersShowResponse.self) else {

@@ -114,6 +114,7 @@
 		9817ECF9E7BE50910851FDB65299C432 /* CountryCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7669B75C0251CE1AAC87CD49101E6256 /* CountryCodePickerViewController.swift */; };
 		BC3BFA87F1315792FB0A2D3FF8761FEB /* CountryCodePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D734666913DB588648DF8BC069C08 /* CountryCodePickerViewModel.swift */; };
 		D4889DA3A01FCEC6F25C2D072D9B798D /* DefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143A8CE5EE335B80E916323451226F4B /* DefaultStorage.swift */; };
+		05F6E301B6DD93DF54876FA81AAA8C5F /* DeliveryChangedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555BD0395A4A7F0CC3696E5324C8D1D4 /* DeliveryChangedError.swift */; };
 		1FA92967D29DE38D2BB89BB18EFF3110 /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E194B5525BB9619AC133C42D7FBB1A5 /* DependencyFactory.swift */; };
 		A2E1CCFE8C79150877AAE74FFF9583BA /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54D26BD0FE939E99AE5326265196D7D /* Document.swift */; };
 		DF3C3CD82293F74EB8CD47CE63B1B160 /* DocumentsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FED63A6F3CE5610BD846408A62A6488 /* DocumentsAPI.swift */; };
@@ -480,6 +481,7 @@
 		7669B75C0251CE1AAC87CD49101E6256 /* CountryCodePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewController.swift; sourceTree = "<group>"; };
 		ED0D734666913DB588648DF8BC069C08 /* CountryCodePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewModel.swift; sourceTree = "<group>"; };
 		143A8CE5EE335B80E916323451226F4B /* DefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultStorage.swift; sourceTree = "<group>"; };
+		555BD0395A4A7F0CC3696E5324C8D1D4 /* DeliveryChangedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryChangedError.swift; sourceTree = "<group>"; };
 		6E194B5525BB9619AC133C42D7FBB1A5 /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
 		F54D26BD0FE939E99AE5326265196D7D /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		8FED63A6F3CE5610BD846408A62A6488 /* DocumentsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsAPI.swift; sourceTree = "<group>"; };
@@ -1093,6 +1095,7 @@
 		35D69EBDFB02F33AC94E0125810E0E71 /* ErrorHandling */ = {
 			isa = PBXGroup;
 			children = (
+				555BD0395A4A7F0CC3696E5324C8D1D4 /* DeliveryChangedError.swift */,
 				E15462585743CB1EFD80C4C797DBB1C3 /* UnauthorizedError.swift */,
 			);
 			path = ErrorHandling;
@@ -1222,6 +1225,15 @@
 				7AE2CB092F5A1A8512D7E44670BC86B8 /* ViewModel */,
 			);
 			path = PaymentSelection;
+			sourceTree = "<group>";
+		};
+		488144AFE015AE752E37893935A93CD7 /* IntroVideo */ = {
+			isa = PBXGroup;
+			children = (
+				3A25A2B7AA8832AAD1F5EA5224DF3D41 /* IntroVideoController.swift */,
+				283896C8A2519151E56167EC68112EC6 /* IntroVideoViewModel.swift */,
+			);
+			path = IntroVideo;
 			sourceTree = "<group>";
 		};
 		49413994E238D9BEE9FFD390032860DD /* Recovered References */ = {
@@ -1819,15 +1831,6 @@
 				E3A0A3FF88D796FDBA2F60AD44728868 /* CartAdditionalProductViewModel.swift */,
 			);
 			path = CartAdditionalProduct;
-			sourceTree = "<group>";
-		};
-		488144AFE015AE752E37893935A93CD7 /* IntroVideo */ = {
-			isa = PBXGroup;
-			children = (
-				3A25A2B7AA8832AAD1F5EA5224DF3D41 /* IntroVideoController.swift */,
-				283896C8A2519151E56167EC68112EC6 /* IntroVideoViewModel.swift */,
-			);
-			path = IntroVideo;
 			sourceTree = "<group>";
 		};
 		A5ECF944127E6FB597F773D79669E96E /* Map */ = {
@@ -2803,6 +2806,7 @@
 				9817ECF9E7BE50910851FDB65299C432 /* CountryCodePickerViewController.swift in Sources */,
 				BC3BFA87F1315792FB0A2D3FF8761FEB /* CountryCodePickerViewModel.swift in Sources */,
 				D4889DA3A01FCEC6F25C2D072D9B798D /* DefaultStorage.swift in Sources */,
+				05F6E301B6DD93DF54876FA81AAA8C5F /* DeliveryChangedError.swift in Sources */,
 				1FA92967D29DE38D2BB89BB18EFF3110 /* DependencyFactory.swift in Sources */,
 				A2E1CCFE8C79150877AAE74FFF9583BA /* Document.swift in Sources */,
 				DF3C3CD82293F74EB8CD47CE63B1B160 /* DocumentsAPI.swift in Sources */,

@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
 protocol RepositoryComponents: AnyObject {
     func makeAddressRepository() -> AddressRepository
@@ -27,14 +29,20 @@ protocol RepositoryComponents: AnyObject {
 final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponents {
     private let serviceComponents: ServiceComponents
 
+    private lazy var localStorage: Storage = shared(.init())
+
     init(serviceComponents: ServiceComponents) {
         self.serviceComponents = serviceComponents
+
+        super.init()
+
+        Single<Any>.geoStorage = localStorage
     }
 
     func makeAddressRepository() -> AddressRepository {
-        return shared(AddressRepositoryImpl(storage: makeLocalStorage(),
+        return shared(AddressRepositoryImpl(storage: localStorage,
                                             authService: serviceComponents.authService(),
-                                            brandStorage: makeLocalStorage(),
+                                            brandStorage: localStorage,
                                             ordersService: serviceComponents.ordersService(),
                                             authorizedApplyService: serviceComponents.authorizedApplyService(),
                                             profileService: serviceComponents.profileService(),
@@ -45,12 +53,12 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
 
     func makeBrandRepository() -> BrandRepository {
         return shared(BrandRepositoryImpl(locationService: serviceComponents.locationService(),
-                                          brandStorage: makeLocalStorage(),
-                                          geoStorage: makeLocalStorage()))
+                                          brandStorage: localStorage,
+                                          geoStorage: localStorage))
     }
 
     func makeCartRepository() -> CartRepository {
-        return shared(CartRepositoryImpl(cartStorage: makeLocalStorage(),
+        return shared(CartRepositoryImpl(cartStorage: localStorage,
                                          ordersService: serviceComponents.ordersService(),
                                          defaultStorage: DefaultStorageImpl.sharedStorage))
     }
@@ -61,20 +69,20 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
                                          ordersService: serviceComponents.ordersService(),
                                          authorizedApplyService: serviceComponents.authorizedApplyService(),
                                          notificationsService: serviceComponents.pushNotificationsService(),
-                                         cartStorage: makeLocalStorage(),
-                                         geoStorage: makeLocalStorage(),
+                                         cartStorage: localStorage,
+                                         geoStorage: localStorage,
                                          tokenStorage: AuthTokenStorageImpl.sharedStorage,
                                          defaultStorage: DefaultStorageImpl.sharedStorage))
     }
 
     func makeCountriesRepository() -> CountriesRepository {
         return shared(CountriesRepositoryImpl(locationService: serviceComponents.locationService(),
-                                              storage: makeLocalStorage()))
+                                              storage: localStorage))
     }
 
     func makeCitiesRepository() -> CitiesRepository {
         return shared(CitiesRepositoryImpl(locationService: serviceComponents.locationService(),
-                                           storage: makeLocalStorage()))
+                                           storage: localStorage))
     }
 
     func makeMenuRepository() -> MenuRepository {
@@ -88,7 +96,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     }
 
     func makeDocumentsRepository() -> DocumentsRepository {
-        return shared(DocumentsRepositoryImpl(storage: makeLocalStorage(),
+        return shared(DocumentsRepositoryImpl(storage: localStorage,
                                               service: serviceComponents.documentsService()))
     }
 
@@ -101,8 +109,8 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
                                                 authorizedApplyService: serviceComponents.authorizedApplyService(),
                                                 ordersService: serviceComponents.ordersService(),
                                                 defaultStorage: DefaultStorageImpl.sharedStorage,
-                                                cartStorage: makeLocalStorage(),
-                                                addressStorage: makeLocalStorage(),
+                                                cartStorage: localStorage,
+                                                addressStorage: localStorage,
                                                 reachabilityManager: ReachabilityManagerImpl.shared))
     }
 
@@ -123,11 +131,7 @@ final class RepositoryComponentsAssembly: DependencyFactory, RepositoryComponent
     func makeOrdersHistoryRepository() -> OrdersHistoryRepository {
         return shared(OrdersHistoryRepositoryImpl(
             ordersHistoryService: serviceComponents.ordersHistoryService(),
-            storage: makeLocalStorage()
+            storage: localStorage
         ))
-    }
-
-    private func makeLocalStorage() -> Storage {
-        return shared(.init())
     }
 }

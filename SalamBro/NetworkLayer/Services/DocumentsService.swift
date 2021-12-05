@@ -27,6 +27,7 @@ final class DocumentsServiceImpl: DocumentsService {
     func getDocuments() -> Single<[Document]> {
         return provider.rx
             .request(.documents)
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard
                     let documentsResponse = try? response.map(DocumentsResponse.self)
@@ -49,6 +50,7 @@ final class DocumentsServiceImpl: DocumentsService {
     func getContacts() -> Single<[Contact]> {
         return provider.rx
             .request(.contacts)
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let contactsResponse = try? response.map(ContactsResponse.self) else {
                     throw NetworkError.badMapping
