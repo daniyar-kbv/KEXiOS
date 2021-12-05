@@ -15,7 +15,12 @@ protocol IntroVideoViewModel: AnyObject {
 }
 
 final class IntroVideoViewModelImpl: IntroVideoViewModel {
-    let output: Output = .init()
+    let output: Output
+
+    init() {
+        let hideButton = DefaultStorageImpl.sharedStorage.launchCount <= 3
+        output = .init(hideButton: .init(value: hideButton))
+    }
 
     func getVideo() {
         guard let path = Bundle.main.path(forResource: "intro_app", ofType: "mp4") else {
@@ -28,6 +33,7 @@ final class IntroVideoViewModelImpl: IntroVideoViewModel {
 
 extension IntroVideoViewModelImpl {
     struct Output {
+        let hideButton: BehaviorRelay<Bool>
         let videoURL = PublishRelay<URL>()
     }
 }

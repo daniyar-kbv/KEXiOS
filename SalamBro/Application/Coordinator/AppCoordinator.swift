@@ -41,7 +41,7 @@ final class AppCoordinator: BaseCoordinator {
 
     override func start() {
         configureCoordinators()
-        switchFlows()
+        showIntroVideo()
         checkForInternet()
     }
 }
@@ -58,6 +58,19 @@ extension AppCoordinator {
                 self?.switchFlows()
             })
             .disposed(by: disposeBag)
+    }
+
+    private func showIntroVideo() {
+        let introVideoController = pagesFactory.makeIntroVideoPage()
+
+        introVideoController.output
+            .didFinish
+            .subscribe(onNext: { [weak self] in
+                self?.switchFlows()
+            })
+            .disposed(by: disposeBag)
+
+        UIApplication.shared.setRootView(introVideoController)
     }
 
     private func switchFlows() {

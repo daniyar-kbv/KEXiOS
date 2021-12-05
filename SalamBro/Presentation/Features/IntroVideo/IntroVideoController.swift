@@ -13,6 +13,12 @@ import RxSwift
 import UIKit
 
 final class IntroVideoController: UIViewController {
+    private(set) lazy var skipButton: SBSubmitButton = {
+        let view = SBSubmitButton(style: .filledRed)
+        view.setTitle(SBLocalization.localized(key: IntroVideoText.buttonTitle), for: .normal)
+        return view
+    }()
+
     private let disposeBag = DisposeBag()
     private let viewModel: IntroVideoViewModel
 
@@ -32,6 +38,8 @@ final class IntroVideoController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        layoutUI()
+        bindActions()
         bindViewModel()
     }
 
@@ -47,7 +55,29 @@ final class IntroVideoController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
     }
 
+    private func layoutUI() {
+        view.addSubview(skipButton)
+        skipButton.snp.makeConstraints {
+            $0.left.right.equalToSuperview().inset(24)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            $0.height.equalTo(43)
+        }
+    }
+
+    private func bindActions() {
+        skipButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.output.didFinish.accept(())
+            })
+            .disposed(by: disposeBag)
+    }
+
     private func bindViewModel() {
+        viewModel.output
+            .hideButton
+            .bind(to: skipButton.rx.isHidden)
+            .disposed(by: disposeBag)
+
         viewModel.output
             .videoURL
             .subscribe(onNext: playVideo(with:))
@@ -62,7 +92,7 @@ final class IntroVideoController: UIViewController {
         playerLayer.frame = view.bounds
         playerLayer.videoGravity = .resizeAspectFill
         playerLayer.contentsGravity = .resizeAspectFill
-        view.layer.addSublayer(playerLayer)
+        view.layer.insertSublayer(playerLayer, at: 0)
 
         player.play()
     }

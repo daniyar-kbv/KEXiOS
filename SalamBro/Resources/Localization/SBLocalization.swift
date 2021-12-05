@@ -11,6 +11,12 @@ protocol UILocalizable {
     var localized: String { get }
 }
 
+enum IntroVideoText: String, UILocalizable {
+    case buttonTitle = "IntroVideo.Button.title"
+
+    var localized: String { rawValue }
+}
+
 enum TabBarText: String, UILocalizable {
     case profileTitle = "MainTab.Profile.Title"
     case menuTitle = "MainTab.Menu.Title"
