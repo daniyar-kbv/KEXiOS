@@ -9,7 +9,6 @@ import Foundation
 
 protocol MenuDetailPagesFactory {
     func makeMenuDetailPage(positionUUID: String) -> MenuDetailController
-    func makeModifiersPage(modifierGroup: ModifierGroup) -> ModifiersController
 }
 
 class MenuDetailPagesFactoryImpl: DependencyFactory, MenuDetailPagesFactory {
@@ -32,13 +31,5 @@ class MenuDetailPagesFactoryImpl: DependencyFactory, MenuDetailPagesFactory {
                                               defaultStorage: DefaultStorageImpl.sharedStorage,
                                               menuDetailRepository: repositoryComponents.makeMenuDetailRepository(),
                                               cartRepository: repositoryComponents.makeCartRepository()))
-    }
-
-    func makeModifiersPage(modifierGroup: ModifierGroup) -> ModifiersController {
-        return scoped(.init(viewModel: makeModifiersViewModel(modifierGroup: modifierGroup)))
-    }
-
-    private func makeModifiersViewModel(modifierGroup: ModifierGroup) -> ModifiersViewModel {
-        return scoped(ModifiersViewModelImpl(modifierGroup: modifierGroup, menuDetailRepository: repositoryComponents.makeMenuDetailRepository()))
     }
 }

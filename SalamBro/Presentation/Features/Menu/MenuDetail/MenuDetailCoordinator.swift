@@ -45,28 +45,7 @@ public final class MenuDetailCoordinator: Coordinator {
                 menuDetailPage?.dismiss(animated: true)
             }).disposed(by: disposeBag)
 
-        menuDetailPage.outputs.toModifiers
-            .subscribe(onNext: { [weak self, weak menuDetailPage] modifierGroup in
-                guard let menuDetailPage = menuDetailPage else { return }
-                self?.openModifiers(on: menuDetailPage,
-                                    modifierGroup: modifierGroup)
-            }).disposed(by: disposeBag)
-
         let nav = SBNavigationController(rootViewController: menuDetailPage)
         router.present(nav, animated: true, completion: nil)
-    }
-
-    private func openModifiers(on presentedController: UIViewController,
-                               modifierGroup: ModifierGroup)
-    {
-        let modifiersPage = pagesFactory.makeModifiersPage(modifierGroup: modifierGroup)
-
-        modifiersPage.outputs.close
-            .subscribe(onNext: { [weak modifiersPage] in
-                modifiersPage?.dismiss(animated: true)
-            }).disposed(by: disposeBag)
-
-        let nav = SBNavigationController(rootViewController: modifiersPage)
-        presentedController.present(nav, animated: true)
     }
 }
