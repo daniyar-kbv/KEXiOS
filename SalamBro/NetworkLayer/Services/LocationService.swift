@@ -24,7 +24,9 @@ final class LocationServiceMoyaImpl: LocationService {
     }
 
     func getAllCountries() -> Single<[Country]> {
-        return provider.rx.request(.getAllCountries)
+        return provider.rx
+            .request(.getAllCountries)
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let countryResponse = try? response.map(CountriesResponse.self) else {
                     throw NetworkError.badMapping
@@ -43,7 +45,9 @@ final class LocationServiceMoyaImpl: LocationService {
     }
 
     func getCities(for countryId: Int) -> Single<[City]> {
-        return provider.rx.request(.getCities(countryId: countryId))
+        return provider.rx
+            .request(.getCities(countryId: countryId))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let citiesResponse = try? response.map(CitiesResponse.self) else {
                     throw NetworkError.badMapping
@@ -62,7 +66,9 @@ final class LocationServiceMoyaImpl: LocationService {
     }
 
     func getBrands(for cityId: Int) -> Single<[Brand]> {
-        provider.rx.request(.getCityBrands(cityId: cityId))
+        provider.rx
+            .request(.getCityBrands(cityId: cityId))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let brandsResponse = try? response.map(BrandResponse.self) else {
                     throw NetworkError.badMapping

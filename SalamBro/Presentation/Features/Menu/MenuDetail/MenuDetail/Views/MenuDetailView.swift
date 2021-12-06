@@ -53,7 +53,6 @@ final class MenuDetailView: UIView {
         view.register(MenuDetailModifierCell.self, forCellReuseIdentifier: String(describing: MenuDetailModifierCell.self))
         view.isScrollEnabled = false
         view.separatorStyle = .none
-        view.estimatedRowHeight = 51
         return view
     }()
 
@@ -154,11 +153,9 @@ extension MenuDetailView {
         }
     }
 
-    func updateTableViewHeight() {
-        scrollView.layoutIfNeeded()
-
+    func update(tableViewHeight: CGFloat) {
         modifiersTableView.snp.updateConstraints {
-            $0.height.equalTo(modifiersTableView.contentSize.height)
+            $0.height.equalTo(tableViewHeight)
         }
     }
 

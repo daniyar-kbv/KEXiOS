@@ -29,23 +29,33 @@ struct ConfigurationPlugin: PluginType {
     }
 
     func process(_ result: Result<Response, MoyaError>, target _: TargetType) -> Result<Response, MoyaError> {
-        let isAvailable = result.map { response -> Bool in
+        let errorType = result.map { response -> ErrorType? in
             guard let errorResponse = try? response.map(ResponseWithErrorOnly.self) else {
-                return true
+                return nil
             }
 
-            guard errorResponse.error.code == Constants.ErrorCode.iosNotAvailable else {
-                return true
+            switch errorResponse.error.code {
+            case Constants.ErrorCode.iosNotAvailable: return .appNotAvailable
+            case Constants.ErrorCode.iosNotAvailable: return .deliveryChanged
+            default: return nil
             }
-
-            return false
         }
 
-        guard (try? isAvailable.get()) ?? true else {
+        switch try? errorType.get() {
+        case .appNotAvailable:
             NotificationCenter.default.post(name: Constants.InternalNotification.appUnavailable.name, object: nil)
             return .failure(.underlying(EmptyError(), nil))
+        case .deliveryChanged:
+            return .failure(.underlying(NetworkError.deliveryChanged, nil))
+        default:
+            return result
         }
+    }
+}
 
-        return result
+extension ConfigurationPlugin {
+    enum ErrorType {
+        case appNotAvailable
+        case deliveryChanged
     }
 }

@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         YMKMapKit.setApiKey(Constants.apiKey)
+        configureAppState()
         configureAppCoordinator()
         configureProgressHUD()
         configureKeyboardManager()
@@ -30,6 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureFirebase(application: application)
 
         return true
+    }
+
+    private func configureAppState() {
+        DefaultStorageImpl.sharedStorage.persist(launchCount: DefaultStorageImpl.sharedStorage.launchCount + 1)
     }
 
     private func configureAppCoordinator() {

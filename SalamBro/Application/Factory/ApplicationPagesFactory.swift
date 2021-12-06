@@ -8,6 +8,7 @@
 import Foundation
 
 protocol ApplicationPagesFactory: AnyObject {
+    func makeIntroVideoPage() -> IntroVideoController
     func makeSBTabbarController() -> SBTabBarController
 }
 
@@ -16,6 +17,14 @@ final class ApplicationPagesFactoryImpl: DependencyFactory, ApplicationPagesFact
 
     init(repositoryComponents: RepositoryComponents) {
         self.repositoryComponents = repositoryComponents
+    }
+
+    func makeIntroVideoPage() -> IntroVideoController {
+        return .init(viewModel: makeIntroVideoViewModel())
+    }
+
+    private func makeIntroVideoViewModel() -> IntroVideoViewModel {
+        return scoped(IntroVideoViewModelImpl())
     }
 
     func makeSBTabbarController() -> SBTabBarController {

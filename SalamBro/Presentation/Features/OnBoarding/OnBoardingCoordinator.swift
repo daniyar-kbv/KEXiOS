@@ -25,19 +25,6 @@ final class OnBoardingCoordinator: BaseCoordinator {
     }
 
     override func start() {
-        let introVideoController = pagesFactory.makeIntroVideoPage()
-
-        introVideoController.output
-            .didFinish
-            .subscribe(onNext: { [weak self] in
-                self?.openCountries()
-            })
-            .disposed(by: disposeBag)
-
-        UIApplication.shared.setRootView(introVideoController)
-    }
-
-    private func openCountries() {
         let countriesPage = pagesFactory.makeCountriesPage()
 
         countriesPage.outputs.didSelectCountry.subscribe(onNext: { [weak self] countryId in

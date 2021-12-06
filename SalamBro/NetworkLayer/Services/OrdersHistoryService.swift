@@ -24,6 +24,7 @@ final class OrdersHistoryServiceMoyaImpl: OrdersHistoryService {
     func getOrders(page: Int) -> Single<OrdersListResponse.Data> {
         return provider.rx
             .request(.getAllOrders(page: page))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let ordersResponse = try? response.map(OrdersListResponse.self) else {
                     throw NetworkError.badMapping

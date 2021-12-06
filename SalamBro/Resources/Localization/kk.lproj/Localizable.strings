@@ -283,3 +283,7 @@
 "Animation.ButtonTitle.upgrade" = "Приложениені жаңарту";
 "Animation.ButtonTitle.payment" = "Тапсырыстан бас тарту";
 "Animation.ButtonTitle.profile" = "Кіру";
+
+// MARK: - Intro Video
+
+"IntroVideo.Button.title" = "Өткізу";

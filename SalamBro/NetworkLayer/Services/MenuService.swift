@@ -27,6 +27,7 @@ class MenuServiceImpl: MenuService {
     func getProducts(for leadUUID: String) -> Single<[MenuCategory]> {
         return provider.rx
             .request(.products(leadUUID: leadUUID))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let orderProductsResponse = try? response.map(OrderProductResponse.self) else {
                     throw NetworkError.badMapping
@@ -47,6 +48,7 @@ class MenuServiceImpl: MenuService {
     func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail> {
         return provider.rx
             .request(.productDetail(leadUUID: leadUUID, productUUID: productUUID))
+            .retryWhenDeliveryChanged()
             .map { response in
 
                 guard let orderProductDetailResponse = try? response.map(OrderProductDetailResponse.self) else {
@@ -68,6 +70,7 @@ class MenuServiceImpl: MenuService {
     func getPromotions(leadUUID: String) -> Single<PromotionResult> {
         return provider.rx
             .request(.promotions(leadUUID: leadUUID))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let promotionsResponse = try? response.map(PromotionsResponse.self) else {
                     throw NetworkError.badMapping
@@ -88,6 +91,7 @@ class MenuServiceImpl: MenuService {
     func getPromotionDetail(for leadUUID: String, by id: Int) -> Single<Promotion> {
         return provider.rx
             .request(.promotionDetail(leadUUID: leadUUID, id: id))
+            .retryWhenDeliveryChanged()
             .map { response in
 
                 guard let response = try? response.map(PromotionDetailResponse.self) else {

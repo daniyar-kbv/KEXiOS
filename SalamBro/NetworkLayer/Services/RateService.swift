@@ -27,6 +27,7 @@ final class RateServiceImpl: RateService {
     func getRates() -> Single<[RateStarList]> {
         return provider.rx
             .request(.getRates)
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard
                     let ratesContainerResponse = try? response.map(RateResponseContainer.self)
@@ -49,6 +50,7 @@ final class RateServiceImpl: RateService {
     func setUserRate(with dto: UserRateDTO) -> Single<UserRateResponse> {
         return provider.rx
             .request(.saveUserRate(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let userRateResponse = try? response.map(UserRateResponseContainer.self) else {
                     throw NetworkError.badMapping

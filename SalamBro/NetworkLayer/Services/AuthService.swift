@@ -26,6 +26,7 @@ final class AuthServiceMoyaImpl: AuthService {
     func authorize(with dto: SendOTPDTO) -> Single<Void> {
         return provider.rx
             .request(.sendOTP(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let authResponse = try? response.map(RegisterResponse.self) else {
                     throw NetworkError.badMapping
@@ -40,6 +41,7 @@ final class AuthServiceMoyaImpl: AuthService {
     func verifyOTP(with dto: OTPVerifyDTO) -> Single<AccessToken> {
         return provider.rx
             .request(.verifyOTP(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let tokenResponse = try? response.map(AccessTokenResponse.self) else {
                     throw NetworkError.badMapping
@@ -60,6 +62,7 @@ final class AuthServiceMoyaImpl: AuthService {
     func resendOTP(with dto: SendOTPDTO) -> Single<Void> {
         return provider.rx
             .request(.resendOTP(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
                 guard let authResponse = try? response.map(RegisterResponse.self) else {
                     throw NetworkError.badMapping

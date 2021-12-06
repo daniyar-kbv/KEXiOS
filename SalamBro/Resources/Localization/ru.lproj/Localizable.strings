@@ -285,3 +285,6 @@
 "Animation.ButtonTitle.payment" = "Отменить заказ";
 "Animation.ButtonTitle.profile" = "Войти";
 
+// MARK: - Intro Video
+
+"IntroVideo.Button.title" = "Пропустить";

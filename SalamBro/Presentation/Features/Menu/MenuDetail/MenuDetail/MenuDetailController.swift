@@ -18,6 +18,7 @@ final class MenuDetailController: UIViewController, LoaderDisplayable {
     let outputs = Output()
 
     private lazy var contentView = MenuDetailView(delegate: self)
+    private var viewDidAppear = false
 
     public init(viewModel: MenuDetailViewModel) {
         self.viewModel = viewModel
@@ -44,17 +45,20 @@ final class MenuDetailController: UIViewController, LoaderDisplayable {
         bindViewModel()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
 
-        contentView.updateTableViewHeight()
-        view.layoutIfNeeded()
+        updateHeight()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        viewModel.update()
+        if !viewDidAppear {
+            viewModel.update()
+        } else {
+            viewDidAppear = true
+        }
     }
 }
 
@@ -105,12 +109,6 @@ extension MenuDetailController {
         viewModel.outputs.itemImage
             .subscribe(onNext: { [weak self] url in
                 self?.contentView.setImageView(with: url)
-            }).disposed(by: disposeBag)
-
-        viewModel.outputs.updateModifiers
-            .subscribe(onNext: { [weak self] in
-                self?.contentView.modifiersTableView.reloadData()
-                self?.contentView.updateTableViewHeight()
             }).disposed(by: disposeBag)
 
         viewModel.outputs.itemTitle
@@ -172,6 +170,11 @@ extension MenuDetailController {
             }
         )
     }
+
+    private func updateHeight() {
+        contentView.update(tableViewHeight: viewModel.getTotalHeight())
+        contentView.modifiersTableView.reloadData()
+    }
 }
 
 extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
@@ -179,19 +182,17 @@ extension MenuDetailController: UITableViewDelegate, UITableViewDataSource {
         return viewModel.modifierCellViewModels.count
     }
 
-    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return MenuDetailModifierCell(viewModel: viewModel.modifierCellViewModels[indexPath.row], delegate: self,
-                                      index: indexPath.row)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MenuDetailModifierCell.self), for: indexPath) as! MenuDetailModifierCell
+        cell.set(viewModel: viewModel.modifierCellViewModels[indexPath.row],
+                 modifiersViewModel: viewModel.modifiersViewModels[indexPath.row],
+                 viewController: self,
+                 index: indexPath.row)
+        return cell
     }
 
-    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        outputs.toModifiers.accept(viewModel.modifierCellViewModels[indexPath.row].getModifierGroup())
-    }
-}
-
-extension MenuDetailController: MenuDetailModifierCellDelegate {
-    func changeButtonTapped(at index: Int) {
-        outputs.toModifiers.accept(viewModel.modifierCellViewModels[index].getModifierGroup())
+    func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return viewModel.getCellHeight(at: indexPath.row)
     }
 }
 
@@ -225,6 +226,5 @@ extension MenuDetailController {
     struct Output {
         let didTerminate = PublishRelay<Void>()
         let close = PublishRelay<Void>()
-        let toModifiers = PublishRelay<ModifierGroup>()
     }
 }

@@ -12,11 +12,14 @@ import RxSwift
 protocol MenuDetailViewModel: AnyObject {
     var outputs: MenuDetailViewModelImpl.Output { get }
     var modifierCellViewModels: [MenuDetailModifierCellViewModel] { get set }
+    var modifiersViewModels: [ModifiersViewModel] { get set }
 
     func update()
     func proceed()
     func set(comment: String)
     func getComment() -> String?
+    func getTotalHeight() -> CGFloat
+    func getCellHeight(at index: Int) -> CGFloat
 }
 
 final class MenuDetailViewModelImpl: MenuDetailViewModel {
@@ -31,6 +34,7 @@ final class MenuDetailViewModelImpl: MenuDetailViewModel {
     private var comment: String?
 
     var modifierCellViewModels: [MenuDetailModifierCellViewModel] = []
+    var modifiersViewModels: [ModifiersViewModel] = []
     let outputs = Output()
 
     init(positionUUID: String,
@@ -151,7 +155,28 @@ extension MenuDetailViewModelImpl {
             modifierCellViewModels = position.modifierGroups.map {
                 MenuDetailModifierCellViewModelImpl(modifierGroup: $0)
             }
+
+            modifiersViewModels = position.modifierGroups.map {
+                ModifiersViewModelImpl(modifierGroup: $0,
+                                       menuDetailRepository: menuDetailRepository)
+            }
         }
+    }
+
+    func getTotalHeight() -> CGFloat {
+        guard let position = position else { return 0 }
+        let cellCount = position.modifierGroups.count
+        let cellsHeight = (0 ..< cellCount).map { getCellHeight(at: $0) }.reduce(0, +)
+        let spaceHeight = CGFloat((cellCount - 1) * 16)
+        return cellsHeight + spaceHeight
+    }
+
+    func getCellHeight(at index: Int) -> CGFloat {
+        let numberOfRows = ceil(Double(position?.modifierGroups[index].modifiers.count ?? 0) / 2)
+        let freeWidth = UIScreen.main.bounds.width - 56
+        let cellWidth = freeWidth / 2
+        let itemHeight = cellWidth * (195 / 160)
+        return (itemHeight * CGFloat(numberOfRows)) + CGFloat((numberOfRows - 1) * 16) + 30.5
     }
 
     private func check() {

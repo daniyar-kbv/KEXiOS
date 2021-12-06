@@ -12,6 +12,7 @@ enum DefaultStorageKey: String, StorageKey, Equatable {
     case fcmToken
     case appLocale
     case notFirstLaunch
+    case launchCount
     case isPaymentProcess
     case deliveryPrice
 
@@ -23,6 +24,7 @@ protocol DefaultStorage {
     var fcmToken: String? { get }
     var appLocale: Language { get }
     var notFirstLaunch: Bool { get }
+    var launchCount: Int { get }
     var isPaymentProcess: Bool { get }
     var deliveryPrice: Double { get }
 
@@ -30,6 +32,7 @@ protocol DefaultStorage {
     func persist(fcmToken: String)
     func persist(appLocale: Language)
     func persist(notFirstLaunch: Bool)
+    func persist(launchCount: Int)
     func persist(isPaymentProcess: Bool)
     func persist(deliveryPrice: Double)
 
@@ -55,6 +58,10 @@ final class DefaultStorageImpl: DefaultStorage {
 
     var notFirstLaunch: Bool {
         return storageProvider.bool(forKey: DefaultStorageKey.notFirstLaunch.value)
+    }
+
+    var launchCount: Int {
+        return storageProvider.integer(forKey: DefaultStorageKey.launchCount.value)
     }
 
     var appLocale: Language {
@@ -83,6 +90,10 @@ final class DefaultStorageImpl: DefaultStorage {
 
     func persist(notFirstLaunch: Bool) {
         storageProvider.set(notFirstLaunch, forKey: DefaultStorageKey.notFirstLaunch.value)
+    }
+
+    func persist(launchCount: Int) {
+        storageProvider.set(launchCount, forKey: DefaultStorageKey.launchCount.value)
     }
 
     func persist(isPaymentProcess: Bool) {

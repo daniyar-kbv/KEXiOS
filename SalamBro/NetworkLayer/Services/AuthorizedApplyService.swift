@@ -24,6 +24,7 @@ final class AuthorizedApplyServiceImpl: AuthorizedApplyService {
     func authorizedApply(dto: OrderApplyDTO?) -> Single<String> {
         return provider.rx
             .request(.authorizedApply(dto: dto))
+            .retryWhenDeliveryChanged()
             .map { response in
 
                 guard let applyResponse = try? response.map(OrderApplyResponse.self) else {

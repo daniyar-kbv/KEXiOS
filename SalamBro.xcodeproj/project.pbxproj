@@ -114,6 +114,7 @@
 		9817ECF9E7BE50910851FDB65299C432 /* CountryCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7669B75C0251CE1AAC87CD49101E6256 /* CountryCodePickerViewController.swift */; };
 		BC3BFA87F1315792FB0A2D3FF8761FEB /* CountryCodePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D734666913DB588648DF8BC069C08 /* CountryCodePickerViewModel.swift */; };
 		D4889DA3A01FCEC6F25C2D072D9B798D /* DefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143A8CE5EE335B80E916323451226F4B /* DefaultStorage.swift */; };
+		05F6E301B6DD93DF54876FA81AAA8C5F /* DeliveryChangedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555BD0395A4A7F0CC3696E5324C8D1D4 /* DeliveryChangedError.swift */; };
 		1FA92967D29DE38D2BB89BB18EFF3110 /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E194B5525BB9619AC133C42D7FBB1A5 /* DependencyFactory.swift */; };
 		A2E1CCFE8C79150877AAE74FFF9583BA /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54D26BD0FE939E99AE5326265196D7D /* Document.swift */; };
 		DF3C3CD82293F74EB8CD47CE63B1B160 /* DocumentsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FED63A6F3CE5610BD846408A62A6488 /* DocumentsAPI.swift */; };
@@ -128,8 +129,8 @@
 		54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070881AEDB3977B0482B6A6B06A1C201 /* GeoStorage.swift */; };
 		7FF3C00C520DBCFD5B1F801D9F8B482F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */; };
 		B3FB615594F67E11FA38E96F8BF2B16F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6348D12D5C3A6F4C3C1D16F49BE415E5 /* InfoPlist.strings */; };
-		607A00EDA926F2AB56E857AC6AE55252 /* IntroVideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE344DA16F5E9A6EBBF18C887EA3B6C0 /* IntroVideoController.swift */; };
-		3F97FF8F11BCC71AE0C8DF40F507285F /* IntroVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEFBAFCB10449CADC1FD81ED9EC497C /* IntroVideoViewModel.swift */; };
+		C3E35FDBDB4DF828099F0E0EC1FA0978 /* IntroVideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A25A2B7AA8832AAD1F5EA5224DF3D41 /* IntroVideoController.swift */; };
+		645D91839BE786C5AFDEF1B01737760D /* IntroVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283896C8A2519151E56167EC68112EC6 /* IntroVideoViewModel.swift */; };
 		10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */; };
 		05F9D75320742F6BDCEE1BDC3CCB7DBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */; };
 		A5C9B7AD6C8EB31158EB6C4FBD444C18 /* LeadInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6080B52F0FEB50CD00ABE2FFDB49B4CD /* LeadInfo.swift */; };
@@ -480,6 +481,7 @@
 		7669B75C0251CE1AAC87CD49101E6256 /* CountryCodePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewController.swift; sourceTree = "<group>"; };
 		ED0D734666913DB588648DF8BC069C08 /* CountryCodePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewModel.swift; sourceTree = "<group>"; };
 		143A8CE5EE335B80E916323451226F4B /* DefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultStorage.swift; sourceTree = "<group>"; };
+		555BD0395A4A7F0CC3696E5324C8D1D4 /* DeliveryChangedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryChangedError.swift; sourceTree = "<group>"; };
 		6E194B5525BB9619AC133C42D7FBB1A5 /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
 		F54D26BD0FE939E99AE5326265196D7D /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		8FED63A6F3CE5610BD846408A62A6488 /* DocumentsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsAPI.swift; sourceTree = "<group>"; };
@@ -496,8 +498,8 @@
 		3C6169FACF56887087B2E3B796665DC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82DF8DD4A94962F1A97777FAD3747A32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9C0AD81DF662457ACBFD84D90AF44BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DE344DA16F5E9A6EBBF18C887EA3B6C0 /* IntroVideoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVideoController.swift; sourceTree = "<group>"; };
-		2BEFBAFCB10449CADC1FD81ED9EC497C /* IntroVideoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVideoViewModel.swift; sourceTree = "<group>"; };
+		3A25A2B7AA8832AAD1F5EA5224DF3D41 /* IntroVideoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVideoController.swift; sourceTree = "<group>"; };
+		283896C8A2519151E56167EC68112EC6 /* IntroVideoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVideoViewModel.swift; sourceTree = "<group>"; };
 		668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		118617203B6EA3AFA30A59DC9FFC07F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6080B52F0FEB50CD00ABE2FFDB49B4CD /* LeadInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadInfo.swift; sourceTree = "<group>"; };
@@ -1093,6 +1095,7 @@
 		35D69EBDFB02F33AC94E0125810E0E71 /* ErrorHandling */ = {
 			isa = PBXGroup;
 			children = (
+				555BD0395A4A7F0CC3696E5324C8D1D4 /* DeliveryChangedError.swift */,
 				E15462585743CB1EFD80C4C797DBB1C3 /* UnauthorizedError.swift */,
 			);
 			path = ErrorHandling;
@@ -1222,6 +1225,15 @@
 				7AE2CB092F5A1A8512D7E44670BC86B8 /* ViewModel */,
 			);
 			path = PaymentSelection;
+			sourceTree = "<group>";
+		};
+		488144AFE015AE752E37893935A93CD7 /* IntroVideo */ = {
+			isa = PBXGroup;
+			children = (
+				3A25A2B7AA8832AAD1F5EA5224DF3D41 /* IntroVideoController.swift */,
+				283896C8A2519151E56167EC68112EC6 /* IntroVideoViewModel.swift */,
+			);
+			path = IntroVideo;
 			sourceTree = "<group>";
 		};
 		49413994E238D9BEE9FFD390032860DD /* Recovered References */ = {
@@ -1357,6 +1369,7 @@
 				5703BDF502114A7D72125B5EE6C3EA75 /* Animations */,
 				912CFB71D3B69BFC0A983E3C88ADC2AB /* Authorization */,
 				8AF05D5445C74C7309FB6D8336409E75 /* Cart */,
+				488144AFE015AE752E37893935A93CD7 /* IntroVideo */,
 				CF86187F6E3E40AD84E132FE8AF6445E /* Menu */,
 				573BBF43A6F98EDE156BE5383BD92FD4 /* Navigation */,
 				73C9FA3C1E79BDFBFA37C07755182CD8 /* OnBoarding */,
@@ -1517,7 +1530,6 @@
 				B4D0A9748890E80377057BB2FD845A5D /* CitiesList */,
 				CE712B75964A8CA2C26DD6BEBCA67C13 /* CountriesList */,
 				28F9B1E6A842CD5414538A2BB32030C7 /* Factories */,
-				A1C92B996E780B7E9C61DD1F246FEA2E /* IntroVideo */,
 				36AE99E011D25D94B7DD1DD146AD6335 /* OnBoardingCoordinator.swift */,
 			);
 			path = OnBoarding;
@@ -1819,15 +1831,6 @@
 				E3A0A3FF88D796FDBA2F60AD44728868 /* CartAdditionalProductViewModel.swift */,
 			);
 			path = CartAdditionalProduct;
-			sourceTree = "<group>";
-		};
-		A1C92B996E780B7E9C61DD1F246FEA2E /* IntroVideo */ = {
-			isa = PBXGroup;
-			children = (
-				DE344DA16F5E9A6EBBF18C887EA3B6C0 /* IntroVideoController.swift */,
-				2BEFBAFCB10449CADC1FD81ED9EC497C /* IntroVideoViewModel.swift */,
-			);
-			path = IntroVideo;
 			sourceTree = "<group>";
 		};
 		A5ECF944127E6FB597F773D79669E96E /* Map */ = {
@@ -2803,6 +2806,7 @@
 				9817ECF9E7BE50910851FDB65299C432 /* CountryCodePickerViewController.swift in Sources */,
 				BC3BFA87F1315792FB0A2D3FF8761FEB /* CountryCodePickerViewModel.swift in Sources */,
 				D4889DA3A01FCEC6F25C2D072D9B798D /* DefaultStorage.swift in Sources */,
+				05F6E301B6DD93DF54876FA81AAA8C5F /* DeliveryChangedError.swift in Sources */,
 				1FA92967D29DE38D2BB89BB18EFF3110 /* DependencyFactory.swift in Sources */,
 				A2E1CCFE8C79150877AAE74FFF9583BA /* Document.swift in Sources */,
 				DF3C3CD82293F74EB8CD47CE63B1B160 /* DocumentsAPI.swift in Sources */,
@@ -2815,8 +2819,8 @@
 				2B50D8F2E1132377E128C4561EF7246D /* ErrorResponse.swift in Sources */,
 				4689A2E43C9E1832756F31868F0DBF8F /* Formatted+Extension.swift in Sources */,
 				54072BE12BD8730BCF547C74F67D2B04 /* GeoStorage.swift in Sources */,
-				607A00EDA926F2AB56E857AC6AE55252 /* IntroVideoController.swift in Sources */,
-				3F97FF8F11BCC71AE0C8DF40F507285F /* IntroVideoViewModel.swift in Sources */,
+				C3E35FDBDB4DF828099F0E0EC1FA0978 /* IntroVideoController.swift in Sources */,
+				645D91839BE786C5AFDEF1B01737760D /* IntroVideoViewModel.swift in Sources */,
 				10A34E04D7CC9181D9B1FFA108FB9ABE /* Language.swift in Sources */,
 				A5C9B7AD6C8EB31158EB6C4FBD444C18 /* LeadInfo.swift in Sources */,
 				AFE4A9CB1651215078FF7933E0FE1E84 /* LoaderDisplayable.swift in Sources */,
@@ -3190,7 +3194,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 81;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -3198,7 +3202,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.81;
+				MARKETING_VERSION = 0.0.87;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3260,7 +3264,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 81;
+				CURRENT_PROJECT_VERSION = 87;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
@@ -3269,7 +3273,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.81;
+				MARKETING_VERSION = 0.0.87;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

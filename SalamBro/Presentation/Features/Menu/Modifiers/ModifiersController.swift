@@ -27,24 +27,22 @@ final class ModifiersController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    private(set) lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = {
+        let view = UICollectionViewFlowLayout()
+        view.scrollDirection = .vertical
+        return view
+    }()
+
+    private(set) lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.register(cellType: ModifiersCell.self)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .arcticWhite
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.contentInset = UIEdgeInsets(top: 24, left: 23, bottom: 75, right: 23)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView.isScrollEnabled = false
         return collectionView
-    }()
-
-    private lazy var doneButton: SBSubmitButton = {
-        let button = SBSubmitButton(style: .filledRed)
-        button.setTitle(SBLocalization.localized(key: CommentaryText.buttonTitle), for: .normal)
-        button.addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
-        return button
     }()
 
     override func loadView() {
@@ -56,12 +54,7 @@ final class ModifiersController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setBackButton { [weak self] in
-            self?.outputs.close.accept(())
-        }
-
         bindViewModel()
-        viewModel.updateCurrentDoneButtonStatus()
     }
 
     private func bindViewModel() {
@@ -72,34 +65,13 @@ final class ModifiersController: UIViewController {
         viewModel.outputs.update
             .bind(to: collectionView.rx.reload)
             .disposed(by: disposeBag)
-
-        viewModel.outputs.showDoneButton
-            .bind { [weak self] _ in
-                self?.addDoneButton()
-            }
-            .disposed(by: disposeBag)
-
-        viewModel.outputs.hideDoneButton
-            .bind { [weak self] _ in
-                self?.doneButton.removeFromSuperview()
-            }
-            .disposed(by: disposeBag)
     }
 
-    private func addDoneButton() {
-        view.addSubview(doneButton)
-
-        doneButton.snp.makeConstraints {
-            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(24)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
-            $0.height.equalTo(43)
-        }
-    }
-
-    @objc private func doneButtonPressed() {
-        let selectedChoices = viewModel.modifiers.filter { $0.itemCount > 0 }
-        viewModel.setSelectedModifiers(with: selectedChoices)
-        outputs.close.accept(())
+    private func getSize() -> CGSize {
+        let freeWidth = UIScreen.main.bounds.width - 56
+        let cellWidth = freeWidth / 2
+        let cellHeight = cellWidth * (195 / 160)
+        return CGSize(width: cellWidth, height: cellHeight)
     }
 }
 
@@ -116,11 +88,8 @@ extension ModifiersController: UICollectionViewDelegate, UICollectionViewDataSou
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
-        let freeWidth = collectionView.frame.size.width - 54
-        let cellWidth = freeWidth / 2
-        let cellHeight = cellWidth * (195 / 160)
-        return CGSize(width: cellWidth, height: cellHeight)
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
+        getSize()
     }
 
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
