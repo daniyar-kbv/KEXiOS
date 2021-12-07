@@ -3,6 +3,6 @@
 brew install swiftformat
 gem install bundler
 bundler install
-pod install 
+pod install
 npm install
-pip install xUnique
+pip3 install xUnique

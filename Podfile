@@ -41,7 +41,7 @@ target 'SalamBro' do
   pod "Spruce", '2.2.0'
   
   # Pod for payments
-  pod 'Cloudpayments', :git =>  "https://github.com/cloudpayments/CloudPayments-SDK-iOS", :branch => "master"
+  pod 'Cloudpayments', :git =>  "https://github.com/cloudpayments/CloudPayments-SDK-iOS", :branch => "master", :tag => '1.1.2'
   pod 'CloudpaymentsNetworking', :git =>  "https://github.com/cloudpayments/CloudPayments-SDK-iOS", :branch => "master"
 
   # Firebase

@@ -260,7 +260,6 @@ extension PaymentRepositoryImpl {
         case .completed:
             getNewLeadAuthorized()
         case .awaitingAuthentication:
-            sendHidePaymentProcessNotification()
             show3DS(orderStatus: paymentStatus)
         default:
             sendHidePaymentProcessNotification()
@@ -456,6 +455,7 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
     }
 
     func willPresentWebView(_ webView: WKWebView) {
+        sendHidePaymentProcessNotification()
         defaultStorage.persist(isPaymentProcess: false)
         outputs.show3DS.accept(webView)
     }
@@ -463,7 +463,7 @@ extension PaymentRepositoryImpl: ThreeDsDelegate {
     func onAuthorizationCompleted(with md: String, paRes: String) {
         outputs.hide3DS.accept { [weak self] in
             guard let paymentUUID = self?.paymentUUID else { return }
-            self?.defaultStorage.persist(isPaymentProcess: false)
+            self?.defaultStorage.persist(isPaymentProcess: true)
             self?.send3DS(paymentUUID: paymentUUID, paRes: paRes, transactionId: md)
             self?.paymentUUID = nil
             self?.threeDsProcessor = nil

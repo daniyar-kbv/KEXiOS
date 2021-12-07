@@ -8,7 +8,7 @@
 import UIKit
 
 struct Constants {
-    static let appMode: AppMode = .dev
+    static let appMode: AppMode = .prod
 
     static let apiKey = getPlistValue(by: "API_KEY")
     static let cloudpaymentsMerchantId = appMode.cloudpaymentsMerchantId
