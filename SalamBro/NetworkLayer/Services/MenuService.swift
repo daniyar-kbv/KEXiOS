@@ -11,10 +11,10 @@ import RxCocoa
 import RxSwift
 
 protocol MenuService: AnyObject {
-    func getProducts(for leadUUID: String) -> Single<[MenuCategory]>
-    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail>
-    func getPromotions(leadUUID: String) -> Single<PromotionResult>
-    func getPromotionDetail(for leadUUID: String, by id: Int) -> Single<Promotion>
+    func getProducts() -> Single<[MenuCategory]>
+    func getProductDetail(by productUUID: String) -> Single<MenuPositionDetail>
+    func getPromotions() -> Single<PromotionResult>
+    func getPromotionDetail(by id: Int) -> Single<Promotion>
 }
 
 class MenuServiceImpl: MenuService {
@@ -24,9 +24,9 @@ class MenuServiceImpl: MenuService {
         self.provider = provider
     }
 
-    func getProducts(for leadUUID: String) -> Single<[MenuCategory]> {
+    func getProducts() -> Single<[MenuCategory]> {
         return provider.rx
-            .request(.products(leadUUID: leadUUID))
+            .request(.products)
             .retryWhenDeliveryChanged()
             .map { response in
                 guard let orderProductsResponse = try? response.map(OrderProductResponse.self) else {
@@ -45,9 +45,9 @@ class MenuServiceImpl: MenuService {
             }
     }
 
-    func getProductDetail(for leadUUID: String, by productUUID: String) -> Single<MenuPositionDetail> {
+    func getProductDetail(by productUUID: String) -> Single<MenuPositionDetail> {
         return provider.rx
-            .request(.productDetail(leadUUID: leadUUID, productUUID: productUUID))
+            .request(.productDetail(productUUID: productUUID))
             .retryWhenDeliveryChanged()
             .map { response in
 
@@ -67,9 +67,9 @@ class MenuServiceImpl: MenuService {
             }
     }
 
-    func getPromotions(leadUUID: String) -> Single<PromotionResult> {
+    func getPromotions() -> Single<PromotionResult> {
         return provider.rx
-            .request(.promotions(leadUUID: leadUUID))
+            .request(.promotions)
             .retryWhenDeliveryChanged()
             .map { response in
                 guard let promotionsResponse = try? response.map(PromotionsResponse.self) else {
@@ -88,9 +88,9 @@ class MenuServiceImpl: MenuService {
             }
     }
 
-    func getPromotionDetail(for leadUUID: String, by id: Int) -> Single<Promotion> {
+    func getPromotionDetail(by id: Int) -> Single<Promotion> {
         return provider.rx
-            .request(.promotionDetail(leadUUID: leadUUID, id: id))
+            .request(.promotionDetail(id: id))
             .retryWhenDeliveryChanged()
             .map { response in
 

@@ -101,10 +101,10 @@ extension MenuDetailViewModelImpl {
 
         menuDetailRepository.outputs.updateSelectedModifiers.bind {
             [weak self] modifierGroups in
-            self?.position?.modifierGroups = modifierGroups
-            self?.assignSelectedModifiers()
-            self?.check()
-            self?.outputs.updateModifiers.accept(())
+                self?.position?.modifierGroups = modifierGroups
+                self?.assignSelectedModifiers()
+                self?.check()
+                self?.outputs.updateModifiers.accept(())
         }
         .disposed(by: disposeBag)
 
@@ -128,8 +128,7 @@ extension MenuDetailViewModelImpl {
     }
 
     private func download() {
-        guard let leadUUID = defaultStorage.leadUUID else { return }
-        menuDetailRepository.getProductDetail(for: leadUUID, by: positionUUID)
+        menuDetailRepository.getProductDetail(by: positionUUID)
     }
 
     private func process(position: MenuPositionDetail) {

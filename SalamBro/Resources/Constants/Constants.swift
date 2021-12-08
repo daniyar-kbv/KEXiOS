@@ -110,6 +110,10 @@ struct Constants {
             }
         }
     }
+
+    enum URLVariables {
+        static let leadUUID = "LEAD_UUID"
+    }
 }
 
 extension Constants {

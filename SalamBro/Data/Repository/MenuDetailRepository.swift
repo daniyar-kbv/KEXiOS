@@ -12,7 +12,7 @@ import RxSwift
 protocol MenuDetailRepository: AnyObject {
     var outputs: MenuDetailRepositoryImpl.Output { get }
 
-    func getProductDetail(for leadUUID: String, by positionUUID: String)
+    func getProductDetail(by positionUUID: String)
     func setSelectedModifiers(for modifiers: [Modifier], with selectedModifiers: [Modifier], at uuid: String, totalCount: Int)
 }
 
@@ -26,9 +26,9 @@ final class MenuDetailRepositoryImpl: MenuDetailRepository {
         self.menuService = menuService
     }
 
-    func getProductDetail(for leadUUID: String, by positionUUID: String) {
+    func getProductDetail(by positionUUID: String) {
         outputs.didStartRequest.accept(())
-        menuService.getProductDetail(for: leadUUID, by: positionUUID)
+        menuService.getProductDetail(by: positionUUID)
             .subscribe(onSuccess: { [weak self] position in
                 self?.outputs.didEndRequest.accept(())
                 self?.modifierGroups = position.modifierGroups

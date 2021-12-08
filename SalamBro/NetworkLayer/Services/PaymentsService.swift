@@ -17,7 +17,7 @@ protocol PaymentsService: AnyObject {
     func createPayment(dto: CreatePaymentDTO) -> Single<PaymentStatus>
     func createCardPayment(dto: CardPaymentDTO) -> Single<PaymentStatus>
     func confirm3DSPayment(dto: Create3DSPaymentDTO, paymentUUID: String) -> Single<PaymentStatus>
-    func getPaymentStatus(leadUUID: String) -> Single<PaymentStatus>
+    func getPaymentStatus() -> Single<PaymentStatus>
 }
 
 final class PaymentsServiceMoyaImpl: PaymentsService {
@@ -132,9 +132,9 @@ final class PaymentsServiceMoyaImpl: PaymentsService {
         return status
     }
 
-    func getPaymentStatus(leadUUID: String) -> Single<PaymentStatus> {
+    func getPaymentStatus() -> Single<PaymentStatus> {
         return provider.rx
-            .request(.paymentStatus(leadUUID: leadUUID))
+            .request(.paymentStatus)
             .retryWhenDeliveryChanged()
             .map { response in
                 guard let response = try? response.map(PaymentResponse.self) else {

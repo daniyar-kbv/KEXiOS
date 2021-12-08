@@ -64,12 +64,10 @@ final class CartRepositoryImpl: CartRepository {
 
 extension CartRepositoryImpl {
     func reload() {
-        guard let leadUUID = defaultStorage.leadUUID else { return }
-
-        ordersService.getAdditionalProducts(for: leadUUID)
+        ordersService.getAdditionalProducts()
             .flatMap { [unowned self] positions -> Single<LeadInfo> in
                 cartStorage.additionalProducts = positions
-                return ordersService.getLeadInfo(for: leadUUID)
+                return ordersService.getLeadInfo()
             }
             .subscribe { [weak self] leadInfo in
                 self?.process(cart: leadInfo.cart)
@@ -236,14 +234,13 @@ extension CartRepositoryImpl {
     }
 
     private func updateCart(withLoader: Bool = true) {
-        guard let leadUUID = defaultStorage.leadUUID else { return }
         let dto = cart.toDTO()
 
         if withLoader {
             outputs.didStartRequest.accept(())
         }
 
-        ordersService.updateCart(for: leadUUID, dto: dto)
+        ordersService.updateCart(dto: dto)
             .subscribe(onSuccess: { [weak self] cart in
                 self?.process(cart: cart)
                 self?.outputs.didAdd.accept(())
