@@ -36,7 +36,7 @@ struct ConfigurationPlugin: PluginType {
 
             switch errorResponse.error.code {
             case Constants.ErrorCode.iosNotAvailable: return .appNotAvailable
-            case Constants.ErrorCode.iosNotAvailable: return .deliveryChanged
+            case Constants.ErrorCode.deliveryIsChanged: return .deliveryChanged
             default: return nil
             }
         }

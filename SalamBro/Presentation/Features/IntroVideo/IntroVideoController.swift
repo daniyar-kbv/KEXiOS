@@ -21,6 +21,7 @@ final class IntroVideoController: UIViewController {
 
     private let disposeBag = DisposeBag()
     private let viewModel: IntroVideoViewModel
+    private var player: AVPlayer?
 
     let output = Output()
 
@@ -67,7 +68,7 @@ final class IntroVideoController: UIViewController {
     private func bindActions() {
         skipButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.output.didFinish.accept(())
+                self?.close()
             })
             .disposed(by: disposeBag)
     }
@@ -85,7 +86,7 @@ final class IntroVideoController: UIViewController {
     }
 
     private func playVideo(with url: URL) {
-        let player = AVPlayer(url: url)
+        player = AVPlayer(url: url)
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
 
         let playerLayer = AVPlayerLayer(player: player)
@@ -94,10 +95,15 @@ final class IntroVideoController: UIViewController {
         playerLayer.contentsGravity = .resizeAspectFill
         view.layer.insertSublayer(playerLayer, at: 0)
 
-        player.play()
+        player?.play()
     }
 
     @objc private func playerDidFinishPlaying(note _: NSNotification) {
+        close()
+    }
+
+    private func close() {
+        player?.pause()
         output.didFinish.accept(())
     }
 }

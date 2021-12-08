@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (5.4.3)
   - Cache (6.0.0)
-  - Cloudpayments (1.1.0):
+  - Cloudpayments (1.1.1):
     - CloudpaymentsNetworking
   - CloudpaymentsNetworking (1.0.1)
   - Cosmos (23.0.0)
@@ -151,7 +151,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - Cache
-  - Cloudpayments (from `https://github.com/cloudpayments/CloudPayments-SDK-iOS`, branch `master`)
+  - Cloudpayments (from `https://github.com/cloudpayments/CloudPayments-SDK-iOS`, branch `master`, tag `1.1.2`)
   - CloudpaymentsNetworking (from `https://github.com/cloudpayments/CloudPayments-SDK-iOS`, branch `master`)
   - Cosmos
   - DropDown
@@ -214,14 +214,16 @@ EXTERNAL SOURCES:
   Cloudpayments:
     :branch: master
     :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
+    :tag: 1.1.2
   CloudpaymentsNetworking:
     :branch: master
     :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
 
 CHECKOUT OPTIONS:
   Cloudpayments:
-    :commit: 6bdd8be84fb420b7b1bcd82966a51a4806927650
+    :commit: f936ef99b4e4ee2b9291e0b7748412766f479bda
     :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
+    :tag: 1.1.2
   CloudpaymentsNetworking:
     :commit: 6bdd8be84fb420b7b1bcd82966a51a4806927650
     :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
@@ -229,7 +231,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
-  Cloudpayments: ee7ae571b7cd037df3309649f61eb91ee9b5feff
+  Cloudpayments: 3be553d44b1c61da9dd85ea6365b4e719b900303
   CloudpaymentsNetworking: c16a709b98a0a3222da8d3afa4c15eb364161e35
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
@@ -263,6 +265,6 @@ SPEC CHECKSUMS:
   YandexMapKitSearch: 9d658009a11ce4973e5b1c59aacb72c3f63c808a
   YandexRuntime: 2547d72a3ce4757f16ad188cfbe8a124ae13d806
 
-PODFILE CHECKSUM: 17ef24ad31f028e165f5786a0af27d4e92e69f3f
+PODFILE CHECKSUM: a71adc9292f1d0f34fe3a0a609dc99b3c3d60f9f
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

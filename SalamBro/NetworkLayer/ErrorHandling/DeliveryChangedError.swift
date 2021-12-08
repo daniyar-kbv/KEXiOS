@@ -97,8 +97,8 @@ extension Single {
                            error == .deliveryChanged
                         {
                             do {
-                                let test = try updateLead()
-                                return test
+                                let updateLead = try updateLead()
+                                return updateLead
                             } catch {
                                 throw error
                             }

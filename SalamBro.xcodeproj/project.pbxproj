@@ -207,6 +207,7 @@
 		297FC1C8FB1090C27A4CE6E603E470CE /* PaymentEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CCB84206666B11E18EF0336D3A79A7 /* PaymentEditViewModel.swift */; };
 		E5AA0BECF098407D61B9ACC039DAEABC /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E6B290305F0D13A85D6644AAC0735 /* PaymentMethod.swift */; };
 		8B92AB6940F73C5C41FE89F3096F23E6 /* PaymentMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB3A883E7CBC80C8F21829BD616E6CC /* PaymentMethodCell.swift */; };
+		FCAD650126DE728ECB1722CB52F3A02C /* PaymentMethodOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67068F4B77DD408CE38F1D7AFC8F2D55 /* PaymentMethodOutput.swift */; };
 		8AB65871A88B639153690D84EDBEFCFD /* PaymentMethodVCViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BDD5FE5A5AAC86E74BBDDFE2A9B8A2 /* PaymentMethodVCViewModel.swift */; };
 		B695EBEA3222F68D25045AB355D6143B /* PaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EEF7402B7CC80248F721B6A2E26962 /* PaymentMethodView.swift */; };
 		95AE817A5F8E0A7F37A1F00542EC6509 /* PaymentMethodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166E4CD545D34044DE2362610BD1346B /* PaymentMethodViewController.swift */; };
@@ -576,6 +577,7 @@
 		D4CCB84206666B11E18EF0336D3A79A7 /* PaymentEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentEditViewModel.swift; sourceTree = "<group>"; };
 		DA0E6B290305F0D13A85D6644AAC0735 /* PaymentMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
 		BDB3A883E7CBC80C8F21829BD616E6CC /* PaymentMethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodCell.swift; sourceTree = "<group>"; };
+		67068F4B77DD408CE38F1D7AFC8F2D55 /* PaymentMethodOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodOutput.swift; sourceTree = "<group>"; };
 		E8BDD5FE5A5AAC86E74BBDDFE2A9B8A2 /* PaymentMethodVCViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodVCViewModel.swift; sourceTree = "<group>"; };
 		00EEF7402B7CC80248F721B6A2E26962 /* PaymentMethodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodView.swift; sourceTree = "<group>"; };
 		166E4CD545D34044DE2362610BD1346B /* PaymentMethodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodViewController.swift; sourceTree = "<group>"; };
@@ -2103,6 +2105,7 @@
 				5E3F3AC10C70D2FE354E5F5546C50811 /* OrdersList.swift */,
 				4A1146ECD2C11F607B503E7FDF57A1F2 /* Payment.swift */,
 				DA0E6B290305F0D13A85D6644AAC0735 /* PaymentMethod.swift */,
+				67068F4B77DD408CE38F1D7AFC8F2D55 /* PaymentMethodOutput.swift */,
 				3AC704D5ACC15F44FDC980B1A4D6337D /* Promocode.swift */,
 				5C7CD0C4424B7F44FE96526C8CECC913 /* Promotion.swift */,
 				7120A99F9624B614E4F4E0E1F245EA7F /* Rate.swift */,
@@ -2894,6 +2897,7 @@
 				297FC1C8FB1090C27A4CE6E603E470CE /* PaymentEditViewModel.swift in Sources */,
 				E5AA0BECF098407D61B9ACC039DAEABC /* PaymentMethod.swift in Sources */,
 				8B92AB6940F73C5C41FE89F3096F23E6 /* PaymentMethodCell.swift in Sources */,
+				FCAD650126DE728ECB1722CB52F3A02C /* PaymentMethodOutput.swift in Sources */,
 				8AB65871A88B639153690D84EDBEFCFD /* PaymentMethodVCViewModel.swift in Sources */,
 				B695EBEA3222F68D25045AB355D6143B /* PaymentMethodView.swift in Sources */,
 				95AE817A5F8E0A7F37A1F00542EC6509 /* PaymentMethodViewController.swift in Sources */,
@@ -3194,7 +3198,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 90;
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -3202,7 +3206,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.87;
+				MARKETING_VERSION = 0.0.90;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3264,7 +3268,7 @@
 				CODE_SIGN_ENTITLEMENTS = SalamBro/SalamBro.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 90;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9WAB9UF39X;
 				INFOPLIST_FILE = SalamBro/Resources/Constants/Info.plist;
@@ -3273,7 +3277,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.87;
+				MARKETING_VERSION = 0.0.90;
 				PRODUCT_BUNDLE_IDENTIFIER = kex.group.kexBrands.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
