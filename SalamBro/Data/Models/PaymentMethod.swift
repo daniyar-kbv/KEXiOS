@@ -8,7 +8,7 @@
 import Foundation
 
 enum PaymentMethodType: String, Codable {
-    case savedCard = ""
+    case savedCard = "WEB_WIDGET"
     case card = "DEBIT_CARD"
     case applePay = "APPLE_PAY"
     case cash = "CASH"

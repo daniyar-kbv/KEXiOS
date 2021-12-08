@@ -259,10 +259,10 @@ final class OrderHistoryCellContentView: UIView {
             addressItem.configure(with: address)
         }
 
-        if let paymentType = PaymentMethodType(rawValue: item.paymentType),
+        if let paymentType = PaymentMethodOutput(rawValue: item.paymentType),
            let orderStatus = OrderedFoodStatus(rawValue: item.status)
         {
-            paymentItem.configure(with: PaymentMethod(type: paymentType).title)
+            paymentItem.configure(with: paymentType.title)
             statusItem.configure(with: orderStatus.title)
             self.orderStatus = orderStatus
         }

@@ -44,7 +44,7 @@ enum OrderedFoodStatus: String, Codable {
     case onWay = "ON_WAY"
     case delivered = "DELIVERED"
     case done = "DONE"
-    case canceled = "CANCELED"
+    case canceled = "CANCELLED"
 
     var title: String {
         switch self {

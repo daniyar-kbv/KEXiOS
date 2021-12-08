@@ -234,6 +234,11 @@
 "Payment.Method.PaymentMethod.Title.card" = "Картой в приложении";
 "Payment.Method.PaymentMethod.Title.cash" = "Наличными курьеру";
 
+"Payment.Method.PaymentMethod.Title.cardOutput" = "Картой онлайн";
+"Payment.Method.PaymentMethod.Title.cashOutput" = "Наличными курьеру";
+"Payment.Method.PaymentMethod.Title.applePayOutput" = "Оплата через ApplePay";
+"Payment.Method.PaymentMethod.Title.googlePayOutput" = "Оплата через GooglePay";
+
 // MARK: - Payment Card
 
 "Payment.Card.title" = "Картой в приложении";

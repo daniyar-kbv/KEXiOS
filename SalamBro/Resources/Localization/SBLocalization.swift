@@ -487,6 +487,15 @@ enum PaymentText: UILocalizable {
 
             var localized: String { rawValue }
         }
+
+        enum TitleOutput: String, UILocalizable {
+            case card = "Payment.Method.PaymentMethod.Title.cardOutput"
+            case cash = "Payment.Method.PaymentMethod.Title.cashOutput"
+            case applePay = "Payment.Method.PaymentMethod.Title.applePayOutput"
+            case googlePay = "Payment.Method.PaymentMethod.Title.googlePayOutput"
+
+            var localized: String { rawValue }
+        }
     }
 
     enum PaymentCard: String, UILocalizable {

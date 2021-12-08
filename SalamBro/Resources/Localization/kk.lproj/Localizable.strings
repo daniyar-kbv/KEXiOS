@@ -233,6 +233,11 @@
 "Payment.Method.PaymentMethod.Title.card" = "Өтінімдегі карта";
 "Payment.Method.PaymentMethod.Title.cash" = "Курьерге қолма-қол төлем";
 
+"Payment.Method.PaymentMethod.Title.cardOutput" = "Картой онлайн";
+"Payment.Method.PaymentMethod.Title.cashOutput" = "Курьерге қолма-қол төлем";
+"Payment.Method.PaymentMethod.Title.applePayOutput" = "ApplePay арқылы төлем жасау";
+"Payment.Method.PaymentMethod.Title.googlePayOutput" = "GooglePay арқылы төлем жасау";
+
 // MARK: - Payment Card
 
 "Payment.Card.title" = "Карта арқылы төлем";
