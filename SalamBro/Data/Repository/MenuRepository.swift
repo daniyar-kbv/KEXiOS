@@ -52,14 +52,12 @@ final class MenuRepositoryImpl: MenuRepository {
     }
 
     func openPromotion(by id: Int) {
-        guard let leadUUID = storage.leadUUID else { return }
-
         outputs.didStartRequest.accept(())
 
-        menuService.getPromotions(leadUUID: leadUUID)
+        menuService.getPromotions()
             .flatMap { [unowned self] promotionResult -> Single<Promotion> in
                 promotionsVerificationURL = promotionResult.verificationURL
-                return menuService.getPromotionDetail(for: leadUUID, by: id)
+                return menuService.getPromotionDetail(by: id)
             }
             .subscribe { [weak self] promotion in
                 self?.process(promotion: promotion)
@@ -97,36 +95,30 @@ extension MenuRepositoryImpl {
     }
 
     private func getLeadInfo() {
-        guard let leadUUID = storage.leadUUID else { return }
-
-        ordersService.getLeadInfo(for: leadUUID)
+        ordersService.getLeadInfo()
             .subscribe(onSuccess: {
                 [weak self] leadInfo in
-                self?.menuData.add(data: leadInfo, type: .leadInfo)
+                    self?.menuData.add(data: leadInfo, type: .leadInfo)
             }, onError: { [weak self] error in
                 self?.process(error: error, type: .leadInfo)
             }).disposed(by: disposeBag)
     }
 
     private func getPromotions() {
-        guard let leadUUID = storage.leadUUID else { return }
-
-        menuService.getPromotions(leadUUID: leadUUID)
+        menuService.getPromotions()
             .subscribe(onSuccess: {
                 [weak self] promotionResult in
-                self?.process(promotionResult: promotionResult)
+                    self?.process(promotionResult: promotionResult)
             }, onError: { [weak self] error in
                 self?.process(error: error, type: .promotions)
             }).disposed(by: disposeBag)
     }
 
     private func getCategories() {
-        guard let leadUUID = storage.leadUUID else { return }
-
-        menuService.getProducts(for: leadUUID)
+        menuService.getProducts()
             .subscribe(onSuccess: {
                 [weak self] categories in
-                self?.menuData.add(data: categories, type: .categories)
+                    self?.menuData.add(data: categories, type: .categories)
             }, onError: { [weak self] error in
                 self?.process(error: error, type: .categories)
             }).disposed(by: disposeBag)

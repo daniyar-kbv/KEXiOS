@@ -14,7 +14,7 @@ enum PaymentsAPI {
     case createPayment(dto: CreatePaymentDTO)
     case createCardPayment(dto: CardPaymentDTO)
     case confirm3DSPayment(dto: Create3DSPaymentDTO, paymentUUID: String)
-    case paymentStatus(leadUUID: String)
+    case paymentStatus
 }
 
 extension PaymentsAPI: TargetType {
@@ -30,7 +30,7 @@ extension PaymentsAPI: TargetType {
         case .createPayment: return "/payments/create-payment/"
         case .createCardPayment: return "/payments/create-card-payment/"
         case let .confirm3DSPayment(_, paymentUUID): return "/payments/confirm-payment/\(paymentUUID)/"
-        case let .paymentStatus(leadUUID): return "/orders/\(leadUUID)/status/"
+        case .paymentStatus: return "/orders/\(Constants.URLVariables.leadUUID)/status/"
         }
     }
 

@@ -182,13 +182,12 @@ extension PaymentRepositoryImpl {
     }
 
     func checkPaymentStatus() {
-        guard defaultStorage.isPaymentProcess,
-              let leadUUID = defaultStorage.leadUUID else { return }
+        guard defaultStorage.isPaymentProcess else { return }
 
         defaultStorage.persist(isPaymentProcess: true)
         sendShowPaymentProcessNotification()
 
-        paymentService.getPaymentStatus(leadUUID: leadUUID)
+        paymentService.getPaymentStatus()
             .retryWhenUnautharized()
             .subscribe(onSuccess: paymentOnSuccess(_:),
                        onError: paymentOnFailure(_:))

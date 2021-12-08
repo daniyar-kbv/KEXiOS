@@ -12,10 +12,10 @@ import RxSwift
 
 protocol OrdersService: AnyObject {
     func applyOrder(dto: OrderApplyDTO) -> Single<String>
-    func getAdditionalProducts(for leadUUID: String) -> Single<[AdditionalPosition]>
-    func updateCart(for leadUUID: String, dto: CartDTO) -> Single<Cart>
+    func getAdditionalProducts() -> Single<[AdditionalPosition]>
+    func updateCart(dto: CartDTO) -> Single<Cart>
     func applyPromocode(promocode: String) -> Single<Promocode>
-    func getLeadInfo(for leadUUID: String) -> Single<LeadInfo>
+    func getLeadInfo() -> Single<LeadInfo>
 }
 
 final class OrdersServiceMoyaImpl: OrdersService {
@@ -47,9 +47,9 @@ final class OrdersServiceMoyaImpl: OrdersService {
             }
     }
 
-    func getAdditionalProducts(for leadUUID: String) -> Single<[AdditionalPosition]> {
+    func getAdditionalProducts() -> Single<[AdditionalPosition]> {
         return provider.rx
-            .request(.additionalNomenclature(leadUUID: leadUUID))
+            .request(.additionalNomenclature)
             .retryWhenDeliveryChanged()
             .map { response in
 
@@ -69,9 +69,9 @@ final class OrdersServiceMoyaImpl: OrdersService {
             }
     }
 
-    func updateCart(for leadUUID: String, dto: CartDTO) -> Single<Cart> {
+    func updateCart(dto: CartDTO) -> Single<Cart> {
         return provider.rx
-            .request(.updateCart(leadUUID: leadUUID, dto: dto))
+            .request(.updateCart(dto: dto))
             .retryWhenDeliveryChanged()
             .map { response in
 
@@ -112,9 +112,9 @@ final class OrdersServiceMoyaImpl: OrdersService {
             }
     }
 
-    func getLeadInfo(for leadUUID: String) -> Single<LeadInfo> {
+    func getLeadInfo() -> Single<LeadInfo> {
         return provider.rx
-            .request(.leadInfo(leadUUID: leadUUID))
+            .request(.leadInfo)
             .retryWhenDeliveryChanged()
             .map { response in
 

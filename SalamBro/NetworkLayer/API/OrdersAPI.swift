@@ -11,10 +11,10 @@ enum OrdersAPI {
     case getAllOrders(page: Int)
     case apply(dto: OrderApplyDTO)
     case authorizedApply(dto: OrderApplyDTO?)
-    case additionalNomenclature(leadUUID: String)
-    case updateCart(leadUUID: String, dto: CartDTO)
+    case additionalNomenclature
+    case updateCart(dto: CartDTO)
     case applyPromocode(promocode: String)
-    case leadInfo(leadUUID: String)
+    case leadInfo
 }
 
 extension OrdersAPI: TargetType {
@@ -27,10 +27,10 @@ extension OrdersAPI: TargetType {
         case .getAllOrders: return "orders/"
         case .apply: return "orders/apply/"
         case .authorizedApply: return "/orders/authorized-apply/"
-        case let .additionalNomenclature(leadUUID): return "/orders/\(leadUUID)/additional-nomenclature/"
-        case let .updateCart(leadUUID, _): return "orders/\(leadUUID)/cart/"
+        case .additionalNomenclature: return "/orders/\(Constants.URLVariables.leadUUID)/additional-nomenclature/"
+        case .updateCart: return "orders/\(Constants.URLVariables.leadUUID)/cart/"
         case let .applyPromocode(promocode): return "/orders/coupons/\(promocode)/"
-        case let .leadInfo(leadUUID): return "/orders/\(leadUUID)/show/"
+        case .leadInfo: return "/orders/\(Constants.URLVariables.leadUUID)/show/"
         }
     }
 
@@ -60,7 +60,7 @@ extension OrdersAPI: TargetType {
             if let dto = dto { return .requestJSONEncodable(dto) }
             else { return .requestPlain }
         case .additionalNomenclature: return .requestPlain
-        case let .updateCart(_, dto): return .requestJSONEncodable(dto)
+        case let .updateCart(dto): return .requestJSONEncodable(dto)
         case .applyPromocode: return .requestPlain
         case .leadInfo: return .requestPlain
         }

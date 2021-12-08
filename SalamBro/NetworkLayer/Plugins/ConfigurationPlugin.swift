@@ -25,6 +25,13 @@ struct ConfigurationPlugin: PluginType {
             request.addValue(fcmToken, forHTTPHeaderField: "X-NOTIFICATION-TOKEN")
         }
 
+        if request.url?.absoluteString.contains(Constants.URLVariables.leadUUID) == true,
+           let leadUUID = defaultStorage.leadUUID,
+           let newURLStr = request.url?.absoluteString.replacingOccurrences(of: Constants.URLVariables.leadUUID, with: leadUUID)
+        {
+            request.url = URL(string: newURLStr)
+        }
+
         return request
     }
 

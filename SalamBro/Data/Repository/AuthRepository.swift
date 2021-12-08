@@ -181,7 +181,7 @@ final class AuthRepositoryImpl: AuthRepository {
                 return notificationsService.fcmTokenSave(dto: .init(fcmToken: fcmToken))
             }
             .flatMap { () -> Single<Cart> in
-                self.ordersService.updateCart(for: self.leadUUID ?? "", dto: self.cartStorage.cart.toDTO())
+                self.ordersService.updateCart(dto: self.cartStorage.cart.toDTO())
             }
     }
 
