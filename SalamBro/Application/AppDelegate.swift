@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var repositoryComponents = RepositoryComponentsAssembly(serviceComponents: serviceComponents)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        YMKMapKit.setApiKey(Constants.apiKey)
+        YMKMapKit.setApiKey(Constants.yandexMapKitApiKey)
         configureAppState()
         configureAppCoordinator()
         configureProgressHUD()
@@ -122,7 +122,8 @@ extension AppDelegate {
     func showNotificationAlert(pushNotification: PushNotification) {
         UIApplication.topViewController()?.showAlert(title: pushNotification.aps.alert.title,
                                                      message: pushNotification.aps.alert.body,
-                                                     submitTitle: SBLocalization.localized(key: AlertText.ok)) { [weak self] in
+                                                     submitTitle: SBLocalization.localized(key: AlertText.ok))
+        { [weak self] in
             self?.appCoordinator?.handleNotification(pushNotification: pushNotification)
         }
     }

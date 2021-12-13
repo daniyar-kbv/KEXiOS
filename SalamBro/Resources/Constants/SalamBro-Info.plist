@@ -2,10 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>API_KEY</key>
+	<key>YANDEX_MAPKIT_API_KEY</key>
 	<string>c4d8ffe6-c93f-4f23-ac7a-89362bd75d36</string>
-	<key>Yandex_API_KEY</key>
+	<key>YANDEX_MAPKIT_API_KEY_TEMP</key>
+	<string>d51f5d7b-ed3c-4e40-90a8-7cbbd302f516</string>
+	<key>YANDEX_GEOCODER_API_KEY</key>
 	<string>7cd03aed-4c1a-460a-aca2-90ae52dd60b6</string>
+	<key>YANDEX_GEOCODER_API_KEY_TEMP</key>
+	<string>cf11fc69-2779-49e1-8d79-f66404fd33cf</string>
 	<key>CLOUDPAYMENTS_MERCHANT_ID_PROD</key>
 	<string>pk_2ec019c3a3a24b44996a1a2ca6f8c</string>
 	<key>CLOUDPAYMENTS_MERCHANT_ID_DEV</key>
