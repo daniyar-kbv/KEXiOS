@@ -10,10 +10,10 @@ import UIKit
 struct Constants {
     static let appMode: AppMode = .prod
 
-    static let apiKey = getPlistValue(by: "API_KEY")
+    static let yandexMapKitApiKey = getPlistValue(by: "YANDEX_MAPKIT_API_KEY_TEMP")
+    static let yandexGeocoderApiKey = getPlistValue(by: "YANDEX_GEOCODER_API_KEY_TEMP")
     static let cloudpaymentsMerchantId = appMode.cloudpaymentsMerchantId
     static let applePayMerchantId = getPlistValue(by: "APPLE_PAY_MERCHANT_ID")
-    static let yandexApiKey = getPlistValue(by: "Yandex_API_KEY")
 
     static let merchantName = "ТОО \"KEX GROUP\""
     static let websiteURL = "kexbrands.kz"

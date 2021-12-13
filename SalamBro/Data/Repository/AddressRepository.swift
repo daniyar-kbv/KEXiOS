@@ -268,7 +268,7 @@ extension AddressRepositoryImpl {
 
 extension AddressRepositoryImpl {
     func getNearestAddress(geocode: String, language: String) {
-        let yandexDTO = YandexDTO(geocode: geocode, apiKey: Constants.yandexApiKey, language: language, format: "json", sco: "latlong", kind: "house", results: "1")
+        let yandexDTO = YandexDTO(geocode: geocode, apiKey: Constants.yandexGeocoderApiKey, language: language, format: "json", sco: "latlong", kind: "house", results: "1")
 
         yandexService.getAddress(dto: yandexDTO)
             .subscribe(onSuccess: { [weak self] address in
