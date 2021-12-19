@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>78343092793-te87snss4c9sdj1s0cuathq50pcg8ijm.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.78343092793-te87snss4c9sdj1s0cuathq50pcg8ijm</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAeML74Z8_WxwGJ_FO9eAkeHFeW26tEOYE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>78343092793</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>kex.group.kexBrands.app</string>
+	<key>PROJECT_ID</key>
+	<string>kexapp-pushes</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kexapp-pushes.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:78343092793:ios:978ecb1c9d3a73afa22be8</string>
+</dict>
+</plist>

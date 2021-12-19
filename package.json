@@ -1,0 +1,27 @@
+{
+  "name": "salambroios",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/Mura75/salambroios.git"
+  },
+  "author": "Murager",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/Mura75/salambroios/issues"
+  },
+  "homepage": "https://gitlab.com/Mura75/salambroios#readme",
+  "devDependencies": {
+    "husky": "^6.0.0"
+  },
+  "dependencies": {
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1"
+  }
+}

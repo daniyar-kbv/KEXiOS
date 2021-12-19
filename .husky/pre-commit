@@ -1,0 +1,11 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+git diff --diff-filter=d --staged --name-only | grep -e '\(.*\).swift$' | while read line; do
+  swiftformat "${line}";
+  git add "$line";
+done
+
+xunique -u -s -p ./SalamBro.xcodeproj
+git add ./SalamBro.xcodeproj
+
