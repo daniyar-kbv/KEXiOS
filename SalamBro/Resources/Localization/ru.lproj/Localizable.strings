@@ -1,0 +1,295 @@
+/* 
+  Localizable.strings
+  SalamBro
+
+  Created by Arystan on 3/17/21.
+  
+*/
+
+
+// MARK: - CountriesList
+"CountriesList.navigation.title" = "Выберите страну";
+
+// MARK: - CitiesList
+"CitiesList.navigation.title" = "Выберите город";
+
+// MARK: - Brands
+"Brands.navigation.title" = "Выберите бренд";
+
+// MARK: - Authorization
+"Authorization.title" = "Введите Ваш номер телефона";
+"Authorization.subtitle" = "На этот номер придет подтверждающий СМС код";
+"Authorization.numberField.placeholder.title" = "Номер телефона";
+"Authorization.agreement.inactive.title" = "Продолжая, вы соглашаетесь со сбором, обработкой персональных данных и ";
+"Authorization.agreement.active.title" = "Пользовательским соглашением";
+"Authorization.button.title" = "Получить код";
+
+// MARK: - Verification
+"Verification.title" = "Введите код из сообщения";
+"Verification.subtitle" = "Мы отправили его на номер %@";
+"Verification.button.title" = "Отправить повторно через: %@";
+"Verification.button.timeout" = "Отправить код повторно";
+
+// MARK: - CountryCodePicker
+"CountryCodePicker.navigation.title" = "Выберите код страны";
+
+// MARK: - GetName
+"GetName.title" = "Как Вас зовут?";
+"GetName.field.title" = "Введите Ваше имя";
+"GetName.button.title" = "Далее";
+
+// MARK: - MainTab
+"MainTab.Menu.Title" = "Меню";
+"MainTab.Profile.Title" = "Профиль";
+"MainTab.Support.Title" = "Помощь";
+"MainTab.Cart.Title" = "Корзина";
+
+// MARK: - Cart
+"Cart.section0.positionTitle" = "%@ товар на %@ ₸";
+"Cart.section0.positionLessOrEqualFour" = "%@ товара на %@ ₸";
+"Cart.section0.positionGreaterThanFour" = "%@ товаров на %@ ₸";
+"Cart.section1.title" = "Дополнительные покупки";
+"Cart.section2.title" = "Промокод: %@";
+"Cart.orderButton.title" = "Оформить заказ на %@ ₸";
+"Cart.title" = "Корзина";
+
+// MARK: - CartFooter
+"CartFooter.promocodeButton.title" = "Ввести промокод";
+"CartFooter.priceSymbol" = "%@ ₸";
+"CartFooter.productsCount" = "%@ товар";
+"CartFooter.productsCountLessOrEqualFour" = "%@ товара";
+"CartFooter.productsCountGreaterThanFour" = "%@ товаров";
+"CartFooter.deliveryLabel" = "Доставка";
+
+// MARK: - UnavailabilityAlert
+"Cart.Alert.title" = "Внимание";
+"Cart.Alert.deliveryPriceChangedMessage" = "Изменилась цена доставки";
+"Cart.Alert.unavailabilityAlertMessage" = "Некоторые товары недоступны";
+"Cart.Alert.minPriceAlertMessage" = "Минимальная сумма заказа %@ ₸";
+
+// MARK: - CartProductCell
+"CartProductCell.deleteButton.title" = "Удалить";
+"CartProductCell.availability.title" = "Товар недоступен";
+
+// MARK: - CartAdditionalProductCell
+"CartAdditionalProductCell.deleteButton.title" = "Удалить";
+"CartAdditionalProductCell.availability.title" = "Товар недоступен";
+
+// MARK: - Profile
+"Profile.navigationBar.title" = "Профиль";
+"Profile.editButton.title" = "Изменить";
+"Profile.orderHistory" = "История заказов";
+"Profile.changeLanguage" = "Сменить язык приложения";
+"Profile.logoutButton.title" = "Выйти из аккаунта";
+"Profile.deliveryAddress" = "Адреса доставки";
+"Profile.Alert.title" = "Вы уверены?";
+"Profile.Alert.message" = "Вы уверены что хотите выйти из аккаунта?";
+"Profile.Alert.Action.yes" = "Да";
+"Profile.Alert.Action.no" = "Нет";
+
+// MARK: - ChangeName
+"ChangeName.navigationBar.title" = "Изменить";
+"ChangeName.nameField.placeholder" = "введите имя";
+"ChangeName.saveButton.title" = "Сохранить";
+"ChangeName.nameLabel" = "Имя";
+"ChangeName.emailLabel" = "E-mail";
+
+// MARK: - Map
+"MapView.addressField.title" = "Адрес доставки";
+"MapView.commentaryLabel.title" = "Комментарий (квартира, подъезд, ...)";
+"Commentary.addressField.title" =" Комментарий (квартира, подъезд, ...)";
+"MapView.proceedButton.title" = "Перейти к заказу";
+"MapView.LocationAlert.title" = "Службы определения местоположения отключены";
+"MapView.LocationAlert.message" = "Пожалуйста, включите Службы определения местоположения в своих настройках";
+
+// MARK: - Suggest
+"Suggest.addressField.title" = "Введите адрес";
+"Suggest.button.title" = "Отменить";
+
+// MARK: - Commentary
+"Commentary.button.title" = "Готово";
+
+// MARK: - RateOrder
+"RateOrder.title" = "Оцените заказ";
+"RateOrder.submitButton.title" = "Отправить";
+"RateOrder.commentaryField.placeholder" = "Добавить комментарий";
+"RateOrder.title" = "Оцените заказ";
+"RateOrder.description" = "Ваша оценка поможет улучшить качество нашей доставки";
+
+// MARK: - AddressPickCell
+"AddressPickCell.changeButton" = "Изменить";
+"AddressPickCell.deliverLabel" = "Доставим на:";
+
+// MARK: - Menu
+"Menu.unavailable" = "Будет позже";
+
+// MARK: - MenuDetail
+"MenuDetail.proceedButton" = "В корзину за %@ ₸";
+"MenuDetail.commentaryField" = "Комментарий к блюду";
+"MenuDetail.chooseAdditionalItemButton" = "Изменить";
+"MenuDetail.required" = "Обязательно";
+"MenuDetail.choose" = "Выберите";
+"MenuDetail.position" = "позиция";
+"MenuDetail.positionLessOrEqualFour" = "позиции";
+"MenuDetail.positionGreaterThanFour" = "позиций";
+"MenuDetail.additional" = "Дополнительно";
+"MenuDetail.max" = "макс.";
+"MenuDetail.chooseAdditional" = "Выберите дополнения";
+"MenuDetail.added" = "Добавлено";
+
+// MARK: - Support
+"Support.title" = "Помощь";
+"Support.callcenter" = "Позвонить в Call-центр";
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.title" = "Язык приложения";
+"ChangeLanguage.kazakh" = "Казахский";
+"ChangeLanguage.russian" = "Русский";
+"ChangeLanguage.english" = "Английский";
+
+// MARK: - OrderHistory
+"OrderHistory.title" = "История заказов";
+"OrderHistory.shipping" = "Доставка";
+"OrderHistory.sum" = "Итого";
+"OrderHistory.deliveryAddress" = "Адрес доставки";
+"OrderHistory.paymentDetails" = "Детали оплаты";
+"OrderHistory.orderStatus" = "Статус заказа";
+"OrderHistory.sendBill" = "Отправить чек на почту";
+"OrderHistory.rateOrder" = "Оценить заказ";
+"OrderHistory.repeatOrder" = "Повторить заказ";
+"OrderHistory.cancelOrder" = "Отменить заказ";
+"OrderHistory.applying" = "На подтверждении";
+"OrderHistory.started" = "Готовится";
+"OrderHistory.waiting" = "Ожидает курьера";
+"OrderHistory.onWay" = "Доставляется";
+"OrderHistory.delivered" = "Доставлен";
+"OrderHistory.canceled" = "Отменен";
+"OrderHistory.Error.title" = "Внимание";
+"OrderHistory.Error.text" = "Если вы хотите отменить заказ, то вам необходимо связаться с колл-центром.";
+
+// MARK: - Select Main Info
+"select_main_info.country" = "Страна";
+"select_main_info.country.placeholder" = "Выберите страну";
+"select_main_info.city" = "Город";
+"select_main_info.city.placeholder" = "Выберите город";
+"select_main_info.address" = "Адрес";
+"select_main_info.address.placeholder" = "Введите адрес";
+"select_main_info.brand" = "Бренд";
+"select_main_info.brand.placeholder" = "Выберите бренд";
+"select_main_info.title" = "Адрес доставки";
+"select_main_info.description" = "Наличие или отсутствие того или иного бренда - зависит от Вашего адреса доставки";
+"select_main_info.save" = "Сохранить";
+"select_main_info.alert.title" = "Вы уверены?";
+"select_main_info.alert.body.address" = "Если Вы сейчас смените адрес, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить адрес?";
+"select_main_info.alert.body.brand" = "Если Вы сейчас смените бренд, то потеряете все выбранные Вами продукты. Вы действительно хотите сменить бренд?";
+"select_main_info.alert.action.yes" = "Да";
+"select_main_info.alert.action.no" = "Нет";
+
+// MARK: - Address Picker
+"address_picker.add" = "Добавить новый адрес";
+
+// MARK: - AddressList
+"address_picker.titleMany" = "Адреса доставки";
+
+// MARK: - AddressDetail
+"address_picker.titleOne" = "Адрес доставки";
+"AddressDetail.commentaryTitleLabel" = "Комментарий";
+"AddressDetail.Alert.title" = "Вы уверены?";
+"AddressDetail.Alert.message" = "Вы уверены что хотите удалить адрес доставки?";
+"AddressDetail.Alert.Action.yes" = "Да";
+"AddressDetail.Alert.Action.no" = "Нет";
+
+// MARK: - ShareOrder
+"ShareOrder.submitButton" = "Опубликовать";
+
+// MARK: - Promocode
+"Promocode.button" = "Применить";
+"Promocode.field" = "Введите промокод";
+
+// MARK: - Close
+"Common.error" = "Ошибка";
+"Common.close" = "Закрыть";
+
+// MARK: - Error
+"Error.mappingError" = "Неудалось обработать ответ";
+"Error.noData" = "Нет данных";
+"Error.unauthorized" = "Вам необходимо снова авторизоваться";
+"Error.internetConnection" = "Интернет соеденение было прервано";
+
+// MARK: - Payment Selection
+
+"Payment.Selection.bill" = "К оплате:";
+"Payment.Selection.change" = "Изменить";
+"Payment.Selection.choosePaymentMethod" = "Выберите способ оплаты";
+"Payment.Selection.orderPayment" = "Оформить заказ";
+"Payment.Selection.paymentMethod" = "Способ оплаты";
+"Payment.Selection.title" = "Оформление заказа";
+"Payment.Selection.applePay" = "Оформить с";
+
+// MARK: - Payment Method
+
+"Payment.Method.PaymentMethod.title" = "Способ оплаты";
+"Payment.Method.PaymentMethodError.description" = "Не валидный indexPath";
+"Payment.Method.PaymentMethod.Title.savedCard" = "Карта *%@";
+"Payment.Method.PaymentMethod.Title.card" = "Картой в приложении";
+"Payment.Method.PaymentMethod.Title.cash" = "Наличными курьеру";
+
+"Payment.Method.PaymentMethod.Title.cardOutput" = "Картой онлайн";
+"Payment.Method.PaymentMethod.Title.cashOutput" = "Наличными курьеру";
+"Payment.Method.PaymentMethod.Title.applePayOutput" = "Оплата через ApplePay";
+"Payment.Method.PaymentMethod.Title.googlePayOutput" = "Оплата через GooglePay";
+
+// MARK: - Payment Card
+
+"Payment.Card.title" = "Картой в приложении";
+"Payment.Card.saveCard" = "Сохранить карту";
+"Payment.Card.cardNumber" = "Номер карты";
+"Payment.Card.expiryDate" = "Срок действия";
+"Payment.Card.cardholderName" = "Имя Фамилия";
+"Payment.Card.saveButton" = "Далее";
+"Payment.Card.Error.title" = "Внимание";
+"Payment.Card.Error.message" = "Некоторые поля заполнены неверно";
+
+// MARK: - Payment Cash
+
+"Payment.Cash.titleDefault" = "Оформление заказа";
+"Payment.Cash.titleChange" = "Сдача";
+"Payment.Cash.topText" = "Заказ на %@ ₸.\nС какой суммы подготовить сдачу?";
+"Payment.Cash.fieldPlaceholder" = "Введите сумму наличных";
+"Payment.Cash.fieldDescription" = "Укажите сумму больше стоимости заказа";
+"Payment.Cash.Button.noChange" = "У меня без сдачи";
+"Payment.Cash.Button.submit" = "Готово";
+
+// MARK: - PaymentEdit
+
+"Payment.Edit.title" = "Способ оплаты";
+"Payment.Edit.Cell.title" = "Карта *%@";
+"Payment.Edit.Alert.title" = "Вы уверены?";
+"Payment.Edit.Alert.message" = "Вы уверены что хотите удалить данную карту?";
+"Payment.Edit.Alert.yes" = "Да";
+"Payment.Edit.Alert.no" = "Нет";
+
+// MARK: - Alert
+
+"Alert.ok" = "Ок";
+"Alert.Error.title" = "Ошибка";
+
+// MARK: - Animations
+
+"Animation.InfoText.orderHistory" = "Тут будут Ваши заказы, чтобы сделать заказ перейдите в меню";
+"Animation.InfoText.emptyBasket" = "Вы еще ничего не выбрали.";
+"Animation.InfoText.noInternet" = "Нет связи. Проверьте интернет соединение";
+"Animation.InfoText.upgrade" = "Мы добавили много новых функций и исправили некоторые баги, чтобы вам было удобнее пользоваться приложением";
+"Animation.InfoText.overload" = "В данный момент ведутся технические работы, для совершения заказа перейдите на сайт kexbrands.kz или позвоните на номер 5-888";
+"Animation.InfoText.payment" = "Проводим оплату";
+"Animation.InfoText.profile" = "Вам необходимо авторизоваться, чтобы сделать заказ";
+"Animation.InfoText.closed" = "Заведение закрыто";
+"Animation.ButtonTitle.orderHistory.emptyBasket" = "Перейти в меню";
+"Animation.ButtonTitle.noInternet.overload" = "Попробовать еще раз";
+"Animation.ButtonTitle.upgrade" = "Обновить приложение";
+"Animation.ButtonTitle.payment" = "Отменить заказ";
+"Animation.ButtonTitle.profile" = "Войти";
+
+// MARK: - Intro Video
+
+"IntroVideo.Button.title" = "Пропустить";

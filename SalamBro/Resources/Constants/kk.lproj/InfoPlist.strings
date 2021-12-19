@@ -1,0 +1,12 @@
+/* 
+  InfoPlist.strings
+  SalamBro
+
+  Created by Dan on 10/11/21.
+  
+*/
+
+NSLocationWhenInUseUsageDescription = "Сіздің орналасқан жеріңіз жеткізу мекенжайын анықтау үшін пайдаланылады";
+NSLocationAlwaysAndWhenInUseUsageDescription = "Сіздің орналасқан жеріңіз жеткізу мекенжайын анықтау үшін пайдаланылады";
+NSLocationAlwaysUsageDescription = "Сіздің орналасқан жеріңіз жеткізу мекенжайын анықтау үшін пайдаланылады";
+NSLocationUsageDescription = "Сіздің орналасқан жеріңіз жеткізу мекенжайын анықтау үшін пайдаланылады";

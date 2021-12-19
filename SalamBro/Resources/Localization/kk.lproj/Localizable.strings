@@ -1,0 +1,294 @@
+/* 
+  Localizable.strings
+  SalamBro
+
+  Created by Arystan on 3/17/21.
+  
+*/
+
+// MARK: - CountriesList
+"CountriesList.navigation.title" = "Еліңізді таңдаңыз";
+
+// MARK: - CitiesList
+"CitiesList.navigation.title" = "Қалаңызды таңдаңыз";
+
+// MARK: - Brands
+"Brands.navigation.title" = "Брендті таңдаңыз";
+
+// MARK: - Authorization
+"Authorization.title" = "Телефон нөміріңізді енгізіңіз";
+"Authorization.subtitle" = "Осы нөмірге растау СМС коды жіберіледі";
+"Authorization.numberField.placeholder.title" = "Телефон нөміріңізді енгізіңіз";
+"Authorization.agreement.inactive.title" = "Жалғастыру арқылы сіз жеке мәліметтерді және";
+"Authorization.agreement.active.title" = " қолдану ережесіне қолдануға рұқсат бересіз";
+"Authorization.button.title" = "Кодты қабылдау";
+
+// MARK: - Verification
+"Verification.title" = "Кодтағы смс-ті енгізіңіз";
+"Verification.subtitle" = "Біз оны осы нөмірге жібердік %@";
+"Verification.button.title" = "Кодты жіберу осы арқылы: %@";
+"Verification.button.timeout" = "Кодты қайта жіберу";
+
+// MARK: - CountryCodePicker
+"CountryCodePicker.navigation.title" = "Еліңіздің кодын жіберіңіз";
+
+// MARK: - GetName
+"GetName.title" = "Есіміңіз кім?";
+"GetName.field.title" = "Есіміңізді енгізіңіз";
+"GetName.button.title" = "Әрі қарай";
+
+// MARK: - MainTab
+"MainTab.Menu.Title" = "Мәзір";
+"MainTab.Profile.Title" = "Профиль";
+"MainTab.Support.Title" = "Көмек";
+"MainTab.Cart.Title" = "Себет";
+
+// MARK: - Cart
+"Cart.section0.positionTitle" = "%@ тауар %@ ₸";
+"Cart.section0.positionLessOrEqualFour" = "%@ тауар %@ ₸";
+"Cart.section0.positionGreaterThanFour" = "%@ тауар %@ ₸";
+"Cart.section1.title" = "Қосымша сатып алу";
+"Cart.section2.title" = "Промокод: %@";
+"Cart.orderButton.title" = "Заказды тіркеу %@ ₸";
+"Cart.title" = "Cебет";
+
+// MARK: - CartFooter
+"CartFooter.promocodeButton.title" = "Промокодты еңгізу";
+"CartFooter.priceSymbol" = "%@ ₸";
+"CartFooter.productsCount" = "%@ тауар";
+"CartFooter.productsCountLessOrEqualFour" = "%@ тауар";
+"CartFooter.productsCountGreaterThanFour" = "%@ тауар";
+"CartFooter.deliveryLabel" = "Жеткізу";
+
+// MARK: - UnavailabilityAlert
+"Cart.Alert.title" = "Назар аударыңыз";
+"Cart.Alert.deliveryPriceChangedMessage" = "Жеткізудің бағасы өзгерді";
+"Cart.Alert.unavailabilityAlertMessage" = "Кейбір тауарлар жоқ";
+"Cart.Alert.minPriceAlertMessage" = "Минималдық тапсырыс бағасы %@ ₸";
+
+// MARK: - CartProductCell
+"CartProductCell.deleteButton.title" = "Жою";
+"CartProductCell.availability.title" = "Тауар қолжетімсіз";
+
+// MARK: - CartAdditionalProductCell
+"CartAdditionalProductCell.deleteButton.title" = "Жою";
+"CartAdditionalProductCell.availability.title" = "Тауар қолжетімсіз";
+
+// MARK: - Profile
+"Profile.navigationBar.title" = "Профиль";
+"Profile.editButton.title" = "Өзгерту";
+"Profile.orderHistory" = "Тапсырыстар тарихы";
+"Profile.changeLanguage" = "Тілді ауыстыру";
+"Profile.logoutButton.title" = "Шығу";
+"Profile.deliveryAddress" = "Жеткізу мекен-жайы";
+"Profile.Alert.title" = "Сенімдісіз бе?";
+"Profile.Alert.message" = "Аккаунттан шығуыңызға сенімдісіз бе?";
+"Profile.Alert.Action.yes" = "Иә";
+"Profile.Alert.Action.no" = "Жоқ";
+
+// MARK: - ChangeName
+"ChangeName.navigationBar.title" = "Өзгерту";
+"ChangeName.nameField.placeholder" = "Есіміңізді енгізіңіз";
+"ChangeName.saveButton.title" = "Сақтау";
+"ChangeName.nameLabel" = "Есіміңіз";
+"ChangeName.emailLabel" = "Почтаңыз";
+
+// MARK: - Map
+"MapView.addressField.title" = "Жеткізу мекен-жайы";
+"MapView.commentaryLabel.title" = "Пікір (пәтер, кіреберіс, ...)";
+"Commentary.addressField.title" = "Пікір (пәтер, кіреберіс, ...)";
+"MapView.proceedButton.title" = "Тапсырысқа өту";
+"MapView.LocationAlert.title" = "Мекен-жайыңызды анықтауға мүмкін емес";
+"MapView.LocationAlert.message" = "Мекен-жайыңызды анықтауға мүмкіндік беріңіз";
+
+// MARK: - Suggest
+"Suggest.addressField.title" = "Мекен-жайыңызды енгізіңіз";
+"Suggest.button.title" = "Бас тарту";
+
+// MARK: - Commentary
+"Commentary.button.title" = "Дайын";
+
+// MARK: - RateOrder
+"RateOrder.title" = "Тапсырысты бағалаңыз";
+"RateOrder.submitButton.title" = "Жіберу";
+"RateOrder.commentaryField.placeholder" = "Пікір қосу";
+"RateOrder.title" = "Тапсырысты бағалау";
+"RateOrder.description" = "Сіздің бағаңыз жеткізу қызметінің сапасын жақсартады";
+
+// MARK: - AddressPickCell
+"AddressPickCell.changeButton" = "Өзгерту";
+"AddressPickCell.deliverLabel" = "Жеткізу жері";
+
+// MARK: - Menu
+"Menu.unavailable" = "Кейінірек келеді";
+
+// MARK: - MenuDetail
+"MenuDetail.proceedButton" = "Себетке жіберу %@ ₸";
+"MenuDetail.commentaryField" = "Тағамға пікір жазу";
+"MenuDetail.chooseAdditionalItemButton" = "Өзгерту";
+"MenuDetail.required" = "Міндетті түрде";
+"MenuDetail.choose" = "Таңдаңыз";
+"MenuDetail.position" = "Позиция";
+"MenuDetail.positionLessOrEqualFour" = "Позиция";
+"MenuDetail.positionGreaterThanFour" = "Позиция";
+"MenuDetail.additional" = "Қосымша";
+"MenuDetail.max" = "Максимальді";
+"MenuDetail.chooseAdditional" = "Қосымшаны таңдаңыз";
+"MenuDetail.added" = "Қосылды";
+
+// MARK: - Support
+"Support.title" = "Көмек";
+"Support.callcenter" = "Қоңырау шалу";
+
+// MARK: - ChangeLanguage
+"ChangeLanguage.title" = "Тілді таңдау";
+"ChangeLanguage.kazakh" = "Қазақша";
+"ChangeLanguage.russian" = "Орысша";
+"ChangeLanguage.english" = "Ағылшынша";
+
+// MARK: - OrderHistory
+"OrderHistory.title" = "Тапсырыстар тарихы";
+"OrderHistory.shipping" = "Жеткізу қызметы";
+"OrderHistory.sum" = "Жалпы";
+"OrderHistory.deliveryAddress" = "Мекен-жай";
+"OrderHistory.paymentDetails" = "Төлеу  егжейлері";
+"OrderHistory.orderStatus" = "Тапсырыс статусы";
+"OrderHistory.sendBill" = "Чекті почтаға жібері";
+"OrderHistory.rateOrder" = "Тапсырысты бағалау";
+"OrderHistory.repeatOrder" = "Тапсырысты қайталау";
+"OrderHistory.cancelOrder" = "Тапсырыстан бас тарту";
+"OrderHistory.applying" = "Расталу барысында";
+"OrderHistory.started" = "Дайындалу барысында";
+"OrderHistory.waiting" = "Курьер күтілуде";
+"OrderHistory.onWay" = "Жеткізілуде";
+"OrderHistory.delivered" = "Жеткізілді";
+"OrderHistory.canceled" = "Доғарылды";
+"OrderHistory.Error.title" = "Назар аударыңыз";
+"OrderHistory.Error.text" = "Егер сіз тапсырыстан бас тартқыңыз келсе, байланыс орталығына хабарласуыңыз қажет.";
+
+// MARK: - Select Main Info
+"select_main_info.country" = "Ел";
+"select_main_info.country.placeholder" = "Еліңізді таңдаңыз";
+"select_main_info.city" = "Қала";
+"select_main_info.city.placeholder" = "Еліңізді таңдаңыз";
+"select_main_info.address" = "Мекен-жай";
+"select_main_info.address.placeholder" = "Мекен-жайыңызды таңдаңыз";
+"select_main_info.brand" = "Бренд";
+"select_main_info.brand.placeholder" = "Брендті таңдау";
+"select_main_info.title" = "Тапсырыс мекен-жайы";
+"select_main_info.description" = "Белгілі бір брендтің болуы немесе болмауы сіздің жеткізу мекенжайыңызға байланысты";
+"select_main_info.save" = "Сақтау";
+"select_main_info.alert.title" = "Сенімдісіз бе?";
+"select_main_info.alert.body.address" = "Егер мекен-жайыңызды өзгертсеңіз, сақталынған өнімдерді жоғалтып аласыз. Мекен-жайыңызды өзгертуге сенімдісіз бе?";
+"select_main_info.alert.body.brand" = "Егер сіз қазір брендті өзгертсеңіз, сіз таңдаған барлық өнімдерден бас тартасыз. Брендті өзгерткіңіз келетініне сенімдісіз бе?";
+"select_main_info.alert.action.yes" = "Иә";
+"select_main_info.alert.action.no" = "Жоқ";
+
+// MARK: - Address Picker
+"address_picker.add" = "Жаңа мекен-жайды енгізу";
+
+// MARK: - AddressList
+"address_picker.titleMany" = "Жеткізу мекен-жайы";
+
+// MARK: - AddressDetail
+"address_picker.titleOne" = "Жеткізу мекен-жайы";
+"AddressDetail.commentaryTitleLabel" = "Пікір";
+"AddressDetail.Alert.title" = "Сенімдісіз бе?";
+"AddressDetail.Alert.message" = "Жеткізу мекен-жайын жойғыңыз келетініне сенімдісіз бе?";
+"AddressDetail.Alert.Action.yes" = "Иә";
+"AddressDetail.Alert.Action.no" = "Жоқ";
+
+// MARK: - ShareOrder
+"ShareOrder.submitButton" = "Жариялау";
+
+// MARK: - Promocode
+"Promocode.button" = "Қолдану";
+"Promocode.field" = "Промокодты енгізіңіз";
+
+// MARK: - Close
+"Common.error" = "Қате";
+"Common.close" = "Жабу";
+
+// MARK: - Error
+"Error.mappingError" = "Жауап өңделмеді";
+"Error.noData" = "Мәлімет жоқ";
+"Error.unauthorized" = "Сіз қайта кіруіңіз қажет";
+"Error.internetConnection" = "Интернет байланысы үзілді";
+
+// MARK: - Payment Selection
+
+"Payment.Selection.bill" = "Төлемге:";
+"Payment.Selection.change" = "Өзгерту ";
+"Payment.Selection.choosePaymentMethod" = "Төлеу әдісін таңдаңыз";
+"Payment.Selection.orderPayment" = "Тапсырысты өңдеу ";
+"Payment.Selection.paymentMethod" = "Төлем тәсілі";
+"Payment.Selection.title" = "Тапсырысты  өңдеу";
+"Payment.Selection.applePay" = "Өңдеу";
+
+// MARK: - Payment Method
+
+"Payment.Method.PaymentMethod.title" = "Төлем тәсілі";
+"Payment.Method.PaymentMethodError.description" = "Жарамсыз";
+"Payment.Method.PaymentMethod.Title.savedCard" = "Карта *%@";
+"Payment.Method.PaymentMethod.Title.card" = "Өтінімдегі карта";
+"Payment.Method.PaymentMethod.Title.cash" = "Курьерге қолма-қол төлем";
+
+"Payment.Method.PaymentMethod.Title.cardOutput" = "Картой онлайн";
+"Payment.Method.PaymentMethod.Title.cashOutput" = "Курьерге қолма-қол төлем";
+"Payment.Method.PaymentMethod.Title.applePayOutput" = "ApplePay арқылы төлем жасау";
+"Payment.Method.PaymentMethod.Title.googlePayOutput" = "GooglePay арқылы төлем жасау";
+
+// MARK: - Payment Card
+
+"Payment.Card.title" = "Карта арқылы төлем";
+"Payment.Card.saveCard" = "Картаны сақтау";
+"Payment.Card.cardNumber" = "Карта нөмірі";
+"Payment.Card.expiryDate" = "Мерзімі";
+"Payment.Card.cardholderName" = "Аты-жөніңіз";
+"Payment.Card.saveButton" = "Әрі қарай";
+"Payment.Card.Error.title" = "Кейбір мәліметтер қате толтырылған";
+"Payment.Card.Error.message" = "Тапсырысты тіркеу";
+
+// MARK: - Payment Cash
+
+"Payment.Cash.titleDefault" = "Тапсырысты өңдеу";
+"Payment.Cash.titleChange" = "Артық ақшаны қайтару";
+"Payment.Cash.topText" = "%@ ₸ тапсырыс беріңіз.\nқалған соманы беру үшін неше теңге қажет?";
+"Payment.Cash.fieldPlaceholder" = "Қолма-қол ақша сомасын енгізіңіз";
+"Payment.Cash.fieldDescription" = "Тапсырыс құнынан жоғары бағаны енгізіңіз";
+"Payment.Cash.Button.noChange" = "Артық ақша қалған жоқ";
+"Payment.Cash.Button.submit" = "Дайын";
+
+// MARK: - PaymentEdit
+
+"Payment.Edit.title" = "Төлем тәсілі";
+"Payment.Edit.Cell.title" = "Карта *%@";
+"Payment.Edit.Alert.title" = "Сенімдісіз бе?";
+"Payment.Edit.Alert.message" = "Картаны жоюңызға сенімдісіз бе?";
+"Payment.Edit.Alert.yes" = "Иә";
+"Payment.Edit.Alert.no" = "Жоқ";
+
+// MARK: - Alert
+
+"Alert.ok" = "Ок";
+"Alert.Error.title" = "Қате";
+
+// MARK: - Animations
+
+"Animation.InfoText.orderHistory" = "Тапсырыстарыңыз осы жерде болады, тапсырыс беру үшін мәзірге көшіңіз";
+"Animation.InfoText.emptyBasket" = "Әзірше ешнәрсе таңдамадыңыз.";
+"Animation.InfoText.noInternet" = "Байланыс жоқ. Интернетті байланысын тексеріңіз";
+"Animation.InfoText.upgrade" = "Біз қосымшаны пайдалануды жеңілдету үшін көптеген жаңа мүмкіндіктерді қостық және кейбір қателерді жөндедік.";
+"Animation.InfoText.overload" = "Қазіргі уақытта өте көп тапсырыс қабылдануда, өтініш, кешірек кіруіңізді сұраймыз";
+"Animation.InfoText.payment" = "Төлемді өңдеп жатырмыз";
+"Animation.InfoText.profile" = "Тапсырыс беру үшін тіркелу қажет";
+"Animation.InfoText.closed" = "Мекеме жабық";
+"Animation.ButtonTitle.orderHistory.emptyBasket" = "Мәзірге көшу";
+"Animation.ButtonTitle.noInternet.overload" = "Қайталау";
+"Animation.ButtonTitle.upgrade" = "Приложениені жаңарту";
+"Animation.ButtonTitle.payment" = "Тапсырыстан бас тарту";
+"Animation.ButtonTitle.profile" = "Кіру";
+
+// MARK: - Intro Video
+
+"IntroVideo.Button.title" = "Өткізу";

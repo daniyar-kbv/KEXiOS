@@ -1,0 +1,12 @@
+/* 
+  InfoPlist.strings
+  SalamBro
+
+  Created by Dan on 10/11/21.
+  
+*/
+
+NSLocationWhenInUseUsageDescription = "Ваше местоположение будет использоваться для определения адреса доставки";
+NSLocationAlwaysAndWhenInUseUsageDescription = "Ваше местоположение будет использоваться для определения адреса доставки";
+NSLocationAlwaysUsageDescription = "Ваше местоположение будет использоваться для определения адреса доставки";
+NSLocationUsageDescription = "Ваше местоположение будет использоваться для определения адреса доставки";
