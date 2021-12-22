@@ -40,9 +40,9 @@ final class CountriesListViewModel: CountriesListViewModelProtocol {
 
         repository.outputs.didGetCountries.bind {
             [weak self] countries in
-            self?.countries = countries
-            self?.repository.setCountries(countries: countries)
-            self?.outputs.didGetCountries.accept(())
+                self?.countries = countries
+                self?.repository.setCountries(countries: countries)
+                self?.outputs.didGetCountries.accept(())
         }
         .disposed(by: disposeBag)
 

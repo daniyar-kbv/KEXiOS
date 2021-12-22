@@ -470,7 +470,7 @@
 		D182A758BB1A04D6DD413CD71E6E6FE1 /* CitiesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesResponse.swift; sourceTree = "<group>"; };
 		D4D108C9F3E1BE55E39EBB94BB446FA4 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		BAB0D8C2F30BD0A6ECB0A487BB7088F7 /* ConfigurationPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationPlugin.swift; sourceTree = "<group>"; };
-		76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		76097A24E698B7CCC77071F4169F54C7 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F48B66EEDF6F5955128F064B6723FD19 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		40C03D37DCC224B9CCB3BE6049F12802 /* CountriesListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListController.swift; sourceTree = "<group>"; };
 		910F93957F11FEAC0347429F3F93ADDD /* CountriesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListViewModel.swift; sourceTree = "<group>"; };
@@ -498,7 +498,7 @@
 		04BE919539126EDCE33D10A68CAEA199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3C6169FACF56887087B2E3B796665DC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82DF8DD4A94962F1A97777FAD3747A32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E9C0AD81DF662457ACBFD84D90AF44BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9C0AD81DF662457ACBFD84D90AF44BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A25A2B7AA8832AAD1F5EA5224DF3D41 /* IntroVideoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVideoController.swift; sourceTree = "<group>"; };
 		283896C8A2519151E56167EC68112EC6 /* IntroVideoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVideoViewModel.swift; sourceTree = "<group>"; };
 		668A6A48729B6DCB0F7D76E65E49AE42 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
@@ -648,10 +648,10 @@
 		E985F252CB9593A514BD35B7C1035E58 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		2A575D74F248228471995C4B0CEB1ED2 /* RoutersFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutersFactory.swift; sourceTree = "<group>"; };
 		DE6817B4A898B5A7668B11D266DA592E /* RoutersFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutersFactory.swift; sourceTree = "<group>"; };
-		37E3A8ACF43854F3EFEEE1076CDD57C8 /* SBFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBFonts.swift; sourceTree = "<group>"; };
-		82DAAE10CC0380EEFD9B74C494E23AAF /* SBIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBIcons.swift; sourceTree = "<group>"; };
+		37E3A8ACF43854F3EFEEE1076CDD57C8 /* SBFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBFonts.swift; sourceTree = "<group>"; };
+		82DAAE10CC0380EEFD9B74C494E23AAF /* SBIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBIcons.swift; sourceTree = "<group>"; };
 		534CB6D497C2DF6E3ED3D112F209E652 /* SBImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SBImages.xcassets; sourceTree = "<group>"; };
-		5BBDF4C9EE88852C22ECA6E35607FA66 /* SBLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBLocalization.swift; sourceTree = "<group>"; };
+		5BBDF4C9EE88852C22ECA6E35607FA66 /* SBLocalization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBLocalization.swift; sourceTree = "<group>"; };
 		80F7907A61A66E9CEA660C77C6B23428 /* SBNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBNavigationController.swift; sourceTree = "<group>"; };
 		A012B6069CF37EAF9A7D520208298845 /* SBNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBNavigationController.swift; sourceTree = "<group>"; };
 		C79F4C4618C10A4E743CA870AB6BDFCF /* SBSubmitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBSubmitButton.swift; sourceTree = "<group>"; };
@@ -3075,7 +3075,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3131,7 +3130,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

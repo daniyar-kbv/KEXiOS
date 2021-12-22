@@ -81,7 +81,7 @@ extension SelectMainInformationViewModel {
 
         countriesRepository.outputs.didGetCountries.bind {
             [weak self] countries in
-            self?.process(received: countries)
+                self?.process(received: countries)
         }
         .disposed(by: disposeBag)
 
@@ -103,8 +103,8 @@ extension SelectMainInformationViewModel {
 
         citiesRepository.outputs.didGetCities.bind {
             [weak self] cities in
-            self?.cities = cities
-            self?.process(received: cities)
+                self?.cities = cities
+                self?.process(received: cities)
         }
         .disposed(by: disposeBag)
 

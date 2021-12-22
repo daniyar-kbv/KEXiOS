@@ -242,24 +242,26 @@ extension SelectMainInformationViewController {
                            currentValue: viewModel.userAddress?.address.city?.name)
         case .address:
             cell.setupCell(type: cellsSequence[indexPath.row],
-                           currentValue: viewModel.userAddress?.address.getName()) { [weak self] in
+                           currentValue: viewModel.userAddress?.address.getName())
+            { [weak self] in
                 guard let userAddress = self?.viewModel.userAddress else { return }
                 self?.outputs.toMap
                     .accept((userAddress,
                              {
                                  [weak self] address in
-                                 self?.viewModel.didChange(address: address)
+                                     self?.viewModel.didChange(address: address)
                              }))
             }
         case .brand:
             cell.setupCell(type: cellsSequence[indexPath.row],
-                           currentValue: viewModel.flowType == .create ? nil : viewModel.userAddress?.brand?.name) { [weak self] in
+                           currentValue: viewModel.flowType == .create ? nil : viewModel.userAddress?.brand?.name)
+            { [weak self] in
                 guard let cityid = self?.viewModel.userAddress?.address.city?.id else { return }
                 self?.outputs.toBrands
                     .accept((cityid,
                              {
                                  [weak self] brand in
-                                 self?.viewModel.didChange(brand: brand)
+                                     self?.viewModel.didChange(brand: brand)
                              }))
             }
         case .empty:

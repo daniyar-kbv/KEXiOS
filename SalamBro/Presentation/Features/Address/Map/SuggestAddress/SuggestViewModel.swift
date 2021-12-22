@@ -45,7 +45,7 @@ final class SuggestViewModelImpl: SuggestViewModel {
     }
 
     func search(with query: String) {
-        let suggestHandler = { (response: [YMKSuggestItem]?, error: Error?) -> Void in
+        let suggestHandler = { (response: [YMKSuggestItem]?, error: Error?) in
             if let items = response {
                 self.suggestResults = items
                 self.outputs.didEndRequest.accept(())

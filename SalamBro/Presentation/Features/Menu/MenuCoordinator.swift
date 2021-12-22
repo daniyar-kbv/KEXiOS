@@ -150,10 +150,10 @@ final class MenuCoordinator: BaseCoordinator {
         authCoordinator.didFinish = { [weak self,
                                        weak authCoordinator,
                                        weak topViewController] in
-            if let topViewController = topViewController {
-                self?.router.pop(to: topViewController, animated: true)
-            }
-            self?.remove(authCoordinator)
+                if let topViewController = topViewController {
+                    self?.router.pop(to: topViewController, animated: true)
+                }
+                self?.remove(authCoordinator)
         }
 
         authCoordinator.didAuthorize = didAuthorize

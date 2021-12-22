@@ -96,12 +96,14 @@ final class PaymentCoordinator: BaseCoordinator {
                 switch paymentMethod.type {
                 case .card:
                     self?.showCardPage(on: paymentMethodVC,
-                                       paymentMethod: paymentMethod) {
+                                       paymentMethod: paymentMethod)
+                    {
                         paymentMethodVC?.dismiss(animated: true)
                     }
                 case .cash:
                     self?.showCashPage(on: paymentMethodVC,
-                                       paymentMethod: paymentMethod) {
+                                       paymentMethod: paymentMethod)
+                    {
                         paymentMethodVC?.dismiss(animated: true)
                     }
                 default:

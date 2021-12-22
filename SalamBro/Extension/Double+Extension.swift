@@ -8,7 +8,7 @@
 import Foundation
 
 extension Double {
-    func rounded(to decimalPlaces: Int) -> Double {
+    func rounded(to _: Int) -> Double {
         let decimalPlaces = 8
         let multiplier = NSDecimalNumber(decimal: pow(10, decimalPlaces)).doubleValue
         return Darwin.round(self * multiplier) / multiplier

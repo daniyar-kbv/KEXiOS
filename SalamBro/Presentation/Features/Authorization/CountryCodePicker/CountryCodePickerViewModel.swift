@@ -76,9 +76,9 @@ final class CountryCodePickerViewModelImpl: CountryCodePickerViewModel {
 
         countriesRepository.outputs.didGetCountries.bind {
             [weak self] countries in
-            self?.countriesRepository.setCountries(countries: countries)
-            self?.convert(cachedCountries: countries)
-            self?.outputs.didGetCountries.accept(())
+                self?.countriesRepository.setCountries(countries: countries)
+                self?.convert(cachedCountries: countries)
+                self?.outputs.didGetCountries.accept(())
         }
         .disposed(by: disposeBag)
 

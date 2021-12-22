@@ -80,9 +80,9 @@ final class BrandViewModel: BrandViewModelProtocol {
         brandsRepository.outputs.didGetBrands
             .bind {
                 [weak self] brands in
-                self?.brands = brands
-                self?.outputs.didRefreshCollectionView.accept(())
-                self?.outputs.didGetBrands.accept(())
+                    self?.brands = brands
+                    self?.outputs.didRefreshCollectionView.accept(())
+                    self?.outputs.didGetBrands.accept(())
             }
             .disposed(by: disposeBag)
     }

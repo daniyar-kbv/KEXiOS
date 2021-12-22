@@ -15,7 +15,8 @@ extension UIApplication {
         UIView.transition(with: window,
                           duration: 0.3,
                           options: .transitionCrossDissolve,
-                          animations: nil) { _ in
+                          animations: nil)
+        { _ in
             completion?()
         }
     }

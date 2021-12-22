@@ -80,7 +80,7 @@ class OTPView: UITextField {
 
     @objc
     private func textDidChange() {
-        guard let text = self.text, text.count <= labels.count else { return }
+        guard let text = text, text.count <= labels.count else { return }
 
         for i in 0 ..< labels.count {
             let currentLabel = labels[i]

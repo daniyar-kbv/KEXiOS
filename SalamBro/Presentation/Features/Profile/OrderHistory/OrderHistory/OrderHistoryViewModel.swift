@@ -63,12 +63,12 @@ final class OrderHistoryViewModelImpl: OrderHistoryViewModel {
 
         ordersRepository.outputs.didGetOrders.bind {
             [weak self] response in
-            self?.currentPage = response?.page
-            self?.pageLimit = response?.total
-            response?.page == 1 ?
-                self?.orders = response?.results ?? [] :
-                self?.orders.append(contentsOf: response?.results ?? [])
-            self?.outputs.didGetOrders.accept(())
+                self?.currentPage = response?.page
+                self?.pageLimit = response?.total
+                response?.page == 1 ?
+                    self?.orders = response?.results ?? [] :
+                    self?.orders.append(contentsOf: response?.results ?? [])
+                self?.outputs.didGetOrders.accept(())
         }
         .disposed(by: disposeBag)
 
