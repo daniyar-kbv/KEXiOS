@@ -8,7 +8,7 @@
 import UIKit
 
 struct Constants {
-    static let appMode: AppMode = .dev
+    static let appMode: AppMode = .prod
 
     static let yandexMapKitApiKey = getPlistValue(by: "YANDEX_MAPKIT_API_KEY")
     static let yandexGeocoderApiKey = getPlistValue(by: "YANDEX_GEOCODER_API_KEY")
