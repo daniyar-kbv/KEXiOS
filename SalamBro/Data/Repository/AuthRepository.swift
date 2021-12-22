@@ -174,6 +174,8 @@ final class AuthRepositoryImpl: AuthRepository {
         return authorizedApplyService.authorizedApply(dto: applyDTO)
             .flatMap { [unowned self] leadUUID -> Single<[UserAddress]> in
                 self.leadUUID = leadUUID
+                NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
+                                                object: leadUUID)
                 return profileService.getAddresses()
             }
             .flatMap { [unowned self] userAddresses in
@@ -186,13 +188,11 @@ final class AuthRepositoryImpl: AuthRepository {
     }
 
     private func postUserInfoDependencies() {
-        guard let leadUUID = leadUUID, let userAddresses = userAddresses else {
+        guard let userAddresses = userAddresses else {
             return
         }
         NotificationCenter.default.post(name: Constants.InternalNotification.userInfo.name,
                                         object: userInfo)
-        NotificationCenter.default.post(name: Constants.InternalNotification.leadUUID.name,
-                                        object: leadUUID)
         NotificationCenter.default.post(name: Constants.InternalNotification.userAddresses.name,
                                         object: userAddresses)
 
