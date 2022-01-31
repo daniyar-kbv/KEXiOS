@@ -61,8 +61,6 @@ final class SelectMainInformationViewModel: SelectMainInformationViewModelProtoc
         switch flowType {
         case let .changeAddress(userAddress):
             self.userAddress = userAddress
-        case .changeBrand:
-            userAddress = addressRepository.getCurrentUserAddress()?.getCopy()
         case .create:
             userAddress = .init()
         }
@@ -120,14 +118,6 @@ extension SelectMainInformationViewModel {
     }
 
     private func bindAddressRepository() {
-        addressRepository.outputs.didGetUserAddresses
-            .subscribe(onNext: { [weak self] _ in
-                guard self?.flowType == .changeBrand else { return }
-
-                self?.userAddress = self?.addressRepository.getCurrentUserAddress()?.getCopy()
-            })
-            .disposed(by: disposeBag)
-
         addressRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
@@ -209,7 +199,7 @@ extension SelectMainInformationViewModel {
         case .create:
             guard let userAddress = userAddress else { return }
             addressRepository.create(userAddress: userAddress)
-        case .changeAddress, .changeBrand:
+        case .changeAddress:
             guard let id = userAddress?.id else { return }
             addressRepository.updateUserAddress(with: id, brandId: userAddress?.brand?.id)
         }
@@ -269,7 +259,6 @@ extension SelectMainInformationViewModel {
     enum FlowType: Equatable {
         case create
         case changeAddress(_ address: UserAddress)
-        case changeBrand
     }
 
     struct Output {

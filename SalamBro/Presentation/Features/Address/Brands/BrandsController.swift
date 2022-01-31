@@ -16,7 +16,6 @@ final class BrandsController: UIViewController {
     let outputs = Output()
     private let viewModel: BrandViewModelProtocol
     private let disposeBag = DisposeBag()
-    private let flowType: FlowType
 
     let animations: [StockAnimation] = [.expand(.moderately), .fadeIn]
     var sortFunction: SortFunction = RandomSortFunction(interObjectDelay: 0.05)
@@ -40,11 +39,8 @@ final class BrandsController: UIViewController {
         return collectionView
     }()
 
-    public init(viewModel: BrandViewModelProtocol,
-                flowType: FlowType)
-    {
+    public init(viewModel: BrandViewModelProtocol) {
         self.viewModel = viewModel
-        self.flowType = flowType
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -120,7 +116,23 @@ final class BrandsController: UIViewController {
 
 extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate {
     public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.didSelect(index: indexPath.row, flowType: flowType)
+        let firstAction = UIAlertAction(
+            title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.actionYes),
+            style: .default,
+            handler: { [weak self] _ in
+                self?.viewModel.didSelect(index: indexPath.row)
+            }
+        )
+
+        let secondAction = UIAlertAction(
+            title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.actionNo),
+            style: .default,
+            handler: nil
+        )
+
+        showAlert(title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.title),
+                  message: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.bodyBrand),
+                  actions: [firstAction, secondAction])
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
@@ -142,11 +154,6 @@ extension BrandsController: Reloadable {
 }
 
 extension BrandsController {
-    enum FlowType: Equatable {
-        case create
-        case change
-    }
-
     struct Output {
         let didSelectBrand = PublishRelay<Brand>()
         let toMap = PublishRelay<UserAddress>()
