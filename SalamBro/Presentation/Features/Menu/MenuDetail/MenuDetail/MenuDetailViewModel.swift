@@ -99,12 +99,12 @@ extension MenuDetailViewModelImpl {
             .bind(to: outputs.didGetBranchClosed)
             .disposed(by: disposeBag)
 
-        menuDetailRepository.outputs.updateSelectedModifiers.bind {
-            [weak self] modifierGroups in
-                self?.position?.modifierGroups = modifierGroups
-                self?.assignSelectedModifiers()
-                self?.check()
-                self?.outputs.updateModifiers.accept(())
+        menuDetailRepository.outputs.updateSelectedModifiers.bind { [weak self] modifierGroups in
+            self?.position?.modifierGroups = modifierGroups
+            self?.assignSelectedModifiers()
+            self?.check()
+            self?.outputs.updateModifiers.accept(())
+            self?.processPrice()
         }
         .disposed(by: disposeBag)
 
@@ -137,7 +137,8 @@ extension MenuDetailViewModelImpl {
         outputs.itemImage.accept(URL(string: position.image ?? ""))
         outputs.itemTitle.accept(position.name)
         outputs.itemDescription.accept(position.description)
-        outputs.itemPrice.accept(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton, arguments: position.price.removeTrailingZeros()))
+
+        processPrice()
 
         if position.modifierGroups.isEmpty {
             outputs.isComplete.accept(true)
@@ -189,6 +190,19 @@ extension MenuDetailViewModelImpl {
 
     private func getSelectedModifiers() -> [Modifier] {
         return modifierCellViewModels.compactMap { $0.getValue() }
+    }
+
+    private func processPrice() {
+        guard let modifiersPrice = position?
+            .modifierGroups
+            .flatMap({ $0.modifiers })
+            .map({ $0.price * $0.itemCount })
+            .reduce(0, +),
+            let positionPrice = position?.price
+        else { return }
+
+        let totalPrice = Double(modifiersPrice) + positionPrice
+        outputs.itemPrice.accept(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton, arguments: totalPrice.removeTrailingZeros()))
     }
 }
 
