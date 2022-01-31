@@ -95,7 +95,7 @@ struct Modifier: Codable {
     let name: String
     let uuid: String
     let image: String?
-    let price: Int
+    let price: Double
     var itemCount: Int = 0
 
     enum CodingKeys: String, CodingKey {
@@ -130,7 +130,7 @@ extension MenuPositionDetail {
                                 position: .init(
                                     uuid: modifier.uuid,
                                     name: modifier.name,
-                                    price: 0,
+                                    price: modifier.price,
                                     positionType: CartPosition.PositionType.modifier.rawValue,
                                     category: nil,
                                     isAvailable: true

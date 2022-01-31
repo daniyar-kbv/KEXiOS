@@ -196,13 +196,15 @@ extension MenuDetailViewModelImpl {
         guard let modifiersPrice = position?
             .modifierGroups
             .flatMap({ $0.modifiers })
-            .map({ $0.price * $0.itemCount })
+            .map({ $0.price * Double($0.itemCount) })
             .reduce(0, +),
             let positionPrice = position?.price
         else { return }
 
-        let totalPrice = Double(modifiersPrice) + positionPrice
-        outputs.itemPrice.accept(SBLocalization.localized(key: MenuText.MenuDetail.proceedButton, arguments: totalPrice.removeTrailingZeros()))
+        outputs.itemPrice.accept(SBLocalization.localized(
+            key: MenuText.MenuDetail.proceedButton,
+            arguments: (modifiersPrice + positionPrice).removeTrailingZeros()
+        ))
     }
 }
 
