@@ -49,8 +49,8 @@ final class OnBoardingCoordinator: BaseCoordinator {
         router.push(viewController: citiesPage, animated: true)
     }
 
-    private func openBrands(cityId: Int) {
-        let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
+    private func openBrands(cityId _: Int) {
+        let brandsPage = pagesFactory.makeBrandsPage(flowType: .create)
 
         brandsPage.outputs.toMap
             .subscribe(onNext: { [weak self] userAddress in

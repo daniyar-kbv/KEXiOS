@@ -34,7 +34,7 @@ final class AddressCoordinator: Coordinator {
         case .changeAddress:
             openAddressPicker()
         case let .changeBrand(presentOn):
-            openSelectMainInfo(flowType: .changeBrand, presentOn: presentOn)
+            openBrands(flowType: .changeBrand, nil, presentOn: presentOn)
         }
     }
 
@@ -94,7 +94,11 @@ final class AddressCoordinator: Coordinator {
 
         selectMainInfoPage.outputs.toBrands
             .subscribe(onNext: { [weak self, weak selectMainInfoPage] cityId, onSelectBrand in
-                self?.openBrands(cityId: cityId, onSelectBrand, presentOn: selectMainInfoPage)
+                self?.openBrands(
+                    flowType: .changeAddress(cityId: cityId),
+                    onSelectBrand,
+                    presentOn: selectMainInfoPage
+                )
             }).disposed(by: disposeBag)
 
         selectMainInfoPage.outputs.didSave
@@ -132,14 +136,14 @@ final class AddressCoordinator: Coordinator {
         presentOn?.present(mapPage, animated: true)
     }
 
-    private func openBrands(cityId: Int,
-                            _ onSelectBrand: @escaping (Brand) -> Void,
+    private func openBrands(flowType: BrandViewModel.FlowType,
+                            _ onSelectBrand: ((Brand) -> Void)?,
                             presentOn: UIViewController?)
     {
-        let brandsPage = pagesFactory.makeBrandsPage(cityId: cityId)
+        let brandsPage = pagesFactory.makeBrandsPage(flowType: flowType)
 
         brandsPage.outputs.didSelectBrand.subscribe(onNext: { [weak brandsPage] brand in
-            onSelectBrand(brand)
+            onSelectBrand?(brand)
             brandsPage?.dismiss(animated: true)
         }).disposed(by: disposeBag)
 

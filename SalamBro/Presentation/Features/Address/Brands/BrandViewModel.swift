@@ -16,17 +16,24 @@ protocol BrandViewModelProtocol: ViewModel {
     var ratios: [(CGFloat, CGFloat)] { get }
 
     func getBrands()
-    func didSelect(index: Int, flowType: BrandsController.FlowType)
+    func didSelect(index: Int)
 }
 
 final class BrandViewModel: BrandViewModelProtocol {
     private(set) var outputs: Outputs = .init()
 
-    private let cityId: Int
     private let disposeBag = DisposeBag()
 
     private let brandsRepository: BrandRepository
     private let addressRepository: AddressRepository
+
+    let flowType: FlowType
+    private lazy var cityId: Int? = {
+        switch flowType {
+        case let .changeAddress(cityId): return cityId
+        case .changeBrand, .create: return addressRepository.getCurrentCity()?.id
+        }
+    }()
 
     private(set) var brands: [Brand] = [] {
         didSet {
@@ -34,37 +41,50 @@ final class BrandViewModel: BrandViewModelProtocol {
         }
     }
 
+    private var selectedIndex: Int?
+
     private var cellSizeSequence: [BrandCellSizeType] = [.square, .horizontalShort, .vertical, .square, .square, .horizontalLong]
     var ratios: [(CGFloat, CGFloat)] = []
 
     init(brandsRepository: BrandRepository,
          addressRepository: AddressRepository,
-         cityId: Int)
+         flowType: FlowType)
     {
         self.brandsRepository = brandsRepository
         self.addressRepository = addressRepository
-        self.cityId = cityId
+        self.flowType = flowType
 
-        bindOutputs()
+        bindBrandsRepository()
+        bindAddressRepository()
     }
 
     func getBrands() {
+        guard let cityId = cityId else { return }
+
         brandsRepository.fetchBrands(with: cityId)
     }
 
-    func didSelect(index: Int, flowType: BrandsController.FlowType) {
+    func didSelect(index: Int) {
+        selectedIndex = index
+
         guard brands[index].isAvailable == true else { return }
         switch flowType {
-        case .change:
+        case .changeAddress:
             outputs.didSelectBrand.accept(brands[index])
         case .create:
             brandsRepository.changeCurrentBrand(to: brands[index])
-            guard let deliveryAddress = addressRepository.getCurrentUserAddress() else { return }
+            guard let deliveryAddress = addressRepository.getCurrentUserAddress()
+            else { return }
             outputs.toMap.accept(deliveryAddress)
+        case .changeBrand:
+            guard let addressId = addressRepository.getCurrentUserAddress()?.id
+            else { return }
+            addressRepository.updateUserAddress(with: addressId,
+                                                brandId: brands[index].id)
         }
     }
 
-    private func bindOutputs() {
+    private func bindBrandsRepository() {
         brandsRepository.outputs.didStartRequest
             .bind(to: outputs.didStartRequest)
             .disposed(by: disposeBag)
@@ -84,6 +104,30 @@ final class BrandViewModel: BrandViewModelProtocol {
                     self?.outputs.didRefreshCollectionView.accept(())
                     self?.outputs.didGetBrands.accept(())
             }
+            .disposed(by: disposeBag)
+    }
+
+    private func bindAddressRepository() {
+        addressRepository.outputs.didStartRequest
+            .bind(to: outputs.didStartRequest)
+            .disposed(by: disposeBag)
+
+        addressRepository.outputs.didSaveUserAddress
+            .subscribe(onNext: { [weak self] in
+                guard let selectedIndex = self?.selectedIndex,
+                      let brand = self?.brands[selectedIndex]
+                else { return }
+
+                self?.outputs.didSelectBrand.accept(brand)
+            })
+            .disposed(by: disposeBag)
+
+        addressRepository.outputs.didEndRequest
+            .bind(to: outputs.didEndRequest)
+            .disposed(by: disposeBag)
+
+        addressRepository.outputs.didFail
+            .bind(to: outputs.didFail)
             .disposed(by: disposeBag)
     }
 
@@ -107,10 +151,10 @@ extension BrandViewModel {
 }
 
 extension BrandViewModel {
-    private enum FlowType {
-        case firstFlow
-        case changeAddress(didSelectAddress: ((Address) -> Void)?)
-        case changeBrand(didSave: (() -> Void)?)
+    internal enum FlowType {
+        case create
+        case changeAddress(cityId: Int)
+        case changeBrand
     }
 
     private enum BrandCellSizeType {
