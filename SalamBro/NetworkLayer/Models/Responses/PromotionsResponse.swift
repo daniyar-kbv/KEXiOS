@@ -13,9 +13,14 @@ struct PromotionsResponse: Decodable {
 
     struct ResponseData: Decodable {
         let count: Int
-        let next: String?
-        let previous: String?
+        let page: Int
+        let totalPages: Int
         let results: PromotionResult
+
+        enum CodingKeys: String, CodingKey {
+            case count, page, results
+            case totalPages = "total_pages"
+        }
     }
 }
 
