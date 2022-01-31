@@ -11,7 +11,7 @@ protocol AddressPagesFactory {
     func makeAddressPickPage() -> AddressPickController
     func makeSelectMainInfoPage(flowType: SelectMainInformationViewModel.FlowType) -> SelectMainInformationViewController
     func makeMapPage(userAddress: UserAddress) -> MapPage
-    func makeBrandsPage(cityId: Int) -> BrandsController
+    func makeBrandsPage(flowType: BrandViewModel.FlowType) -> BrandsController
 }
 
 final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
@@ -54,14 +54,13 @@ final class AddressPagesFactoryImpl: DependencyFactory, AddressPagesFactory {
                             userAddress: userAddress))
     }
 
-    func makeBrandsPage(cityId: Int) -> BrandsController {
-        return scoped(.init(viewModel: makeBrandsViewModel(cityId: cityId),
-                            flowType: .change))
+    func makeBrandsPage(flowType: BrandViewModel.FlowType) -> BrandsController {
+        return scoped(.init(viewModel: makeBrandsViewModel(flowType: flowType)))
     }
 
-    private func makeBrandsViewModel(cityId: Int) -> BrandViewModel {
+    private func makeBrandsViewModel(flowType: BrandViewModel.FlowType) -> BrandViewModel {
         return scoped(.init(brandsRepository: repositoryComponents.makeBrandRepository(),
                             addressRepository: repositoryComponents.makeAddressRepository(),
-                            cityId: cityId))
+                            flowType: flowType))
     }
 }

@@ -131,12 +131,6 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
         }
     }
 
-    deinit {
-        if viewModel.flowType == .changeBrand {
-            outputs.didTerminate.accept(())
-        }
-    }
-
     private func setup() {
         setupViews()
         setupConstraints()
@@ -166,8 +160,8 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
         let firstAction = UIAlertAction(
             title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.actionYes),
             style: .default,
-            handler: { _ in
-                self.viewModel.didSave()
+            handler: { [weak self] _ in
+                self?.viewModel.didSave()
             }
         )
 
@@ -177,16 +171,9 @@ final class SelectMainInformationViewController: UIViewController, LoaderDisplay
             handler: nil
         )
 
-        switch viewModel.flowType {
-        case .create, .changeAddress:
-            showAlert(title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.title),
-                      message: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.bodyAddress),
-                      actions: [firstAction, secondAction])
-        case .changeBrand:
-            showAlert(title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.title),
-                      message: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.bodyBrand),
-                      actions: [firstAction, secondAction])
-        }
+        showAlert(title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.title),
+                  message: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.bodyAddress),
+                  actions: [firstAction, secondAction])
     }
 
     private func changeSaveButtonState(isActive: Bool) {
@@ -275,7 +262,7 @@ extension SelectMainInformationViewController {
             if [.city, .address, .brand].contains(cell.type) {
                 cell.setFieldState(isActive: false)
             }
-        case .changeAddress, .changeBrand:
+        case .changeAddress:
             if [.country, .city, .address].contains(cell.type) {
                 cell.setFieldState(isActive: false)
             }
