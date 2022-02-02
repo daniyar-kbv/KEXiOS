@@ -25,6 +25,7 @@ protocol AddressRepository: AnyObject {
     func getCurrentUserAddress() -> UserAddress?
     func setInitial(userAddress: UserAddress)
     func create(userAddress: UserAddress)
+    func changeUserAddress(brand: Brand)
     func updateUserAddress(with id: Int, brandId: Int?)
     func deleteUserAddress(with id: Int)
 
@@ -211,6 +212,10 @@ extension AddressRepositoryImpl {
                 self?.outputs.didFail.accept(error)
             })
             .disposed(by: disposeBag)
+    }
+
+    func changeUserAddress(brand: Brand) {
+        getCurrentUserAddress()?.brand = brand
     }
 
     func updateUserAddress(with id: Int, brandId: Int?) {

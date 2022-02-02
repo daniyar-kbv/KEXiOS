@@ -64,6 +64,7 @@ extension UserAddress {
     }
 
     func toDTO() -> OrderApplyDTO? {
+        print(brand?.id)
         guard let countryId = address.country?.id,
               let cityId = address.city?.id,
               let longitude = address.longitude?.rounded(to: 8),
