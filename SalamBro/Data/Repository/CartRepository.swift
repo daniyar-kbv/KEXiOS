@@ -103,7 +103,14 @@ extension CartRepositoryImpl {
 
     func incrementItem(internalUUID: String) {
         guard let index = getIndex(of: internalUUID) else { return }
-        cart.items[index].count += 1
+
+        let cartItem = cart.items[index]
+        cartItem.modifiers.forEach { modifier in
+            guard modifier.count != 0 else { return }
+            modifier.count += (modifier.count / cartItem.count)
+        }
+        cartItem.count += 1
+
         sendNewCart(withDebounce: true)
     }
 
@@ -118,7 +125,14 @@ extension CartRepositoryImpl {
 
     func decrementItem(internalUUID: String) {
         guard let index = getIndex(of: internalUUID) else { return }
-        cart.items[index].count -= 1
+
+        let cartItem = cart.items[index]
+        cartItem.modifiers.forEach { modifier in
+            guard modifier.count != 0 else { return }
+            modifier.count -= (modifier.count / cartItem.count)
+        }
+        cartItem.count -= 1
+
         if cart.items[index].count == 0,
            let index = getIndex(of: internalUUID)
         {

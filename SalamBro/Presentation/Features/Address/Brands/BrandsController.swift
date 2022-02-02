@@ -116,6 +116,11 @@ final class BrandsController: UIViewController {
 
 extension BrandsController: UICollectionViewDataSource, UICollectionViewDelegate {
     public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard viewModel.askAlert() else {
+            viewModel.didSelect(index: indexPath.row)
+            return
+        }
+
         let firstAction = UIAlertAction(
             title: SBLocalization.localized(key: AddressText.SelectMainInfo.Alert.actionYes),
             style: .default,

@@ -48,14 +48,17 @@ extension CartProductViewModelImpl {
             itemImage = .init(value: URL(string: item.position.image ?? ""))
             itemTitle = .init(value: item.position.name)
             modifiersTitles = .init(value: item.modifiers
-                .map { [String].init(repeating: $0.position.name, count: $0.count) }
+                .map {
+                    [String].init(repeating: $0.position.name,
+                                  count: $0.count / item.count)
+                }
                 .flatMap { $0 }
                 .joined(separator: ", "))
             comment = .init(value: item.comment)
 
             let modifiersPrice = item
                 .modifiers
-                .map { Double($0.count) * ($0.position.price ?? 0) }
+                .map { Double($0.count / item.count) * ($0.position.price ?? 0) }
                 .reduce(0, +)
             let totalPrice = (item.position.price ?? 0) + modifiersPrice
 

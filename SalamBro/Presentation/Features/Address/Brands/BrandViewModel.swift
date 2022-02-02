@@ -17,6 +17,7 @@ protocol BrandViewModelProtocol: ViewModel {
 
     func getBrands()
     func didSelect(index: Int)
+    func askAlert() -> Bool
 }
 
 final class BrandViewModel: BrandViewModelProtocol {
@@ -68,11 +69,12 @@ final class BrandViewModel: BrandViewModelProtocol {
         selectedIndex = index
 
         guard brands[index].isAvailable == true else { return }
+
         switch flowType {
         case .changeAddress:
             outputs.didSelectBrand.accept(brands[index])
         case .create:
-            brandsRepository.changeCurrentBrand(to: brands[index])
+            addressRepository.changeUserAddress(brand: brands[index])
             guard let deliveryAddress = addressRepository.getCurrentUserAddress()
             else { return }
             outputs.toMap.accept(deliveryAddress)
@@ -82,6 +84,10 @@ final class BrandViewModel: BrandViewModelProtocol {
             addressRepository.updateUserAddress(with: addressId,
                                                 brandId: brands[index].id)
         }
+    }
+
+    func askAlert() -> Bool {
+        [.changeBrand].contains(flowType)
     }
 
     private func bindBrandsRepository() {
@@ -151,7 +157,7 @@ extension BrandViewModel {
 }
 
 extension BrandViewModel {
-    internal enum FlowType {
+    internal enum FlowType: Equatable {
         case create
         case changeAddress(cityId: Int)
         case changeBrand
