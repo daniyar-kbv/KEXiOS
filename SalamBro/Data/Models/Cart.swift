@@ -128,18 +128,25 @@ struct CartPosition: Codable, Equatable {
     }
 }
 
-struct CartModifier: Codable, Equatable {
+class CartModifier: Codable, Equatable {
     let name: String
     let position: CartPosition
-    let count: Int
+    var count: Int
     let modifierGroupUUID: String
+
+    init(name: String, position: CartPosition, count: Int, modifierGroupUUID: String) {
+        self.name = name
+        self.position = position
+        self.count = count
+        self.modifierGroupUUID = modifierGroupUUID
+    }
 
     enum CodingKeys: String, CodingKey {
         case name, position, count
         case modifierGroupUUID = "modifier_group"
     }
 
-    static func == (lhs: Self, rhs: Self) -> Bool {
+    static func == (lhs: CartModifier, rhs: CartModifier) -> Bool {
         return lhs.position == rhs.position &&
             lhs.count == rhs.count
     }
