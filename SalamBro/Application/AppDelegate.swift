@@ -103,28 +103,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
 extension AppDelegate {
 //    MARK: - Notification recieved in foreground
 
-    func userNotificationCenter(_: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler _: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let userInfo = notification.request.content.userInfo
-        guard let pushNotification = PushNotification(dictionary: userInfo) else { return }
-
-        showNotificationAlert(pushNotification: pushNotification)
+    func userNotificationCenter(_: UNUserNotificationCenter, willPresent _: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
     }
 
-//    MARK: - Notification recieved in background
+//    MARK: - Tap on notification
 
     func userNotificationCenter(_: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler _: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         guard let pushNotification = PushNotification(dictionary: userInfo) else { return }
 
         appCoordinator?.handleNotification(pushNotification: pushNotification)
-    }
-
-    func showNotificationAlert(pushNotification: PushNotification) {
-        UIApplication.topViewController()?.showAlert(title: pushNotification.aps.alert.title,
-                                                     message: pushNotification.aps.alert.body,
-                                                     submitTitle: SBLocalization.localized(key: AlertText.ok))
-        { [weak self] in
-            self?.appCoordinator?.handleNotification(pushNotification: pushNotification)
-        }
     }
 }
